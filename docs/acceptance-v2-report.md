@@ -161,3 +161,103 @@ research combinations, pathology CLI/tutorial/live-container checks, all six
 runnable tutorials, complete three-suite L1–L5/peak-memory evidence, and actual
 Windows/Linux installation/independent-operation records for final artifacts.
 No PyPI/crates.io publication or version change is authorized by this audit.
+
+## Native API follow-up audit: c245959 plus integration fixes
+
+The preceding integration gaps describe the initial 597c78f snapshot. The owner
+subsequently integrated M3/CLI work and corrected shared API boundaries. This
+follow-up independently exercises the current **uncommitted integration
+snapshot above `c245959e67e9b18c53fcdb24bf195476cdfaeb93`**, using its matching
+rebuilt extension. It does not count the newly integrated M3/pathology CLI as
+independently audited here merely because the owner reports their tests passed.
+
+Read-only adversarial calls first reproduced these actual failures, which the
+integration owner then fixed without changing Golden expected values:
+
+- pandas `iterrows()` promoted integer sample/patient IDs to floats in a purely
+  numeric external frame. Training patient `1000` became `1000.0`, bypassing
+  the saved training-patient overlap check. Column-preserving conversion now
+  retains the same canonical identities in splitting and prediction.
+- New patients could be labeled `train`/`test`, and existing patients could be
+  moved between cohorts. Saved plan membership and actual fitted sample/patient
+  provenance are now checked at standalone and fusion prediction boundaries.
+- A selector accepted reversed target Series indices, and declared multiclass
+  or unknown tasks could silently fit as binary. Index order and task class
+  cardinality are now checked.
+- A 3×2 tissue mask was flattened onto a 2×3 patch, and an all-NaN float mask
+  became all tissue. Shape/axis and finite binary semantics are now required.
+- Explicit binary class order and `positive_label` could disagree while the
+  saved API configuration described the opposite of the returned probability.
+  The order is canonicalized and conflicts are rejected. Numeric class lists
+  now use the same string mapping as their saved SplitPlan.
+- An explicitly misspelled outcome column produced `prediction_only` rather
+  than an error. Explicit missing names now fail; intentional `target=None`
+  remains a valid unlabeled-cohort path.
+- Aggregating OOF rows to patients changed their displayed type to `apparent`.
+  Aggregation now preserves OOF origin and avoids rewriting already patient-unit
+  provenance.
+- OOF fusion views validated all study outcomes, including held-out patients.
+  Changing only one held-out lesion label could prevent fusion even though
+  models and OOF predictions were unchanged. Truth checks are now scoped to the
+  selected OOF population; the held-out inconsistency is left to its evaluation.
+- Native `ExtractionResult.save()` silently replaced existing result files.
+  Default saving now refuses replacement and explicit overwrite is required.
+- Clinical patient-level summaries accepted an empty patient identifier and
+  counted it as a patient. Canonical nonempty identity checks now reject it.
+- Missing-native `auto` execution could enter optional Python algorithms. A
+  separate read-only availability probe now serves inspection/skip logic;
+  explicit `auto` requires native execution and never runs an implicit reference.
+
+The independent regression file is
+[`tests/test_native_api_audit.py`](../tests/test_native_api_audit.py). **All 36
+tests passed in both environments**: Python 3.9.21 / NumPy 1.23.0 / pandas 1.3.5
+with reference packages available, and Python 3.9.21 / NumPy 2.0.2 / pandas 2.3.3
+with sklearn, statsmodels, SciPy, PyRadiomics, SimpleITK, joblib, ov and WSIData
+absent. Both runs explicitly imported the integration worktree's source and
+matching `.pyd` through `PYTHONPATH`; this is dependency-isolation evidence,
+not a fresh installation test of a final wheel.
+
+Sixteen tests cover the boundary findings and default saved threshold, original
+patient grouping, model/output replacement protection, and no implicit reference
+dispatch. Twenty additional cases independently compare every selected feature
+family to the frozen public 3.0.1 reference: ten 2D/3D/boundary cases, each under
+direction averaging and matrix merging. The 18 nonempty cases compare all **990
+scalar feature values/states**, including NaN positions, with the unchanged
+`atol=1e-10, rtol=1e-8`; the empty ROI case rejects each family in both modes.
+Every six-family union is exactly equal to its separate-family projections.
+This uses the frozen Python values, not newly recorded native expectations.
+
+The current compiled IBSI harness was also independently rerun. All **110
+observed values are exactly unchanged** from the prior actual report. Only its
+feature-source hash and observed-executable/recheck provenance were refreshed
+in [the actual report](golden-ibsi-digital-report.json). Published IBSI values,
+the source freeze, Python Golden, tolerances and the 54-conformant/one-deviation
+feature matrix remain unchanged.
+
+Exact audited snapshot hashes:
+
+```json
+{
+  "src/ov_radiomics/_native_learning.py": "f7db1c806dc0f66f729548421e9c294012ded6a8b756f23a96982fb6f2536c5c",
+  "src/ov_radiomics/_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+  "src/ov_radiomics/_native_common.py": "1f383ded882ae60e98c7f3bc49b1736991ebff416b7ce637e3157eea715240be",
+  "src/ov_radiomics/_types.py": "5991f50f956694e4d8486a26e03259e136377aaf6684c054f19c2780b4ef76d3",
+  "src/ov_radiomics/_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+  "src/ov_radiomics/pathology.py": "1a2cf8a38c6cc3d531c0ce83e0cd2bd8d53398f222662a7cc1aae860cb4feff7",
+  "src/ov_radiomics/_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+  "src/ov_radiomics/image.py": "ae37cd7b901691a56b55043a8f482a281a7f140555f7da88f76888fef35a2b99",
+  "src/ov_radiomics/modeling.py": "f19e9ca3fe0753087fb70f880b2c8a60ad48a77b2809cc19af1bd82fa8180473",
+  "src/ov_radiomics/split.py": "f0090ab15a820ccc6e0009b0c9b39e013fc44203b07d2f9cac3684860475c249",
+  "crates/radiomics-core/src/learning/population.rs": "f1faacbf349863b86f842317e2ec49e1ec0cfa3a9754cae8c2f31063e10b3fb1",
+  "crates/radiomics-core/src/learning/fusion.rs": "44c497655cfbcef66e06225ed79a9f734b0e0ae672480beb751a76d7a37673d2",
+  "crates/radiomics-core/src/learning/training.rs": "8facc0f7a7c452523248392877eb9d0b29b3faf705a7ab26672961912de81831",
+  "crates/radiomics-core/src/features.rs": "bf83322ba590b19c0b10ea5801edb287b3bdf986ad7290cdf3eedee91afdc57a",
+  "native_extension": "a4a2a6231cc5fd8db83e1c062af578272c20bbaf6ede18cdea2ad60aa1cc796d",
+  "golden_ibsi_native_executable": "1e0d28a6a9d1c18426ea5f269e430d88abbfa7ef101579280e30a51a505c0584"
+}
+```
+
+These targeted results do not close the remaining public CT, full three-suite
+performance/memory, final artifact installation, Linux, or complete M0–M5 release
+gates. The original metrics timing artifact above remains a measurement of its
+own earlier binary/source hashes, not a timing result for this later snapshot.

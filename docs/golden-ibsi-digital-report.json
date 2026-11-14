@@ -3,7 +3,7 @@
   "status": "passed_with_declared_raw_kurtosis_nonconformance",
   "scope": "IBSI1 digital phantom,3D,noresampling,FBS1,distance1,GLCM symmetric,GLDMalpha0; both per-direction mean and explicit matrix merging. No claim for2D/CTresampling/other preprocessing.",
   "source_sha256": {
-    "crates/radiomics-core/src/features.rs": "69001c0150800836b227b96305ed0c8d1c83dba507aae2c1cded6278bcf0f8e8",
+    "crates/radiomics-core/src/features.rs": "bf83322ba590b19c0b10ea5801edb287b3bdf986ad7290cdf3eedee91afdc57a",
     "crates/radiomics-core/src/imaging.rs": "bbdb76c4eb12f9938400cc1cc8fc5081e4cd9669f2153e11ec17d48bfcd88d61",
     "golden/ibsi_digital_v1/published_reference.json": "e55f0dbd3a7fb6e92bf5500b18a4e18077d7ca86096366efdf80c585182081a4",
     "golden/ibsi_digital_v1/firstorder_fullprecision.json": "d75d742ca1639dad638076d293e1e00a420688d7afbde21b7f6099f1c9969ecf"
@@ -1282,5 +1282,14 @@
       "passed": true,
       "ibsi_conformant": true
     }
-  ]
+  ],
+  "native_binary_sha256": "1e0d28a6a9d1c18426ea5f269e430d88abbfa7ef101579280e30a51a505c0584",
+  "independent_recheck": {
+    "date": "2026-11-14",
+    "root_revision": "c245959e67e9b18c53fcdb24bf195476cdfaeb93",
+    "working_snapshot": "post-integration selected-family extraction and API boundary fixes; source hashes above identify this uncommitted snapshot",
+    "method": "Reran the current integration golden_ibsi_native executable; all 110 observed values exactly equal the previous actual report, with no expected value or tolerance changes.",
+    "binary": "golden_ibsi_native-6a4a9ee6d34997d0.exe",
+    "comparisons_unchanged": 110
+  }
 }
