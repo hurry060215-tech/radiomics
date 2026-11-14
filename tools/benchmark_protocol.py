@@ -9,8 +9,10 @@ import platform
 import statistics
 import subprocess
 import sys
+import time
 
 SCHEMA='radiomics.benchmark.v2'
+CASE_FIELDS=('suite','level','dataset','operation','state','threads','input_sha256','configuration_sha256')
 
 
 def sha256_file(path):
@@ -81,6 +83,7 @@ def machine_manifest(root):
         rustc_verbose=_command(['rustc','-vV'],root),git_revision=_command(['git','rev-parse','HEAD'],root),
         working_tree_status=_command(['git','status','--porcelain'],root),
         cargo_lock_sha256=sha256_file(root/'Cargo.lock'),
+        benchmark_sources_sha256={name:sha256_file(root/name) for name in ('tools/benchmark_protocol.py','tools/benchmark_metrics.py')},
         thread_environment={name:os.environ.get(name) for name in ('OMP_NUM_THREADS','OPENBLAS_NUM_THREADS',
             'MKL_NUM_THREADS','NUMEXPR_NUM_THREADS','RAYON_NUM_THREADS')},
         rust_flags={name:os.environ.get(name) for name in ('RUSTFLAGS','CARGO_ENCODED_RUSTFLAGS','CARGO_BUILD_TARGET')},
@@ -106,15 +109,46 @@ def latency_summary(values):
         p95_interpretation='empirical linear quantile; seven pairs do not estimate a precise tail guarantee')
 
 
+def capture_call(call):
+    """Retain workload failures, including warmup, without timing comparisons/digests."""
+    start=time.perf_counter()
+    try:
+        output=call()
+    except Exception as exc:
+        return dict(status='failed',elapsed_seconds=time.perf_counter()-start,
+            error=f'{type(exc).__name__}: {exc}'),None
+    return dict(status='ok',elapsed_seconds=time.perf_counter()-start,error=None),output
+
+
 def paired_summary(records,*,repeats):
     """One predeclared case only. Failed/mismatching outputs have no speed claim."""
     if repeats<7:
         raise ValueError('Benchmark v2 requires at least seven predeclared repetition pairs.')
     by_pair={}
+    case=None
     for row in records:
+        if any(key not in row for key in CASE_FIELDS):
+            raise ValueError('Every observation needs its complete benchmark case identity.')
+        if (any(not isinstance(row[key],str) or not row[key].strip() for key in CASE_FIELDS if key!='threads')
+                or type(row['threads']) is not int or row['threads']<1):
+            raise ValueError('Case identities must be nonempty strings and threads a positive integer.')
+        if any(len(row[key])!=64 or any(c not in '0123456789abcdef' for c in row[key])
+                for key in ('input_sha256','configuration_sha256')):
+            raise ValueError('Case input/configuration digests must be lowercase SHA256 strings.')
+        identity=tuple(row[key] for key in CASE_FIELDS)
+        if case is None:
+            case=identity
+        elif case!=identity:
+            raise ValueError('Paired observations must have the same suite, level, dataset, operation, state, threads and input/configuration hashes.')
         pair=row['pair'];backend=row['backend']
-        if backend not in ('python','rust') or not 0<=pair<repeats or backend in by_pair.setdefault(pair,{}):
+        if (type(pair) is not int or backend not in ('python','rust') or not 0<=pair<repeats
+                or backend in by_pair.setdefault(pair,{})):
             raise ValueError('Duplicate/unknown backend or invalid paired observation.')
+        expected_order=(0 if backend=='python' else 1) if pair%2==0 else (1 if backend=='python' else 0)
+        if type(row.get('order')) is not int or row['order']!=expected_order:
+            raise ValueError('Pair order must follow the declared alternating Python/Rust sequence.')
+        if type(row.get('correctness_checked')) is not bool or row.get('status') not in ('ok','failed'):
+            raise ValueError('Observation status and correctness flags must be explicit typed values.')
         by_pair[pair][backend]=row
     if len(by_pair)!=repeats or any(set(row)!= {'python','rust'} for row in by_pair.values()):
         raise ValueError('Every declared pair needs both backend observations, including failures.')
