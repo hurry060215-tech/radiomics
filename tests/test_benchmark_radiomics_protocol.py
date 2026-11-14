@@ -142,3 +142,36 @@ def test_cold_wall_excludes_before_after_file_audits_and_uses_transport_peak(tmp
     assert events==['audit','start','spawn','stop','audit','postflight_transport']
     assert result['elapsed_seconds']==2. and result['api_elapsed_seconds']==.5
     assert result['worker_peak_memory_bytes']==200 and result['peak_memory_bytes']==200
+
+
+def test_os_worker_launch_failure_becomes_a_retained_observation(tmp_path,monkeypatch):
+    _,digest=module.load_plan(ROOT/'benchmarks/v2/radiomics-plan.json')
+    monkeypatch.setattr(module,'audit_observation_inputs',lambda request:{'verified':True})
+    def fail(*args,**kwargs):
+        raise OSError('Synthetic launch failure; no program was executed.')
+    monkeypatch.setattr(module.subprocess,'Popen',fail)
+    request=dict(plan=str(ROOT/'benchmarks/v2/radiomics-plan.json'),approved_plan_sha256=digest,
+        case=dict(state='cold_process_total'),observation_directory=str(tmp_path/'observation'))
+    result=module.launch_worker('not executed',request,tmp_path/'request.json',tmp_path/'stdout.json',tmp_path/'stderr.txt',2**31,1800)
+    assert result['status']=='failed' and result['worker_started'] is False
+    assert 'OwnedWorkerLaunchOrMonitorFailure' in result['error']
+
+
+def test_ct_is_append_only_with_case_specific_binning_and_dynamic_complete_counts(tmp_path):
+    plan,digest=module.load_plan(ROOT/'benchmarks/v2/radiomics-plan.json')
+    supplement,ct_digest=module.load_ct_plan(ROOT/'benchmarks/v2/radiomics-ct-plan.json',digest)
+    manifest=module.prepare(plan,digest,tmp_path/'base')
+    original=module.cases(plan,manifest)
+    manifest['ct_supplement_sha256']=ct_digest
+    manifest['datasets'].append(dict(id='public_ct_pat1',input_sha256='a'*64,roi_voxels=125256,present_gray_values=[-500.,0.,400.]))
+    declared=module.cases(plan,manifest,supplement)
+    assert declared[:58]==original
+    assert len(declared)==60
+    assert declared[58]['native_extraction']['discretization']['width']==25.
+    assert declared[58]['roi_count']==1 and declared[58]['preparation']==[]
+    assert declared[59]['preparation']==[dict(operation='crop_voxels',margin_voxels=[0,0,0])]
+    cache=dict(population_and_hit_observations=[dict(status='ok',correctness_checked=True) for _ in range(14)])
+    summaries=[dict(valid_speed_comparison=True) for _ in range(60)]
+    records=[dict(status='ok') for _ in range(840)]
+    assert module.overall_status(summaries,cache,records,expected_case_count=60)['correctness_status']=='passed_measured_applicable_cases'
+    assert module.overall_status(summaries,cache,records[:-1],expected_case_count=60)['correctness_status'].startswith('failed_')

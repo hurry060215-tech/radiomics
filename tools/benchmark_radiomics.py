@@ -61,6 +61,19 @@ def load_plan(path,approved=None):
     return plan,digest
 
 
+def load_ct_plan(path,base_sha,approved=None):
+    raw=Path(path).read_bytes();supplement=json.loads(raw);digest=hashlib.sha256(raw).hexdigest()
+    if approved is not None and digest!=approved:
+        raise ValueError('CT supplemental bytes differ from their independently reviewed SHA256.')
+    if supplement['schema']!='radiomics.benchmark.v2.public_ct_append.v1' or supplement['base_plan_sha256']!=base_sha:
+        raise ValueError('CT supplement must append to the exact unchanged base plan.')
+    if supplement['original_case_count_unchanged']!=58 or supplement['total_primary_cases']!=60 or len(supplement['cases'])!=2:
+        raise ValueError('The CT addition may only append the two predeclared cases to the original58.')
+    if any(case['roi_count']!=1 or case['threads']!=1 for case in supplement['cases']):
+        raise ValueError('CT calls must retain one ROI and one outer worker.')
+    return supplement,digest
+
+
 def read_nifti_fixture(path):
     """Fixture preparation only: scalar NIfTI-1 with explicit sform, not runtime reader replacement."""
     import numpy as np
@@ -119,7 +132,7 @@ def cohort_file(path,dataset,count):
             writer.writerow([f"{dataset}-R{i:04}",f'P{i:04}','image.nii.gz','mask.nii.gz'])
 
 
-def prepare(plan,plan_sha,output):
+def prepare(plan,plan_sha,output,ct_plan=None,ct_sha=None,ct_source=None,ct_reference_paths=None):
     import numpy as np
     output=Path(output)
     if output.exists():
@@ -159,12 +172,64 @@ def prepare(plan,plan_sha,output):
             original_source=None if source is None else str(source),
             files_sha256={p.name:sha256_file(p) for p in sorted(directory.iterdir())})
         record['input_sha256']=json_hash(record['files_sha256']);records.append(record)
+    if ct_plan is not None:
+        records.append(prepare_ct(plan,ct_plan,ct_sha,output,ct_source,ct_reference_paths))
     manifest=dict(schema='radiomics.benchmark.v2.inputs.v1',approved_plan_sha256=plan_sha,
         synthetic_generator=plan['synthetic_generator'],datasets=records,
         repeated_roi_disclosure='Each batch repeats the same fixed image/ROI with distinct sample/patient IDs; uncached calls do not reuse computed features.',
         ibsi_attribution='IBSI-1 digital phantom, Alex Zwanenburg, CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/ ; original NIfTI/license/source README bytes copied unchanged; no new conformance claim.')
+    if ct_plan is not None:
+        manifest.update(ct_supplement_sha256=ct_sha,ct_license=ct_plan['dataset']['license'],ct_raw_and_prepared_data_external_only=True)
     write_json(output/'manifest.json',manifest)
     return manifest
+
+
+def prepare_ct(plan,supplement,supplement_sha,output,source,reference_paths):
+    """External licensed raw/cropped data only; no native or feature extraction."""
+    import numpy as np
+    output=Path(output).resolve()
+    if output==ROOT or ROOT in output.parents:
+        raise ValueError('Noncommercial CT raw/prepared arrays must stay in external artifacts, outside the source checkout.')
+    if source is None:
+        raise ValueError('The approved public CT external source directory is required.')
+    source=Path(source);spec=supplement['dataset'];directory=output/spec['id'];directory.mkdir()
+    frozen={}
+    for key,binding in supplement['reference_bindings'].items():
+        path=Path((reference_paths or {}).get(key) or ROOT/binding['repository_path'])
+        if sha256_file(path)!=binding['sha256']:
+            raise ValueError('CT LF reference/profile differs from the pre-native approved binding: '+key)
+        frozen[key]=json.loads(path.read_text(encoding='utf-8'))
+        shutil.copyfile(path,directory/Path(binding['repository_path']).name)
+    if frozen['protocol']['features']!=plan['reference']['features']:
+        raise ValueError('CT and base plan must use the exact same55 selected feature names.')
+    crop_reference=frozen['tight_bbox_reference']
+    if crop_reference['protocol_sha256']!=supplement['reference_bindings']['protocol']['sha256'] or crop_reference['full_reference_sha256']!=supplement['reference_bindings']['original_reference']['sha256']:
+        raise ValueError('The approved tight-crop reference is not bound to the original public CT reference.')
+    for name,digest in spec['source_files_sha256'].items():
+        if sha256_file(source/name)!=digest:
+            raise ValueError('Public CT source/license bytes differ: '+name)
+        shutil.copyfile(source/name,directory/name)
+    values,affine=read_nifti_fixture(directory/'image.nii.gz');mask,mask_affine=read_nifti_fixture(directory/'mask.nii.gz')
+    if list(reversed(values.shape))!=spec['source_shape_xyz'] or not np.array_equal(affine,spec['source_affine_ras_mm']) or not np.array_equal(affine,mask_affine):
+        raise ValueError('Public CT source geometry differs from the frozen complete affine/grid.')
+    if not np.isin(mask,[0,1]).all() or int(np.count_nonzero(mask==1))!=spec['morphology_and_intensity_roi_voxels']:
+        raise ValueError('CT morphology/intensity ROI is not the125256-voxel original mask.')
+    start,size=spec['tight_crop']['start_xyz'],spec['tight_crop']['size_xyz'];slices=tuple(slice(a,a+b) for a,b in zip(reversed(start),reversed(size)))
+    values=np.ascontiguousarray(values[slices],dtype='<f8');mask=np.ascontiguousarray(mask[slices],dtype=np.uint8)
+    prepared_affine=affine.copy();prepared_affine[:3,3]+=prepared_affine[:3,:3]@np.asarray(start)
+    if not np.array_equal(prepared_affine,spec['prepared_affine_ras_mm']) or not np.array_equal(prepared_affine,crop_reference['geometry']['affine_ras_mm']):
+        raise ValueError('CT prepared affine differs from the independent frozen tight-crop geometry.')
+    if hashlib.sha256(values.tobytes()).hexdigest()!=crop_reference['image_f64_le_sha256'] or hashlib.sha256(mask.astype('<u4').tobytes()).hexdigest()!=crop_reference['mask_u32_le_sha256']:
+        raise ValueError('Prepared CT arrays differ from their independently frozen byte-level reference.')
+    np.save(directory/'values.npy',values,allow_pickle=False);np.save(directory/'mask.npy',mask,allow_pickle=False)
+    cohort_file(directory/'cohort-1.csv',spec['id'],1)
+    record=dict(id=spec['id'],directory=spec['id'],shape_xyz=size,affine_ras_mm=prepared_affine.tolist(),
+        source_shape_xyz=spec['source_shape_xyz'],source_affine_ras_mm=affine.tolist(),roi_voxels=int(mask.sum()),
+        present_gray_values=np.unique(values[mask==1]).tolist(),roi_count_files=[1],license=spec['license'],
+        original_source=str(source.resolve()),ct_supplement_sha256=supplement_sha,reference_bindings=supplement['reference_bindings'],
+        files_sha256={path.name:sha256_file(path) for path in sorted(directory.iterdir())})
+    record['input_sha256']=json_hash(record['files_sha256'])
+    return record
 
 
 def expected_columns(plan,ndim,family=None):
@@ -302,7 +367,16 @@ def worker_setup(request,plan):
                 versions[name]=importlib.metadata.version(name)
             except importlib.metadata.PackageNotFoundError:
                 versions[name]=None
-    state=dict(request=request,plan=plan,np=np,pd=pd)
+    extraction=request.get('case',{}).get('native_extraction',plan['native_extraction'])
+    settings=dict(plan['reference']['settings'])
+    if extraction['discretization']['method']!='fixed_width':
+        raise RuntimeError('This approved benchmark declares fixed widths, not an unreviewed alternative binning setup.')
+    shift=extraction['voxel_array_shift']
+    # PyRadiomics's public parameter schema types this as int; the approved
+    # benchmark shift is exactly zero, so preserve its value without truncation.
+    shift=int(shift) if float(shift).is_integer() else shift
+    settings.update(binWidth=extraction['discretization']['width'],gldm_a=extraction['gldm_alpha'],voxelArrayShift=shift)
+    state=dict(request=request,plan=plan,np=np,pd=pd,native_extraction=extraction,reference_settings=settings)
     if request['backend']=='rust':
         import inspect
         import ov_radiomics as rad
@@ -335,7 +409,6 @@ def worker_setup(request,plan):
         if any(name in sys.modules for name in ('radiomics','SimpleITK','sklearn','statsmodels')):
             raise RuntimeError('Native measurement unexpectedly imported an external reference backend.')
     else:
-        import importlib
         import logging
         import radiomics
         import SimpleITK as sitk
@@ -350,7 +423,7 @@ def worker_setup(request,plan):
         for family in plan['reference']['features']:
             module=importlib.import_module('radiomics.'+family)
             classes[family]=getattr(module,'RadiomicsFirstOrder' if family=='firstorder' else 'Radiomics'+family.upper())
-        extractor=RadiomicsFeatureExtractor(dict(imageType={'Original':{}},featureClass=plan['reference']['features'],setting=plan['reference']['settings']))
+        extractor=RadiomicsFeatureExtractor(dict(imageType={'Original':{}},featureClass=plan['reference']['features'],setting=settings))
         if set(extractor.enabledImagetypes)!= {'Original'} or extractor.enabledFeatures!=plan['reference']['features']:
             raise RuntimeError('Reference enabled feature/image scope differs from the frozen explicit selection.')
         state.update(sitk=sitk,reference_classes=classes,extractor=extractor)
@@ -422,7 +495,7 @@ def prepared_call(state,output):
             rad=state['rad'];image=rad.image.from_array(values,affine=affine,spatial_unit='mm')
             roi=rad.mask.from_array(mask,geometry=image.geometry)
             sample=rad.ImageSample(dict(sample_id=identifier,patient_id=f'P{i:04}'),image,roi)
-            table=sample.extract(plan['native_extraction'],**({} if family is None else {'families':[family]}))
+            table=sample.extract(state['native_extraction'],**({} if family is None else {'families':[family]}))
             rows.append(table.features)
         else:
             row={'ID':identifier}
@@ -431,7 +504,7 @@ def prepared_call(state,output):
                 for name,klass in state['reference_classes'].items():
                     if family is not None and name!=family:
                         continue
-                    engine=klass(image,roi,**plan['reference']['settings'])
+                    engine=klass(image,roi,**state['reference_settings'])
                     for feature in plan['reference']['features'][name]:
                         engine.enableFeatureByName(feature)
                     row.update({'original_'+name+'_'+key:float(value) for key,value in engine.execute().items()})
@@ -471,7 +544,7 @@ def e2e_call(state,output):
     directory=Path(request['fixtures'])/state['dataset']['directory'];cohort=directory/f"cohort-{case['roi_count']}.csv"
     if request['backend']=='rust':
         rad=state['rad'];samples=rad.read_cohort(cohort)
-        config=dict(extraction=plan['native_extraction'],labels=[1],preparation=case['preparation'])
+        config=dict(extraction=state['native_extraction'],labels=[1],preparation=case['preparation'])
         result=rad.extract(samples,params=config,backend='rust',n_jobs=case['threads'],cache=request.get('cache_directory'))
         if result.config['failures'] or len(result.features)!=case['roi_count']:
             raise RuntimeError('Native batch did not retain every declared ROI as a successful feature row.')
@@ -485,7 +558,7 @@ def e2e_call(state,output):
     samples=pd.read_csv(cohort,dtype={'sample_id':str,'patient_id':str})
     def one(row):
         image=state['sitk'].ReadImage(str(directory/row['image']));roi=state['sitk'].ReadImage(str(directory/row['mask']))
-        image,roi,affine=reference_preparation(state,image,roi,state['dataset']['affine_ras_mm'])
+        image,roi,affine=reference_preparation(state,image,roi,state['dataset'].get('source_affine_ras_mm',state['dataset']['affine_ras_mm']))
         values=state['extractor'].execute(image,roi,label=1)
         features={'ID':row['sample_id']};diagnostic={'ID':row['sample_id'],'patient_id':row['patient_id'],'ok':True,'error':''}
         for name,value in values.items():
@@ -538,6 +611,15 @@ def worker_execute(request,plan,state):
         state.update(values=state['np'].load(directory/'values.npy',allow_pickle=False),mask=state['np'].load(directory/'mask.npy',allow_pickle=False))
     call=prepared_call if request['case']['level'] in ('L1','L2') else e2e_call
     observation=Path(request['observation_directory']);observation.mkdir(parents=True,exist_ok=False)
+    if request.get('validation_only'):
+        # Correctness preflight is explicitly untimed; it is not another sample
+        # in the seven-pair performance series and cannot produce a speed claim.
+        result=call(state,observation/'validation')
+        return dict(status='ok',validation_only=True,comparison_values=artifact_from_frame(result['features'],
+            expected_columns(plan,len(dataset['shape_xyz']),request['case'].get('family')),request['case']['roi_count']),
+            peak_memory_bytes=peak_resident_bytes(),environment_snapshot_sha256=request['environment_snapshot_sha256'],
+            observed_thread_libraries=state['observed_thread_libraries'],cache_summary=result['cache_summary'],
+            implementation_sha256=result['implementation_sha256'])
     warmup=[]
     for i in range(request['warmup_calls']):
         started=time.perf_counter();result=call(state,observation/f'warmup-{i}')
@@ -565,6 +647,7 @@ def worker_execute(request,plan,state):
         elapsed_seconds=elapsed,peak_memory_bytes=peak,comparison_values=artifact,
         warmup=warmup,timed_roi_count=request['case']['roi_count'],warmup_roi_count=request['warmup_calls']*request['case']['roi_count'],
         cache_summary=cache,implementation_sha256=result['implementation_sha256'],environment_snapshot_sha256=request['environment_snapshot_sha256'],
+        effective_native_extraction=state['native_extraction'],effective_reference_settings=state['reference_settings'],
         observed_thread_libraries=state['observed_thread_libraries'],simpleitk_effective_threads=state['environment'].get('simpleitk_effective_threads'),
         stage_seconds=None,stage_status='Full declared public call measured; no invented per-stage instrumentation.',
         allocation_count=None,allocation_bytes=None,allocation_status='Unmeasured; peak RSS is a process metric, not an allocation count.')
@@ -623,7 +706,7 @@ def machine_details(fixtures,output):
     return details
 
 
-def cases(plan,manifest):
+def cases(plan,manifest,ct_plan=None):
     output=[];datasets={d['id']:d for d in manifest['datasets']}
     for declaration in plan['datasets']:
         dataset=datasets[declaration['id']]
@@ -648,6 +731,18 @@ def cases(plan,manifest):
                             case['configuration_sha256']=json_hash(case)
                             case['id']=f"{level}-{dataset['id']}-{family or 'full'}-n{count}-j{threads}-{state}"
                             output.append(case)
+    if ct_plan is not None:
+        dataset=datasets[ct_plan['dataset']['id']]
+        for declaration in ct_plan['cases']:
+            case=dict(suite='radiomics',level=declaration['level'],dataset=dataset['id'],family=None,
+                operation='prepared_all55_shape_basic' if declaration['level']=='L2' else 'e2e_all55_shape_basic',state=declaration['state'],
+                threads=declaration['threads'],roi_count=declaration['roi_count'],preparation=declaration['preparation'],input_sha256=dataset['input_sha256'],
+                source_roi_voxels=dataset['roi_voxels'],source_gray_values=dataset['present_gray_values'],
+                native_extraction=ct_plan['native_extraction'],output_feature_names=expected_columns(plan,3),
+                frozen_reference='bbox_crop_reference.json',ct_supplement_sha256=manifest['ct_supplement_sha256'])
+            case['configuration_sha256']=json_hash(case);case['id']=declaration['id'];output.append(case)
+        if len(output)!=ct_plan['total_primary_cases'] or len({case['id'] for case in output})!=len(output):
+            raise ValueError('CT append changed/dropped/duplicated the unchanged base grid.')
     return output
 
 
@@ -725,23 +820,37 @@ def launch_worker(executable,request,request_path,stdout_path,stderr_path,budget
     plan,_=load_plan(request['plan'],request['approved_plan_sha256'])
     environment.update(plan['execution']['thread_environment']);environment['MPLBACKEND']='Agg'
     environment['PYTHONDONTWRITEBYTECODE']='1'
-    observed_peak=0;sample_count=0;enforced=None
-    with Path(stdout_path).open('xb') as out,Path(stderr_path).open('xb') as err:
-        started=time.perf_counter()
-        process=subprocess.Popen([str(executable),str(Path(__file__).resolve()),'--worker',str(request_path)],
-            cwd=ROOT,env=environment,stdout=out,stderr=err)
-        while process.poll() is None:
-            resident,peak=process_memory(process.pid)
-            if resident is not None:
-                observed_peak=max(observed_peak,resident,peak or 0);sample_count+=1
-                if resident>budget or (peak is not None and peak>budget):
-                    enforced='OperationalFailure: owned worker exceeded the fixed process-resident memory budget.'
+    observed_peak=0;sample_count=0;enforced=None;process=None;started=None
+    try:
+        with Path(stdout_path).open('xb') as out,Path(stderr_path).open('xb') as err:
+            started=time.perf_counter()
+            process=subprocess.Popen([str(executable),str(Path(__file__).resolve()),'--worker',str(request_path)],
+                cwd=ROOT,env=environment,stdout=out,stderr=err)
+            while process.poll() is None:
+                resident,peak=process_memory(process.pid)
+                if resident is not None:
+                    observed_peak=max(observed_peak,resident,peak or 0);sample_count+=1
+                    if resident>budget or (peak is not None and peak>budget):
+                        enforced='OperationalFailure: owned worker exceeded the fixed process-resident memory budget.'
+                        process.kill();break
+                if time.perf_counter()-started>timeout:
+                    enforced='OperationalFailure: owned worker exceeded the predeclared observation timeout.'
                     process.kill();break
-            if time.perf_counter()-started>timeout:
-                enforced='OperationalFailure: owned worker exceeded the predeclared observation timeout.'
-                process.kill();break
-            time.sleep(.02)
-        process.wait();wall=time.perf_counter()-started
+                time.sleep(.02)
+            process.wait();wall=time.perf_counter()-started
+    except Exception as exc:
+        cleanup_error=None
+        if process is not None:
+            try:
+                if process.poll() is None:
+                    process.kill()
+                process.wait()
+            except Exception as cleanup:
+                cleanup_error=f'{type(cleanup).__name__}: {cleanup}'
+        return dict(status='failed',error=f'OwnedWorkerLaunchOrMonitorFailure: {type(exc).__name__}: {exc}',
+            cleanup_error=cleanup_error,worker_started=process is not None,worker_exit_code=None if process is None else process.returncode,
+            process_wall_seconds=None if started is None else time.perf_counter()-started,
+            peak_memory_bytes=observed_peak or None,stdout_path=str(stdout_path),stderr_path=str(stderr_path))
     # Wall clock is stopped before file audits, protocol parsing, comparisons,
     # canonical sidecar persistence and output-file re-reading/digests.
     try:
@@ -863,6 +972,22 @@ def append_record(path,record):
         handle.write(json.dumps(clean(record),allow_nan=False,sort_keys=True)+'\n');handle.flush();os.fsync(handle.fileno())
 
 
+def frozen_ct_artifact(plan,manifest,fixtures,output):
+    matches=[dataset for dataset in manifest['datasets'] if dataset.get('ct_supplement_sha256')]
+    if not matches:
+        return {}
+    dataset=matches[0];path=Path(fixtures)/dataset['directory']/'bbox_crop_reference.json'
+    if sha256_file(path)!=dataset['reference_bindings']['tight_bbox_reference']['sha256']:
+        raise ValueError('Frozen CT crop reference changed before measurement.')
+    reference=json.loads(path.read_text(encoding='utf-8'));values={**reference['features'],**reference['basic_shape']}
+    columns=expected_columns(plan,3)
+    if set(values)!=set(columns):
+        raise ValueError('Frozen CT scalar/basic-shape reference does not cover the exact66-column output.')
+    artifact=dict(schema='radiomics.benchmark.v2.values.v1',sample_ids=[dataset['id']+'-R0000'],feature_names=columns,values=[[values[name] for name in columns]])
+    destination=Path(output)/'frozen-ct-comparison.json';write_json(destination,artifact)
+    return {dataset['id']:str(destination)}
+
+
 def run(args,plan,plan_sha):
     output=Path(args.output).resolve()
     if output.exists():
@@ -870,8 +995,17 @@ def run(args,plan,plan_sha):
     fixtures=Path(args.fixtures).resolve();manifest=json.loads((fixtures/'manifest.json').read_text(encoding='utf-8'))
     if manifest['approved_plan_sha256']!=plan_sha:
         raise ValueError('Input corpus was prepared from different plan bytes.')
+    ct_plan=ct_sha=None
+    if args.ct_plan:
+        ct_plan,ct_sha=load_ct_plan(args.ct_plan,plan_sha,args.approved_ct_plan_sha256)
+        if manifest.get('ct_supplement_sha256')!=ct_sha:
+            raise ValueError('Prepared public CT supplement differs from its pre-measurement approval.')
+    elif manifest.get('ct_supplement_sha256'):
+        raise ValueError('A CT corpus requires its exact approved supplemental plan, not an implicit extra dataset.')
     output.mkdir(parents=True);snapshot=package_snapshot(args,output)
     write_json(output/'plan.json',plan);write_json(output/'input-manifest.json',manifest)
+    if ct_plan is not None:
+        write_json(output/'ct-plan.json',ct_plan)
     environments={}
     reference_expected=frozen_reference_provenance(plan)
     for backend,executable in [('python',args.reference_python),('rust',args.native_python)]:
@@ -887,13 +1021,13 @@ def run(args,plan,plan_sha):
     # Coordinator package state is not the measured native wheel/source identity.
     machine=machine_details(fixtures,output)
     write_json(output/'provenance.json',dict(machine=machine,environments=environments,native_snapshot=snapshot,
-        plan_sha256=plan_sha,input_manifest_sha256=sha256_file(fixtures/'manifest.json'),
+        plan_sha256=plan_sha,ct_plan_sha256=ct_sha,input_manifest_sha256=sha256_file(fixtures/'manifest.json'),
         benchmark_runner_source_revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         command_arguments=vars(args)))
     snapshot['audited_environments']={backend:result['environment'] for backend,result in environments.items()}
     snapshot['plan_contents']=plan;snapshot['dataset_contents']={dataset['id']:dataset for dataset in manifest['datasets']}
-    summaries=[];all_records=[];baseline={}
-    declared=cases(plan,manifest)
+    summaries=[];all_records=[];baseline={};ct_expected=frozen_ct_artifact(plan,manifest,fixtures,output)
+    declared=cases(plan,manifest,ct_plan)
     for case_index,case in enumerate(declared):
         case_directory=output/case['id'];case_directory.mkdir();records=[]
         for pair in range(plan['execution']['paired_repetitions']):
@@ -908,6 +1042,10 @@ def run(args,plan,plan_sha):
             comparison=dict(passed=False,reason='At least one backend execution failed; retain timings as diagnostic only.')
             if all(r['status']=='ok' for r in pair_records.values()):
                 comparison=safe_compare_artifacts(pair_records['python'].get('comparison_artifact'),pair_records['rust'].get('comparison_artifact'),plan)
+                if case['dataset'] in ct_expected:
+                    frozen={backend:safe_compare_artifacts(ct_expected[case['dataset']],result.get('comparison_artifact'),plan) for backend,result in pair_records.items()}
+                    comparison=dict(passed=comparison['passed'] and all(row['passed'] for row in frozen.values()),
+                        paired_compatibility=comparison,against_frozen_pre_native_crop_reference=frozen)
             for record in pair_records.values():
                 record['correctness_checked']=bool(comparison['passed']);record['comparison']=comparison
                 records.append(record);all_records.append(record);append_record(output/'raw-observations.jsonl',record)
@@ -919,8 +1057,9 @@ def run(args,plan,plan_sha):
             valid_speed_comparison=summary['valid_speed_comparison'],ratio_python_over_rust=summary.get('ratio_python_over_rust')))
         print(f"[{case_index+1}/{len(declared)}] {case['id']}: "+str(summary.get('ratio_python_over_rust','invalid')),flush=True)
     cache_records=run_cache_series(args,plan,snapshot,manifest,output,baseline)
-    statuses=overall_status(summaries,cache_records,all_records)
+    statuses=overall_status(summaries,cache_records,all_records,expected_case_count=len(declared),repeats=plan['execution']['paired_repetitions'])
     report=dict(schema='radiomics.benchmark.v2.report.v1',suite='radiomics',plan_sha256=plan_sha,
+        ct_plan_sha256=ct_sha,expected_primary_cases=len(declared),expected_primary_backend_observations=len(declared)*14,
         correctness_status=statuses['correctness_status'],operational_status=statuses['operational_status'],
         performance_policy='Targets/regression thresholds are disclosed separately from numerical correctness; no cross-suite total score.',
         performance_scope='Public API calls and described same-process batch workflows, not pure Rust kernels or a new blanket IBSI conformance claim.',
@@ -965,13 +1104,14 @@ def run_cache_series(args,plan,snapshot,manifest,output,baseline):
     return summary
 
 
-def overall_status(summaries,cache,primary_records=None):
+def overall_status(summaries,cache,primary_records=None,*,expected_case_count=58,repeats=7):
     cache_rows=cache.get('population_and_hit_observations',[])
-    complete=(len(cache_rows)==14 and len(summaries)==58)
+    complete=(len(cache_rows)==14 and len(summaries)==expected_case_count and primary_records is not None
+        and len(primary_records)==expected_case_count*repeats*2)
     numerical=complete and all(summary.get('valid_speed_comparison') is True for summary in summaries) and all(
         row.get('status')=='ok' and row.get('correctness_checked') is True for row in cache_rows)
     records=(primary_records or [])+cache_rows
-    operational=complete and primary_records is not None and len(primary_records)==812 and all(row.get('status')=='ok' for row in records)
+    operational=complete and primary_records is not None and len(primary_records)==expected_case_count*repeats*2 and all(row.get('status')=='ok' for row in records)
     return dict(correctness_status='passed_measured_applicable_cases' if numerical else 'failed_or_incomplete_measured_cases',
         operational_status='passed_recorded_observations' if operational else 'failed_or_incomplete_recorded_observations')
 
@@ -1042,6 +1182,12 @@ def main():
     parser.add_argument('--reference-python')
     parser.add_argument('--native-wheel')
     parser.add_argument('--native-build-manifest')
+    parser.add_argument('--ct-plan',help='Optional append-only public CT plan; never changes the original58 cases.')
+    parser.add_argument('--approved-ct-plan-sha256')
+    parser.add_argument('--public-ct-directory',help='External source artifact directory; never copied into the source repository.')
+    parser.add_argument('--ct-protocol')
+    parser.add_argument('--ct-reference')
+    parser.add_argument('--ct-crop-reference')
     parser.add_argument('--worker',help=argparse.SUPPRESS)
     args=parser.parse_args()
     if args.worker:
@@ -1070,9 +1216,16 @@ def main():
         parser.error('--fixtures is required.')
     if args.run and not all((args.approved_plan_sha256,args.output,args.native_python,args.reference_python,args.native_wheel,args.native_build_manifest)):
         parser.error('--run requires the exact approved plan SHA, fresh output, both interpreter paths, fixed wheel and build manifest.')
+    if args.ct_plan and not args.approved_ct_plan_sha256:
+        parser.error('CT prepare/measurement requires its separately reviewed exact supplemental SHA.')
     plan,digest=load_plan(args.plan,args.approved_plan_sha256 if args.run else None)
     if args.prepare:
-        prepare(plan,digest,args.fixtures);print('Prepared fixed inputs; no algorithm timings collected.')
+        ct_plan=ct_sha=None
+        if args.ct_plan:
+            ct_plan,ct_sha=load_ct_plan(args.ct_plan,digest,args.approved_ct_plan_sha256)
+        prepare(plan,digest,args.fixtures,ct_plan,ct_sha,args.public_ct_directory,
+            {'protocol':args.ct_protocol,'original_reference':args.ct_reference,'tight_bbox_reference':args.ct_crop_reference})
+        print('Prepared fixed inputs; no algorithm timings collected.')
     else:
         run(args,plan,digest)
     return 0

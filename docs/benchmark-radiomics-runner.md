@@ -94,6 +94,34 @@ the measured call exactly in that same worker. Seven pairs remain only seven
 independent recorded timings; the 16 ROIs per call are not falsely counted as 112
 independent latency observations.
 
+The separately reviewed append-only
+[`radiomics-ct-plan.json`](../benchmarks/v2/radiomics-ct-plan.json) adds exactly
+two real CT cases before measurement: one-ROI L2 tight prepared bbox and one-ROI
+L3 original NIfTI→explicit tight crop→complete export. Both use bin width25,
+clipping/normalization/resegmentation/resampling **none**, one outer worker and
+the original seven pairs/2GiB budget/tolerances. It does not change any original
+58-case input, seed, loop or threshold. With this supplement the primary grid
+has 60 cases/840 backend observations, plus the unchanged14 cache observations.
+
+The source and tight-crop references are independently frozen LF files. Original
+CT/ROI NIfTI and prepared arrays remain external CC-BY-NC-3.0 artifacts, with
+Philippe Lambin/CancerData and Alex Zwanenburg attribution. L2 prepared geometry
+updates the complete affine and resets bbox indices; L3 starts from the source
+affine and applies its crop once. Its matched66-column results must agree with
+both measured backends **and** the frozen tight-crop scalar/basic-shape reference.
+The source125256-voxel morphology/intensity ROI is used; the separate accuracy
+resegmentation case is not silently substituted.
+
+To prepare/include this supplemental corpus, pass `--ct-plan`, its separately
+approved `--approved-ct-plan-sha256`, and `--public-ct-directory` on prepare. If
+approved reference files live outside this checkout, specify their exact
+`--ct-protocol`, `--ct-reference`, and `--ct-crop-reference` paths. Their hashes
+must still equal the reviewed supplement bindings. The same `--ct-plan` and
+approved SHA accompany measurement. A corpus containing CT without its approved
+append plan is refused. Global expected counts derive from the actual approved
+case declaration, so missing observations cannot be hidden by using the observed
+summary length as its own expectation.
+
 L3 cold rows have no warmup and use coordinator process-launch-to-exit time,
 including imports, required local resource configuration, full API work and
 numerical report transport. Package/input audits occur before launch/after exit;
