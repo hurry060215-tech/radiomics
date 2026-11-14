@@ -22,6 +22,10 @@ def adapter(monkeypatch):
         def to_dict(self):
             return copy.deepcopy(self.payload)
 
+        @classmethod
+        def _from_native(cls, table, provenance=None):
+            return cls(table, provenance=provenance)
+
     types_module = ModuleType('ov_radiomics._types')
     types_module.TileTable = Table
     monkeypatch.setitem(sys.modules, 'ov_radiomics._types', types_module)

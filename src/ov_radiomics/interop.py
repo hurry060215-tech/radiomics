@@ -74,7 +74,9 @@ def _from_matrix(values, tile_ids, tiles, feature_names, provenance):
     metadata = dict(provenance, input_row_ids=ids, feature_names=names,
                     input_shape=[buffer['rows'], buffer['cols']],
                     missing_representation='explicit_numeric_buffer_flags')
-    return TileTable(aligned, provenance=metadata)
+    # This payload has just passed native alignment and validation; do not serialize
+    # the entire embedding a second time through the external-dictionary constructor.
+    return TileTable._from_native(aligned, provenance=metadata)
 
 
 def from_arrays(values, *, tile_ids, tiles, feature_names=None, source=None):
