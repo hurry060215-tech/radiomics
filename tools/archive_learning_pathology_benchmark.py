@@ -79,9 +79,9 @@ def archive(source,output,plan,source_binding):
         '- Full-process resident memory includes imports, fixed buffers, warmup and result transport, using worker/footer/coordinator high-water maximum. This is not tracemalloc or private memory.',
         '- On this Windows host the venv executable launches a base-Python child: worker self/footer high-water measurements cover the actual interpreter, while the coordinator polls the launcher PID. Final memory checks remain valid; immediate parent memory/timeout termination is not independently validated for that child. Operational failures, if present, remain in raw records. Future process-tree supervision is separate engineering work; this grid is not replaced.',
         '- Single-thread workload only; no multicore scaling inference. Native computation/CLI deployment, Windows/Linux installation and other modules retain separately scoped acceptance evidence.','']
-    (output/'report.md').write_text('\n'.join(lines),encoding='utf-8')
+    (output/'report.md').write_bytes('\n'.join(lines).encode('utf-8'))
     index['artifacts']={path.name:dict(sha256=digest(path),bytes=path.stat().st_size) for path in sorted(output.iterdir()) if path.is_file()}
-    (output/'artifact-index.json').write_text(json.dumps(index,indent=2)+'\n',encoding='utf-8')
+    (output/'artifact-index.json').write_bytes((json.dumps(index,indent=2)+'\n').encode('utf-8'))
     return index
 
 
