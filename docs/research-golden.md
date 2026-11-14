@@ -1,8 +1,9 @@
 # Research combinations: pre-implementation Golden freeze candidate
 
-This candidate specifies keyed feature concatenation, paired Delta and basic
-Lloyd KMeans before their native implementation. It requires main-worker review
-before native development. The reference generator uses public NumPy 1.23.0 and
+This freeze specifies keyed feature concatenation, paired Delta and basic
+Lloyd KMeans before their native implementation. The main worker independently
+rebuilt and structurally verified both the original freeze and supplementary
+direct-distance freeze before approving native execution. The reference generator uses public NumPy 1.23.0 and
 scikit-learn 1.0.2; no native output enters the expected values.
 
 ## Scope and contracts
