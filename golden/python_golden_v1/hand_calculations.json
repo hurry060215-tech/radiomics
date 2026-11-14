@@ -1,0 +1,32 @@
+{
+  "schema": "python_golden_v1.hand.v1",
+  "case_id": "hand_2d",
+  "provenance": "Independent hand calculation, before native feature implementation.",
+  "firstorder": {
+    "Mean": 2.0, "Median": 2.0, "Minimum": 1.0, "Maximum": 3.0,
+    "10Percentile": 1.0, "90Percentile": 3.0, "Range": 2.0,
+    "InterquartileRange": 1.5, "Variance": 0.6666666666666666,
+    "MeanAbsoluteDeviation": 0.6666666666666666, "Skewness": 0.0,
+    "Kurtosis": 1.5, "Energy": 28.0, "RootMeanSquared": 2.160246899469287,
+    "Entropy": 1.584962500721156, "Uniformity": 0.3333333333333333
+  },
+  "matrix_conventions": {
+    "gray_levels": [1, 2, 3],
+    "glcm": "Only direction (+1,0); symmetric raw integer counts; both endpoints in mask.",
+    "glrlm": "Only direction (+1,0); rows gray level, columns run length 1,2.",
+    "glszm": "8-connected; rows gray level, columns zone size 1,2.",
+    "gldm": "8-neighborhood, alpha=0; dependence includes center; columns size 1,2.",
+    "ngtdm": "8-neighborhood; rows gray level; columns valid center count, sum absolute differences."
+  },
+  "glcm_x_symmetric": [[2, 1, 0], [1, 0, 1], [0, 1, 2]],
+  "glrlm_x": [[0, 1], [2, 0], [0, 1]],
+  "glszm": [[0, 1], [2, 0], [0, 1]],
+  "gldm": [[0, 2], [2, 0], [0, 2]],
+  "ngtdm": [[2, 2.2], [2, 0.6666666666666666], [2, 2.2]],
+  "notes": [
+    "IQR uses linear interpolation: q25=1.25 and q75=2.75.",
+    "Kurtosis is population fourth central moment / variance squared, not excess kurtosis.",
+    "PyRadiomics entropy adds machine epsilon inside log2; compare with scalar tolerance.",
+    "Do not compare a single-direction matrix's features with per-direction-averaged features."
+  ]
+}
