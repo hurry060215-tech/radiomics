@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+    "-I",
+    "-m",
+    "pip",
+    "--disable-pip-version-check",
+    "install",
+    "--no-index",
+    "--no-deps",
+    "--no-cache-dir",
+    "E:\\radiomics-build\\snapshot-native-v3\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl"
+  ],
+  "elapsed_seconds": 0.7623983000000001,
+  "error": null,
+  "exit_code": 0,
+  "full_dependency_install_cost_measured": false,
+  "n": 1,
+  "scope": "Offline project-wheel payload only; dependencies/base Python/environment creation excluded.",
+  "status": "ok",
+  "stderr_path": "payload-install.stderr.txt",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_utf8": "",
+  "stdout_path": "payload-install.stdout.txt",
+  "stdout_sha256": "3bff4aa17a8165a5d98242a636c0edd66148f6b963d98f7eb6b0df8bb82a019f",
+  "stdout_utf8": "Processing e:\\radiomics-build\\snapshot-native-v3\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl\r\nInstalling collected packages: ov-radiomics\r\nSuccessfully installed ov-radiomics-0.1.0\r\n"
+}

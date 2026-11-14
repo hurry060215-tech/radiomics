@@ -1,6 +1,7 @@
 radiomics-plan.json text eol=lf
 radiomics-ct-plan.json text eol=lf
 radiomics-dimension-binding.json text eol=lf
+deployment-plan.json text eol=lf
 .gitattributes text eol=lf
 learning-pathology-plan.json text eol=lf
 learning-pathology-source-text-binding.json text eol=lf

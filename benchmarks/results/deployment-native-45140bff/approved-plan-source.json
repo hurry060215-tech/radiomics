@@ -1,0 +1,54 @@
+{
+  "schema": "radiomics.benchmark.v2.deployment_plan.v1",
+  "status": "predeclared_pending_main_review_no_timing",
+  "suite": "deployment",
+  "scope": "L5 bounded startup/artifact/payload-install evidence; separate from Radiomics, Machine Learning & Statistics and Pathology performance scores.",
+  "snapshot": {
+    "manifest_schema": "radiomics.native-build.v1",
+    "source_revision": "45140bff46b3ef1ae7eff9a170acb3a1116308b1",
+    "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+    "wheel_sha256": "8767c22d3344d0009669de7c5297c0db58b5f9144c506be04722fe70ab4ea9b3",
+    "cli_sha256": "2197ea4af3cc3078f660a26f5a1401c8c9b185ace3d1d31984c7ba74fbb471f4",
+    "package_version": "0.1.0",
+    "reference_manifest": "E:/radiomics-build/snapshot-native-v3/build-manifest.json"
+  },
+  "preparation": {
+    "fresh_environment": "Create one new venv with system-site-packages=false from the existing CPython3.9.21 base; environment creation is untimed setup, recorded separately.",
+    "installation": "Exactly one offline pip install --no-index --no-deps --no-cache-dir of the fixed wheel into the fresh empty environment. No resolver/download/dependency installation; record one elapsed value and logs, not a median or full-install claim.",
+    "dependency_scope": "Project wheel payload only. NumPy/Pandas/Matplotlib and optional reference/container packages are not installed by this operation. Import/backend_info may work through lazy imports; full analysis functionality still requires declared base dependencies.",
+    "external_mutation": "Do not modify the public3.0.1 environment, existing benchmark environments, root source, version, wheel, CLI or machine-wide configuration."
+  },
+  "startup_cases": [
+    {
+      "id": "cli_version_fresh_process",
+      "argv": ["IMMUTABLE_CLI", "--version"],
+      "expected": "Exit0; stdout identifies radiomics0.1.0; no Python program or feature/model algorithm is started."
+    },
+    {
+      "id": "python_import_backend_info_fresh_process",
+      "argv": ["FRESH_VENV_PYTHON", "-I", "-c", "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"],
+      "expected": "Exit0; actual backend rust, version0.1.0 and fixed implementation constant; installed package file bytes match fixed wheel in non-timed preflight."
+    }
+  ],
+  "measurement": {
+    "repetitions_per_case": 7,
+    "warmup_calls": 0,
+    "order": "Round0 CLI then Python; round1 Python then CLI; alternate through seven fixed rounds. This order reduces drift but is not a cross-endpoint speed comparison.",
+    "timer": "Coordinator perf_counter immediately before process creation to wait/communicate completion, including process startup, import/command, stdout/stderr transport and exit. Source/package/input byte audits, decoding and footprint scans are outside elapsed time.",
+    "cold_definition": "Fresh process/interpreter for every observation. OS file/bytecode cache is not flushed and remains explicitly uncontrolled; no cold-disk claim.",
+    "summary": ["n", "median", "q25", "q75", "IQR", "empirical linear-interpolation p95", "min", "max"],
+    "raw": "Retain all14 per-endpoint observations, round/order, argv, stdout/stderr bytes/decoded results, exit code, elapsed, environment/build/source digests and failures. Do not select minimum or drop a slow/failed sample.",
+    "timeout_seconds_per_startup": 60,
+    "thread_environment": {"OMP_NUM_THREADS":"1","OPENBLAS_NUM_THREADS":"1","MKL_NUM_THREADS":"1","NUMEXPR_NUM_THREADS":"1","ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS":"1"},
+    "host_window": "Start only after main/acceptance confirm no overlapping benchmark, dependency installation or build; record host/power/storage limitations and UTC start/end.",
+    "comparative_ratio": false,
+    "speed_threshold": null
+  },
+  "footprint": {
+    "artifacts": "Exact wheel compressed file bytes, ZIP entry/file count/uncompressed payload bytes, and standalone CLI file bytes; hashes must match immutable receipt.",
+    "installed_payload": "Project package and its dist-info regular-file count and summed logical bytes; baseline and post-install complete fresh-venv counts/bytes also recorded. Reject symlink traversal; no recursive deletion.",
+    "metric_limits": "Logical file-byte totals are not filesystem allocation/cluster occupancy, base Python/shared system DLL footprint or complete dependency footprint. Those remain explicitly unmeasured."
+  },
+  "acceptance": "Validate source/artifact/installed byte identity and outputs. Startup failure or output mismatch is an operational result retained in raw evidence. No shared target, language-wide speedup, combined suite score or full dependency-install cost is inferred.",
+  "approval": "Main agent must approve exact JSON SHA before payload install or startup timing. No post-result case/repetition/source changes."
+}
