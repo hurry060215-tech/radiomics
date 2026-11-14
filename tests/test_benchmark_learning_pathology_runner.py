@@ -1,5 +1,6 @@
 """Protocol/input tests only; no algorithm timings or Golden regeneration."""
 import importlib.util
+import importlib.metadata
 from pathlib import Path
 import sys
 from types import SimpleNamespace
@@ -13,6 +14,10 @@ import benchmark_lp_runtime as runtime
 
 def test_input_corpus_is_deterministic_and_patient_folds_are_actual_sets(tmp_path):
     plan,digest=runner.load_plan(ROOT/'benchmarks/v2/learning-pathology-plan.json')
+    import numpy as np
+    if (np.__version__!=plan['environments']['common_versions']['numpy']
+            or importlib.metadata.version('Pillow')!=plan['environments']['common_versions']['Pillow']):
+        pytest.skip('Deterministic benchmark corpus acceptance requires the exact predeclared NumPy/Pillow generation environment.')
     first=runner.prepare_inputs(plan,digest,tmp_path/'a');second=runner.prepare_inputs(plan,digest,tmp_path/'b')
     assert first==second
     assert first['pathology']['images']==25 and first['pathology']['study_patients']==12
@@ -29,6 +34,16 @@ def test_input_corpus_is_deterministic_and_patient_folds_are_actual_sets(tmp_pat
     assert len(declared)==16
     assert len({row['id'] for row in declared})==16
     with pytest.raises(FileExistsError):runner.prepare_inputs(plan,digest,tmp_path/'a')
+
+
+def test_input_generation_rejects_nonfrozen_versions_before_writing(tmp_path,monkeypatch):
+    import numpy as np
+    plan,digest=runner.load_plan(ROOT/'benchmarks/v2/learning-pathology-plan.json')
+    monkeypatch.setattr(np,'__version__','deliberately-not-the-frozen-version')
+    target=tmp_path/'not-generated'
+    with pytest.raises(RuntimeError,match='declared NumPy/Pillow'):
+        runner.prepare_inputs(plan,digest,target)
+    assert not target.exists()
 
 
 def test_typed_nonfinite_and_scalar_layers_are_preserved():
