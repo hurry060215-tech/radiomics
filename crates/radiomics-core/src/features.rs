@@ -258,34 +258,41 @@ pub fn texture_matrices(discrete: &DiscretizedImage, alpha: u32) -> RadResult<Te
     let shape = discrete.shape;
     let half = directions(shape, false);
     let full = directions(shape, true);
+    // Resolve gray labels once. Repeated BTreeMap lookups inside every pair
+    // would dominate the distance-one kernels on ordinary CT volumes.
+    let ranks: Vec<usize> = discrete
+        .values
+        .iter()
+        .map(|&v| actual.binary_search(&v).unwrap_or(usize::MAX))
+        .collect();
+    let pair_size = actual
+        .len()
+        .checked_mul(actual.len())
+        .ok_or_else(|| invalid("GLCM dimensions overflow usize; adjust binning."))?;
     let mut glcm = Vec::new();
     let mut glrlm = Vec::new();
     for &offset in &half {
-        let mut pair_entries = BTreeMap::new();
-        for (i, &v) in discrete.values.iter().enumerate().filter(|(_, v)| **v > 0) {
+        let mut counts = Vec::new();
+        counts.try_reserve_exact(pair_size).map_err(|_| {
+            invalid("GLCM allocation failed; increase bin width or decrease bin count.")
+        })?;
+        counts.resize(pair_size, 0u64);
+        for (i, _) in discrete.values.iter().enumerate().filter(|(_, v)| **v > 0) {
             if let Some(j) = shifted(coordinates(i, shape), offset, shape) {
                 let w = discrete.values[j];
                 if w > 0 {
-                    *pair_entries.entry((v, w)).or_insert(0) += 1;
-                    *pair_entries.entry((w, v)).or_insert(0) += 1;
+                    counts[ranks[i] * actual.len() + ranks[j]] += 1;
+                    counts[ranks[j] * actual.len() + ranks[i]] += 1;
                 }
             }
         }
         // GLCM keeps both actual gray-level axes, even if a direction has no
         // pairs for a particular gray. Empty directions are excluded downstream.
-        let mut pair = CountMatrix {
+        let pair = CountMatrix {
             row_values: actual.clone(),
             column_values: actual.clone(),
-            counts: Vec::new(),
+            counts,
         };
-        pair.counts = actual
-            .iter()
-            .flat_map(|r| {
-                actual
-                    .iter()
-                    .map(|c| *pair_entries.get(&(*r, *c)).unwrap_or(&0))
-            })
-            .collect();
         glcm.push(DirectionalMatrix {
             offset,
             matrix: pair,
@@ -733,7 +740,14 @@ fn insert_directional(
                 column_values: vec![],
                 counts: vec![],
             };
-            insert_family(output, family, feature_fn(&empty));
+            insert_family(
+                output,
+                family,
+                feature_fn(&empty)
+                    .into_iter()
+                    .map(|(name, _)| (name, f64::NAN))
+                    .collect(),
+            );
         } else {
             insert_family(
                 output,
@@ -989,6 +1003,28 @@ mod tests {
             (averaged["original_glcm_JointEnergy"] - merged["original_glcm_JointEnergy"]).abs()
                 > 1e-4
         );
+    }
+    #[test]
+    fn frozen_singleton_preserves_mode_specific_undefined_values() {
+        // PyRadiomics 3.0.1 reference frozen independently in 4e424ec.
+        let (image, mask) = sample(
+            [3, 3, 1],
+            vec![0., 0., 0., 0., 7., 0., 0., 0., 0.],
+            vec![0, 0, 0, 0, 1, 0, 0, 0, 0],
+            2,
+        );
+        let averaged = extract(&image, &mask, None, 1, &config()).unwrap();
+        for (name, value) in &averaged {
+            if name.starts_with("original_glcm_") || name.starts_with("original_glrlm_") {
+                assert!(value.is_nan(), "{name} must remain NaN, got {value}");
+            }
+        }
+        assert_eq!(averaged["original_ngtdm_Coarseness"], 1e6);
+        let mut merged_config = config();
+        merged_config.aggregation = TextureAggregation::MergeMatrices;
+        let merged = extract(&image, &mask, None, 1, &merged_config).unwrap();
+        assert_eq!(merged["original_glrlm_RunEntropy"], 0.0);
+        assert!(merged["original_glrlm_RunPercentage"].is_nan());
     }
     #[test]
     fn empty_nonfinite_misaligned_and_resegmentation_errors() {
