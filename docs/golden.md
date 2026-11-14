@@ -109,6 +109,15 @@ not a requirement that Linux produce byte-identical binaries.
   RMSE limits apply to five-seed means independently, with native repeatability
   across thread counts and serialization checked separately. These small
   synthetic datasets test software behavior, not clinical model performance.
+- `table_inputs.json`, `table_reference.json` and `table_hand.json`: six-row
+  train-only numeric/category imputation, deterministic mode ties, full one-hot
+  encoding with unknown-category errors, Standard/MinMax/Robust scaler states,
+  low-variance and stable absolute-correlation filtering, and task-specific
+  Mann–Whitney/Kruskal–Wallis/Pearson tests with optional BH adjustment. Hand
+  medians, population variance, linear quantiles, exact rank-test probability,
+  tie-corrected H and BH values independently check the reference. Entirely
+  missing columns default to error; dropping them must be explicit. A screen
+  retaining zero features errors instead of relaxing the threshold.
 
 `Lab_D65` uses the sRGB transfer, the W3C D65 RGB-to-XYZ matrix and the CIELAB
 piecewise formula with D65 white. It does not adapt to D50. The profile preserves
