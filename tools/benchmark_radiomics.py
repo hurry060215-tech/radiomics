@@ -135,6 +135,8 @@ def prepare(plan,plan_sha,output):
                 if sha256_file(source/name)!=frozen['files_sha256'][name]:
                     raise ValueError('IBSI source bytes no longer match their independent frozen manifest.')
                 shutil.copyfile(source/name,directory/name)
+            for name in ('LICENSE.md','SOURCE_README.md'):
+                shutil.copyfile(source/name,directory/name)
             values,affine=read_nifti_fixture(directory/'image.nii.gz');mask,mask_affine=read_nifti_fixture(directory/'mask.nii.gz')
             if values.shape!=mask.shape or not np.array_equal(affine,mask_affine) or not np.isin(mask,[0,1]).all():
                 raise ValueError('IBSI fixture geometry/label contract differs.')
@@ -160,7 +162,7 @@ def prepare(plan,plan_sha,output):
     manifest=dict(schema='radiomics.benchmark.v2.inputs.v1',approved_plan_sha256=plan_sha,
         synthetic_generator=plan['synthetic_generator'],datasets=records,
         repeated_roi_disclosure='Each batch repeats the same fixed image/ROI with distinct sample/patient IDs; uncached calls do not reuse computed features.',
-        ibsi_attribution='IBSI-1 digital phantom, Alex Zwanenburg, CC-BY-4.0; original NIfTI bytes copied unchanged; no new conformance claim.')
+        ibsi_attribution='IBSI-1 digital phantom, Alex Zwanenburg, CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/ ; original NIfTI/license/source README bytes copied unchanged; no new conformance claim.')
     write_json(output/'manifest.json',manifest)
     return manifest
 
