@@ -1,4 +1,5 @@
 //! Native evaluation. Metric rows represent the caller's explicit evaluation unit.
+pub mod baseline;
 use crate::contracts::Task;
 use crate::errors::{ErrorCode, RadResult, RadiomicsError};
 use crate::models::{ModelPrediction, ModelTarget};

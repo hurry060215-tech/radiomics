@@ -1,8 +1,10 @@
 //! Patient-scoped native learning workflows and portable fitted pipelines.
 mod data;
+mod io_spec;
 mod pipeline;
 mod training;
 pub use data::{Outcome, StudyData};
+pub use io_spec::{ClinicalJoinKey, FeatureTableManifest, JoinPolicy, StudyTableSpec};
 pub use pipeline::{FittedPipeline, PipelineSpec};
 pub use training::{
     predict, train, CandidateScore, FitAudit, FoldResult, InnerScore, ModelGrid, ModelRun,

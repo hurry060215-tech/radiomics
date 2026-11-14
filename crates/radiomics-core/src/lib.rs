@@ -15,6 +15,7 @@ pub mod features;
 pub mod imaging;
 pub mod learning;
 pub mod models;
+pub mod pathology_pixels;
 pub mod preprocessing;
 pub mod random;
 pub mod reliability;

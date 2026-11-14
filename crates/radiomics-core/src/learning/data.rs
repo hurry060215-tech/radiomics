@@ -6,6 +6,7 @@ use std::collections::BTreeSet;
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "task", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Outcome {
+    Unlabeled,
     Classification {
         name: String,
         values: Vec<Option<String>>,
@@ -82,7 +83,7 @@ impl StudyData {
                         "Classification outcome dimensions or labels are invalid.",
                     ));
                 }
-                name
+                Some(name)
             }
             Outcome::Regression { name, values } => {
                 if values.len() != self.samples.len()
@@ -90,10 +91,11 @@ impl StudyData {
                 {
                     return Err(invalid("Regression outcomes require finite observed values and explicit missing markers."));
                 }
-                name
+                Some(name)
             }
+            Outcome::Unlabeled => None,
         };
-        if name.trim().is_empty() {
+        if name.is_some_and(|name| name.trim().is_empty()) {
             return Err(invalid("Outcome name must be explicit."));
         }
         for feature in self
@@ -102,7 +104,7 @@ impl StudyData {
             .iter()
             .chain(&self.features.categorical_names)
         {
-            if feature == name
+            if name.is_some_and(|name| feature == name)
                 || matches!(
                     feature.as_str(),
                     "ID" | "sample_id"
@@ -187,6 +189,7 @@ impl StudyData {
                 categorical_values: categorical,
             },
             outcome: match &self.outcome {
+                Outcome::Unlabeled => Outcome::Unlabeled,
                 Outcome::Classification { name, values } => Outcome::Classification {
                     name: name.clone(),
                     values: indices.iter().map(|&i| values[i].clone()).collect(),

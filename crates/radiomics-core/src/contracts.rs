@@ -437,11 +437,31 @@ pub struct TileTable {
     pub feature_names: Vec<String>,
     /// Explicit statuses also preserve slides with no accepted tiles.
     pub slide_status: BTreeMap<String, String>,
+    /// Retained even for slides with no tiles, so empty results never lose patients.
+    pub slide_patients: BTreeMap<String, String>,
 }
 impl TileTable {
     pub fn validate(&self) -> RadResult<()> {
+        if self.slide_patients.keys().collect::<BTreeSet<_>>()
+            != self.slide_status.keys().collect::<BTreeSet<_>>()
+            || self
+                .slide_patients
+                .iter()
+                .any(|(slide, patient)| slide.trim().is_empty() || patient.trim().is_empty())
+            || self
+                .slide_status
+                .values()
+                .any(|status| status.trim().is_empty())
+        {
+            return Err(invalid("Every slide status needs a nonempty explicit patient parent, including zero-tile slides."));
+        }
         for tile in &self.tiles {
             tile.validate()?;
+            if self.slide_patients.get(&tile.slide_id) != Some(&tile.patient_id) {
+                return Err(invalid(
+                    "Tile parent differs from the slide-patient hierarchy.",
+                ));
+            }
         }
         unique_nonempty(
             &self

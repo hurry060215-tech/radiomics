@@ -22,6 +22,7 @@ rand_chacha = "=0.3.1"
 rand_mt = "=4.2.2"
 statrs = { version = "=0.18.0", default-features = false }
 minilp = "=0.2.2"
+parquet = { version = "=57.3.1", default-features = false, features = ["snap", "flate2-zlib-rs", "zstd"] }
 
 [build-dependencies]
 sha2 = "0.10"

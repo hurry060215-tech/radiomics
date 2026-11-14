@@ -82,3 +82,20 @@ fn actual_prediction_units_are_unique_and_hierarchy_is_consistent() {
     p.rows[1].probabilities = vec![0., 0.];
     assert!(p.validate().is_err());
 }
+
+#[test]
+fn empty_slide_statuses_keep_the_patient_parent() {
+    let mut table = TileTable {
+        tiles: vec![],
+        features: None,
+        feature_names: vec![],
+        slide_status: std::collections::BTreeMap::from([("empty-slide".into(), "no_tiles".into())]),
+        slide_patients: std::collections::BTreeMap::from([(
+            "empty-slide".into(),
+            "patient".into(),
+        )]),
+    };
+    table.validate().unwrap();
+    table.slide_patients.clear();
+    assert!(table.validate().is_err());
+}

@@ -232,6 +232,7 @@ fn holdout_and_external_perturbations_cannot_change_state_threshold_or_oof() {
                     changed.features.numeric.values[i * 4 + j] = 123456. * (j as f64 + 1.);
                 }
                 match &mut changed.outcome {
+                    Outcome::Unlabeled => unreachable!(),
                     Outcome::Classification { values, .. } => {
                         values[i] = Some("unseen-external-label".into())
                     }
@@ -269,9 +270,7 @@ fn portable_pipeline_bundle_reloads_and_predicts_without_labels() {
     let restored = ModelBundle::<FittedPipeline>::load(&file).unwrap();
     assert_eq!(model.model, restored);
     let mut unlabeled = data.clone();
-    if let Outcome::Classification { values, .. } = &mut unlabeled.outcome {
-        values.fill(None);
-    }
+    unlabeled.outcome = Outcome::Unlabeled;
     assert_eq!(predict(&restored, &unlabeled).unwrap(), model.predictions);
     std::fs::remove_file(file).unwrap();
     let mut bad = result.clone();
