@@ -205,7 +205,12 @@ Windows 不可变 wheel 的原生环境测试刻意不安装 sklearn、SciPy、s
 
 GitHub Actions 的实际已核实证据为 [run43602824324](https://github.com/hurry060215-tech/radiomics/actions/runs/43602824324)，commit`9732b3a4c9991343d9597bf27dcbe5f7be02b597` 的 **9 jobs success**。其中 Linux Ubuntu24 无 Python、无容器网络环境执行 extract/train/load/predict/evaluate；工作流另配置 Rust tests/Clippy、Windows/Linux wheel/native-only、Python参考和 image 检查。应将“已配置矩阵”与“这个 commit 的实际 job通过”分别理解。
 
-该 CI commit 之后的单位元数据、TableReader、center holdout/apply cohorts/by-center evaluation 和边界校验等接口变更已有针对性本地测试；**最新接口 head 的完整 CI仍待主 agent最终查询与补入**，不能把9732的成功外推到后续代码。正式 PyPI/crates.io 发布、版本号变更和 ov 源码接入未自动执行。
+后续接口版本 `59a3c81ac801944a2d5219bac26cf0ba11fbc2cd` 的
+[CI run 43613986293](https://github.com/hurry060215-tech/radiomics/actions/runs/43613986293)
+也已实核九个作业全部成功，覆盖单位元数据、TableReader、Python center
+holdout/apply cohorts/by-center evaluation 和身份边界修复。当前主分支相对此
+提交的 `crates/`、`src/`、`pyproject.toml` 没有差异；尚待合入的 CLI 分中心评价
+扩展仍须另行验证。正式 PyPI/crates.io 发布、版本号变更和 ov 源码接入未自动执行。
 
 ## 8. 限制与后续工作
 
