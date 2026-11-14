@@ -1,0 +1,11 @@
+# Public CT reference environment; no native package imported
+# CPython 3.9.21
+numpy==1.23.0
+SimpleITK==2.4.1
+pyradiomics==3.0.1
+scipy==1.13.1
+PyWavelets==1.6.0
+pykwalify==1.8.0
+six==1.17.0
+setuptools==79.0.0
+wheel==0.45.1

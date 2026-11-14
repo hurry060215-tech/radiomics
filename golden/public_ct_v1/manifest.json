@@ -1,0 +1,28 @@
+{
+  "schema": "radiomics.public_ct_v1.freeze_manifest.v1",
+  "status": "reference_candidate_awaiting_main_worker_review",
+  "native_executed": false,
+  "license": "CC-BY-NC-3.0 source-specific data/derived-reference provenance; software code remains MIT",
+  "raw_images_in_repository": false,
+  "package_assets_allowlist": false,
+  "source_revision": "6da96021bc91faf4c0cb7fd7fa56a4225d2064a8",
+  "reference_revision": "pyradiomics:c428a771c8cf682c462162b6babc836150d5d9d6",
+  "generator_path": "tools/validate_public_ct.py",
+  "generator_sha256": "f922fccce4d231719df6a683b713524da98bb1282f641833e454bac851b8afe4",
+  "files_sha256": {
+    "protocol.json": "4ee3d95879082af6c71e9b0c933e7b8fa90d37e42911e71f5674c3e9e6daab29",
+    "reference.json": "1b998b5a2432fad328ebc4341df48be63f3803e84c46464341089428eb917bf4",
+    "requirements-reference.txt": "3c5d3ad33325a8e3d0a04c222844d6f9a87c0836e66ab06004d21d8574f13cd9",
+    "LICENSE_NOTICE.md": "f3a131d01cb87362cf7cb12cb55fb27c0655758c130b7920c8e81089d26434ea",
+    "README.md": "a6d108254a63cbe4143d7bd1016405bf680b7d10f5c76ffbbe421e9b1b927cf8"
+  },
+  "scope": "Two full PAT1 3D explicit-bin25 numerical compatibility cases (55 features each), original morphology basic geometry, fixed 16x16x8 subgrid exact/sparse texture matrices; not IBSI CT configuration conformance or a performance measurement.",
+  "failure_behavior": {
+    "bad_source_hash": "error before reuse/copy",
+    "input_inside_git": "error; raw source must stay external",
+    "wrong_reference_environment": "error; never substitute 3.1.0",
+    "existing_reference_output": "error; reviewed expected results are not overwritten",
+    "changed_units_scaling_noninteger_input": "error; no guessed unit/rounding correction",
+    "native_acceptance": "not run before candidate review"
+  }
+}
