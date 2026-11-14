@@ -787,7 +787,9 @@ name = "ov-radiomics-cli"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "csv",
  "ov-radiomics-core",
+ "serde",
  "serde_json",
 ]
 
@@ -818,6 +820,7 @@ version = "0.1.0"
 dependencies = [
  "ov-radiomics-core",
  "pyo3",
+ "serde",
  "serde_json",
 ]
 
