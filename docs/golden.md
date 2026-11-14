@@ -37,10 +37,11 @@ benchmark-policy update.
 `feature_validation_matrix.json` separates `pyradiomics_compatible`,
 `ibsi_conformant` and `deviation_reason` for each of the 55 named features.
 PyRadiomics compatibility is restricted to the frozen, independently executed
-scope. All independent IBSI acceptance entries remain `null` pending the second
-track; they are not inferred from Python parity. Raw versus excess kurtosis and
-the fixed-width anchor differences are stated explicitly. Project `shape_basic`
-descriptors do not claim a complete standard morphology family.
+scope. Independent IBSI entries now record the separately accepted digital
+phantom 3D/FBS1/no-resampling case; they are not inferred from Python parity.
+Raw kurtosis remains explicitly nonconformant, differing from excess kurtosis by
+three. Other binning/resampling and 2D scopes remain separately unaccepted.
+Project `shape_basic` descriptors do not claim a complete morphology family.
 
 The reference interpreter really imports public **PyRadiomics v3.0.1**. It does
 not reuse the installed v3.1.0 extension. Public source tag `v3.0.1` resolves to
@@ -268,9 +269,28 @@ using a separate environment containing v3.1.0.
 IBSI reference values are separate acceptance evidence. The
 [official reference-data specification](https://ibsi.readthedocs.io/en/master/05_Reference_data_sets.html)
 describes a 5×4×4 digital phantom with 2 mm isotropic voxels and missing gray
-levels. Public CT/ROI and digital phantom data are not yet vendored: explicit
-redistribution permission must be recorded first. Repository visibility alone
-does not establish a redistribution license.
+levels. The official digital data is licensed CC BY 4.0, with Alex Zwanenburg's
+attribution and the original license retained in `golden/ibsi_digital_v1`.
+The separate official PAT1 CT/ROI has a CC BY-NC 3.0 license and is restricted to
+reference download/artifacts rather than the MIT installation package.
+
+The independent native acceptance verifies public GLCM/GLRLM merged counts,
+GLSZM and GLDM counts exactly. NGTDM counts are exact and its printed six-decimal
+difference sums use their source precision. Sixteen first-order statistics also
+have an independent histogram/Fraction specification, with eight integral
+statistics exact and the others at the normal `1e-10/1e-8` scalar tolerance.
+The remaining published feature values are checked using the source's stated
+tolerance, or its explicit printed-precision interval where no numeric tolerance
+is supplied. This does not change PythonGolden tolerances.
+
+[The actual-vs-reference report](golden-ibsi-digital-report.json) records every
+feature in both directional modes and the explicit raw-kurtosis deviation.
+Regenerate it into a fresh path using
+`python tools/golden_ibsi_actual_report.py --output /fresh/ibsi-actual.json`
+with the repository Rust environment. Tests only read expectations; this report
+tool writes actual observations, never accepted references. The source-only
+freeze and an approved source-section/line-metadata correction have separate
+hash records, retaining all genuine numeric values and original input bytes.
 
 The [PyRadiomics difference documentation](https://pyradiomics.readthedocs.io/en/stable/faq.html)
 explains differences in fixed-width discretization, resampling grid alignment,
