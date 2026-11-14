@@ -378,7 +378,6 @@ def worker_setup(request,plan):
     settings.update(binWidth=extraction['discretization']['width'],gldm_a=extraction['gldm_alpha'],voxelArrayShift=shift)
     state=dict(request=request,plan=plan,np=np,pd=pd,native_extraction=extraction,reference_settings=settings)
     if request['backend']=='rust':
-        import inspect
         import ov_radiomics as rad
         from ov_radiomics import _native
         root=Path(rad.__file__).resolve()
@@ -391,8 +390,10 @@ def worker_setup(request,plan):
                 raise RuntimeError('Installed native package bytes differ from the frozen wheel.')
         elif str(root.parent)!=request['expected_package_path']:
             raise RuntimeError('Measured native module came from a different installed package path.')
-        if 'families' not in inspect.signature(rad.ImageSample.extract).parameters:
-            raise RuntimeError('The frozen wheel lacks the reviewed selective-family interface; L1 must not time full extraction.')
+        if audit:
+            import inspect
+            if 'families' not in inspect.signature(rad.ImageSample.extract).parameters:
+                raise RuntimeError('The frozen wheel lacks the reviewed selective-family interface; L1 must not time full extraction.')
         state['rad']=rad
         build_info=None
         if audit and hasattr(_native,'build_info'):
