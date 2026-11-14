@@ -450,7 +450,25 @@
         0.9922778767136677
       ]
     ],
-    "center_fixed_point_max_abs_residual": 0.0
+    "center_fixed_point_max_abs_residual": 0.0,
+    "evaluation_distances_euclidean_direct": [
+      [
+        0.0,
+        2.806585661782494
+      ],
+      [
+        2.806585661782494,
+        1.1102230246251565e-16
+      ],
+      [
+        1.4209422659196689,
+        1.3858626860607024
+      ],
+      [
+        350.82325157570995,
+        350.8358809822841
+      ]
+    ]
   },
   "habitat_max_iter_reference": {
     "scaler": {
@@ -597,6 +615,7 @@
       "prediction_state": "evaluation feature/label changes cannot alter fit"
     },
     "initial_center_space": "Explicit initial_centers_raw are original feature units, converted using only the fitted training Standard state; they are not already scaled.",
+    "distance_definition": "Native prediction distance is direct Euclidean norm of per-feature differences in fitted scaled space. evaluation_distances_euclidean_direct is independently calculated by NumPy from only the public reference training scaler and frozen fitted centers, with deterministic scalar atol1e-10/rtol1e-8. Existing evaluation_distances remains the unmodified sklearn.transform expanded-norm diagnostic; cancellation near centers can produce spurious approximately 1e-8 positive distances, and those diagnostic values do not define or gate the native direct norm.",
     "reference_convergence": "sklearn1.0.2 uses tol*mean(var(training_scaled,axis=0,ddof=0)) as an absolute threshold for sum of squared center shifts, or strict unchanged assignments. This is not a per-element scalar tolerance. The normal fixture has unit variance in both columns, hence the threshold is 1e-12.",
     "native_convergence": "A successful native Lloyd fit requires stable nearest-center assignments (ties lowest cluster index), no empty cluster and centers equal to the assigned member means within declared scalar tolerance; report iterations and convergence. At max_iter, a non-fixed-point result errors, including the frozen partial reference. Initial repeated centers are rejected as empty-cluster input/fit, not silently relocated."
   },

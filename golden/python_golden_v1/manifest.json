@@ -102,7 +102,7 @@
     "wsidata_collision_reference.json": "0ce3e95278b50e1f5c460846cde954d25583cae0d0882d063946906ad78a0f38",
     "research_spec.py": "b3abdee7da1f6dda8a0b6c5019b2192209d31638c9d8e2641396b5673c04ca68",
     "research_inputs.json": "0e2e4790533bd0f23711a879c5d0af0b2cff3f07b425fd43f9ffd153e8a17a70",
-    "research_reference.json": "eb1a4a43f0587f10563e6f6146bce87496afc31aed9d42ac3879ed4c93a9cb74"
+    "research_reference.json": "3cb7c29e28ef47aa0205cbf6656884f1092932f7312762731a114853f7fb03a8"
   },
   "benchmark_policy": {
     "version": 2,
@@ -145,6 +145,6 @@
   "reference_scope_notes": {
     "clinical_logistic_statistics_reference": "Sample-level solver reference with two lesions per patient; n_used/n_dropped are rows. Clinical patient inference rejects repeated patients by default; explicit sample analysis must state dependence. Existing numerical fixture unchanged.",
     "wsidata_digest_collision": "Required supplementary wsidata_contract_guard.py checks recursive normalized structure/type/value after validating digests. The original frozen specification/reference bytes and normal digest protocol remain unchanged; wsidata_collision_reference.json independently demonstrates the float-tag opaque-object collision and required rejection.",
-    "research_combinations": "Pre-implementation keyed concat/Delta and explicit-init Lloyd reference candidate; revised near-midpoint evaluation approved before native implementation, old point retained as diagnostic and independent exact tie frozen separately. Main-worker review required before native development."
+    "research_combinations": "Pre-implementation keyed concat/Delta and explicit-init Lloyd reference candidate; revised near-midpoint evaluation approved before native implementation, old point retained as diagnostic and independent exact tie frozen separately. Main-worker review required before native development. Direct Euclidean distance is frozen independently from sklearn expanded-norm diagnostics before native distance testing; existing scalar tolerance unchanged."
   }
 }

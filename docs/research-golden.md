@@ -50,11 +50,22 @@ The old point and exact old sklearn result remain in
 and query `[0,0]`, squared distances `[1,1]`, and lowest-index label `0`.
 No tolerance has been widened.
 
+An additional pre-native-test distance definition is frozen separately:
+`habitat.evaluation_distances_euclidean_direct` is NumPy's direct Euclidean norm
+of feature differences, using only the public reference training scaler and
+frozen centers. It uses the existing deterministic scalar tolerance
+`atol=1e-10, rtol=1e-8`. The original sklearn `evaluation_distances` values are
+unchanged and retained as an expanded-norm diagnostic: cancellation near a
+center can produce a spurious distance around 1e-8. That diagnostic is not the
+native mathematical distance definition or an acceptance gate. This addition
+was explicitly required by the main worker before native execution/testing;
+no native output was consulted.
+
 | Input / reference | SHA256 |
 |---|---|
 | research_spec.py | b3abdee7da1f6dda8a0b6c5019b2192209d31638c9d8e2641396b5673c04ca68 |
 | revised research_inputs.json | 0e2e4790533bd0f23711a879c5d0af0b2cff3f07b425fd43f9ffd153e8a17a70 |
-| revised research_reference.json | eb1a4a43f0587f10563e6f6146bce87496afc31aed9d42ac3879ed4c93a9cb74 |
+| revised research_reference.json | 3cb7c29e28ef47aa0205cbf6656884f1092932f7312762731a114853f7fb03a8 |
 
 Rebuild into a new candidate path, never over the frozen fixture:
 

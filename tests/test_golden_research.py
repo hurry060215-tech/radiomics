@@ -40,6 +40,11 @@ def test_habitat_training_scaler_centers_inertia_and_partial_result():
     assert reference["habitat_old_midpoint_diagnostic"]["evaluation_values"]==[[4.5,4.5]]
     assert reference["habitat_exact_tie"]["squared_distances"]==[[1.,1.]]
     assert reference["habitat_exact_tie"]["labels"]==[0]
+    inputs=json.loads((DIRECTORY/"research_inputs.json").read_text())["habitat"]
+    evaluation=(np.asarray(inputs["evaluation_values"])-case["scaler"]["mean"])/case["scaler"]["scale"]
+    direct=np.linalg.norm(evaluation[:,None,:]-np.asarray(case["centers_scaled"])[None,:,:],axis=2)
+    np.testing.assert_array_equal(direct,case["evaluation_distances_euclidean_direct"])
+    assert np.max(direct[:2].min(axis=1))<1e-14
     x=np.asarray(case["training_scaled"]);centers=np.asarray(case["centers_scaled"])
     np.testing.assert_allclose(sum(np.dot(row-centers[label],row-centers[label]) for row,label in zip(x,case["labels"])),case["inertia"],atol=1e-10,rtol=1e-8)
     for cluster in [0,1]:
