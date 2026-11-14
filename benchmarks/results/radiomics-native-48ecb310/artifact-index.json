@@ -1,4 +1,10 @@
 {
+  "approved_plan_byte_evidence": {
+    "base": "approved-base-plan.json",
+    "ct": "approved-ct-plan.json",
+    "dimension": "approved-dimension-binding.json",
+    "note": "approved-*.json preserve exact reviewed source bytes; plan.json/ct-plan.json/dimension-binding.json are separately labeled canonical serialized run-control copies, semantically equal but not claimed byte-identical."
+  },
   "compressed_raw": {
     "cache_observations": 14,
     "observations": 854,
@@ -13,6 +19,10 @@
     "reason": "Localized Windows powercfg stdout decoding failed before case1; metadata-only correction ad10b72; no performance observations discarded."
   },
   "files_sha256": {
+    ".gitattributes": "31cef24afb35c4ede8483ac7afad613a5b92037475b2dacfbec3df8323ed87c6",
+    "approved-base-plan.json": "a37b033956721ce3ae6ef54fa4cc4a9e62bf001b50611b4886a873e77786058c",
+    "approved-ct-plan.json": "14192fe46356e5cc9e494779ab1f5556a6012b7602e9f9e5c20979d5591be963",
+    "approved-dimension-binding.json": "36730dda2d5cc0d928879684df57285d761e1d45e56571ed598e11b77b1509c7",
     "ct-plan.json": "5f7e80640f4bfda4db27e90b1c32b7b2ca9fb0bd7b77c123c168cdf12ab9736d",
     "dimension-binding.json": "398a9a93eada2b352a278b7c5a1767cd4830634ad57d2fd8f12a47c8e614bf9b",
     "input-manifest.json": "4f0b5b555b97b34342095fd984cf92d1ba632baed18eea13ba21db2161138e9b",
