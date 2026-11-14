@@ -1,0 +1,57 @@
+{
+  "active_axis_margin_xy_unchanged": [
+    1,
+    1
+  ],
+  "applies_only_to": {
+    "dataset": "synthetic_2d_g8",
+    "declared_ndim": 2,
+    "level": "L3",
+    "operation": "crop_voxels",
+    "states": [
+      "warm_uncached",
+      "cold_process_total"
+    ]
+  },
+  "approval_requirement": "Main integrator and independent acceptance review this exact supplement SHA before any performance measurement; no implicit adaptation when the approved binding is absent.",
+  "base_plan_sha256": "a37b033956721ce3ae6ef54fa4cc4a9e62bf001b50611b4886a873e77786058c",
+  "ct_append_sha256": "14192fe46356e5cc9e494779ab1f5556a6012b7602e9f9e5c20979d5591be963",
+  "ct_cases_unchanged": [
+    0,
+    0,
+    0
+  ],
+  "effective_native_and_reference_vector": [
+    1,
+    1,
+    0
+  ],
+  "failure_evidence": {
+    "artifact": "E:/radiomics-build/benchmark-v2/untimed-output-validation-v2-1/validation.json",
+    "error": "2D z margin must be zero.",
+    "scope": "17 untimed public-output comparisons; no API elapsed values or seven-pair performance grid. Original failed records remain available; no failed performance sample was replaced.",
+    "sha256": "dc04b580162fe5fb3cb63b4ff67826805e3b3ea162eecf76636adbedeceb6849"
+  },
+  "original_base_vector": [
+    1,
+    1,
+    1
+  ],
+  "permitted_case_changes": "Only the two affected true2D L3 states have an effective crop vector and resulting effective-configuration SHA change. No other case configuration SHA may change.",
+  "reason": "Untimed correctness preflight exposed that a three-element crop-margin API requires zero in inactive z for true2D. The original reference already applies only the active xy dimensions. This binds the same one-pixel in-plane crop to the native dimensional contract without weakening geometry validation or changing actual intended image/ROI output.",
+  "schema": "radiomics.benchmark.v2.inactive_axis_binding.v1",
+  "status": "pre_measurement_interface_clarification_pending_exact_sha_review",
+  "three_dimensional_cases_unchanged": [
+    1,
+    1,
+    1
+  ],
+  "unchanged": [
+    "Original base-plan bytes and CT append bytes",
+    "All case IDs, case ordering and counts:60 primary cases/840 backend observations, cache14",
+    "All source/prepared input bytes, generator formula/seed, image/ROI sizes and gray levels",
+    "Discretization/profile/feature list, clipping parameters, physical affine meaning and in-plane margin",
+    "Seven paired repetitions, warmup/call ROI counts, thread limits and2GiB budget",
+    "Scalar/geometry/exact/nonfinite tolerances and performance targets"
+  ]
+}

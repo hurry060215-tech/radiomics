@@ -16,19 +16,24 @@ def _observations(data, target, id_col, patient_id, split, center):
     import pandas as pd
     from ._validation import unique_ids
     unique_ids(data, id_col)
+    if target is not None and target not in data:
+        raise ValueError('The explicitly named outcome column is missing: '+str(target))
     group = patient_id or ('patient_id' if 'patient_id' in data else id_col)
-    required = [group, split] + ([center] if center else [])
+    center=center or ('center' if 'center' in data else None)
+    required = [group, split]
+    if center is not None and center not in data:
+        raise ValueError('Missing center column.')
     if any(column not in data for column in required):
         raise ValueError('Missing patient, cohort or center column.')
     if data[required].isna().any().any():
-        raise ValueError('Patient, cohort and center identifiers must be complete.')
+        raise ValueError('Patient and cohort identifiers must be complete.')
     rows = []
     columns=list(dict.fromkeys([id_col,group,split]+([center] if center else [])+([target] if target is not None and target in data else [])))
     for values in data[columns].itertuples(index=False,name=None):
         row=dict(zip(columns,values));value=row.get(target)
         rows.append(dict(sample_id=_label(row[id_col]),patient_id=_label(row[group]),
             cohort=_label(row[split]),class_label=None if pd.isna(value) else _label(value),
-            center=_label(row[center]) if center else None))
+            center=None if center is None or pd.isna(row[center]) else _label(row[center])))
     return rows
 
 
@@ -64,6 +69,40 @@ class SplitPlan:
         raw = _native().create_split_plan(json.dumps(rows, allow_nan=False), task,
             classes, outer_cv, inner_cv, seed)
         return cls(raw)
+
+    @classmethod
+    def center_holdout(cls,data,target=None,*,held_out_centers,task='binary',classes=None,
+                       id_col='ID',patient_id=None,split='group',center='center',outer_cv=5,inner_cv=3,seed=0):
+        """Hold out declared centers in Rust; preserve already external cohorts.
+
+        Call ``plan.apply_cohorts(data)`` before training with this plan. Class
+        inference reads only the resulting training centers, never held-out labels.
+        """
+        held_out_centers=[held_out_centers] if isinstance(held_out_centers,str) else list(held_out_centers)
+        held_out_centers=[_label(value) for value in held_out_centers]
+        prepared=data if split in data else data.assign(**{split:'unassigned'})
+        rows=_observations(prepared,target,id_col,patient_id,split,center)
+        held=set(held_out_centers)
+        if classes is None:
+            classes=[] if task=='regression' else sorted({row['class_label'] for row in rows
+                if row['cohort'] in ('train','test','unassigned') and row['center'] not in held and row['class_label'] is not None})
+        raw=_native().create_split_plan(json.dumps(rows,allow_nan=False),task,[_label(value) for value in classes],
+            outer_cv,inner_cv,seed,held_out_centers)
+        return cls(raw)
+
+    def apply_cohorts(self,data,*,id_col='ID',patient_id=None,split='group'):
+        """Return identified rows with the saved patient memberships, without fitting."""
+        from ._validation import unique_ids
+        unique_ids(data,id_col)
+        group=patient_id or ('patient_id' if 'patient_id' in data else id_col)
+        if group not in data or data[group].isna().any():
+            raise ValueError('Complete patient identities are required.')
+        plan=self.to_dict();memberships={patient:name for name,patients in plan['cohorts'].items() for patient in patients}
+        ids=data[id_col].map(_label);patients=data[group].map(_label)
+        if any(plan['sample_patients'].get(sample)!=patient for sample,patient in zip(ids,patients)):
+            raise ValueError('Sample/patient identities differ from the saved SplitPlan.')
+        result=data.copy();result[split]=[memberships[patient] for patient in patients]
+        return result
 
     @classmethod
     def from_dict(cls, value):

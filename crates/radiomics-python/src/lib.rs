@@ -95,6 +95,8 @@ mod _native {
     }
 
     #[pyfunction]
+    #[pyo3(signature=(observations, task, classes, outer_k, inner_k, seed, held_out_centers=None))]
+    #[allow(clippy::too_many_arguments)] // Preserve the existing positional Python boundary.
     fn create_split_plan(
         py: Python<'_>,
         observations: String,
@@ -103,9 +105,16 @@ mod _native {
         outer_k: usize,
         inner_k: usize,
         seed: u64,
+        held_out_centers: Option<Vec<String>>,
     ) -> PyResult<String> {
         py.detach(|| {
             let rows: Vec<core::split::SplitObservation> = serde_json::from_str(&observations)?;
+            let rows = match held_out_centers {
+                Some(centers) => {
+                    core::split::center_holdout(&rows, &centers.into_iter().collect())?
+                }
+                None => rows,
+            };
             let task: core::contracts::Task =
                 serde_json::from_value(serde_json::Value::String(task))?;
             let plan =

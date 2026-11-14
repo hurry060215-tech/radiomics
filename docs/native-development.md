@@ -137,15 +137,21 @@ states, median/IQR/p95 and sample size; at least seven alternating warm pairs ar
 required. No data/seed/tolerance changes are allowed after seeing results.
 PyRadiomics compatibility and independent IBSI conformance have separate per-feature
 statuses and evidence; pending IBSI checks never become assumed passes.
-No extraction or workflow performance target has yet been measured as passed.
+The [complete Radiomics measurement](radiomics-benchmark-v2-results.md) now
+retains 840 paired backend observations and 14 cache observations. All applicable
+numerical/resource checks passed. Performance targets are mixed: actual CT
+prepared-array extraction is slower (0.400× speedup), while CT end-to-end is
+1.225×, below the 1.5× target. Small synthetic end-to-end gains are not generalized
+to CT. ML/Statistics and Pathology performance remain pending their own complete
+measurement; L5 install/startup timing and allocator instrumentation are unmeasured.
 
 | Milestone | Required completion | Status |
 |---|---|---|
-| M0 | Scope, six contracts, formulas/params, all required reference environments/data | Contracts, independent image/model/statistics/pathology/aggregation/WSI fixtures and scoped IBSI track integrated; research and full performance datasets pending |
-| M1 | Python-free NIfTI→preprocessing→Original features→CLI, exact matrix/geometry Golden | Core/CLI/Python integrated; frozen matrix/value/geometry checks pass; fixed public CT and full performance/install evidence still pending |
+| M0 | Scope, six contracts, formulas/params, all required reference environments/data | Six contracts and independently frozen image/model/statistics/pathology/research references integrated; scoped IBSI and licensed external CT references verified; remaining suite measurements pending |
+| M1 | Python-free NIfTI→preprocessing→Original features→CLI, exact matrix/geometry Golden | Golden, scoped IBSI, public CT 396 comparisons and 28 exact matrices passed; Python-free CLI verified; Radiomics performance measured with explicit misses |
 | M2 | Three-task native selection/models/stats/CV/fusion/.rad and leakage audit | Core/CLI/Python integrated; independent three-task nested-fit/leakage/persistence checks pass; remaining full delivery/installation audit pending |
-| M3 | Strictly keyed multi-region/modality/Delta/habitat/center workflows | Pending |
-| M4 | Independent patch and embedding pipelines, aggregation/maps without GPU/ov | Core/Python pixel/embedding/hierarchy/overlay paths integrated; frozen tests and native-only Windows wheel checks pass; pathology CLI/tutorial/live-container verification pending |
+| M3 | Strictly keyed multi-region/modality/Delta/habitat/center workflows | Native keyed concat/Delta/habitat and frozen tests integrated; Python center holdout/per-center evaluation and CLI holdout added with focused validation; final scope audit pending |
+| M4 | Independent patch and embedding pipelines, aggregation/maps without GPU/ov | Core/Python/CLI and executable tutorials pass; actual pinned AnnData/WSIData dense metadata paths verified; full Pathology performance pending |
 | M5 | Python/CLI, Windows/Linux wheels/crate artifacts, six runnable tutorials, full installation/performance acceptance | Pending |
 
 Final tutorials cover NIfTI/ROI extraction; imaging+clinical binary modeling;
@@ -155,7 +161,7 @@ prediction/maps. CLI exposes only genuinely implemented commands. Python native
 tests must omit sklearn/statsmodels/PyRadiomics; CLI must run without Python;
 Windows/Linux wheel installation and absence of ov/WSIData must be tested.
 
-Current local checkpoint on 2026-11-14: **121 Python tests**, **143 Rust core
+Historical local checkpoint on 2026-11-14: **121 Python tests**, **143 Rust core
 tests plus 6 CLI integration tests**, and **25 installed-wheel native-only
 tests** passed on Windows. The latter environment has no sklearn, SciPy,
 statsmodels, PyRadiomics, SimpleITK, joblib, ov or WSIData. Python subprocess
@@ -164,4 +170,15 @@ predictions exactly on unchanged f64 inputs. These counts describe the tested
 checkpoint, not an all-platform release approval. Basic native plots use
 matplotlib; seaborn remains an explicit optional extra. Performance reporting
 utilities and a first diagnostic metric measurement are available; full
-L1–L5/three-workflow performance and peak-memory evidence remain pending.
+L1–L5/three-workflow evidence was pending at that historical checkpoint.
+
+Later evidence is version scoped: immutable native v2 (source `48ecb310`) passed
+64 installed-wheel native-only checks and the six executable tutorials. The
+public CT report records 396/396 API/CLI comparisons plus exact matrix/geometry
+checks; actual optional-container results are in
+[optional-interop-acceptance.md](optional-interop-acceptance.md). CI run
+[43602824324](https://github.com/hurry060215-tech/radiomics/actions/runs/43602824324)
+passed all nine jobs at `9732b3a`, including Windows/Linux installation and an
+Ubuntu container with neither Python nor network running extraction, training,
+model reload, prediction and evaluation. Later API changes require their own
+latest-head CI; the older green run is not a blanket approval of later commits.

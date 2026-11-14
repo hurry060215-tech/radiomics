@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pandas as pd
 import ov_radiomics as rad
-from _shared import output_arguments,task_data,write_json,provenance
+from _shared import output_arguments,task_data,write_json,provenance,plot_small_overlay
 
 
 def main():
@@ -55,6 +55,7 @@ def main():
     canvas=dict(width=7,height=4,origin0=[0.,0.],pixel_size0=[1.,1.])
     stream=rad.pathology.rasterize_predictions(table,local,slide_id=first.slide_id,class_name=classes[1],canvas=canvas,block_size=(3,2))
     stream.save(output/'actual-tile-score-overlay')
+    plot_small_overlay(output/'actual-tile-score-overlay',output/'actual-tile-score-overlay.png',value_label='Positive-class probability')
     try:
         rad.pathology.rasterize_predictions(table,patient.predict(patients.loc[patients.group!='train'].drop(columns='target')),
             slide_id=first.slide_id,class_name=classes[1],canvas=canvas)

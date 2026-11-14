@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pandas as pd
 import ov_radiomics as rad
-from _shared import output_arguments,task_data,write_json,write_rgb_png,provenance,GOLDEN
+from _shared import output_arguments,task_data,write_json,write_rgb_png,provenance,GOLDEN,plot_small_overlay
 
 
 def main():
@@ -59,6 +59,7 @@ def main():
     first_slide=next(iter(parents))
     rad.pathology.rasterize_predictions(table,feature='rgb_R_mean',slide_id=first_slide,
         canvas=dict(width=8,height=8,origin0=[0.,0.],pixel_size0=[1.,1.]),block_size=(4,4)).save(output/'tile-feature-overlay')
+    plot_small_overlay(output/'tile-feature-overlay',output/'tile-feature-overlay.png',value_label='RGB R mean (8-bit)')
     objects=rad.pathology.object_features(np.array([[1,1,0,2],[1,0,0,2],[0,0,0,0],[0,0,0,0]],dtype=np.uint32),
         kind='instance',connectivity=4,patch_mpp_um=(.5,.5),overlapping_tiles=True)
     assert objects['count_scope']=='patch_local'
