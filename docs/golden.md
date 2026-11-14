@@ -118,6 +118,13 @@ not a requirement that Linux produce byte-identical binaries.
   tie-corrected H and BH values independently check the reference. Entirely
   missing columns default to error; dropping them must be explicit. A screen
   retaining zero features errors instead of relaxing the threshold.
+- `statistics_reference.json`: fixed SciPy normal/Student-t/chi-square/F tails
+  and quantiles, t/Welch/chi-square/Fisher tests, nonfinite boundary states, and
+  Statsmodels complete-case unpenalized binary Logistic inference. Per-variable
+  and multivariable used IDs, dropped counts, score, observed information,
+  covariance, coefficients, OR and normal-Wald CIs are frozen. A small optimizer
+  gradient is not a separation diagnostic; rank deficiency, separation and
+  nonconvergence remain explicit inference errors.
 
 `Lab_D65` uses the sRGB transfer, the W3C D65 RGB-to-XYZ matrix and the CIELAB
 piecewise formula with D65 white. It does not adapt to D50. The profile preserves

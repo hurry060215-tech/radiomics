@@ -2,7 +2,7 @@
   "schema": "python_golden_v1.acceptance.v1",
   "profile": "python_golden_v1",
   "status": "frozen_by_main_agent_review",
-  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation. Forest behavioral references use fixed five seeds, 200 trees and patient-level score means on the same three inputs. Train-only table preprocessing, three-task univariate/BH and hand tests approved before native implementation.",
+  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation. Forest behavioral references use fixed five seeds, 200 trees and patient-level score means on the same three inputs. Train-only table preprocessing, three-task univariate/BH and hand tests approved before native implementation. Distribution tails/quantiles, hypothesis tests and complete-case unpenalized Logit reference approved independently.",
   "baseline_revision": "2512e16979a544207f84c943e619ef33e02d3dc7",
   "reference_source": {
     "pyradiomics_tag": "v3.0.1",
@@ -82,7 +82,8 @@
     "forest_hand.json": "11feb05433ceec788b19e3949171f4adc86af333d7931f5632f85cf06ff7a5a3",
     "table_inputs.json": "7397c47719d457df1be0d099a93f1f0e904fcc0a94945f553b784ecb0918d984",
     "table_reference.json": "2d63c7c0add6e8d6810653736f186a367672ef28ab12daadd2ab54a73cc76a16",
-    "table_hand.json": "30b317bb421c2b77f6f8f5bb4d1b1fe03b42ec51af5c74dabdcf423bbc402b8b"
+    "table_hand.json": "30b317bb421c2b77f6f8f5bb4d1b1fe03b42ec51af5c74dabdcf423bbc402b8b",
+    "statistics_reference.json": "8dae3abf7b60f073e7612cdbb943813ad424cd86d7fe53170d74b2d260625d4d"
   },
   "benchmark_policy": {
     "version": 2,
