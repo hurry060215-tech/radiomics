@@ -1,0 +1,75 @@
+{
+  "schema": "python_golden_v1.acceptance.v1",
+  "profile": "python_golden_v1",
+  "status": "frozen_by_main_agent_review",
+  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion.",
+  "baseline_revision": "2512e16979a544207f84c943e619ef33e02d3dc7",
+  "reference_source": {
+    "pyradiomics_tag": "v3.0.1",
+    "pyradiomics_revision": "c428a771c8cf682c462162b6babc836150d5d9d6",
+    "sdist_url": "https://files.pythonhosted.org/packages/1b/35/c7f7fb7affd302fd8107dcee6b6e7aaf3708b75ad69d5f9a3dfcadb73eaa/pyradiomics-3.0.1.tar.gz",
+    "sdist_sha256": "47c57f441d6cb7973fa3b2ea48d3948df78e3348e1c69e1e2ff19001601fc2f5",
+    "geometry": "SimpleITK2.4.1, explicit RAS/LPS conversion; generic outer-edge grid, not PyRadiomics ROI grid"
+  },
+  "numeric_rule": "abs(actual-reference) <= atol + rtol*abs(reference)",
+  "tolerances": {
+    "ids_order_labels_discrete_values_counts_split_sets": {
+      "comparison": "exact"
+    },
+    "geometry_world_coordinates_mm": {
+      "atol": 1e-06,
+      "rtol": 0.0
+    },
+    "deterministic_statistics_texture": {
+      "atol": 1e-10,
+      "rtol": 1e-08
+    },
+    "ngtdm_difference_sums": {
+      "atol": 1e-10,
+      "rtol": 1e-08,
+      "reason": "Floating neighborhood means; counts remain exact integers."
+    },
+    "resampling_color": {
+      "atol": 1e-06,
+      "rtol": 1e-05
+    },
+    "linear_logistic_predictions": {
+      "atol": 1e-06,
+      "rtol": 1e-05,
+      "additional": "objective, gradient/KKT, and convergence must also pass"
+    },
+    "nonfinite": {
+      "comparison": "identical NaN/Inf/-Inf locations and status; JSON encodes these as strings"
+    }
+  },
+  "matrix_comparison": {
+    "glcm": "Exact symmetric integer counts per direction; arrays store gray_i,gray_j,angle. Preserve true gray-level labels.",
+    "glrlm": "Exact integer counts per direction; gray,run_length,angle. Empty-angle behavior follows 3.0.1 C source.",
+    "gldm_glszm": "Exact integer counts with original gray/size labels. Trailing all-zero size columns may be removed explicitly, never renumber populated labels.",
+    "ngtdm": "Columns n_i,s_i,i; n_i and i exact, s_i scalar tolerance. 3.0.1 includes isolated centers with s_i=0.",
+    "aggregation": "Default per-direction features averaged; explicit no_weighting sums matrices first. Both references are separate."
+  },
+  "failure_contract": {
+    "empty_roi": "Reference feature classes error; native extraction must error and retain sample failure record.",
+    "singleton": "Direct class calculation frozen: GLCM/GLRLM return NaN; finite feature results retained for other families. This does not assert the full PyRadiomics extractor accepts its default minimum ROI dimensions.",
+    "unknown_profile_or_unsupported_configuration": "Explicit error; never silently substitute a Python backend or alternative algorithm."
+  },
+  "input_license": "Original synthetic fixtures dedicated to CC0-1.0; source implementations retain their own licenses.",
+  "pending_acceptance": [
+    "IBSI digital phantom acquisition with explicit redistribution permission and independent IBSI feature comparison",
+    "Public CT/ROI licensed fixture and feature reference",
+    "Pinned three-task model datasets, objective/KKT references and five-seed 200-tree behavioral reference",
+    "Pathology pixel/mask/embedding fixtures and independent specifications",
+    "Native CLI/Python workflow leakage, serialization and installation checks",
+    "Seven-repeat alternating end-to-end performance and memory gates"
+  ],
+  "update_policy": "Generate candidates only into a fresh directory. Main agent reviews source, settings and numerical/exception differences before accepting. Module authors must not re-record expected values.",
+  "files_sha256": {
+    "cases.json": "15f32a9addb3d64a7017c84632b52bd7c70145af41518e62f3bc9a815bb84315",
+    "geometry.json": "b61ac2ca0263b5d8567c624407e585c1c73da6604a357b068b68d8079811d80e",
+    "hand_calculations.json": "21ff2dbfd8c17427e6c586191a28df6840800023027475eab2faaecad4f16d99",
+    "pyradiomics_310_differences.json": "721807ddabe11184dadc298764b5c68ca0461bb293d6de2b8c6bf5aac604cc2b",
+    "reference.json": "39428b095751f38590d2f91ab27081090747567a3cad93b4d4c3a5a37c0beb22",
+    "requirements-reference.txt": "43bd63b4fabedadccd4c77e9df95b6d3dd976aab9d9227cb91e5f9d0be104265"
+  }
+}

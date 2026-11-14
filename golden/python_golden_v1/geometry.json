@@ -1,0 +1,643 @@
+{
+  "schema": "python_golden_v1.geometry.v1",
+  "units": "mm",
+  "coordinate_system": "NIfTI RAS (explicit SimpleITK LPS conversion)",
+  "source_versions": {
+    "SimpleITK": "2.4.1",
+    "NumPy": "1.23.0"
+  },
+  "grid_specification": {
+    "name": "generic_outer_edge_preserved_v1",
+    "shape": "ceil(n*old_spacing/new_spacing)",
+    "origin": "origin + direction @ ((new_spacing-old_spacing)/2)",
+    "direction": "unchanged",
+    "distinction": "Not the PyRadiomics ROI resampling grid; extraction defaults to no resampling."
+  },
+  "cases": [
+    {
+      "id": "flip_2d",
+      "shape_xyz": [
+        3,
+        2
+      ],
+      "values_x_fastest": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "mask_x_fastest": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "spacing_mm": [
+        2.0,
+        3.0
+      ],
+      "origin_ras_mm": [
+        11.0,
+        -7.0
+      ],
+      "direction_ras": [
+        [
+          -1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_ras": [
+        [
+          -2.0,
+          0.0,
+          11.0
+        ],
+        [
+          0.0,
+          3.0,
+          -7.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "resample": {
+        "spacing_mm": [
+          1.0,
+          2.0
+        ],
+        "shape_xyz": [
+          6,
+          3
+        ],
+        "origin_ras_mm": [
+          11.5,
+          -7.5
+        ],
+        "affine_ras": [
+          [
+            -1.0,
+            0.0,
+            11.5
+          ],
+          [
+            0.0,
+            2.0,
+            -7.5
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "outputs_x_fastest": {
+          "linear": [
+            0.0,
+            0.25,
+            0.75,
+            1.25,
+            1.75,
+            2.0,
+            1.5,
+            1.75,
+            2.25,
+            2.75,
+            3.25,
+            3.5,
+            3.0,
+            3.25,
+            3.75,
+            4.25,
+            4.75,
+            5.0
+          ],
+          "nearest": [
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            2.0,
+            2.0,
+            3.0,
+            3.0,
+            4.0,
+            4.0,
+            5.0,
+            5.0,
+            3.0,
+            3.0,
+            4.0,
+            4.0,
+            5.0,
+            5.0
+          ],
+          "mask_nearest": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        "image_default_value": -999,
+        "mask_default_value": 0
+      },
+      "crop": {
+        "index_xyz": [
+          1,
+          0
+        ],
+        "shape_xyz": [
+          2,
+          2
+        ],
+        "origin_ras_mm": [
+          9.0,
+          -7.0
+        ],
+        "affine_ras": [
+          [
+            -2.0,
+            0.0,
+            9.0
+          ],
+          [
+            0.0,
+            3.0,
+            -7.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "values_x_fastest": [
+          1.0,
+          2.0,
+          4.0,
+          5.0
+        ]
+      },
+      "world_landmarks_ras_mm": [
+        {
+          "index_xyz": [
+            0,
+            0
+          ],
+          "world": [
+            11.0,
+            -7.0
+          ]
+        },
+        {
+          "index_xyz": [
+            2,
+            1
+          ],
+          "world": [
+            7.0,
+            -4.0
+          ]
+        }
+      ],
+      "sitk_origin_lps_mm": [
+        -11.0,
+        7.0
+      ],
+      "sitk_direction_lps": [
+        1.0,
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    {
+      "id": "rotate_3d",
+      "shape_xyz": [
+        3,
+        2,
+        2
+      ],
+      "values_x_fastest": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "mask_x_fastest": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "spacing_mm": [
+        2.0,
+        1.5,
+        4.0
+      ],
+      "origin_ras_mm": [
+        12.0,
+        -9.0,
+        3.0
+      ],
+      "direction_ras": [
+        [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_ras": [
+        [
+          0.0,
+          -1.5,
+          0.0,
+          12.0
+        ],
+        [
+          2.0,
+          0.0,
+          0.0,
+          -9.0
+        ],
+        [
+          0.0,
+          0.0,
+          4.0,
+          3.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "resample": {
+        "spacing_mm": [
+          1.0,
+          3.0,
+          2.0
+        ],
+        "shape_xyz": [
+          6,
+          1,
+          4
+        ],
+        "origin_ras_mm": [
+          11.25,
+          -9.5,
+          2.0
+        ],
+        "affine_ras": [
+          [
+            0.0,
+            -3.0,
+            0.0,
+            11.25
+          ],
+          [
+            1.0,
+            0.0,
+            0.0,
+            -9.5
+          ],
+          [
+            0.0,
+            0.0,
+            2.0,
+            2.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "outputs_x_fastest": {
+          "linear": [
+            1.5,
+            1.75,
+            2.25,
+            2.75,
+            3.25,
+            3.5,
+            3.0,
+            3.25,
+            3.75,
+            4.25,
+            4.75,
+            5.0,
+            6.0,
+            6.25,
+            6.75,
+            7.25,
+            7.75,
+            8.0,
+            7.5,
+            7.75,
+            8.25,
+            8.75,
+            9.25,
+            9.5
+          ],
+          "nearest": [
+            3.0,
+            3.0,
+            4.0,
+            4.0,
+            5.0,
+            5.0,
+            3.0,
+            3.0,
+            4.0,
+            4.0,
+            5.0,
+            5.0,
+            9.0,
+            9.0,
+            10.0,
+            10.0,
+            11.0,
+            11.0,
+            9.0,
+            9.0,
+            10.0,
+            10.0,
+            11.0,
+            11.0
+          ],
+          "mask_nearest": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        "image_default_value": -999,
+        "mask_default_value": 0
+      },
+      "crop": {
+        "index_xyz": [
+          1,
+          0,
+          1
+        ],
+        "shape_xyz": [
+          2,
+          2,
+          1
+        ],
+        "origin_ras_mm": [
+          12.0,
+          -7.0,
+          7.0
+        ],
+        "affine_ras": [
+          [
+            0.0,
+            -1.5,
+            0.0,
+            12.0
+          ],
+          [
+            2.0,
+            0.0,
+            0.0,
+            -7.0
+          ],
+          [
+            0.0,
+            0.0,
+            4.0,
+            7.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "values_x_fastest": [
+          7.0,
+          8.0,
+          10.0,
+          11.0
+        ]
+      },
+      "world_landmarks_ras_mm": [
+        {
+          "index_xyz": [
+            0,
+            0,
+            0
+          ],
+          "world": [
+            12.0,
+            -9.0,
+            3.0
+          ]
+        },
+        {
+          "index_xyz": [
+            2,
+            1,
+            1
+          ],
+          "world": [
+            10.5,
+            -5.0,
+            7.0
+          ]
+        }
+      ],
+      "sitk_origin_lps_mm": [
+        -12.0,
+        9.0,
+        3.0
+      ],
+      "sitk_direction_lps": [
+        0.0,
+        1.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    }
+  ],
+  "boundary_probe": {
+    "source_shape_xyz": [
+      3,
+      2
+    ],
+    "source_values_x_fastest": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50
+    ],
+    "identity_ras_affine": true,
+    "default_value": -999,
+    "outputs": [
+      {
+        "source_continuous_index_xy": [
+          -0.50001,
+          0.0
+        ],
+        "linear": -999.0,
+        "nearest": -999.0
+      },
+      {
+        "source_continuous_index_xy": [
+          -0.5,
+          0.0
+        ],
+        "linear": 0.0,
+        "nearest": 0.0
+      },
+      {
+        "source_continuous_index_xy": [
+          -0.49999,
+          0.0
+        ],
+        "linear": 0.0,
+        "nearest": 0.0
+      },
+      {
+        "source_continuous_index_xy": [
+          0.0,
+          0.0
+        ],
+        "linear": 0.0,
+        "nearest": 0.0
+      },
+      {
+        "source_continuous_index_xy": [
+          0.49999,
+          0.0
+        ],
+        "linear": 4.9999,
+        "nearest": 0.0
+      },
+      {
+        "source_continuous_index_xy": [
+          0.5,
+          0.0
+        ],
+        "linear": 5.0,
+        "nearest": 10.0
+      },
+      {
+        "source_continuous_index_xy": [
+          0.50001,
+          0.0
+        ],
+        "linear": 5.0001,
+        "nearest": 10.0
+      },
+      {
+        "source_continuous_index_xy": [
+          1.5,
+          0.0
+        ],
+        "linear": 15.0,
+        "nearest": 20.0
+      },
+      {
+        "source_continuous_index_xy": [
+          2.49999,
+          0.0
+        ],
+        "linear": 20.0,
+        "nearest": 20.0
+      },
+      {
+        "source_continuous_index_xy": [
+          2.5,
+          0.0
+        ],
+        "linear": -999.0,
+        "nearest": -999.0
+      }
+    ]
+  }
+}

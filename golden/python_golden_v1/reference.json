@@ -1,0 +1,5993 @@
+{
+  "schema": "python_golden_v1.reference.v1",
+  "environment": {
+    "python": "3.9.21",
+    "implementation": "CPython",
+    "packages": {
+      "numpy": "1.23.0",
+      "scipy": "1.13.1",
+      "pandas": "1.3.5",
+      "SimpleITK": "2.4.1",
+      "pyradiomics": "3.0.1",
+      "scikit-learn": "1.0.2",
+      "statsmodels": "0.13.2",
+      "PyWavelets": "1.6.0",
+      "pykwalify": "1.8.0",
+      "six": "1.17.0",
+      "setuptools": "79.0.0",
+      "wheel": "0.45.1"
+    },
+    "pyradiomics_revision": "c428a771c8cf682c462162b6babc836150d5d9d6",
+    "pyradiomics_tag": "v3.0.1",
+    "pyradiomics_files_sha256": {
+      "__init__.py": "886b4c27e574142f0864e4aef07fd3a6da806428f997283e8781e9e99020abca",
+      "_cmatrices.cp39-win_amd64.pyd": "b354099f333a484ddc89117c6ec7bfa66f5e7c60e35d8d1502bec2233fa227b3",
+      "_cshape.cp39-win_amd64.pyd": "d5f0e121969bfc0a028d0aa4a2c39d605563f77ec9d466b652a57ae4803f35e9",
+      "_version.py": "6296322d2938fd43ebd6d2ed04a5f7ef2137e1b5352d75757e1012b7dddb573c",
+      "base.py": "ba2473625ba83ad6196d1f2cdff488e8735672fa01f6e7f2451b7335f254579f",
+      "featureextractor.py": "6759cc4779c32941098a7eeba1c7e64e0c52eef25e645f9dc3c46520efdecc73",
+      "firstorder.py": "80d01b13750c4180f4ae2f8dbefab0ae95856ab6836ccd97fa13dfa5cbee54d9",
+      "generalinfo.py": "2171ec739dc2db475478fd299bc88cb3aacffdc9d6c7477ab3ad4f57f29b57cb",
+      "glcm.py": "4390283a3bff1c3bb9c3f348d1b0cbcb7324e8558727cd536296c140ccabc49e",
+      "gldm.py": "fd7b51770dd13f957c084bf00b5793c980626933f1be6536e198784ca834c1fa",
+      "glrlm.py": "68777ee41f3e79e6487a4e7cf7ecb73a1dc1f6cd49d5d1215814490245c9d9ac",
+      "glszm.py": "ff039eb01a5183371760c07b8875f6501c09b2a2185b23ff4eb352b33f882260",
+      "imageoperations.py": "fde887881b5c7f4f51a7e1f86c7a729f3cbb632f81679e11797a7f313936b581",
+      "ngtdm.py": "9d44f55d1e85bb4de7012248477aee74eaa2d5294042444437c88796743e7b1c",
+      "shape.py": "aba403f94462ab9aab9996bd6b2589b466384c3137539230b81959e17c67a8d8",
+      "shape2D.py": "0b57adea4632865c762c3106a071ee1b845a5369c967494daad1089d1c8503b7"
+    },
+    "scope": "Pinned imported numerical dependencies; pyd hashes are platform-build specific. No global environment modified."
+  },
+  "input_file_sha256": "15f32a9addb3d64a7017c84632b52bd7c70145af41518e62f3bc9a815bb84315",
+  "features": {
+    "hand_2d": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binWidth": 1.0
+      },
+      "features": {
+        "firstorder": {
+          "status": "ok",
+          "value": {
+            "Mean": 2.0,
+            "Median": 2.0,
+            "Minimum": 1.0,
+            "Maximum": 3.0,
+            "10Percentile": 1.0,
+            "90Percentile": 3.0,
+            "Range": 2.0,
+            "InterquartileRange": 1.5,
+            "Variance": 0.6666666666666666,
+            "MeanAbsoluteDeviation": 0.6666666666666666,
+            "Skewness": 0.0,
+            "Kurtosis": 1.5,
+            "Energy": 28.0,
+            "RootMeanSquared": 2.160246899469287,
+            "Entropy": 1.5849625007211552,
+            "Uniformity": 0.3333333333333333
+          },
+          "warnings": []
+        },
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 2.0,
+            "JointEnergy": 0.2760416666666667,
+            "JointEntropy": 2.0212406251802877,
+            "MaximumProbability": 0.29166666666666663,
+            "Contrast": 1.875,
+            "Correlation": -0.20833333333333326,
+            "DifferenceAverage": 1.2083333333333333,
+            "Id": 0.5069444444444444,
+            "Idm": 0.4625,
+            "SumSquares": 0.7291666666666666
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.90625,
+            "LongRunEmphasis": 1.375,
+            "GrayLevelNonUniformity": 1.875,
+            "GrayLevelNonUniformityNormalized": 0.34375,
+            "RunLengthNonUniformity": 5.0,
+            "RunLengthNonUniformityNormalized": 0.875,
+            "RunPercentage": 0.9166666666666666,
+            "RunEntropy": 1.5637218755408662
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": {
+            "SmallAreaEmphasis": 0.625,
+            "LargeAreaEmphasis": 2.5,
+            "GrayLevelNonUniformity": 1.5,
+            "GrayLevelNonUniformityNormalized": 0.375,
+            "SizeZoneNonUniformity": 2.0,
+            "SizeZoneNonUniformityNormalized": 0.5,
+            "ZonePercentage": 0.6666666666666666,
+            "ZoneEntropy": 1.4999999999999991
+          },
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": {
+            "SmallDependenceEmphasis": 0.5,
+            "LargeDependenceEmphasis": 3.0,
+            "GrayLevelNonUniformity": 2.0,
+            "DependenceNonUniformity": 3.3333333333333335,
+            "DependenceNonUniformityNormalized": 0.5555555555555556,
+            "GrayLevelVariance": 0.6666666666666666,
+            "DependenceVariance": 0.2222222222222222,
+            "DependenceEntropy": 1.5849625007211552
+          },
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": {
+            "Coarseness": 0.5921052631578947,
+            "Contrast": 0.18765432098765436,
+            "Busyness": 0.6333333333333333,
+            "Complexity": 2.4222222222222225,
+            "Strength": 1.5789473684210522
+          },
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 1.9999999999999998,
+            "JointEnergy": 0.128099173553719,
+            "JointEntropy": 2.980825936229076,
+            "MaximumProbability": 0.13636363636363635,
+            "Contrast": 1.6363636363636362,
+            "Correlation": -0.12499999999999994,
+            "DifferenceAverage": 1.0909090909090908,
+            "Id": 0.5454545454545454,
+            "Idm": 0.509090909090909,
+            "SumSquares": 0.7272727272727272
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.9318181818181818,
+            "LongRunEmphasis": 1.2727272727272727,
+            "GrayLevelNonUniformity": 7.363636363636363,
+            "GrayLevelNonUniformityNormalized": 0.3347107438016529,
+            "RunLengthNonUniformity": 18.363636363636363,
+            "RunLengthNonUniformityNormalized": 0.8347107438016529,
+            "RunPercentage": 0.9166666666666666,
+            "RunEntropy": 1.9585429818803015
+          },
+          "warnings": []
+        }
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          [
+            1,
+            1,
+            2
+          ],
+          [
+            2,
+            3,
+            3
+          ]
+        ],
+        "warnings": []
+      },
+      "raw_matrices": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  2.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  2.0,
+                  2.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  2.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              1.0
+            ],
+            [
+              2.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": [
+            [
+              2.0,
+              2.2,
+              1.0
+            ],
+            [
+              2.0,
+              0.6666666666666667,
+              2.0
+            ],
+            [
+              2.0,
+              2.2,
+              3.0
+            ]
+          ],
+          "warnings": []
+        }
+      }
+    },
+    "hand_3d": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binWidth": 1.0
+      },
+      "features": {
+        "firstorder": {
+          "status": "ok",
+          "value": {
+            "Mean": 2.25,
+            "Median": 2.0,
+            "Minimum": 1.0,
+            "Maximum": 4.0,
+            "10Percentile": 1.0,
+            "90Percentile": 3.9000000000000004,
+            "Range": 3.0,
+            "InterquartileRange": 2.0,
+            "Variance": 1.1875000000000002,
+            "MeanAbsoluteDeviation": 0.9583333333333334,
+            "Skewness": 0.26563927079749255,
+            "Kurtosis": 1.742382271468144,
+            "Energy": 75.0,
+            "RootMeanSquared": 2.5,
+            "Entropy": 1.9591479170272432,
+            "Uniformity": 0.2638888888888889
+          },
+          "warnings": []
+        },
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 2.3365384615384617,
+            "JointEnergy": 0.2012553418803419,
+            "JointEntropy": 2.4859842149238767,
+            "MaximumProbability": 0.23397435897435898,
+            "Contrast": 2.8333333333333335,
+            "Correlation": -0.2620524029808725,
+            "DifferenceAverage": 1.4166666666666665,
+            "Id": 0.49332264957264954,
+            "Idm": 0.4333333333333333,
+            "SumSquares": 1.109375
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.9472027972027971,
+            "LongRunEmphasis": 1.2111888111888112,
+            "GrayLevelNonUniformity": 2.98974358974359,
+            "GrayLevelNonUniformityNormalized": 0.2642942242942243,
+            "RunLengthNonUniformity": 10.227972027972028,
+            "RunLengthNonUniformityNormalized": 0.8911520802429892,
+            "RunPercentage": 0.9423076923076923,
+            "RunEntropy": 2.1069574406258944
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": {
+            "SmallAreaEmphasis": 0.33472222222222225,
+            "LargeAreaEmphasis": 6.8,
+            "GrayLevelNonUniformity": 1.4,
+            "GrayLevelNonUniformityNormalized": 0.28,
+            "SizeZoneNonUniformity": 1.4,
+            "SizeZoneNonUniformityNormalized": 0.28,
+            "ZonePercentage": 0.4166666666666667,
+            "ZoneEntropy": 2.321928094887361
+          },
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": {
+            "SmallDependenceEmphasis": 0.23900462962962962,
+            "LargeDependenceEmphasis": 6.833333333333333,
+            "GrayLevelNonUniformity": 3.1666666666666665,
+            "DependenceNonUniformity": 4.333333333333333,
+            "DependenceNonUniformityNormalized": 0.3611111111111111,
+            "GrayLevelVariance": 1.1875,
+            "DependenceVariance": 0.5833333333333334,
+            "DependenceEntropy": 2.688721875540865
+          },
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": {
+            "Coarseness": 0.2806804374240583,
+            "Contrast": 0.22233495670995673,
+            "Busyness": 1.2574484339190224,
+            "Complexity": 6.366357452071739,
+            "Strength": 1.4836223506743738
+          },
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 2.33,
+            "JointEnergy": 0.07140000000000002,
+            "JointEntropy": 3.8861206330891127,
+            "MaximumProbability": 0.1,
+            "Contrast": 2.7800000000000002,
+            "Correlation": -0.13831791008107444,
+            "DifferenceAverage": 1.3800000000000001,
+            "Id": 0.5083333333333333,
+            "Idm": 0.45,
+            "SumSquares": 1.2211000000000003
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.9540816326530612,
+            "LongRunEmphasis": 1.183673469387755,
+            "GrayLevelNonUniformity": 38.564625850340136,
+            "GrayLevelNonUniformityNormalized": 0.2623443935397288,
+            "RunLengthNonUniformity": 130.10204081632654,
+            "RunLengthNonUniformityNormalized": 0.8850478967097043,
+            "RunPercentage": 0.9423076923076923,
+            "RunEntropy": 2.286585547512468
+          },
+          "warnings": []
+        }
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          [
+            [
+              1,
+              1,
+              2
+            ],
+            [
+              2,
+              3,
+              3
+            ]
+          ],
+          [
+            [
+              1,
+              4,
+              2
+            ],
+            [
+              4,
+              3,
+              1
+            ]
+          ]
+        ],
+        "warnings": []
+      },
+      "raw_matrices": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                1,
+                1,
+                -1
+              ],
+              [
+                1,
+                0,
+                1
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                -1
+              ],
+              [
+                1,
+                -1,
+                1
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                -1,
+                -1
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                -1
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                -1,
+                1,
+                1
+              ],
+              [
+                1,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                -1,
+                0,
+                1
+              ],
+              [
+                1,
+                -1,
+                1
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                -1,
+                -1,
+                1
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1,
+                1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  2.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0,
+                  2.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  2.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  1.0,
+                  1.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  3.0,
+                  1.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  1.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  2.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  2.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              [
+                [
+                  1.0,
+                  1.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  3.0,
+                  1.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  2.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0,
+                  2.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                1,
+                1,
+                -1
+              ],
+              [
+                1,
+                0,
+                1
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                -1
+              ],
+              [
+                1,
+                -1,
+                1
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                -1,
+                -1
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                -1
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                -1,
+                1,
+                1
+              ],
+              [
+                1,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                -1,
+                0,
+                1
+              ],
+              [
+                1,
+                -1,
+                1
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                -1,
+                -1,
+                1
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1,
+                1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  2.0,
+                  4.0,
+                  4.0,
+                  4.0,
+                  2.0,
+                  2.0,
+                  4.0,
+                  4.0,
+                  4.0,
+                  4.0,
+                  4.0,
+                  4.0,
+                  2.0
+                ],
+                [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  1.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  1.0,
+                  1.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  3.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0,
+                  0.0,
+                  2.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              1.0,
+              2.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": [
+            [
+              4.0,
+              6.077922077922079,
+              1.0
+            ],
+            [
+              3.0,
+              1.2857142857142851,
+              2.0
+            ],
+            [
+              3.0,
+              2.350649350649351,
+              3.0
+            ],
+            [
+              2.0,
+              3.7662337662337664,
+              4.0
+            ]
+          ],
+          "warnings": []
+        }
+      }
+    },
+    "negative_boundaries": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binWidth": 2.0
+      },
+      "features": {
+        "firstorder": {
+          "status": "ok",
+          "value": {
+            "Mean": 0.16666666666666666,
+            "Median": -0.5,
+            "Minimum": -4.0,
+            "Maximum": 6.0,
+            "10Percentile": -3.0,
+            "90Percentile": 4.0,
+            "Range": 10.0,
+            "InterquartileRange": 3.25,
+            "Variance": 10.13888888888889,
+            "MeanAbsoluteDeviation": 2.555555555555556,
+            "Skewness": 0.6223725545319253,
+            "Kurtosis": 2.423036216926253,
+            "Energy": 61.0,
+            "RootMeanSquared": 3.1885210782848317,
+            "Entropy": 2.2516291673878213,
+            "Uniformity": 0.22222222222222227
+          },
+          "warnings": []
+        },
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 3.0,
+            "JointEnergy": 0.20572916666666669,
+            "JointEntropy": 2.333740625180287,
+            "MaximumProbability": 0.22916666666666666,
+            "Contrast": 6.125,
+            "Correlation": -0.33660760143810986,
+            "DifferenceAverage": 2.1666666666666665,
+            "Id": 0.3784722222222222,
+            "Idm": 0.28308823529411764,
+            "SumSquares": 2.3229166666666665
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.9625,
+            "LongRunEmphasis": 1.15,
+            "GrayLevelNonUniformity": 1.25,
+            "GrayLevelNonUniformityNormalized": 0.21666666666666667,
+            "RunLengthNonUniformity": 5.35,
+            "RunLengthNonUniformityNormalized": 0.92,
+            "RunPercentage": 0.9583333333333334,
+            "RunEntropy": 2.269203899262706
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": {
+            "SmallAreaEmphasis": 0.85,
+            "LargeAreaEmphasis": 1.6,
+            "GrayLevelNonUniformity": 1.0,
+            "GrayLevelNonUniformityNormalized": 0.2,
+            "SizeZoneNonUniformity": 3.4,
+            "SizeZoneNonUniformityNormalized": 0.68,
+            "ZonePercentage": 0.8333333333333334,
+            "ZoneEntropy": 2.321928094887361
+          },
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": {
+            "SmallDependenceEmphasis": 0.75,
+            "LargeDependenceEmphasis": 2.0,
+            "GrayLevelNonUniformity": 1.3333333333333333,
+            "DependenceNonUniformity": 3.3333333333333335,
+            "DependenceNonUniformityNormalized": 0.5555555555555556,
+            "GrayLevelVariance": 2.666666666666667,
+            "DependenceVariance": 0.2222222222222222,
+            "DependenceEntropy": 2.2516291673878213
+          },
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": {
+            "Coarseness": 0.4411764705882353,
+            "Contrast": 0.46222222222222226,
+            "Busyness": 0.3090909090909091,
+            "Complexity": 18.48888888888889,
+            "Strength": 5.448717948717948
+          },
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 3.0,
+            "JointEnergy": 0.06611570247933884,
+            "JointEntropy": 4.004886164091838,
+            "MaximumProbability": 0.09090909090909091,
+            "Contrast": 5.454545454545454,
+            "Correlation": -0.15384615384615383,
+            "DifferenceAverage": 2.0,
+            "Id": 0.4075757575757576,
+            "Idm": 0.3197860962566845,
+            "SumSquares": 2.3636363636363638
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.967391304347826,
+            "LongRunEmphasis": 1.1304347826086956,
+            "GrayLevelNonUniformity": 4.913043478260869,
+            "GrayLevelNonUniformityNormalized": 0.21361058601134217,
+            "RunLengthNonUniformity": 21.08695652173913,
+            "RunLengthNonUniformityNormalized": 0.9168241965973535,
+            "RunPercentage": 0.9583333333333334,
+            "RunEntropy": 2.4579195645645355
+          },
+          "warnings": []
+        }
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          [
+            1,
+            2,
+            2
+          ],
+          [
+            3,
+            4,
+            6
+          ]
+        ],
+        "warnings": []
+      },
+      "raw_matrices": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  1.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  2.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ],
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": [
+            [
+              1.0,
+              2.0,
+              1.0
+            ],
+            [
+              2.0,
+              3.2,
+              2.0
+            ],
+            [
+              1.0,
+              0.6666666666666665,
+              3.0
+            ],
+            [
+              1.0,
+              1.2000000000000002,
+              4.0
+            ],
+            [
+              0.0,
+              0.0,
+              5.0
+            ],
+            [
+              1.0,
+              3.3333333333333335,
+              6.0
+            ]
+          ],
+          "warnings": []
+        }
+      }
+    },
+    "missing_gray_levels": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binWidth": 1.0
+      },
+      "features": {
+        "firstorder": {
+          "status": "ok",
+          "value": {
+            "Mean": 3.6666666666666665,
+            "Median": 4.0,
+            "Minimum": 1.0,
+            "Maximum": 6.0,
+            "10Percentile": 1.0,
+            "90Percentile": 6.0,
+            "Range": 5.0,
+            "InterquartileRange": 3.75,
+            "Variance": 4.222222222222223,
+            "MeanAbsoluteDeviation": 1.777777777777778,
+            "Skewness": -0.23906314692954445,
+            "Kurtosis": 1.4999999999999998,
+            "Energy": 106.0,
+            "RootMeanSquared": 4.203173404306164,
+            "Entropy": 1.5849625007211552,
+            "Uniformity": 0.3333333333333333
+          },
+          "warnings": []
+        },
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 3.6354166666666665,
+            "JointEnergy": 0.2760416666666667,
+            "JointEntropy": 2.0212406251802877,
+            "MaximumProbability": 0.29166666666666663,
+            "Contrast": 11.854166666666666,
+            "Correlation": -0.2157105416423995,
+            "DifferenceAverage": 3.020833333333333,
+            "Id": 0.33854166666666663,
+            "Idm": 0.21907051282051285,
+            "SumSquares": 4.598524305555555
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.90625,
+            "LongRunEmphasis": 1.375,
+            "GrayLevelNonUniformity": 1.875,
+            "GrayLevelNonUniformityNormalized": 0.34375,
+            "RunLengthNonUniformity": 5.0,
+            "RunLengthNonUniformityNormalized": 0.875,
+            "RunPercentage": 0.9166666666666666,
+            "RunEntropy": 1.5637218755408662
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": {
+            "SmallAreaEmphasis": 0.625,
+            "LargeAreaEmphasis": 2.5,
+            "GrayLevelNonUniformity": 1.5,
+            "GrayLevelNonUniformityNormalized": 0.375,
+            "SizeZoneNonUniformity": 2.0,
+            "SizeZoneNonUniformityNormalized": 0.5,
+            "ZonePercentage": 0.6666666666666666,
+            "ZoneEntropy": 1.4999999999999991
+          },
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": {
+            "SmallDependenceEmphasis": 0.5,
+            "LargeDependenceEmphasis": 3.0,
+            "GrayLevelNonUniformity": 2.0,
+            "DependenceNonUniformity": 3.3333333333333335,
+            "DependenceNonUniformityNormalized": 0.5555555555555556,
+            "GrayLevelVariance": 4.222222222222222,
+            "DependenceVariance": 0.2222222222222222,
+            "DependenceEntropy": 1.5849625007211552
+          },
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": {
+            "Coarseness": 0.23684210526315794,
+            "Contrast": 2.97119341563786,
+            "Busyness": 0.6333333333333332,
+            "Complexity": 15.199999999999998,
+            "Strength": 4.0
+          },
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 3.6363636363636362,
+            "JointEnergy": 0.128099173553719,
+            "JointEntropy": 2.980825936229076,
+            "MaximumProbability": 0.13636363636363635,
+            "Contrast": 10.363636363636363,
+            "Correlation": -0.1276978417266187,
+            "DifferenceAverage": 2.727272727272727,
+            "Id": 0.38636363636363635,
+            "Idm": 0.2741258741258741,
+            "SumSquares": 4.595041322314049
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.9318181818181818,
+            "LongRunEmphasis": 1.2727272727272727,
+            "GrayLevelNonUniformity": 7.363636363636363,
+            "GrayLevelNonUniformityNormalized": 0.3347107438016529,
+            "RunLengthNonUniformity": 18.363636363636363,
+            "RunLengthNonUniformityNormalized": 0.8347107438016529,
+            "RunPercentage": 0.9166666666666666,
+            "RunEntropy": 1.9585429818803015
+          },
+          "warnings": []
+        }
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          [
+            1,
+            1,
+            4
+          ],
+          [
+            4,
+            6,
+            6
+          ]
+        ],
+        "warnings": []
+      },
+      "raw_matrices": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  2.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  2.0,
+                  2.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  2.0,
+                  2.0,
+                  2.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  2.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              2.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": [
+            [
+              2.0,
+              5.866666666666667,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              2.0
+            ],
+            [
+              0.0,
+              0.0,
+              3.0
+            ],
+            [
+              2.0,
+              1.6666666666666665,
+              4.0
+            ],
+            [
+              0.0,
+              0.0,
+              5.0
+            ],
+            [
+              2.0,
+              5.133333333333333,
+              6.0
+            ]
+          ],
+          "warnings": []
+        }
+      }
+    },
+    "constant_width": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binWidth": 1.0
+      },
+      "features": {
+        "firstorder": {
+          "status": "ok",
+          "value": {
+            "Mean": 7.0,
+            "Median": 7.0,
+            "Minimum": 7.0,
+            "Maximum": 7.0,
+            "10Percentile": 7.0,
+            "90Percentile": 7.0,
+            "Range": 0.0,
+            "InterquartileRange": 0.0,
+            "Variance": 0.0,
+            "MeanAbsoluteDeviation": 0.0,
+            "Skewness": 0.0,
+            "Kurtosis": 0.0,
+            "Energy": 294.0,
+            "RootMeanSquared": 7.0,
+            "Entropy": -3.203426503814917e-16,
+            "Uniformity": 1.0
+          },
+          "warnings": []
+        },
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 1.0,
+            "JointEnergy": 1.0,
+            "JointEntropy": -3.203426503814917e-16,
+            "MaximumProbability": 1.0,
+            "Contrast": 0.0,
+            "Correlation": 1.0,
+            "DifferenceAverage": 0.0,
+            "Id": 1.0,
+            "Idm": 1.0,
+            "SumSquares": 0.0
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.4027777777777778,
+            "LongRunEmphasis": 4.5,
+            "GrayLevelNonUniformity": 3.25,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "RunLengthNonUniformity": 2.25,
+            "RunLengthNonUniformityNormalized": 0.75,
+            "RunPercentage": 0.5416666666666666,
+            "RunEntropy": 0.4999999999999995
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": {
+            "SmallAreaEmphasis": 0.027777777777777776,
+            "LargeAreaEmphasis": 36.0,
+            "GrayLevelNonUniformity": 1.0,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "SizeZoneNonUniformity": 1.0,
+            "SizeZoneNonUniformityNormalized": 1.0,
+            "ZonePercentage": 0.16666666666666666,
+            "ZoneEntropy": -3.203426503814917e-16
+          },
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": {
+            "SmallDependenceEmphasis": 0.05092592592592593,
+            "LargeDependenceEmphasis": 22.666666666666668,
+            "GrayLevelNonUniformity": 6.0,
+            "DependenceNonUniformity": 3.3333333333333335,
+            "DependenceNonUniformityNormalized": 0.5555555555555556,
+            "GrayLevelVariance": 0.0,
+            "DependenceVariance": 0.8888888888888888,
+            "DependenceEntropy": 0.9182958340544889
+          },
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": {
+            "Coarseness": 1000000.0,
+            "Contrast": 0.0,
+            "Busyness": 0.0,
+            "Complexity": 0.0,
+            "Strength": 0.0
+          },
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 1.0,
+            "JointEnergy": 1.0,
+            "JointEntropy": -3.203426503814917e-16,
+            "MaximumProbability": 1.0,
+            "Contrast": 0.0,
+            "Correlation": 1.0,
+            "DifferenceAverage": 0.0,
+            "Id": 1.0,
+            "Idm": 1.0,
+            "SumSquares": 0.0
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.45940170940170943,
+            "LongRunEmphasis": 3.8461538461538463,
+            "GrayLevelNonUniformity": 13.0,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "RunLengthNonUniformity": 5.3076923076923075,
+            "RunLengthNonUniformityNormalized": 0.40828402366863903,
+            "RunPercentage": 0.5416666666666666,
+            "RunEntropy": 1.4195562985716121
+          },
+          "warnings": []
+        }
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "warnings": []
+      },
+      "raw_matrices": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  4.0,
+                  6.0,
+                  4.0,
+                  8.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  2.0,
+                  0.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  2.0,
+                  3.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              4.0,
+              0.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": [
+            [
+              6.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "warnings": []
+        }
+      }
+    },
+    "constant_count_even": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binCount": 4
+      },
+      "features": {
+        "firstorder": {
+          "status": "ok",
+          "value": {
+            "Mean": 7.0,
+            "Median": 7.0,
+            "Minimum": 7.0,
+            "Maximum": 7.0,
+            "10Percentile": 7.0,
+            "90Percentile": 7.0,
+            "Range": 0.0,
+            "InterquartileRange": 0.0,
+            "Variance": 0.0,
+            "MeanAbsoluteDeviation": 0.0,
+            "Skewness": 0.0,
+            "Kurtosis": 0.0,
+            "Energy": 294.0,
+            "RootMeanSquared": 7.0,
+            "Entropy": -3.203426503814917e-16,
+            "Uniformity": 1.0
+          },
+          "warnings": []
+        },
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 3.0,
+            "JointEnergy": 1.0,
+            "JointEntropy": -3.203426503814917e-16,
+            "MaximumProbability": 1.0,
+            "Contrast": 0.0,
+            "Correlation": 1.0,
+            "DifferenceAverage": 0.0,
+            "Id": 1.0,
+            "Idm": 1.0,
+            "SumSquares": 0.0
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.4027777777777778,
+            "LongRunEmphasis": 4.5,
+            "GrayLevelNonUniformity": 3.25,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "RunLengthNonUniformity": 2.25,
+            "RunLengthNonUniformityNormalized": 0.75,
+            "RunPercentage": 0.5416666666666666,
+            "RunEntropy": 0.4999999999999995
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": {
+            "SmallAreaEmphasis": 0.027777777777777776,
+            "LargeAreaEmphasis": 36.0,
+            "GrayLevelNonUniformity": 1.0,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "SizeZoneNonUniformity": 1.0,
+            "SizeZoneNonUniformityNormalized": 1.0,
+            "ZonePercentage": 0.16666666666666666,
+            "ZoneEntropy": -3.203426503814917e-16
+          },
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": {
+            "SmallDependenceEmphasis": 0.05092592592592593,
+            "LargeDependenceEmphasis": 22.666666666666668,
+            "GrayLevelNonUniformity": 6.0,
+            "DependenceNonUniformity": 3.3333333333333335,
+            "DependenceNonUniformityNormalized": 0.5555555555555556,
+            "GrayLevelVariance": 0.0,
+            "DependenceVariance": 0.8888888888888888,
+            "DependenceEntropy": 0.9182958340544889
+          },
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": {
+            "Coarseness": 1000000.0,
+            "Contrast": 0.0,
+            "Busyness": 0.0,
+            "Complexity": 0.0,
+            "Strength": 0.0
+          },
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 3.0,
+            "JointEnergy": 1.0,
+            "JointEntropy": -3.203426503814917e-16,
+            "MaximumProbability": 1.0,
+            "Contrast": 0.0,
+            "Correlation": 1.0,
+            "DifferenceAverage": 0.0,
+            "Id": 1.0,
+            "Idm": 1.0,
+            "SumSquares": 0.0
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.45940170940170943,
+            "LongRunEmphasis": 3.8461538461538463,
+            "GrayLevelNonUniformity": 13.0,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "RunLengthNonUniformity": 5.3076923076923075,
+            "RunLengthNonUniformityNormalized": 0.40828402366863903,
+            "RunPercentage": 0.5416666666666666,
+            "RunEntropy": 1.4195562985716121
+          },
+          "warnings": []
+        }
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          [
+            3,
+            3,
+            3
+          ],
+          [
+            3,
+            3,
+            3
+          ]
+        ],
+        "warnings": []
+      },
+      "raw_matrices": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  4.0,
+                  6.0,
+                  4.0,
+                  8.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  0.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  2.0,
+                  3.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              4.0,
+              0.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              2.0
+            ],
+            [
+              6.0,
+              0.0,
+              3.0
+            ]
+          ],
+          "warnings": []
+        }
+      }
+    },
+    "constant_count_odd": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binCount": 5
+      },
+      "features": {
+        "firstorder": {
+          "status": "ok",
+          "value": {
+            "Mean": 7.0,
+            "Median": 7.0,
+            "Minimum": 7.0,
+            "Maximum": 7.0,
+            "10Percentile": 7.0,
+            "90Percentile": 7.0,
+            "Range": 0.0,
+            "InterquartileRange": 0.0,
+            "Variance": 0.0,
+            "MeanAbsoluteDeviation": 0.0,
+            "Skewness": 0.0,
+            "Kurtosis": 0.0,
+            "Energy": 294.0,
+            "RootMeanSquared": 7.0,
+            "Entropy": -3.203426503814917e-16,
+            "Uniformity": 1.0
+          },
+          "warnings": []
+        },
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 3.0,
+            "JointEnergy": 1.0,
+            "JointEntropy": -3.203426503814917e-16,
+            "MaximumProbability": 1.0,
+            "Contrast": 0.0,
+            "Correlation": 1.0,
+            "DifferenceAverage": 0.0,
+            "Id": 1.0,
+            "Idm": 1.0,
+            "SumSquares": 0.0
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.4027777777777778,
+            "LongRunEmphasis": 4.5,
+            "GrayLevelNonUniformity": 3.25,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "RunLengthNonUniformity": 2.25,
+            "RunLengthNonUniformityNormalized": 0.75,
+            "RunPercentage": 0.5416666666666666,
+            "RunEntropy": 0.4999999999999995
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": {
+            "SmallAreaEmphasis": 0.027777777777777776,
+            "LargeAreaEmphasis": 36.0,
+            "GrayLevelNonUniformity": 1.0,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "SizeZoneNonUniformity": 1.0,
+            "SizeZoneNonUniformityNormalized": 1.0,
+            "ZonePercentage": 0.16666666666666666,
+            "ZoneEntropy": -3.203426503814917e-16
+          },
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": {
+            "SmallDependenceEmphasis": 0.05092592592592593,
+            "LargeDependenceEmphasis": 22.666666666666668,
+            "GrayLevelNonUniformity": 6.0,
+            "DependenceNonUniformity": 3.3333333333333335,
+            "DependenceNonUniformityNormalized": 0.5555555555555556,
+            "GrayLevelVariance": 0.0,
+            "DependenceVariance": 0.8888888888888888,
+            "DependenceEntropy": 0.9182958340544889
+          },
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": {
+            "Coarseness": 1000000.0,
+            "Contrast": 0.0,
+            "Busyness": 0.0,
+            "Complexity": 0.0,
+            "Strength": 0.0
+          },
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": 3.0,
+            "JointEnergy": 1.0,
+            "JointEntropy": -3.203426503814917e-16,
+            "MaximumProbability": 1.0,
+            "Contrast": 0.0,
+            "Correlation": 1.0,
+            "DifferenceAverage": 0.0,
+            "Id": 1.0,
+            "Idm": 1.0,
+            "SumSquares": 0.0
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 0.45940170940170943,
+            "LongRunEmphasis": 3.8461538461538463,
+            "GrayLevelNonUniformity": 13.0,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "RunLengthNonUniformity": 5.3076923076923075,
+            "RunLengthNonUniformityNormalized": 0.40828402366863903,
+            "RunPercentage": 0.5416666666666666,
+            "RunEntropy": 1.4195562985716121
+          },
+          "warnings": []
+        }
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          [
+            3,
+            3,
+            3
+          ],
+          [
+            3,
+            3,
+            3
+          ]
+        ],
+        "warnings": []
+      },
+      "raw_matrices": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  4.0,
+                  6.0,
+                  4.0,
+                  8.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  2.0,
+                  0.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  2.0,
+                  3.0,
+                  2.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  2.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              4.0,
+              0.0,
+              2.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": [
+            [
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              2.0
+            ],
+            [
+              6.0,
+              0.0,
+              3.0
+            ]
+          ],
+          "warnings": []
+        }
+      }
+    },
+    "single_voxel": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binWidth": 1.0
+      },
+      "features": {
+        "firstorder": {
+          "status": "ok",
+          "value": {
+            "Mean": 7.0,
+            "Median": 7.0,
+            "Minimum": 7.0,
+            "Maximum": 7.0,
+            "10Percentile": 7.0,
+            "90Percentile": 7.0,
+            "Range": 0.0,
+            "InterquartileRange": 0.0,
+            "Variance": 0.0,
+            "MeanAbsoluteDeviation": 0.0,
+            "Skewness": 0.0,
+            "Kurtosis": 0.0,
+            "Energy": 49.0,
+            "RootMeanSquared": 7.0,
+            "Entropy": -3.203426503814917e-16,
+            "Uniformity": 1.0
+          },
+          "warnings": []
+        },
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": "NaN",
+            "JointEnergy": "NaN",
+            "JointEntropy": "NaN",
+            "MaximumProbability": "NaN",
+            "Contrast": "NaN",
+            "Correlation": "NaN",
+            "DifferenceAverage": "NaN",
+            "Id": "NaN",
+            "Idm": "NaN",
+            "SumSquares": "NaN"
+          },
+          "warnings": [
+            "Mean of empty slice",
+            "Mean of empty slice.",
+            "invalid value encountered in divide"
+          ]
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": "NaN",
+            "LongRunEmphasis": "NaN",
+            "GrayLevelNonUniformity": "NaN",
+            "GrayLevelNonUniformityNormalized": "NaN",
+            "RunLengthNonUniformity": "NaN",
+            "RunLengthNonUniformityNormalized": "NaN",
+            "RunPercentage": "NaN",
+            "RunEntropy": "NaN"
+          },
+          "warnings": [
+            "Mean of empty slice"
+          ]
+        },
+        "glszm": {
+          "status": "ok",
+          "value": {
+            "SmallAreaEmphasis": 1.0,
+            "LargeAreaEmphasis": 1.0,
+            "GrayLevelNonUniformity": 1.0,
+            "GrayLevelNonUniformityNormalized": 1.0,
+            "SizeZoneNonUniformity": 1.0,
+            "SizeZoneNonUniformityNormalized": 1.0,
+            "ZonePercentage": 1.0,
+            "ZoneEntropy": -3.203426503814917e-16
+          },
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": {
+            "SmallDependenceEmphasis": 1.0,
+            "LargeDependenceEmphasis": 1.0,
+            "GrayLevelNonUniformity": 1.0,
+            "DependenceNonUniformity": 1.0,
+            "DependenceNonUniformityNormalized": 1.0,
+            "GrayLevelVariance": 0.0,
+            "DependenceVariance": 0.0,
+            "DependenceEntropy": -3.203426503814917e-16
+          },
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": {
+            "Coarseness": 1000000.0,
+            "Contrast": 0.0,
+            "Busyness": 0.0,
+            "Complexity": 0.0,
+            "Strength": 0.0
+          },
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": "NaN",
+            "JointEnergy": "NaN",
+            "JointEntropy": "NaN",
+            "MaximumProbability": "NaN",
+            "Contrast": "NaN",
+            "Correlation": "NaN",
+            "DifferenceAverage": "NaN",
+            "Id": "NaN",
+            "Idm": "NaN",
+            "SumSquares": "NaN"
+          },
+          "warnings": [
+            "Mean of empty slice"
+          ]
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": "NaN",
+            "LongRunEmphasis": "NaN",
+            "GrayLevelNonUniformity": "NaN",
+            "GrayLevelNonUniformityNormalized": "NaN",
+            "RunLengthNonUniformity": "NaN",
+            "RunLengthNonUniformityNormalized": "NaN",
+            "RunPercentage": "NaN",
+            "RunEntropy": 0.0
+          },
+          "warnings": [
+            "Mean of empty slice"
+          ]
+        }
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ],
+        "warnings": []
+      },
+      "raw_matrices": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": [
+            [
+              1.0
+            ]
+          ],
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": [
+            [
+              1.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "warnings": []
+        }
+      }
+    },
+    "isolated_voxels": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binWidth": 1.0
+      },
+      "features": {
+        "firstorder": {
+          "status": "ok",
+          "value": {
+            "Mean": 2.5,
+            "Median": 2.5,
+            "Minimum": 1.0,
+            "Maximum": 4.0,
+            "10Percentile": 1.3,
+            "90Percentile": 3.7,
+            "Range": 3.0,
+            "InterquartileRange": 1.5,
+            "Variance": 1.2500000000000002,
+            "MeanAbsoluteDeviation": 1.0,
+            "Skewness": 0.0,
+            "Kurtosis": 1.64,
+            "Energy": 30.0,
+            "RootMeanSquared": 2.7386127875258306,
+            "Entropy": 1.9999999999999987,
+            "Uniformity": 0.25
+          },
+          "warnings": []
+        },
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": "NaN",
+            "JointEnergy": "NaN",
+            "JointEntropy": "NaN",
+            "MaximumProbability": "NaN",
+            "Contrast": "NaN",
+            "Correlation": "NaN",
+            "DifferenceAverage": "NaN",
+            "Id": "NaN",
+            "Idm": "NaN",
+            "SumSquares": "NaN"
+          },
+          "warnings": [
+            "Mean of empty slice",
+            "Mean of empty slice.",
+            "invalid value encountered in divide"
+          ]
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 1.0,
+            "LongRunEmphasis": 1.0,
+            "GrayLevelNonUniformity": 1.0,
+            "GrayLevelNonUniformityNormalized": 0.25,
+            "RunLengthNonUniformity": 4.0,
+            "RunLengthNonUniformityNormalized": 1.0,
+            "RunPercentage": 1.0,
+            "RunEntropy": 1.9999999999999987
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": {
+            "SmallAreaEmphasis": 1.0,
+            "LargeAreaEmphasis": 1.0,
+            "GrayLevelNonUniformity": 1.0,
+            "GrayLevelNonUniformityNormalized": 0.25,
+            "SizeZoneNonUniformity": 4.0,
+            "SizeZoneNonUniformityNormalized": 1.0,
+            "ZonePercentage": 1.0,
+            "ZoneEntropy": 1.9999999999999987
+          },
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": {
+            "SmallDependenceEmphasis": 1.0,
+            "LargeDependenceEmphasis": 1.0,
+            "GrayLevelNonUniformity": 1.0,
+            "DependenceNonUniformity": 4.0,
+            "DependenceNonUniformityNormalized": 1.0,
+            "GrayLevelVariance": 1.25,
+            "DependenceVariance": 0.0,
+            "DependenceEntropy": 1.9999999999999987
+          },
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": {
+            "Coarseness": 1000000.0,
+            "Contrast": 0.0,
+            "Busyness": 0.0,
+            "Complexity": 0.0,
+            "Strength": 0.0
+          },
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "JointAverage": "NaN",
+            "JointEnergy": "NaN",
+            "JointEntropy": "NaN",
+            "MaximumProbability": "NaN",
+            "Contrast": "NaN",
+            "Correlation": "NaN",
+            "DifferenceAverage": "NaN",
+            "Id": "NaN",
+            "Idm": "NaN",
+            "SumSquares": "NaN"
+          },
+          "warnings": [
+            "Mean of empty slice"
+          ]
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "ShortRunEmphasis": 1.0,
+            "LongRunEmphasis": 1.0,
+            "GrayLevelNonUniformity": 4.0,
+            "GrayLevelNonUniformityNormalized": 0.25,
+            "RunLengthNonUniformity": 16.0,
+            "RunLengthNonUniformityNormalized": 1.0,
+            "RunPercentage": 1.0,
+            "RunEntropy": 1.9999999999999987
+          },
+          "warnings": []
+        }
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          [
+            1,
+            0,
+            3
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            2,
+            0,
+            4
+          ]
+        ],
+        "warnings": []
+      },
+      "raw_matrices": {
+        "glcm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "ok",
+          "value": {
+            "angles_array_axes": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                -1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "angles_xyz": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                0
+              ]
+            ],
+            "counts": [
+              [
+                [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              [
+                [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ]
+            ]
+          },
+          "warnings": []
+        },
+        "glszm": {
+          "status": "ok",
+          "value": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ],
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ],
+          "warnings": []
+        },
+        "gldm": {
+          "status": "ok",
+          "value": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "ok",
+          "value": [
+            [
+              1.0,
+              0.0,
+              1.0
+            ],
+            [
+              1.0,
+              0.0,
+              2.0
+            ],
+            [
+              1.0,
+              0.0,
+              3.0
+            ],
+            [
+              1.0,
+              0.0,
+              4.0
+            ]
+          ],
+          "warnings": []
+        }
+      }
+    },
+    "empty_roi": {
+      "effective_settings": {
+        "label": 1,
+        "distances": [
+          1
+        ],
+        "symmetricalGLCM": true,
+        "weightingNorm": null,
+        "force2D": false,
+        "force2Ddimension": 0,
+        "gldm_a": 0,
+        "voxelArrayShift": 0,
+        "normalize": false,
+        "resampledPixelSpacing": null,
+        "resegmentRange": null,
+        "binWidth": 1.0
+      },
+      "features": {
+        "firstorder": {
+          "status": "error",
+          "error_type": "ValueError",
+          "message": "min() arg is an empty sequence",
+          "warnings": []
+        },
+        "glcm": {
+          "status": "error",
+          "error_type": "ValueError",
+          "message": "min() arg is an empty sequence",
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "error",
+          "error_type": "ValueError",
+          "message": "min() arg is an empty sequence",
+          "warnings": []
+        },
+        "glszm": {
+          "status": "error",
+          "error_type": "ValueError",
+          "message": "min() arg is an empty sequence",
+          "warnings": []
+        },
+        "gldm": {
+          "status": "error",
+          "error_type": "ValueError",
+          "message": "min() arg is an empty sequence",
+          "warnings": []
+        },
+        "ngtdm": {
+          "status": "error",
+          "error_type": "ValueError",
+          "message": "min() arg is an empty sequence",
+          "warnings": []
+        }
+      },
+      "merged_features": {
+        "glcm": {
+          "status": "error",
+          "error_type": "ValueError",
+          "message": "min() arg is an empty sequence",
+          "warnings": []
+        },
+        "glrlm": {
+          "status": "error",
+          "error_type": "ValueError",
+          "message": "min() arg is an empty sequence",
+          "warnings": []
+        }
+      },
+      "discretized": {
+        "status": "error",
+        "error_type": "ValueError",
+        "message": "min() arg is an empty sequence",
+        "warnings": []
+      }
+    }
+  },
+  "baseline_metrics": {
+    "source_revision": "2512e16979a544207f84c943e619ef33e02d3dc7",
+    "source_sha256": {
+      "src/ov_radiomics/metrics.py": "ac5a826248d3f92ca5b47c66829183ba8a254975d7028cd1e7c4540a29197ef4",
+      "src/ov_radiomics/_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+      "src/ov_radiomics/_backend.py": "426bc99c7b72b8832647140c5c1e5756a691f668bc505543f7d672b147a1ad48"
+    },
+    "inputs": {
+      "y": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "a": [
+        0.0,
+        0.4,
+        0.35,
+        0.8,
+        0.2,
+        0.6,
+        0.6,
+        1.0,
+        0.1,
+        0.9,
+        0.3,
+        0.7
+      ],
+      "b": [
+        0.1,
+        0.3,
+        0.4,
+        0.7,
+        0.3,
+        0.5,
+        0.8,
+        0.9,
+        0.2,
+        0.85,
+        0.25,
+        0.75
+      ]
+    },
+    "parameters": {
+      "threshold": 0.5,
+      "confidence": 0.95,
+      "n_bootstrap": 16,
+      "random_state": 42
+    },
+    "binary_delong": {
+      "n": 12.0,
+      "positive_n": 6.0,
+      "accuracy": 0.8333333333333334,
+      "auc": 0.9305555555555556,
+      "ci_low": 0.791751463845711,
+      "ci_high": 1.0,
+      "sensitivity": 0.8333333333333334,
+      "specificity": 0.8333333333333334,
+      "ppv": 0.8333333333333334,
+      "npv": 0.8333333333333334,
+      "precision": 0.8333333333333334,
+      "recall": 0.8333333333333334,
+      "f1": 0.8333333333333334,
+      "brier": 0.11520833333333336,
+      "threshold": 0.5
+    },
+    "binary_bootstrap": {
+      "n": 12.0,
+      "positive_n": 6.0,
+      "accuracy": 0.8333333333333334,
+      "auc": 0.9305555555555556,
+      "ci_low": 0.704861111111111,
+      "ci_high": 1.0,
+      "sensitivity": 0.8333333333333334,
+      "specificity": 0.8333333333333334,
+      "ppv": 0.8333333333333334,
+      "npv": 0.8333333333333334,
+      "precision": 0.8333333333333334,
+      "recall": 0.8333333333333334,
+      "f1": 0.8333333333333334,
+      "brier": 0.11520833333333336,
+      "threshold": 0.5
+    },
+    "bootstrap_indices": [
+      [
+        7,
+        9,
+        5,
+        9,
+        9,
+        3,
+        4,
+        4,
+        4,
+        8,
+        6,
+        4
+      ],
+      [
+        11,
+        9,
+        3,
+        7,
+        11,
+        11,
+        1,
+        6,
+        8,
+        0,
+        6,
+        1
+      ],
+      [
+        11,
+        9,
+        7,
+        2,
+        2,
+        5,
+        4,
+        1,
+        6,
+        6,
+        10,
+        10
+      ],
+      [
+        11,
+        5,
+        7,
+        7,
+        2,
+        5,
+        8,
+        4,
+        8,
+        0,
+        1,
+        6
+      ],
+      [
+        2,
+        7,
+        11,
+        3,
+        3,
+        2,
+        1,
+        8,
+        1,
+        6,
+        6,
+        6
+      ],
+      [
+        7,
+        9,
+        5,
+        11,
+        2,
+        7,
+        1,
+        6,
+        1,
+        10,
+        10,
+        10
+      ],
+      [
+        3,
+        7,
+        11,
+        9,
+        3,
+        3,
+        6,
+        1,
+        1,
+        10,
+        6,
+        10
+      ],
+      [
+        11,
+        7,
+        2,
+        11,
+        9,
+        9,
+        1,
+        8,
+        1,
+        0,
+        6,
+        6
+      ],
+      [
+        7,
+        9,
+        2,
+        9,
+        9,
+        2,
+        0,
+        0,
+        0,
+        6,
+        4,
+        4
+      ],
+      [
+        2,
+        5,
+        5,
+        2,
+        5,
+        9,
+        1,
+        1,
+        0,
+        6,
+        0,
+        6
+      ],
+      [
+        3,
+        2,
+        11,
+        9,
+        5,
+        7,
+        10,
+        4,
+        4,
+        0,
+        4,
+        8
+      ],
+      [
+        11,
+        5,
+        2,
+        9,
+        3,
+        11,
+        4,
+        0,
+        1,
+        1,
+        6,
+        8
+      ],
+      [
+        5,
+        2,
+        7,
+        9,
+        7,
+        11,
+        8,
+        8,
+        4,
+        8,
+        6,
+        8
+      ],
+      [
+        5,
+        5,
+        11,
+        7,
+        3,
+        3,
+        8,
+        10,
+        0,
+        8,
+        10,
+        6
+      ],
+      [
+        7,
+        7,
+        7,
+        7,
+        11,
+        11,
+        4,
+        1,
+        6,
+        0,
+        10,
+        0
+      ],
+      [
+        2,
+        2,
+        5,
+        11,
+        2,
+        7,
+        8,
+        0,
+        4,
+        10,
+        4,
+        0
+      ]
+    ],
+    "paired_delong": {
+      "auc_a": 0.9305555555555555,
+      "auc_b": 0.8888888888888888,
+      "difference": 0.04166666666666663,
+      "z": 0.43852900965351427,
+      "p_value": 0.6610028456239792
+    },
+    "dca": [
+      {
+        "model": "a",
+        "threshold": 0.5,
+        "net_benefit": 0.3333333333333333
+      },
+      {
+        "model": "a",
+        "threshold": 0.2,
+        "net_benefit": 0.4166666666666667
+      },
+      {
+        "model": "a",
+        "threshold": 0.5,
+        "net_benefit": 0.3333333333333333
+      },
+      {
+        "model": "a",
+        "threshold": 0.8,
+        "net_benefit": 0.25
+      },
+      {
+        "model": "b",
+        "threshold": 0.5,
+        "net_benefit": 0.3333333333333333
+      },
+      {
+        "model": "b",
+        "threshold": 0.2,
+        "net_benefit": 0.3958333333333333
+      },
+      {
+        "model": "b",
+        "threshold": 0.5,
+        "net_benefit": 0.3333333333333333
+      },
+      {
+        "model": "b",
+        "threshold": 0.8,
+        "net_benefit": -0.16666666666666674
+      },
+      {
+        "model": "Treat all",
+        "threshold": 0.5,
+        "net_benefit": 0.0
+      },
+      {
+        "model": "Treat none",
+        "threshold": 0.5,
+        "net_benefit": 0.0
+      },
+      {
+        "model": "Treat all",
+        "threshold": 0.2,
+        "net_benefit": 0.375
+      },
+      {
+        "model": "Treat none",
+        "threshold": 0.2,
+        "net_benefit": 0.0
+      },
+      {
+        "model": "Treat all",
+        "threshold": 0.5,
+        "net_benefit": 0.0
+      },
+      {
+        "model": "Treat none",
+        "threshold": 0.5,
+        "net_benefit": 0.0
+      },
+      {
+        "model": "Treat all",
+        "threshold": 0.8,
+        "net_benefit": -1.5000000000000004
+      },
+      {
+        "model": "Treat none",
+        "threshold": 0.8,
+        "net_benefit": 0.0
+      }
+    ],
+    "hosmer_lemeshow": {
+      "statistic": 0.6846837373153158,
+      "df": 2,
+      "p_value": 0.7101054004279153,
+      "table": [
+        {
+          "bin": "(-0.001, 0.275]",
+          "n": 3.0,
+          "observed": 0.0,
+          "expected": 0.30000000000000004
+        },
+        {
+          "bin": "(0.275, 0.5]",
+          "n": 3.0,
+          "observed": 1.0,
+          "expected": 1.05
+        },
+        {
+          "bin": "(0.5, 0.725]",
+          "n": 3.0,
+          "observed": 2.0,
+          "expected": 1.9
+        },
+        {
+          "bin": "(0.725, 1.0]",
+          "n": 3.0,
+          "observed": 3.0,
+          "expected": 2.7
+        }
+      ]
+    },
+    "failures": {
+      "one_class": {
+        "status": "error",
+        "error_type": "ValueError",
+        "message": "Target must contain exactly two non-missing classes.",
+        "warnings": []
+      },
+      "hl_constant": {
+        "status": "error",
+        "error_type": "ValueError",
+        "message": "Fewer than three distinct probability bins; H-L is undefined.",
+        "warnings": []
+      },
+      "invalid_probability": {
+        "status": "error",
+        "error_type": "ValueError",
+        "message": "Probabilities must be finite and between 0 and 1.",
+        "warnings": []
+      }
+    }
+  }
+}
