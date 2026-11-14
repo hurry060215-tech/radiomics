@@ -182,3 +182,10 @@ passed all nine jobs at `9732b3a`, including Windows/Linux installation and an
 Ubuntu container with neither Python nor network running extraction, training,
 model reload, prediction and evaluation. Later API changes require their own
 latest-head CI; the older green run is not a blanket approval of later commits.
+
+The later immutable v3 snapshot (`45140bf`) was built with the same native
+core identity and explicitly recorded release flags. Its installed Windows wheel
+passed 71 native-only tests, including the added table/center APIs and identity
+boundaries. The receipt and wheel/CLI are at
+`E:/radiomics-build/snapshot-native-v3/`; this does not replace the immutable v2
+software used for performance measurement.

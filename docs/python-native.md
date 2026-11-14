@@ -29,6 +29,21 @@ external-array tutorial does not claim that a real WSIData installation was test
 
 ## Training and persistence
 
+CSV/Parquet study inputs can use the native loader without pandas/pyarrow file
+parsers. `study = rad.read_study('study.json', task='binary')` resolves the
+schema-one column-role/join specification relative to its file. Its
+`study.dataframe`, `study.features`, `study.categorical`, `study.target` and
+`study.report` expose conversion views and the actual load audit. Native feature
+tables round-trip with `rad.read_feature_table(path)` or `rad.FeatureTable.read(path)`.
+
+For explicit center holdout, create
+`plan = rad.SplitPlan.center_holdout(data, 'outcome', held_out_centers=['B'])`,
+then apply `data = plan.apply_cohorts(data)` before fitting. Existing external
+cohorts remain external, and class inference reads training centers only.
+`rad.evaluate(result, by_center=True)` reports center/cohort strata with native
+metrics; an already aggregated prediction spanning multiple centers cannot be
+disaggregated. The CLI equivalent for training is `train --hold-out-center B`.
+
 ```python
 selector = rad.FeatureSelector(task='multiclass', backend='rust',
     univariate='auto', sparse_method='ovr_l1_logistic', alpha=0.01)
