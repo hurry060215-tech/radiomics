@@ -21,6 +21,10 @@ def test_independent_ibsi_source_and_binary_input_integrity():
     reference=read("published_reference.json")
     assert reference["license"]=="CC-BY-4.0"
     assert len(reference["features"])==55
+    for feature in reference["features"]:
+        family=feature["feature"].split("_")[1]
+        required=["3D, averaged","3D, merged"] if family in ["glcm","glrlm"] else ["3D"]
+        assert sorted(row["aggregation"] for row in feature["rows"])==sorted(required)
     for name in ("image.nii.gz","mask.nii.gz"):
         payload=gzip.decompress((DIRECTORY/name).read_bytes())
         assert struct.unpack_from("<i",payload,0)[0]==348

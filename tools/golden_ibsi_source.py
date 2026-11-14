@@ -44,10 +44,16 @@ def sections(text):
     result={}
     for i,anchor in enumerate(anchors):
         end=anchors[i+1].start() if i+1<len(anchors) else len(text)
-        result[anchor.group(1)[5:]]=(text[anchor.end():end],text[:anchor.start()].count("\n")+1)
+        block=text[anchor.end():end]
+        # The pinned manual omits an anchor for Small zone emphasis. A feature
+        # block must end at the next actual feature title, even without an anchor.
+        titles=list(re.finditer(r"(?m)^[^\n]+\n\^{4,}[ \t]*$",block))
+        if len(titles)>1:
+            block=block[:titles[1].start()]
+        result[anchor.group(1)[5:]]=(block,text[:anchor.start()].count("\n")+1,text[:anchor.end()].count("\n")+1)
     start=text.index("Small zone emphasis\n")
     end=text.index(".. _feat_szm_large_zone_emphasis:",start)
-    result["small_zone_emphasis"]=(text[start:end],text[:start].count("\n")+1)
+    result["small_zone_emphasis"]=(text[start:end],text[:start].count("\n")+1,text[:start].count("\n")+1)
     return result
 
 
@@ -56,7 +62,7 @@ def published_features(text):
     output=[]
     for family,mapping in MAPPING.items():
         for name,anchor in mapping.items():
-            block,line=blocks[anchor]
+            block,line,first_line=blocks[anchor]
             identifier=re.search(r'text-align:right">([A-Z0-9]{4})</p>',block)
             rows=[]
             for offset,raw in enumerate(block.splitlines()):
@@ -75,9 +81,17 @@ def published_features(text):
                 tol=None if tolerance=="—" else number(tolerance)[0]
                 rows.append({"aggregation":aggregation,"printed_value":value,"value":numeric,"printed_tolerance":tolerance,"published_tolerance":tol,
                              "printed_half_unit":half,"acceptance":"published_tolerance" if tol is not None else "published_printed_precision_interval",
-                             "consensus":consensus,"source_line":line+offset})
+                             "consensus":consensus,"source_line":first_line+offset})
+                if text.splitlines()[first_line+offset-1].strip()!=raw.strip():
+                    raise ValueError("Published row readback differs from its original absolute source line.")
             if not rows:
                 raise ValueError("No independent 3D benchmark for "+family+"/"+name)
+            required=["3D, averaged","3D, merged"] if family in ["glcm","glrlm"] else ["3D"]
+            if sorted(row["aggregation"] for row in rows)!=sorted(required):
+                raise ValueError("A source section has missing or cross-feature aggregation rows: "+family+"/"+name)
+            for row in rows:
+                if "dig. phantom" not in text.splitlines()[row["source_line"]-1]:
+                    raise ValueError("Source line must identify the actual published data row.")
             output.append({"feature":"original_"+family+"_"+name,"source_anchor":"feat_"+anchor if anchor!="small_zone_emphasis" else "small-zone-emphasis",
                            "ibsi_identifier":identifier.group(1) if identifier else None,"source_section_line":line,"rows":rows,
                            "definition_deviation":"Native python_golden_v1 emits raw kurtosis; IBSI excess is raw minus3. Native profile is not conformant for this feature." if name=="Kurtosis" else None})

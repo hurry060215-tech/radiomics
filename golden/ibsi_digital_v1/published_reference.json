@@ -49,7 +49,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1601
+          "source_line": 1602
         }
       ],
       "definition_deviation": null
@@ -69,7 +69,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1738
+          "source_line": 1739
         }
       ],
       "definition_deviation": null
@@ -89,7 +89,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1770
+          "source_line": 1771
         }
       ],
       "definition_deviation": null
@@ -109,7 +109,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1869
+          "source_line": 1870
         }
       ],
       "definition_deviation": null
@@ -129,7 +129,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1800
+          "source_line": 1801
         }
       ],
       "definition_deviation": null
@@ -149,7 +149,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1831
+          "source_line": 1832
         }
       ],
       "definition_deviation": null
@@ -169,7 +169,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1935
+          "source_line": 1936
         }
       ],
       "definition_deviation": null
@@ -189,7 +189,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1904
+          "source_line": 1905
         }
       ],
       "definition_deviation": null
@@ -209,7 +209,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1636
+          "source_line": 1637
         }
       ],
       "definition_deviation": null
@@ -229,7 +229,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1969
+          "source_line": 1970
         }
       ],
       "definition_deviation": null
@@ -249,7 +249,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1671
+          "source_line": 1672
         }
       ],
       "definition_deviation": null
@@ -269,7 +269,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 1708
+          "source_line": 1709
         }
       ],
       "definition_deviation": "Native python_golden_v1 emits raw kurtosis; IBSI excess is raw minus3. Native profile is not conformant for this feature."
@@ -289,7 +289,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 2158
+          "source_line": 2159
         }
       ],
       "definition_deviation": null
@@ -309,7 +309,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 2191
+          "source_line": 2192
         }
       ],
       "definition_deviation": null
@@ -329,7 +329,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 2897
+          "source_line": 2898
         }
       ],
       "definition_deviation": null
@@ -349,7 +349,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 2935
+          "source_line": 2936
         }
       ],
       "definition_deviation": null
@@ -369,7 +369,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3717
+          "source_line": 3718
         },
         {
           "aggregation": "3D, merged",
@@ -380,7 +380,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3719
+          "source_line": 3720
         }
       ],
       "definition_deviation": null
@@ -400,7 +400,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4277
+          "source_line": 4278
         },
         {
           "aggregation": "3D, merged",
@@ -411,7 +411,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4279
+          "source_line": 4280
         }
       ],
       "definition_deviation": null
@@ -431,7 +431,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3839
+          "source_line": 3840
         },
         {
           "aggregation": "3D, merged",
@@ -442,7 +442,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3841
+          "source_line": 3842
         }
       ],
       "definition_deviation": null
@@ -462,7 +462,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3658
+          "source_line": 3659
         },
         {
           "aggregation": "3D, merged",
@@ -473,7 +473,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3660
+          "source_line": 3661
         }
       ],
       "definition_deviation": null
@@ -493,7 +493,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4343
+          "source_line": 4344
         },
         {
           "aggregation": "3D, merged",
@@ -504,7 +504,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4345
+          "source_line": 4346
         }
       ],
       "definition_deviation": null
@@ -524,7 +524,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4817
+          "source_line": 4818
         },
         {
           "aggregation": "3D, merged",
@@ -535,7 +535,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4819
+          "source_line": 4820
         }
       ],
       "definition_deviation": null
@@ -555,7 +555,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3901
+          "source_line": 3902
         },
         {
           "aggregation": "3D, merged",
@@ -566,7 +566,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3903
+          "source_line": 3904
         }
       ],
       "definition_deviation": null
@@ -586,7 +586,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4472
+          "source_line": 4473
         },
         {
           "aggregation": "3D, merged",
@@ -597,7 +597,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4474
+          "source_line": 4475
         }
       ],
       "definition_deviation": null
@@ -617,7 +617,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4610
+          "source_line": 4611
         },
         {
           "aggregation": "3D, merged",
@@ -628,7 +628,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 4612
+          "source_line": 4613
         }
       ],
       "definition_deviation": null
@@ -648,7 +648,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3781
+          "source_line": 3782
         },
         {
           "aggregation": "3D, merged",
@@ -659,7 +659,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 3783
+          "source_line": 3784
         }
       ],
       "definition_deviation": null
@@ -679,7 +679,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5368
+          "source_line": 5369
         },
         {
           "aggregation": "3D, merged",
@@ -690,7 +690,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5370
+          "source_line": 5371
         }
       ],
       "definition_deviation": null
@@ -710,7 +710,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5427
+          "source_line": 5428
         },
         {
           "aggregation": "3D, merged",
@@ -721,7 +721,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5429
+          "source_line": 5430
         }
       ],
       "definition_deviation": null
@@ -741,7 +741,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5845
+          "source_line": 5846
         },
         {
           "aggregation": "3D, merged",
@@ -752,7 +752,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5847
+          "source_line": 5848
         }
       ],
       "definition_deviation": null
@@ -772,7 +772,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5904
+          "source_line": 5905
         },
         {
           "aggregation": "3D, merged",
@@ -783,7 +783,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5906
+          "source_line": 5907
         }
       ],
       "definition_deviation": null
@@ -803,7 +803,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5963
+          "source_line": 5964
         },
         {
           "aggregation": "3D, merged",
@@ -814,7 +814,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 5965
+          "source_line": 5966
         }
       ],
       "definition_deviation": null
@@ -834,7 +834,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6021
+          "source_line": 6022
         },
         {
           "aggregation": "3D, merged",
@@ -845,7 +845,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6023
+          "source_line": 6024
         }
       ],
       "definition_deviation": null
@@ -865,7 +865,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6085
+          "source_line": 6086
         },
         {
           "aggregation": "3D, merged",
@@ -876,7 +876,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6087
+          "source_line": 6088
         }
       ],
       "definition_deviation": null
@@ -896,7 +896,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6265
+          "source_line": 6266
         },
         {
           "aggregation": "3D, merged",
@@ -907,18 +907,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6267
-        },
-        {
-          "aggregation": "3D",
-          "printed_value": "0.255",
-          "value": 0.255,
-          "printed_tolerance": "\u2014",
-          "published_tolerance": null,
-          "printed_half_unit": 0.0005,
-          "acceptance": "published_printed_precision_interval",
-          "consensus": "very strong",
-          "source_line": 6411
+          "source_line": 6268
         }
       ],
       "definition_deviation": null
@@ -958,7 +947,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6448
+          "source_line": 6449
         }
       ],
       "definition_deviation": null
@@ -978,7 +967,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6724
+          "source_line": 6725
         }
       ],
       "definition_deviation": null
@@ -998,7 +987,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6762
+          "source_line": 6763
         }
       ],
       "definition_deviation": null
@@ -1018,7 +1007,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6801
+          "source_line": 6802
         }
       ],
       "definition_deviation": null
@@ -1038,7 +1027,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6839
+          "source_line": 6840
         }
       ],
       "definition_deviation": null
@@ -1058,7 +1047,7 @@
           "printed_half_unit": 5e-05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6878
+          "source_line": 6879
         }
       ],
       "definition_deviation": null
@@ -1078,7 +1067,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 6999
+          "source_line": 7000
         }
       ],
       "definition_deviation": null
@@ -1098,7 +1087,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8320
+          "source_line": 8321
         }
       ],
       "definition_deviation": null
@@ -1118,7 +1107,7 @@
           "printed_half_unit": 0.5,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8359
+          "source_line": 8360
         }
       ],
       "definition_deviation": null
@@ -1138,7 +1127,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8638
+          "source_line": 8639
         }
       ],
       "definition_deviation": null
@@ -1158,7 +1147,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8721
+          "source_line": 8722
         }
       ],
       "definition_deviation": null
@@ -1178,7 +1167,7 @@
           "printed_half_unit": 5e-05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8759
+          "source_line": 8760
         }
       ],
       "definition_deviation": null
@@ -1198,7 +1187,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8844
+          "source_line": 8845
         }
       ],
       "definition_deviation": null
@@ -1218,7 +1207,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8887
+          "source_line": 8888
         }
       ],
       "definition_deviation": null
@@ -1238,7 +1227,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8931
+          "source_line": 8932
         }
       ],
       "definition_deviation": null
@@ -1258,7 +1247,7 @@
           "printed_half_unit": 5e-05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 7959
+          "source_line": 7960
         }
       ],
       "definition_deviation": null
@@ -1278,7 +1267,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8005
+          "source_line": 8006
         }
       ],
       "definition_deviation": null
@@ -1298,7 +1287,7 @@
           "printed_half_unit": 0.005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8053
+          "source_line": 8054
         }
       ],
       "definition_deviation": null
@@ -1318,7 +1307,7 @@
           "printed_half_unit": 0.05,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8095
+          "source_line": 8096
         }
       ],
       "definition_deviation": null
@@ -1338,7 +1327,7 @@
           "printed_half_unit": 0.0005,
           "acceptance": "published_printed_precision_interval",
           "consensus": "very strong",
-          "source_line": 8135
+          "source_line": 8136
         }
       ],
       "definition_deviation": null

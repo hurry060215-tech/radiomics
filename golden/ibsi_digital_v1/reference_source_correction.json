@@ -1,0 +1,16 @@
+{
+  "schema": "ibsi_digital_v1.reference_source_correction.v1",
+  "review": "Main agent independently verified the pinned official RST before approving this source-reference repair.",
+  "reason": "The manual omits a feature anchor for Small zone emphasis. The previous parser crossed the actual feature title and misattributed its3D row to RunEntropy; source row metadata also pointed to preceding separator lines.",
+  "old_published_sha256": "ff25cb886b5f6291f46ff767e980559adb97e9b8b1ef6e4945b85d00ba294c69",
+  "new_published_sha256": "e55f0dbd3a7fb6e92bf5500b18a4e18077d7ca86096366efdf80c585182081a4",
+  "numeric_change": "Only remove the wrongly attributed GLSZM3D0.255 row from GLRLMRunEntropy. Genuine entropy3Davg2.43/merged2.62 and GLSZMSmallArea3D0.255 remain unchanged.",
+  "other_changes": "Source line numbers are corrected by absolute offsets; generator asserts actual row readback and exact aggregation-row coverage.",
+  "unchanged": [
+    "All actual reference numeric values",
+    "All tolerance and precision rules",
+    "All source input bytes and hashes",
+    "PythonGolden files and tolerances",
+    "Native implementation"
+  ]
+}
