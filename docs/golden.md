@@ -183,6 +183,15 @@ not a requirement that Linux produce byte-identical binaries.
   outcome during fixture assembly; the public API rejects missing outcomes.
   Sample-level dependency warnings remain visible for these repeated-patient
   numerical examples.
+- `pathology_aggregate_spec.py`, its input and reference JSON: strict tile-ID
+  embedding alignment, six summaries at tile→slide and slide→patient levels,
+  explicit valid-area weighting, missing/empty parent retention and block
+  overlays. Weighted quantiles use the declared stable `(value,id)` sequential
+  f64 CDF; ordinary quantiles are linear. Patient area weights require physical
+  units and recorded MPP. Global object coordinates carry an explicit space.
+  Coverage is exact, padding is excluded, and every block uses the original
+  canvas's global pixel index. The `.1`/nextafter boundary case prevents an
+  apparently tiny coordinate tolerance from hiding a changed coverage cell.
 
 The clinical Logistic fixture reuses lesion rows to validate numerical solvers;
 its 94/92 complete cases are sample counts, not independent-patient counts.
