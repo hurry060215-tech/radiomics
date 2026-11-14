@@ -145,6 +145,15 @@ not a requirement that Linux produce byte-identical binaries.
   An optimal zero objective only means no direction was detected at the declared
   resolution; observed-information and convergence checks are still required.
   One optimal vector cannot classify complete versus quasi separation.
+- `workflow_plans.json` and `workflow_reference.json`: explicit 3-outer/2-inner
+  patient partitions on the original three-task data, with real sample/patient/
+  center membership, every inner preprocessing/filter/model fit, selected grid
+  candidate, OOF scores and final train/test/unlabeled-external predictions.
+  Every inner fold refits median imputation, population scaling, variance and
+  absolute-correlation filtering. Scores aggregate lesion predictions within
+  patient first, then average fold-level scores equally. Differences ≤1e-12
+  are explicit candidate-order ties. Test labels and features do not fit any
+  training state, tuning choice, threshold or OOF prediction.
 
 The clinical Logistic fixture reuses lesion rows to validate numerical solvers;
 its 94/92 complete cases are sample counts, not independent-patient counts.
