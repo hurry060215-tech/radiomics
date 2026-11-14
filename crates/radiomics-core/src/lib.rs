@@ -6,6 +6,9 @@
 use std::error::Error;
 use std::fmt;
 
+pub mod contracts;
+pub mod errors;
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct InputError(pub &'static str);
 
