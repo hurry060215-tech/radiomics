@@ -115,3 +115,12 @@ Results save the seed, shared RNG version and namespace. Draws are processed
 one at a time, avoiding a full replicates-by-observations index allocation.
 These new-component streams do not replace the legacy binary bootstrap scheme.
 Repeat, outer one/three-thread and JSON tests reproduce every replicate exactly.
+
+`bootstrap_binary_seeded` calls the shared streaming
+`random::legacy_binary_bootstrap` iterator. It preserves NumPy RandomState
+MT19937/rk_interval compatibility, including positive-class draws before
+negative-class draws, and records `LEGACY_BOOTSTRAP_SCHEME` plus its u32 seed.
+It neither allocates all replicate index arrays nor defines a separate PRNG.
+The original 16 and patient-level 64 fixed-seed sequences yield the same
+replicate AUCs and intervals as their explicit-index paths; outer thread counts
+do not change any replicate.

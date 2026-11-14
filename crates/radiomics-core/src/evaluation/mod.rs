@@ -7,8 +7,8 @@ mod curves;
 mod inference;
 mod reports;
 pub use bootstrap::{
-    bootstrap_auc_explicit, bootstrap_model_score_explicit, bootstrap_multiclass_seeded,
-    bootstrap_regression_seeded, BootstrapInterval,
+    bootstrap_auc_explicit, bootstrap_binary_seeded, bootstrap_model_score_explicit,
+    bootstrap_multiclass_seeded, bootstrap_regression_seeded, BootstrapInterval,
 };
 pub use curves::{
     calibration_curve, precision_recall_curve, roc_curve, CalibrationCurve, CalibrationStrategy,

@@ -71,6 +71,40 @@ pub fn bootstrap_auc_explicit(
     }
     finish(estimate, values, confidence)
 }
+/// Legacy-compatible NumPy RandomState binary bootstrap, streamed through the
+/// shared MT19937/rk_interval sampler. Positives are drawn before negatives.
+pub fn bootstrap_binary_seeded(
+    y: &[u8],
+    scores: &[f64],
+    replicates: usize,
+    seed: u32,
+    confidence: f64,
+) -> RadResult<BootstrapInterval> {
+    super::inference::confidence(confidence)?;
+    if replicates < 2 {
+        return Err(invalid(
+            "Binary bootstrap requires at least two replicates.",
+        ));
+    }
+    let estimate = crate::auc(y, scores).map_err(kernel)?;
+    let draws = crate::random::legacy_binary_bootstrap(y, replicates, seed)?;
+    let mut values = Vec::new();
+    values
+        .try_reserve_exact(draws.len())
+        .map_err(|_| invalid("Binary bootstrap replicate result allocation failed."))?;
+    for draw in draws {
+        let labels: Vec<_> = draw.iter().map(|&i| y[i]).collect();
+        let probability: Vec<_> = draw.iter().map(|&i| scores[i]).collect();
+        values.push(crate::auc(&labels, &probability).map_err(kernel)?);
+    }
+    let mut report = finish(estimate, values, confidence)?;
+    report.resampling_source = "stratified_binary_legacy".into();
+    report.seed = Some(u64::from(seed));
+    report.rng_scheme = Some(crate::random::LEGACY_BOOTSTRAP_SCHEME.into());
+    report.rng_namespace = None;
+    Ok(report)
+}
+
 /// Generic task comparison-metric interval. Classification draws must retain
 /// every declared class; callers supply explicit stratified draws as needed.
 pub fn bootstrap_model_score_explicit(

@@ -1,6 +1,76 @@
 use super::*;
 use crate::contracts::NumericBuffer;
 use serde_json::Value;
+#[test]
+fn legacy_seeded_bootstrap_stream_matches_frozen16_and64_without_evaluator_rng() {
+    let old: Value = serde_json::from_str(include_str!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../../golden/python_golden_v1/reference.json"
+    )))
+    .unwrap();
+    let old = &old["baseline_metrics"];
+    let y: Vec<_> = old["inputs"]["y"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|v| v.as_u64().unwrap() as u8)
+        .collect();
+    let p = numbers(&old["inputs"]["a"]);
+    let draws: Vec<Vec<_>> = old["bootstrap_indices"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|row| {
+            row.as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_u64().unwrap() as usize)
+                .collect()
+        })
+        .collect();
+    let seeded = bootstrap_binary_seeded(&y, &p, 16, 42, 0.95).unwrap();
+    let explicit = bootstrap_auc_explicit(&y, &p, &draws, 0.95).unwrap();
+    assert_eq!(seeded.replicate_scores, explicit.replicate_scores);
+    assert_eq!(seeded.low, explicit.low);
+    assert_eq!(seeded.high, explicit.high);
+    assert_eq!(seeded.seed, Some(42));
+    assert_eq!(
+        seeded.rng_scheme.as_deref(),
+        Some(crate::random::LEGACY_BOOTSTRAP_SCHEME)
+    );
+    assert_eq!(seeded.rng_namespace, None);
+    let fixture = fixture();
+    let case = &fixture["cases"]["binary"];
+    let y: Vec<_> = case["y"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|v| v.as_u64().unwrap() as u8)
+        .collect();
+    let p: Vec<_> = case["predictions"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|row| row[1].as_f64().unwrap())
+        .collect();
+    let reference = &fixture["patient_binary_bootstrap"];
+    let result = bootstrap_binary_seeded(&y, &p, 64, 42, 0.95).unwrap();
+    vec_close(&result.replicate_scores, &reference["auc_replicates"]);
+    close(result.low, reference["ci"][0].as_f64().unwrap());
+    close(result.high, reference["ci"][1].as_f64().unwrap());
+    for n in [1, 3] {
+        let pool = rayon::ThreadPoolBuilder::new()
+            .num_threads(n)
+            .build()
+            .unwrap();
+        assert_eq!(
+            result,
+            pool.install(|| bootstrap_binary_seeded(&y, &p, 64, 42, 0.95).unwrap())
+        );
+    }
+    assert!(bootstrap_binary_seeded(&y, &p, 1, 42, 0.95).is_err());
+}
+
 fn fixture() -> Value {
     serde_json::from_str(include_str!(concat!(
         env!("CARGO_MANIFEST_DIR"),
