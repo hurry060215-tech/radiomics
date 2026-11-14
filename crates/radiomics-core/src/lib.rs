@@ -14,6 +14,7 @@ pub mod imaging;
 pub mod models;
 pub mod random;
 pub mod split;
+pub mod statistics;
 pub mod workflow;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
