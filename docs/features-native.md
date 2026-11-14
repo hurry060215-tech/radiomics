@@ -22,6 +22,19 @@ their original discrete labels in feature equations. Fixed-count binning expands
 a constant ROI's range by ±0.5, following NumPy histogram semantics, rather than
 assigning a constant ROI an arbitrary gray label of one.
 
+Floating-point bin edges follow the actual NumPy `arange`/`linspace` and
+`digitize` operations frozen in the reference, including representable values
+immediately adjacent to an edge. Applying the documentation's idealized floor
+formula directly would produce different labels for some decimal widths. The
+Rust code generates these edges implicitly and searches them without allocating
+a potentially enormous edge array. Shared JSON parsing must enable
+`serde_json/float_roundtrip` to preserve these exact input floats.
+If a huge constant intensity cannot represent the histogram range, or binning
+would produce a nonpositive/out-of-range gray label, the native API returns an
+explicit input error; it does not accept an all-zero discretized ROI. The Golden
+manifest retains the reference's original failures/nonpositive-label outputs
+and documents this rejection boundary.
+
 ## Explicit supported features
 
 All names are prefixed `original_` and their family name.
@@ -83,9 +96,14 @@ commit `5dbbee1` before this implementation. They validate actual counts rather
 than only final scalars. Additional tests cover affine flips and nonzero origin,
 unknown units, missing discrete gray labels, negative bin boundaries,
 resegmentation-mask separation, invalid geometry and nonfinite ROI intensities.
-The complete version-pinned PyRadiomics 3.0.1 reference comparison is a separate
-acceptance step and must pass before advertising reference parity. These tests
-alone do not establish IBSI conformance or any extraction speed claim.
+Independent Golden tests also compare all 55 requested first-order/texture
+features, merged GLCM/GLRLM, discrete labels and all five raw matrix families
+against actual version-pinned PyRadiomics 3.0.1 outputs for nine nonempty cases
+and explicit empty-ROI errors. Fifteen additional binning cases check decimal
+width/count edges, nextafter inputs, and representability failures. Scalar
+checks use the frozen tolerance; integer matrices, labels and floating bin edges
+are exact. These fixtures do not establish IBSI conformance or any extraction
+speed claim.
 
 No mesh surface area, sphericity, filters, 2.5D aggregation or sliding-window
 texture maps are implemented in this module. Scalar 2D and scalar 3D remain

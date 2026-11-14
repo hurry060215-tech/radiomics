@@ -122,6 +122,111 @@ fn validate_pair(image: &ImageVolume, mask: &MaskVolume, roi_label: u32) -> RadR
     Ok(())
 }
 
+/// NumPy constructs floating edges before digitizing. Applying an idealized
+/// floor formula can change exact gray labels at representable boundaries.
+/// Store those edges implicitly, so a wide intensity range does not allocate a
+/// huge intermediate edge vector merely to perform a binary search.
+struct BinEdges {
+    low: f64,
+    step: f64,
+    length: usize,
+    last: Option<f64>,
+    denormal_delta: Option<f64>,
+}
+impl BinEdges {
+    fn new(minimum: f64, maximum: f64, method: &Discretization) -> RadResult<Self> {
+        match *method {
+            Discretization::FixedWidth { width } => {
+                if !width.is_finite() || width <= 0.0 {
+                    return Err(invalid("Fixed bin width must be positive and finite."));
+                }
+                // Python's positive-divisor modulo has the sign of the divisor.
+                let low = minimum - minimum.rem_euclid(width);
+                let high = maximum + 2.0 * width;
+                let size = ((high - low) / width).ceil();
+                if !low.is_finite()
+                    || !high.is_finite()
+                    || !size.is_finite()
+                    || size <= 0.0
+                    || size > u32::MAX as f64
+                {
+                    return Err(invalid("Fixed-width edges are unrepresentable or exceed the u32 gray-label range; adjust binning explicitly."));
+                }
+                if size == 1.0 {
+                    // PyRadiomics' explicit flat-region fallback.
+                    return Ok(Self {
+                        low: low - 0.5,
+                        step: 1.0,
+                        length: 2,
+                        last: Some(low + 0.5),
+                        denormal_delta: None,
+                    });
+                }
+                // np.arange uses the difference between its first two stored
+                // values as the fill step, including rounding at the origin.
+                Ok(Self {
+                    low,
+                    step: (low + width) - low,
+                    length: size as usize,
+                    last: None,
+                    denormal_delta: None,
+                })
+            }
+            Discretization::FixedCount { count } => {
+                if count == 0 || count > u32::MAX as usize {
+                    return Err(invalid("Fixed bin count is outside the u32 label range."));
+                }
+                let (low, high) = if minimum == maximum {
+                    (minimum - 0.5, maximum + 0.5)
+                } else {
+                    (minimum, maximum)
+                };
+                let delta = high - low;
+                if !delta.is_finite() || delta <= 0.0 {
+                    return Err(invalid(
+                        "Fixed-count histogram range is not representable at these intensities.",
+                    ));
+                }
+                let step = delta / count as f64;
+                Ok(Self {
+                    low,
+                    step,
+                    length: count + 1,
+                    last: Some(high + 1.0),
+                    denormal_delta: (step == 0.0).then_some(delta),
+                })
+            }
+        }
+    }
+    fn edge(&self, index: usize) -> f64 {
+        if index == self.length - 1 {
+            if let Some(last) = self.last {
+                return last;
+            }
+        }
+        if let Some(delta) = self.denormal_delta {
+            (index as f64 / (self.length - 1) as f64) * delta + self.low
+        } else {
+            index as f64 * self.step + self.low
+        }
+    }
+    fn digitize(&self, value: f64) -> RadResult<u32> {
+        let (mut left, mut right) = (0usize, self.length);
+        while left < right {
+            let middle = left + (right - left) / 2;
+            if self.edge(middle) <= value {
+                left = middle + 1;
+            } else {
+                right = middle;
+            }
+        }
+        if left == 0 || left > u32::MAX as usize {
+            return Err(invalid("Discretization produced a nonpositive or out-of-range gray label; adjust binning explicitly."));
+        }
+        Ok(left as u32)
+    }
+}
+
 /// Freeze binning before computing any texture. Fixed-width bins are aligned to
 /// zero; fixed-count constant inputs follow NumPy histogram's expanded range.
 pub fn discretize(
@@ -139,43 +244,14 @@ pub fn discretize(
             maximum = maximum.max(v);
         }
     }
-    match *method {
-        Discretization::FixedWidth { width } if !width.is_finite() || width <= 0.0 => {
-            return Err(invalid("Fixed bin width must be positive and finite."))
-        }
-        Discretization::FixedCount { count } if count == 0 || count > u32::MAX as usize => {
-            return Err(invalid("Fixed bin count is outside the u32 label range."))
-        }
-        _ => (),
-    }
+    let edges = BinEdges::new(minimum, maximum, method)?;
     let mut values = vec![0; image.values.len()];
     let mut gray_levels = BTreeSet::new();
     for (i, (&v, &m)) in image.values.iter().zip(&mask.labels).enumerate() {
         if m != roi_label {
             continue;
         }
-        let label = match *method {
-            Discretization::FixedWidth { width } => {
-                (v / width).floor() - (minimum / width).floor() + 1.0
-            }
-            Discretization::FixedCount { count } => {
-                let (low, high) = if minimum == maximum {
-                    (minimum - 0.5, maximum + 0.5)
-                } else {
-                    (minimum, maximum)
-                };
-                // np.histogram's last edge includes the maximum; np.digitize
-                // receives that edge increased by one in PyRadiomics 3.0.1.
-                (((v - low) / (high - low) * count as f64).floor() as usize).min(count - 1) as f64
-                    + 1.0
-            }
-        };
-        if !label.is_finite() || !(1.0..=u32::MAX as f64).contains(&label) {
-            return Err(invalid(
-                "Discretized gray label exceeds u32 range; adjust binning explicitly.",
-            ));
-        }
-        values[i] = label as u32;
+        values[i] = edges.digitize(v)?;
         gray_levels.insert(values[i]);
     }
     Ok(DiscretizedImage {
@@ -991,6 +1067,67 @@ mod tests {
         assert_eq!(d.gray_levels, vec![1, 2, 3, 4, 6]);
         let m = texture_matrices(&d, 0).unwrap();
         assert_eq!(m.gldm.row_values, vec![1, 2, 3, 4, 6]);
+    }
+    #[test]
+    fn floating_binning_matches_independently_frozen_numpy_edges() {
+        // Independent 3.0.1 execution frozen in c64ed4c before this repair.
+        let fixture: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../../golden/python_golden_v1/binning_edges.json"
+        )))
+        .unwrap();
+        for case in fixture["cases"].as_array().unwrap() {
+            let id = case["id"].as_str().unwrap();
+            let values: Vec<f64> = case["values"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_f64().unwrap())
+                .collect();
+            let dims = case["shape"].as_array().unwrap();
+            let shape = [
+                dims[0].as_u64().unwrap() as usize,
+                dims[1].as_u64().unwrap() as usize,
+                1,
+            ];
+            let method = if let Some(width) = case["binWidth"].as_f64() {
+                Discretization::FixedWidth { width }
+            } else {
+                Discretization::FixedCount {
+                    count: case["binCount"].as_u64().unwrap() as usize,
+                }
+            };
+            let (image, mask) = sample(shape, values.clone(), vec![1; values.len()], 2);
+            let output = discretize(&image, &mask, 1, &method);
+            if case["native_rule"] == "exact_discrete_labels" {
+                let output = output.unwrap_or_else(|e| panic!("{id}: {e}"));
+                let expected: Vec<u32> = case["discretized"]["value"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_u64().unwrap() as u32)
+                    .collect();
+                assert_eq!(output.values, expected, "{id}");
+                let minimum = values.iter().copied().fold(f64::INFINITY, f64::min);
+                let maximum = values.iter().copied().fold(f64::NEG_INFINITY, f64::max);
+                let edges = BinEdges::new(minimum, maximum, &method).unwrap();
+                let expected_edges = case["bin_edges"]["value"].as_array().unwrap();
+                assert_eq!(edges.length, expected_edges.len(), "{id} edge count");
+                for (i, reference) in expected_edges.iter().enumerate() {
+                    assert_eq!(
+                        edges.edge(i).to_bits(),
+                        reference.as_f64().unwrap().to_bits(),
+                        "{id} edge {i}"
+                    );
+                }
+            } else {
+                let error = output.unwrap_err();
+                assert!(
+                    matches!(error.code, ErrorCode::InvalidInput | ErrorCode::Unsupported),
+                    "{id}: {error}"
+                );
+            }
+        }
     }
     #[test]
     fn direction_mean_and_merged_are_distinct() {
