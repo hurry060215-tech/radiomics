@@ -99,3 +99,17 @@ fn empty_slide_statuses_keep_the_patient_parent() {
     table.slide_patients.clear();
     assert!(table.validate().is_err());
 }
+
+#[test]
+fn repeated_samples_do_not_permit_a_patient_in_two_external_cohorts() {
+    let mut table = prediction();
+    table.unit = PredictionUnit::Sample;
+    let mut second = table.rows[0].clone();
+    second.sample_id = "other_sample".into();
+    second.cohort = "external_B".into();
+    table.rows[0].cohort = "external_A".into();
+    table.rows.push(second);
+    assert!(table.validate().is_err());
+    table.rows[1].cohort = "external_A".into();
+    table.validate().unwrap();
+}

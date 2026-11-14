@@ -89,3 +89,14 @@ def test_native_preparation_and_strict_configuration(samples):
     config['unsupported_filter'] = 'LoG'
     with pytest.raises(ValueError, match='unknown field'):
         rad.extract(samples, params=config, backend='rust')
+
+
+def test_per_sample_roi_labels_are_not_silently_ignored(samples, tmp_path):
+    write_nifti(tmp_path/'mask.nii', [1, 1, 2, 2, 0, 0])
+    changed = samples.copy()
+    changed['roi_label'] = [2.0, None]
+    result = rad.extract(changed, backend='rust', bin_width=1)
+    assert result.features.set_index('ID').original_firstorder_Mean.to_dict() == {'A': 1., 'B': 2.}
+    changed.loc[0, 'roi_label'] = 2.5
+    with pytest.raises(ValueError, match='without truncation'):
+        rad.extract(changed, backend='rust', bin_width=1)

@@ -1,0 +1,73 @@
+# Native NIfTI extraction
+
+The Rust core, CLI `check`/`extract` and Python `backend="rust"` entry point use
+the same reader/preparation/explicit Original feature engine without calling
+SimpleITK/PyRadiomics/sklearn/statsmodels. Full native modeling/statistical
+workflow integration is tracked separately in [the ledger](native-development.md).
+
+Build with `cargo build --release -p ov-radiomics-cli --locked`. The binary is
+`target/release/radiomics` (Windows: `radiomics.exe`). Build the Python wheel with
+maturin; base installation needs no reference packages. Legacy scientific
+adapters require `[reference]`, with `[image]` for external image extraction.
+
+The cohort CSV requires `sample_id,patient_id,image,mask`. IDs remain strings;
+sample IDs are unique and patient IDs may repeat. Paths are relative to the CSV.
+Optional fields are `slide_id,lesion_id,modality,region,timepoint,center,organ_mask`.
+An optional integer `roi_label` selects one ROI per row and overrides the global
+label selection; effective labels are recorded per sample and included in cache
+identity. Missing row labels use the explicit extraction configuration.
+Metadata stays outside numerical features. Bad images/ROIs remain failure records.
+
+```sh
+radiomics check --cohort study.csv --output new-check.json
+radiomics extract --cohort study.csv --config examples/native-extract.json --output fresh-results --n-jobs 2
+```
+
+The example config is not a modality preset. Bin width/count must be explicit.
+JSON rejects unknown fields/profiles and unsupported filters. The default is no
+preparation/resampling. `direction_mean` and `merge_matrices` are different modes.
+2D/3D remain explicit; no 2.5D/mesh/filter support is implied.
+
+```python
+import ov_radiomics as rad
+samples = rad.read_cohort("study.csv")
+result = rad.extract(samples, backend="rust", profile="python_golden_v1", bin_width=25)
+result.save("fresh-python-results")
+```
+
+Native `params=` accepts ExtractConfig as a dictionary/JSON file with `extraction`,
+nonzero `labels` and ordered `preparation`. Operations are `resample_spacing`,
+`crop_voxels`, `crop_mm`, `clip_range`, `clip_percentile`, `normalize`,
+`largest_component`, `peritumoral`, and final `resegment`. Percentile/normalization
+explicitly name `statistics` (`roi`/`whole_image`). Geometric transforms update
+image/morphology/organ masks together; resegmentation keeps an independent
+intensity mask. Unknown units/shear cannot silently enter mm-distance algorithms.
+The generic outer-edge spacing grid differs from PyRadiomics's ROI-based grid.
+
+For compatibility, the old `extract()` default remains the documented Python
+adapter. `backend="rust"`/`"auto"` selects only validated native configurations;
+it never changes algorithms by falling back. External PyRadiomics YAML/settings
+need explicit `backend="python"`. Native `correct_mask=True` is rejected: alignment
+requires explicit resampling.
+
+CLI output contains `features.csv`, `metadata.csv`, `failures.csv`, `extraction.json`.
+Existing output directories require `--overwrite`. Partial/all-failed batches
+still export records and exit 2; input/configuration errors exit 1; success exits
+0. Python `on_error="record"` retains failed IDs/NaN feature rows; `"raise"` names
+the failures. Undefined features remain missing with diagnostics, never valid zero.
+
+Content cache is opt-in (`--cache` / Python `cache=`). Keys include input SHA256,
+metadata, effective config and a build-time source/dependency-lock digest. Schema
+and payload validation reject corrupt entries with diagnostics and recompute.
+Cache files are not silently overwritten. `n_jobs` controls one outer sample pool;
+outputs have deterministic sample/feature order.
+Input content is checked again after computation; a moving input is rejected
+before any feature cache entry is accepted.
+
+[The executable tutorial](../examples/native/01_extract.py) creates original
+anisotropic 3D fixtures with a flipped direction and nonzero origin. Three lesions
+belong to two patients, each with 24 ROI voxels / 576 mm³. `--cli` invokes the binary
+with an empty executable search path, compares exact CSV values with Python and
+requires matching implementation digests. A clean OS/container deployment remains
+a separate cross-platform gate. Numerical compatibility does not establish IBSI
+conformance or performance targets; see [Benchmark v2](benchmark-v2.md).

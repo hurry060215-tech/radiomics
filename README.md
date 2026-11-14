@@ -17,7 +17,7 @@ From a checkout:
 ```bash
 # Source builds require Rust >= 1.85 plus a platform C/C++ linker.
 # A prebuilt wheel does not require Rust on the user's machine.
-python -m pip install -e ".[image,test]"
+python -m pip install -e ".[image,test,reference]"
 # Optional classifier backends:
 python -m pip install -e ".[boost]"
 ```

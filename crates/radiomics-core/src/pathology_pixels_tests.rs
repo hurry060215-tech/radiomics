@@ -305,11 +305,15 @@ fn invalid_parameters_grayscale_and_empty_regions_are_explicit() {
         height: 2,
         pixels: RasterPixels::Rgb8(vec![128; 12]),
     };
-    let mut qc = QcConfig::default();
-    qc.border_band_px = 0;
+    let qc = QcConfig {
+        border_band_px: 0,
+        ..QcConfig::default()
+    };
     assert!(qc_patch(&rgb, [0, 0, 2, 2], &qc).is_err());
-    qc = QcConfig::default();
-    qc.min_laplacian_variance = Some(0.);
+    let qc = QcConfig {
+        min_laplacian_variance: Some(0.),
+        ..QcConfig::default()
+    };
     let result = qc_patch(&rgb, [0, 0, 2, 2], &qc).unwrap();
     assert_eq!(result.scores["laplacian_variance"], None);
     assert_eq!(

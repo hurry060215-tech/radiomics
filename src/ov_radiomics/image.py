@@ -16,6 +16,19 @@ def _sitk():
         raise ImportError('Install ov-radiomics[image] to read medical images.') from exc
 
 
+def _sample_roi_label(row, default):
+    value = row.get('roi_label')
+    if value is None or pd.isna(value):
+        return default
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError('roi_label must be an integer.') from exc
+    if isinstance(value, (float, np.floating)) and value != parsed:
+        raise ValueError('roi_label must be an integer, without truncation.')
+    return parsed
+
+
 def match_images(root, image_dir="images", mask_dir="masks"):
     """Pair .nii/.nii.gz files by exact filename. IDs retain the filename."""
     root = Path(root)
@@ -49,7 +62,7 @@ def check_images(samples, roi_label=1, geometry_tolerance=1e-6):
                 equal = a == b if name == 'Size' else np.allclose(a, b, atol=geometry_tolerance, rtol=0)
                 if not equal:
                     mismatch.append(name)
-            count = int(np.count_nonzero(sitk.GetArrayViewFromImage(mask) == row.get('roi_label', roi_label)))
+            count = int(np.count_nonzero(sitk.GetArrayViewFromImage(mask) == _sample_roi_label(row, roi_label)))
             result.update(roi_voxels=count, geometry_mismatch=','.join(mismatch))
             if count == 0:
                 raise ValueError('Requested ROI is empty or absent.')
@@ -116,7 +129,7 @@ def extract(samples, params=None, roi_label=1, correct_mask=False, n_jobs=1, on_
             if not qc['ok'] and not (correct_mask and str(qc['error']).startswith('Geometry mismatch:')):
                 raise ValueError(qc['error'])
             extractor = RadiomicsFeatureExtractor(copy.deepcopy(effective))
-            output = extractor.execute(str(row['image']), str(row['mask']), label=int(row.get('roi_label', roi_label)))
+            output = extractor.execute(str(row['image']), str(row['mask']), label=_sample_roi_label(row, roi_label))
             for key, value in output.items():
                 if key.startswith('diagnostics_'):
                     diagnostic[key] = str(value)
@@ -147,7 +160,7 @@ def read_cohort(path):
     records = json.loads(native.read_cohort(str(Path(path).resolve())))
     return pd.DataFrame([dict(ID=row['metadata']['sample_id'],
         **{k: v for k, v in row['metadata'].items() if k != 'sample_id'},
-        image=row['image'], mask=row['mask'], organ_mask=row['organ_mask']) for row in records])
+        image=row['image'], mask=row['mask'], organ_mask=row['organ_mask'], roi_label=row.get('roi_label')) for row in records])
 
 
 def _extract_native(samples, params, roi_label, correct_mask, n_jobs, on_error,
@@ -187,8 +200,9 @@ def _extract_native(samples, params, roi_label, correct_mask, n_jobs, on_error,
             raise ValueError('patient_id must be complete when supplied.')
         metadata = dict(sample_id=str(row['ID']), patient_id=str(row.get('patient_id', row['ID'])),
             **{k: optional(k) for k in ('slide_id', 'lesion_id', 'modality', 'region', 'timepoint', 'center')})
+        label = _sample_roi_label(row, None)
         rows.append(dict(metadata=metadata, image=str(Path(row['image']).resolve()),
-            mask=str(Path(row['mask']).resolve()), organ_mask=optional('organ_mask')))
+            mask=str(Path(row['mask']).resolve()), organ_mask=optional('organ_mask'), roi_label=label))
     native = resolve_backend('rust')
     batch = json.loads(native.extract_images(json.dumps(rows, allow_nan=False),
         json.dumps(config, allow_nan=False), n_jobs, str(Path(cache).resolve()) if cache is not None else None))

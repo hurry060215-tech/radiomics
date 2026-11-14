@@ -152,3 +152,28 @@ fn malformed_configuration_and_duplicate_ids_fail_before_processing() {
     assert!(serde_json::from_value::<ExtractConfig>(raw).is_err());
     fs::remove_dir_all(root).unwrap();
 }
+
+#[test]
+fn explicit_per_sample_roi_labels_change_features_and_cache_identity() {
+    let root = temp();
+    let mut samples = cohort(&root);
+    nifti(&root.join("mask.nii"), &[1., 1., 2., 2., 0., 0.]);
+    samples[0].roi_label = Some(1);
+    let first = extract_batch(&samples[..1], &config(), 1, Some(&root.join("cache"))).unwrap();
+    samples[0].roi_label = Some(2);
+    let second = extract_batch(&samples[..1], &config(), 1, Some(&root.join("cache"))).unwrap();
+    assert_eq!(
+        first.records[0].features["original_firstorder_Mean"],
+        Some(1.)
+    );
+    assert_eq!(
+        second.records[0].features["original_firstorder_Mean"],
+        Some(2.)
+    );
+    assert_ne!(first.records[0].cache_key, second.records[0].cache_key);
+    assert!(second.records[0]
+        .quality
+        .iter()
+        .any(|q| q.code == "effective_roi_labels" && q.message == "[2]"));
+    fs::remove_dir_all(root).unwrap();
+}

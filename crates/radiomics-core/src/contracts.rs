@@ -17,6 +17,27 @@ pub fn unique_nonempty(values: &[String], label: &str) -> RadResult<()> {
     Ok(())
 }
 
+pub fn validate_patient_cohorts<'a>(
+    pairs: impl Iterator<Item = (&'a str, &'a str)>,
+) -> RadResult<()> {
+    let mut membership = BTreeMap::new();
+    for (patient, cohort) in pairs {
+        if patient.trim().is_empty() || cohort.trim().is_empty() {
+            return Err(invalid("Patient/cohort identity must be nonempty."));
+        }
+        if membership
+            .insert(patient, cohort)
+            .is_some_and(|previous| previous != cohort)
+        {
+            return Err(RadiomicsError::new(
+                ErrorCode::Leakage,
+                "A patient occurs in multiple cohorts, including external prediction cohorts.",
+            ));
+        }
+    }
+    Ok(())
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct QualityRecord {
@@ -577,6 +598,11 @@ pub struct PredictionTable {
 }
 impl PredictionTable {
     pub fn validate(&self) -> RadResult<()> {
+        validate_patient_cohorts(
+            self.rows
+                .iter()
+                .map(|r| (r.patient_id.as_str(), r.cohort.as_str())),
+        )?;
         unique_nonempty(&self.classes, "Class labels")?;
         match self.task {
             Task::Regression if !self.classes.is_empty() => {

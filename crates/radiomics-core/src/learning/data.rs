@@ -66,6 +66,12 @@ impl StudyData {
         for sample in &self.samples {
             sample.validate()?;
         }
+        validate_patient_cohorts(
+            self.samples
+                .iter()
+                .zip(&self.cohorts)
+                .map(|(sample, cohort)| (sample.patient_id.as_str(), cohort.as_str())),
+        )?;
         unique_nonempty(
             &self
                 .samples

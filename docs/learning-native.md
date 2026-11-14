@@ -72,3 +72,21 @@ predictions are apparent. A final held-out cohort remains necessary for evaluati
 this workflow does not turn OOF scores used to fit a fusion model into unbiased
 validation of that fusion model. See [Benchmark v2](benchmark-v2.md) for separate
 correctness/deployment gates and performance reporting.
+
+`learning::fit_fusion` supports explicit weighted probability averaging and a
+native Logistic/softmax meta model. Named components must share the full validated
+SplitPlan, including actual inner/outer patient sets; matching outer fold numbers
+alone is insufficient. Base OOF predictions become one row per training patient
+before meta fitting. Binary meta input uses each positive-class probability;
+multiclass input preserves every ordered component/class probability. Weights are
+explicit nonnegative relative weights divided by their sum. Meta fitting uses no
+extra scaling and never reads held-out outcomes. Its training output is marked
+`apparent_meta_training`; fixed-weight OOF output is labeled separately.
+
+Portable fusion state stores fitted base models and training-only OOF provenance,
+not held-out feature values or predictions. Changing test/external features and
+labels therefore cannot change the saved fusion model. `predict_fusion` takes
+the exact named raw component inputs, validates schemas, aggregates genuine base
+predictions to patients, and returns patient-level output. Patient probabilities
+cannot become local pathology scores. New external cohorts are mutually patient
+disjoint as well as disjoint from fitted training patients.

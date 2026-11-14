@@ -159,6 +159,21 @@ impl FitAudit {
             ));
         }
         unique_nonempty(&self.training_sample_ids, "Audit training sample IDs")?;
+        let selected = if let Some(selector) = &self.selector {
+            selector.selected_names()?
+        } else {
+            self.preprocessing.output_names.clone()
+        };
+        if selected != self.selected_features
+            || !self
+                .model_state_sha256
+                .bytes()
+                .all(|b| b.is_ascii_hexdigit())
+        {
+            return Err(invalid(
+                "Fit audit selected feature order or state digest is invalid.",
+            ));
+        }
         let expected: Vec<_> = plan
             .sample_patients
             .iter()
@@ -656,6 +671,7 @@ fn train_model(
         threshold: config.threshold,
         split_plan_sha256: fingerprint.clone(),
         training_configuration: BTreeMap::from([
+            ("model_kind".into(), "pipeline".into()),
             ("split_plan".into(), serde_json::to_value(plan)?),
             (
                 "candidate_grid".into(),
@@ -749,92 +765,127 @@ pub fn train(
     Ok(result)
 }
 
+pub(super) fn validate_oof<'a>(
+    table: &PredictionTable,
+    plan: &SplitPlan,
+    model_name: &str,
+    unit: PredictionUnit,
+    sources: impl IntoIterator<Item = (usize, &'a FoldPartition, &'a FitAudit)>,
+) -> RadResult<()> {
+    table.validate()?;
+    plan.validate()?;
+    if table.task != plan.task || table.classes != plan.classes || table.unit != unit {
+        return Err(invalid(
+            "OOF task, class order or prediction unit differs from SplitPlan/model.",
+        ));
+    }
+    let expected: BTreeSet<_> = plan
+        .sample_patients
+        .iter()
+        .filter(|(_, p)| plan.cohorts["train"].contains(*p))
+        .map(|(s, _)| s.clone())
+        .collect();
+    if table
+        .rows
+        .iter()
+        .map(|r| r.sample_id.clone())
+        .collect::<BTreeSet<_>>()
+        != expected
+    {
+        return Err(RadiomicsError::new(
+            ErrorCode::Alignment,
+            "OOF population differs from the complete training sample set.",
+        ));
+    }
+    let mut count = 0;
+    for (index, (fold, partition, audit)) in sources.into_iter().enumerate() {
+        let nested = plan
+            .outer_folds
+            .get(index)
+            .ok_or_else(|| invalid("Extra OOF source fold."))?;
+        if fold != index || partition != &nested.outer {
+            return Err(RadiomicsError::new(
+                ErrorCode::Leakage,
+                "Fold numbers do not identify the same actual patient partitions.",
+            ));
+        }
+        audit.validate(
+            plan,
+            &nested.outer.training_patients,
+            &format!("{model_name}/outer-{index}/fit"),
+        )?;
+        for row in table.rows.iter().filter(|r| r.fold == Some(index)) {
+            if row.cohort != "train"
+                || !nested.outer.validation_patients.contains(&row.patient_id)
+                || plan.sample_patients.get(&row.sample_id) != Some(&row.patient_id)
+                || row.training_source != format!("oof:{}", audit.provenance_id)
+            {
+                return Err(RadiomicsError::new(
+                    ErrorCode::Leakage,
+                    "OOF prediction does not come from its declared patient-excluding fit.",
+                ));
+            }
+        }
+        count += 1;
+    }
+    if count != plan.outer_folds.len()
+        || table.rows.iter().any(|r| r.fold.is_none_or(|f| f >= count))
+    {
+        return Err(invalid("An OOF prediction has no valid source fold."));
+    }
+    Ok(())
+}
 impl ModelRun {
     pub fn validate_provenance(&self, plan: &SplitPlan) -> RadResult<()> {
         self.model.validate()?;
-        self.oof.validate()?;
         self.predictions.validate()?;
         if self.split_plan_sha256 != plan.fingerprint()?
             || self.model.manifest.split_plan_sha256 != self.split_plan_sha256
-            || self.outer_folds.len() != plan.outer_folds.len()
             || self.model.manifest.task != plan.task
             || self.model.manifest.classes != plan.classes
-            || [&self.oof, &self.predictions].iter().any(|t| {
-                t.task != plan.task
-                    || t.classes != plan.classes
-                    || t.unit != self.model.fitted.fit_unit
-            })
+            || self.predictions.task != plan.task
+            || self.predictions.classes != plan.classes
+            || self.predictions.unit != self.model.fitted.fit_unit
         {
             return Err(RadiomicsError::new(
                 ErrorCode::Alignment,
-                "Model and OOF results do not share the supplied SplitPlan.",
+                "Model and prediction results do not share the supplied SplitPlan/task/unit.",
             ));
         }
-        let expected: BTreeSet<_> = plan
-            .sample_patients
-            .iter()
-            .filter(|(_, p)| plan.cohorts["train"].contains(*p))
-            .map(|(s, _)| s.clone())
-            .collect();
+        validate_oof(
+            &self.oof,
+            plan,
+            &self.name,
+            self.model.fitted.fit_unit,
+            self.outer_folds
+                .iter()
+                .map(|f| (f.fold, &f.partition, &f.fit)),
+        )?;
+        let mean =
+            self.outer_folds.iter().map(|f| f.score).sum::<f64>() / self.outer_folds.len() as f64;
+        if self.mean_cv_score != mean
+            || !valid_score(plan.task, mean)
+            || self
+                .outer_folds
+                .iter()
+                .any(|f| !valid_score(plan.task, f.score))
+        {
+            return Err(invalid(
+                "Stored model comparison score differs from valid outer-fold scores.",
+            ));
+        }
         if self
-            .oof
+            .predictions
             .rows
             .iter()
             .map(|r| r.sample_id.clone())
             .collect::<BTreeSet<_>>()
-            != expected
-            || self
-                .predictions
-                .rows
-                .iter()
-                .map(|r| r.sample_id.clone())
-                .collect::<BTreeSet<_>>()
-                != plan.sample_patients.keys().cloned().collect()
+            != plan.sample_patients.keys().cloned().collect()
         {
             return Err(RadiomicsError::new(
                 ErrorCode::Alignment,
-                "Prediction sample populations differ from SplitPlan.",
+                "Final prediction population differs from SplitPlan.",
             ));
-        }
-        for (index, (fold, nested)) in self.outer_folds.iter().zip(&plan.outer_folds).enumerate() {
-            if fold.fold != index || fold.partition != nested.outer || !fold.score.is_finite() {
-                return Err(RadiomicsError::new(
-                    ErrorCode::Leakage,
-                    "Fold indices do not identify the same actual patient partitions.",
-                ));
-            }
-            fold.fit.validate(
-                plan,
-                &nested.outer.training_patients,
-                &format!("{}/outer-{index}/fit", self.name),
-            )?;
-            for row in self.oof.rows.iter().filter(|r| r.fold == Some(index)) {
-                if !nested.outer.validation_patients.contains(&row.patient_id)
-                    || row.cohort != "train"
-                    || plan.sample_patients.get(&row.sample_id) != Some(&row.patient_id)
-                    || row.training_source != format!("oof:{}", fold.fit.provenance_id)
-                {
-                    return Err(RadiomicsError::new(
-                        ErrorCode::Leakage,
-                        "OOF prediction does not come from its declared patient-excluding fit.",
-                    ));
-                }
-            }
-        }
-        let mean =
-            self.outer_folds.iter().map(|f| f.score).sum::<f64>() / self.outer_folds.len() as f64;
-        if self.mean_cv_score != mean || !valid_score(plan.task, mean) {
-            return Err(invalid(
-                "Stored model comparison score differs from outer-fold scores.",
-            ));
-        }
-        if self
-            .oof
-            .rows
-            .iter()
-            .any(|r| r.fold.is_none_or(|f| f >= self.outer_folds.len()))
-        {
-            return Err(invalid("An OOF prediction has no valid source fold."));
         }
         let source = format!("final:{}", digest(&self.model)?);
         for row in &self.predictions.rows {
@@ -848,13 +899,14 @@ impl ModelRun {
             {
                 return Err(RadiomicsError::new(
                     ErrorCode::Alignment,
-                    "Final prediction identity/cohort/source differs from the fitted model.",
+                    "Final prediction identity/cohort/source differs from its fitted model.",
                 ));
             }
         }
         Ok(())
     }
 }
+
 impl TrainingResult {
     pub fn validate(&self) -> RadResult<()> {
         self.config.validate()?;

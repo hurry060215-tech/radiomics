@@ -31,12 +31,17 @@ pub struct CohortSample {
     pub image: PathBuf,
     pub mask: PathBuf,
     pub organ_mask: Option<PathBuf>,
+    #[serde(default)]
+    pub roi_label: Option<u32>,
 }
 
 /// Paths are resolved relative to the cohort CSV, never the shell's current directory.
 pub fn read_cohort(path: impl AsRef<Path>) -> RadResult<Vec<CohortSample>> {
     let path = path.as_ref();
-    let base = path.parent().unwrap_or_else(|| Path::new("."));
+    let base = path
+        .parent()
+        .filter(|p| !p.as_os_str().is_empty())
+        .unwrap_or_else(|| Path::new("."));
     let base = fs::canonicalize(base)?;
     let mut reader = csv::Reader::from_path(path).map_err(csv_error)?;
     let headers = reader.headers().map_err(csv_error)?.clone();
@@ -87,6 +92,13 @@ pub fn read_cohort(path: impl AsRef<Path>) -> RadResult<Vec<CohortSample>> {
             image: resolve(required("image")?),
             mask: resolve(required("mask")?),
             organ_mask: get("organ_mask").map(resolve),
+            roi_label: get("roi_label")
+                .map(|label| {
+                    label
+                        .parse::<u32>()
+                        .map_err(|_| invalid("roi_label must be a nonnegative integer."))
+                })
+                .transpose()?,
         });
     }
     validate_cohort(&result)?;
@@ -213,11 +225,23 @@ pub struct ExtractionBatch {
     pub implementation_sha256: String,
 }
 
+fn effective_extract_config(
+    sample: &CohortSample,
+    config: &ExtractConfig,
+) -> RadResult<ExtractConfig> {
+    let mut effective = config.clone();
+    if let Some(label) = sample.roi_label {
+        effective.labels = vec![label];
+    }
+    effective.validate()?;
+    Ok(effective)
+}
 pub fn prepare_sample(
     sample: &CohortSample,
     config: &ExtractConfig,
 ) -> RadResult<(ImageSample, Option<MaskVolume>, Vec<QualityRecord>)> {
-    config.validate()?;
+    let effective = effective_extract_config(sample, config)?;
+    let config = &effective;
     let mut image = imaging::read_nifti(&sample.image)?;
     let source_mask = imaging::read_mask(&sample.mask)?;
     image.geometry.aligned_with(&source_mask.geometry)?;
@@ -233,6 +257,12 @@ pub fn prepare_sample(
     let mut intensity_mask = None;
     let mut quality = image.geometry.diagnostics.clone();
     quality.extend(mask.geometry.diagnostics.clone());
+    quality.push(QualityRecord {
+        code: "effective_roi_labels".into(),
+        message: serde_json::to_string(&config.labels)?,
+        severity: "info".into(),
+        sample_id: Some(sample.metadata.sample_id.clone()),
+    });
     for step in &config.preparation {
         match *step {
             PrepareStep::ResampleSpacing {
@@ -351,6 +381,7 @@ fn extract_one(
     config: &ExtractConfig,
     cache: Option<&Path>,
 ) -> RadResult<ExtractedSample> {
+    let effective = effective_extract_config(sample, config)?;
     let mut hashes = BTreeMap::from([
         ("image".into(), file_sha256(&sample.image)?),
         ("mask".into(), file_sha256(&sample.mask)?),
@@ -363,7 +394,7 @@ fn extract_one(
         Sha256::digest(serde_json::to_vec(&(
             1u32,
             &hashes,
-            config,
+            &effective,
             &sample.metadata,
             implementation_sha256()
         ))?)
@@ -401,7 +432,7 @@ fn extract_one(
             }
         }
     }
-    let (prepared, intensity_mask, mut quality) = prepare_sample(sample, config)?;
+    let (prepared, intensity_mask, mut quality) = prepare_sample(sample, &effective)?;
     if let Some(message) = cache_diagnostic {
         quality.push(QualityRecord {
             code: "cache_rejected".into(),
@@ -415,7 +446,7 @@ fn extract_one(
         &prepared.mask,
         intensity_mask.as_ref(),
         1,
-        &config.extraction,
+        &effective.extraction,
     )?;
     let mut features = BTreeMap::new();
     for (name, value) in output {
@@ -436,6 +467,17 @@ fn extract_one(
         input_sha256: hashes,
         cache_key: key.clone(),
     };
+    if file_sha256(&sample.image)? != record.input_sha256["image"]
+        || file_sha256(&sample.mask)? != record.input_sha256["mask"]
+        || sample
+            .organ_mask
+            .as_ref()
+            .map(file_sha256)
+            .transpose()?
+            .is_some_and(|hash| Some(&hash) != record.input_sha256.get("organ_mask"))
+    {
+        return Err(invalid("Input content changed during extraction; no result/cache entry is accepted for a moving input."));
+    }
     if let Some(path) = cache_file {
         let entry = CacheEntry {
             schema: 1,

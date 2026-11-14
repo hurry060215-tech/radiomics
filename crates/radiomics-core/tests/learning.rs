@@ -272,6 +272,10 @@ fn portable_pipeline_bundle_reloads_and_predicts_without_labels() {
     let mut unlabeled = data.clone();
     unlabeled.outcome = Outcome::Unlabeled;
     assert_eq!(predict(&restored, &unlabeled).unwrap(), model.predictions);
+    let mut overlapping = unlabeled.clone();
+    let last = overlapping.cohorts.len() - 1;
+    overlapping.cohorts[last] = "another_external_cohort".into();
+    assert!(predict(&restored, &overlapping).is_err());
     std::fs::remove_file(file).unwrap();
     let mut bad = result.clone();
     bad.models[0].outer_folds[0]
@@ -295,4 +299,221 @@ fn portable_pipeline_bundle_reloads_and_predicts_without_labels() {
     bad.models[0].final_tuning.selected_candidate =
         1 - bad.models[0].final_tuning.selected_candidate;
     assert!(bad.validate().is_err());
+}
+
+fn subset_features(data: &StudyData, indices: &[usize]) -> StudyData {
+    let mut result = data.clone();
+    result.features.numeric_names = indices
+        .iter()
+        .map(|&i| data.features.numeric_names[i].clone())
+        .collect();
+    let values: Vec<_> = (0..data.features.rows)
+        .flat_map(|r| {
+            indices
+                .iter()
+                .map(move |&c| data.features.numeric.values[r * data.features.numeric.cols + c])
+        })
+        .collect();
+    result.features.numeric = NumericBuffer {
+        rows: data.features.rows,
+        cols: indices.len(),
+        missing: vec![false; values.len()],
+        values,
+    };
+    result
+}
+fn fixed_config(task: &str) -> TrainingConfig {
+    let mut c = config(task);
+    c.models[0].candidates = vec![c.models[0].candidates[1].clone()];
+    c
+}
+
+#[test]
+fn patient_fusion_matches_frozen_reference_and_never_saves_holdout_numerics() {
+    let original = data("binary");
+    let plan = plan("binary");
+    let cfg = fixed_config("binary");
+    let signal_data = subset_features(&original, &[0, 1]);
+    let noise_data = subset_features(&original, &[2, 3]);
+    let signal = train(&signal_data, &plan, &cfg, 1).unwrap();
+    let noise = train(&noise_data, &plan, &cfg, 1).unwrap();
+    let inputs = [
+        FusionInput {
+            name: "signal",
+            training: &signal,
+            model_name: "LR",
+        },
+        FusionInput {
+            name: "noise",
+            training: &noise,
+            model_name: "LR",
+        },
+    ];
+    let reference = load("fusion_reference.json");
+    for method in [
+        FusionMethod::Weighted {
+            weights: vec![0.5, 0.5],
+        },
+        FusionMethod::Logistic {
+            lambda: 0.1,
+            tolerance: 1e-10,
+            max_iterations: 5000,
+        },
+    ] {
+        let logistic = matches!(method, FusionMethod::Logistic { .. });
+        let config = FusionConfig {
+            method,
+            threshold: Some(0.5),
+        };
+        let result = fit_fusion(&inputs, &config).unwrap();
+        result.model.validate().unwrap();
+        for row in &result.predictions.rows {
+            let expected = reference["final_patient_predictions"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|r| r["patient_id"] == row.patient_id)
+                .unwrap();
+            assert_eq!(row.cohort, expected["cohort"].as_str().unwrap());
+            let name = if logistic {
+                "logistic_probabilities"
+            } else {
+                "weighted_probabilities"
+            };
+            for (p, q) in row
+                .probabilities
+                .iter()
+                .zip(expected[name].as_array().unwrap())
+            {
+                close(*p, q.as_f64().unwrap(), 1e-6, 1e-5);
+            }
+        }
+        assert_eq!(result.predictions.unit, PredictionUnit::Patient);
+        assert_eq!(
+            result.training_prediction_type,
+            if logistic {
+                "apparent_meta_training"
+            } else {
+                "oof_fixed_weight"
+            }
+        );
+        if logistic {
+            let model = result.model.fitted.meta_model.as_ref().unwrap();
+            close(
+                model.report.objective.unwrap(),
+                reference["meta_fit"]["numerical_state"]["objective"]
+                    .as_f64()
+                    .unwrap(),
+                1e-10,
+                1e-8,
+            );
+            assert!(model.report.gradient_or_kkt_inf.unwrap() <= 1e-7);
+        }
+        let mut changed_signal = signal_data.clone();
+        let mut changed_noise = noise_data.clone();
+        for dataset in [&mut changed_signal, &mut changed_noise] {
+            for i in 0..dataset.samples.len() {
+                if dataset.cohorts[i] != "train" {
+                    for j in 0..dataset.features.numeric.cols {
+                        dataset.features.numeric.values[i * dataset.features.numeric.cols + j] =
+                            98765.;
+                    }
+                    if let Outcome::Classification { values, .. } = &mut dataset.outcome {
+                        values[i] = Some("unknown-test-outcome".into());
+                    }
+                }
+            }
+        }
+        let changed_signal = train(&changed_signal, &plan, &cfg, 2).unwrap();
+        let changed_noise = train(&changed_noise, &plan, &cfg, 2).unwrap();
+        let changed = fit_fusion(
+            &[
+                FusionInput {
+                    name: "signal",
+                    training: &changed_signal,
+                    model_name: "LR",
+                },
+                FusionInput {
+                    name: "noise",
+                    training: &changed_noise,
+                    model_name: "LR",
+                },
+            ],
+            &config,
+        )
+        .unwrap();
+        assert_eq!(result.model, changed.model);
+        assert_eq!(result.training, changed.training);
+        let mut prediction_inputs = std::collections::BTreeMap::from([
+            ("signal".into(), signal_data.clone()),
+            ("noise".into(), noise_data.clone()),
+        ]);
+        for d in prediction_inputs.values_mut() {
+            d.outcome = Outcome::Unlabeled;
+        }
+        assert_eq!(
+            predict_fusion(&result.model, &prediction_inputs).unwrap(),
+            result.predictions
+        );
+        let file = std::env::temp_dir().join(format!(
+            "fusion-{}-{}.rad",
+            std::process::id(),
+            if logistic { "logistic" } else { "weighted" }
+        ));
+        result.model.save(&file, true).unwrap();
+        let loaded = ModelBundle::<FittedFusion>::load(&file).unwrap();
+        assert_eq!(loaded, result.model);
+        assert_eq!(
+            predict_fusion(&loaded, &prediction_inputs).unwrap(),
+            result.predictions
+        );
+        std::fs::remove_file(file).unwrap();
+    }
+}
+
+#[test]
+fn fusion_requires_real_shared_nested_partitions_even_when_outer_fold_numbers_match() {
+    let dataset = data("binary");
+    let original = plan("binary");
+    let cfg = fixed_config("binary");
+    let first = train(&dataset, &original, &cfg, 1).unwrap();
+    let mut other = original.clone();
+    other.outer_folds[0].inner.swap(0, 1);
+    other.validate().unwrap();
+    let second = train(&dataset, &other, &cfg, 1).unwrap();
+    assert_eq!(
+        first.models[0]
+            .oof
+            .rows
+            .iter()
+            .map(|r| (&r.sample_id, r.fold))
+            .collect::<Vec<_>>(),
+        second.models[0]
+            .oof
+            .rows
+            .iter()
+            .map(|r| (&r.sample_id, r.fold))
+            .collect::<Vec<_>>()
+    );
+    assert!(fit_fusion(
+        &[
+            FusionInput {
+                name: "first",
+                training: &first,
+                model_name: "LR"
+            },
+            FusionInput {
+                name: "second",
+                training: &second,
+                model_name: "LR"
+            }
+        ],
+        &FusionConfig {
+            method: FusionMethod::Weighted {
+                weights: vec![1., 1.]
+            },
+            threshold: Some(0.5)
+        }
+    )
+    .is_err());
 }

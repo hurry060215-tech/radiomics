@@ -72,7 +72,10 @@ fn run(cli: Cli) -> RadResult<u8> {
                         let image = imaging::read_nifti(&sample.image)?;
                         let mask = imaging::read_mask(&sample.mask)?;
                         image.geometry.aligned_with(&mask.geometry)?;
-                        Ok((imaging::select_labels(&mask, &labels)?, image.geometry))
+                        let selected = sample
+                            .roi_label
+                            .map_or_else(|| labels.clone(), |label| vec![label]);
+                        Ok((imaging::select_labels(&mask, &selected)?, image.geometry))
                     })();
                 let row = match checked {
                     Ok((mask, geometry)) => {

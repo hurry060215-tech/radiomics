@@ -21,6 +21,7 @@ pub mod random;
 pub mod reliability;
 pub mod split;
 pub mod statistics;
+pub mod table_io;
 pub mod workflow;
 
 #[derive(Debug, Clone, PartialEq, Eq)]

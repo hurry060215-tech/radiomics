@@ -139,6 +139,16 @@ impl FittedPipeline {
 impl FittedState for FittedPipeline {
     fn validate(&self, manifest: &ModelManifest) -> RadResult<()> {
         self.validate_state()?;
+        if manifest
+            .training_configuration
+            .get("model_kind")
+            .and_then(|v| v.as_str())
+            != Some("pipeline")
+        {
+            return Err(invalid(
+                "Unknown or incompatible saved pipeline model type.",
+            ));
+        }
         if self.required_features() != manifest.feature_names {
             return Err(invalid(
                 "Model manifest raw feature order differs from the fitted pipeline.",
