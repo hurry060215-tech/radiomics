@@ -42,8 +42,8 @@ def _native_binary_report(y,p,threshold,ci_method,confidence,n_bootstrap,random_
         interval = request('delong_interval', **inputs, confidence=confidence)
         low, high = interval['low'], interval['high']
     elif ci_method == 'bootstrap':
-        if n_bootstrap < 2:
-            raise ValueError('n_bootstrap must be at least 2.')
+        if not isinstance(n_bootstrap,(int,np.integer)) or isinstance(n_bootstrap,(bool,np.bool_)) or n_bootstrap<2:
+            raise ValueError('n_bootstrap must be an integer at least 2; fractional replication counts are not truncated.')
         if random_state is None or not isinstance(random_state, (int, np.integer)) or not 0 <= int(random_state) <= 2**32-1:
             raise ValueError('Native legacy bootstrap requires an explicit uint32 random_state.')
         interval = request('bootstrap_binary', **inputs, replicates=int(n_bootstrap),
@@ -91,8 +91,8 @@ def hosmer_lemeshow(y_true, y_score, n_bins=10, positive_label=1, backend='auto'
     if resolve_backend(backend) is None:
         return _reference().hosmer_lemeshow(y_true, y_score, n_bins, positive_label, backend='python')
     y, p = probabilities(y_true, y_score, positive_label)
-    if n_bins < 3:
-        raise ValueError('At least three requested bins are required.')
+    if not isinstance(n_bins,(int,np.integer)) or isinstance(n_bins,(bool,np.bool_)) or n_bins<3:
+        raise ValueError('At least three integer requested bins are required; fractional counts are not truncated.')
     value = request('hosmer_lemeshow', y=y.tolist(), scores=p.tolist(), n_bins=int(n_bins))
     # Rust owns quantile edges and every numerical bin assignment. pandas only
     # formats the legacy categorical interval labels for display compatibility.

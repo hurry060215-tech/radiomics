@@ -10,6 +10,7 @@ __version__ = '0.1.0'
 _EXPORTS = {
     'image': ('match_images', 'check_images', 'extract', 'read_cohort', 'ExtractionResult'),
     'selection': ('FeatureSelector',),
+    'table': ('read_study','read_feature_table','LoadedStudy'),
     'clinical': ('baseline_table', 'univariate_logistic', 'multivariable_logistic', 'icc'),
     'modeling': ('split_data', 'make_classifier', 'train_models', 'evaluate', 'fusion_data',
                  'fit_fusion', 'TrainingResult', 'FusionResult'),
@@ -26,7 +27,7 @@ __all__ = ['backend_info', 'SplitPlan', *_LOOKUP]
 
 
 def __getattr__(name):
-    if name in {'image', 'mask', 'interop', 'pathology', 'research', 'habitat'}:
+    if name in {'image', 'mask', 'interop', 'pathology', 'research', 'habitat', 'table'}:
         module = import_module('.' + name, __name__)
         globals()[name] = module
         return module

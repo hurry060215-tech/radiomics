@@ -18,6 +18,9 @@ pub struct TrainCommand {
     pub config: PathBuf,
     #[arg(long)]
     pub split_plan: Option<PathBuf>,
+    /// Explicit center holdout; already external cohorts remain external.
+    #[arg(long = "hold-out-center")]
+    pub held_out_centers: Vec<String>,
     #[arg(long, default_value = "radiomics-models")]
     pub output: PathBuf,
     #[arg(long, default_value_t = 5)]
@@ -58,7 +61,19 @@ pub fn train(args: TrainCommand) -> RadResult<u8> {
         }
     }
     let output = Output::preflight(&args.output, args.overwrite, names)?;
-    let (study_spec, loaded) = load_study_record(&args.data, config.task)?;
+    if args.split_plan.is_some() && !args.held_out_centers.is_empty() {
+        return Err(invalid(
+            "Choose a supplied SplitPlan or explicit center holdout, not both.",
+        ));
+    }
+    let (study_spec, mut loaded) = load_study_record(&args.data, config.task)?;
+    if !args.held_out_centers.is_empty() {
+        let observations = ov_radiomics_core::split::center_holdout(
+            &loaded.data.observations()?,
+            &args.held_out_centers.iter().cloned().collect(),
+        )?;
+        loaded.data.cohorts = observations.into_iter().map(|row| row.cohort).collect();
+    }
     let study_spec_directory = std::fs::canonicalize(parent(&args.data))?;
     let plan = if let Some(path) = &args.split_plan {
         let plan: SplitPlan = read_json(path)?;

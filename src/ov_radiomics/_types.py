@@ -168,6 +168,13 @@ class ImageSample(_NativeObject):
 class FeatureTable(_NativeObject):
     _operation, _argument = 'validate_feature_table', 'table'
 
+    @classmethod
+    def read(cls,path,*,manifest=None):
+        """Read a native CSV/Parquet feature table and its schema/provenance."""
+        from ._native_common import request
+        return cls._from_native(request('read_feature_table',path=str(path),
+            manifest=None if manifest is None else str(manifest)))
+
     @property
     def features(self):
         import pandas as pd
@@ -256,6 +263,9 @@ class ModelBundle:
         from ._native_common import study
         if self._kind!='pipeline':
             raise ValueError('Fusion loading requires named component studies through predict_study; retain each component identity.')
+        if patient_id is None and 'patient_id' not in data and any(
+                sample!=patient for sample,patient in self._payload['fitted']['training_samples'].items()):
+            raise ValueError('This model has distinct sample/patient identities; supply a patient_id column or explicit patient_id parameter instead of inventing patients from new sample IDs.')
         fitted=self._payload['fitted']['preprocessing']
         numeric=[state['name'] for state in fitted['numeric']]
         categorical=[state['name'] for state in fitted['categorical']]

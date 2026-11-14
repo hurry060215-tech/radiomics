@@ -296,7 +296,22 @@ def _truth_groups(converted,unit,selected_ids=None):
     return groups
 
 
-def evaluate(predictions,threshold=None,ci_method='auto',confidence=.95,*,prediction_unit='patient',
+def _center_tables(source,converted):
+    unit=source['unit'];centers={}
+    for sample in converted['samples']:
+        key=(sample['patient_id'] if unit=='patient' else sample['slide_id'] if unit=='slide' else sample['sample_id'])
+        centers.setdefault(key,set()).add(sample.get('center'))
+    partitions={}
+    for row in source['rows']:
+        key=row['patient_id'] if unit=='patient' else row['slide_id'] if unit=='slide' else row['sample_id']
+        values=centers.get(key,set())
+        if len(values)!=1 or next(iter(values)) is None or not next(iter(values)).strip():
+            raise ValueError('Center evaluation needs one known center per actual prediction unit; an already aggregated multi-center score cannot be disaggregated.')
+        center=next(iter(values));partitions.setdefault(center,[]).append(row)
+    return [(center,dict(source,rows=rows)) for center,rows in sorted(partitions.items())]
+
+
+def evaluate(predictions,threshold=None,ci_method='auto',confidence=.95,*,prediction_unit='patient',by_center=False,
              n_bootstrap=2000,random_state=0,data=None,target=None,task=None,classes=None,
              id_col='ID',patient_id=None,split='group'):
     from .metrics import _native_binary_report
@@ -324,7 +339,9 @@ def evaluate(predictions,threshold=None,ci_method='auto',confidence=.95,*,predic
         raise ValueError('Choose explicit sample or patient evaluation.')
     truth=_truth_groups(converted,prediction_unit)
     rows=[];details=[]
-    for name,source in tables:
+    tables=[(name,center,source) for name,table in tables for center,source in
+        (_center_tables(table,converted) if by_center else [(None,table)])]
+    for name,center,source in tables:
         effective_threshold=threshold if threshold is not None else thresholds[name]
         effective_threshold=.5 if effective_threshold is None else effective_threshold
         if prediction_unit=='sample' and source['unit']!='sample':
@@ -338,6 +355,8 @@ def evaluate(predictions,threshold=None,ci_method='auto',confidence=.95,*,predic
                     raise ValueError('Prediction/truth identity or cohort differs.')
                 outcomes.append(truth[key][0])
             result=dict(model=name,group=cohort,task=task,prediction_unit=prediction_unit,n=len(subset))
+            if by_center:
+                result['center']=center
             subset_table=dict(table,rows=subset)
             kinds=sorted(set(prediction_frame(subset_table).prediction_type))
             result['prediction_type']=','.join(kinds)
@@ -372,7 +391,7 @@ def evaluate(predictions,threshold=None,ci_method='auto',confidence=.95,*,predic
                     replicates=n_bootstrap,seed=random_state,confidence=confidence)
                 result.update(ci_low=interval['low'],ci_high=interval['high'])
             result['status']='evaluated';rows.append(result)
-            details.append(dict(model=name,group=cohort,prediction_unit=prediction_unit,report=report))
+            details.append(dict(model=name,group=cohort,center=center,prediction_unit=prediction_unit,report=report))
     output=pd.DataFrame(rows)
     output.attrs['native_reports']=details
     return output

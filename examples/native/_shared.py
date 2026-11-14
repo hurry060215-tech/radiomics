@@ -111,3 +111,35 @@ def stack_example_tables(tables):
         sources.append(item['effective_parameters'])
     payload['effective_parameters']=dict(operation='example_row_concatenation',sources=sources)
     return rad.FeatureTable(payload)
+
+
+def plot_small_overlay(directory,path,*,value_label):
+    """Display a small tutorial canvas; production output remains block streamed."""
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    directory=Path(directory)
+    manifest=json.loads((directory/'manifest.json').read_text())
+    canvas=manifest['canvas'];width,height=canvas['width'],canvas['height']
+    if width*height>1_000_000:
+        raise ValueError('This example viewer only assembles small canvases; use the native block stream for large slides.')
+    values=np.full((height,width),np.nan);coverage=np.zeros((height,width),dtype=np.uint64)
+    for block in manifest['blocks']:
+        with np.load(directory/block['path']) as data:
+            y,x=block['y'],block['x'];h,w=block['height'],block['width']
+            values[y:y+h,x:x+w]=data['values'];coverage[y:y+h,x:x+w]=data['coverage']
+    x0,y0=canvas['origin0'];dx,dy=canvas['pixel_size0']
+    extent=(x0,x0+width*dx,y0+height*dy,y0)
+    cmap=plt.get_cmap('viridis').copy();cmap.set_bad((0,0,0,0))
+    fig,axes=plt.subplots(1,2,figsize=(9,4),constrained_layout=True)
+    kwargs=dict(vmin=0.,vmax=1.) if 'probability' in value_label else {}
+    image=axes[0].imshow(np.ma.masked_invalid(values),origin='upper',extent=extent,interpolation='nearest',cmap=cmap,**kwargs)
+    fig.colorbar(image,ax=axes[0],label=value_label);axes[0].set_title('Actual tile values; overlap mean')
+    count=axes[1].imshow(np.ma.masked_where(coverage==0,coverage),origin='upper',extent=extent,interpolation='nearest',cmap=cmap)
+    colorbar=fig.colorbar(count,ax=axes[1],label='Coverage count')
+    from matplotlib.ticker import MaxNLocator
+    colorbar.locator=MaxNLocator(integer=True);colorbar.update_ticks()
+    axes[1].set_title('Coverage of valid unpadded pixels')
+    for axis in axes:
+        axis.set(xlabel='Level-0 x (pixels)',ylabel='Level-0 y (pixels)')
+    fig.savefig(path,dpi=140,transparent=True);plt.close(fig)
