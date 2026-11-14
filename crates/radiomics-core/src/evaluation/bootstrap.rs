@@ -1,4 +1,5 @@
 use super::*;
+use rand::Rng;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -10,6 +11,9 @@ pub struct BootstrapInterval {
     pub high: f64,
     pub replicate_scores: Vec<f64>,
     pub resampling_source: String,
+    pub seed: Option<u64>,
+    pub rng_scheme: Option<String>,
+    pub rng_namespace: Option<String>,
 }
 fn finish(
     estimate: f64,
@@ -32,6 +36,9 @@ fn finish(
         high,
         replicate_scores,
         resampling_source: "explicit_indices".into(),
+        seed: None,
+        rng_scheme: None,
+        rng_namespace: None,
     })
 }
 fn indices(draws: &[Vec<usize>], n: usize) -> RadResult<()> {
@@ -82,50 +89,146 @@ pub fn bootstrap_model_score_explicit(
     indices(draws, n)?;
     let mut values = Vec::with_capacity(draws.len());
     for draw in draws {
-        let (target, prediction) = match (target, prediction) {
-            (
-                ModelTarget::Classification { classes, labels },
-                ModelPrediction::Classification { probabilities, .. },
-            ) => {
-                let data: Vec<_> = draw
-                    .iter()
-                    .flat_map(|&i| {
-                        probabilities.values[i * probabilities.cols..(i + 1) * probabilities.cols]
-                            .iter()
-                            .copied()
-                    })
-                    .collect();
-                (
-                    ModelTarget::Classification {
-                        classes: classes.clone(),
-                        labels: draw.iter().map(|&i| labels[i]).collect(),
-                    },
-                    ModelPrediction::Classification {
-                        classes: classes.clone(),
-                        probabilities: crate::contracts::NumericBuffer {
-                            rows: n,
-                            cols: probabilities.cols,
-                            missing: vec![false; data.len()],
-                            values: data,
-                        },
-                    },
-                )
-            }
-            (ModelTarget::Regression { values: y }, ModelPrediction::Regression { values: p }) => (
-                ModelTarget::Regression {
-                    values: draw.iter().map(|&i| y[i]).collect(),
-                },
-                ModelPrediction::Regression {
-                    values: draw.iter().map(|&i| p[i]).collect(),
-                },
-            ),
-            _ => {
-                return Err(invalid(
-                    "Bootstrap target/prediction task resolution failed.",
-                ))
-            }
-        };
-        values.push(model_score(task, &target, &prediction)?);
+        values.push(score_for_draw(task, target, prediction, draw)?);
     }
     finish(estimate, values, confidence)
+}
+
+fn score_for_draw(
+    task: Task,
+    target: &ModelTarget,
+    prediction: &ModelPrediction,
+    draw: &[usize],
+) -> RadResult<f64> {
+    let n = draw.len();
+    let (target, prediction) = match (target, prediction) {
+        (
+            ModelTarget::Classification { classes, labels },
+            ModelPrediction::Classification { probabilities, .. },
+        ) => {
+            let data: Vec<_> = draw
+                .iter()
+                .flat_map(|&i| {
+                    probabilities.values[i * probabilities.cols..(i + 1) * probabilities.cols]
+                        .iter()
+                        .copied()
+                })
+                .collect();
+            (
+                ModelTarget::Classification {
+                    classes: classes.clone(),
+                    labels: draw.iter().map(|&i| labels[i]).collect(),
+                },
+                ModelPrediction::Classification {
+                    classes: classes.clone(),
+                    probabilities: crate::contracts::NumericBuffer {
+                        rows: n,
+                        cols: probabilities.cols,
+                        missing: vec![false; data.len()],
+                        values: data,
+                    },
+                },
+            )
+        }
+        (ModelTarget::Regression { values: y }, ModelPrediction::Regression { values: p }) => (
+            ModelTarget::Regression {
+                values: draw.iter().map(|&i| y[i]).collect(),
+            },
+            ModelPrediction::Regression {
+                values: draw.iter().map(|&i| p[i]).collect(),
+            },
+        ),
+        _ => {
+            return Err(invalid(
+                "Bootstrap target/prediction task resolution failed.",
+            ))
+        }
+    };
+    model_score(task, &target, &prediction)
+}
+
+/// Stratified multiclass primary-score bootstrap using the shared versioned
+/// component RNG. Binary legacy sampling deliberately has its separate entry.
+pub fn bootstrap_multiclass_seeded(
+    target: &ModelTarget,
+    prediction: &ModelPrediction,
+    replicates: usize,
+    seed: u64,
+    confidence: f64,
+) -> RadResult<BootstrapInterval> {
+    seeded(
+        Task::Multiclass,
+        target,
+        prediction,
+        replicates,
+        seed,
+        confidence,
+    )
+}
+/// Ordinary row bootstrap for the regression primary metric (RMSE).
+pub fn bootstrap_regression_seeded(
+    target: &ModelTarget,
+    prediction: &ModelPrediction,
+    replicates: usize,
+    seed: u64,
+    confidence: f64,
+) -> RadResult<BootstrapInterval> {
+    seeded(
+        Task::Regression,
+        target,
+        prediction,
+        replicates,
+        seed,
+        confidence,
+    )
+}
+fn seeded(
+    task: Task,
+    target: &ModelTarget,
+    prediction: &ModelPrediction,
+    replicates: usize,
+    seed: u64,
+    confidence: f64,
+) -> RadResult<BootstrapInterval> {
+    super::inference::confidence(confidence)?;
+    let estimate = model_score(task, target, prediction)?;
+    if replicates < 2 {
+        return Err(invalid("Bootstrap requires at least two replicates."));
+    }
+    let (n,groups,tag)=match (task,target) {
+        (Task::Multiclass,ModelTarget::Classification{classes,labels})=>(labels.len(),Some((0..classes.len()).map(|c|labels.iter().enumerate().filter_map(|(i,&label)|(c==label).then_some(i)).collect::<Vec<_>>()).collect::<Vec<_>>()),1u8),
+        (Task::Regression,ModelTarget::Regression{values})=>(values.len(),None,2u8),
+        _=>return Err(invalid("The new component RNG entry points support explicitly multiclass or regression tasks; binary sampling uses the legacy path.")),
+    };
+    let namespace = "evaluation-bootstrap-v1";
+    let mut values = Vec::new();
+    values
+        .try_reserve_exact(replicates)
+        .map_err(|_| invalid("Bootstrap replicate result allocation failed."))?;
+    for replicate in 0..replicates {
+        let mut identifier = vec![tag];
+        identifier.extend_from_slice(&(replicate as u64).to_le_bytes());
+        let mut rng = crate::random::component_rng(seed, namespace, &identifier);
+        let mut draw = Vec::with_capacity(n);
+        if let Some(groups) = &groups {
+            for group in groups {
+                for _ in 0..group.len() {
+                    draw.push(group[rng.gen_range(0..group.len())]);
+                }
+            }
+        } else {
+            draw.extend((0..n).map(|_| rng.gen_range(0..n)));
+        }
+        values.push(score_for_draw(task, target, prediction, &draw)?);
+    }
+    let mut report = finish(estimate, values, confidence)?;
+    report.resampling_source = if task == Task::Multiclass {
+        "stratified_multiclass".into()
+    } else {
+        "ordinary_regression".into()
+    };
+    report.seed = Some(seed);
+    report.rng_scheme = Some(crate::random::RNG_SCHEME.into());
+    report.rng_namespace = Some(namespace.into());
+    Ok(report)
 }

@@ -104,3 +104,14 @@ baseline DeLong interval/test, DCA repeated thresholds, H–L group counts,
 expected/observed values, statistic and p-value also pass the original frozen
 tolerances. Seeded entry points must delegate sampling to the shared random
 module; these explicit-index functions contain no separate RNG implementation.
+
+`bootstrap_multiclass_seeded` uses within-class resampling with original class
+counts, and `bootstrap_regression_seeded` uses ordinary row resampling. Both
+call the shared component RNG with namespace `evaluation-bootstrap-v1`; the
+identifier is a task byte (one for multiclass, two for regression) followed by
+the replicate index as little-endian u64. Each replicate has an independent
+stream, so extending the replicate count preserves the existing prefix.
+Results save the seed, shared RNG version and namespace. Draws are processed
+one at a time, avoiding a full replicates-by-observations index allocation.
+These new-component streams do not replace the legacy binary bootstrap scheme.
+Repeat, outer one/three-thread and JSON tests reproduce every replicate exactly.

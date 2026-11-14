@@ -410,3 +410,87 @@ fn binary_inference_undefined_and_invalid_requests_are_explicit() {
     assert!(bootstrap_auc_explicit(&y, &a, &[vec![0, 1, 2, 4], vec![0, 1, 2, 3]], 0.95).is_err());
     assert!(bootstrap_auc_explicit(&y, &a, &[vec![0; 4], vec![1; 4]], 0.95).is_err());
 }
+
+#[test]
+fn new_multiclass_and_regression_bootstrap_record_component_rng_and_reproduce_without_inner_pools()
+{
+    let fixture = fixture();
+    for (name, task) in [
+        ("multiclass", Task::Multiclass),
+        ("regression", Task::Regression),
+    ] {
+        let case = &fixture["cases"][name];
+        let (target, prediction) = if task == Task::Regression {
+            (
+                ModelTarget::Regression {
+                    values: numbers(&case["y"]),
+                },
+                ModelPrediction::Regression {
+                    values: numbers(&case["predictions"]),
+                },
+            )
+        } else {
+            let classes = vec!["A".into(), "B".into(), "C".into()];
+            let labels: Vec<_> = case["y"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_u64().unwrap() as usize)
+                .collect();
+            let values: Vec<_> = case["predictions"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .flat_map(|row| row.as_array().unwrap().iter().map(|v| v.as_f64().unwrap()))
+                .collect();
+            (
+                ModelTarget::Classification {
+                    classes: classes.clone(),
+                    labels: labels.clone(),
+                },
+                ModelPrediction::Classification {
+                    classes,
+                    probabilities: NumericBuffer {
+                        rows: labels.len(),
+                        cols: 3,
+                        missing: vec![false; values.len()],
+                        values,
+                    },
+                },
+            )
+        };
+        let run = |replicates| {
+            if task == Task::Regression {
+                bootstrap_regression_seeded(&target, &prediction, replicates, 42, 0.95)
+            } else {
+                bootstrap_multiclass_seeded(&target, &prediction, replicates, 42, 0.95)
+            }
+        };
+        let report = run(32).unwrap();
+        assert_eq!(report, run(32).unwrap());
+        assert_eq!(
+            report.rng_scheme.as_deref(),
+            Some(crate::random::RNG_SCHEME)
+        );
+        assert_eq!(
+            report.rng_namespace.as_deref(),
+            Some("evaluation-bootstrap-v1")
+        );
+        assert_eq!(report.seed, Some(42));
+        assert_eq!(
+            report.replicate_scores.as_slice(),
+            &run(64).unwrap().replicate_scores[..32]
+        );
+        for threads in [1, 3] {
+            let pool = rayon::ThreadPoolBuilder::new()
+                .num_threads(threads)
+                .build()
+                .unwrap();
+            assert_eq!(report, pool.install(|| run(32).unwrap()));
+        }
+        let reloaded: BootstrapInterval =
+            serde_json::from_slice(&serde_json::to_vec(&report).unwrap()).unwrap();
+        assert_eq!(report, reloaded);
+        assert!(run(1).is_err());
+    }
+}
