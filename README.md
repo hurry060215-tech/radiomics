@@ -1,4 +1,4 @@
-# ov-radiomics
+# radiomics
 
 An independently maintained Python package with a Rust numerical core: medical images and ROI masks → radiomics models → clinical models → probability fusion and evaluation.
 
