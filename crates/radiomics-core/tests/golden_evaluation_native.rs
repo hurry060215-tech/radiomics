@@ -300,3 +300,87 @@ fn native_explicit_patient_and_legacy_bootstrap_and_binary_inference_match() {
             .collect::<Vec<_>>()
     );
 }
+
+#[test]
+fn streaming_binary_seeded_draws_match_both_frozen_numpy_index_sequences() {
+    let fixtures = [
+        (read("reference.json"), false),
+        (read("evaluation_reference.json"), true),
+    ];
+    for (reference, patient) in fixtures {
+        let (y_value, score_value, indices, expected_ci, replicates) = if patient {
+            (
+                &reference["cases"]["binary"]["y"],
+                &reference["cases"]["binary"]["predictions"],
+                &reference["patient_binary_bootstrap"]["indices"],
+                vec![
+                    reference["patient_binary_bootstrap"]["ci"][0]
+                        .as_f64()
+                        .unwrap(),
+                    reference["patient_binary_bootstrap"]["ci"][1]
+                        .as_f64()
+                        .unwrap(),
+                ],
+                64,
+            )
+        } else {
+            (
+                &reference["baseline_metrics"]["inputs"]["y"],
+                &reference["baseline_metrics"]["inputs"]["a"],
+                &reference["baseline_metrics"]["bootstrap_indices"],
+                vec![
+                    reference["baseline_metrics"]["binary_bootstrap"]["ci_low"]
+                        .as_f64()
+                        .unwrap(),
+                    reference["baseline_metrics"]["binary_bootstrap"]["ci_high"]
+                        .as_f64()
+                        .unwrap(),
+                ],
+                16,
+            )
+        };
+        let y: Vec<_> = y_value
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|v| v.as_u64().unwrap() as u8)
+            .collect();
+        let scores = if patient {
+            score_value
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|r| r[1].as_f64().unwrap())
+                .collect()
+        } else {
+            numbers(score_value)
+        };
+        let expected: Vec<Vec<usize>> = serde_json::from_value(indices.clone()).unwrap();
+        let actual: Vec<_> = ov_radiomics_core::random::legacy_binary_bootstrap(&y, replicates, 42)
+            .unwrap()
+            .collect();
+        assert_eq!(actual, expected);
+        let seeded =
+            evaluation::bootstrap_binary_seeded(&y, &scores, replicates, 42, 0.95).unwrap();
+        let explicit = evaluation::bootstrap_auc_explicit(&y, &scores, &expected, 0.95).unwrap();
+        assert_eq!(seeded.replicate_scores, explicit.replicate_scores);
+        close(seeded.low, expected_ci[0]);
+        close(seeded.high, expected_ci[1]);
+        assert_eq!(
+            seeded.rng_scheme.as_deref(),
+            Some(ov_radiomics_core::random::LEGACY_BOOTSTRAP_SCHEME)
+        );
+        let workers: Vec<_> = (0..3)
+            .map(|_| {
+                let y = y.clone();
+                let scores = scores.clone();
+                std::thread::spawn(move || {
+                    evaluation::bootstrap_binary_seeded(&y, &scores, replicates, 42, 0.95).unwrap()
+                })
+            })
+            .collect();
+        for worker in workers {
+            assert_eq!(worker.join().unwrap(), seeded);
+        }
+    }
+}
