@@ -3,6 +3,11 @@ use crate::contracts::{unique_nonempty, NumericBuffer, TabularData};
 use crate::errors::{ErrorCode, RadResult, RadiomicsError};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
+mod selector;
+pub use selector::{
+    fit_selector, CorrelationDrop, FittedSelector, SelectorConfig, UnivariateMethod,
+    UnivariateResult, VarianceSource,
+};
 
 fn invalid(message: impl Into<String>) -> RadiomicsError {
     RadiomicsError::new(ErrorCode::InvalidInput, message)
@@ -66,12 +71,6 @@ pub struct FittedPreprocessor {
     pub output_names: Vec<String>,
 }
 
-fn quantile(sorted: &[f64], p: f64) -> f64 {
-    let rank = (sorted.len() - 1) as f64 * p;
-    let lo = rank.floor() as usize;
-    let hi = rank.ceil() as usize;
-    sorted[lo] + (sorted[hi] - sorted[lo]) * (rank - lo as f64)
-}
 fn output_names(
     numeric: &[NumericColumnState],
     categorical: &[CategoricalColumnState],
@@ -139,7 +138,7 @@ pub fn fit_preprocessor(
             continue;
         }
         observed.sort_by(f64::total_cmp);
-        let median = quantile(&observed, 0.5);
+        let median = crate::statistics::quantile_linear(&observed, 0.5)?;
         let mut imputed: Vec<_> = (0..data.rows)
             .map(|i| {
                 let index = i * data.numeric.cols + j;
@@ -150,8 +149,7 @@ pub fn fit_preprocessor(
                 }
             })
             .collect();
-        let mean = imputed.iter().sum::<f64>() / data.rows as f64;
-        let variance = imputed.iter().map(|v| (v - mean).powi(2)).sum::<f64>() / data.rows as f64;
+        let (mean, variance) = crate::statistics::population_mean_variance(&imputed)?;
         imputed.sort_by(f64::total_cmp);
         let mut state = NumericColumnState {
             name: name.clone(),
@@ -160,8 +158,8 @@ pub fn fit_preprocessor(
             variance,
             minimum: imputed[0],
             maximum: imputed[data.rows - 1],
-            q25: quantile(&imputed, 0.25),
-            q75: quantile(&imputed, 0.75),
+            q25: crate::statistics::quantile_linear(&imputed, 0.25)?,
+            q75: crate::statistics::quantile_linear(&imputed, 0.75)?,
             center: 0.0,
             scale: 1.0,
         };
