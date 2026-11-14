@@ -20,30 +20,39 @@ def train_models(*args, backend='python', **kwargs):
     return _implementation(backend).train_models(*args, **kwargs)
 
 
-def evaluate(predictions, *args, backend='auto', **kwargs):
+def evaluate(predictions, *args, backend=None, **kwargs):
     from ._native_learning import NativeTrainingResult, NativeFusionResult
     from ._types import PredictionTable
     native = isinstance(predictions, (NativeTrainingResult, NativeFusionResult, PredictionTable))
+    backend=('rust' if native else 'python') if backend is None else backend
     if native:
         if backend == 'python':
             raise ValueError('Native results are evaluated by the native core; use a reference prediction table for the Python reference.')
         return _implementation(backend).evaluate(predictions, *args, **kwargs)
-    if backend == 'rust':
+    if backend in ('rust','auto'):
         raise TypeError('Native evaluation requires an identified PredictionTable or native TrainingResult, not an unverified score frame.')
     return _implementation('python').evaluate(predictions, *args, backend=backend, **kwargs)
 
 
-def fusion_data(results, *args, backend='auto', **kwargs):
+def fusion_data(results, *args, backend=None, **kwargs):
     from ._native_learning import NativeTrainingResult
     native = bool(results) and all(isinstance(r, NativeTrainingResult) for r in results.values())
-    chosen = 'rust' if native and backend != 'python' else 'python' if backend == 'auto' else backend
+    if bool(results) and not native and any(isinstance(r,NativeTrainingResult) for r in results.values()):
+        raise TypeError('Fusion cannot mix native and external/reference training results.')
+    chosen=('rust' if native else 'python') if backend is None else backend
+    if native and chosen=='python' or not native and chosen in ('auto','rust'):
+        raise TypeError('Fusion backend and typed results differ; mixed/unverified tables cannot become native provenance.')
     return _implementation(chosen).fusion_data(results, *args, **kwargs)
 
 
-def fit_fusion(inputs, *args, backend='auto', **kwargs):
+def fit_fusion(inputs, *args, backend=None, **kwargs):
     from ._native_learning import NativeFusionData, NativeTrainingResult
     native = isinstance(inputs, NativeFusionData) or isinstance(inputs, dict) and bool(inputs) and all(isinstance(r, NativeTrainingResult) for r in inputs.values())
-    chosen = 'rust' if native and backend != 'python' else 'python' if backend == 'auto' else backend
+    if isinstance(inputs,dict) and not native and any(isinstance(r,NativeTrainingResult) for r in inputs.values()):
+        raise TypeError('Fusion cannot mix native and external/reference training results.')
+    chosen=('rust' if native else 'python') if backend is None else backend
+    if native and chosen=='python' or not native and chosen in ('auto','rust'):
+        raise TypeError('Fusion backend and typed results differ; mixed/unverified tables cannot become native provenance.')
     return _implementation(chosen).fit_fusion(inputs, *args, **kwargs)
 
 

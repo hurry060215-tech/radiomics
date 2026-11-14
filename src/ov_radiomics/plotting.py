@@ -26,13 +26,13 @@ def _scores(scores):
     return scores if isinstance(scores, (dict, pd.DataFrame)) else {'Model': scores}
 
 
-def plot_roc(y_true, scores, ax=None, figsize=(6, 5), title='ROC', palette=None):
+def plot_roc(y_true, scores, ax=None, figsize=(6, 5), title='ROC', palette=None, backend='auto'):
     ax = _axis(ax, figsize, title)
     for i, (name, score) in enumerate(_scores(scores).items()):
         y, p = probabilities(y_true, score)
         from ._native_common import request
         from ._backend import resolve_backend
-        if resolve_backend('auto') is None:
+        if resolve_backend(backend) is None:
             from sklearn.metrics import roc_curve, roc_auc_score
             fpr, tpr, _ = roc_curve(y, p)
             area = roc_auc_score(y,p)
@@ -47,13 +47,13 @@ def plot_roc(y_true, scores, ax=None, figsize=(6, 5), title='ROC', palette=None)
     return ax
 
 
-def plot_calibration(y_true, scores, n_bins=10, strategy='quantile', ax=None, figsize=(6, 5), title='Calibration'):
+def plot_calibration(y_true, scores, n_bins=10, strategy='quantile', ax=None, figsize=(6, 5), title='Calibration', backend='auto'):
     ax = _axis(ax, figsize, title)
     for name, score in _scores(scores).items():
         y, p = probabilities(y_true, score)
         from ._native_common import request
         from ._backend import resolve_backend
-        if resolve_backend('auto') is None:
+        if resolve_backend(backend) is None:
             from sklearn.calibration import calibration_curve
             observed, predicted = calibration_curve(y,p,n_bins=n_bins,strategy=strategy)
         else:
@@ -78,14 +78,14 @@ def plot_dca(curve, ax=None, figsize=(6, 5), title='Decision curve', ylim=None):
 
 
 def plot_confusion_matrix(y_true, y_score, threshold=0.5, class_names=('Negative', 'Positive'), normalize=False,
-                          ax=None, figsize=(5, 4), title='Confusion matrix', cmap='Blues'):
+                          ax=None, figsize=(5, 4), title='Confusion matrix', cmap='Blues', backend='auto'):
     y, p = probabilities(y_true, y_score)
     if not 0 <= threshold <= 1:
         raise ValueError('threshold must be between 0 and 1.')
     # Counts are returned by the shared core, including its threshold convention.
     from ._native_common import request
     from ._backend import resolve_backend
-    if resolve_backend('auto') is None:
+    if resolve_backend(backend) is None:
         from sklearn.metrics import confusion_matrix
         matrix = confusion_matrix(y,p>=threshold,labels=[0,1])
     else:

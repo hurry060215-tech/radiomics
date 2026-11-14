@@ -26,7 +26,7 @@ __all__ = ['backend_info', 'SplitPlan', *_LOOKUP]
 
 
 def __getattr__(name):
-    if name in {'image', 'mask', 'interop', 'pathology'}:
+    if name in {'image', 'mask', 'interop', 'pathology', 'research', 'habitat'}:
         module = import_module('.' + name, __name__)
         globals()[name] = module
         return module

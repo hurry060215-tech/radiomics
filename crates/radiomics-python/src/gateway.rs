@@ -33,6 +33,32 @@ struct SelectorState {
 #[derive(Deserialize)]
 #[serde(tag = "operation", rename_all = "snake_case", deny_unknown_fields)]
 enum Request {
+    ResearchConcat {
+        sources: Vec<core::research::NamedFeatureTable>,
+        config: core::research::ConcatConfig,
+    },
+    ResearchDelta {
+        table: FeatureTable,
+        config: core::research::DeltaConfig,
+    },
+    HabitatFit {
+        data: NumericBuffer,
+        ids: Vec<String>,
+        feature_names: Vec<String>,
+        config: core::habitat::HabitatConfig,
+    },
+    HabitatPredict {
+        state: Box<core::habitat::FittedHabitat>,
+        data: NumericBuffer,
+        ids: Vec<String>,
+        feature_names: Vec<String>,
+    },
+    HabitatValidate {
+        state: Box<core::habitat::FittedHabitat>,
+    },
+    HabitatCenters {
+        state: Box<core::habitat::FittedHabitat>,
+    },
     ValidateImage {
         image: ImageVolume,
     },
@@ -286,6 +312,8 @@ enum Request {
         intensity_mask: Option<MaskVolume>,
         roi_label: u32,
         config: ExtractionConfig,
+        #[serde(default)]
+        families: Option<Vec<core::features::FeatureFamily>>,
     },
 }
 fn encoded<T: Serialize>(value: &T) -> RadResult<String> {
@@ -300,6 +328,29 @@ pub fn execute(payload: &str) -> RadResult<String> {
         ));
     }
     match envelope.request {
+        Request::ResearchConcat { sources, config } => {
+            encoded(&core::research::concat(&sources, &config)?)
+        }
+        Request::ResearchDelta { table, config } => {
+            encoded(&core::research::delta(&table, &config)?)
+        }
+        Request::HabitatFit {
+            data,
+            ids,
+            feature_names,
+            config,
+        } => encoded(&core::habitat::fit(&data, &ids, &feature_names, &config)?),
+        Request::HabitatPredict {
+            state,
+            data,
+            ids,
+            feature_names,
+        } => encoded(&state.predict(&data, &ids, &feature_names)?),
+        Request::HabitatValidate { state } => {
+            state.validate()?;
+            encoded(&state)
+        }
+        Request::HabitatCenters { state } => encoded(&state.centers_raw()?),
         Request::ValidateImage { image } => {
             image.validate()?;
             encoded(&image)
@@ -640,13 +691,15 @@ pub fn execute(payload: &str) -> RadResult<String> {
             intensity_mask,
             roi_label,
             config,
+            families,
         } => {
-            let output = core::features::extract(
+            let output = core::features::extract_families(
                 &image,
                 &morphology_mask,
                 intensity_mask.as_ref(),
                 roi_label,
                 &config,
+                families.as_deref().unwrap_or(&core::features::ALL_FAMILIES),
             )?;
             let mapped: BTreeMap<_, _> = output
                 .into_iter()

@@ -3,9 +3,9 @@ from pathlib import Path
 import numpy as np
 import pytest
 import ov_radiomics as rad
-from ov_radiomics._backend import resolve_backend
+from ov_radiomics._backend import resolve_backend, try_native
 
-pytestmark=pytest.mark.skipif(resolve_backend('auto') is None,reason='Native extension not built.')
+pytestmark=pytest.mark.skipif(try_native() is None,reason='Native extension not built.')
 ROOT=Path(__file__).resolve().parents[1]/'golden/python_golden_v1'
 
 

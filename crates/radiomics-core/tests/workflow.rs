@@ -55,6 +55,7 @@ fn config() -> ExtractConfig {
         },
         labels: vec![1],
         preparation: vec![],
+        families: None,
     }
 }
 #[test]
@@ -64,7 +65,13 @@ fn threads_cache_content_changes_and_export_preserve_identity() {
     let cfg = config();
     let first = extract_batch(&samples, &cfg, 1, Some(&root.join("cache"))).unwrap();
     let second = extract_batch(&samples, &cfg, 3, Some(&root.join("cache"))).unwrap();
-    assert_eq!(first, second);
+    assert_eq!(first.cache_summary.hits, 0);
+    assert_eq!(first.cache_summary.misses, 2);
+    assert_eq!(second.cache_summary.hits, 2);
+    assert_eq!(second.cache_summary.misses, 0);
+    let mut comparable = second.clone();
+    comparable.cache_summary = first.cache_summary.clone();
+    assert_eq!(first, comparable);
     assert_eq!(first.records[0].metadata.sample_id, "A");
     assert_eq!(
         first.records[0].features["original_firstorder_Mean"],
@@ -123,6 +130,8 @@ fn corrupt_cache_is_diagnosed_and_recomputed() {
     let key = &batch.records[0].cache_key;
     fs::write(cache.join(format!("{key}.json")), b"{}").unwrap();
     let recomputed = extract_batch(&samples, &config(), 1, Some(&cache)).unwrap();
+    assert_eq!(recomputed.cache_summary.rejected, 1);
+    assert_eq!(recomputed.cache_summary.hits, 1);
     assert_eq!(recomputed.records[0].features, batch.records[0].features);
     assert!(recomputed.records[0]
         .quality

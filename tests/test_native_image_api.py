@@ -1,9 +1,9 @@
 import numpy as np
 import pytest
 import ov_radiomics as rad
-from ov_radiomics._backend import resolve_backend
+from ov_radiomics._backend import resolve_backend, try_native
 
-pytestmark = pytest.mark.skipif(resolve_backend('auto') is None, reason='Native extension not built.')
+pytestmark = pytest.mark.skipif(try_native() is None, reason='Native extension not built.')
 
 
 def test_native_array_image_mask_geometry_preparation_and_extraction():
@@ -16,6 +16,10 @@ def test_native_array_image_mask_geometry_preparation_and_extraction():
     table = sample.extract(config)
     assert table.features.original_firstorder_Mean.item() == 2.
     assert table.features.original_shape_basic_Area_mm2.item() == 36.
+    family=sample.extract(config,families=['firstorder'])
+    assert len(family.definitions)==16
+    assert all(definition['name'].startswith('original_firstorder_') for definition in family.definitions)
+    np.testing.assert_array_equal(family.features,table.features[family.features.columns])
     intensity = rad.mask.resegment(image, mask, lower=2, upper=3)
     assert sample.extract(config,intensity_mask=intensity).features.original_firstorder_Mean.item() == 2.5
     scaled, fitted = rad.image.normalize(image, method='zscore', statistics='roi', mask=mask, return_transform=True)

@@ -993,14 +993,19 @@ pub fn predict(
     bundle.validate()?;
     let data = data.canonical()?;
     data.validate_unit(bundle.fitted.fit_unit)?;
-    let training = bundle.fitted.training_patients();
-    if data
-        .samples
-        .iter()
-        .zip(&data.cohorts)
-        .any(|(s, cohort)| cohort != "train" && training.contains(&s.patient_id))
-    {
-        return Err(RadiomicsError::new(ErrorCode::Leakage,"An external prediction cohort overlaps fitted training patients; preserve the actual cohort identity."));
+    let plan: SplitPlan =
+        serde_json::from_value(bundle.manifest.training_configuration["split_plan"].clone())?;
+    for (sample, cohort) in data.samples.iter().zip(&data.cohorts) {
+        super::population::validate_cohort(&plan, &sample.patient_id, cohort)?;
+        if plan
+            .sample_patients
+            .get(&sample.sample_id)
+            .is_some_and(|patient| patient != &sample.patient_id)
+            || cohort == "train"
+                && bundle.fitted.training_samples.get(&sample.sample_id) != Some(&sample.patient_id)
+        {
+            return Err(RadiomicsError::new(ErrorCode::Leakage,"Prediction sample/patient identity differs from saved training provenance; apparent training rows must be actual fitted samples."));
+        }
     }
     let predicted = bundle.fitted.predict(&data.features)?;
     prediction_table(

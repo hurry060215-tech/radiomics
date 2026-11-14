@@ -3,12 +3,12 @@ import json
 import pandas as pd
 import pytest
 import ov_radiomics as rad
-from ov_radiomics._backend import resolve_backend
+from ov_radiomics._backend import resolve_backend, try_native
 
 
 @pytest.fixture
 def cohort():
-    if resolve_backend('auto') is None:
+    if try_native() is None:
         pytest.skip('Native SplitPlan requires a built extension.')
     return pd.DataFrame([dict(ID=f'P{i}-L{j}', patient=f'P{i}', label=i % 3,
         group='train' if i < 30 else 'external', center='A' if i < 30 else 'B')

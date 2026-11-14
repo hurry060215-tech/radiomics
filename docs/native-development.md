@@ -114,7 +114,7 @@ atol1e-6/rtol1e-5; linear/logistic predictions use atol1e-6/rtol1e-5 plus
 objective/gradient/KKT/convergence. NaN/Inf states and positions must match.
 
 RandomForest: exact hand-tree tests; repeatability across thread counts and
-save/load; three datasets per task, five seeds, 200 trees against matched reference
+save/load; one frozen dataset for each of three tasks, five seeds, 200 trees against matched reference
 parameters. Per-dataset mean binary AUC loss <=0.03 and Brier increase <=0.03;
 multiclass macro-F1 loss <=0.04; regression RMSE increase <=max(0.10×reference RMSE,
 0.02×test-target SD). Do not require sklearn's tree sequence for the same seed.

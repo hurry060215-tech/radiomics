@@ -25,6 +25,15 @@ def binary_metrics(y_true, y_score, threshold=0.5, positive_label=1, ci_method='
         return _reference().binary_metrics(y_true, y_score, threshold, positive_label,
             ci_method, confidence, n_bootstrap, random_state, backend='python')
     y, p = probabilities(y_true, y_score, positive_label)
+    summary = _native_binary_report(y,p,threshold,ci_method,confidence,n_bootstrap,random_state)
+    output = {name:summary[name] for name in ('n','positive_n','accuracy','auc','ci_low','ci_high')}
+    for name in ('sensitivity','specificity','ppv','npv','precision','recall','f1','brier','threshold'):
+        output[name] = float(summary[name])
+    return pd.Series(output)
+
+
+def _native_binary_report(y,p,threshold,ci_method,confidence,n_bootstrap,random_state):
+    """Shared native report/CI boundary; legacy Series is a display projection."""
     if not 0 <= threshold <= 1 or not 0 < confidence < 1:
         raise ValueError('Invalid threshold or confidence.')
     inputs = dict(y=y.tolist(), scores=p.tolist())
@@ -44,11 +53,8 @@ def binary_metrics(y_true, y_score, threshold=0.5, positive_label=1, ci_method='
         low, high = np.nan, np.nan
     else:
         raise ValueError('ci_method must be delong, bootstrap, or None.')
-    output = {'n': summary['n'], 'positive_n': summary['positive_n'],
-        'accuracy': summary['accuracy'], 'auc': summary['auc'], 'ci_low': low, 'ci_high': high}
-    for name in ('sensitivity', 'specificity', 'ppv', 'npv', 'precision', 'recall', 'f1', 'brier', 'threshold'):
-        output[name] = float(summary[name])
-    return pd.Series(output)
+    summary.update(ci_low=low,ci_high=high)
+    return summary
 
 
 def delong_test(y_true, score_a, score_b, positive_label=1, backend='auto'):

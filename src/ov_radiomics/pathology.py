@@ -12,12 +12,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from ._backend import resolve_backend
-from ._native_common import clean_json
+from ._native_common import encode_json
 from ._types import TileTable, FeatureTable, PredictionTable
 
 
 def _dumps(value):
-    return json.dumps(clean_json(value),allow_nan=False,ensure_ascii=False,separators=(',',':'))
+    return encode_json(value)
 
 
 def _call(operation,**kwargs):
@@ -121,14 +121,26 @@ def qc_patches(patches,*,config=None):
 def color_features(patch,*,config,tissue_mask=None):
     """sRGB/D65 fixed-bin statistics. Hue is circular; no linear mean of angles."""
     return _call('color',patch=patch.to_dict(),config=config,
-        tissue_mask=None if tissue_mask is None else np.asarray(tissue_mask,dtype=bool).ravel().tolist())
+        tissue_mask=_tissue_mask(patch,tissue_mask))
 
 
 def texture_features(patch,*,config,tissue_mask=None):
     """Explicit Gray8/Gray16; reuse the same radiomics feature engine."""
     values=_call('texture',patch=patch.to_dict(),config=config,
-        tissue_mask=None if tissue_mask is None else np.asarray(tissue_mask,dtype=bool).ravel().tolist())
+        tissue_mask=_tissue_mask(patch,tissue_mask))
     return {name:float(value) for name,value in values.items()}
+
+
+def _tissue_mask(patch,mask):
+    if mask is None:
+        return None
+    values=np.asarray(mask)
+    record=patch.record;shape=(record['patch_height'],record['patch_width'])
+    if values.shape not in (shape,(shape[0]*shape[1],)):
+        raise ValueError('Tissue mask shape/axes must match the decoded patch, or be an explicit x-fastest flat buffer.')
+    if values.dtype.kind not in 'bifu' or not np.isfinite(values).all() or not np.isin(values,[0,1]).all():
+        raise ValueError('Tissue masks require finite Boolean or explicit binary 0/1 values; NaN is not tissue.')
+    return values.astype(bool).ravel(order='C').tolist()
 
 
 def _mask(labels):

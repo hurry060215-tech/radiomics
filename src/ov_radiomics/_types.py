@@ -142,14 +142,14 @@ class ImageSample(_NativeObject):
     def mask(self):
         return MaskVolume(self._payload['mask'])
 
-    def extract(self, config, *, roi_label=1, intensity_mask=None):
+    def extract(self, config, *, roi_label=1, intensity_mask=None, families=None):
         """Extract an explicitly prepared array sample using the shared native engine."""
         import numpy as np
         from ._native_common import request
         output = request('array_features', image=self._payload['image'],
             morphology_mask=self._payload['mask'],
             intensity_mask=None if intensity_mask is None else intensity_mask.to_dict(),
-            roi_label=roi_label, config=config)
+            roi_label=roi_label, config=config, families=families)
         names = list(output)
         values = np.asarray([output[name] for name in names], dtype=float)
         missing = ~np.isfinite(values)
@@ -159,7 +159,7 @@ class ImageSample(_NativeObject):
         table = dict(data=dict(rows=1, cols=len(names), values=np.where(missing, 0., values).tolist(),
             missing=missing.tolist()), samples=[self.metadata],
             features=[dict(name=name, definition='python_golden_v1 explicit native Original subset', unit=None) for name in names],
-            effective_parameters=dict(extraction=config, roi_label=roi_label), quality=quality)
+            effective_parameters=dict(extraction=config, roi_label=roi_label, families=families), quality=quality)
         return FeatureTable(table)
 
 
@@ -206,6 +206,11 @@ class PredictionTable(_NativeObject):
     def prediction_unit(self):
         return self._payload['unit']
 
+    def aggregate_patients(self):
+        """Native equal-sample mean; tiles first average within slide, then equal slides."""
+        from ._native_common import request
+        return PredictionTable._from_native(request('aggregate_patient_predictions',predictions=self.to_dict()))
+
 
 class ModelBundle:
     """Portable typed native `.rad` model; loading never executes serialized code."""
@@ -243,6 +248,18 @@ class ModelBundle:
         from ._native_common import request
         key = 'studies' if self._kind == 'fusion' else 'study'
         return PredictionTable(request('predict_' + self._kind, model=self.to_dict(), **{key: study}))
+
+    def predict(self,data,*,id_col='ID',patient_id=None,split='group',cohort='external'):
+        """Predict an identified DataFrame with no outcome column or refitting."""
+        from ._native_common import study
+        if self._kind!='pipeline':
+            raise ValueError('Fusion loading requires named component studies through predict_study; retain each component identity.')
+        fitted=self._payload['fitted']['preprocessing']
+        numeric=[state['name'] for state in fitted['numeric']]
+        categorical=[state['name'] for state in fitted['categorical']]
+        converted,_=study(data,None,numeric+categorical,task=self.manifest['task'],classes=self.manifest['classes'],
+            categorical=categorical,split=split,id_col=id_col,patient_id=patient_id,default_cohort=cohort)
+        return self.predict_study(converted)
 
     def predict_proba(self, data):
         from ._native_common import request, tabular, buffer_array

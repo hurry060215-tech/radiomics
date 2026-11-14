@@ -12,6 +12,7 @@ use std::{
     fs::{self, File, OpenOptions},
     io::{Read, Write},
     path::{Path, PathBuf},
+    sync::atomic::{AtomicUsize, Ordering},
 };
 
 pub fn implementation_sha256() -> &'static str {
@@ -173,10 +174,15 @@ pub struct ExtractConfig {
     pub labels: Vec<u32>,
     #[serde(default)]
     pub preparation: Vec<PrepareStep>,
+    #[serde(default)]
+    pub families: Option<Vec<features::FeatureFamily>>,
 }
 impl ExtractConfig {
     pub fn validate(&self) -> RadResult<()> {
         self.extraction.validate()?;
+        if let Some(families) = &self.families {
+            features::validate_families(families)?;
+        }
         if self.labels.is_empty()
             || self.labels.contains(&0)
             || self.labels.iter().collect::<BTreeSet<_>>().len() != self.labels.len()
@@ -223,6 +229,25 @@ pub struct ExtractionBatch {
     pub failures: Vec<FailedSample>,
     pub config: ExtractConfig,
     pub implementation_sha256: String,
+    #[serde(default)]
+    pub cache_summary: CacheSummary,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Default, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct CacheSummary {
+    pub enabled: bool,
+    pub hits: usize,
+    pub misses: usize,
+    pub rejected: usize,
+    pub write_failures: usize,
+}
+#[derive(Default)]
+struct CacheCounters {
+    hits: AtomicUsize,
+    misses: AtomicUsize,
+    rejected: AtomicUsize,
+    write_failures: AtomicUsize,
 }
 
 fn effective_extract_config(
@@ -380,6 +405,7 @@ fn extract_one(
     sample: &CohortSample,
     config: &ExtractConfig,
     cache: Option<&Path>,
+    counters: &CacheCounters,
 ) -> RadResult<ExtractedSample> {
     let effective = effective_extract_config(sample, config)?;
     let mut hashes = BTreeMap::from([
@@ -427,10 +453,19 @@ fn extract_one(
                 Ok(entry.payload)
             })();
             match candidate {
-                Ok(payload) => return Ok(payload),
-                Err(e) => cache_diagnostic = Some(e.to_string()),
+                Ok(payload) => {
+                    counters.hits.fetch_add(1, Ordering::Relaxed);
+                    return Ok(payload);
+                }
+                Err(e) => {
+                    counters.rejected.fetch_add(1, Ordering::Relaxed);
+                    cache_diagnostic = Some(e.to_string());
+                }
             }
         }
+    }
+    if cache.is_some() {
+        counters.misses.fetch_add(1, Ordering::Relaxed);
     }
     let (prepared, intensity_mask, mut quality) = prepare_sample(sample, &effective)?;
     if let Some(message) = cache_diagnostic {
@@ -441,12 +476,16 @@ fn extract_one(
             sample_id: Some(sample.metadata.sample_id.clone()),
         });
     }
-    let output = features::extract(
+    let output = features::extract_families(
         &prepared.image,
         &prepared.mask,
         intensity_mask.as_ref(),
         1,
         &effective.extraction,
+        effective
+            .families
+            .as_deref()
+            .unwrap_or(&features::ALL_FAMILIES),
     )?;
     let mut features = BTreeMap::new();
     for (name, value) in output {
@@ -492,6 +531,7 @@ fn extract_one(
             Ok(())
         })();
         if let Err(e) = write {
+            counters.write_failures.fetch_add(1, Ordering::Relaxed);
             record.quality.push(QualityRecord {
                 code: "cache_write_failed".into(),
                 message: e.to_string(),
@@ -521,10 +561,11 @@ pub fn extract_batch(
         .num_threads(n_jobs)
         .build()
         .map_err(|e| invalid(e.to_string()))?;
+    let counters = CacheCounters::default();
     let results: Vec<_> = pool.install(|| {
         samples
             .par_iter()
-            .map(|sample| extract_one(sample, config, cache))
+            .map(|sample| extract_one(sample, config, cache, &counters))
             .collect()
     });
     let mut records = Vec::new();
@@ -615,6 +656,13 @@ pub fn extract_batch(
         failures,
         config: config.clone(),
         implementation_sha256: implementation_sha256().into(),
+        cache_summary: CacheSummary {
+            enabled: cache.is_some(),
+            hits: counters.hits.load(Ordering::Relaxed),
+            misses: counters.misses.load(Ordering::Relaxed),
+            rejected: counters.rejected.load(Ordering::Relaxed),
+            write_failures: counters.write_failures.load(Ordering::Relaxed),
+        },
     })
 }
 

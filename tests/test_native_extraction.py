@@ -9,7 +9,7 @@ import sys
 import pandas as pd
 import pytest
 import ov_radiomics as rad
-from ov_radiomics._backend import resolve_backend
+from ov_radiomics._backend import resolve_backend, try_native
 
 
 def write_nifti(path, values, shape=(3, 2)):
@@ -29,7 +29,7 @@ def write_nifti(path, values, shape=(3, 2)):
 
 @pytest.fixture
 def samples(tmp_path):
-    if resolve_backend('auto') is None:
+    if try_native() is None:
         pytest.skip('Native extension is not built.')
     write_nifti(tmp_path/'image.nii', [1, 1, 2, 2, 3, 3])
     write_nifti(tmp_path/'mask.nii', [1]*6)
@@ -61,6 +61,8 @@ def test_native_api_threads_and_cache_without_reference_imports(samples, tmp_pat
     assert list(first.diagnostics.patient_id) == ['P1', 'P1']
     assert first.features.original_firstorder_Mean.tolist() == [2., 2.]
     assert first.config['implementation_sha256'] == second.config['implementation_sha256']
+    assert first.config['cache_summary']==dict(enabled=True,hits=0,misses=2,rejected=0,write_failures=0)
+    assert second.config['cache_summary']==dict(enabled=True,hits=2,misses=0,rejected=0,write_failures=0)
 
 
 def test_failures_remain_rows_and_auto_does_not_change_algorithm(samples):

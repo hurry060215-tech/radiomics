@@ -120,6 +120,9 @@ pub struct FusionResult {
 /// become local tile scores. Tile inputs average within slide then across slides.
 pub fn aggregate_patient_predictions(table: &PredictionTable) -> RadResult<PredictionTable> {
     table.validate()?;
+    if table.unit == PredictionUnit::Patient {
+        return Ok(table.clone());
+    }
     let mut groups: BTreeMap<&str, Vec<&PredictionRow>> = BTreeMap::new();
     for row in &table.rows {
         groups.entry(&row.patient_id).or_default().push(row);
@@ -183,7 +186,11 @@ pub fn aggregate_patient_predictions(table: &PredictionTable) -> RadResult<Predi
             tile_id: None,
             cohort: first.cohort.clone(),
             fold: first.fold,
-            training_source: format!("patient_mean:{}", digest(&(table.unit, &group))?),
+            training_source: format!(
+                "{}:patient_mean:{}",
+                first.training_source,
+                digest(&(table.unit, &group))?
+            ),
             probabilities,
             value,
         });
@@ -706,15 +713,30 @@ pub fn predict_fusion_tables(
         let table = &tables[&component.name];
         table.validate()?;
         let source = format!("final:{}", digest(&component.model)?);
-        let training = component.model.fitted.training_patients();
+        let plan: SplitPlan = serde_json::from_value(
+            component.model.manifest.training_configuration["split_plan"].clone(),
+        )?;
+        for row in &table.rows {
+            super::population::validate_cohort(&plan, &row.patient_id, &row.cohort)?;
+            if table.unit != PredictionUnit::Patient
+                && (plan
+                    .sample_patients
+                    .get(&row.sample_id)
+                    .is_some_and(|patient| patient != &row.patient_id)
+                    || row.cohort == "train"
+                        && component.model.fitted.training_samples.get(&row.sample_id)
+                            != Some(&row.patient_id))
+            {
+                return Err(RadiomicsError::new(ErrorCode::Leakage,"Provided base sample/patient identities differ from saved training provenance."));
+            }
+        }
         if table.unit != component.model.fitted.fit_unit
             || table.task != component.model.manifest.task
             || table.classes != component.model.manifest.classes
-            || table.rows.iter().any(|r| {
-                r.fold.is_some()
-                    || r.training_source != source
-                    || r.cohort != "train" && training.contains(&r.patient_id)
-            })
+            || table
+                .rows
+                .iter()
+                .any(|r| r.fold.is_some() || r.training_source != source)
         {
             return Err(RadiomicsError::new(ErrorCode::Leakage,"Provided base probabilities do not have the fitted component model/unit/source/cohort provenance."));
         }

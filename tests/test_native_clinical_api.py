@@ -4,9 +4,9 @@ import numpy as np
 import pandas as pd
 import pytest
 import ov_radiomics as rad
-from ov_radiomics._backend import resolve_backend
+from ov_radiomics._backend import resolve_backend, try_native
 
-pytestmark=pytest.mark.skipif(resolve_backend('auto') is None,reason='Native extension not built.')
+pytestmark=pytest.mark.skipif(try_native() is None,reason='Native extension not built.')
 
 
 def test_identified_complete_case_clinical_fit_matches_frozen_reference():

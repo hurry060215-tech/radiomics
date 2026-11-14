@@ -25,6 +25,8 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Command {
+    /// Process ordinary patches, existing embeddings, masks and true tile maps.
+    Pathology(workflow_commands::PathologyCommand),
     /// Fit grouped native pipelines from keyed CSV/Parquet study inputs.
     Train(workflow_commands::TrainCommand),
     /// Predict from a portable native pipeline or fusion model, without refitting.
@@ -66,6 +68,7 @@ enum Command {
 
 fn run(cli: Cli) -> RadResult<u8> {
     match cli.command {
+        Command::Pathology(args) => workflow_commands::pathology(args),
         Command::Train(args) => workflow_commands::train(args),
         Command::Predict(args) => workflow_commands::predict(args),
         Command::Evaluate(args) => workflow_commands::evaluate(args),

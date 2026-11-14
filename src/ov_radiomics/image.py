@@ -81,12 +81,34 @@ class ExtractionResult:
     diagnostics: pd.DataFrame
     config: dict
 
-    def save(self, directory):
+    @property
+    def feature_table(self):
+        """Canonical native FeatureTable, or None for an explicit empty batch."""
+        if 'implementation_sha256' not in self.config:
+            raise ValueError('The legacy reference result has no canonical native FeatureTable; convert externally supplied columns explicitly.')
+        from copy import deepcopy
+        from ._types import FeatureTable
+        table=self.config.get('table')
+        return None if table is None else FeatureTable._from_native(deepcopy(table))
+
+    @property
+    def cache_summary(self):
+        from copy import deepcopy
+        return deepcopy(self.config.get('cache_summary'))
+
+    def save(self, directory, *, overwrite=False):
         path = Path(directory)
+        names=('features.csv','diagnostics.csv','config.json')
+        if not overwrite and any((path/name).exists() for name in names):
+            raise FileExistsError('Extraction output exists; choose a new directory or pass overwrite=True.')
         path.mkdir(parents=True, exist_ok=True)
-        self.features.to_csv(path / 'features.csv', index=False)
-        self.diagnostics.to_csv(path / 'diagnostics.csv', index=False)
-        (path / 'config.json').write_text(json.dumps(self.config, indent=2, default=str), encoding='utf-8')
+        mode='w' if overwrite else 'x'
+        with (path/'features.csv').open(mode,encoding='utf-8',newline='') as handle:
+            self.features.to_csv(handle,index=False)
+        with (path/'diagnostics.csv').open(mode,encoding='utf-8',newline='') as handle:
+            self.diagnostics.to_csv(handle,index=False)
+        with (path/'config.json').open(mode,encoding='utf-8') as handle:
+            json.dump(self.config,handle,indent=2,default=str)
 
 
 def extract(samples, params=None, roi_label=1, correct_mask=False, n_jobs=1, on_error="raise",

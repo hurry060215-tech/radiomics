@@ -36,6 +36,8 @@ class NativeFeatureSelector:
 
     def configurations(self, task=None):
         task = task or self.task
+        if task not in ('binary','multiclass','regression') or self.task not in ('binary','multiclass','regression'):
+            raise ValueError('task must be binary, multiclass, or regression.')
         if self.backend not in ('rust','auto') or self.missing != 'median':
             raise ValueError('Native selection uses median imputation; all_missing=drop explicitly deletes wholly missing columns. Use backend=python for legacy missing=drop semantics.')
         if self.corr_method != 'pearson' or self.p_adjust not in (None,'fdr_bh','bh'):
@@ -75,6 +77,8 @@ class NativeFeatureSelector:
         if len(configurations) != 1:
             raise ValueError('An alpha grid must be fitted inside patient-grouped train_models, not on a standalone pooled selector.')
         frame = X if isinstance(X,pd.DataFrame) else pd.DataFrame(X)
+        if isinstance(y,(pd.Series,pd.DataFrame)) and not frame.index.equals(y.index):
+            raise ValueError('Feature and target indices must have identical labels and order.')
         target, self.classes_ = model_target(y,self.task)
         self._state = request('selector_fit',data=tabular(frame),target=target,
             preprocessing=preprocessing,selection=configurations[0])

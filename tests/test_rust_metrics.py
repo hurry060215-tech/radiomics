@@ -72,14 +72,18 @@ def test_backend_selection_and_missing_module(monkeypatch):
     def absent(name):
         raise ModuleNotFoundError('not built',name='ov_radiomics._native')
     monkeypatch.setattr(_backend,'import_module',absent)
-    assert _backend.resolve_backend('auto') is None
+    assert _backend.try_native() is None
+    with pytest.raises(ImportError,match='never falls back'):
+        _backend.resolve_backend('auto')
     assert _backend.resolve_backend('python') is None
-    assert _backend.backend_info()['metrics_backend'] == 'python'
+    assert _backend.backend_info()['metrics_backend'] == 'unavailable'
     with pytest.raises(ImportError,match='not built'):
         _backend.resolve_backend('rust')
     with pytest.raises(ValueError,match='backend'):
         _backend.resolve_backend('invalid')
-    assert metrics.binary_metrics([0,0,1,1],[.1,.4,.35,.8]).auc == .75
+    assert metrics.binary_metrics([0,0,1,1],[.1,.4,.35,.8],backend='python').auc == .75
+    with pytest.raises(ImportError,match='never falls back'):
+        metrics.binary_metrics([0,0,1,1],[.1,.4,.35,.8],backend='auto')
 
 
 def test_broken_extension_is_not_silently_ignored(monkeypatch):

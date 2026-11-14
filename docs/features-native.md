@@ -109,5 +109,15 @@ No mesh surface area, sphericity, filters, 2.5D aggregation or sliding-window
 texture maps are implemented in this module. Scalar 2D and scalar 3D remain
 separate extraction inputs; a singleton axis does not request 2.5D behavior.
 
+Selective extraction uses `features::extract_families` with the same counting
+and scalar functions. Valid selectors are `firstorder`, `shape_basic`, `glcm`,
+`glrlm`, `glszm`, `gldm`, `ngtdm`; duplicates/empty lists error. Unselected texture
+matrices are not constructed. `extract` remains the complete supported subset,
+with exact same Golden results. Prepared Python samples accept
+`sample.extract(config, families=['glcm'])`; batch ExtractConfig has an optional
+top-level `families` array. This enables scoped operator measurements without
+timing the whole engine and relabeling it a single family. Report actual public
+conversion/binning/selected-matrix/scalar work, not invented internal timings.
+
 Reference definitions: [PyRadiomics 3.0.1 source](https://github.com/AIM-Harvard/pyradiomics/tree/v3.0.1/radiomics),
 [documented IBSI differences](https://pyradiomics.readthedocs.io/en/stable/faq.html).

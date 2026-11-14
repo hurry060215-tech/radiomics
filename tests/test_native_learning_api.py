@@ -7,9 +7,9 @@ import numpy as np
 import pandas as pd
 import pytest
 import ov_radiomics as rad
-from ov_radiomics._backend import resolve_backend
+from ov_radiomics._backend import resolve_backend, try_native
 
-pytestmark=pytest.mark.skipif(resolve_backend('auto') is None,reason='Native extension not built.')
+pytestmark=pytest.mark.skipif(try_native() is None,reason='Native extension not built.')
 GOLDEN=Path(__file__).resolve().parents[1]/'golden/python_golden_v1'
 
 
@@ -60,6 +60,10 @@ print(json.dumps(bundle.predict_study(converted).to_dict(),sort_keys=True))
     with pytest.raises(FileExistsError):
         result.save(tmp_path/'result')
     assert bundle.manifest['task']==task
+    assert 'prediction_type' in report
+    if task=='multiclass':
+        assert {'macro_f1','micro_f1','weighted_f1'} <= set(report)
+        assert 'confusion' in report.attrs['native_reports'][0]['report']
 
 
 def test_patient_plan_fusion_leakage_and_test_perturbation():
@@ -116,3 +120,14 @@ def test_native_selector_does_not_relax_all_missing_or_zero_feature_errors():
     assert selector.transform(data[['b','a','all_missing']]).shape==(4,1)
     with pytest.raises(ValueError,match='Multiclass'):
         rad.FeatureSelector(backend='rust',task='multiclass',sparse_method='squared_lasso').configurations()
+
+
+def test_native_evaluation_uses_saved_threshold_and_preserves_full_report():
+    frame,features,classes=dataset('binary')
+    result=rad.train_models(frame,'target',features,backend='rust',classes=classes,
+        positive_label=classes[-1],cv=3,inner_cv=2,threshold=.73)
+    report=rad.evaluate(result,ci_method=None)
+    assert report.loc[report.status=='evaluated','threshold'].eq(.73).all()
+    assert {'average_precision','log_loss_eps1e15'} <= set(report)
+    assert report.attrs['native_reports'][0]['report']['confusion']['size']==2
+    assert result.predict(frame.loc[frame.group!='train'].drop(columns='target')).to_dict()==result.models['LR'].predict(frame.loc[frame.group!='train'].drop(columns='target')).to_dict()

@@ -93,7 +93,7 @@ class NativeTrainingResult:
 
 def train_models(data,target,features,split='group',models=None,selector=None,
                  continuous=None,categorical=None,scale=None,cv=5,scoring=None,
-                 model_params=None,random_state=0,id_col='ID',positive_label=1,
+                 model_params=None,random_state=0,id_col='ID',positive_label=None,
                  patient_id=None,smote=False,*,task='binary',split_plan=None,
                  inner_cv=3,n_jobs=1,classes=None,fit_unit='sample',scoring_unit='patient',
                  threshold=.5,native_config=None):
@@ -118,11 +118,20 @@ def train_models(data,target,features,split='group',models=None,selector=None,
         elif classes is None:
             classes = sorted({string_value(v) for v in training})
             if task == 'binary':
-                positive = string_value(positive_label)
+                positive = string_value(1 if positive_label is None else positive_label)
                 if len(classes)!=2 or positive not in classes:
                     raise ValueError('Specify the binary positive_label present in training outcomes.')
                 classes = [c for c in classes if c!=positive]+[positive]
         plan = None
+    classes=[string_value(value) for value in classes]
+    if task=='binary':
+        if len(classes)!=2:
+            raise ValueError('Binary training requires exactly two ordered classes.')
+        if positive_label is not None and string_value(positive_label)!=classes[1]:
+            raise ValueError('positive_label must agree with the second entry of the explicit class order/SplitPlan.')
+        positive_label=classes[1]
+    elif task=='multiclass' and len(classes)<3:
+        raise ValueError('Multiclass training requires at least three ordered classes.')
     converted,group = study(data,target,list(features),task=task,classes=classes,
         categorical=categorical,split=split,id_col=id_col,patient_id=patient_id)
     if continuous is not None and (set(continuous)&set(categorical or []) or set(continuous)|set(categorical or [])!=set(features)):
@@ -195,7 +204,9 @@ class NativeFusionData:
         merged=frames[0]
         for frame in frames[1:]:
             merged=merged.merge(frame.drop(columns=['group','fold']),on='ID',validate='one_to_one')
-        truth=_truth_groups(first._study,'patient') if first._study is not None else {}
+        truth=_truth_groups(first._study,'patient',selected_ids=set(merged.ID)) if first._study is not None else {}
+        if any(value[0] is not None and value[0] not in self.classes for value in truth.values()):
+            raise ValueError('The requested fusion view contains an observed unknown training class.')
         merged['y_true']=[self.classes.index(truth[i][0]) if i in truth and truth[i][0] in self.classes else np.nan for i in merged.ID]
         merged['prediction_type']='oof' if cohort=='oof' else 'apparent' if cohort=='train' else 'holdout' if cohort=='test' else 'external'
         self._frame=merged
@@ -272,29 +283,36 @@ def fit_fusion(inputs,target='y_true',score_columns=('Rad','Clinical'),model='LR
     return NativeFusionResult(payload,sources)
 
 
-def _truth_groups(converted,unit):
+def _truth_groups(converted,unit,selected_ids=None):
     outcome=converted['outcome'];values=outcome.get('values',[None]*len(converted['samples']))
     groups={}
     for sample,cohort,value in zip(converted['samples'],converted['cohorts'],values):
         key=sample['patient_id'] if unit=='patient' else sample['sample_id']
+        if selected_ids is not None and key not in selected_ids:
+            continue
         if key in groups and (groups[key][0]!=value or groups[key][1]!=cohort or groups[key][2]!=sample['patient_id']):
             raise ValueError('Evaluation/fusion requires consistent targets, cohorts and patient identities at the declared unit.')
         groups[key]=(value,cohort,sample['patient_id'])
     return groups
 
 
-def evaluate(predictions,threshold=.5,ci_method='auto',confidence=.95,*,prediction_unit='patient',
+def evaluate(predictions,threshold=None,ci_method='auto',confidence=.95,*,prediction_unit='patient',
              n_bootstrap=2000,random_state=0,data=None,target=None,task=None,classes=None,
              id_col='ID',patient_id=None,split='group'):
-    from .metrics import binary_metrics
+    from .metrics import _native_binary_report
     if isinstance(predictions,NativeTrainingResult):
         tables=[(run['name'],run['predictions']) for run in predictions._payload['models']]
         converted=predictions._study;task=predictions.task;classes=predictions.classes
+        thresholds={run['name']:run['model']['manifest']['threshold'] for run in predictions._payload['models']}
     elif isinstance(predictions,NativeFusionResult):
         tables=[('Fusion',predictions._payload['predictions'])]
         converted=predictions._study;task=tables[0][1]['task'];classes=tables[0][1]['classes']
+        thresholds={'Fusion':predictions.model.manifest['threshold']}
     elif isinstance(predictions,PredictionTable):
         tables=[('Model',predictions.to_dict())];task=predictions.to_dict()['task'];classes=predictions.to_dict()['classes']
+        if task=='binary' and threshold is None:
+            raise ValueError('A standalone binary PredictionTable requires an explicit saved-model threshold.')
+        thresholds={'Model':threshold}
         if data is None:
             raise ValueError('Native prediction-table evaluation requires explicitly identified truth data.')
         converted,_=study(data,target,[],task=task,classes=classes,split=split,id_col=id_col,patient_id=patient_id)
@@ -305,8 +323,10 @@ def evaluate(predictions,threshold=.5,ci_method='auto',confidence=.95,*,predicti
     if prediction_unit not in ('sample','patient'):
         raise ValueError('Choose explicit sample or patient evaluation.')
     truth=_truth_groups(converted,prediction_unit)
-    rows=[]
+    rows=[];details=[]
     for name,source in tables:
+        effective_threshold=threshold if threshold is not None else thresholds[name]
+        effective_threshold=.5 if effective_threshold is None else effective_threshold
         if prediction_unit=='sample' and source['unit']!='sample':
             raise ValueError('Patient/slide/tile predictions cannot be broadcast as independent sample predictions.')
         table=request('aggregate_patient_predictions',predictions=source) if prediction_unit=='patient' and source['unit']!='patient' else source
@@ -318,6 +338,9 @@ def evaluate(predictions,threshold=.5,ci_method='auto',confidence=.95,*,predicti
                     raise ValueError('Prediction/truth identity or cohort differs.')
                 outcomes.append(truth[key][0])
             result=dict(model=name,group=cohort,task=task,prediction_unit=prediction_unit,n=len(subset))
+            subset_table=dict(table,rows=subset)
+            kinds=sorted(set(prediction_frame(subset_table).prediction_type))
+            result['prediction_type']=','.join(kinds)
             if all(v is None for v in outcomes):
                 result['status']='prediction_only';rows.append(result);continue
             if any(v is None for v in outcomes):
@@ -334,11 +357,14 @@ def evaluate(predictions,threshold=.5,ci_method='auto',confidence=.95,*,predicti
                     values=[p for r in subset for p in r['probabilities']],missing=[False]*(len(subset)*len(classes))))
                 target_value=dict(task='classification',classes=classes,labels=y)
                 if task=='binary':
-                    report=binary_metrics(y,[r['probabilities'][1] for r in subset],threshold=threshold,
-                        ci_method=method,confidence=confidence,n_bootstrap=n_bootstrap,random_state=random_state,backend='rust').to_dict()
+                    report=_native_binary_report(np.asarray(y),np.asarray([r['probabilities'][1] for r in subset]),
+                        effective_threshold,method,confidence,n_bootstrap,random_state)
                 else:
-                    report=request('classification_metrics',task=task,target=target_value,prediction=prediction,threshold=threshold)
+                    report=request('classification_metrics',task=task,target=target_value,prediction=prediction,threshold=effective_threshold)
             result.update({k:float(v) if isinstance(v,str) and v in ('NaN','Inf','-Inf') else v for k,v in report.items() if not isinstance(v,(dict,list))})
+            for average in ('macro','micro','weighted'):
+                for key,value in report.get(average+'_average',{}).items():
+                    result[average+'_'+key]=value
             if task!='binary' and method is not None:
                 if method!='bootstrap':
                     raise ValueError('DeLong/H-L/DCA overall semantics are binary only; use native bootstrap for multiclass/regression.')
@@ -346,4 +372,7 @@ def evaluate(predictions,threshold=.5,ci_method='auto',confidence=.95,*,predicti
                     replicates=n_bootstrap,seed=random_state,confidence=confidence)
                 result.update(ci_low=interval['low'],ci_high=interval['high'])
             result['status']='evaluated';rows.append(result)
-    return pd.DataFrame(rows)
+            details.append(dict(model=name,group=cohort,prediction_unit=prediction_unit,report=report))
+    output=pd.DataFrame(rows)
+    output.attrs['native_reports']=details
+    return output

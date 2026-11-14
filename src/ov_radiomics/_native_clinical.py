@@ -12,7 +12,10 @@ def _analysis_rows(data, analysis_unit, patient_id, id_col):
     column = patient_id or ('patient_id' if 'patient_id' in data else id_col)
     if column not in data or data[column].isna().any():
         raise ValueError('Clinical analysis requires complete patient identities; specify patient_id or id_col.')
-    if analysis_unit == 'patient' and data[column].astype(str).duplicated().any():
+    normalized=data[column].map(string_value)
+    if normalized.isna().any() or normalized.map(lambda value:not value.strip()).any():
+        raise ValueError('Clinical analysis requires nonempty patient identities.')
+    if analysis_unit == 'patient' and normalized.duplicated().any():
         raise ValueError('Repeated patients require prior patient-level aggregation; choose analysis_unit=sample explicitly only for a row-level descriptive/inference analysis.')
 
 

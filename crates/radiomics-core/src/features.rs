@@ -14,6 +14,36 @@ fn invalid(message: &str) -> RadiomicsError {
     RadiomicsError::new(ErrorCode::InvalidInput, message)
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum FeatureFamily {
+    #[serde(rename = "firstorder")]
+    FirstOrder,
+    ShapeBasic,
+    Glcm,
+    Glrlm,
+    Glszm,
+    Gldm,
+    Ngtdm,
+}
+pub const ALL_FAMILIES: [FeatureFamily; 7] = [
+    FeatureFamily::FirstOrder,
+    FeatureFamily::ShapeBasic,
+    FeatureFamily::Glcm,
+    FeatureFamily::Glrlm,
+    FeatureFamily::Glszm,
+    FeatureFamily::Gldm,
+    FeatureFamily::Ngtdm,
+];
+pub fn validate_families(families: &[FeatureFamily]) -> RadResult<()> {
+    if families.is_empty() || families.iter().collect::<BTreeSet<_>>().len() != families.len() {
+        return Err(invalid(
+            "Select a nonempty unique list of supported Original feature families.",
+        ));
+    }
+    Ok(())
+}
+
 /// A compact matrix with explicit axis values; `counts` is row-major.
 /// Missing gray labels are not silently renumbered to consecutive values.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -309,6 +339,14 @@ fn directions(shape: [usize; 3], full: bool) -> Vec<[i32; 3]> {
 /// Raw symmetric GLCM and run/zone/dependence counts. This diagnostic is also the
 /// exact matrix path used for extraction; it is not an independent implementation.
 pub fn texture_matrices(discrete: &DiscretizedImage, alpha: u32) -> RadResult<TextureMatrices> {
+    texture_matrices_selected(discrete, alpha, &ALL_FAMILIES.into_iter().collect())
+}
+
+fn texture_matrices_selected(
+    discrete: &DiscretizedImage,
+    alpha: u32,
+    selected: &BTreeSet<FeatureFamily>,
+) -> RadResult<TextureMatrices> {
     if discrete
         .shape
         .iter()
@@ -334,6 +372,8 @@ pub fn texture_matrices(discrete: &DiscretizedImage, alpha: u32) -> RadResult<Te
     let shape = discrete.shape;
     let half = directions(shape, false);
     let full = directions(shape, true);
+    let gldm_enabled = selected.contains(&FeatureFamily::Gldm);
+    let ngtdm_enabled = selected.contains(&FeatureFamily::Ngtdm);
     // Resolve gray labels once. Repeated BTreeMap lookups inside every pair
     // would dominate the distance-one kernels on ordinary CT volumes.
     let ranks: Vec<usize> = discrete
@@ -348,119 +388,133 @@ pub fn texture_matrices(discrete: &DiscretizedImage, alpha: u32) -> RadResult<Te
     let mut glcm = Vec::new();
     let mut glrlm = Vec::new();
     for &offset in &half {
-        let mut counts = Vec::new();
-        counts.try_reserve_exact(pair_size).map_err(|_| {
-            invalid("GLCM allocation failed; increase bin width or decrease bin count.")
-        })?;
-        counts.resize(pair_size, 0u64);
-        for (i, _) in discrete.values.iter().enumerate().filter(|(_, v)| **v > 0) {
-            if let Some(j) = shifted(coordinates(i, shape), offset, shape) {
-                let w = discrete.values[j];
-                if w > 0 {
-                    counts[ranks[i] * actual.len() + ranks[j]] += 1;
-                    counts[ranks[j] * actual.len() + ranks[i]] += 1;
+        if selected.contains(&FeatureFamily::Glcm) {
+            let mut counts = Vec::new();
+            counts.try_reserve_exact(pair_size).map_err(|_| {
+                invalid("GLCM allocation failed; increase bin width or decrease bin count.")
+            })?;
+            counts.resize(pair_size, 0u64);
+            for (i, _) in discrete.values.iter().enumerate().filter(|(_, v)| **v > 0) {
+                if let Some(j) = shifted(coordinates(i, shape), offset, shape) {
+                    let w = discrete.values[j];
+                    if w > 0 {
+                        counts[ranks[i] * actual.len() + ranks[j]] += 1;
+                        counts[ranks[j] * actual.len() + ranks[i]] += 1;
+                    }
                 }
             }
+            // GLCM keeps both actual gray-level axes, even if a direction has no
+            // pairs for a particular gray. Empty directions are excluded downstream.
+            let pair = CountMatrix {
+                row_values: actual.clone(),
+                column_values: actual.clone(),
+                counts,
+            };
+            glcm.push(DirectionalMatrix {
+                offset,
+                matrix: pair,
+            });
         }
-        // GLCM keeps both actual gray-level axes, even if a direction has no
-        // pairs for a particular gray. Empty directions are excluded downstream.
-        let pair = CountMatrix {
-            row_values: actual.clone(),
-            column_values: actual.clone(),
-            counts,
-        };
-        glcm.push(DirectionalMatrix {
-            offset,
-            matrix: pair,
-        });
-        let reverse = offset.map(|v| -v);
-        let mut entries = BTreeMap::new();
-        let mut multi_element = false;
-        // Walk each entire geometric line exactly once. ROI holes terminate
-        // individual runs but remain part of that line for multi-element status.
-        for i in 0..discrete.values.len() {
-            if shifted(coordinates(i, shape), reverse, shape).is_some() {
+        if selected.contains(&FeatureFamily::Glrlm) {
+            let reverse = offset.map(|v| -v);
+            let mut entries = BTreeMap::new();
+            let mut multi_element = false;
+            // Walk each entire geometric line exactly once. ROI holes terminate
+            // individual runs but remain part of that line for multi-element status.
+            for i in 0..discrete.values.len() {
+                if shifted(coordinates(i, shape), reverse, shape).is_some() {
+                    continue;
+                }
+                let mut cursor = Some(i);
+                let (mut gray, mut length, mut elements) = (0, 0u32, 0usize);
+                while let Some(j) = cursor {
+                    let value = discrete.values[j];
+                    if value > 0 {
+                        elements += 1;
+                    }
+                    if value != gray {
+                        if gray > 0 {
+                            *entries.entry((gray, length)).or_insert(0) += 1;
+                        }
+                        gray = value;
+                        length = u32::from(value > 0);
+                    } else if value > 0 {
+                        length += 1;
+                    }
+                    cursor = shifted(coordinates(j, shape), offset, shape);
+                }
+                if gray > 0 {
+                    *entries.entry((gray, length)).or_insert(0) += 1;
+                }
+                multi_element |= elements > 1;
+            }
+            if !multi_element {
+                entries.clear();
+            }
+            glrlm.push(DirectionalMatrix {
+                offset,
+                matrix: CountMatrix::from_entries(entries, &actual),
+            });
+        }
+    }
+    let mut zones = BTreeMap::new();
+    if selected.contains(&FeatureFamily::Glszm) {
+        let mut visited = vec![false; discrete.values.len()];
+        for (start, &gray) in discrete.values.iter().enumerate() {
+            if gray == 0 || visited[start] {
                 continue;
             }
-            let mut cursor = Some(i);
-            let (mut gray, mut length, mut elements) = (0, 0u32, 0usize);
-            while let Some(j) = cursor {
-                let value = discrete.values[j];
-                if value > 0 {
-                    elements += 1;
-                }
-                if value != gray {
-                    if gray > 0 {
-                        *entries.entry((gray, length)).or_insert(0) += 1;
-                    }
-                    gray = value;
-                    length = u32::from(value > 0);
-                } else if value > 0 {
-                    length += 1;
-                }
-                cursor = shifted(coordinates(j, shape), offset, shape);
-            }
-            if gray > 0 {
-                *entries.entry((gray, length)).or_insert(0) += 1;
-            }
-            multi_element |= elements > 1;
-        }
-        if !multi_element {
-            entries.clear();
-        }
-        glrlm.push(DirectionalMatrix {
-            offset,
-            matrix: CountMatrix::from_entries(entries, &actual),
-        });
-    }
-    let mut visited = vec![false; discrete.values.len()];
-    let mut zones = BTreeMap::new();
-    for (start, &gray) in discrete.values.iter().enumerate() {
-        if gray == 0 || visited[start] {
-            continue;
-        }
-        let mut stack = vec![start];
-        visited[start] = true;
-        let mut size = 0u32;
-        while let Some(i) = stack.pop() {
-            size = size
-                .checked_add(1)
-                .ok_or_else(|| invalid("A texture zone exceeds u32 size."))?;
-            for &offset in &full {
-                if let Some(j) = shifted(coordinates(i, shape), offset, shape) {
-                    if !visited[j] && discrete.values[j] == gray {
-                        visited[j] = true;
-                        stack.push(j);
+            let mut stack = vec![start];
+            visited[start] = true;
+            let mut size = 0u32;
+            while let Some(i) = stack.pop() {
+                size = size
+                    .checked_add(1)
+                    .ok_or_else(|| invalid("A texture zone exceeds u32 size."))?;
+                for &offset in &full {
+                    if let Some(j) = shifted(coordinates(i, shape), offset, shape) {
+                        if !visited[j] && discrete.values[j] == gray {
+                            visited[j] = true;
+                            stack.push(j);
+                        }
                     }
                 }
             }
+            *zones.entry((gray, size)).or_insert(0) += 1;
         }
-        *zones.entry((gray, size)).or_insert(0) += 1;
     }
     let mut dependencies = BTreeMap::new();
     let mut differences: BTreeMap<u32, (u64, f64)> =
         actual.iter().map(|&g| (g, (0, 0.0))).collect();
-    for (i, &gray) in discrete.values.iter().enumerate().filter(|(_, v)| **v > 0) {
-        let (mut dependence, mut count, mut sum) = (1u32, 0u32, 0.0);
-        for &offset in &full {
-            if let Some(j) = shifted(coordinates(i, shape), offset, shape) {
-                let other = discrete.values[j];
-                if other > 0 {
-                    count += 1;
-                    sum += f64::from(other);
-                    if gray.abs_diff(other) <= alpha {
-                        dependence += 1;
+    if gldm_enabled || ngtdm_enabled {
+        for (i, &gray) in discrete.values.iter().enumerate().filter(|(_, v)| **v > 0) {
+            let (mut dependence, mut count, mut sum) = (1u32, 0u32, 0.0);
+            for &offset in &full {
+                if let Some(j) = shifted(coordinates(i, shape), offset, shape) {
+                    let other = discrete.values[j];
+                    if other > 0 {
+                        if ngtdm_enabled {
+                            count += 1;
+                            sum += f64::from(other);
+                        }
+                        if gldm_enabled && gray.abs_diff(other) <= alpha {
+                            dependence += 1;
+                        }
                     }
                 }
             }
-        }
-        *dependencies.entry((gray, dependence)).or_insert(0) += 1;
-        // PyRadiomics C counts isolated centers with zero difference, despite
-        // the prose definition saying at least one neighbor is required.
-        let entry = differences.get_mut(&gray).unwrap();
-        entry.0 += 1;
-        if count > 0 {
-            entry.1 += (f64::from(gray) - sum / f64::from(count)).abs();
+            if gldm_enabled {
+                *dependencies.entry((gray, dependence)).or_insert(0) += 1;
+            }
+            // PyRadiomics C counts isolated centers with zero difference, despite
+            // the prose definition saying at least one neighbor is required.
+            if ngtdm_enabled {
+                let entry = differences.get_mut(&gray).unwrap();
+                entry.0 += 1;
+                if count > 0 {
+                    entry.1 += (f64::from(gray) - sum / f64::from(count)).abs();
+                }
+            }
         }
     }
     Ok(TextureMatrices {
@@ -924,7 +978,28 @@ pub fn extract(
     roi_label: u32,
     config: &ExtractionConfig,
 ) -> RadResult<BTreeMap<String, f64>> {
+    extract_families(
+        image,
+        morphology_mask,
+        intensity_mask,
+        roi_label,
+        config,
+        &ALL_FAMILIES,
+    )
+}
+
+/// Selective extraction shares formulas/counting with `extract`, without building unselected matrices.
+pub fn extract_families(
+    image: &ImageVolume,
+    morphology_mask: &MaskVolume,
+    intensity_mask: Option<&MaskVolume>,
+    roi_label: u32,
+    config: &ExtractionConfig,
+    families: &[FeatureFamily],
+) -> RadResult<BTreeMap<String, f64>> {
     config.validate()?;
+    validate_families(families)?;
+    let selected: BTreeSet<_> = families.iter().copied().collect();
     validate_pair(image, morphology_mask, roi_label)?;
     let mask = intensity_mask.unwrap_or(morphology_mask);
     validate_pair(image, mask, roi_label)?;
@@ -938,6 +1013,13 @@ pub fn extract(
     {
         return Err(invalid("Intensity ROI must be a subset of morphology ROI."));
     }
+    let mut output = BTreeMap::new();
+    if selected.contains(&FeatureFamily::ShapeBasic) {
+        output.extend(shape_basic(morphology_mask, roi_label));
+    }
+    if selected.len() == 1 && selected.contains(&FeatureFamily::ShapeBasic) {
+        return Ok(output);
+    }
     let discrete = discretize(image, mask, roi_label, &config.discretization)?;
     let values: Vec<_> = image
         .values
@@ -945,23 +1027,42 @@ pub fn extract(
         .zip(&mask.labels)
         .filter_map(|(&v, &m)| (m == roi_label).then_some(v))
         .collect();
-    let matrices = texture_matrices(&discrete, config.gldm_alpha)?;
     let n = values.len() as f64;
-    let mut output = first_order(&values, &discrete, config.voxel_array_shift);
-    output.extend(shape_basic(morphology_mask, roi_label));
-    insert_directional(&mut output, "glcm", &matrices.glcm, config.aggregation, n);
-    insert_directional(&mut output, "glrlm", &matrices.glrlm, config.aggregation, n);
-    insert_family(
-        &mut output,
-        "glszm",
-        size_features(&matrices.glszm, "glszm", n),
-    );
-    insert_family(
-        &mut output,
-        "gldm",
-        size_features(&matrices.gldm, "gldm", n),
-    );
-    insert_family(&mut output, "ngtdm", ngtdm_features(&matrices.ngtdm));
+    if selected.contains(&FeatureFamily::FirstOrder) {
+        output.extend(first_order(&values, &discrete, config.voxel_array_shift));
+    }
+    if selected.iter().all(|family| {
+        matches!(
+            family,
+            FeatureFamily::FirstOrder | FeatureFamily::ShapeBasic
+        )
+    }) {
+        return Ok(output);
+    }
+    let matrices = texture_matrices_selected(&discrete, config.gldm_alpha, &selected)?;
+    if selected.contains(&FeatureFamily::Glcm) {
+        insert_directional(&mut output, "glcm", &matrices.glcm, config.aggregation, n);
+    }
+    if selected.contains(&FeatureFamily::Glrlm) {
+        insert_directional(&mut output, "glrlm", &matrices.glrlm, config.aggregation, n);
+    }
+    if selected.contains(&FeatureFamily::Glszm) {
+        insert_family(
+            &mut output,
+            "glszm",
+            size_features(&matrices.glszm, "glszm", n),
+        );
+    }
+    if selected.contains(&FeatureFamily::Gldm) {
+        insert_family(
+            &mut output,
+            "gldm",
+            size_features(&matrices.gldm, "gldm", n),
+        );
+    }
+    if selected.contains(&FeatureFamily::Ngtdm) {
+        insert_family(&mut output, "ngtdm", ngtdm_features(&matrices.ngtdm));
+    }
     Ok(output)
 }
 

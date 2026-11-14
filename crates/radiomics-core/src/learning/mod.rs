@@ -3,6 +3,7 @@ mod data;
 mod fusion;
 mod io_spec;
 mod pipeline;
+mod population;
 mod training;
 pub use data::{Outcome, StudyData};
 pub use fusion::{

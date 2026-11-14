@@ -8,8 +8,8 @@ import pytest
 
 
 def test_external_arrays_and_anndata_rows_reach_the_same_rust_alignment():
-    from ov_radiomics._backend import resolve_backend
-    native = resolve_backend('auto')
+    from ov_radiomics._backend import resolve_backend, try_native
+    native = try_native()
     if native is None:
         pytest.skip('This source-only environment has no compiled extension.')
     assert hasattr(native, 'align_tile_embeddings'), 'Rebuild the extension with the native interop entry point.'
@@ -37,8 +37,8 @@ def test_external_arrays_and_anndata_rows_reach_the_same_rust_alignment():
 
 
 def test_wsidata_real_rust_snapshot_history_namespace_and_stale_geometry():
-    from ov_radiomics._backend import resolve_backend
-    native=resolve_backend('auto')
+    from ov_radiomics._backend import resolve_backend, try_native
+    native=try_native()
     if native is None:
         pytest.skip('This source-only environment has no compiled extension.')
     assert hasattr(native,'wsidata_snapshot') and hasattr(native,'from_wsidata'), 'Rebuild the native WSIData contract entry points.'

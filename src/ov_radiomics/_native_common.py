@@ -1,5 +1,6 @@
 """Array/table conversion and versioned calls into the shared native core."""
 import json
+import math
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -8,11 +9,15 @@ from .split import _label
 
 
 def clean_json(value):
+    if value is None or type(value) in (str,int,bool):
+        return value
+    if type(value) is float:
+        return value if math.isfinite(value) else ('NaN' if math.isnan(value) else ('Inf' if value>0 else '-Inf'))
     if isinstance(value, np.ndarray):
         return clean_json(value.tolist())
     if isinstance(value, np.generic):
         return clean_json(value.item())
-    if isinstance(value, float) and not np.isfinite(value):
+    if isinstance(value, float) and not math.isfinite(value):
         return 'NaN' if np.isnan(value) else ('Inf' if value > 0 else '-Inf')
     if isinstance(value, dict):
         return {str(k): clean_json(v) for k, v in value.items()}
@@ -23,6 +28,24 @@ def clean_json(value):
     return value
 
 
+def encode_json(value):
+    """Fast finite typed-buffer path; explicit nonfinite image states on demand."""
+    def convert(item):
+        if isinstance(item,np.generic):
+            return item.item()
+        if isinstance(item,np.ndarray):
+            return item.tolist()
+        if isinstance(item,Path):
+            return str(item)
+        raise TypeError('Unsupported native JSON conversion type: '+type(item).__name__)
+    try:
+        return json.dumps(value,allow_nan=False,ensure_ascii=False,separators=(',',':'),default=convert)
+    except ValueError as error:
+        if 'Out of range float values' not in str(error):
+            raise
+        return json.dumps(clean_json(value),allow_nan=False,ensure_ascii=False,separators=(',',':'))
+
+
 def request(operation, **values):
     native = resolve_backend('rust')
     if not hasattr(native, 'request_json'):
@@ -30,8 +53,7 @@ def request(operation, **values):
     envelope = dict(schema_version=1, request=dict(operation=operation, **values))
     # Nonfinite image/statistic states have explicit string encodings in Rust.
     # Numeric feature buffers below instead use finite zero + missing flags.
-    return json.loads(native.request_json(json.dumps(clean_json(envelope), allow_nan=False,
-        ensure_ascii=False, separators=(',', ':'))))
+    return json.loads(native.request_json(encode_json(envelope)))
 
 
 def numeric_buffer(values):
@@ -91,6 +113,8 @@ def tabular(data, features=None, categorical=None):
 
 
 def model_target(y, task, classes=None, positive_label=1):
+    if task not in ('binary','multiclass','regression'):
+        raise ValueError('task must be binary, multiclass, or regression.')
     series = pd.Series(y)
     if series.isna().any():
         raise ValueError('Training outcomes must be observed.')
@@ -108,6 +132,8 @@ def model_target(y, task, classes=None, positive_label=1):
                 raise ValueError('Binary outcomes need two classes including positive_label, or an explicit class order.')
             classes = [c for c in classes if c != positive] + [positive]
     classes = [string_value(c) for c in classes]
+    if task=='binary' and len(classes)!=2 or task=='multiclass' and len(classes)<3:
+        raise ValueError('Declared binary/multiclass task disagrees with the observed class count.')
     mapping = {c: i for i, c in enumerate(classes)}
     if any(label not in mapping for label in labels):
         raise ValueError('Observed outcome uses an unknown training class.')
@@ -117,6 +143,8 @@ def model_target(y, task, classes=None, positive_label=1):
 def study(data, target, features, *, task, classes, categorical=None, split='group',
           id_col='ID', patient_id=None, fit_unit='sample', default_cohort=None):
     frame = data.copy(deep=False)
+    if target is not None and target not in frame:
+        raise ValueError('The explicitly named outcome column is missing: '+str(target))
     if id_col not in frame or frame[id_col].isna().any() or frame[id_col].duplicated().any():
         raise ValueError('Study data require unique nonmissing sample IDs.')
     group = patient_id or ('patient_id' if 'patient_id' in frame else id_col)
@@ -131,10 +159,12 @@ def study(data, target, features, *, task, classes, categorical=None, split='gro
     if any(pd.isna(c) or not str(c).strip() for c in cohorts):
         raise ValueError('Cohort assignments must be complete.')
     samples = []
-    for _, row in frame.iterrows():
-        optional = {key: None if key not in frame or pd.isna(row[key]) else str(row[key])
-            for key in ('slide_id', 'lesion_id', 'modality', 'region', 'timepoint', 'center')}
-        samples.append(dict(sample_id=str(row[id_col]), patient_id=str(row[group]), **optional))
+    metadata_keys=('slide_id','lesion_id','modality','region','timepoint','center')
+    columns=list(dict.fromkeys([id_col,group]+[key for key in metadata_keys if key in frame]))
+    for values in frame[columns].itertuples(index=False,name=None):
+        row=dict(zip(columns,values))
+        optional={key:string_value(row.get(key)) for key in metadata_keys}
+        samples.append(dict(sample_id=string_value(row[id_col]),patient_id=string_value(row[group]),**optional))
     if target is None or target not in frame:
         outcome = dict(task='unlabeled')
     elif task == 'regression':

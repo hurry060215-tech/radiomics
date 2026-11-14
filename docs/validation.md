@@ -2,7 +2,13 @@
 
 Initial local validation: 2026-11-11, Windows, Python 3.9.21.
 
-## Rust migration validation, 2026-11-14
+Current native-engine evidence and outstanding Windows/Linux, deployment,
+tutorial and performance gates are tracked in the [acceptance ledger](native-development.md)
+and [independent Benchmark v2 audit](acceptance-v2-report.md). The records below
+are historical baselines and are not the current support matrix or a full release
+approval.
+
+## Historical first-stage Rust validation, 2026-11-14
 
 - Rust 1.100.0/MSVC and PyO3 0.30.1 compiled the independent core and CPython ABI3 extension locally.
 - Six Rust unit tests passed. `cargo fmt --check` and workspace clippy with warnings denied passed.

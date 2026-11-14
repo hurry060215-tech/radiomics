@@ -54,10 +54,10 @@ jobs:
               project = tomllib.load(handle)['project']
           subprocess.check_call([sys.executable, '-m', 'pip', 'install', *project['dependencies'], *project['optional-dependencies']['reference'], *project['optional-dependencies']['test']])
           PY
-      - run: python -c "import ov_radiomics as rad; assert rad.backend_info()['metrics_backend'] == 'python'"
+      - run: python -c "import ov_radiomics as rad; assert rad.backend_info()['metrics_backend'] == 'unavailable'; assert rad.binary_metrics([0,0,1,1],[.1,.4,.35,.8],backend='python').auc == .75"
         env:
           PYTHONPATH: src
-      - run: python -m pytest -q
+      - run: python -m pytest -q tests/test_golden_reference.py tests/test_golden_models.py tests/test_golden_statistics.py tests/test_golden_baseline.py tests/test_golden_tables.py tests/test_golden_workflow.py tests/test_golden_fusion.py tests/test_golden_evaluation.py tests/test_golden_forest.py tests/test_golden_icc.py tests/test_golden_ibsi.py tests/test_golden_pathology.py tests/test_golden_pathology_aggregate.py tests/test_golden_separation.py tests/test_golden_research.py tests/test_golden_wsidata.py tests/test_benchmark_protocol.py tests/test_interop_conversion.py
         env:
           MPLBACKEND: Agg
           PYTHONPATH: src
@@ -101,7 +101,7 @@ jobs:
       - run: python -c "import glob,subprocess,sys; subprocess.check_call([sys.executable,'-m','pip','install',glob.glob('dist/*.whl')[0]])"
       - name: Check reference packages are absent
         run: python -c "import importlib.util; assert all(importlib.util.find_spec(m) is None for m in ('sklearn','statsmodels','scipy','radiomics','SimpleITK','joblib','omicverse','wsidata'))"
-      - run: python -m pytest -q tests/test_native_extraction.py tests/test_native_image_api.py tests/test_split_plan.py tests/test_native_learning_api.py tests/test_native_clinical_api.py tests/test_native_pathology_api.py tests/test_interop_native.py --import-mode=importlib -o pythonpath=
+      - run: python -m pytest -q tests/test_native_extraction.py tests/test_native_image_api.py tests/test_split_plan.py tests/test_native_learning_api.py tests/test_native_clinical_api.py tests/test_native_pathology_api.py tests/test_native_research_api.py tests/test_native_api_audit.py tests/test_interop_native.py --import-mode=importlib -o pythonpath=
         env:
           MPLBACKEND: Agg
       - run: cargo build --release -p ov-radiomics-cli --locked

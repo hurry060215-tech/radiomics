@@ -1,4 +1,4 @@
-# ov-radiomics
+# radiomics
 
 An independently maintained Python package with a Rust numerical core: medical images and ROI masks → radiomics models → clinical models → probability fusion and evaluation.
 
@@ -45,7 +45,11 @@ metrics = rad.binary_metrics(y_true, y_score, backend="rust")
 reference = rad.binary_metrics(y_true, y_score, backend="python")
 ```
 
-The default `backend="auto"` uses the compiled extension when present, or the Python reference when running an unbuilt source checkout. A broken extension raises its import error rather than silently falling back. `backend="rust"` requires the extension. There are no environment switches or global backend options.
+`backend="auto"` selects only the compiled native implementation. An absent or
+broken extension raises a clear error; choose `backend="python"` explicitly for
+the optional reference implementation. `backend_info()` is a read-only probe and
+reports `unavailable` when the extension is absent. There are no environment
+switches or global backend options.
 
 Use `backend="rust"` explicitly for the native training/selection/clinical APIs;
 their compatibility defaults retain the historical optional Python backend.
@@ -138,18 +142,18 @@ No runtime registration, monkey patching, or changes to OmicVerse are required. 
 
 ## Method boundaries
 
-- `ID` is unique. Repeated scans/lesions per patient require aggregation before this initial workflow; `patient_id=` explicitly rejects repeated patients.
+- `ID` is unique. Native pipelines preserve repeated scans/lesions with patient-grouped splits throughout nested fitting; the legacy Python workflow still requires independent rows and rejects repeated `patient_id` values.
 - Reserve the test cohort before any learned preprocessing or feature screening. Every outer CV fold refits the complete pipeline. LASSO alpha tuning also refits preprocessing within its inner folds.
 - AUC-based model comparisons report all folds; there is no search for a favorable test split.
 - Fusion trains on training-set OOF probabilities. The held-out test cohort is never used to fit it. Training-cohort predictions are labeled **apparent** performance.
 - OOF scores used to fit the fusion model are not themselves unbiased validation of that fusion model. Use the held-out cohort for its evaluation.
 - A model chosen by mean CV AUC has selection uncertainty: do not interpret that selected CV score as an independent final validation estimate.
 - Clinical baseline summaries report observed data and missing counts. They do not impute data or select features automatically. Select clinical variables on training data only; data-driven selection should itself be nested when estimating CV performance.
-- Logistic inference uses complete cases and reports dropped counts. It is unpenalized and distinct from sklearn predictive LR. No automatic stepwise analysis is performed.
-- ROC intervals and paired DeLong tests assume independent patients; cluster bootstrap and multicenter/repeated-measure inference are not implemented.
+- Logistic inference uses complete cases and reports dropped counts. It is unpenalized and distinct from regularized predictive LR. The native public clinical API rejects repeated patients unless a row-level `analysis_unit='sample'` is explicitly requested. No automatic stepwise analysis is performed.
+- ROC intervals and paired DeLong tests assume independent patients. Native evaluation aggregates predictions to patients before bootstrap by default; complex multicenter/repeated-measure inference is not implemented.
 - Calibration plots do not recalibrate the model. H–L returns its group table and fails when the requested grouping is undefined; a large p-value is not proof of calibration.
-- The LASSO selector uses squared loss, as in the source workflow; its linear score is not a probability. Fusion uses classifier probabilities.
-- Classifier parameters are explicit sklearn/backend defaults plus documented adapter overrides, not unverified replicas of Onekey's encrypted model factory.
+- Binary/regression sparse selection uses squared-loss LASSO; multiclass uses OvR L1 Logistic and a union of selected features. Native alpha grids are tuned within patient-grouped whole pipelines. Legacy Python LASSO remains an explicit optional path. A squared-loss score is not a probability.
+- Native models use documented mean-loss regularization/objectives and convergence checks. External Python models use their named backend parameters. Neither path claims to reproduce Onekey's encrypted model factory.
 
 ## Reference and validation
 
@@ -162,4 +166,8 @@ No runtime registration, monkey patching, or changes to OmicVerse are required. 
 python -m pytest -q
 ```
 
-The original implementation in this repository is MIT licensed. Third-party libraries retain their own licenses; model adapters do not reimplement PyRadiomics, sklearn, or their dependencies.
+The original implementation in this repository is MIT licensed. External adapters
+call separately licensed libraries. Native algorithms are independently written
+against frozen public specifications/references; they do not incorporate encrypted
+Onekey source. Third-party libraries and licensed reference data retain their own
+licenses and attribution.

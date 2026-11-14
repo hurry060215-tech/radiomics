@@ -16,18 +16,19 @@ def _observations(data, target, id_col, patient_id, split, center):
     import pandas as pd
     from ._validation import unique_ids
     unique_ids(data, id_col)
-    group = patient_id or id_col
+    group = patient_id or ('patient_id' if 'patient_id' in data else id_col)
     required = [group, split] + ([center] if center else [])
     if any(column not in data for column in required):
         raise ValueError('Missing patient, cohort or center column.')
     if data[required].isna().any().any():
         raise ValueError('Patient, cohort and center identifiers must be complete.')
     rows = []
-    for _, row in data.iterrows():
-        value = row[target] if target is not None and target in data else None
-        rows.append(dict(sample_id=str(row[id_col]), patient_id=str(row[group]),
-            cohort=str(row[split]), class_label=None if pd.isna(value) else _label(value),
-            center=str(row[center]) if center else None))
+    columns=list(dict.fromkeys([id_col,group,split]+([center] if center else [])+([target] if target is not None and target in data else [])))
+    for values in data[columns].itertuples(index=False,name=None):
+        row=dict(zip(columns,values));value=row.get(target)
+        rows.append(dict(sample_id=_label(row[id_col]),patient_id=_label(row[group]),
+            cohort=_label(row[split]),class_label=None if pd.isna(value) else _label(value),
+            center=_label(row[center]) if center else None))
     return rows
 
 
@@ -94,16 +95,16 @@ class SplitPlan:
         plan = self.to_dict()
         nested = plan['outer_folds'][fold]
         part = nested['outer'] if inner is None else nested['inner'][inner]
-        return self._indices(data, part, patient_id or id_col)
+        return self._indices(data, part, patient_id or ('patient_id' if 'patient_id' in data else id_col))
 
     def final_inner_indices(self, data, fold, *, patient_id=None, id_col='ID'):
-        return self._indices(data, self.to_dict()['final_inner_folds'][fold], patient_id or id_col)
+        return self._indices(data, self.to_dict()['final_inner_folds'][fold], patient_id or ('patient_id' if 'patient_id' in data else id_col))
 
     @staticmethod
     def _indices(data, part, group):
         if group not in data or data[group].isna().any():
             raise ValueError('Complete patient identifiers are required.')
-        groups = data[group].astype(str)
+        groups = data[group].map(_label)
         train, valid = set(part['training_patients']), set(part['validation_patients'])
         present = set(groups)
         if not (train | valid).issubset(present):
