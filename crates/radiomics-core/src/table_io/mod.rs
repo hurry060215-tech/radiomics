@@ -754,6 +754,17 @@ pub fn read_study(spec: &StudyTableSpec, task: Task, base: &Path) -> RadResult<L
         }
         let manifest = manifest_samples.get(id.as_str()).copied();
         let from_manifest = |name: &str| manifest_column(manifest, name, spec, id);
+        // Join-key aliases do not authorize a conflicting same-named sample_id
+        // payload. Verify it even though the base ID remains the output key.
+        merged_text(
+            &spec.id_column,
+            i,
+            (id, &spec.id_column),
+            &raw,
+            metadata.as_ref(),
+            clinical.as_ref(),
+            from_manifest(&spec.id_column)?,
+        )?;
         let patient = merged_text(
             &spec.patient_column,
             i,

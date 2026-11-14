@@ -903,3 +903,23 @@ fn missing_schema_conflicting_fields_present_missing_cohort_and_csv_nonfinite_ar
         .message
         .contains("simultaneously"));
 }
+
+#[test]
+fn explicit_join_key_alias_cannot_hide_a_conflicting_sample_id_payload() {
+    let work = Workspace::new();
+    work.csv(
+        "base.csv",
+        "sample_id,patient_id,cohort,x\n001,P1,train,1\n002,P2,test,2\n",
+    );
+    work.csv(
+        "meta.csv",
+        "lookup_id,sample_id,center\n001,wrong,A\n002,002,B\n",
+    );
+    let input = spec(
+        json!({"schema_version":1,"table":"base.csv","metadata":"meta.csv","metadata_id_column":"lookup_id"}),
+    );
+    assert!(read_study(&input, Task::Binary, &work.0)
+        .unwrap_err()
+        .message
+        .contains("Conflicting nonmissing field 'sample_id'"));
+}
