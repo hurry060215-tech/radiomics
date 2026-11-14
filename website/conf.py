@@ -8,4 +8,4 @@ nb_execution_mode = 'off'
 exclude_patterns = ['_build']
 html_theme_options = {'github_url': 'https://github.com/hurry060215-tech/radiomics', 'navigation_depth': 3}
 
-exclude_patterns += ['tutorials/*.ipynb']
+
