@@ -681,3 +681,49 @@ pub fn predict_fusion(
         false,
     )
 }
+
+/// Reuse already computed genuine base predictions without refitting any model.
+/// Each table retains the exact fitted base model source and prediction unit.
+pub fn predict_fusion_tables(
+    bundle: &ModelBundle<FittedFusion>,
+    tables: &BTreeMap<String, PredictionTable>,
+) -> RadResult<PredictionTable> {
+    bundle.validate()?;
+    if tables.keys().cloned().collect::<BTreeSet<_>>()
+        != bundle
+            .fitted
+            .components
+            .iter()
+            .map(|c| c.name.clone())
+            .collect()
+    {
+        return Err(invalid(
+            "Fusion prediction requires exactly the fitted component names.",
+        ));
+    }
+    let mut aggregated = Vec::new();
+    for component in &bundle.fitted.components {
+        let table = &tables[&component.name];
+        table.validate()?;
+        let source = format!("final:{}", digest(&component.model)?);
+        let training = component.model.fitted.training_patients();
+        if table.unit != component.model.fitted.fit_unit
+            || table.task != component.model.manifest.task
+            || table.classes != component.model.manifest.classes
+            || table.rows.iter().any(|r| {
+                r.fold.is_some()
+                    || r.training_source != source
+                    || r.cohort != "train" && training.contains(&r.patient_id)
+            })
+        {
+            return Err(RadiomicsError::new(ErrorCode::Leakage,"Provided base probabilities do not have the fitted component model/unit/source/cohort provenance."));
+        }
+        aggregated.push(aggregate_patient_predictions(table)?);
+    }
+    fused_table(
+        &bundle.fitted,
+        &aggregated,
+        &format!("fusion_final:{}", digest(bundle)?),
+        false,
+    )
+}

@@ -8,6 +8,7 @@ use crate::errors::{ErrorCode, RadResult, RadiomicsError};
 use crate::{features, imaging, statistics};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
+use std::borrow::Cow;
 use std::collections::{BTreeMap, BTreeSet};
 
 fn invalid(message: impl Into<String>) -> RadiomicsError {
@@ -73,8 +74,22 @@ pub struct TilePatch {
     pub record: TileRecord,
     pub image: RasterImage,
 }
+impl TilePatch {
+    pub fn validate(&self) -> RadResult<()> {
+        self.record.validate()?;
+        self.image.validate()?;
+        if self.image.width != self.record.patch_width
+            || self.image.height != self.record.patch_height
+        {
+            return Err(invalid(
+                "Decoded patch shape differs from its TileRecord pixel dimensions.",
+            ));
+        }
+        Ok(())
+    }
+}
 pub struct TileIterator<'a> {
-    image: &'a RasterImage,
+    image: Cow<'a, RasterImage>,
     spec: TileSpec,
     metadata: SlideMetadata,
     x: usize,
@@ -100,6 +115,23 @@ fn tile_identifier(metadata: &SlideMetadata, x: usize, y: usize, patch_size: [us
 /// Stream y-major/x-minor patches from an already decoded image. No files are written or deleted.
 pub fn tile_image<'a>(
     image: &'a RasterImage,
+    spec: &TileSpec,
+    metadata: &SlideMetadata,
+) -> RadResult<TileIterator<'a>> {
+    tile_image_impl(Cow::Borrowed(image), spec, metadata)
+}
+
+/// Own one decoded source image while yielding one patch at a time across FFI.
+pub fn tile_image_owned(
+    image: RasterImage,
+    spec: &TileSpec,
+    metadata: &SlideMetadata,
+) -> RadResult<TileIterator<'static>> {
+    tile_image_impl(Cow::Owned(image), spec, metadata)
+}
+
+fn tile_image_impl<'a>(
+    image: Cow<'a, RasterImage>,
     spec: &TileSpec,
     metadata: &SlideMetadata,
 ) -> RadResult<TileIterator<'a>> {

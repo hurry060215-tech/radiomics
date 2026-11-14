@@ -6,8 +6,9 @@ mod pipeline;
 mod training;
 pub use data::{Outcome, StudyData};
 pub use fusion::{
-    aggregate_patient_predictions, fit_fusion, predict_fusion, FittedComponent, FittedFusion,
-    FusionConfig, FusionInput, FusionMethod, FusionOofSource, FusionResult,
+    aggregate_patient_predictions, fit_fusion, predict_fusion, predict_fusion_tables,
+    FittedComponent, FittedFusion, FusionConfig, FusionInput, FusionMethod, FusionOofSource,
+    FusionResult,
 };
 pub use io_spec::{ClinicalJoinKey, FeatureTableManifest, JoinPolicy, StudyTableSpec};
 pub use pipeline::{FittedPipeline, PipelineSpec};

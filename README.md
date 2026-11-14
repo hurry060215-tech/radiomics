@@ -26,9 +26,17 @@ The distribution is named **ov-radiomics** and the import is **ov_radiomics**, a
 
 The Rust core and Python bindings live in `crates/radiomics-core` and `crates/radiomics-python`. Maturin builds an ABI3 extension for CPython 3.9+; CI tests compiled wheels on Windows and Linux. Development wheels are available as CI artifacts, not a promised PyPI release.
 
-## Rust migration: first stage
+## Native engine development
 
-Binary AUC/confusion counts/Brier score, DeLong placement variance, DCA net benefit, and the grouped H–L statistic now have Rust kernels. Python retains the API, DataFrames, distribution functions, bootstrap random draws and H–L quantile grouping. PyRadiomics extraction, sklearn modeling, clinical inference and plotting remain Python/library integrations.
+The shared Rust core now implements scalar NIfTI preparation, the explicitly
+listed Original feature subset, grouped binary/multiclass/regression pipelines,
+native models, clinical tests/inference, evaluation, lightweight patch features,
+hierarchical aggregation and tile overlays. Python supplies array/table views and
+plots. The independent CLI exposes extraction, training, prediction, evaluation
+and fusion. Pathology CLI and remaining research combinations are still pending.
+See the [development/acceptance ledger](docs/native-development.md) for scope,
+independent Golden evidence and outstanding release gates. This working build is
+not the completed M0–M5 release.
 
 ```python
 import ov_radiomics as rad
@@ -39,7 +47,25 @@ reference = rad.binary_metrics(y_true, y_score, backend="python")
 
 The default `backend="auto"` uses the compiled extension when present, or the Python reference when running an unbuilt source checkout. A broken extension raises its import error rather than silently falling back. `backend="rust"` requires the extension. There are no environment switches or global backend options.
 
-See [Rust architecture, build instructions and parity tests](docs/rust.md). This is an incremental migration, **not a complete Rust reimplementation of radiomics extraction or machine learning**.
+Use `backend="rust"` explicitly for the native training/selection/clinical APIs;
+their compatibility defaults retain the historical optional Python backend.
+Native models save as typed `.rad` files and accept unlabeled external cohorts.
+Base installation does not require sklearn, SciPy, statsmodels, PyRadiomics,
+joblib, seaborn, ov or WSIData. Install `[reference,image]` for legacy workflows;
+`[plots]` adds optional seaborn plots. Basic ROC/calibration/confusion plots use
+the native core and matplotlib alone. See [build instructions](docs/rust.md).
+
+```python
+result = rad.train_models(data, "outcome", feature_names, task="multiclass",
+    patient_id="patient_id", split_plan=plan, backend="rust")
+metrics = rad.evaluate(result, prediction_unit="patient", backend="rust")
+result.save("new-native-results")
+model = rad.load_model("new-native-results/model-000.rad")
+```
+
+Performance and correctness have separate acceptance in
+[Benchmark v2](docs/benchmark-v2.md). No unmeasured extraction/end-to-end speedup
+or blanket IBSI conformance is claimed.
 
 The core package does not import SimpleITK/PyRadiomics until image functionality is requested. PyRadiomics has compiled dependencies; the initial local validation used Python 3.9, NumPy 1.23, sklearn 1.0.2 and PyRadiomics 3.1.0. Consult CI and `docs/validation.md` for actually tested combinations. Installation on other Python/NumPy versions is not guaranteed by the minimum dependency declarations.
 

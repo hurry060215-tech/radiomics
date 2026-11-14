@@ -2,10 +2,16 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy.special import expit, logit
-from sklearn.metrics import roc_curve, roc_auc_score, confusion_matrix
-from sklearn.calibration import calibration_curve
 from ._validation import probabilities
+
+
+def expit(value):
+    return np.exp(-np.logaddexp(0., -np.asarray(value)))
+
+
+def logit(value):
+    value = np.asarray(value)
+    return np.log(value)-np.log1p(-value)
 
 
 def _axis(ax=None, figsize=(6, 4), title=None):
@@ -24,8 +30,17 @@ def plot_roc(y_true, scores, ax=None, figsize=(6, 5), title='ROC', palette=None)
     ax = _axis(ax, figsize, title)
     for i, (name, score) in enumerate(_scores(scores).items()):
         y, p = probabilities(y_true, score)
-        fpr, tpr, _ = roc_curve(y, p)
-        ax.plot(fpr, tpr, label=f'{name} (AUC={roc_auc_score(y,p):.3f})', color=None if palette is None else palette[i])
+        from ._native_common import request
+        from ._backend import resolve_backend
+        if resolve_backend('auto') is None:
+            from sklearn.metrics import roc_curve, roc_auc_score
+            fpr, tpr, _ = roc_curve(y, p)
+            area = roc_auc_score(y,p)
+        else:
+            curve = request('roc_curve',y=y.tolist(),scores=p.tolist())
+            fpr, tpr = curve['false_positive_rate'], curve['true_positive_rate']
+            area = request('binary_metrics',y=y.tolist(),scores=p.tolist(),threshold=.5)['auc']
+        ax.plot(fpr, tpr, label=f'{name} (AUC={area:.3f})', color=None if palette is None else palette[i])
     ax.plot([0, 1], [0, 1], '--', color='gray')
     ax.set(xlabel='False positive rate', ylabel='True positive rate', xlim=(0, 1), ylim=(0, 1.02))
     ax.legend()
@@ -36,7 +51,14 @@ def plot_calibration(y_true, scores, n_bins=10, strategy='quantile', ax=None, fi
     ax = _axis(ax, figsize, title)
     for name, score in _scores(scores).items():
         y, p = probabilities(y_true, score)
-        observed, predicted = calibration_curve(y, p, n_bins=n_bins, strategy=strategy)
+        from ._native_common import request
+        from ._backend import resolve_backend
+        if resolve_backend('auto') is None:
+            from sklearn.calibration import calibration_curve
+            observed, predicted = calibration_curve(y,p,n_bins=n_bins,strategy=strategy)
+        else:
+            curve = request('calibration_curve',y=y.tolist(),scores=p.tolist(),n_bins=n_bins,strategy=strategy)
+            observed, predicted = curve['fraction_positive'], curve['mean_predicted']
         ax.plot(predicted, observed, 'o-', label=name)
     ax.plot([0, 1], [0, 1], '--', color='gray')
     ax.set(xlabel='Mean predicted probability', ylabel='Observed proportion', xlim=(0, 1), ylim=(0, 1))
@@ -57,14 +79,28 @@ def plot_dca(curve, ax=None, figsize=(6, 5), title='Decision curve', ylim=None):
 
 def plot_confusion_matrix(y_true, y_score, threshold=0.5, class_names=('Negative', 'Positive'), normalize=False,
                           ax=None, figsize=(5, 4), title='Confusion matrix', cmap='Blues'):
-    import seaborn as sns
     y, p = probabilities(y_true, y_score)
     if not 0 <= threshold <= 1:
         raise ValueError('threshold must be between 0 and 1.')
-    matrix = confusion_matrix(y, p >= threshold, labels=[0, 1], normalize='true' if normalize else None)
+    # Counts are returned by the shared core, including its threshold convention.
+    from ._native_common import request
+    from ._backend import resolve_backend
+    if resolve_backend('auto') is None:
+        from sklearn.metrics import confusion_matrix
+        matrix = confusion_matrix(y,p>=threshold,labels=[0,1])
+    else:
+        counts = request('binary_metrics',y=y.tolist(),scores=p.tolist(),threshold=threshold)
+        matrix = np.asarray(counts['confusion']['counts']).reshape(2,2)
+    if normalize:
+        matrix=np.divide(matrix,matrix.sum(axis=1,keepdims=True),out=np.zeros_like(matrix,dtype=float),where=matrix.sum(axis=1,keepdims=True)!=0)
     ax = _axis(ax, figsize, title)
-    sns.heatmap(matrix, annot=True, fmt='.2f' if normalize else 'd', cmap=cmap,
-        xticklabels=class_names, yticklabels=class_names, ax=ax)
+    image=ax.imshow(matrix,cmap=cmap,aspect='auto')
+    ax.figure.colorbar(image,ax=ax)
+    for i in range(2):
+        for j in range(2):
+            ax.text(j,i,format(matrix[i,j],'.2f' if normalize else 'd'),ha='center',va='center')
+    ax.set_xticks([0,1]);ax.set_xticklabels(class_names)
+    ax.set_yticks([0,1]);ax.set_yticklabels(class_names)
     ax.set(xlabel='Predicted', ylabel='Observed')
     return ax
 

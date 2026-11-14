@@ -78,6 +78,374 @@ fn frozen(name: &str) -> Value {
     )
     .unwrap()
 }
+
+#[test]
+fn native_cli_fusion_preserves_shared_plan_scope_and_predicts_named_unlabeled_sources() {
+    let work = Workspace::new();
+    for name in ["binary", "multiclass"] {
+        fixture(&work, name, false);
+        let data = format!("{name}-data.json");
+        let config = format!("{name}-config.json");
+        let plan = format!("{name}-plan.json");
+        let rad_models = format!("{name}-rad-models");
+        let clinical_models = format!("{name}-clinical-models");
+        let mut clinical_spec = json_file(&work.path(&data));
+        clinical_spec["numeric_features"] = json!(["signal_a", "noise_a"]);
+        let clinical_data = format!("{name}-clinical-data.json");
+        work.json(&clinical_data, &clinical_spec);
+        clinical_spec["outcome_column"] = Value::Null;
+        let clinical_unlabeled = format!("{name}-clinical-unlabeled.json");
+        work.json(&clinical_unlabeled, &clinical_spec);
+        for (source, output) in [(&data, &rad_models), (&clinical_data, &clinical_models)] {
+            work.success(&[
+                "train",
+                "--data",
+                source,
+                "--config",
+                &config,
+                "--split-plan",
+                &plan,
+                "--output",
+                output,
+            ]);
+        }
+        let components = format!("{name}-components.json");
+        work.json(&components,&json!([{"name":"Rad","training":format!("{rad_models}/training.json"),"model_name":"LR"},{"name":"Clinical","training":format!("{clinical_models}/training.json"),"model_name":"LR"}]));
+        let nested = format!("{name}-nested");
+        fs::create_dir(work.path(&nested)).unwrap();
+        let inputs = format!("{nested}/inputs.json");
+        work.json(&inputs,&json!({"schema_version":1,"components":{"Clinical":format!("../{clinical_unlabeled}"),"Rad":format!("../{name}-unlabeled.json")}}));
+        for (method, configuration, scope) in [
+            (
+                "weighted",
+                json!({"method":{"method":"weighted","weights":[0.4,0.6]},"threshold":if name=="binary" {Some(0.5)} else {None}}),
+                "oof_fixed_weight",
+            ),
+            (
+                "logistic",
+                json!({"method":{"method":"logistic","lambda":0.1,"tolerance":1e-10,"max_iterations":5000},"threshold":if name=="binary" {Some(0.5)} else {None}}),
+                "apparent_meta_training",
+            ),
+        ] {
+            let fusion_config = format!("{name}-{method}-fusion.json");
+            work.json(&fusion_config, &configuration);
+            let output = format!("{name}-{method}-fusion");
+            work.success(&[
+                "fuse",
+                "--components",
+                &components,
+                "--config",
+                &fusion_config,
+                "--output",
+                &output,
+            ]);
+            assert_eq!(
+                json_file(&work.path(&format!("{output}/summary.json")))
+                    ["training_prediction_type"],
+                scope
+            );
+            let model = format!("{output}/fusion.rad");
+            let predicted = format!("{output}-predicted");
+            work.success(&[
+                "predict", "--model", &model, "--data", &inputs, "--output", &predicted,
+            ]);
+            let expected = json_file(&work.path(&format!("{output}/predictions.json")));
+            let actual = json_file(&work.path(&format!("{predicted}/predictions.json")));
+            assert_eq!(actual["unit"], "patient");
+            for row in expected["rows"].as_array().unwrap() {
+                let matching = actual["rows"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|r| r["patient_id"] == row["patient_id"])
+                    .unwrap();
+                assert_eq!(matching["cohort"], row["cohort"]);
+                assert_eq!(matching["probabilities"], row["probabilities"]);
+            }
+            let evaluated = format!("{output}-evaluated");
+            work.success(&[
+                "evaluate",
+                "--predictions",
+                &format!("{predicted}/predictions.json"),
+                "--data",
+                &data,
+                "--n-bootstrap",
+                "16",
+                "--output",
+                &evaluated,
+            ]);
+            assert_eq!(
+                work.cli(&[
+                    "evaluate",
+                    "--predictions",
+                    &format!("{predicted}/predictions.json"),
+                    "--data",
+                    &data,
+                    "--prediction-unit",
+                    "sample",
+                    "--n-bootstrap",
+                    "16",
+                    "--output",
+                    &format!("{output}-broadcast")
+                ])
+                .status
+                .code(),
+                Some(1)
+            );
+            let bad_input = format!("{name}-bad-fusion-input.json");
+            work.json(&bad_input,&json!({"schema_version":1,"components":{"Wrong":"not-read.json","Clinical":"not-read.json"}}));
+            assert_eq!(
+                work.cli(&[
+                    "predict",
+                    "--model",
+                    &model,
+                    "--data",
+                    &bad_input,
+                    "--output",
+                    &format!("{output}-bad")
+                ])
+                .status
+                .code(),
+                Some(1)
+            );
+        }
+        if name == "binary" {
+            work.success(&[
+                "train",
+                "--data",
+                &clinical_data,
+                "--config",
+                &config,
+                "--outer-cv",
+                "3",
+                "--inner-cv",
+                "2",
+                "--seed",
+                "999",
+                "--output",
+                "different-plan-models",
+            ]);
+            let source = json_file(&work.path(&components));
+            let mut wrong = source;
+            wrong[1]["training"] = json!("different-plan-models/training.json");
+            work.json("different-plan-components.json", &wrong);
+            assert_eq!(
+                work.cli(&[
+                    "fuse",
+                    "--components",
+                    "different-plan-components.json",
+                    "--config",
+                    "binary-weighted-fusion.json",
+                    "--output",
+                    "different-plan-fusion"
+                ])
+                .status
+                .code(),
+                Some(1)
+            );
+            assert!(!work.path("different-plan-fusion").exists());
+        }
+    }
+}
+
+#[test]
+fn evaluate_joins_by_actual_ids_rejects_partial_truth_and_never_broadcasts_patient_scores() {
+    let work = Workspace::new();
+    fixture(&work, "binary", false);
+    work.success(&[
+        "train",
+        "--data",
+        "binary-data.json",
+        "--config",
+        "binary-config.json",
+        "--split-plan",
+        "binary-plan.json",
+        "--output",
+        "models",
+    ]);
+    work.success(&[
+        "predict",
+        "--model",
+        "models/model-000.rad",
+        "--data",
+        "binary-data.json",
+        "--output",
+        "pred",
+    ]);
+    let mut predictions = json_file(&work.path("pred/predictions.json"));
+    predictions["rows"][0]["patient_id"] = json!("wrong-parent");
+    work.json("wrong.json", &predictions);
+    assert_eq!(
+        work.cli(&[
+            "evaluate",
+            "--predictions",
+            "wrong.json",
+            "--data",
+            "binary-data.json",
+            "--n-bootstrap",
+            "16",
+            "--output",
+            "wrong-eval"
+        ])
+        .status
+        .code(),
+        Some(1)
+    );
+    assert!(!work.path("wrong-eval").exists());
+    let mut reader = csv::Reader::from_path(work.path("binary.csv")).unwrap();
+    let headers = reader.headers().unwrap().clone();
+    let mut rows: Vec<_> = reader.records().map(Result::unwrap).collect();
+    let index = rows.iter().position(|r| &r[2] == "test").unwrap();
+    let mut values: Vec<String> = rows[index].iter().map(str::to_string).collect();
+    values[9] = String::new();
+    rows[index] = csv::StringRecord::from(values);
+    let mut writer = csv::Writer::from_path(work.path("partial.csv")).unwrap();
+    writer.write_record(&headers).unwrap();
+    for row in rows {
+        writer.write_record(&row).unwrap();
+    }
+    writer.flush().unwrap();
+    let mut spec = json_file(&work.path("binary-data.json"));
+    spec["table"] = json!("partial.csv");
+    work.json("partial-data.json", &spec);
+    let failure = work.cli(&[
+        "evaluate",
+        "--predictions",
+        "pred/predictions.json",
+        "--data",
+        "partial-data.json",
+        "--n-bootstrap",
+        "16",
+        "--output",
+        "partial-eval",
+    ]);
+    assert_eq!(failure.status.code(), Some(1));
+    assert!(String::from_utf8_lossy(&failure.stderr).contains("mixes missing"));
+    assert!(!work.path("partial-eval").exists());
+    work.success(&[
+        "evaluate",
+        "--predictions",
+        "pred/predictions.json",
+        "--data",
+        "binary-data.json",
+        "--n-bootstrap",
+        "16",
+        "--output",
+        "evaluation",
+    ]);
+    let source = "evaluation/predictions.json";
+    assert_eq!(
+        work.cli(&[
+            "evaluate",
+            "--predictions",
+            source,
+            "--data",
+            "binary-data.json",
+            "--prediction-unit",
+            "sample",
+            "--n-bootstrap",
+            "16",
+            "--output",
+            "broadcast"
+        ])
+        .status
+        .code(),
+        Some(1)
+    );
+}
+
+#[test]
+fn tile_evaluation_reuses_equal_slide_patient_aggregation_and_exposes_undefined_binary_diagnostics()
+{
+    let work = Workspace::new();
+    let records = [
+        ("T1", "P1", "S1", 0.75, "negative"),
+        ("T2", "P1", "S1", 0.75, "negative"),
+        ("T3", "P1", "S1", 0.75, "negative"),
+        ("T4", "P1", "S2", 0.25, "negative"),
+        ("T5", "P2", "S3", 0.25, "positive"),
+        ("T6", "P2", "S4", 0.75, "positive"),
+    ];
+    let mut writer = csv::Writer::from_path(work.path("tiles.csv")).unwrap();
+    writer
+        .write_record([
+            "sample_id",
+            "patient_id",
+            "slide_id",
+            "cohort",
+            "x",
+            "label",
+        ])
+        .unwrap();
+    for (tile, patient, slide, _, label) in records {
+        writer
+            .write_record([tile, patient, slide, "test", "1", label])
+            .unwrap();
+    }
+    writer.flush().unwrap();
+    work.json("tiles-data.json",&json!({"schema_version":1,"table":"tiles.csv","numeric_features":["x"],"outcome_column":"label"}));
+    let table = PredictionTable {
+        task: Task::Binary,
+        unit: PredictionUnit::Tile,
+        classes: vec!["negative".into(), "positive".into()],
+        rows: records
+            .iter()
+            .map(|(tile, patient, slide, p, _)| PredictionRow {
+                sample_id: (*tile).into(),
+                patient_id: (*patient).into(),
+                slide_id: Some((*slide).into()),
+                tile_id: Some((*tile).into()),
+                cohort: "test".into(),
+                fold: None,
+                training_source: "actual-tile-scores".into(),
+                probabilities: vec![1.0 - p, *p],
+                value: None,
+            })
+            .collect(),
+    };
+    work.json(
+        "tile-predictions.json",
+        &serde_json::to_value(table).unwrap(),
+    );
+    work.success(&[
+        "evaluate",
+        "--predictions",
+        "tile-predictions.json",
+        "--data",
+        "tiles-data.json",
+        "--n-bootstrap",
+        "16",
+        "--output",
+        "tile-eval",
+    ]);
+    let predictions = json_file(&work.path("tile-eval/predictions.json"));
+    assert_eq!(predictions["rows"].as_array().unwrap().len(), 2);
+    for row in predictions["rows"].as_array().unwrap() {
+        assert_eq!(row["probabilities"][1], 0.5);
+    }
+    let report = json_file(&work.path("tile-eval/cohort-000.json"));
+    assert_eq!(report["metrics"]["auc"], 0.5);
+    assert_eq!(report["delong"]["status"], "unavailable");
+    assert_eq!(report["hosmer_lemeshow"]["status"], "unavailable");
+    assert_eq!(
+        work.cli(&[
+            "evaluate",
+            "--predictions",
+            "tile-predictions.json",
+            "--data",
+            "tiles-data.json",
+            "--prediction-unit",
+            "sample",
+            "--n-bootstrap",
+            "16",
+            "--output",
+            "tile-broadcast"
+        ])
+        .status
+        .code(),
+        Some(1)
+    );
+}
 fn json_file(path: &Path) -> Value {
     serde_json::from_slice(&fs::read(path).unwrap()).unwrap()
 }
@@ -350,6 +718,89 @@ fn native_cli_three_tasks_train_predict_save_load_csv_parquet_and_no_python_path
         assert_eq!(
             fs::read(work.path(&model_file)).unwrap(),
             fs::read(work.path(&format!("{parity_models}/model-000.rad"))).unwrap()
+        );
+        let evaluation = format!("{name}-evaluation");
+        let prediction_file = format!("{prediction}/predictions.json");
+        work.success(&[
+            "evaluate",
+            "--predictions",
+            &prediction_file,
+            "--data",
+            &data,
+            "--n-bootstrap",
+            "16",
+            "--seed",
+            "42",
+            "--output",
+            &evaluation,
+        ]);
+        let evaluated = json_file(&work.path(&format!("{evaluation}/summary.json")));
+        assert_eq!(evaluated["effective_unit"], "patient");
+        let cohorts = evaluated["cohorts"].as_array().unwrap();
+        let train = cohorts.iter().find(|r| r["cohort"] == "train").unwrap();
+        assert_eq!(train["n_predictions"], 48);
+        assert_eq!(train["performance_scope"], "apparent");
+        let test = cohorts.iter().find(|r| r["cohort"] == "test").unwrap();
+        assert_eq!(test["n_predictions"], 12);
+        let external = cohorts
+            .iter()
+            .find(|r| r["cohort"] == "external_A")
+            .unwrap();
+        assert_eq!(external["n_predictions"], 6);
+        assert_eq!(external["status"], "prediction_only");
+        let external_report = json_file(&work.path(&format!(
+            "{evaluation}/{}",
+            external["file"].as_str().unwrap()
+        )));
+        assert!(external_report["metrics"].is_null());
+        let test_report =
+            json_file(&work.path(&format!("{evaluation}/{}", test["file"].as_str().unwrap())));
+        assert_eq!(
+            test_report["bootstrap"]["replicate_scores"]
+                .as_array()
+                .unwrap()
+                .len(),
+            16
+        );
+        if name != "binary" {
+            assert!(test_report["decision_curve"].is_null());
+            assert!(test_report["delong"].is_null());
+        }
+        let only = format!("{name}-evaluation-only");
+        assert_eq!(
+            work.success(&[
+                "evaluate",
+                "--predictions",
+                &prediction_file,
+                "--data",
+                &unlabeled,
+                "--n-bootstrap",
+                "16",
+                "--output",
+                &only
+            ])["status"],
+            "prediction_only"
+        );
+        let oof = format!("{models}/model-000-oof.json");
+        let oof_eval = format!("{name}-oof-evaluation");
+        work.success(&[
+            "evaluate",
+            "--predictions",
+            &oof,
+            "--data",
+            &data,
+            "--n-bootstrap",
+            "16",
+            "--output",
+            &oof_eval,
+        ]);
+        assert_eq!(
+            json_file(&work.path(&format!("{oof_eval}/alignment_report.json")))
+                ["unused_truth_sample_ids"]
+                .as_array()
+                .unwrap()
+                .len(),
+            36
         );
     }
 }

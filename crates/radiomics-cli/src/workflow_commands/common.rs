@@ -33,9 +33,13 @@ pub(super) fn resolve(base: &Path, path: &Path) -> PathBuf {
 pub(super) fn read_json<T: DeserializeOwned>(path: &Path) -> RadResult<T> {
     Ok(serde_json::from_reader(BufReader::new(File::open(path)?))?)
 }
-pub(super) fn load_study(path: &Path, task: Task) -> RadResult<LoadedStudy> {
+pub(super) fn load_study_record(
+    path: &Path,
+    task: Task,
+) -> RadResult<(StudyTableSpec, LoadedStudy)> {
     let spec: StudyTableSpec = read_json(path)?;
-    table_io::read_study(&spec, task, parent(path))
+    let loaded = table_io::read_study(&spec, task, parent(path))?;
+    Ok((spec, loaded))
 }
 fn csv_error(error: csv::Error) -> RadiomicsError {
     invalid(format!("CSV export: {error}"))

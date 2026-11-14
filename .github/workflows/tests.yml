@@ -101,7 +101,9 @@ jobs:
       - run: python -c "import glob,subprocess,sys; subprocess.check_call([sys.executable,'-m','pip','install',glob.glob('dist/*.whl')[0]])"
       - name: Check reference packages are absent
         run: python -c "import importlib.util; assert all(importlib.util.find_spec(m) is None for m in ('sklearn','statsmodels','scipy','radiomics','SimpleITK','joblib','omicverse','wsidata'))"
-      - run: python -m pytest -q tests/test_native_extraction.py tests/test_split_plan.py --import-mode=importlib -o pythonpath=
+      - run: python -m pytest -q tests/test_native_extraction.py tests/test_native_image_api.py tests/test_split_plan.py tests/test_native_learning_api.py tests/test_native_clinical_api.py tests/test_native_pathology_api.py tests/test_interop_native.py --import-mode=importlib -o pythonpath=
+        env:
+          MPLBACKEND: Agg
       - run: cargo build --release -p ov-radiomics-cli --locked
       - uses: actions/upload-artifact@v4
         with:

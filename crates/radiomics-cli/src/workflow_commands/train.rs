@@ -58,7 +58,8 @@ pub fn train(args: TrainCommand) -> RadResult<u8> {
         }
     }
     let output = Output::preflight(&args.output, args.overwrite, names)?;
-    let loaded = load_study(&args.data, config.task)?;
+    let (study_spec, loaded) = load_study_record(&args.data, config.task)?;
+    let study_spec_directory = std::fs::canonicalize(parent(&args.data))?;
     let plan = if let Some(path) = &args.split_plan {
         let plan: SplitPlan = read_json(path)?;
         plan.validate()?;
@@ -80,7 +81,7 @@ pub fn train(args: TrainCommand) -> RadResult<u8> {
     output.json("split_plan.json", &plan)?;
     output.json("training.json", &result)?;
     output.json("load_report.json", &loaded.report)?;
-    output.json("command_config.json",&json!({"format":"radiomics.cli.train","schema_version":1,"arguments":args,"training_config":config,"effective_seed":plan.seed,"effective_outer_folds":plan.outer_folds.len(),"provided_split_plan":args.split_plan.is_some(),"runtime":"rust"}))?;
+    output.json("command_config.json",&json!({"format":"radiomics.cli.train","schema_version":1,"arguments":args,"study_spec":study_spec,"study_spec_directory":study_spec_directory,"training_config":config,"effective_seed":plan.seed,"effective_outer_folds":plan.outer_folds.len(),"provided_split_plan":args.split_plan.is_some(),"runtime":"rust"}))?;
     let metric = match config.task {
         Task::Binary => "roc_auc",
         Task::Multiclass => "macro_ovr_roc_auc",

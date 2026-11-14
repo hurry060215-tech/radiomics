@@ -21,6 +21,7 @@ rand = "=0.8.5"
 rand_chacha = "=0.3.1"
 rand_mt = "=4.2.2"
 statrs = { version = "=0.18.0", default-features = false }
+libm = "=0.2.16"
 minilp = "=0.2.2"
 parquet = { version = "=57.3.1", default-features = false, features = ["snap", "flate2-zlib-rs", "zstd"] }
 

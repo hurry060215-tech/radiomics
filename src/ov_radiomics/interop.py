@@ -6,7 +6,9 @@ embedding cache has been verified.
 """
 import copy
 import json
-from numbers import Integral
+import math
+from collections.abc import Mapping
+from numbers import Integral, Real
 
 from ._backend import resolve_backend
 from ._types import TileTable
@@ -116,3 +118,132 @@ def from_anndata(adata, *, tiles, tile_id_column=None, feature_names=None, sourc
                         dict(adapter='from_anndata', association='external/provided',
                              cache_verified=False, source=None if source is None else str(source),
                              original_obs_names=row_names, tile_id_column=tile_id_column))
+
+
+def _plain_metadata(value):
+    """Convert array-library scalar/container representations, preserving metadata types."""
+    if value is None or isinstance(value, (str, bool, int, float)):
+        return value
+    if isinstance(value, Mapping):
+        if any(not isinstance(key, str) for key in value):
+            raise ValueError('Metadata dictionaries require string keys.')
+        return {key: _plain_metadata(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_plain_metadata(item) for item in value]
+    if hasattr(value, 'tolist'):
+        return _plain_metadata(value.tolist())
+    if hasattr(value, 'item'):
+        return _plain_metadata(value.item())
+    raise TypeError('Metadata must consist of explicit JSON-compatible scalar/container values.')
+
+
+def _shape_to_level0(shapes, explicit):
+    if explicit is not None:
+        return _plain_metadata(explicit)
+    try:
+        from spatialdata.transformations import Identity, get_transformation
+    except ImportError as exc:
+        raise ImportError('Reading implicit WSIData transforms needs optional spatialdata; '
+                          'supply the explicit recorded shape_to_level0 matrix otherwise.') from exc
+    transform = get_transformation(shapes, to_coordinate_system='global')
+    if not isinstance(transform, Identity):
+        raise ValueError('A non-identity registered transform is not automatically level-0 coordinates; '
+                         'supply an explicit positive axis-aligned shape_to_level0 matrix.')
+    return _plain_metadata(transform.to_affine_matrix(input_axes=('x', 'y'), output_axes=('x', 'y')))
+
+
+def _wsidata_geometry(wsi, *, tile_key, source, shape_to_level0, level0_mpp_xy):
+    try:
+        shapes = wsi.shapes[tile_key]
+        spec = wsi.attrs['tile_spec'][tile_key]
+    except (KeyError, AttributeError, TypeError) as exc:
+        raise ValueError('WSIData must supply shapes[tile_key] and attrs["tile_spec"][tile_key].') from exc
+    if 'tile_id' not in shapes:
+        raise ValueError('WSIData shapes need the authoritative tile_id column; row positions are not identities.')
+    ids = _identity_strings(shapes['tile_id'], 'Shape tile_id')
+    geometries = list(shapes.geometry)
+    if len(geometries) != len(ids):
+        raise ValueError('Shape identity and geometry vectors differ.')
+    valid_values = list(shapes['valid_pixels']) if 'valid_pixels' in shapes else [None] * len(ids)
+    rows = []
+    for raw_id, geometry, valid in zip(ids, geometries, valid_values):
+        # Only public geometry structure is inspected; rectangle/scale arithmetic is Rust.
+        if (getattr(geometry, 'geom_type', None) != 'Polygon'
+                or not getattr(geometry, 'is_valid', False)
+                or getattr(geometry, 'is_empty', True)
+                or getattr(geometry, 'has_z', False)
+                or len(geometry.interiors) != 0):
+            raise ValueError('WSIData tiles must be valid 2D Polygon geometries without holes; '
+                             'rotation/non-rectangles are checked by the native builder.')
+        row = dict(tile_id=raw_id, geometry_corners=_plain_metadata(list(geometry.exterior.coords)))
+        if valid is not None and not (isinstance(valid, Real) and math.isnan(valid)):
+            row['valid_pixels'] = _plain_metadata(valid)
+        rows.append(row)
+    properties = getattr(wsi, 'properties', None)
+    shape = getattr(properties, 'shape', None)
+    slide_shape = None if shape is None else _plain_metadata(list(reversed(shape)))
+    if level0_mpp_xy is None:
+        recorded_mpp = getattr(properties, 'mpp', None)
+        level0_mpp_xy = None if recorded_mpp is None else [recorded_mpp, recorded_mpp]
+    if hasattr(spec, 'to_dict'):
+        spec = spec.to_dict()
+    return dict(tile_key=tile_key, shape_rows=rows, tile_spec=_plain_metadata(spec),
+                shape_to_level0=_shape_to_level0(shapes, shape_to_level0),
+                slide_shape_wh=slide_shape, level0_mpp_xy=_plain_metadata(level0_mpp_xy),
+                source=source)
+
+
+def snapshot_wsidata(wsi, *, source, tile_key='tiles', shape_to_level0=None, level0_mpp_xy=None):
+    """Read-only generation-time geometry snapshot; call before computing embeddings.
+
+    ``source`` is an explicit stable source identity, preferably an input-content
+    digest. This helper returns a manifest and never attaches one to an existing
+    table. Save it with the embedding generation provenance, for example as a JSON
+    string in the generated AnnData ``uns['radiomics_tile_manifest']``.
+    """
+    payload = _wsidata_geometry(wsi, tile_key=tile_key, source=source,
+                                shape_to_level0=shape_to_level0, level0_mpp_xy=level0_mpp_xy)
+    return json.loads(resolve_backend('rust').wsidata_snapshot(json.dumps(payload, allow_nan=False)))
+
+
+def from_wsidata(wsi, *, patient_id, slide_id, feature_key, source, tile_key='tiles',
+                 shape_to_level0=None, level0_mpp_xy=None,
+                 manifest_key='radiomics_tile_manifest'):
+    """Strictly adapt an existing embedding table with historical geometry evidence.
+
+    Actual polygons, recorded TileSpec and the specified table X/row identities
+    are passed to Rust. Authoritative tile IDs, TableModel region/instance links
+    and a valid generation-time geometry manifest are required. Missing provenance
+    raises; this function never falls back to caller-provided arrays or silently
+    stamps the current geometry onto an old cache. Canonical IDs are generated
+    only by Rust as compact JSON pairs ``[slide_id, raw_tile_id]``.
+    """
+    geometry = _wsidata_geometry(wsi, tile_key=tile_key, source=source,
+                                 shape_to_level0=shape_to_level0, level0_mpp_xy=level0_mpp_xy)
+    try:
+        table = wsi.tables[feature_key]
+        link = table.uns['spatialdata_attrs']
+        instance_key, region_key = link['instance_key'], link['region_key']
+        region = link['region']
+    except (KeyError, AttributeError, TypeError) as exc:
+        raise ValueError('Embedding table needs the recorded SpatialData TableModel region/instance linkage.') from exc
+    if not isinstance(instance_key, str) or not isinstance(region_key, str):
+        raise ValueError('TableModel instance_key and region_key must be explicit column names.')
+    try:
+        tile_ids = _identity_strings(table.obs[instance_key], 'Embedding obs tile_id')
+        regions = _identity_strings(table.obs[region_key], 'Embedding observation region')
+    except (KeyError, TypeError, AttributeError) as exc:
+        raise ValueError('Embedding observations lack the declared TableModel linkage columns.') from exc
+    saved = table.uns.get(manifest_key)
+    if isinstance(saved, str):
+        saved = json.loads(saved)
+    payload = dict(geometry=geometry, saved_at_generation=_plain_metadata(saved),
+                   table_region=_plain_metadata(region), table_region_key=region_key,
+                   table_instance_key=instance_key, obs_regions=regions,
+                   obs_tile_ids=tile_ids,
+                   obs_row_ids=_identity_strings(table.obs_names, 'Embedding obs_names'),
+                   patient_id=patient_id, slide_id=slide_id, feature_key=feature_key,
+                   feature_names=_identity_strings(table.var_names, 'Embedding var_names'))
+    result = json.loads(resolve_backend('rust').from_wsidata(
+        json.dumps(payload, allow_nan=False), json.dumps(_numeric_buffer(table.X), allow_nan=False)))
+    return TileTable._from_native(result['table'], provenance=result['provenance'])

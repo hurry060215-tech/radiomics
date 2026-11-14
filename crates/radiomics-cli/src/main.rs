@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+mod workflow_commands;
 use ov_radiomics_core::{
     contracts::MaskVolume,
     errors::{ErrorCode, RadResult, RadiomicsError},
@@ -24,6 +25,14 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Command {
+    /// Fit grouped native pipelines from keyed CSV/Parquet study inputs.
+    Train(workflow_commands::TrainCommand),
+    /// Predict from a portable native pipeline or fusion model, without refitting.
+    Predict(workflow_commands::PredictCommand),
+    /// Evaluate matching predictions at their declared sample or patient level.
+    Evaluate(workflow_commands::EvaluateCommand),
+    /// Fit a patient probability fusion using verified shared OOF partitions.
+    Fuse(workflow_commands::FuseCommand),
     /// Diagnose scalar NIfTI image/mask grids and selected labels without modifying inputs.
     Check {
         #[arg(long)]
@@ -57,6 +66,10 @@ enum Command {
 
 fn run(cli: Cli) -> RadResult<u8> {
     match cli.command {
+        Command::Train(args) => workflow_commands::train(args),
+        Command::Predict(args) => workflow_commands::predict(args),
+        Command::Evaluate(args) => workflow_commands::evaluate(args),
+        Command::Fuse(args) => workflow_commands::fuse(args),
         Command::Check {
             cohort,
             labels,

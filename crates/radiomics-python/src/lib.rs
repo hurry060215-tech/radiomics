@@ -2,6 +2,8 @@
 use ov_radiomics_core as core;
 use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
+mod gateway;
+mod pathology;
 
 fn input_error(error: core::InputError) -> PyErr {
     PyValueError::new_err(error.to_string())
@@ -10,6 +12,87 @@ fn input_error(error: core::InputError) -> PyErr {
 #[pymodule]
 mod _native {
     use super::*;
+
+    #[pyfunction]
+    fn request_json(py: Python<'_>, payload: String) -> PyResult<String> {
+        py.detach(|| crate::gateway::execute(&payload))
+            .map_err(|e| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn pathology_json(py: Python<'_>, payload: String) -> PyResult<String> {
+        py.detach(|| crate::pathology::execute(&payload))
+            .map_err(|e| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn pathology_tiles(
+        py: Python<'_>,
+        payload: String,
+    ) -> PyResult<crate::pathology::PatchIterator> {
+        py.detach(|| crate::pathology::tiles(&payload))
+            .map_err(|e| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn pathology_overlay(
+        py: Python<'_>,
+        payload: String,
+    ) -> PyResult<crate::pathology::OverlayIterator> {
+        py.detach(|| crate::pathology::overlay(&payload))
+            .map_err(|e| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn wsidata_snapshot(py: Python<'_>, payload: String) -> PyResult<String> {
+        py.detach(|| {
+            let input: serde_json::Value = serde_json::from_str(&payload)?;
+            Ok(serde_json::to_string(&core::wsidata_contract::snapshot(
+                &input,
+            )?)?)
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn from_wsidata(py: Python<'_>, payload: String, buffer: String) -> PyResult<String> {
+        py.detach(|| {
+            let input: core::wsidata_contract::WsiInput = serde_json::from_str(&payload)?;
+            let buffer: core::contracts::NumericBuffer = serde_json::from_str(&buffer)?;
+            Ok(serde_json::to_string(&core::wsidata_contract::adapt(
+                &input, &buffer,
+            )?)?)
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn validate_tile_table(py: Python<'_>, table: String) -> PyResult<String> {
+        py.detach(|| {
+            let table: core::contracts::TileTable = serde_json::from_str(&table)?;
+            table.validate()?;
+            Ok(serde_json::to_string(&table)?)
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn align_tile_embeddings(
+        py: Python<'_>,
+        table: String,
+        ids: Vec<String>,
+        buffer: String,
+        feature_names: Vec<String>,
+    ) -> PyResult<String> {
+        py.detach(|| {
+            let table: core::contracts::TileTable = serde_json::from_str(&table)?;
+            let buffer: core::contracts::NumericBuffer = serde_json::from_str(&buffer)?;
+            let aligned =
+                core::pathology_aggregate::align_embeddings(&table, &ids, &buffer, &feature_names)?;
+            Ok(serde_json::to_string(&aligned)?)
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
 
     #[pyfunction]
     fn create_split_plan(

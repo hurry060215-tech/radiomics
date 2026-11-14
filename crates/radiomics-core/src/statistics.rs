@@ -110,7 +110,9 @@ impl Distribution {
             }};
         }
         let value = match self {
-            Self::Normal => evaluate!(Normal::new(0., 1.).unwrap()),
+            Self::Normal => {
+                0.5 * libm::erfc(if survival { x } else { -x } / std::f64::consts::SQRT_2)
+            }
             Self::StudentT { df } => evaluate!(StudentsT::new(0., 1., df).unwrap()),
             Self::ChiSquare { df } => evaluate!(ChiSquared::new(df).unwrap()),
             Self::F { dfn, dfd } => {
@@ -513,7 +515,7 @@ pub fn mann_whitney_u(a: &[f64], b: &[f64]) -> RadResult<TestResult> {
             1.
         } else {
             let z = (u1.max(u2) - pairs as f64 / 2. - 0.5) / variance.sqrt();
-            (2. * Normal::new(0., 1.).unwrap().sf(z)).min(1.)
+            (2. * Distribution::Normal.sf(z)?).min(1.)
         }
     };
     if !p.is_finite() || !(0.0..=1.0).contains(&p) {

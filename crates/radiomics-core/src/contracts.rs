@@ -181,6 +181,7 @@ impl Geometry {
 #[serde(deny_unknown_fields)]
 pub struct ImageVolume {
     pub geometry: Geometry,
+    #[serde(with = "crate::statistics::float_vec_state")]
     pub values: Vec<f64>,
 }
 impl ImageVolume {

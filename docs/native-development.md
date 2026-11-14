@@ -9,8 +9,8 @@ code from independently accepted capabilities; a pending row is not support.
 ## Architecture and ownership
 
 One repository has a Rust core, thin PyO3 boundary, and a Python-independent CLI.
-`crates/radiomics-core` and `crates/radiomics-python` already exist; a third CLI
-crate is being implemented. Public numerical contracts contain owned contiguous
+`crates/radiomics-core`, `crates/radiomics-python` and `crates/radiomics-cli` are
+integrated. Public numerical contracts contain owned contiguous
 buffers, dimensions, explicit missing flags and ordinary Rust types. Matrix and
 image-library types stay private. The main worker owns contracts, dependency
 versions, error types, serialization and public exports. Delegated workers use
@@ -20,12 +20,12 @@ the feature/algorithm author.
 
 | Contract | Definition and invariants | Current status |
 |---|---|---|
-| ImageSample | SampleMetadata, ImageVolume, MaskVolume; unique sample ID in a cohort, patient IDs may repeat; scalar 2D/3D; x-fastest buffers; native NIfTI world affine and declared units | Defined in contracts.rs; image integration pending |
-| FeatureTable | Row-major NumericBuffer, sample metadata, ordered feature definitions, effective parameters and quality records; outcomes/IDs are separate metadata | Defined; native extraction-table integration pending |
-| TileTable | patient→slide→tile, level-0 upper-left x/y, extent distinct from patch dimensions, valid nonpadding rectangle, optional mpp, source/QC, optional named features | Defined; pathology implementation pending |
-| SplitPlan | Cohorts, sample→patient and training class maps, actual outer/inner/final-inner patient sets, ordered classes, seed and versioned SHA256 ordering | Implemented and unit tested; workflow integration pending |
-| ModelBundle | Versioned manifest and typed fitted state with numerical arrays; JSON .rad envelope; no executable serialization | Generic container implemented; actual fitted pipeline states pending |
-| PredictionTable | Prediction unit, IDs, cohorts/folds, training source, ordered class probabilities or one regression value | Defined; model/pathology integration pending |
+| ImageSample | SampleMetadata, ImageVolume, MaskVolume; unique sample ID in a cohort, patient IDs may repeat; scalar 2D/3D; x-fastest buffers; native NIfTI world affine and declared units | Integrated with image/extraction core, CLI and Python; geometry and Golden checks pass |
+| FeatureTable | Row-major NumericBuffer, sample metadata, ordered feature definitions, effective parameters and quality records; outcomes/IDs are separate metadata | Native extraction and CSV/Parquet I/O integrated and tested |
+| TileTable | patient→slide→tile, level-0 upper-left x/y, extent distinct from patch dimensions, valid nonpadding rectangle, optional mpp, source/QC, optional named features | Integrated with patch tools, strict adapters, aggregation and overlays; empty-slide parent retained |
+| SplitPlan | Cohorts, sample→patient and training class maps, actual outer/inner/final-inner patient sets, ordered classes, seed and versioned SHA256 ordering | Integrated with all nested training/selection and fusion; full patient sets checked |
+| ModelBundle | Versioned manifest and typed fitted state with numerical arrays; JSON .rad envelope; no executable serialization | Pipeline/fusion typed states integrated; CLI and Python save/load tested |
+| PredictionTable | Prediction unit, IDs, cohorts/folds, training source, ordered class probabilities or one regression value | Integrated with training/evaluation/overlays; wrong-level broadcasting and cohort overlap rejected |
 
 `NumericBuffer` uses one missing flag per element, finite f64 storage and canonical
 zero at missing positions. Extraction adapters must convert undefined results to
@@ -59,28 +59,28 @@ mapping; changing external labels cannot change its fingerprint.
 
 | Work item | This round | Acceptance dependency/status |
 |---|---|---|
-| NIfTI scalar 2D/3D, complete affine/forms/units; CSV cohort; CSV/Parquet tables | Native | B implementation and geometry/format fixtures underway; Parquet pending |
+| NIfTI scalar 2D/3D, complete affine/forms/units; CSV cohort; CSV/Parquet tables | Native | Integrated; geometry fixtures and CSV/Parquet round-trip/three-task workflow checks pass |
 | ROI bbox, voxel/mm margins, maximal section; spacing/reference-grid resampling | Native | Explicit nearest/linear, mask nearest-only; generic grid frozen separately from PyRadiomics ROI grid |
-| Clipping, Z-score/MinMax, explicit statistic ROI, absolute resegmentation | Native | Morphology/intensity ROI separation; numerical acceptance pending |
-| Label selection/recode, explicit connectivity, largest component, dilation and anisotropic mm ring/organ intersection | Native | Shear/unknown-unit rejection required; geometry acceptance pending |
-| Original 16 first-order, shape_basic and 10/8/8/8/5 selected GLCM/GLRLM/GLSZM/GLDM/NGTDM features | Native, explicit subset only | First implementation integrated; independent matrix/value acceptance pending |
+| Clipping, Z-score/MinMax, explicit statistic ROI, absolute resegmentation | Native | Integrated with separate morphology/intensity ROI and frozen numerical checks |
+| Label selection/recode, explicit connectivity, largest component, dilation and anisotropic mm ring/organ intersection | Native | Implemented and tested, including shear/unknown-unit rejection |
+| Original 16 first-order, shape_basic and 10/8/8/8/5 selected GLCM/GLRLM/GLSZM/GLDM/NGTDM features | Native, explicit subset only | Independent public 3.0.1 raw matrices and scalar/undefined-state acceptance pass; scoped IBSI matrix is separate |
 | Batch parallelism, deterministic sorting, failures/export, content-addressed cache | Native | Outermost n_jobs only; input/config/implementation digests required |
-| Numeric median/category mode, one-hot; Standard/MinMax/Robust; constant/variance/correlation/univariate/BH/sparse filters | Native | D pending; fitted state and all-missing/zero-feature errors required |
-| Binary/multiclass/regression: LR, OLS, Ridge, KNN; classification GaussianNB; CART RandomForest | Native | E pending; objectives/KKT/convergence Golden must precede implementation |
-| Binary/regression squared-loss LASSO; multiclass OvR L1 Logistic feature union | Native | E solver reused by D; category renaming must not change selected set |
-| Grouped fixed holdout/nested CV/grid, center holdout, feature concatenation, weighted probability fusion and OOF Logistic fusion | Native | G pending; core SplitPlan available; training-scope/leakage tests required |
-| Baseline/test distributions, Fisher 2×2, unpenalized logistic OR/Wald CI and complete-case reporting | Native | F pending; logistic solver reused from E |
-| ICC(2,1), ICC(3,1) for complete balanced subject×reader matrices | Native | F pending; type, estimate and CI required |
-| ROC/PR, calibration, confusion, patient bootstrap, macro/micro/weighted classification, MAE/RMSE/R² | Native | F pending; binary kernels already exist, CDF/quantile/HL bins/bootstrap still migrate |
+| Numeric median/category mode, one-hot; Standard/MinMax/Robust; constant/variance/correlation/univariate/BH/sparse filters | Native | Core and Python fit states integrated; independent screening/preprocessing Golden and error checks pass |
+| Binary/multiclass/regression: LR, OLS, Ridge, KNN; classification GaussianNB; CART RandomForest | Native | Implemented; independent objectives/KKT, convergence, model-quality and persistence checks pass |
+| Binary/regression squared-loss LASSO; multiclass OvR L1 Logistic feature union | Native | Shared solver; category-renaming invariant and exact support checks pass |
+| Grouped fixed holdout/nested CV/grid, center holdout, feature concatenation, weighted probability fusion and OOF Logistic fusion | Native | Grouped pipelines/fusion integrated with true patient sets and leakage checks; keyed feature concatenation remains pending |
+| Baseline/test distributions, Fisher 2×2, unpenalized logistic OR/Wald CI and complete-case reporting | Native | Shared Logistic solver, LP separation/rank/score checks; frozen inference passes; Python enforces explicit patient/sample units |
+| ICC(2,1), ICC(3,1) for complete balanced subject×reader matrices | Native | Typed result/CI and degenerate states match frozen reference; public Python API integrated |
+| ROC/PR, calibration, confusion, patient bootstrap, macro/micro/weighted classification, MAE/RMSE/R² | Native | Full Rust evaluator/CDF/quantiles/bins/bootstrap integrated; exact legacy sample indices and independent evaluation checks pass |
 | DeLong, DCA, H–L | Binary only | Existing Python/reference semantics retained; multiclass must use explicitly scoped binary comparisons |
 | Multi-region/peritumoral/multimodal, keyed Delta, KMeans habitat, center-specific evaluation | Native | G pending; no inferred registration or batch correction |
-| PNG/JPEG RGB8; single-page TIFF Gray8/Gray16/RGB8 | Native | B underway; reject pyramidal/vendor/unsupported pixel types |
-| Patch streaming/padding, raw QC/reasons, semantic coverage, RGB/HSV/Lab D65 features, shared grayscale textures | Native | H pending; hue circular statistics; padding excluded from denominators |
-| Existing semantic/instance mask objects; hierarchical mean/std/max/quartiles/area weighting | Native | H/I pending; no naive sum of overlapping patch instances |
-| Tile score rasterization, overlap means/coverage, transparent or NaN uncovered pixels, chunked output | Native | I pending; require real tile scores, never broadcast patient probabilities |
+| PNG/JPEG RGB8; single-page TIFF Gray8/Gray16/RGB8 | Native | Integrated with rejection of pyramidal/vendor/unsupported pixel types |
+| Patch streaming/padding, raw QC/reasons, semantic coverage, RGB/HSV/Lab D65 features, shared grayscale textures | Native | Core and streaming Python iterator integrated; independent pixel/color/mask Golden pass; padding excluded |
+| Existing semantic/instance mask objects; hierarchical mean/std/max/quartiles/area weighting | Native | Core and Python integrated; independent hierarchy/weight/missing-state checks pass; object counts stay patch local |
+| Tile score rasterization, overlap means/coverage, transparent or NaN uncovered pixels, chunked output | Native | Owned block iterator and Python NPZ/manifest export integrated; exact global-coordinate coverage checks pass |
 | External CSV/Parquet/NumPy features/embeddings and precomputed masks/registration/filter results | External input | Exact IDs/keys required; native model workflow reused |
-| AnnData/WSIData | Optional Python adapter | I pending; shapes[tile_key], attrs.tile_spec[tile_key], tables[feature_key].X + row IDs; decode geometry explicitly |
-| sklearn/statsmodels/PyRadiomics and existing extra Python models | Optional reference/external backend | Lazy imports and dependency isolation pending; never called by backend=rust |
+| AnnData/WSIData | Optional Python adapter | Strict ID/geometry/generation-time history contract implemented and frozen tests pass; live third-party package installation/runtime checks pending |
+| sklearn/statsmodels/PyRadiomics and existing extra Python models | Optional reference/external backend | Lazy reference paths; native wheel tested without these packages; they are never called by backend=rust |
 | Plotting | Python | Native results/tables with units, provenance and valid coordinates |
 | DICOM/RTSTRUCT, registration optimizer, N4, WSI/KFB, complex stains | Deferred | No placeholder implementation or support claim |
 | Mesh surface/sphericity, LoG/Wavelet/LBP, local texture maps, SLIC/GPU habitats, nonstandard topology/fractal/ITH | Deferred | Existing externally generated features may be accepted as named external inputs |
@@ -141,11 +141,11 @@ No extraction or workflow performance target has yet been measured as passed.
 
 | Milestone | Required completion | Status |
 |---|---|---|
-| M0 | Scope, six contracts, formulas/params, all required reference environments/data | Partial: contracts and initial image/metric references; remaining domains pending |
-| M1 | Python-free NIfTI→preprocessing→Original features→CLI, exact matrix/geometry Golden | In progress |
-| M2 | Three-task native selection/models/stats/CV/fusion/.rad and leakage audit | Pending |
+| M0 | Scope, six contracts, formulas/params, all required reference environments/data | Contracts, independent image/model/statistics/pathology/aggregation/WSI fixtures and scoped IBSI track integrated; research and full performance datasets pending |
+| M1 | Python-free NIfTI→preprocessing→Original features→CLI, exact matrix/geometry Golden | Core/CLI/Python integrated; frozen matrix/value/geometry checks pass; fixed public CT and full performance/install evidence still pending |
+| M2 | Three-task native selection/models/stats/CV/fusion/.rad and leakage audit | Core/CLI/Python integrated; independent three-task nested-fit/leakage/persistence checks pass; remaining full delivery/installation audit pending |
 | M3 | Strictly keyed multi-region/modality/Delta/habitat/center workflows | Pending |
-| M4 | Independent patch and embedding pipelines, aggregation/maps without GPU/ov | Pending |
+| M4 | Independent patch and embedding pipelines, aggregation/maps without GPU/ov | Core/Python pixel/embedding/hierarchy/overlay paths integrated; frozen tests and native-only Windows wheel checks pass; pathology CLI/tutorial/live-container verification pending |
 | M5 | Python/CLI, Windows/Linux wheels/crate artifacts, six runnable tutorials, full installation/performance acceptance | Pending |
 
 Final tutorials cover NIfTI/ROI extraction; imaging+clinical binary modeling;
@@ -154,3 +154,14 @@ patch→QC/features→patient modeling; and embeddings/WSIData→aligned aggrega
 prediction/maps. CLI exposes only genuinely implemented commands. Python native
 tests must omit sklearn/statsmodels/PyRadiomics; CLI must run without Python;
 Windows/Linux wheel installation and absence of ov/WSIData must be tested.
+
+Current local checkpoint on 2026-11-14: **121 Python tests**, **143 Rust core
+tests plus 6 CLI integration tests**, and **25 installed-wheel native-only
+tests** passed on Windows. The latter environment has no sklearn, SciPy,
+statsmodels, PyRadiomics, SimpleITK, joblib, ov or WSIData. Python subprocess
+tests additionally reject reference imports, and compare cross-process `.rad`
+predictions exactly on unchanged f64 inputs. These counts describe the tested
+checkpoint, not an all-platform release approval. Basic native plots use
+matplotlib; seaborn remains an explicit optional extra. Performance reporting
+utilities and a first diagnostic metric measurement are available; full
+L1–L5/three-workflow performance and peak-memory evidence remain pending.

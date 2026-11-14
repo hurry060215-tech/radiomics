@@ -10,11 +10,12 @@ __version__ = '0.1.0'
 _EXPORTS = {
     'image': ('match_images', 'check_images', 'extract', 'read_cohort', 'ExtractionResult'),
     'selection': ('FeatureSelector',),
-    'clinical': ('baseline_table', 'univariate_logistic', 'multivariable_logistic'),
+    'clinical': ('baseline_table', 'univariate_logistic', 'multivariable_logistic', 'icc'),
     'modeling': ('split_data', 'make_classifier', 'train_models', 'evaluate', 'fusion_data',
                  'fit_fusion', 'TrainingResult', 'FusionResult'),
     'metrics': ('binary_metrics', 'delong_test', 'decision_curve', 'hosmer_lemeshow'),
     '_validation': ('join_data',),
+    '_types': ('ImageSample', 'ImageVolume', 'MaskVolume', 'FeatureTable', 'TileTable', 'ModelBundle', 'PredictionTable', 'load_model'),
     'plotting': ('plot_roc', 'plot_calibration', 'plot_dca', 'plot_confusion_matrix',
         'plot_prediction_scores', 'plot_correlation', 'plot_lasso_path', 'plot_lasso_cv',
         'plot_feature_weights', 'plot_cv_results', 'plot_metrics', 'plot_feature_summary',
@@ -25,6 +26,10 @@ __all__ = ['backend_info', 'SplitPlan', *_LOOKUP]
 
 
 def __getattr__(name):
+    if name in {'image', 'mask', 'interop', 'pathology'}:
+        module = import_module('.' + name, __name__)
+        globals()[name] = module
+        return module
     module = _LOOKUP.get(name)
     if module is None:
         raise AttributeError(f'module {__name__!r} has no attribute {name!r}')

@@ -156,3 +156,29 @@ evidence, engineering regressions and optimization follow-ups. Mark capabilities
 native, optional external, experimental or deferred according to actual evidence.
 Local Windows results never imply Linux installation, Python-free execution,
 IBSI conformance or unmeasured throughput has passed.
+
+## Executable evidence utilities
+
+`tools/benchmark_protocol.py` records machine/dependency/binary hashes and raw
+paired observations, and computes the declared linear-quantile median/IQR/p95.
+It rejects duplicate/incomplete pairs or fewer than seven declared pairs. A
+failed or numerically inconsistent observation suppresses a speed claim; it
+does not change correctness tolerances or produce a combined suite score.
+
+The existing `tools/benchmark_metrics.py` is retained as one **ML & Statistics
+public-metric microbenchmark**, now emitting the v2 raw-record format. It measures
+one warmup pair followed by seven alternating pairs, n=100/10,000 and the same
+three operations/seed. It includes conversion/output, retains per-observation
+input/output hashes and errors, and refuses output replacement by default.
+It does not represent radiomics L1–L4, training or pathology performance. Memory,
+cold/cache states, observed concurrency and currently unrecorded machine fields
+remain explicit missing evidence. These utilities are not completion of the
+full performance acceptance suite.
+
+```powershell
+$env:OMP_NUM_THREADS='1'
+$env:OPENBLAS_NUM_THREADS='1'
+$env:MKL_NUM_THREADS='1'
+$env:NUMEXPR_NUM_THREADS='1'
+python tools/benchmark_metrics.py --output artifacts/benchmark-v2/metrics-warm.json
+```

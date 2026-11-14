@@ -15,6 +15,8 @@ pub mod features;
 pub mod imaging;
 pub mod learning;
 pub mod models;
+pub mod overlay;
+pub mod pathology_aggregate;
 pub mod pathology_pixels;
 pub mod preprocessing;
 pub mod random;
@@ -23,6 +25,7 @@ pub mod split;
 pub mod statistics;
 pub mod table_io;
 pub mod workflow;
+pub mod wsidata_contract;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct InputError(pub &'static str);

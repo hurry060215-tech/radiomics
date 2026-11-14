@@ -223,3 +223,83 @@ def _extract_native(samples, params, roi_label, correct_mask, n_jobs, on_error,
             ok=False, error=row['error']['message'], error_code=row['error']['code']))
     return ExtractionResult(pd.DataFrame(feature_rows).sort_values('ID').reset_index(drop=True),
         pd.DataFrame(diagnostic_rows).sort_values('ID').reset_index(drop=True), batch)
+
+
+def from_array(values, *, affine=None, spatial_unit='unknown'):
+    """Create a scalar native image; NumPy axes are y,x (2D) or z,y,x (3D).
+
+    Without an explicit affine/unit, coordinates are an unknown-unit index grid.
+    No millimeter scale, channel reduction or 4D splitting is inferred.
+    """
+    from ._types import ImageVolume
+    array = np.asarray(values)
+    if array.ndim not in (2, 3) or np.iscomplexobj(array):
+        raise ValueError('Scalar real 2D/3D arrays are required; split channels/4D explicitly.')
+    shape = list(reversed(array.shape))
+    if array.ndim == 2:
+        shape.append(1)
+    affine = np.eye(4) if affine is None else np.asarray(affine, dtype=float)
+    units = {'mm': 'millimeter', 'm': 'meter', 'um': 'micron'}
+    unit = units.get(spatial_unit, spatial_unit)
+    geometry = dict(shape=shape, ndim=array.ndim, affine=affine.tolist(), unit=unit, diagnostics=[])
+    return ImageVolume(dict(geometry=geometry, values=np.asarray(array, dtype=float).ravel(order='C').tolist()))
+
+
+def read_nifti(path):
+    """Read scalar NIfTI in Rust, preserving full RAS affine and declared units."""
+    from ._native_common import request
+    from ._types import ImageVolume
+    return ImageVolume._from_native(request('read_nifti', path=str(Path(path).resolve())))
+
+
+def _volume_payload(value):
+    return value.to_dict() if hasattr(value, 'to_dict') else value
+
+
+def resample_spacing(image, spacing_mm, *, interpolation='linear', outside=0.):
+    """Resample with the explicit generic outer-edge grid, not a PyRadiomics ROI grid."""
+    from ._native_common import request
+    from ._types import ImageVolume
+    payload = request('image_resample_spacing', image=_volume_payload(image),
+        spacing_mm=list(spacing_mm), interpolation=interpolation, outside=outside)
+    return ImageVolume._from_native(payload)
+
+
+def resample_like(image, reference, *, interpolation='linear', outside=0.):
+    from ._native_common import request
+    from ._types import ImageVolume
+    geometry = reference.geometry if hasattr(reference, 'geometry') else reference.get('geometry', reference)
+    return ImageVolume._from_native(request('image_resample_like', image=_volume_payload(image),
+        reference=geometry, interpolation=interpolation, outside=outside))
+
+
+def clip_range(image, lower, upper):
+    from ._native_common import request
+    from ._types import ImageVolume
+    return ImageVolume._from_native(request('image_clip_range', image=_volume_payload(image), lower=lower, upper=upper))
+
+
+def _statistics_mask(statistics, mask):
+    if statistics == 'roi':
+        if mask is None:
+            raise ValueError('ROI statistics require an explicit statistical mask.')
+        return _volume_payload(mask)
+    if statistics != 'whole_image' or mask is not None:
+        raise ValueError('Choose statistics=roi with a mask, or whole_image without a mask.')
+    return None
+
+
+def clip_percentile(image, lower, upper, *, statistics, mask=None):
+    from ._native_common import request
+    from ._types import ImageVolume
+    return ImageVolume._from_native(request('image_clip_percentile', image=_volume_payload(image),
+        lower=lower, upper=upper, statistical_mask=_statistics_mask(statistics, mask)))
+
+
+def normalize(image, *, method, statistics, mask=None, return_transform=False):
+    from ._native_common import request
+    from ._types import ImageVolume
+    result = request('image_normalize', image=_volume_payload(image),
+        method={'zscore': 'z_score'}.get(method, method), statistical_mask=_statistics_mask(statistics, mask))
+    image = ImageVolume._from_native(result['image'])
+    return (image, result['fitted']) if return_transform else image

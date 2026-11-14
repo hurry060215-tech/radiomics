@@ -62,6 +62,12 @@ fn unique_paths<'de, D: serde::Deserializer<'de>>(
     }
     deserializer.deserialize_map(Visitor)
 }
+struct RoutedPrediction {
+    table: ov_radiomics_core::contracts::PredictionTable,
+    reports: BTreeMap<String, LoadReport>,
+    specifications: BTreeMap<String, serde_json::Value>,
+    manifest: ModelManifest,
+}
 pub fn predict(args: PredictCommand) -> RadResult<u8> {
     let header: Header = read_json(&args.model)?;
     header.manifest.validate()?;
@@ -82,18 +88,20 @@ pub fn predict(args: PredictCommand) -> RadResult<u8> {
         ]
         .map(PathBuf::from),
     )?;
-    let (predictions, reports): (
-        ov_radiomics_core::contracts::PredictionTable,
-        BTreeMap<String, LoadReport>,
-    ) = match kind {
+    let routed = match kind {
         "pipeline" => {
             let model = ModelBundle::<FittedPipeline>::load(&args.model)?;
-            let loaded = load_study(&args.data, model.manifest.task)?;
+            let (spec, loaded) = load_study_record(&args.data, model.manifest.task)?;
             let predictions = learning::predict(&model, &loaded.data)?;
-            (
-                predictions,
-                BTreeMap::from([("pipeline".into(), loaded.report)]),
-            )
+            RoutedPrediction {
+                table: predictions,
+                reports: BTreeMap::from([("pipeline".into(), loaded.report)]),
+                specifications: BTreeMap::from([(
+                    "pipeline".into(),
+                    json!({"specification":spec,"spec_directory":std::fs::canonicalize(parent(&args.data))?}),
+                )]),
+                manifest: model.manifest.clone(),
+            }
         }
         "fusion" => {
             let model = ModelBundle::<FittedFusion>::load(&args.model)?;
@@ -114,13 +122,21 @@ pub fn predict(args: PredictCommand) -> RadResult<u8> {
             }
             let mut data = BTreeMap::new();
             let mut reports = BTreeMap::new();
+            let mut specifications = BTreeMap::new();
             for (name, path) in inputs.components {
-                let loaded = load_study(&resolve(parent(&args.data), &path), model.manifest.task)?;
+                let path = resolve(parent(&args.data), &path);
+                let (spec, loaded) = load_study_record(&path, model.manifest.task)?;
                 data.insert(name.clone(), loaded.data);
+                specifications.insert(name.clone(),json!({"specification":spec,"spec_directory":std::fs::canonicalize(parent(&path))?}));
                 reports.insert(name, loaded.report);
             }
             let predictions = learning::predict_fusion(&model, &data)?;
-            (predictions, reports)
+            RoutedPrediction {
+                table: predictions,
+                reports,
+                specifications,
+                manifest: model.manifest.clone(),
+            }
         }
         _ => {
             return Err(schema(format!(
@@ -128,10 +144,16 @@ pub fn predict(args: PredictCommand) -> RadResult<u8> {
             )))
         }
     };
+    let RoutedPrediction {
+        table: predictions,
+        reports,
+        specifications,
+        manifest,
+    } = routed;
     output.begin()?;
     output.predictions("predictions.json", "predictions.csv", &predictions)?;
     output.json("load_report.json", &reports)?;
-    output.json("prediction_metadata.json",&json!({"format":"radiomics.cli.prediction","schema_version":1,"task":predictions.task,"classes":predictions.classes,"unit":predictions.unit,"model_kind":kind,"model_schema_version":header.manifest.schema_version,"model_threshold":header.manifest.threshold,"rows":predictions.rows.len(),"cohorts":predictions.rows.iter().map(|r|r.cohort.as_str()).collect::<BTreeSet<_>>(),"runtime":"rust","fit_performed":false}))?;
+    output.json("prediction_metadata.json",&json!({"format":"radiomics.cli.prediction","schema_version":1,"task":predictions.task,"classes":predictions.classes,"unit":predictions.unit,"model_kind":kind,"model_schema_version":manifest.schema_version,"model_threshold":manifest.threshold,"input_specifications":specifications,"rows":predictions.rows.len(),"cohorts":predictions.rows.iter().map(|r|r.cohort.as_str()).collect::<BTreeSet<_>>(),"runtime":"rust","fit_performed":false}))?;
     println!(
         "{}",
         json!({"status":"complete","command":"predict","rows":predictions.rows.len(),"unit":predictions.unit,"output":args.output})
