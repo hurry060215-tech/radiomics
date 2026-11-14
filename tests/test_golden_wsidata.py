@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 import struct
+import importlib.util
 
 
 DIRECTORY=Path(__file__).resolve().parents[1]/"golden/python_golden_v1"
@@ -56,3 +57,22 @@ def test_wsidata_canonical_float_hex_includes_signed_zero_and_subnormal():
         assert case["canonical"]=={"float64_hex":text}
     assert reference["canonical_float_cases"][0]["python_float_hex"]=="0x0.0p+0"
     assert reference["canonical_float_cases"][1]["python_float_hex"]=="-0x0.0p+0"
+
+
+def test_wsidata_float_tag_collision_requires_typed_payload_guard():
+    reference=read("wsidata_collision_reference.json")
+    for name,digest in reference["source_sha256"].items():
+        assert hashlib.sha256((DIRECTORY/name).read_bytes()).hexdigest()==digest
+    loader=importlib.util.spec_from_file_location("wsidata_guard_test",DIRECTORY/"wsidata_contract_guard.py")
+    guard=importlib.util.module_from_spec(loader);loader.loader.exec_module(guard)
+    saved=reference["saved_snapshot"];current=reference["current_snapshot"]
+    assert saved["sha256"]==current["sha256"]
+    assert type(saved["snapshot"]["tile_spec"]["custom"]) is float
+    assert type(current["snapshot"]["tile_spec"]["custom"]) is dict
+    assert reference["legacy_digest_only_validation"]["status"]=="ok"
+    assert reference["required_guard_validation"]["status"]=="error"
+    assert not guard.typed_equal(1,1.0) and not guard.typed_equal(True,1)
+    assert not guard.typed_equal(saved["snapshot"],current["snapshot"])
+    import pytest
+    with pytest.raises(ValueError,match="structure, type or value"):
+        guard.validate_embedding_link(current,saved,"tiles","tiles",["T0","T1"],["T1","T0"],["b","a"])

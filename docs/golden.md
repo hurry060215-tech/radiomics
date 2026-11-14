@@ -316,3 +316,14 @@ The [PyRadiomics difference documentation](https://pyradiomics.readthedocs.io/en
 explains differences in fixed-width discretization, resampling grid alignment,
 and kurtosis. These are recorded definition differences. Acceptance must not
 inflate tolerances to hide them or combine IBSI and PyRadiomics into one standard.
+
+## WSI snapshot type evidence
+
+The supplementary `wsidata_contract_guard.py` is required together with the original
+WSI specification. An extra TileSpec value `1.0` and an opaque object
+`{"float64_hex":"0x1.0000000000000p+0"}` have the same v1 canonical digest.
+The independently generated `wsidata_collision_reference.json` records that
+counterexample and its mandatory rejection. Both digest validity and recursive
+normalized metadata structure, type and value equality are required. Existing
+normal snapshots, digests, schema and the original specification/reference bytes
+remain frozen. The float tag cannot prove the original JSON metadata type.

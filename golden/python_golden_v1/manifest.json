@@ -97,7 +97,9 @@
     "pathology_aggregate_reference.json": "7d21243c8536b4f3c036260219000523473f3d8370292d13c2b18b9ce02f95db",
     "wsidata_contract_spec.py": "a5c2d4bbd6a8567a86e2c16d3d24c0b22c90f789e47414f0d7156faaa1a6c32b",
     "wsidata_contract_inputs.json": "6463012d0909ce6615431a50c8eaf232e3a94c119bbd081fb060b31c260b3f54",
-    "wsidata_contract_reference.json": "5b0a8fe8109587e63d0edc013c743cce338b453c8a5a1915d3074f32829283a9"
+    "wsidata_contract_reference.json": "5b0a8fe8109587e63d0edc013c743cce338b453c8a5a1915d3074f32829283a9",
+    "wsidata_contract_guard.py": "1332d26dd7de53a63fb9132f502f6caa26c34b4d5d516ed9844b2d451fb66b36",
+    "wsidata_collision_reference.json": "0ce3e95278b50e1f5c460846cde954d25583cae0d0882d063946906ad78a0f38"
   },
   "benchmark_policy": {
     "version": 2,
@@ -138,6 +140,7 @@
     "memory": "<=1.20x matched-reference peak memory remains an engineering protection budget, reported explicitly"
   },
   "reference_scope_notes": {
-    "clinical_logistic_statistics_reference": "Sample-level solver reference with two lesions per patient; n_used/n_dropped are rows. Clinical patient inference rejects repeated patients by default; explicit sample analysis must state dependence. Existing numerical fixture unchanged."
+    "clinical_logistic_statistics_reference": "Sample-level solver reference with two lesions per patient; n_used/n_dropped are rows. Clinical patient inference rejects repeated patients by default; explicit sample analysis must state dependence. Existing numerical fixture unchanged.",
+    "wsidata_digest_collision": "Required supplementary wsidata_contract_guard.py checks recursive normalized structure/type/value after validating digests. The original frozen specification/reference bytes and normal digest protocol remain unchanged; wsidata_collision_reference.json independently demonstrates the float-tag opaque-object collision and required rejection."
   }
 }
