@@ -1,0 +1,75 @@
+# ML & Statistics and lightweight Pathology: measured results
+
+All 224 predeclared observations completed with matching outputs: eight workload rows × cold/warm × seven alternating backend pairs. The two suites are reported separately. These are Windows synthetic-workload results, not a clinical-validation or universal-engine speed claim.
+
+Native source `48ecb310a2d9ccb5da821733ee1190ce1764f27a`, implementation `a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8`, wheel `f2c8e0cbf55bfdf56ee4efb7b4d664112028618cb6bf03e0761170730214c160`. Plan `33911b9585e934a43ec08e620bae37fcfd1061293799023b14243e49b80b874b`, source-text binding `0a0944f104703e3008a93ad36ec56e5e6d473828fe6890e950c602e1f7f97c9c`, environment/runner binding `13254953c839f4aa51687a7acd2dfdd6b2db91981577803444a23105b47801a2`.
+
+Both facade environments use Python3.9.21, NumPy1.23.0 and pandas1.3.5. Public model/statistics references use sklearn1.0.2, SciPy1.13.1 and statsmodels0.13.2; pathology uses the independently frozen Python specifications and Pillow10.4.0. n=7 per backend/case; median/IQR/p95 below are milliseconds. RSS is median full-process lifetime resident memory, MiB. p95 is empirical linear interpolation, not a precise tail guarantee.
+
+<!-- ML_STATS_RESULTS -->
+## machine_learning_statistics
+
+| Workload | State | Python median / IQR / p95 ms | Native median / IQR / p95 ms | Python/native | RSS Python / Native MiB | Native/reference RSS |
+|---|---|---:|---:|---:|---:|---:|
+| Binary LR | warm | 70.595 / 9.590 / 79.662 | 43.261 / 11.171 / 56.348 | 1.632× | 110.31 / 63.71 | 0.578× |
+| Binary LR | cold process | 867.617 / 64.551 / 982.627 | 439.036 / 14.463 / 465.355 | 1.976× | 109.35 / 63.07 | 0.577× |
+| Multiclass softmax | warm | 97.713 / 4.052 / 106.427 | 46.795 / 2.035 / 52.148 | 2.088× | 110.61 / 64.21 | 0.581× |
+| Multiclass softmax | cold process | 904.804 / 45.048 / 960.578 | 436.395 / 6.557 / 459.113 | 2.073× | 109.61 / 63.27 | 0.577× |
+| Ridge regression | warm | 38.245 / 1.483 / 39.190 | 38.985 / 2.555 / 43.612 | 0.981× | 110.05 / 63.84 | 0.580× |
+| Ridge regression | cold process | 856.173 / 50.394 / 896.802 | 438.519 / 29.557 / 468.126 | 1.952× | 109.29 / 62.66 | 0.573× |
+| Clinical secondary | warm | 21.723 / 0.757 / 23.261 | 10.145 / 0.309 / 10.734 | 2.141× | 121.36 / 58.47 | 0.482× |
+| Clinical secondary | cold process | 1035.110 / 29.436 / 1081.472 | 414.289 / 29.459 / 442.562 | 2.499× | 121.11 / 58.30 | 0.481× |
+| Pathology patient LR | warm | 42.202 / 0.785 / 42.616 | 21.190 / 0.805 / 21.503 | 1.992× | 108.54 / 61.08 | 0.563× |
+| Pathology patient LR | cold process | 872.388 / 30.888 / 946.202 | 418.875 / 23.255 / 441.688 | 2.083× | 108.48 / 60.67 | 0.559× |
+
+<!-- PATHOLOGY_RESULTS -->
+## pathology
+
+| Workload | State | Python median / IQR / p95 ms | Native median / IQR / p95 ms | Python/native | RSS Python / Native MiB | Native/reference RSS |
+|---|---|---:|---:|---:|---:|---:|
+| Decoded pathology front end | warm | 10514.620 / 1121.177 / 10636.501 | 2327.506 / 35.157 / 2356.541 | 4.518× | 147.71 / 155.14 | 1.050× |
+| Decoded pathology front end | cold process | 9158.672 / 106.327 / 9245.997 | 3175.587 / 27.828 / 3207.222 | 2.884× | 103.83 / 110.05 | 1.060× |
+| PNG pathology front end | warm | 8392.431 / 1173.131 / 10638.696 | 2233.910 / 17.215 / 2254.160 | 3.757× | 149.89 / 155.06 | 1.035× |
+| PNG pathology front end | cold process | 9300.275 / 147.515 / 9514.168 | 3073.899 / 37.426 / 3143.689 | 3.026× | 106.18 / 110.35 | 1.039× |
+| Full-scene diagnostic | warm | 8446.231 / 120.408 / 9116.358 | 2286.582 / 39.256 / 2604.623 | 3.694× | 201.55 / 157.62 | 0.782× |
+| Full-scene diagnostic | cold process | 9650.902 / 85.121 / 9805.082 | 3081.062 / 26.673 / 3110.159 | 3.132× | 157.68 / 113.12 | 0.717× |
+
+## Full-scene diagnostic stages
+
+This diagnostic contains PNG input through modeling; the two pathology-front-end rows above exclude training. Independent pathology-patient modeling remains a separate ML & Statistics row. Stages are named actual public-call/export boundaries, not internal kernels; total includes unassigned boundary overhead. The persistence stage includes the public save method's builtin CV/OOF/prediction table exports.
+
+| State | Stage | Python median ms | Native median ms |
+|---|---|---:|---:|
+| warm | actual_tile_overlay_compute | 84.048 | 14.311 |
+| warm | additional_model_table_exports | 1.808 | 1.402 |
+| warm | decode_tile_qc_color | 8129.645 | 2049.381 |
+| warm | frontend_exports | 173.905 | 173.282 |
+| warm | id_alignment_aggregation | 14.941 | 28.423 |
+| warm | model_fit_tune | 31.788 | 5.855 |
+| warm | model_persist_load_and_builtin_table_exports | 5.852 | 9.652 |
+| warm | model_predict_evaluate | 3.298 | 4.815 |
+| cold process (API stage) | actual_tile_overlay_compute | 83.634 | 13.971 |
+| cold process (API stage) | additional_model_table_exports | 1.818 | 1.376 |
+| cold process (API stage) | decode_tile_qc_color | 8107.787 | 2020.529 |
+| cold process (API stage) | frontend_exports | 170.205 | 170.597 |
+| cold process (API stage) | id_alignment_aggregation | 14.435 | 29.632 |
+| cold process (API stage) | model_fit_tune | 31.717 | 8.604 |
+| cold process (API stage) | model_persist_load_and_builtin_table_exports | 5.926 | 9.328 |
+| cold process (API stage) | model_predict_evaluate | 3.251 | 5.686 |
+
+## Targets, uncertainty and interpretation
+
+- All sixteen rows meet the predeclared native/reference runtime ≤1.10 engineering comparison and RSS ≤1.20 target. Maximum runtime ratio is 1.019362 (warm Ridge); maximum median RSS ratio is 1.059970. No failed observation, seed/config change or favorable-run selection was used.
+- Warm Ridge is approximately equal speed: 38.245 ms reference versus 38.985 ms native, ratio0.981×; the small difference is below the reported spread. Do not advertise regression acceleration from this warm row. Cold gains include dependency/import/deployment cost, not only model arithmetic.
+- Peak actual-interpreter resident memory over all observations is 211746816 bytes (201.94 MiB), below the declared2 GiB budget. Worker self and post-transport kernel footers provide actual interpreter high-water values. On this Windows host Popen monitors a venv launcher PID, so immediate child memory-kill and timeout cleanup are not established by this experiment. The later watchdog correction is separate; these224 are retained without rerun.
+- The clinical row is the explicitly sample-scoped96-row mathematical fixture with repeated lesions: baseline uses95 known outcomes, multivariable inference92 complete cases. Its OR/Wald output is included, but it is not evidence for96 independent clinical patients.
+- Predictive evaluation uses CI=None. No bootstrap/DeLong interval runtime was measured. Native model fitting, saved threshold, grouped folds and portable save/load were included; cross-process/final-install acceptance remains separately scoped.
+- Pathology uses12 labeled-study synthetic patients/two slides plus one no-outcome all-QC-excluded sentinel:25slides,600tiles. Five generic tile features follow full frozen QC/color descriptors; raw Hue angles are not averaged. Overlays contain actual tile R-channel means, never broadcast patient probabilities.
+- The simple Python pathology specification is a correctness reference, not an optimized QuPath/PyVips/WSI competitor. Front-end ratios describe this declared 128×96 RGB8 / patch32 / stride24 workload. OS file cache and background load were not controlled. No multicore or maximum-throughput claim follows.
+- No result averages across these suites or Radiomics. Radiomics has independently disclosed misses, including CT extraction and 3Dgray32; these tables cannot erase those misses.
+
+## Reproducible evidence
+
+[Archived report and per-backend distributions](../benchmarks/results/learning-pathology-native-48ecb310/report.json), [all224 raw observations](../benchmarks/results/learning-pathology-native-48ecb310/raw-observations.jsonl.gz), [artifact index](../benchmarks/results/learning-pathology-native-48ecb310/artifact-index.json). Full per-attempt CSV/JSON/stdout artifacts remain at `E:/radiomics-build/benchmark-v2/learning-pathology-full-v2-16case-1`. Uncompressed raw SHA256 `54a9892e92a65306dc8d6375718af9021a2c689491d15cdbda83d1898636449c`.
+
+Original untimed CSV-export adapter failures and their repaired preflight evidence remain available. No Golden expected output, published reference, numerical tolerance or native algorithm was changed to pass these measurements.

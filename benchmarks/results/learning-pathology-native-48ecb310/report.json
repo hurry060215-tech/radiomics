@@ -1,0 +1,3090 @@
+{
+  "binding_sha256": "13254953c839f4aa51687a7acd2dfdd6b2db91981577803444a23105b47801a2",
+  "complete_declared_grid": true,
+  "expected_cases": 16,
+  "expected_observations": 224,
+  "missing_evidence": [
+    "No multicore scaling",
+    "No bootstrap/DeLong predictive-CI runtime",
+    "OS disk cache/background load uncontrolled",
+    "Independent final artifact installation and Python-free CLI evidence remain separately scoped"
+  ],
+  "performance_targets": {
+    "memory_ratio": 1.2,
+    "runtime_ratio": 1.1
+  },
+  "plan_sha256": "33911b9585e934a43ec08e620bae37fcfd1061293799023b14243e49b80b874b",
+  "raw_observations": "raw-observations.jsonl",
+  "schema": "radiomics.benchmark.v2.learning_pathology_report.v1",
+  "source_text_binding_sha256": "0a0944f104703e3008a93ad36ec56e5e6d473828fe6890e950c602e1f7f97c9c",
+  "source_text_evidence": {
+    "golden/python_golden_v1/model_inputs.json": {
+      "comparison": "raw_bytes_exact",
+      "raw_sha256": "ce154ab4ba1390661cd5bd3c4828f99aae96becd779620622903e26c99a06fea"
+    },
+    "golden/python_golden_v1/pathology_aggregate_spec.py": {
+      "comparison": "raw_bytes_exact",
+      "raw_sha256": "bda53e363705c7cf13e029709d81273fc7fde0cfcc8123798ec859266d5af3ac"
+    },
+    "golden/python_golden_v1/pathology_inputs.json": {
+      "comparison": "raw_bytes_exact",
+      "raw_sha256": "2f23581540ed7b7aa315ef787d32461d1343b4566b0840c2a43e31396669712a"
+    },
+    "golden/python_golden_v1/pathology_spec.py": {
+      "comparison": "raw_bytes_exact",
+      "raw_sha256": "de07e123d5064a27a71c086b4868d9d9021186958709a089a261d479913c73de"
+    },
+    "golden/python_golden_v1/statistics_reference.json": {
+      "comparison": "raw_bytes_exact",
+      "raw_sha256": "8dae3abf7b60f073e7612cdbb943813ad424cd86d7fe53170d74b2d260625d4d"
+    },
+    "golden/python_golden_v1/workflow_plans.json": {
+      "comparison": "raw_bytes_exact",
+      "raw_sha256": "04f70a69fb0331d8faf0109ab5a9374e80a70ad607299d6072e0d63fcb80c6e6"
+    },
+    "golden/python_golden_v1/workflow_reference.json": {
+      "comparison": "raw_bytes_exact",
+      "raw_sha256": "012b19af423e2079985f621e159e948fc0ebed4314468856e7d468789cf0c633"
+    },
+    "tools/golden_models.py": {
+      "CRLF_count": 207,
+      "canonical_LF_sha256": "c602b7cae027eab3e6eb11c6ed653ba670d9a573396cfbbcf7d47941b5178bd3",
+      "comparison": "explicit_approved_CRLF_or_LF_only",
+      "raw_sha256": "296127da29b6d398ec3ce9865634a9547776341c8daaf26e3055a3e0d3fd993a"
+    },
+    "tools/golden_workflow.py": {
+      "CRLF_count": 212,
+      "canonical_LF_sha256": "6ca15683361711f1a712562461ce5179525fb652f3467f7c938e77f984435637",
+      "comparison": "explicit_approved_CRLF_or_LF_only",
+      "raw_sha256": "bc829260ad47bf4103132727824ecee652084166091f8c2f7e05e4ea1ddf9abb"
+    }
+  },
+  "suites": {
+    "machine_learning_statistics": {
+      "correctness_status": "passed_recorded_cases",
+      "policy": "No pooled speedup or cross-suite total; misses remain individual rows.",
+      "results": [
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.009589899999999929,
+              "maximum_seconds": 0.07999480000000003,
+              "median_seconds": 0.07059539999999997,
+              "minimum_seconds": 0.06818990000000003,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.07966189,
+              "q25_seconds": 0.06929165000000004,
+              "q75_seconds": 0.07888154999999997
+            },
+            "rust": {
+              "iqr_seconds": 0.011171349999999997,
+              "maximum_seconds": 0.05750280000000002,
+              "median_seconds": 0.0432611,
+              "minimum_seconds": 0.04198780000000002,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.05634768000000001,
+              "q25_seconds": 0.0422324,
+              "q75_seconds": 0.05340375
+            }
+          },
+          "case": {
+            "configuration_sha256": "cdadf0c14f0b0e3659a81f81c0258c60c5108e232a55da56500eea0eccdcdc3d",
+            "dataset": "learning_binary",
+            "dataset_path": "learning-binary.json",
+            "id": "learning_binary-warm_uncached",
+            "input_sha256": "89edf94fafb0714784ac45f77f8657eb4dd48db3b9e51e8977e52a0804df7b4b",
+            "level": "complete_learning",
+            "operation": "learning_binary",
+            "plan_path": "plan-binary.json",
+            "state": "warm_uncached",
+            "suite": "machine_learning_statistics",
+            "task": "binary",
+            "threads": 1,
+            "unit_name": "patients",
+            "units": 66
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            1.6175839868676376,
+            1.6685511966607889,
+            1.3717245073283384,
+            1.2769233063199426,
+            1.318279901646314,
+            1.9051915080094692,
+            1.8234649604378976
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 194560.0,
+              "maximum_bytes": 115757056,
+              "median_bytes": 115666944,
+              "minimum_bytes": 115412992,
+              "n": 7,
+              "p95_bytes": 115741081.6,
+              "q25_bytes": 115492864.0,
+              "q75_bytes": 115687424.0
+            },
+            "rust": {
+              "iqr_bytes": 210944.0,
+              "maximum_bytes": 66994176,
+              "median_bytes": 66805760,
+              "minimum_bytes": 66617344,
+              "n": 7,
+              "p95_bytes": 66962227.2,
+              "q25_bytes": 66658304.0,
+              "q75_bytes": 66869248.0
+            }
+          },
+          "peak_memory_comparison": 0.5775700272672545,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 1.6318447750981824,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.6128033837898789,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00017490000000003336,
+                "maximum_seconds": 0.002556299999999956,
+                "median_seconds": 0.00222089999999997,
+                "minimum_seconds": 0.0021159000000000594,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0025126499999999826,
+                "q25_seconds": 0.0021699000000000024,
+                "q75_seconds": 0.0023448000000000357
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0011444499999999636,
+                "maximum_seconds": 0.05010739999999991,
+                "median_seconds": 0.0478189,
+                "minimum_seconds": 0.047491199999999956,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.04982944999999993,
+                "q25_seconds": 0.04760950000000003,
+                "q75_seconds": 0.04875394999999999
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.010310800000000064,
+                "maximum_seconds": 0.025295100000000015,
+                "median_seconds": 0.014848900000000054,
+                "minimum_seconds": 0.01390020000000003,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.025190040000000025,
+                "q25_seconds": 0.014561599999999952,
+                "q75_seconds": 0.024872400000000017
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.00015670000000006512,
+                "maximum_seconds": 0.004111399999999987,
+                "median_seconds": 0.0037085000000000035,
+                "minimum_seconds": 0.0036741000000000135,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.004034840000000017,
+                "q25_seconds": 0.0036784499999999998,
+                "q75_seconds": 0.003835150000000065
+              }
+            },
+            "rust": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00017405000000000892,
+                "maximum_seconds": 0.0028108999999999496,
+                "median_seconds": 0.0020280000000000298,
+                "minimum_seconds": 0.00188060000000001,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0026394199999999644,
+                "q25_seconds": 0.001986799999999983,
+                "q75_seconds": 0.002160849999999992
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0002574499999999924,
+                "maximum_seconds": 0.018211000000000033,
+                "median_seconds": 0.017720999999999987,
+                "minimum_seconds": 0.01748329999999998,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.018090460000000013,
+                "q25_seconds": 0.017535949999999995,
+                "q75_seconds": 0.017793399999999987
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.01043765000000002,
+                "maximum_seconds": 0.026351500000000028,
+                "median_seconds": 0.01336130000000002,
+                "minimum_seconds": 0.011988299999999952,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.025333090000000016,
+                "q25_seconds": 0.012335349999999995,
+                "q75_seconds": 0.022773000000000015
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.0005483000000000293,
+                "maximum_seconds": 0.010552600000000023,
+                "median_seconds": 0.010284300000000024,
+                "minimum_seconds": 0.009838999999999987,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.010539460000000028,
+                "q25_seconds": 0.009959350000000006,
+                "q75_seconds": 0.010507650000000035
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 934.9051071316264,
+            "rust": 1525.620014285351
+          },
+          "throughput_unit": "patients/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.06455139999999915,
+              "maximum_seconds": 0.9992864999999966,
+              "median_seconds": 0.8676170000000027,
+              "minimum_seconds": 0.8140045000000029,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.9826274399999988,
+              "q25_seconds": 0.8610641000000072,
+              "q75_seconds": 0.9256155000000064
+            },
+            "rust": {
+              "iqr_seconds": 0.014463250000009253,
+              "maximum_seconds": 0.4660412000000065,
+              "median_seconds": 0.4390355000000028,
+              "minimum_seconds": 0.4329438000000039,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.4653551000000078,
+              "q25_seconds": 0.43747159999999496,
+              "q75_seconds": 0.4519348500000042
+            }
+          },
+          "case": {
+            "configuration_sha256": "742d55cf1215f95bb378341112cf1ea283e35e9931d5e94c53ae01453ecc3e87",
+            "dataset": "learning_binary",
+            "dataset_path": "learning-binary.json",
+            "id": "learning_binary-cold_process_total",
+            "input_sha256": "89edf94fafb0714784ac45f77f8657eb4dd48db3b9e51e8977e52a0804df7b4b",
+            "level": "complete_learning",
+            "operation": "learning_binary",
+            "plan_path": "plan-binary.json",
+            "state": "cold_process_total",
+            "suite": "machine_learning_statistics",
+            "task": "binary",
+            "threads": 1,
+            "unit_name": "patients",
+            "units": 66
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            1.8540744427272913,
+            1.9713393416046647,
+            1.956801038136123,
+            2.1573678162417744,
+            2.1442020576721172,
+            1.9752579896051083,
+            1.981669580665373
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 219136.0,
+              "maximum_bytes": 114933760,
+              "median_bytes": 114663424,
+              "minimum_bytes": 114495488,
+              "n": 7,
+              "p95_bytes": 114926387.20000002,
+              "q25_bytes": 114644992.0,
+              "q75_bytes": 114864128.0
+            },
+            "rust": {
+              "iqr_bytes": 182272.0,
+              "maximum_bytes": 66359296,
+              "median_bytes": 66129920,
+              "minimum_bytes": 65925120,
+              "n": 7,
+              "p95_bytes": 66332262.4,
+              "q25_bytes": 66039808.0,
+              "q75_bytes": 66222080.0
+            }
+          },
+          "peak_memory_comparison": 0.5767307280131456,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 1.9761887136689338,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.5060245476978914,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00028780000000006023,
+                "maximum_seconds": 0.0027641999999999944,
+                "median_seconds": 0.0023724000000000522,
+                "minimum_seconds": 0.0020599999999999508,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0027318900000000146,
+                "q25_seconds": 0.002233399999999941,
+                "q75_seconds": 0.0025212000000000012
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0008694499999999383,
+                "maximum_seconds": 0.048839499999999925,
+                "median_seconds": 0.04807869999999992,
+                "minimum_seconds": 0.04765649999999999,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.04881666999999995,
+                "q25_seconds": 0.047822500000000046,
+                "q75_seconds": 0.048691949999999984
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0036325499999999566,
+                "maximum_seconds": 0.02668959999999998,
+                "median_seconds": 0.015968800000000005,
+                "minimum_seconds": 0.015604399999999963,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.02515773999999999,
+                "q25_seconds": 0.01586310000000002,
+                "q75_seconds": 0.019495649999999975
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 7.8400000000034e-05,
+                "maximum_seconds": 0.003992299999999949,
+                "median_seconds": 0.0038082999999999867,
+                "minimum_seconds": 0.003677999999999959,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.003949339999999979,
+                "q25_seconds": 0.00375559999999997,
+                "q75_seconds": 0.003834000000000004
+              }
+            },
+            "rust": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00019234999999998004,
+                "maximum_seconds": 0.0024282999999999944,
+                "median_seconds": 0.0018949000000000327,
+                "minimum_seconds": 0.001844699999999977,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.002350659999999993,
+                "q25_seconds": 0.0018768000000000118,
+                "q75_seconds": 0.002069149999999992
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.000921749999999999,
+                "maximum_seconds": 0.02290019999999998,
+                "median_seconds": 0.021822300000000017,
+                "minimum_seconds": 0.020916799999999958,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.022684259999999998,
+                "q25_seconds": 0.02119410000000002,
+                "q75_seconds": 0.02211585000000002
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.006949800000000006,
+                "maximum_seconds": 0.0226171,
+                "median_seconds": 0.013953699999999958,
+                "minimum_seconds": 0.01281359999999998,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.022419730000000002,
+                "q25_seconds": 0.013589400000000001,
+                "q75_seconds": 0.020539200000000007
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.00024749999999998384,
+                "maximum_seconds": 0.012560899999999986,
+                "median_seconds": 0.011478700000000008,
+                "minimum_seconds": 0.011030700000000004,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.01227607999999999,
+                "q25_seconds": 0.011300500000000019,
+                "q75_seconds": 0.011548000000000003
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 76.07043199937276,
+            "rust": 150.32952916108056
+          },
+          "throughput_unit": "patients/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.004052050000000029,
+              "maximum_seconds": 0.10764030000000002,
+              "median_seconds": 0.0977131,
+              "minimum_seconds": 0.09566640000000004,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.10642740000000002,
+              "q25_seconds": 0.09662214999999996,
+              "q75_seconds": 0.10067419999999999
+            },
+            "rust": {
+              "iqr_seconds": 0.0020346000000000253,
+              "maximum_seconds": 0.053938899999999956,
+              "median_seconds": 0.04679460000000002,
+              "minimum_seconds": 0.04539850000000001,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.05214822999999997,
+              "q25_seconds": 0.045520599999999994,
+              "q75_seconds": 0.04755520000000002
+            }
+          },
+          "case": {
+            "configuration_sha256": "4f882bde89ab9e75308b64c33cefe8b50f7e9ed24748cd390bb1a61efd26cc44",
+            "dataset": "learning_multiclass",
+            "dataset_path": "learning-multiclass.json",
+            "id": "learning_multiclass-warm_uncached",
+            "input_sha256": "35475e9df6627c8e6047588c7adb33514399b7f0d838f090e8cd644a8daf3b7c",
+            "level": "complete_learning",
+            "operation": "learning_multiclass",
+            "plan_path": "plan-multiclass.json",
+            "state": "warm_uncached",
+            "suite": "machine_learning_statistics",
+            "task": "multiclass",
+            "threads": 1,
+            "unit_name": "patients",
+            "units": 66
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            2.3645204302870426,
+            1.7736068032533128,
+            2.072339543451593,
+            2.147521535389218,
+            2.0421973508922266,
+            2.036962685011465,
+            2.281954249589744
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 190464.0,
+              "maximum_bytes": 116191232,
+              "median_bytes": 115978240,
+              "minimum_bytes": 115761152,
+              "n": 7,
+              "p95_bytes": 116162969.6,
+              "q25_bytes": 115900416.0,
+              "q75_bytes": 116090880.0
+            },
+            "rust": {
+              "iqr_bytes": 131072.0,
+              "maximum_bytes": 67358720,
+              "median_bytes": 67325952,
+              "minimum_bytes": 67158016,
+              "n": 7,
+              "p95_bytes": 67357491.2,
+              "q25_bytes": 67213312.0,
+              "q75_bytes": 67344384.0
+            }
+          },
+          "peak_memory_comparison": 0.5805050326681971,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 2.0881276899471297,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.47889791645132557,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 7.5200000000053e-05,
+                "maximum_seconds": 0.0028367000000000253,
+                "median_seconds": 0.0026074000000000375,
+                "minimum_seconds": 0.002574500000000035,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.002804120000000021,
+                "q25_seconds": 0.0025950499999999876,
+                "q75_seconds": 0.0026702500000000406
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0014524000000000759,
+                "maximum_seconds": 0.06867329999999994,
+                "median_seconds": 0.06727870000000002,
+                "minimum_seconds": 0.06661450000000002,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.06862334999999999,
+                "q25_seconds": 0.0668706,
+                "q75_seconds": 0.06832300000000008
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0029773500000000452,
+                "maximum_seconds": 0.025902300000000045,
+                "median_seconds": 0.01524749999999997,
+                "minimum_seconds": 0.014439300000000044,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.024176550000000026,
+                "q25_seconds": 0.014826349999999988,
+                "q75_seconds": 0.017803700000000033
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.00010965000000001668,
+                "maximum_seconds": 0.011839900000000014,
+                "median_seconds": 0.01164720000000008,
+                "minimum_seconds": 0.011573500000000014,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.01181338000000002,
+                "q25_seconds": 0.011620799999999987,
+                "q75_seconds": 0.011730450000000003
+              }
+            },
+            "rust": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00010449999999997961,
+                "maximum_seconds": 0.002397499999999997,
+                "median_seconds": 0.0022938000000000125,
+                "minimum_seconds": 0.0022241000000000066,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0023911399999999973,
+                "q25_seconds": 0.0022562000000000138,
+                "q75_seconds": 0.0023606999999999934
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0006271999999999944,
+                "maximum_seconds": 0.02012449999999999,
+                "median_seconds": 0.01978000000000002,
+                "minimum_seconds": 0.019042300000000012,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.02009329999999999,
+                "q25_seconds": 0.019375150000000008,
+                "q75_seconds": 0.020002350000000002
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0017069500000000126,
+                "maximum_seconds": 0.021843,
+                "median_seconds": 0.013334200000000018,
+                "minimum_seconds": 0.012446299999999966,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.01966706999999999,
+                "q25_seconds": 0.012687349999999986,
+                "q75_seconds": 0.014394299999999999
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.0002014999999999656,
+                "maximum_seconds": 0.011507600000000007,
+                "median_seconds": 0.010576499999999989,
+                "minimum_seconds": 0.01049479999999997,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.011298709999999995,
+                "q25_seconds": 0.010572050000000027,
+                "q75_seconds": 0.010773549999999993
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 675.4467927023092,
+            "rust": 1410.4191509276704
+          },
+          "throughput_unit": "patients/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.0450475499999925,
+              "maximum_seconds": 0.9708974000000126,
+              "median_seconds": 0.9048037999999963,
+              "minimum_seconds": 0.8602027000000021,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.960578120000011,
+              "q25_seconds": 0.8788668500000085,
+              "q75_seconds": 0.923914400000001
+            },
+            "rust": {
+              "iqr_seconds": 0.006557299999997213,
+              "maximum_seconds": 0.4675301999999988,
+              "median_seconds": 0.43639530000001514,
+              "minimum_seconds": 0.403565900000018,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.45911268000000116,
+              "q25_seconds": 0.43287270000000433,
+              "q75_seconds": 0.43943000000000154
+            }
+          },
+          "case": {
+            "configuration_sha256": "0daec8f2622d74f7bb135c4c5586b8a322cb1f34c59f7ce99203db9da2c3c08d",
+            "dataset": "learning_multiclass",
+            "dataset_path": "learning-multiclass.json",
+            "id": "learning_multiclass-cold_process_total",
+            "input_sha256": "35475e9df6627c8e6047588c7adb33514399b7f0d838f090e8cd644a8daf3b7c",
+            "level": "complete_learning",
+            "operation": "learning_multiclass",
+            "plan_path": "plan-multiclass.json",
+            "state": "cold_process_total",
+            "suite": "machine_learning_statistics",
+            "task": "multiclass",
+            "threads": 1,
+            "unit_name": "patients",
+            "units": 66
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            2.0277169569655973,
+            2.2581912892044502,
+            1.95735585309453,
+            2.131372212544659,
+            2.0893575298762306,
+            2.0173388668484504,
+            2.076651732872048
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 161792.0,
+              "maximum_bytes": 115023872,
+              "median_bytes": 114937856,
+              "minimum_bytes": 114728960,
+              "n": 7,
+              "p95_bytes": 115015270.4,
+              "q25_bytes": 114806784.0,
+              "q75_bytes": 114968576.0
+            },
+            "rust": {
+              "iqr_bytes": 184320.0,
+              "maximum_bytes": 66576384,
+              "median_bytes": 66342912,
+              "minimum_bytes": 65986560,
+              "n": 7,
+              "p95_bytes": 66576384.0,
+              "q25_bytes": 66289664.0,
+              "q75_bytes": 66473984.0
+            }
+          },
+          "peak_memory_comparison": 0.5772067994725776,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 2.0733582602744915,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.48230931390873577,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.0001766999999999741,
+                "maximum_seconds": 0.003124099999999963,
+                "median_seconds": 0.0027614999999999723,
+                "minimum_seconds": 0.0026282000000000805,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.003054469999999976,
+                "q25_seconds": 0.002710299999999999,
+                "q75_seconds": 0.002886999999999973
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0011213000000000473,
+                "maximum_seconds": 0.07142660000000012,
+                "median_seconds": 0.06931789999999993,
+                "minimum_seconds": 0.06863479999999988,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.07124285000000011,
+                "q25_seconds": 0.0690751,
+                "q75_seconds": 0.07019640000000005
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.002421349999999989,
+                "maximum_seconds": 0.024919799999999936,
+                "median_seconds": 0.01639019999999991,
+                "minimum_seconds": 0.015484400000000065,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.022889009999999935,
+                "q25_seconds": 0.0155941,
+                "q75_seconds": 0.01801544999999999
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.0001194999999999391,
+                "maximum_seconds": 0.012220600000000026,
+                "median_seconds": 0.01193730000000004,
+                "minimum_seconds": 0.011794700000000047,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.012155260000000011,
+                "q25_seconds": 0.011858350000000017,
+                "q75_seconds": 0.011977849999999957
+              }
+            },
+            "rust": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00014685000000000392,
+                "maximum_seconds": 0.0024504000000000192,
+                "median_seconds": 0.0022515999999999647,
+                "minimum_seconds": 0.0022056000000000298,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.002438190000000018,
+                "q25_seconds": 0.0022231000000000056,
+                "q75_seconds": 0.0023699500000000095
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.00036499999999997645,
+                "maximum_seconds": 0.024094400000000016,
+                "median_seconds": 0.023734500000000047,
+                "minimum_seconds": 0.02267340000000001,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.024046010000000007,
+                "q25_seconds": 0.023479250000000007,
+                "q75_seconds": 0.023844249999999984
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.004991949999999967,
+                "maximum_seconds": 0.02338760000000001,
+                "median_seconds": 0.014650200000000002,
+                "minimum_seconds": 0.013839400000000002,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.023364529999999994,
+                "q25_seconds": 0.014363600000000004,
+                "q75_seconds": 0.01935554999999997
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.00043009999999996107,
+                "maximum_seconds": 0.012371799999999988,
+                "median_seconds": 0.011918499999999999,
+                "minimum_seconds": 0.011519599999999963,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.012332499999999991,
+                "q25_seconds": 0.011708000000000024,
+                "q75_seconds": 0.012138099999999985
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 72.94399073036638,
+            "rust": 151.23902571819107
+          },
+          "throughput_unit": "patients/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.0014831999999999623,
+              "maximum_seconds": 0.039213399999999954,
+              "median_seconds": 0.038244500000000015,
+              "minimum_seconds": 0.03725909999999999,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.039190329999999975,
+              "q25_seconds": 0.037623300000000026,
+              "q75_seconds": 0.03910649999999999
+            },
+            "rust": {
+              "iqr_seconds": 0.002555249999999981,
+              "maximum_seconds": 0.045344899999999966,
+              "median_seconds": 0.03898499999999999,
+              "minimum_seconds": 0.036728999999999956,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.04361191999999997,
+              "q25_seconds": 0.03699405,
+              "q75_seconds": 0.03954929999999998
+            }
+          },
+          "case": {
+            "configuration_sha256": "8527dd31adf887331bec0b21fad06be62f842d8c05afb5b881d4067c2d683eea",
+            "dataset": "learning_regression",
+            "dataset_path": "learning-regression.json",
+            "id": "learning_regression-warm_uncached",
+            "input_sha256": "306576e1ef1306f28d7b3a336b83e1a0cfdb45427c87781f80a03559cbfe854e",
+            "level": "complete_learning",
+            "operation": "learning_regression",
+            "plan_path": "plan-regression.json",
+            "state": "warm_uncached",
+            "suite": "machine_learning_statistics",
+            "task": "regression",
+            "threads": 1,
+            "unit_name": "patients",
+            "units": 66
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            1.009594064010904,
+            0.941640151333264,
+            1.0321707642462377,
+            0.8647808243043866,
+            1.057546025200706,
+            1.0023470565602146,
+            0.9674730523168317
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 423936.0,
+              "maximum_bytes": 115593216,
+              "median_bytes": 115396608,
+              "minimum_bytes": 115044352,
+              "n": 7,
+              "p95_bytes": 115591987.19999999,
+              "q25_bytes": 115093504.0,
+              "q75_bytes": 115517440.0
+            },
+            "rust": {
+              "iqr_bytes": 122880.0,
+              "maximum_bytes": 67063808,
+              "median_bytes": 66936832,
+              "minimum_bytes": 66809856,
+              "n": 7,
+              "p95_bytes": 67053977.599999994,
+              "q25_bytes": 66863104.0,
+              "q75_bytes": 66985984.0
+            }
+          },
+          "peak_memory_comparison": 0.5800589216625848,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 0.9810055149416448,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 1.0193622612401778,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 5.135000000000556e-05,
+                "maximum_seconds": 0.0018052000000000623,
+                "median_seconds": 0.0017409999999999926,
+                "minimum_seconds": 0.0016176999999999442,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0017944600000000532,
+                "q25_seconds": 0.0017148500000000455,
+                "q75_seconds": 0.001766200000000051
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.00042909999999996007,
+                "maximum_seconds": 0.0226499,
+                "median_seconds": 0.021988200000000013,
+                "minimum_seconds": 0.021372100000000005,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.022504969999999982,
+                "q25_seconds": 0.021714299999999964,
+                "q75_seconds": 0.022143399999999924
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0007600500000000121,
+                "maximum_seconds": 0.014314600000000066,
+                "median_seconds": 0.013268699999999911,
+                "minimum_seconds": 0.012995499999999938,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.014263780000000037,
+                "q25_seconds": 0.013127449999999985,
+                "q75_seconds": 0.013887499999999997
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 4.2399999999997995e-05,
+                "maximum_seconds": 0.0009439999999999449,
+                "median_seconds": 0.0008673000000000153,
+                "minimum_seconds": 0.0008422000000000152,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0009344299999999528,
+                "q25_seconds": 0.0008631000000000055,
+                "q75_seconds": 0.0009055000000000035
+              }
+            },
+            "rust": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 8.650000000001712e-05,
+                "maximum_seconds": 0.0018368000000000273,
+                "median_seconds": 0.0016488000000000058,
+                "minimum_seconds": 0.001606200000000002,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0018067400000000289,
+                "q25_seconds": 0.001635049999999999,
+                "q75_seconds": 0.0017215500000000161
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.00034555,
+                "maximum_seconds": 0.016368199999999944,
+                "median_seconds": 0.014661100000000038,
+                "minimum_seconds": 0.014171099999999992,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.01591189999999996,
+                "q25_seconds": 0.014460699999999993,
+                "q75_seconds": 0.014806249999999993
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0014204500000000175,
+                "maximum_seconds": 0.019346699999999994,
+                "median_seconds": 0.011789099999999997,
+                "minimum_seconds": 0.011060899999999985,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.017448119999999984,
+                "q25_seconds": 0.011501599999999973,
+                "q75_seconds": 0.01292204999999999
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.00031245000000001966,
+                "maximum_seconds": 0.0097449,
+                "median_seconds": 0.009417899999999979,
+                "minimum_seconds": 0.009191100000000008,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.009717240000000005,
+                "q25_seconds": 0.00929084999999999,
+                "q75_seconds": 0.009603300000000009
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 1725.738341460863,
+            "rust": 1692.9588303193539
+          },
+          "throughput_unit": "patients/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.05039440000000184,
+              "maximum_seconds": 0.9054431000000136,
+              "median_seconds": 0.8561732999999663,
+              "minimum_seconds": 0.7864142999999899,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.8968015400000069,
+              "q25_seconds": 0.8237482500000084,
+              "q75_seconds": 0.8741426500000102
+            },
+            "rust": {
+              "iqr_seconds": 0.029556650000017726,
+              "maximum_seconds": 0.4684395999999822,
+              "median_seconds": 0.4385194000000183,
+              "minimum_seconds": 0.41075499999999465,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.46812633999998354,
+              "q25_seconds": 0.43227304999999205,
+              "q75_seconds": 0.4618297000000098
+            }
+          },
+          "case": {
+            "configuration_sha256": "f778fdf0226863974c47f1e6aa783e48ae599bec271fe378cca3fd84c3693d7c",
+            "dataset": "learning_regression",
+            "dataset_path": "learning-regression.json",
+            "id": "learning_regression-cold_process_total",
+            "input_sha256": "306576e1ef1306f28d7b3a336b83e1a0cfdb45427c87781f80a03559cbfe854e",
+            "level": "complete_learning",
+            "operation": "learning_regression",
+            "plan_path": "plan-regression.json",
+            "state": "cold_process_total",
+            "suite": "machine_learning_statistics",
+            "task": "regression",
+            "threads": 1,
+            "unit_name": "patients",
+            "units": 66
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            1.7846420328256272,
+            2.1058995640246536,
+            2.1342111477644896,
+            1.8672734753123166,
+            1.9104014342572855,
+            1.9524182966590087,
+            1.6825460841078288
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 202752.0,
+              "maximum_bytes": 114917376,
+              "median_bytes": 114597888,
+              "minimum_bytes": 114429952,
+              "n": 7,
+              "p95_bytes": 114859622.4,
+              "q25_bytes": 114487296.0,
+              "q75_bytes": 114690048.0
+            },
+            "rust": {
+              "iqr_bytes": 88064.0,
+              "maximum_bytes": 65925120,
+              "median_bytes": 65708032,
+              "minimum_bytes": 65687552,
+              "n": 7,
+              "p95_bytes": 65894400.0,
+              "q25_bytes": 65699840.0,
+              "q75_bytes": 65787904.0
+            }
+          },
+          "peak_memory_comparison": 0.5733790835656587,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 1.9524182966590087,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.512185325097192,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00014165000000004868,
+                "maximum_seconds": 0.0035722999999999727,
+                "median_seconds": 0.0017162000000000566,
+                "minimum_seconds": 0.0016308999999999907,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0030663499999999608,
+                "q25_seconds": 0.0016857999999999596,
+                "q75_seconds": 0.0018274500000000082
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0006071999999998634,
+                "maximum_seconds": 0.022555199999999997,
+                "median_seconds": 0.021988600000000025,
+                "minimum_seconds": 0.02170250000000007,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.02248769999999999,
+                "q25_seconds": 0.021721050000000075,
+                "q75_seconds": 0.02232824999999994
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.000463350000000029,
+                "maximum_seconds": 0.026083499999999926,
+                "median_seconds": 0.014129999999999976,
+                "minimum_seconds": 0.013963900000000029,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.02268998999999994,
+                "q25_seconds": 0.014046399999999959,
+                "q75_seconds": 0.014509749999999988
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 4.23499999999688e-05,
+                "maximum_seconds": 0.0009562000000000737,
+                "median_seconds": 0.0009124000000000354,
+                "minimum_seconds": 0.0008774000000000282,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0009463000000000555,
+                "q25_seconds": 0.0008790000000000187,
+                "q75_seconds": 0.0009213499999999875
+              }
+            },
+            "rust": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00013339999999995023,
+                "maximum_seconds": 0.0018931999999999838,
+                "median_seconds": 0.0017325000000000257,
+                "minimum_seconds": 0.0015996999999999817,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.001861969999999985,
+                "q25_seconds": 0.001646500000000023,
+                "q75_seconds": 0.0017798999999999732
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0006958999999999993,
+                "maximum_seconds": 0.020449800000000018,
+                "median_seconds": 0.018852499999999994,
+                "minimum_seconds": 0.018448100000000023,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.020194920000000015,
+                "q25_seconds": 0.018766050000000006,
+                "q75_seconds": 0.019461950000000006
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0011893999999999794,
+                "maximum_seconds": 0.016364800000000013,
+                "median_seconds": 0.013187100000000007,
+                "minimum_seconds": 0.011800399999999989,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.015699100000000004,
+                "q25_seconds": 0.01275125000000002,
+                "q75_seconds": 0.013940649999999999
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.0007023000000000168,
+                "maximum_seconds": 0.01166830000000002,
+                "median_seconds": 0.010670400000000024,
+                "minimum_seconds": 0.010190199999999983,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.011641330000000028,
+                "q25_seconds": 0.010594149999999997,
+                "q75_seconds": 0.011296450000000013
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 77.08719718309669,
+            "rust": 150.5064542184388
+          },
+          "throughput_unit": "patients/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.0007574499999999373,
+              "maximum_seconds": 0.02375169999999993,
+              "median_seconds": 0.02172289999999999,
+              "minimum_seconds": 0.02109249999999996,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.023260509999999946,
+              "q25_seconds": 0.021299950000000067,
+              "q75_seconds": 0.022057400000000005
+            },
+            "rust": {
+              "iqr_seconds": 0.0003085999999999922,
+              "maximum_seconds": 0.010881299999999983,
+              "median_seconds": 0.010145199999999965,
+              "minimum_seconds": 0.009961999999999971,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.010734359999999988,
+              "q25_seconds": 0.010081050000000008,
+              "q75_seconds": 0.01038965
+            }
+          },
+          "case": {
+            "configuration_sha256": "be3f3e64bbf5b10a11484af28c088e92f95928c9ec70d886d7b361623c879365",
+            "dataset": "frozen_clinical_96rows",
+            "dataset_path": "clinical-rows.json",
+            "id": "clinical_observed_complete_case-warm_uncached",
+            "input_sha256": "499df9e17189dea2aa1e37491bc99cbfcfca789fc1108a98cdf13dc94421362a",
+            "level": "clinical_secondary",
+            "operation": "clinical_observed_complete_case",
+            "state": "warm_uncached",
+            "suite": "machine_learning_statistics",
+            "threads": 1,
+            "unit_name": "supplied_rows",
+            "units": 96
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            2.2062993225783876,
+            2.2084320417586927,
+            2.0910676970390027,
+            2.285685415964965,
+            2.0587227324361375,
+            1.9963515388786288,
+            2.080374403282435
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 79872.0,
+              "maximum_bytes": 127639552,
+              "median_bytes": 127250432,
+              "minimum_bytes": 127082496,
+              "n": 7,
+              "p95_bytes": 127528960.0,
+              "q25_bytes": 127188992.0,
+              "q75_bytes": 127268864.0
+            },
+            "rust": {
+              "iqr_bytes": 135168.0,
+              "maximum_bytes": 61501440,
+              "median_bytes": 61313024,
+              "minimum_bytes": 61190144,
+              "n": 7,
+              "p95_bytes": 61475635.2,
+              "q25_bytes": 61274112.0,
+              "q75_bytes": 61409280.0
+            }
+          },
+          "peak_memory_comparison": 0.4818295941030676,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 2.141199779205936,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.4670278830174595,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "clinical_table_exports": {
+                "iqr_seconds": 0.0006447500000000272,
+                "maximum_seconds": 0.004213199999999917,
+                "median_seconds": 0.0033058999999999727,
+                "minimum_seconds": 0.0031505999999998924,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.004180379999999939,
+                "q25_seconds": 0.003203599999999973,
+                "q75_seconds": 0.0038483500000000004
+              },
+              "observed_baseline_and_complete_case_logistic": {
+                "iqr_seconds": 0.0004415999999998754,
+                "maximum_seconds": 0.019087599999999982,
+                "median_seconds": 0.017567499999999958,
+                "minimum_seconds": 0.01731079999999996,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.01880508999999997,
+                "q25_seconds": 0.017466450000000078,
+                "q75_seconds": 0.017908049999999953
+              }
+            },
+            "rust": {
+              "clinical_table_exports": {
+                "iqr_seconds": 7.730000000000237e-05,
+                "maximum_seconds": 0.003120899999999982,
+                "median_seconds": 0.0030635999999999997,
+                "minimum_seconds": 0.0029345000000000065,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.003115079999999981,
+                "q25_seconds": 0.003009600000000001,
+                "q75_seconds": 0.0030869000000000035
+              },
+              "observed_baseline_and_complete_case_logistic": {
+                "iqr_seconds": 0.00015909999999999536,
+                "maximum_seconds": 0.007330100000000006,
+                "median_seconds": 0.006676100000000018,
+                "minimum_seconds": 0.006544300000000003,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.007178480000000009,
+                "q25_seconds": 0.006637699999999996,
+                "q75_seconds": 0.006796799999999992
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 4419.2994489686025,
+            "rust": 9462.603004376486
+          },
+          "throughput_unit": "supplied_rows/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.02943594999996435,
+              "maximum_seconds": 1.0875566999999933,
+              "median_seconds": 1.0351100999999971,
+              "minimum_seconds": 0.9946967999999856,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 1.0814722499999903,
+              "q25_seconds": 1.0225449500000252,
+              "q75_seconds": 1.0519808999999896
+            },
+            "rust": {
+              "iqr_seconds": 0.029459100000025273,
+              "maximum_seconds": 0.44267750000000206,
+              "median_seconds": 0.41428910000001906,
+              "minimum_seconds": 0.40483109999996714,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.4425620299999935,
+              "q25_seconds": 0.4099434999999687,
+              "q75_seconds": 0.439402599999994
+            }
+          },
+          "case": {
+            "configuration_sha256": "ae688aa929459733d3ac61d7759ddb15b4c4d99e93ef5c8ee85ab8956cc70a2c",
+            "dataset": "frozen_clinical_96rows",
+            "dataset_path": "clinical-rows.json",
+            "id": "clinical_observed_complete_case-cold_process_total",
+            "input_sha256": "499df9e17189dea2aa1e37491bc99cbfcfca789fc1108a98cdf13dc94421362a",
+            "level": "clinical_secondary",
+            "operation": "clinical_observed_complete_case",
+            "state": "cold_process_total",
+            "suite": "machine_learning_statistics",
+            "threads": 1,
+            "unit_name": "supplied_rows",
+            "units": 96
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            2.4009726541198884,
+            2.338293904704875,
+            2.6864455324704095,
+            2.287047081502326,
+            2.525824064712128,
+            2.524217490695044,
+            2.445004336644458
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 223232.0,
+              "maximum_bytes": 127442944,
+              "median_bytes": 126996480,
+              "minimum_bytes": 126644224,
+              "n": 7,
+              "p95_bytes": 127364300.8,
+              "q25_bytes": 126955520.0,
+              "q75_bytes": 127178752.0
+            },
+            "rust": {
+              "iqr_bytes": 151552.0,
+              "maximum_bytes": 61427712,
+              "median_bytes": 61132800,
+              "minimum_bytes": 61001728,
+              "n": 7,
+              "p95_bytes": 61366272.0,
+              "q25_bytes": 61059072.0,
+              "q75_bytes": 61210624.0
+            }
+          },
+          "peak_memory_comparison": 0.4813739719400097,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 2.498521201740402,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.4002367477624073,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "clinical_table_exports": {
+                "iqr_seconds": 0.0002677999999999847,
+                "maximum_seconds": 0.006369600000000086,
+                "median_seconds": 0.004194000000000031,
+                "minimum_seconds": 0.003920099999999982,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.005766150000000068,
+                "q25_seconds": 0.004022599999999987,
+                "q75_seconds": 0.004290399999999972
+              },
+              "observed_baseline_and_complete_case_logistic": {
+                "iqr_seconds": 0.0008099499999999482,
+                "maximum_seconds": 0.020843500000000015,
+                "median_seconds": 0.019345599999999963,
+                "minimum_seconds": 0.019029799999999986,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.02074402000000002,
+                "q25_seconds": 0.019166050000000046,
+                "q75_seconds": 0.019975999999999994
+              }
+            },
+            "rust": {
+              "clinical_table_exports": {
+                "iqr_seconds": 0.0002173000000000036,
+                "maximum_seconds": 0.003938300000000006,
+                "median_seconds": 0.0037215000000000442,
+                "minimum_seconds": 0.0035963999999999996,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.003919640000000002,
+                "q25_seconds": 0.003643850000000004,
+                "q75_seconds": 0.0038611500000000076
+              },
+              "observed_baseline_and_complete_case_logistic": {
+                "iqr_seconds": 0.00047820000000001195,
+                "maximum_seconds": 0.00983139999999999,
+                "median_seconds": 0.009450100000000017,
+                "minimum_seconds": 0.008786300000000025,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.009826329999999994,
+                "q25_seconds": 0.009206799999999987,
+                "q75_seconds": 0.009685
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 92.74375740319823,
+            "rust": 231.72224420095915
+          },
+          "throughput_unit": "supplied_rows/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.0007854500000000209,
+              "maximum_seconds": 0.042707199999999945,
+              "median_seconds": 0.04220239999999997,
+              "minimum_seconds": 0.04125880000000004,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.042616359999999964,
+              "q25_seconds": 0.04158299999999998,
+              "q75_seconds": 0.04236845
+            },
+            "rust": {
+              "iqr_seconds": 0.0008047500000000207,
+              "maximum_seconds": 0.02155459999999998,
+              "median_seconds": 0.021189999999999987,
+              "minimum_seconds": 0.02038509999999999,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.02150302999999998,
+              "q25_seconds": 0.020497549999999976,
+              "q75_seconds": 0.021302299999999996
+            }
+          },
+          "case": {
+            "configuration_sha256": "0ea96e5186ad6c46237c24f9f444a9a724643cb9646a43518d6a2bd59319a690",
+            "dataset": "reference_prepared_12patient_matrix",
+            "id": "pathology_patient_binary_model-warm_uncached",
+            "input_sha256": "f66793cf7b18845b6b0b6ef66a177866c42d73d693c6d78b79ac1685f3c8af69",
+            "level": "pathology_patient_model",
+            "operation": "pathology_patient_binary_model",
+            "plan_path": "pathology-patient-plan.json",
+            "state": "warm_uncached",
+            "suite": "machine_learning_statistics",
+            "task": "binary",
+            "threads": 1,
+            "unit_name": "patients",
+            "units": 12
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            1.9630004853476815,
+            1.9579300938082829,
+            2.0940855733492856,
+            1.9797546614786738,
+            2.0583760903649866,
+            1.947088249174142,
+            2.0361636685618416
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 286720.0,
+              "maximum_bytes": 114221056,
+              "median_bytes": 113807360,
+              "minimum_bytes": 113618944,
+              "n": 7,
+              "p95_bytes": 114175590.39999999,
+              "q25_bytes": 113715200.0,
+              "q75_bytes": 114001920.0
+            },
+            "rust": {
+              "iqr_bytes": 194560.0,
+              "maximum_bytes": 64098304,
+              "median_bytes": 64049152,
+              "minimum_bytes": 63737856,
+              "n": 7,
+              "p95_bytes": 64097075.2,
+              "q25_bytes": 63885312.0,
+              "q75_bytes": 64079872.0
+            }
+          },
+          "peak_memory_comparison": 0.5627856757243117,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 1.9916186880604059,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.5021041457357875,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 4.509999999996461e-05,
+                "maximum_seconds": 0.0017209999999999726,
+                "median_seconds": 0.0016281999999999686,
+                "minimum_seconds": 0.0015952000000000188,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0017029099999999685,
+                "q25_seconds": 0.0016065000000000107,
+                "q75_seconds": 0.0016515999999999753
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.000744950000000022,
+                "maximum_seconds": 0.03180079999999996,
+                "median_seconds": 0.030794500000000058,
+                "minimum_seconds": 0.02979939999999992,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.03177085999999997,
+                "q25_seconds": 0.030695200000000034,
+                "q75_seconds": 0.031440150000000056
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0004175500000000443,
+                "maximum_seconds": 0.006495499999999987,
+                "median_seconds": 0.005918300000000043,
+                "minimum_seconds": 0.005634200000000034,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.006490579999999979,
+                "q25_seconds": 0.00580054999999996,
+                "q75_seconds": 0.006218100000000004
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 5.95499999999638e-05,
+                "maximum_seconds": 0.003269999999999995,
+                "median_seconds": 0.0031754999999999978,
+                "minimum_seconds": 0.003120600000000029,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0032583600000000265,
+                "q25_seconds": 0.003168450000000045,
+                "q75_seconds": 0.0032280000000000086
+              }
+            },
+            "rust": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 7.40000000000185e-05,
+                "maximum_seconds": 0.0017880000000000118,
+                "median_seconds": 0.001433899999999988,
+                "minimum_seconds": 0.0013685999999999976,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.001699140000000021,
+                "q25_seconds": 0.0013945999999999958,
+                "q75_seconds": 0.0014686000000000143
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.00013265000000003968,
+                "maximum_seconds": 0.006063700000000005,
+                "median_seconds": 0.005587000000000009,
+                "minimum_seconds": 0.00550879999999998,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.005977330000000019,
+                "q25_seconds": 0.005552299999999982,
+                "q75_seconds": 0.005684950000000022
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0003666500000000239,
+                "maximum_seconds": 0.009327400000000041,
+                "median_seconds": 0.008777100000000038,
+                "minimum_seconds": 0.00848660000000001,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.009211240000000032,
+                "q25_seconds": 0.008550999999999975,
+                "q75_seconds": 0.00891765
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.00010440000000000449,
+                "maximum_seconds": 0.005186099999999971,
+                "median_seconds": 0.004795800000000017,
+                "minimum_seconds": 0.004641299999999959,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.00508100999999998,
+                "q25_seconds": 0.0047235999999999945,
+                "q75_seconds": 0.004827999999999999
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 284.3440183496675,
+            "rust": 566.3048607833888
+          },
+          "throughput_unit": "patients/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.03088799999989078,
+              "maximum_seconds": 0.9650661000000582,
+              "median_seconds": 0.8723877999998422,
+              "minimum_seconds": 0.8149584000000232,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.9462018000000398,
+              "q25_seconds": 0.8701537500000995,
+              "q75_seconds": 0.9010417499999903
+            },
+            "rust": {
+              "iqr_seconds": 0.02325465000001259,
+              "maximum_seconds": 0.4447546000001239,
+              "median_seconds": 0.4188752000000022,
+              "minimum_seconds": 0.3853403000000526,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 0.4416875200000504,
+              "q25_seconds": 0.41038189999994756,
+              "q75_seconds": 0.43363654999996015
+            }
+          },
+          "case": {
+            "configuration_sha256": "ef04547e25c782831d0f35856e8b3619e1e7594ee61ae5027ef343d00a6adf7c",
+            "dataset": "reference_prepared_12patient_matrix",
+            "id": "pathology_patient_binary_model-cold_process_total",
+            "input_sha256": "f66793cf7b18845b6b0b6ef66a177866c42d73d693c6d78b79ac1685f3c8af69",
+            "level": "pathology_patient_model",
+            "operation": "pathology_patient_binary_model",
+            "plan_path": "pathology-patient-plan.json",
+            "state": "cold_process_total",
+            "suite": "machine_learning_statistics",
+            "task": "binary",
+            "threads": 1,
+            "unit_name": "patients",
+            "units": 12
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            1.9976610239870698,
+            2.0144113549387352,
+            2.023359398643056,
+            2.337811449647495,
+            2.341268483986424,
+            2.007653769236453,
+            2.073617392483674
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 225280.0,
+              "maximum_bytes": 113852416,
+              "median_bytes": 113745920,
+              "minimum_bytes": 113549312,
+              "n": 7,
+              "p95_bytes": 113848729.6,
+              "q25_bytes": 113604608.0,
+              "q75_bytes": 113829888.0
+            },
+            "rust": {
+              "iqr_bytes": 190464.0,
+              "maximum_bytes": 63819776,
+              "median_bytes": 63614976,
+              "minimum_bytes": 63438848,
+              "n": 7,
+              "p95_bytes": 63793971.2,
+              "q25_bytes": 63508480.0,
+              "q75_bytes": 63698944.0
+            }
+          },
+          "peak_memory_comparison": 0.5592725963269716,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 2.0826914555930682,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.4801479342100818,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00015014999999996004,
+                "maximum_seconds": 0.020748600000000006,
+                "median_seconds": 0.001647500000000024,
+                "minimum_seconds": 0.0015967999999999538,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.015071010000000017,
+                "q25_seconds": 0.001607800000000048,
+                "q75_seconds": 0.0017579500000000081
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0011243499999999407,
+                "maximum_seconds": 0.0336417,
+                "median_seconds": 0.03195020000000004,
+                "minimum_seconds": 0.03044020000000003,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.033331440000000004,
+                "q25_seconds": 0.031229700000000027,
+                "q75_seconds": 0.03235404999999997
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.005471749999999942,
+                "maximum_seconds": 0.03062509999999996,
+                "median_seconds": 0.007007399999999997,
+                "minimum_seconds": 0.006409299999999951,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.02661262999999996,
+                "q25_seconds": 0.006786400000000026,
+                "q75_seconds": 0.012258149999999968
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.00012500000000004174,
+                "maximum_seconds": 0.003494499999999956,
+                "median_seconds": 0.0032873999999999404,
+                "minimum_seconds": 0.0031965000000000465,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0034825299999999616,
+                "q25_seconds": 0.0032469499999999707,
+                "q75_seconds": 0.0033719500000000124
+              }
+            },
+            "rust": {
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.0001276000000000055,
+                "maximum_seconds": 0.001541400000000026,
+                "median_seconds": 0.001406200000000024,
+                "minimum_seconds": 0.0013111000000000095,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0015354900000000226,
+                "q25_seconds": 0.0013793,
+                "q75_seconds": 0.0015069000000000055
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0004062999999999706,
+                "maximum_seconds": 0.010279299999999991,
+                "median_seconds": 0.009852099999999975,
+                "minimum_seconds": 0.009421599999999974,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.010233939999999987,
+                "q25_seconds": 0.009678150000000024,
+                "q75_seconds": 0.010084449999999995
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0006363500000000077,
+                "maximum_seconds": 0.010752100000000042,
+                "median_seconds": 0.010106500000000018,
+                "minimum_seconds": 0.00903219999999999,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.010636300000000026,
+                "q25_seconds": 0.00971785,
+                "q75_seconds": 0.010354200000000008
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.00028425000000001366,
+                "maximum_seconds": 0.006371400000000027,
+                "median_seconds": 0.006000600000000023,
+                "minimum_seconds": 0.00560250000000001,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.006295110000000015,
+                "q25_seconds": 0.0057986499999999885,
+                "q75_seconds": 0.006082900000000002
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 13.75535054479461,
+            "rust": 28.64815104833119
+          },
+          "throughput_unit": "patients/s",
+          "valid_speed_comparison": true
+        }
+      ]
+    },
+    "pathology": {
+      "correctness_status": "passed_recorded_cases",
+      "policy": "No pooled speedup or cross-suite total; misses remain individual rows.",
+      "results": [
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 1.1211769999999976,
+              "maximum_seconds": 10.6587456,
+              "median_seconds": 10.514620300000002,
+              "minimum_seconds": 8.4121765,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 10.636501229999999,
+              "q25_seconds": 9.447739200000001,
+              "q75_seconds": 10.568916199999999
+            },
+            "rust": {
+              "iqr_seconds": 0.03515730000000028,
+              "maximum_seconds": 2.3618916,
+              "median_seconds": 2.3275059,
+              "minimum_seconds": 2.2965694000000005,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 2.3565405,
+              "q25_seconds": 2.3052227499999995,
+              "q75_seconds": 2.34038005
+            }
+          },
+          "case": {
+            "configuration_sha256": "0085592aacf388b426f038783c0f7f3197989c5fd9b858ad2793a0593914c661",
+            "dataset": "synthetic_12patients_600tiles",
+            "id": "pathology_decoded_frontend-warm_uncached",
+            "input_kind": "decoded",
+            "input_sha256": "50114bb7dc13d63604da1e5cd888a425d57eebd6de77aabff819bda9ea9772d5",
+            "level": "frontend",
+            "operation": "pathology_decoded_frontend",
+            "state": "warm_uncached",
+            "suite": "pathology",
+            "threads": 1,
+            "unit_name": "tiles",
+            "units": 600
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            4.499762721489723,
+            3.635826026176534,
+            3.5706653091107152,
+            4.5341387534184125,
+            4.515508171183384,
+            4.555470433421257,
+            4.640784961425357
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 221184.0,
+              "maximum_bytes": 155262976,
+              "median_bytes": 154890240,
+              "minimum_bytes": 154234880,
+              "n": 7,
+              "p95_bytes": 155199078.39999998,
+              "q25_bytes": 154761216.0,
+              "q75_bytes": 154982400.0
+            },
+            "rust": {
+              "iqr_bytes": 282624.0,
+              "maximum_bytes": 163135488,
+              "median_bytes": 162676736,
+              "minimum_bytes": 162402304,
+              "n": 7,
+              "p95_bytes": 163086336.0,
+              "q25_bytes": 162543616.0,
+              "q75_bytes": 162826240.0
+            }
+          },
+          "peak_memory_comparison": 1.0502710564590771,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 4.51754829064021,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.22135900618303822,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.017645649999998625,
+                "maximum_seconds": 0.12238410000000144,
+                "median_seconds": 0.12094949999999827,
+                "minimum_seconds": 0.0844106999999994,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.12210456000000036,
+                "q25_seconds": 0.10364925000000191,
+                "q75_seconds": 0.12129490000000054
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 1.0714745999999984,
+                "maximum_seconds": 10.2755835,
+                "median_seconds": 10.139182599999998,
+                "minimum_seconds": 8.136048399999998,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 10.25525523,
+                "q25_seconds": 9.121832300000001,
+                "q75_seconds": 10.1933069
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.031808950000002056,
+                "maximum_seconds": 0.23985950000000145,
+                "median_seconds": 0.23361579999999904,
+                "minimum_seconds": 0.16840090000000174,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.23855150000000194,
+                "q25_seconds": 0.20347690000000007,
+                "q75_seconds": 0.23528585000000213
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.00010270000000112134,
+                "maximum_seconds": 0.020822100000000177,
+                "median_seconds": 0.020394300000003085,
+                "minimum_seconds": 0.014497099999999818,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.020709450000000018,
+                "q25_seconds": 0.020318999999998866,
+                "q75_seconds": 0.020421699999999987
+              }
+            },
+            "rust": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.000737099999999824,
+                "maximum_seconds": 0.015102200000000288,
+                "median_seconds": 0.014206499999999345,
+                "minimum_seconds": 0.013672299999999638,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.015008030000000259,
+                "q25_seconds": 0.013926200000000222,
+                "q75_seconds": 0.014663300000000046
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.03226949999999906,
+                "maximum_seconds": 2.1459672,
+                "median_seconds": 2.1141970999999997,
+                "minimum_seconds": 2.0829194999999996,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 2.13957801,
+                "q25_seconds": 2.0912840500000005,
+                "q75_seconds": 2.1235535499999996
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.000993349999999893,
+                "maximum_seconds": 0.17510900000000085,
+                "median_seconds": 0.17205080000000006,
+                "minimum_seconds": 0.17113960000000006,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.17432549000000055,
+                "q25_seconds": 0.17137409999999997,
+                "q75_seconds": 0.17236744999999987
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.0006654500000000674,
+                "maximum_seconds": 0.028668200000000255,
+                "median_seconds": 0.027756100000000394,
+                "minimum_seconds": 0.02740089999999995,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.028508780000000032,
+                "q25_seconds": 0.02746444999999964,
+                "q75_seconds": 0.028129899999999708
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 57.06340151912094,
+            "rust": 257.78667199082076
+          },
+          "throughput_unit": "tiles/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.10632694999992509,
+              "maximum_seconds": 9.25237519999996,
+              "median_seconds": 9.158672300000035,
+              "minimum_seconds": 9.097385199999962,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 9.245997319999958,
+              "q25_seconds": 9.117575400000021,
+              "q75_seconds": 9.223902349999946
+            },
+            "rust": {
+              "iqr_seconds": 0.027827800000011393,
+              "maximum_seconds": 3.2084330999999793,
+              "median_seconds": 3.175586899999985,
+              "minimum_seconds": 3.153141699999992,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 3.207221609999999,
+              "q25_seconds": 3.1726829500000235,
+              "q75_seconds": 3.200510750000035
+            }
+          },
+          "case": {
+            "configuration_sha256": "8f633bd1fcf56537a2fd6f38c3353e966eea31b5614290667431eb08e4b0fdd5",
+            "dataset": "synthetic_12patients_600tiles",
+            "id": "pathology_decoded_frontend-cold_process_total",
+            "input_kind": "decoded",
+            "input_sha256": "50114bb7dc13d63604da1e5cd888a425d57eebd6de77aabff819bda9ea9772d5",
+            "level": "frontend",
+            "operation": "pathology_decoded_frontend",
+            "state": "cold_process_total",
+            "suite": "pathology",
+            "threads": 1,
+            "unit_name": "tiles",
+            "units": 600
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            2.8694535302419486,
+            2.8545623407264107,
+            2.9029476006739485,
+            2.8934538844226334,
+            2.8504049909862825,
+            2.887401764601487,
+            2.906900642523748
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 235520.0,
+              "maximum_bytes": 109740032,
+              "median_bytes": 108871680,
+              "minimum_bytes": 108601344,
+              "n": 7,
+              "p95_bytes": 109583974.39999999,
+              "q25_bytes": 108822528.0,
+              "q75_bytes": 109058048.0
+            },
+            "rust": {
+              "iqr_bytes": 477184.0,
+              "maximum_bytes": 116350976,
+              "median_bytes": 115400704,
+              "minimum_bytes": 115245056,
+              "n": 7,
+              "p95_bytes": 116234240.0,
+              "q25_bytes": 115281920.0,
+              "q75_bytes": 115759104.0
+            }
+          },
+          "peak_memory_comparison": 1.0599699021820919,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 2.884088072034835,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.34673004950728203,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.0026944499999990157,
+                "maximum_seconds": 0.08613689999999963,
+                "median_seconds": 0.08365940000000016,
+                "minimum_seconds": 0.08185710000000057,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0861160499999995,
+                "q25_seconds": 0.08268874999999998,
+                "q75_seconds": 0.085383199999999
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.06935560000000152,
+                "maximum_seconds": 8.129513200000002,
+                "median_seconds": 8.0756516,
+                "minimum_seconds": 7.9763973,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 8.12107735,
+                "q25_seconds": 8.02334595,
+                "q75_seconds": 8.092701550000001
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.0030839499999997244,
+                "maximum_seconds": 0.1728991999999998,
+                "median_seconds": 0.17035999999999873,
+                "minimum_seconds": 0.1664785999999996,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.1726423699999998,
+                "q25_seconds": 0.16891480000000048,
+                "q75_seconds": 0.1719987500000002
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.00033284999999949605,
+                "maximum_seconds": 0.015300800000000336,
+                "median_seconds": 0.014610900000000981,
+                "minimum_seconds": 0.014323199999999758,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.01513435999999988,
+                "q25_seconds": 0.014372149999999806,
+                "q75_seconds": 0.014704999999999302
+              }
+            },
+            "rust": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.0006423000000002066,
+                "maximum_seconds": 0.014760799999999907,
+                "median_seconds": 0.013899400000000117,
+                "minimum_seconds": 0.013511300000000226,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.014675689999999974,
+                "q25_seconds": 0.013778499999999916,
+                "q75_seconds": 0.014420800000000122
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.039609500000000075,
+                "maximum_seconds": 2.1492789,
+                "median_seconds": 2.1032916999999998,
+                "minimum_seconds": 2.0818663,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 2.14856376,
+                "q25_seconds": 2.09837835,
+                "q75_seconds": 2.13798785
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.005290550000000005,
+                "maximum_seconds": 0.17636430000000036,
+                "median_seconds": 0.17098710000000006,
+                "minimum_seconds": 0.16739930000000003,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.17561571000000034,
+                "q25_seconds": 0.16810275000000008,
+                "q75_seconds": 0.17339330000000008
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.0015681000000000722,
+                "maximum_seconds": 0.031088400000000238,
+                "median_seconds": 0.029207299999999936,
+                "minimum_seconds": 0.028491999999999962,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.030894510000000208,
+                "q25_seconds": 0.028712300000000024,
+                "q75_seconds": 0.030280400000000096
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 65.5116790236067,
+            "rust": 188.9414520509588
+          },
+          "throughput_unit": "tiles/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 1.1731314000000008,
+              "maximum_seconds": 10.6517436,
+              "median_seconds": 8.392431199999999,
+              "minimum_seconds": 8.282974900000001,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 10.63869618,
+              "q25_seconds": 8.32761595,
+              "q75_seconds": 9.500747350000001
+            },
+            "rust": {
+              "iqr_seconds": 0.017215250000000015,
+              "maximum_seconds": 2.2544379,
+              "median_seconds": 2.23391,
+              "minimum_seconds": 2.225481,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 2.2541601,
+              "q25_seconds": 2.2300773499999997,
+              "q75_seconds": 2.2472925999999998
+            }
+          },
+          "case": {
+            "configuration_sha256": "9c0ee03bfd5a92bb3807cffe011b906202d5b693dcd85481282f573c3eb12bc8",
+            "dataset": "synthetic_12patients_600tiles",
+            "id": "pathology_png_frontend-warm_uncached",
+            "input_kind": "png",
+            "input_sha256": "50114bb7dc13d63604da1e5cd888a425d57eebd6de77aabff819bda9ea9772d5",
+            "level": "frontend",
+            "operation": "pathology_png_frontend",
+            "state": "warm_uncached",
+            "suite": "pathology",
+            "threads": 1,
+            "unit_name": "tiles",
+            "units": 600
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            3.7685318878337406,
+            3.674075431396891,
+            3.7584290175831914,
+            3.7171844434198333,
+            3.705938451001746,
+            4.752965286766836,
+            4.766723328574812
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 366592.0,
+              "maximum_bytes": 157429760,
+              "median_bytes": 157171712,
+              "minimum_bytes": 156717056,
+              "n": 7,
+              "p95_bytes": 157415014.39999998,
+              "q25_bytes": 156923904.0,
+              "q75_bytes": 157290496.0
+            },
+            "rust": {
+              "iqr_bytes": 339968.0,
+              "maximum_bytes": 163061760,
+              "median_bytes": 162594816,
+              "minimum_bytes": 162279424,
+              "n": 7,
+              "p95_bytes": 163040870.4,
+              "q25_bytes": 162504704.0,
+              "q75_bytes": 162844672.0
+            }
+          },
+          "peak_memory_comparison": 1.0345043260710935,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 3.756834966493726,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.26618150888147885,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.020774999999998656,
+                "maximum_seconds": 0.1251244000000007,
+                "median_seconds": 0.0847239999999978,
+                "minimum_seconds": 0.08261459999999943,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.12432345999999975,
+                "q25_seconds": 0.08291484999999987,
+                "q75_seconds": 0.10368984999999853
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 1.1198519499999993,
+                "maximum_seconds": 10.269702900000002,
+                "median_seconds": 8.1218958,
+                "minimum_seconds": 8.0161466,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 10.256943810000001,
+                "q25_seconds": 8.05787815,
+                "q75_seconds": 9.1777301
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.03452159999999971,
+                "maximum_seconds": 0.23902519999999683,
+                "median_seconds": 0.17097940000000023,
+                "minimum_seconds": 0.16755859999999956,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.2378003299999978,
+                "q25_seconds": 0.16927809999999965,
+                "q75_seconds": 0.20379969999999936
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.0029996000000025447,
+                "maximum_seconds": 0.0204070999999999,
+                "median_seconds": 0.014388900000000149,
+                "minimum_seconds": 0.014272500000000576,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.02030534000000017,
+                "q25_seconds": 0.014296049999998672,
+                "q75_seconds": 0.017295650000001217
+              }
+            },
+            "rust": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.0007194500000000659,
+                "maximum_seconds": 0.015587700000000204,
+                "median_seconds": 0.01462050000000037,
+                "minimum_seconds": 0.013579400000000241,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.015307260000000066,
+                "q25_seconds": 0.013931599999999822,
+                "q75_seconds": 0.014651049999999888
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.015937150000000067,
+                "maximum_seconds": 2.0415169000000004,
+                "median_seconds": 2.0200975,
+                "minimum_seconds": 2.0145861000000003,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 2.04014059,
+                "q25_seconds": 2.01722685,
+                "q75_seconds": 2.033164
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.0010760500000004392,
+                "maximum_seconds": 0.17375010000000035,
+                "median_seconds": 0.1703316999999993,
+                "minimum_seconds": 0.1678204000000001,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.1728712800000003,
+                "q25_seconds": 0.1696853499999995,
+                "q75_seconds": 0.17076139999999995
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.0006554499999995578,
+                "maximum_seconds": 0.02864490000000064,
+                "median_seconds": 0.027743300000000026,
+                "minimum_seconds": 0.027105899999999572,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.02854617000000035,
+                "q25_seconds": 0.027432300000000076,
+                "q75_seconds": 0.028087749999999634
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 71.49299001700486,
+            "rust": 268.5873647550707
+          },
+          "throughput_unit": "tiles/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.14751505000003817,
+              "maximum_seconds": 9.518483500000002,
+              "median_seconds": 9.300275499999998,
+              "minimum_seconds": 9.135077200000069,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 9.514167550000003,
+              "q25_seconds": 9.255593199999907,
+              "q75_seconds": 9.403108249999946
+            },
+            "rust": {
+              "iqr_seconds": 0.03742610000000468,
+              "maximum_seconds": 3.1601398999998764,
+              "median_seconds": 3.073898500000041,
+              "minimum_seconds": 3.055302299999994,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 3.143689159999917,
+              "q25_seconds": 3.063610600000004,
+              "q75_seconds": 3.1010367000000088
+            }
+          },
+          "case": {
+            "configuration_sha256": "5199eaf985cf08d9166f599fee8c5ce85d0774ca3d7113d38429c1a6b788e526",
+            "dataset": "synthetic_12patients_600tiles",
+            "id": "pathology_png_frontend-cold_process_total",
+            "input_kind": "png",
+            "input_sha256": "50114bb7dc13d63604da1e5cd888a425d57eebd6de77aabff819bda9ea9772d5",
+            "level": "frontend",
+            "operation": "pathology_png_frontend",
+            "state": "cold_process_total",
+            "suite": "pathology",
+            "threads": 1,
+            "unit_name": "tiles",
+            "units": 600
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            3.0990276911960306,
+            3.1102039993530393,
+            2.9997121895859142,
+            2.995558309409972,
+            2.9429948655122393,
+            2.989909443658026,
+            3.00002186149282
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 434176.0,
+              "maximum_bytes": 111738880,
+              "median_bytes": 111337472,
+              "minimum_bytes": 110784512,
+              "n": 7,
+              "p95_bytes": 111687270.4,
+              "q25_bytes": 111060992.0,
+              "q75_bytes": 111495168.0
+            },
+            "rust": {
+              "iqr_bytes": 358400.0,
+              "maximum_bytes": 116199424,
+              "median_bytes": 115712000,
+              "minimum_bytes": 115478528,
+              "n": 7,
+              "p95_bytes": 116147814.4,
+              "q25_bytes": 115546112.0,
+              "q75_bytes": 115904512.0
+            }
+          },
+          "peak_memory_comparison": 1.0392907070855713,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 3.0255636287274528,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.3305169293103244,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.02046860000000006,
+                "maximum_seconds": 0.12543420000000083,
+                "median_seconds": 0.08372699999999966,
+                "minimum_seconds": 0.08245930000000001,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.1242650700000004,
+                "q25_seconds": 0.08316824999999994,
+                "q75_seconds": 0.10363685
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.02450025000000089,
+                "maximum_seconds": 8.1237749,
+                "median_seconds": 8.1132214,
+                "minimum_seconds": 8.0638387,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 8.122027670000001,
+                "q25_seconds": 8.09213145,
+                "q75_seconds": 8.116631700000001
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.03933180000000025,
+                "maximum_seconds": 0.2377994999999995,
+                "median_seconds": 0.17030069999999853,
+                "minimum_seconds": 0.1656601000000002,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.23692031999999977,
+                "q25_seconds": 0.16947840000000003,
+                "q75_seconds": 0.20881020000000028
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.003304149999999062,
+                "maximum_seconds": 0.020654999999999646,
+                "median_seconds": 0.014558400000000304,
+                "minimum_seconds": 0.014195600000000752,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.020649119999999677,
+                "q25_seconds": 0.014423100000000133,
+                "q75_seconds": 0.017727249999999195
+              }
+            },
+            "rust": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.0004052499999998016,
+                "maximum_seconds": 0.0157961000000002,
+                "median_seconds": 0.014015700000000297,
+                "minimum_seconds": 0.013383300000000098,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.015352220000000026,
+                "q25_seconds": 0.013763399999999981,
+                "q75_seconds": 0.014168649999999783
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.019347800000000248,
+                "maximum_seconds": 2.0542763,
+                "median_seconds": 2.0320702,
+                "minimum_seconds": 2.0072277,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 2.0535989900000002,
+                "q25_seconds": 2.029876,
+                "q75_seconds": 2.0492238
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.004812399999999828,
+                "maximum_seconds": 0.1745570999999999,
+                "median_seconds": 0.17033960000000015,
+                "minimum_seconds": 0.16835889999999987,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.17455625999999996,
+                "q25_seconds": 0.16933690000000023,
+                "q75_seconds": 0.17414930000000006
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.0013068500000001926,
+                "maximum_seconds": 0.04403520000000016,
+                "median_seconds": 0.02909689999999987,
+                "minimum_seconds": 0.02877110000000016,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.04008435000000014,
+                "q25_seconds": 0.02901555,
+                "q75_seconds": 0.030322400000000194
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 64.5142178852659,
+            "rust": 195.19187116945858
+          },
+          "throughput_unit": "tiles/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.12040805000000177,
+              "maximum_seconds": 9.347621100000001,
+              "median_seconds": 8.446231200000001,
+              "minimum_seconds": 8.3941723,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 9.11635776,
+              "q25_seconds": 8.437939149999998,
+              "q75_seconds": 8.5583472
+            },
+            "rust": {
+              "iqr_seconds": 0.03925555000000047,
+              "maximum_seconds": 2.7326452,
+              "median_seconds": 2.2865823000000005,
+              "minimum_seconds": 2.2570559,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 2.6046226,
+              "q25_seconds": 2.2625761,
+              "q75_seconds": 2.3018316500000005
+            }
+          },
+          "case": {
+            "configuration_sha256": "27b5528413b7d1f3990cb4fbca500314cb4669bc37a695e88d128c57b62b96d1",
+            "dataset": "synthetic_12patients_600tiles",
+            "id": "pathology_png_full_scene_diagnostic-warm_uncached",
+            "input_kind": "png",
+            "input_sha256": "50114bb7dc13d63604da1e5cd888a425d57eebd6de77aabff819bda9ea9772d5",
+            "level": "full_scene_diagnostic",
+            "operation": "pathology_png_full_scene_diagnostic",
+            "state": "warm_uncached",
+            "suite": "pathology",
+            "threads": 1,
+            "unit_name": "tiles",
+            "units": 600
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            4.068144929490246,
+            3.125159131525747,
+            3.799969376035392,
+            3.662873272390619,
+            3.6889046154166403,
+            3.7087198768238965,
+            3.7319513283079053
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 149504.0,
+              "maximum_bytes": 211746816,
+              "median_bytes": 211341312,
+              "minimum_bytes": 210644992,
+              "n": 7,
+              "p95_bytes": 211647283.2,
+              "q25_bytes": 211245056.0,
+              "q75_bytes": 211394560.0
+            },
+            "rust": {
+              "iqr_bytes": 651264.0,
+              "maximum_bytes": 166096896,
+              "median_bytes": 165277696,
+              "minimum_bytes": 164220928,
+              "n": 7,
+              "p95_bytes": 165982617.6,
+              "q25_bytes": 165064704.0,
+              "q75_bytes": 165715968.0
+            }
+          },
+          "peak_memory_comparison": 0.7820415915654011,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 3.693823397478411,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.27072220092672816,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.0005013000000015921,
+                "maximum_seconds": 0.12143899999999874,
+                "median_seconds": 0.08404840000000036,
+                "minimum_seconds": 0.08376240000000124,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.1103543899999998,
+                "q25_seconds": 0.08390110000000028,
+                "q75_seconds": 0.08440240000000188
+              },
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.0003048500000026877,
+                "maximum_seconds": 0.002577099999999888,
+                "median_seconds": 0.001808399999998045,
+                "minimum_seconds": 0.0016724999999979673,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.002459950000000432,
+                "q25_seconds": 0.0017504999999982118,
+                "q75_seconds": 0.0020553500000008995
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.12172040000000095,
+                "maximum_seconds": 8.910155099999999,
+                "median_seconds": 8.129645100000001,
+                "minimum_seconds": 8.0799805,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 8.713620209999998,
+                "q25_seconds": 8.11794915,
+                "q75_seconds": 8.23966955
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.0026382500000003972,
+                "maximum_seconds": 0.2383077,
+                "median_seconds": 0.17390470000000136,
+                "minimum_seconds": 0.1728915999999998,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.22024914000000026,
+                "q25_seconds": 0.1736196500000009,
+                "q75_seconds": 0.1762579000000013
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.0004383499999995877,
+                "maximum_seconds": 0.020523399999998304,
+                "median_seconds": 0.014941300000000268,
+                "minimum_seconds": 0.014535800000000876,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.018943419999998663,
+                "q25_seconds": 0.014663900000000396,
+                "q75_seconds": 0.015102249999999984
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.004930749999999762,
+                "maximum_seconds": 0.04167499999999791,
+                "median_seconds": 0.03178800000000237,
+                "minimum_seconds": 0.03079879999999946,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.04101835999999821,
+                "q25_seconds": 0.031253150000001284,
+                "q75_seconds": 0.036183900000001046
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0006734000000001572,
+                "maximum_seconds": 0.007620400000000416,
+                "median_seconds": 0.005852499999999594,
+                "minimum_seconds": 0.0057037999999991484,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.007389849999999498,
+                "q25_seconds": 0.0057755499999991855,
+                "q75_seconds": 0.006448949999999343
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.00020934999999866477,
+                "maximum_seconds": 0.004598800000000125,
+                "median_seconds": 0.0032983000000008644,
+                "minimum_seconds": 0.0031634000000018148,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.004303629999999713,
+                "q25_seconds": 0.003253600000000745,
+                "q75_seconds": 0.0034629499999994096
+              }
+            },
+            "rust": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.0007217499999998545,
+                "maximum_seconds": 0.015267700000000772,
+                "median_seconds": 0.014311000000000185,
+                "minimum_seconds": 0.013937299999999375,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.015267040000000521,
+                "q25_seconds": 0.014146400000000003,
+                "q75_seconds": 0.014868149999999858
+              },
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00011864999999966486,
+                "maximum_seconds": 0.0016511000000001275,
+                "median_seconds": 0.0014020999999999617,
+                "minimum_seconds": 0.001339200000000318,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0016129399999999625,
+                "q25_seconds": 0.0013855000000000395,
+                "q75_seconds": 0.0015041499999997043
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.03936325000000007,
+                "maximum_seconds": 2.087158,
+                "median_seconds": 2.049381,
+                "minimum_seconds": 2.0162497999999998,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 2.08178356,
+                "q25_seconds": 2.0240818000000003,
+                "q75_seconds": 2.0634450500000003
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.0020999000000001544,
+                "maximum_seconds": 0.5782652000000006,
+                "median_seconds": 0.17328170000000043,
+                "minimum_seconds": 0.1722847999999999,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.4573230800000001,
+                "q25_seconds": 0.17280664999999962,
+                "q75_seconds": 0.17490654999999977
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.0006456500000004972,
+                "maximum_seconds": 0.029637700000000322,
+                "median_seconds": 0.028423200000000648,
+                "minimum_seconds": 0.02750330000000023,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.029435890000000332,
+                "q25_seconds": 0.028090549999999492,
+                "q75_seconds": 0.02873619999999999
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.00023175000000064117,
+                "maximum_seconds": 0.006242600000000209,
+                "median_seconds": 0.005854899999999219,
+                "minimum_seconds": 0.005489199999999528,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.006139400000000172,
+                "q25_seconds": 0.005649299999999524,
+                "q75_seconds": 0.005881050000000165
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0009400999999997772,
+                "maximum_seconds": 0.011395100000000546,
+                "median_seconds": 0.00965239999999934,
+                "minimum_seconds": 0.0084256000000007,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.011067860000000262,
+                "q25_seconds": 0.009122399999999864,
+                "q75_seconds": 0.010062499999999641
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.0001795499999990291,
+                "maximum_seconds": 0.0052075000000000315,
+                "median_seconds": 0.004815400000000025,
+                "minimum_seconds": 0.004646799999999729,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.005109609999999964,
+                "q25_seconds": 0.004692200000000479,
+                "q75_seconds": 0.004871749999999508
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 71.03760077038856,
+            "rust": 262.40035182639167
+          },
+          "throughput_unit": "tiles/s",
+          "valid_speed_comparison": true
+        },
+        {
+          "backends": {
+            "python": {
+              "iqr_seconds": 0.08512115000007725,
+              "maximum_seconds": 9.832199599999967,
+              "median_seconds": 9.65090239999995,
+              "minimum_seconds": 9.632283899999948,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 9.805081670000027,
+              "q25_seconds": 9.646404299999972,
+              "q75_seconds": 9.73152545000005
+            },
+            "rust": {
+              "iqr_seconds": 0.026672650000023168,
+              "maximum_seconds": 3.110247500000014,
+              "median_seconds": 3.081061800000043,
+              "minimum_seconds": 3.0425016000001506,
+              "n": 7,
+              "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+              "p95_seconds": 3.1101585499999826,
+              "q25_seconds": 3.0764248999998927,
+              "q75_seconds": 3.103097549999916
+            }
+          },
+          "case": {
+            "configuration_sha256": "0bb451a86fd45305fbb6bfc70a8504f505e326bee55cc6dfb5f2dd77bd0432c6",
+            "dataset": "synthetic_12patients_600tiles",
+            "id": "pathology_png_full_scene_diagnostic-cold_process_total",
+            "input_kind": "png",
+            "input_sha256": "50114bb7dc13d63604da1e5cd888a425d57eebd6de77aabff819bda9ea9772d5",
+            "level": "full_scene_diagnostic",
+            "operation": "pathology_png_full_scene_diagnostic",
+            "state": "cold_process_total",
+            "suite": "pathology",
+            "threads": 1,
+            "unit_name": "tiles",
+            "units": 600
+          },
+          "interval_status": "not estimated; raw pairs and spread retained",
+          "memory_status": "Full process lifetime resident memory; bytes, not traced allocations.",
+          "memory_target_miss": false,
+          "observed_pairs": 7,
+          "paired_ratios": [
+            3.1620434477463255,
+            3.1009865613588268,
+            3.165909230745999,
+            3.1323300298617234,
+            3.133990420707927,
+            3.1324630195139562,
+            3.175524694580836
+          ],
+          "peak_memory": {
+            "python": {
+              "iqr_bytes": 1101824.0,
+              "maximum_bytes": 166662144,
+              "median_bytes": 165343232,
+              "minimum_bytes": 164782080,
+              "n": 7,
+              "p95_bytes": 166593331.2,
+              "q25_bytes": 165027840.0,
+              "q75_bytes": 166129664.0
+            },
+            "rust": {
+              "iqr_bytes": 356352.0,
+              "maximum_bytes": 118915072,
+              "median_bytes": 118620160,
+              "minimum_bytes": 118206464,
+              "n": 7,
+              "p95_bytes": 118859776.0,
+              "q25_bytes": 118366208.0,
+              "q75_bytes": 118722560.0
+            }
+          },
+          "peak_memory_comparison": 0.717417692669755,
+          "performance_target": "report_only",
+          "ratio_python_over_rust": 3.1323300298617234,
+          "raw_observations": 14,
+          "runtime_native_over_reference": 0.3192511614250766,
+          "runtime_target_miss": false,
+          "stage_summaries": {
+            "python": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.00035605000000060727,
+                "maximum_seconds": 0.0841428999999998,
+                "median_seconds": 0.08363439999999933,
+                "minimum_seconds": 0.0833446999999996,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.08406103000000016,
+                "q25_seconds": 0.08343140000000027,
+                "q75_seconds": 0.08378745000000087
+              },
+              "additional_model_table_exports": {
+                "iqr_seconds": 0.00018665000000073206,
+                "maximum_seconds": 0.001984000000000208,
+                "median_seconds": 0.0018183000000000504,
+                "minimum_seconds": 0.0016394999999995719,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.0019598200000000786,
+                "q25_seconds": 0.0017087499999997036,
+                "q75_seconds": 0.0018954000000004356
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.05464579999999941,
+                "maximum_seconds": 8.259099599999999,
+                "median_seconds": 8.1077868,
+                "minimum_seconds": 8.070558,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 8.224783409999999,
+                "q25_seconds": 8.08978755,
+                "q75_seconds": 8.14443335
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.002270449999999258,
+                "maximum_seconds": 0.17270450000000004,
+                "median_seconds": 0.17020450000000054,
+                "minimum_seconds": 0.16764689999999938,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.17231890999999971,
+                "q25_seconds": 0.16891230000000057,
+                "q75_seconds": 0.17118274999999983
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.00012555000000080696,
+                "maximum_seconds": 0.014603600000000938,
+                "median_seconds": 0.014434500000000128,
+                "minimum_seconds": 0.014289699999999073,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.014561630000000747,
+                "q25_seconds": 0.014328199999999569,
+                "q75_seconds": 0.014453750000000376
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0004063999999992518,
+                "maximum_seconds": 0.03251169999999881,
+                "median_seconds": 0.03171700000000044,
+                "minimum_seconds": 0.03137670000000092,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.03236055999999863,
+                "q25_seconds": 0.03154009999999996,
+                "q75_seconds": 0.03194649999999921
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0005290499999999199,
+                "maximum_seconds": 0.008143499999999193,
+                "median_seconds": 0.005925700000000589,
+                "minimum_seconds": 0.0056621999999997286,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.007660559999999527,
+                "q25_seconds": 0.00583964999999953,
+                "q75_seconds": 0.00636869999999945
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.0003427000000000291,
+                "maximum_seconds": 0.004292100000000687,
+                "median_seconds": 0.0032513999999999044,
+                "minimum_seconds": 0.0031601999999999464,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.004144230000000348,
+                "q25_seconds": 0.0031976499999997188,
+                "q75_seconds": 0.003540349999999748
+              }
+            },
+            "rust": {
+              "actual_tile_overlay_compute": {
+                "iqr_seconds": 0.0003389999999998672,
+                "maximum_seconds": 0.015013100000000001,
+                "median_seconds": 0.013970800000000061,
+                "minimum_seconds": 0.013557800000000064,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.01479607999999999,
+                "q25_seconds": 0.013914300000000157,
+                "q75_seconds": 0.014253300000000024
+              },
+              "additional_model_table_exports": {
+                "iqr_seconds": 7.619999999985971e-05,
+                "maximum_seconds": 0.0018148000000000053,
+                "median_seconds": 0.0013758999999997634,
+                "minimum_seconds": 0.0012848000000000859,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.001701970000000008,
+                "q25_seconds": 0.001342450000000106,
+                "q75_seconds": 0.0014186499999999658
+              },
+              "decode_tile_qc_color": {
+                "iqr_seconds": 0.02106769999999969,
+                "maximum_seconds": 2.0413951,
+                "median_seconds": 2.0205285,
+                "minimum_seconds": 1.9970709999999998,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 2.0391824499999998,
+                "q25_seconds": 2.01157115,
+                "q75_seconds": 2.0326388499999997
+              },
+              "frontend_exports": {
+                "iqr_seconds": 0.003283799999999948,
+                "maximum_seconds": 0.1756880999999999,
+                "median_seconds": 0.17059690000000005,
+                "minimum_seconds": 0.16825639999999975,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.17507709,
+                "q25_seconds": 0.1699558000000001,
+                "q75_seconds": 0.17323960000000005
+              },
+              "id_alignment_aggregation": {
+                "iqr_seconds": 0.001274449999999927,
+                "maximum_seconds": 0.031304700000000185,
+                "median_seconds": 0.029632099999999717,
+                "minimum_seconds": 0.02872319999999995,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.03124011000000011,
+                "q25_seconds": 0.029317199999999932,
+                "q75_seconds": 0.03059164999999986
+              },
+              "model_fit_tune": {
+                "iqr_seconds": 0.0006001000000002144,
+                "maximum_seconds": 0.009126900000000049,
+                "median_seconds": 0.008603700000000547,
+                "minimum_seconds": 0.007634999999999614,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.009112590000000021,
+                "q25_seconds": 0.008266899999999966,
+                "q75_seconds": 0.00886700000000018
+              },
+              "model_persist_load_and_builtin_table_exports": {
+                "iqr_seconds": 0.0007465999999998196,
+                "maximum_seconds": 0.014162999999999926,
+                "median_seconds": 0.00932820000000012,
+                "minimum_seconds": 0.009102500000000013,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.013012469999999962,
+                "q25_seconds": 0.009256000000000153,
+                "q75_seconds": 0.010002599999999973
+              },
+              "model_predict_evaluate": {
+                "iqr_seconds": 0.0004399999999997739,
+                "maximum_seconds": 0.006193200000000232,
+                "median_seconds": 0.005686499999999928,
+                "minimum_seconds": 0.005627000000000049,
+                "n": 7,
+                "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+                "p95_seconds": 0.006171780000000115,
+                "q25_seconds": 0.005649050000000155,
+                "q75_seconds": 0.006089049999999929
+              }
+            }
+          },
+          "statistical_interval": null,
+          "throughput": {
+            "python": 62.17035206987516,
+            "rust": 194.7380607555459
+          },
+          "throughput_unit": "tiles/s",
+          "valid_speed_comparison": true
+        }
+      ]
+    }
+  }
+}
