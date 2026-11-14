@@ -1,7 +1,9 @@
 # 独立 Rust 影像组学与轻量病理分析引擎：架构、数值验证与性能技术报告
 
-**文档状态：可审查草稿，待主 agent 整合最终验收结果。**  
-项目：[hurry060215-tech/radiomics](https://github.com/hurry060215-tech/radiomics)；Python 包/导入名保留 `ov-radiomics` / `ov_radiomics`，版本保留 `0.1.0`。  
+**文档状态：可审查草稿，待主 agent 整合最终验收结果。**
+
+项目：[hurry060215-tech/radiomics](https://github.com/hurry060215-tech/radiomics)；Python 包/导入名保留 `ov-radiomics` / `ov_radiomics`，版本保留 `0.1.0`。
+
 Radiomics 性能对象：不可变源码快照 `48ecb310a2d9ccb5da821733ee1190ce1764f27a`；核心实现摘要 `a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8`。后续接口变更与持续集成结果应单独标识，不能自动继承该快照的测量结论。
 
 ## 摘要
