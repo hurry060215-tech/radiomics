@@ -1,6 +1,6 @@
 {
   "schema": "radiomics.public_ct_v1.reference.v1",
-  "protocol_sha256": "4ee3d95879082af6c71e9b0c933e7b8fa90d37e42911e71f5674c3e9e6daab29",
+  "protocol_sha256": "7672da0b5f59e2601c582482eaa611123a607f269443d4860c925c05da8af248",
   "license": {
     "identifier": "CC-BY-NC-3.0",
     "url": "https://creativecommons.org/licenses/by-nc/3.0/",

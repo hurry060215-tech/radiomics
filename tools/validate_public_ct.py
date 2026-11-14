@@ -192,7 +192,7 @@ def reference(directory,output,protocol):
             intensity_mask_u32_le_sha256=sha(roi.astype('<u4').tobytes(order='C')),features=features(image,intensity,protocol))
     result['matrix_case']=matrix_reference(image,mask,protocol)
     output.parent.mkdir(parents=True,exist_ok=True)
-    output.write_text(json.dumps(result,indent=2,ensure_ascii=False,allow_nan=False)+'\n',encoding='utf-8')
+    output.write_bytes((json.dumps(result,indent=2,ensure_ascii=False,allow_nan=False)+'\n').encode('utf-8'))
     return result
 
 

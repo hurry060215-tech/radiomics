@@ -34,6 +34,12 @@ def test_frozen_public_ct_protocol_and_source_headers_are_explicit():
     assert reference['cases']['PAT1_original_3d_bin25']['intensity_roi_voxels']==125256
     assert reference['cases']['PAT1_resegmented_3d_bin25']['intensity_roi_voxels']==114596
     for case in reference['cases'].values():assert len(case['features'])==55
+    manifest=json.loads((PROFILE/'manifest.json').read_text(encoding='utf-8'))
+    assert hashlib.sha256((ROOT/manifest['generator_path']).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==manifest['generator_sha256']
+    for name,expected in manifest['files_sha256'].items():
+        data=(PROFILE/name).read_bytes()
+        assert b'\r\n' not in data
+        assert hashlib.sha256(data).hexdigest()==expected
 
 
 def test_fixed_block_count_matrices_satisfy_exact_hand_invariants():

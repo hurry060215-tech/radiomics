@@ -50,3 +50,9 @@ exact source-byte length and SHA256 checks. License and original source README
 are downloaded alongside the external NIfTI inputs, and input paths inside any
 Git worktree are rejected. The reference environment is read, never installed
 into or modified by this tool.
+
+All frozen text files use explicit UTF-8/LF bytes on Windows and Linux. A
+pre-native candidate correction replaced Windows newline translation and updated
+only byte-hash/protocol-hash metadata; numerical values, settings and matrices
+were unchanged. The profile-local attributes and byte writer preserve that
+canonical representation through Git checkouts and independent rebuilding.
