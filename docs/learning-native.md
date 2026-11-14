@@ -1,0 +1,74 @@
+# Patient-grouped native learning
+
+`learning::train` and `learning::predict` use the same Rust preprocessing,
+selection, model and metric implementations. Python/CLI integration is being
+completed separately; this document describes the implemented Rust workflow.
+Inputs are typed `StudyData` (sample metadata, cohort assignments, `TabularData`,
+and a separate named outcome). IDs, outcome and cohort columns cannot enter
+the numerical features. Binary/multiclass class order is explicit.
+
+`SplitPlan` contains actual patient sets for each outer and inner fold, the final
+inner folds, sample/patient/class/center mappings and seed/method. Generated plans
+use the versioned SHA256 scheme; externally specified partitions use
+`explicit-patient-partitions-v1`. Both validate complete, nonoverlapping cohorts
+and partitions, class presence and patient exclusion. Equal fold numbers alone
+never prove shared training provenance.
+
+`TrainingConfig` contains named finite candidate grids. Each `PipelineSpec`
+declares imputation/encoding/scaling, optional selection and an explicit native
+model specification. Each inner fold refits the entire pipeline on its training
+patients. Each outer fold selects its candidate using only its inner folds,
+refits on its outer training patients, then predicts its excluded patients.
+Final candidate selection uses the final inner folds within the entire training
+cohort. The test and multiple external cohorts remain prediction-only, including
+when external outcomes are absent or use labels unknown to the training model.
+Evaluation must separately reject unknown observed classes.
+
+Default comparison conventions are binary ROC AUC, multiclass macro OvR ROC AUC,
+and regression RMSE. `scoring_unit=patient` averages sample probabilities/values
+within patients before computing each fold's metric; outcomes within a patient
+must agree. `sample` scoring is explicit for sample-level outcomes. Fold metrics
+have equal weight. `selection_tie_atol` is an explicit saved field (the frozen
+workflow uses 1e-12); ties retain candidate order. A single fixed candidate does
+not invent inner CV scores or perform needless selection. Candidate failures,
+zero selected features, missing classes, unknown encoded categories and
+nonconvergence are errors, not silently skipped grid points.
+
+Preprocessing preserves original population variances before scaling and passes
+them to the selector, so Standard scaling does not rescue low-variance columns.
+All univariate tests, BH, correlations, sparse solvers and models use the common
+native implementations. No Python/reference library or nested thread pool is
+called. `n_jobs` controls only the outer model pool; output ordering is fixed.
+Input sample order is canonicalized by sample ID before fitting.
+
+Each inner and outer fit records actual training patients/sample IDs, pipeline
+configuration, fitted preprocessing/selection, optimizer report and state digest.
+OOF rows identify their patient-excluding source fit. Result validation checks
+cohort/sample/class/unit identity, inner and outer partitions, configuration and
+tuning provenance, and prediction source hashes. A fitted `.rad` pipeline contains
+typed state, required feature order, class order, threshold, complete SplitPlan,
+training configuration and implementation digest. Unknown schema/types, missing
+features and invalid/nonconverged state are rejected. Input columns can be
+reordered by name; fitted values are never recomputed during prediction.
+
+`fit_unit` is saved and cannot be changed into a different prediction level on
+load. Patient-level pipelines require one feature row per patient. Slide/tile
+units require explicit slide identity. A patient prediction is therefore not a
+tile score and cannot be broadcast into a local pathology map. Standalone
+external prediction rejects overlap with fitted training patients; apparent
+training predictions must retain their actual `train` cohort identity.
+
+The frozen workflow uses 48 training, 12 test and 6 unlabeled external patients,
+with two lesions per patient, three outer folds and two inner folds. Independent
+Python references were frozen before orchestration implementation. Tests compare
+all inner preprocessing statistics, candidate choices, fold metrics, OOF and
+final predictions for all three tasks. Altering holdout/external features and
+outcomes cannot change fitted state, threshold, selection or OOF. Row reorder and
+outer worker counts preserve state/output. Portable model save/load predicts
+without outcomes. These are software acceptance data, not clinical performance.
+
+Outer CV scores used for model comparison have selection uncertainty. Training
+predictions are apparent. A final held-out cohort remains necessary for evaluation;
+this workflow does not turn OOF scores used to fit a fusion model into unbiased
+validation of that fusion model. See [Benchmark v2](benchmark-v2.md) for separate
+correctness/deployment gates and performance reporting.

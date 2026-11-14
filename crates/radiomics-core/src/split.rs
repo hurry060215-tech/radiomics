@@ -347,7 +347,12 @@ impl SplitPlan {
     }
 
     pub fn validate(&self) -> RadResult<()> {
-        if self.schema_version != 1 || self.rng_scheme != "sha256-group-stratification-v1" {
+        if self.schema_version != 1
+            || !matches!(
+                self.rng_scheme.as_str(),
+                "sha256-group-stratification-v1" | "explicit-patient-partitions-v1"
+            )
+        {
             return Err(error(
                 ErrorCode::Schema,
                 "Unknown split schema or randomization scheme.",

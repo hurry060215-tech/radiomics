@@ -7,13 +7,17 @@ use std::error::Error;
 use std::fmt;
 
 pub mod bundle;
+pub mod clinical_native;
 pub mod contracts;
 pub mod errors;
+pub mod evaluation;
 pub mod features;
 pub mod imaging;
+pub mod learning;
 pub mod models;
 pub mod preprocessing;
 pub mod random;
+pub mod reliability;
 pub mod split;
 pub mod statistics;
 pub mod workflow;
