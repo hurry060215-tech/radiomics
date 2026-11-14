@@ -4,8 +4,8 @@ use serde_json::Value;
 #[test]
 fn legacy_seeded_bootstrap_stream_matches_frozen16_and64_without_evaluator_rng() {
     let old: Value = serde_json::from_str(include_str!(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/../../golden/python_golden_v1/reference.json"
+        env!("RAD_GOLDEN_DIR"),
+        "/python_golden_v1/reference.json"
     )))
     .unwrap();
     let old = &old["baseline_metrics"];
@@ -73,8 +73,8 @@ fn legacy_seeded_bootstrap_stream_matches_frozen16_and64_without_evaluator_rng()
 
 fn fixture() -> Value {
     serde_json::from_str(include_str!(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/../../golden/python_golden_v1/evaluation_reference.json"
+        env!("RAD_GOLDEN_DIR"),
+        "/python_golden_v1/evaluation_reference.json"
     )))
     .unwrap()
 }
@@ -305,8 +305,8 @@ fn regression_and_degenerate_r2_follow_frozen_reference_not_invented_zeroes() {
 #[test]
 fn native_delong_dca_and_hl_bins_tails_match_the_original_python_baseline() {
     let fixture: Value = serde_json::from_str(include_str!(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/../../golden/python_golden_v1/reference.json"
+        env!("RAD_GOLDEN_DIR"),
+        "/python_golden_v1/reference.json"
     )))
     .unwrap();
     let reference = &fixture["baseline_metrics"];
@@ -379,8 +379,8 @@ fn native_delong_dca_and_hl_bins_tails_match_the_original_python_baseline() {
 #[test]
 fn explicit_bootstrap_indices_reproduce_old16_and_patient64_auc_intervals() {
     let old: Value = serde_json::from_str(include_str!(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/../../golden/python_golden_v1/reference.json"
+        env!("RAD_GOLDEN_DIR"),
+        "/python_golden_v1/reference.json"
     )))
     .unwrap();
     let old = &old["baseline_metrics"];

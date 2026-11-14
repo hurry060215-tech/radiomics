@@ -9,13 +9,13 @@ fn close(actual: f64, expected: f64, atol: f64, rtol: f64) {
 fn fixture() -> (Value, Value) {
     (
         serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/model_inputs.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/model_inputs.json"
         )))
         .unwrap(),
         serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/model_reference.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/model_reference.json"
         )))
         .unwrap(),
     )
@@ -468,8 +468,8 @@ fn forest_spec(seed: u64, regression: bool, trees: usize) -> ModelSpec {
 #[test]
 fn cart_hand_splits_ties_leaves_and_thresholds_are_exact() {
     let hand: Value = serde_json::from_str(include_str!(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/../../golden/python_golden_v1/forest_hand.json"
+        env!("RAD_GOLDEN_DIR"),
+        "/python_golden_v1/forest_hand.json"
     )))
     .unwrap();
     for case in hand["cases"].as_array().unwrap() {
@@ -593,8 +593,8 @@ fn cart_hand_splits_ties_leaves_and_thresholds_are_exact() {
 fn forest_fixed_datasets_pass_patient_level_behavior_gates() {
     let (inputs, model_reference) = fixture();
     let reference: Value = serde_json::from_str(include_str!(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/../../golden/python_golden_v1/forest_reference.json"
+        env!("RAD_GOLDEN_DIR"),
+        "/python_golden_v1/forest_reference.json"
     )))
     .unwrap();
     for task in ["binary", "multiclass", "regression"] {

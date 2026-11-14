@@ -10,8 +10,7 @@ use ov_radiomics_core::{
 };
 use serde_json::Value;
 fn load(name: &str) -> Value {
-    let root =
-        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../golden/python_golden_v1");
+    let root = std::path::Path::new(env!("RAD_GOLDEN_DIR")).join("python_golden_v1");
     serde_json::from_slice(&std::fs::read(root.join(name)).unwrap()).unwrap()
 }
 fn data(task: &str) -> StudyData {

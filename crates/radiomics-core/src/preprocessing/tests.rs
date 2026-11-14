@@ -3,13 +3,13 @@ use serde_json::Value;
 fn fixtures() -> (Value, Value) {
     (
         serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/table_inputs.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/table_inputs.json"
         )))
         .unwrap(),
         serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/table_reference.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/table_reference.json"
         )))
         .unwrap(),
     )

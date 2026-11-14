@@ -15,8 +15,37 @@ fn sources(path: &Path, output: &mut Vec<PathBuf>) {
         }
     }
 }
+
+// Compile-time test-data path only, without an external environment override.
+// The original digest algorithm is unchanged; build.rs remains one of its inputs.
+fn golden_directory(root: &Path) -> PathBuf {
+    for ancestor in root.ancestors() {
+        let manifest = ancestor.join("Cargo.toml");
+        let workspace = fs::read_to_string(&manifest).is_ok_and(|text| {
+            text.lines()
+                .any(|line| line.split('#').next().unwrap_or("").trim() == "[workspace]")
+        });
+        let golden = ancestor.join("golden");
+        if workspace && golden.is_dir() {
+            return golden.canonicalize().unwrap_or(golden);
+        }
+    }
+    let local = root.join("package-assets/golden");
+    local.canonicalize().unwrap_or(local)
+}
 fn main() {
     let root = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
+    let golden = golden_directory(&root);
+    println!("cargo:rustc-env=RAD_GOLDEN_DIR={}", golden.display());
+    for name in [
+        "python_golden_v1/manifest.json",
+        "ibsi_digital_v1/manifest.json",
+    ] {
+        let manifest = golden.join(name);
+        if manifest.is_file() {
+            println!("cargo:rerun-if-changed={}", manifest.display());
+        }
+    }
     let mut files = vec![root.join("Cargo.toml"), root.join("build.rs")];
     sources(&root.join("src"), &mut files);
     files.sort();

@@ -1,6 +1,8 @@
 [package]
 name = "ov-radiomics-python"
 description = "PyO3 bindings for the independent ov-radiomics numerical core"
+readme = "package-assets/README.md"
+include = ["/src", "/tests", "/build.rs", "/package-assets"]
 version.workspace = true
 edition.workspace = true
 license.workspace = true

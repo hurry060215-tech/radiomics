@@ -1,9 +1,10 @@
 use ov_radiomics_core::statistics::*;
 use serde_json::Value;
 fn reference() -> Value {
-    serde_json::from_str(include_str!(
-        "../../../golden/python_golden_v1/statistics_reference.json"
-    ))
+    serde_json::from_str(include_str!(concat!(
+        env!("RAD_GOLDEN_DIR"),
+        "/python_golden_v1/statistics_reference.json"
+    )))
     .unwrap()
 }
 fn scalar(value: &Value) -> f64 {

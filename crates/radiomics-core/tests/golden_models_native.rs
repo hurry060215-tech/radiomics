@@ -8,8 +8,8 @@ use ov_radiomics_core::models::{
 use serde_json::Value;
 
 fn read(name: &str) -> Value {
-    let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../golden/python_golden_v1")
+    let path = std::path::Path::new(env!("RAD_GOLDEN_DIR"))
+        .join("python_golden_v1")
         .join(name);
     serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap()
 }

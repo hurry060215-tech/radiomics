@@ -9,8 +9,8 @@ use serde_json::Value;
 use std::collections::BTreeMap;
 
 fn fixture(name: &str) -> Value {
-    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../golden/python_golden_v1")
+    let root = std::path::Path::new(env!("RAD_GOLDEN_DIR"))
+        .join("python_golden_v1")
         .join(name);
     serde_json::from_slice(&std::fs::read(root).unwrap()).unwrap()
 }

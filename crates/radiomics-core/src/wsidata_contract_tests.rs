@@ -1,13 +1,15 @@
 use super::*;
 fn fixtures() -> (Value, Value) {
     (
-        serde_json::from_str(include_str!(
-            "../../../golden/python_golden_v1/wsidata_contract_inputs.json"
-        ))
+        serde_json::from_str(include_str!(concat!(
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/wsidata_contract_inputs.json"
+        )))
         .unwrap(),
-        serde_json::from_str(include_str!(
-            "../../../golden/python_golden_v1/wsidata_contract_reference.json"
-        ))
+        serde_json::from_str(include_str!(concat!(
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/wsidata_contract_reference.json"
+        )))
         .unwrap(),
     )
 }
@@ -294,9 +296,10 @@ fn malformed_geometry_levels_padding_and_history_are_rejected() {
 
 #[test]
 fn independent_frozen_float_tag_collision_requires_typed_snapshot_guard() {
-    let reference: Value = serde_json::from_str(include_str!(
-        "../../../golden/python_golden_v1/wsidata_collision_reference.json"
-    ))
+    let reference: Value = serde_json::from_str(include_str!(concat!(
+        env!("RAD_GOLDEN_DIR"),
+        "/python_golden_v1/wsidata_collision_reference.json"
+    )))
     .unwrap();
     let saved = snapshot(&reference["saved_generation_input"]).unwrap();
     let current = snapshot(&reference["current_input"]).unwrap();

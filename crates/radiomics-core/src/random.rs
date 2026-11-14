@@ -113,9 +113,10 @@ mod tests {
     use super::*;
     #[test]
     fn legacy_draws_match_both_independent_frozen_numpy_sequences() {
-        let baseline: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../golden/python_golden_v1/reference.json"
-        ))
+        let baseline: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/reference.json"
+        )))
         .unwrap();
         let reference = &baseline["baseline_metrics"];
         let y: Vec<u8> = serde_json::from_value(reference["inputs"]["y"].clone()).unwrap();
@@ -125,9 +126,10 @@ mod tests {
             legacy_bootstrap_indices(&y, expected.len(), 42).unwrap(),
             expected
         );
-        let r: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../golden/python_golden_v1/evaluation_reference.json"
-        ))
+        let r: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/evaluation_reference.json"
+        )))
         .unwrap();
         let b = &r["patient_binary_bootstrap"];
         let y: Vec<u8> = serde_json::from_value(r["cases"]["binary"]["y"].clone()).unwrap();

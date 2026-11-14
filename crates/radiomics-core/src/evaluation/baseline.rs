@@ -448,8 +448,8 @@ mod tests {
     use serde_json::Value;
     fn fixture() -> Value {
         serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/baseline_reference.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/baseline_reference.json"
         )))
         .unwrap()
     }
@@ -714,8 +714,8 @@ mod tests {
     #[test]
     fn explicit_student_and_welch_use_frozen_shared_tests_and_cohorts_do_not_mix() {
         let reference: Value = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/statistics_reference.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/statistics_reference.json"
         )))
         .unwrap();
         for (name, method) in [

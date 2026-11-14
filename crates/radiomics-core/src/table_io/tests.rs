@@ -86,8 +86,8 @@ fn spec(value: Value) -> StudyTableSpec {
 fn frozen(name: &str) -> Value {
     serde_json::from_str(
         &fs::read_to_string(
-            Path::new(env!("CARGO_MANIFEST_DIR"))
-                .join("../../golden/python_golden_v1")
+            Path::new(env!("RAD_GOLDEN_DIR"))
+                .join("python_golden_v1")
                 .join(name),
         )
         .unwrap(),

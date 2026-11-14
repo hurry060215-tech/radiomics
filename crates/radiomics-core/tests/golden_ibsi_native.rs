@@ -6,7 +6,7 @@ use serde_json::Value;
 use std::collections::BTreeMap;
 
 fn directory() -> std::path::PathBuf {
-    std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../golden/ibsi_digital_v1")
+    std::path::Path::new(env!("RAD_GOLDEN_DIR")).join("ibsi_digital_v1")
 }
 fn read(name: &str) -> Value {
     serde_json::from_slice(&std::fs::read(directory().join(name)).unwrap()).unwrap()

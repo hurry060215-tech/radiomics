@@ -1,6 +1,8 @@
 [package]
 name = "ov-radiomics-cli"
 description = "Independent Python-free radiomics command line workflow"
+readme = "package-assets/README.md"
+include = ["/src", "/tests", "/build.rs", "/package-assets"]
 version.workspace = true
 edition.workspace = true
 license.workspace = true

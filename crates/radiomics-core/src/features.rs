@@ -1173,8 +1173,8 @@ mod tests {
     fn floating_binning_matches_independently_frozen_numpy_edges() {
         // Independent 3.0.1 execution frozen in c64ed4c before this repair.
         let fixture: serde_json::Value = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/binning_edges.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/binning_edges.json"
         )))
         .unwrap();
         for case in fixture["cases"].as_array().unwrap() {

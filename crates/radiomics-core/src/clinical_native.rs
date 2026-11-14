@@ -767,8 +767,8 @@ mod tests {
     }
     fn fixture() -> Value {
         serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/statistics_reference.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/statistics_reference.json"
         )))
         .unwrap()
     }
@@ -808,8 +808,8 @@ mod tests {
     #[test]
     fn lp_certificate_status_and_scaled_rank_match_frozen_hand_cases() {
         let fixture: Value = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/separation_reference.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/separation_reference.json"
         )))
         .unwrap();
         for case in fixture["cases"].as_array().unwrap() {

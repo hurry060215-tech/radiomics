@@ -9,13 +9,15 @@ use std::collections::BTreeMap;
 
 fn fixtures() -> (Value, Value) {
     (
-        serde_json::from_str(include_str!(
-            "../../../golden/python_golden_v1/pathology_aggregate_inputs.json"
-        ))
+        serde_json::from_str(include_str!(concat!(
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/pathology_aggregate_inputs.json"
+        )))
         .unwrap(),
-        serde_json::from_str(include_str!(
-            "../../../golden/python_golden_v1/pathology_aggregate_reference.json"
-        ))
+        serde_json::from_str(include_str!(concat!(
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/pathology_aggregate_reference.json"
+        )))
         .unwrap(),
     )
 }

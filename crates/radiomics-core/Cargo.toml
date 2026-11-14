@@ -6,6 +6,8 @@ license.workspace = true
 rust-version.workspace = true
 repository.workspace = true
 description = "Independent Rust numerical kernels for binary radiomics model evaluation"
+readme = "package-assets/README.md"
+include = ["/src", "/tests", "/build.rs", "/package-assets"]
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }

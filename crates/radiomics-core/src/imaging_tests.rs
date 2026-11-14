@@ -32,9 +32,10 @@ fn assert_close(actual: &[f64], reference: &[f64], atol: f64, rtol: f64) {
 }
 #[test]
 fn frozen_independent_simpleitk_geometry_reference() {
-    let fixture: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../golden/python_golden_v1/geometry.json"
-    ))
+    let fixture: serde_json::Value = serde_json::from_str(include_str!(concat!(
+        env!("RAD_GOLDEN_DIR"),
+        "/python_golden_v1/geometry.json"
+    )))
     .unwrap();
     for case in fixture["cases"].as_array().unwrap() {
         let dimensions = numbers(&case["shape_xyz"]);

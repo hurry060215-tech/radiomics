@@ -243,8 +243,8 @@ mod tests {
     #[test]
     fn typed_icc_and_unrounded_intervals_match_frozen_reference_including_degeneracy() {
         let fixture: Value = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/icc_reference.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/icc_reference.json"
         )))
         .unwrap();
         for (name, case) in fixture["cases"].as_object().unwrap() {

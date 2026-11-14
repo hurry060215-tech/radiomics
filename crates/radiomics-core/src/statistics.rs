@@ -651,13 +651,15 @@ mod tests {
     }
     #[test]
     fn matches_frozen_three_task_univariate_references() {
-        let reference: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../golden/python_golden_v1/table_reference.json"
-        ))
+        let reference: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/table_reference.json"
+        )))
         .unwrap();
-        let input: serde_json::Value = serde_json::from_str(include_str!(
-            "../../../golden/python_golden_v1/table_inputs.json"
-        ))
+        let input: serde_json::Value = serde_json::from_str(include_str!(concat!(
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/table_inputs.json"
+        )))
         .unwrap();
         let rows = reference["numeric"]["imputed_training"].as_array().unwrap();
         for task in ["binary", "multiclass", "regression"] {

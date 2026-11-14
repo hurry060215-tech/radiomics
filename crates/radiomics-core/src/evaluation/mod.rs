@@ -311,13 +311,13 @@ mod tests {
             }
         }
         let reference: Value = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/workflow_reference.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/workflow_reference.json"
         )))
         .unwrap();
         let input: Value = serde_json::from_str(include_str!(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/../../golden/python_golden_v1/model_inputs.json"
+            env!("RAD_GOLDEN_DIR"),
+            "/python_golden_v1/model_inputs.json"
         )))
         .unwrap();
         for (name, task) in [
