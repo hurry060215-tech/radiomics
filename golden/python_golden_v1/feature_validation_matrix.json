@@ -1,0 +1,399 @@
+{
+  "schema": "radiomics.validation_matrix.v2",
+  "tri_state": "true=independently passed for documented scope; false=known nonconformance; null=not independently accepted",
+  "reference_profile": "python_golden_v1",
+  "benchmark_policy": "Benchmark v2: correctness and independent deployment are release gates; performance targets are reported separately. No aggregate across radiomics/ml_stats/pathology.",
+  "independent_ibsi_status": "pending_data_license_and_independent_reference_comparison",
+  "features": [
+    {
+      "feature": "original_firstorder_Mean",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Median",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Minimum",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Maximum",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_10Percentile",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_90Percentile",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Range",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_InterquartileRange",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Variance",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_MeanAbsoluteDeviation",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Skewness",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Kurtosis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "PyRadiomics uses raw standardized fourth moment; IBSI uses excess kurtosis, differing by 3. Independent IBSI acceptance is pending.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Energy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_RootMeanSquared",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending; no IBSI conformance is inferred from PyRadiomics compatibility.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Entropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_firstorder_Uniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_JointAverage",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_JointEnergy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_JointEntropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_MaximumProbability",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_Contrast",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_Correlation",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_DifferenceAverage",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_Id",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_Idm",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glcm_SumSquares",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glrlm_ShortRunEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glrlm_LongRunEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glrlm_GrayLevelNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glrlm_GrayLevelNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glrlm_RunLengthNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glrlm_RunLengthNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glrlm_RunPercentage",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glrlm_RunEntropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glszm_SmallAreaEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glszm_LargeAreaEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glszm_GrayLevelNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glszm_GrayLevelNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glszm_SizeZoneNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glszm_SizeZoneNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glszm_ZonePercentage",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_glszm_ZoneEntropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_gldm_SmallDependenceEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_gldm_LargeDependenceEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_gldm_GrayLevelNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_gldm_DependenceNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_gldm_DependenceNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_gldm_GrayLevelVariance",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_gldm_DependenceVariance",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_gldm_DependenceEntropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_ngtdm_Coarseness",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_ngtdm_Contrast",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_ngtdm_Busyness",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_ngtdm_Complexity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    },
+    {
+      "feature": "original_ngtdm_Strength",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": null,
+      "deviation_reason": "Independent IBSI check pending. PyRadiomics fixed-width bin anchoring can differ from IBSI.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration."
+    }
+  ],
+  "shape_basic": {
+    "pyradiomics_compatible": null,
+    "ibsi_conformant": null,
+    "deviation_reason": "Project-specific voxel/pixel count, affine bbox/centroid and determinant/cross-product area/volume; no claim to complete PyRadiomics/IBSI morphology family."
+  }
+}

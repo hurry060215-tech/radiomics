@@ -61,7 +61,7 @@
     "Public CT/ROI licensed fixture and feature reference",
     "Pathology pixel/mask/embedding fixtures and independent specifications",
     "Native CLI/Python workflow leakage, serialization and installation checks",
-    "Seven-repeat alternating end-to-end performance and memory gates"
+    "Benchmark v2: seven-repeat alternating radiomics/ml_stats/pathology performance reports and memory engineering budget, separate from Release Gate"
   ],
   "update_policy": "Generate candidates only into a fresh directory. Main agent reviews source, settings and numerical/exception differences before accepting. Module authors must not re-record expected values.",
   "files_sha256": {
@@ -80,5 +80,43 @@
     "pathology_hand.json": "f5560a6f7d1a100d8f694c1d9f65d5f3716654045bdbdb8826977b09495abce7",
     "forest_reference.json": "2aab2c11a1ceb470cdda227494b300654b9d9ed15eba9e411f4bd6dd8d53d314",
     "forest_hand.json": "11feb05433ceec788b19e3949171f4adc86af333d7931f5632f85cf06ff7a5a3"
+  },
+  "benchmark_policy": {
+    "version": 2,
+    "release_gate": [
+      "correctness",
+      "API contract",
+      "stability",
+      "independent execution",
+      "cross-platform installation"
+    ],
+    "performance": "Separate reported engineering targets; missing target requires disclosure and optimization, not automatic algorithm failure or prohibition of an experimental release. Actual publication requires separate authorization.",
+    "suites": [
+      "radiomics",
+      "ml_stats",
+      "pathology"
+    ],
+    "combined_score": "forbidden",
+    "radiomics_levels": {
+      "L1": "Each feature family separately, no uniform speedup gate",
+      "L2": "Fixed preprocessed image/ROI, complete supported feature set; Rust <=1.10x engineering regression reference and >=1.5x target",
+      "L3": "Complete I/O, preparation, extraction and export; >=1.5x target",
+      "L4": "100/500/1000 ROIs across sizes/gray levels/thread counts; ROI/s, peak memory and stable throughput budget",
+      "L5": "Deployment and independent startup"
+    },
+    "reporting": [
+      "median",
+      "IQR",
+      "p95",
+      "all raw timings",
+      "CPU",
+      "threads",
+      "Rust flags",
+      "Python and C library versions",
+      "cold/warm",
+      "cache state",
+      "single-thread and scaling"
+    ],
+    "memory": "<=1.20x matched-reference peak memory remains an engineering protection budget, reported explicitly"
   }
 }

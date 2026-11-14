@@ -8,6 +8,40 @@ their raw texture matrices, and the existing binary metric API at commit
 the manifest lists the remaining data, model, pathology, installation and
 performance requirements. Passing these tests does not complete M0–M5.
 
+## Benchmark v2 acceptance policy
+
+Correctness, API contracts, stability, independent execution and cross-platform
+installation form the Release Gate. Performance targets are reported separately.
+A missed target requires an explicit limitation and optimization work; it does
+not automatically invalidate a numerically correct algorithm or prohibit an
+experimental release. Publishing and version changes still need separate user
+authorization.
+
+Radiomics, `ml_stats` and pathology have independent benchmark suites and reports;
+they must not be combined into one total score. Radiomics reports L1 by feature
+family without a uniform speedup gate; L2 measures the complete supported feature
+set on fixed prepared image/ROI buffers with an engineering regression budget
+of Rust time ≤1.10× its matched reference and a ≥1.5× speedup target; L3 measures
+the full I/O, preparation, extraction and export API with a ≥1.5× target; L4
+reports 100/500/1000-ROI throughput across image sizes, gray levels and thread
+counts; L5 covers deployment. Matched peak memory ≤1.20× remains an engineering
+protection budget and is disclosed when missed.
+
+Reports retain seven warm repetitions in alternating order plus cold-start
+measurements, raw times, median/IQR/p95, CPU, thread count, Rust flags, Python/C
+library versions, cache status and single-thread versus scaling results. The
+main project [Benchmark v2 specification](benchmark-v2.md) is authoritative.
+Existing numerical fixture bytes, hashes and tolerances stay unchanged by this
+benchmark-policy update.
+
+`feature_validation_matrix.json` separates `pyradiomics_compatible`,
+`ibsi_conformant` and `deviation_reason` for each of the 55 named features.
+PyRadiomics compatibility is restricted to the frozen, independently executed
+scope. All independent IBSI acceptance entries remain `null` pending the second
+track; they are not inferred from Python parity. Raw versus excess kurtosis and
+the fixed-width anchor differences are stated explicitly. Project `shape_basic`
+descriptors do not claim a complete standard morphology family.
+
 The reference interpreter really imports public **PyRadiomics v3.0.1**. It does
 not reuse the installed v3.1.0 extension. Public source tag `v3.0.1` resolves to
 `c428a771c8cf682c462162b6babc836150d5d9d6`; the manifest records the PyPI source
