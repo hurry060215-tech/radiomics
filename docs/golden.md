@@ -154,6 +154,14 @@ not a requirement that Linux produce byte-identical binaries.
   patient first, then average fold-level scores equally. Differences ≤1e-12
   are explicit candidate-order ties. Test labels and features do not fit any
   training state, tuning choice, threshold or OOF prediction.
+- `fusion_reference.json`: two fixed-penalty base components on exactly the
+  same explicit patient plan. Sample OOF probabilities aggregate to 48 patients
+  before fitting the two-column Logistic meta model; explicit equal-weight
+  averaging uses the same patient unit. Base sample OOF and final predictions
+  remain available for provenance. Meta training predictions are apparent,
+  while held-out and unlabeled external patients retain their cohort. Neither
+  matching fold integers alone nor broadcasting patient scores to tile maps
+  is accepted as alignment.
 
 The clinical Logistic fixture reuses lesion rows to validate numerical solvers;
 its 94/92 complete cases are sample counts, not independent-patient counts.

@@ -2,7 +2,7 @@
   "schema": "python_golden_v1.acceptance.v1",
   "profile": "python_golden_v1",
   "status": "frozen_by_main_agent_review",
-  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation. Forest behavioral references use fixed five seeds, 200 trees and patient-level score means on the same three inputs. Train-only table preprocessing, three-task univariate/BH and hand tests approved before native implementation. Distribution tails/quantiles, hypothesis tests and complete-case unpenalized Logit reference approved independently. Independent actual Pingouin ICC and hand/HiGHS separation references approved with explicit nonfinite and three-state diagnostic policies. Explicit patient nested-workflow references approved before native G implementation; sample_centers provenance included.",
+  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation. Forest behavioral references use fixed five seeds, 200 trees and patient-level score means on the same three inputs. Train-only table preprocessing, three-task univariate/BH and hand tests approved before native implementation. Distribution tails/quantiles, hypothesis tests and complete-case unpenalized Logit reference approved independently. Independent actual Pingouin ICC and hand/HiGHS separation references approved with explicit nonfinite and three-state diagnostic policies. Explicit patient nested-workflow references approved before native G implementation; sample_centers provenance included. Patient-level shared-plan OOF Logistic fusion and explicit weighted averaging approved before native implementation.",
   "baseline_revision": "2512e16979a544207f84c943e619ef33e02d3dc7",
   "reference_source": {
     "pyradiomics_tag": "v3.0.1",
@@ -88,7 +88,8 @@
     "requirements-icc-reference.txt": "99cd5d99acfd37735c90d2709dc2a37283be14edc540569e931dbc86d0862140",
     "separation_reference.json": "f47ada725601083b843b04f6d6f819fe04db0ea10520afbe50b4da511934f199",
     "workflow_plans.json": "04f70a69fb0331d8faf0109ab5a9374e80a70ad607299d6072e0d63fcb80c6e6",
-    "workflow_reference.json": "012b19af423e2079985f621e159e948fc0ebed4314468856e7d468789cf0c633"
+    "workflow_reference.json": "012b19af423e2079985f621e159e948fc0ebed4314468856e7d468789cf0c633",
+    "fusion_reference.json": "9ee7bf8d5e0f99d36c961d67da76236f8872deae34d0363577c4fe056086fedd"
   },
   "benchmark_policy": {
     "version": 2,
