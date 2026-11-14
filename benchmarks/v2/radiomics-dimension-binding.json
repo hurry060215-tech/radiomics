@@ -27,6 +27,7 @@
   "permitted_case_changes": "Only the two affected true2D L3 states have an effective crop vector and resulting effective-configuration SHA change. No other case configuration SHA may change.",
   "failure_evidence": {
     "artifact": "E:/radiomics-build/benchmark-v2/untimed-output-validation-v2-1/validation.json",
+    "sha256": "dc04b580162fe5fb3cb63b4ff67826805e3b3ea162eecf76636adbedeceb6849",
     "error": "2D z margin must be zero.",
     "scope": "17 untimed public-output comparisons; no API elapsed values or seven-pair performance grid. Original failed records remain available; no failed performance sample was replaced."
   },
