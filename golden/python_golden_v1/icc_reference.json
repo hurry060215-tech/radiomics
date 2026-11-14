@@ -1,0 +1,511 @@
+{
+  "schema": "python_golden_v1.icc.reference.v1",
+  "packages": {
+    "numpy": "1.23.0",
+    "scipy": "1.13.1",
+    "pandas": "1.5.3",
+    "pingouin": "0.5.5"
+  },
+  "dependency_lock": {
+    "contourpy": "1.3.0",
+    "cycler": "0.12.1",
+    "fonttools": "4.57.0",
+    "importlib-resources": "6.5.2",
+    "joblib": "1.4.2",
+    "kiwisolver": "1.4.7",
+    "matplotlib": "3.7.5",
+    "numpy": "1.23.0",
+    "packaging": "24.2",
+    "pandas": "1.5.3",
+    "pandas-flavor": "0.6.0",
+    "patsy": "1.0.1",
+    "pillow": "10.4.0",
+    "pingouin": "0.5.5",
+    "pyparsing": "3.2.3",
+    "python-dateutil": "2.9.0.post0",
+    "pytz": "2025.2",
+    "scikit-learn": "1.2.2",
+    "scipy": "1.13.1",
+    "seaborn": "0.11.2",
+    "six": "1.17.0",
+    "statsmodels": "0.13.2",
+    "tabulate": "0.9.0",
+    "threadpoolctl": "3.6.0",
+    "xarray": "0.20.2",
+    "zipp": "3.21.0"
+  },
+  "reference_source": {
+    "repository": "https://github.com/raphaelvallat/pingouin",
+    "tag": "v0.5.5",
+    "revision": "b1488dd4e6e872d016c3d55af5b2ed255c40ea63",
+    "reliability_py_sha256": "c7c20466eecdd1039a2434288899025df7fe791854847e4005971cb8623540ab"
+  },
+  "effective_parameters": {
+    "nan_policy": "raise",
+    "confidence": 0.95,
+    "reference_round": null,
+    "reference_round_column_CI95": null
+  },
+  "specification": "Complete balanced subject-by-reader matrix only; ICC(2,1)=two-way random absolute agreement single rating; ICC(3,1)=two-way fixed consistency single rating. No mixed models, imputation, average-measure ICC or omitted type.",
+  "confidence_definition": "Public Pingouin0.5.5 Shrout-Fleiss ANOVA/F interval, with output presentation rounding disabled temporarily and restored. Report unrounded CI. Preserve negative estimates and bounds; do not clip to zero.",
+  "license": "Original synthetic input matrices CC0-1.0. Pingouin source retains its BSD-3-Clause license; this artifact contains numerical outputs and provenance.",
+  "cases": {
+    "balanced": {
+      "subject_ids": [
+        "S0",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "reader_ids": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "values_subject_by_reader": [
+        [
+          1.0,
+          2.0,
+          1.0
+        ],
+        [
+          2.0,
+          2.0,
+          3.0
+        ],
+        [
+          3.0,
+          4.0,
+          2.0
+        ],
+        [
+          5.0,
+          5.0,
+          6.0
+        ],
+        [
+          4.0,
+          3.0,
+          4.0
+        ],
+        [
+          7.0,
+          6.0,
+          8.0
+        ]
+      ],
+      "reference": {
+        "status": "ok",
+        "value": {
+          "ICC(2,1)": {
+            "type": "ICC(2,1)",
+            "estimate": 0.8803827751196172,
+            "confidence": 0.95,
+            "ci95": [
+              0.6079240216153917,
+              0.9805317781337626
+            ],
+            "f_statistic": 20.714285714285694,
+            "df1": 5,
+            "df2": 10,
+            "p_value": 5.5380243301498335e-05
+          },
+          "ICC(3,1)": {
+            "type": "ICC(3,1)",
+            "estimate": 0.8679245283018866,
+            "confidence": 0.95,
+            "ci95": [
+              0.5645837731346965,
+              0.9784344959400166
+            ],
+            "f_statistic": 20.714285714285694,
+            "df1": 5,
+            "df2": 10,
+            "p_value": 5.5380243301498335e-05
+          }
+        },
+        "warnings": []
+      },
+      "anova": {
+        "n_subjects": 6,
+        "n_readers": 3,
+        "grand_mean": 3.7777777777777777,
+        "ms_subject": 12.88888888888889,
+        "ms_reader": 0.22222222222222243,
+        "ms_error": 0.6222222222222221
+      }
+    },
+    "reader_bias": {
+      "subject_ids": [
+        "S0",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "reader_ids": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "values_subject_by_reader": [
+        [
+          1.0,
+          7.0,
+          -2.0
+        ],
+        [
+          2.0,
+          7.0,
+          0.0
+        ],
+        [
+          3.0,
+          9.0,
+          -1.0
+        ],
+        [
+          5.0,
+          10.0,
+          3.0
+        ],
+        [
+          4.0,
+          8.0,
+          1.0
+        ],
+        [
+          7.0,
+          11.0,
+          5.0
+        ]
+      ],
+      "reference": {
+        "status": "ok",
+        "value": {
+          "ICC(2,1)": {
+            "type": "ICC(2,1)",
+            "estimate": 0.20697412823397082,
+            "confidence": 0.95,
+            "ci95": [
+              -0.0023087511328589326,
+              0.6893512793432888
+            ],
+            "f_statistic": 20.71428571428579,
+            "df1": 5,
+            "df2": 10,
+            "p_value": 5.5380243301497196e-05
+          },
+          "ICC(3,1)": {
+            "type": "ICC(3,1)",
+            "estimate": 0.8679245283018873,
+            "confidence": 0.95,
+            "ci95": [
+              0.5645837731346979,
+              0.9784344959400167
+            ],
+            "f_statistic": 20.71428571428579,
+            "df1": 5,
+            "df2": 10,
+            "p_value": 5.5380243301497196e-05
+          }
+        },
+        "warnings": []
+      },
+      "anova": {
+        "n_subjects": 6,
+        "n_readers": 3,
+        "grand_mean": 4.444444444444445,
+        "ms_subject": 12.888888888888891,
+        "ms_reader": 90.88888888888889,
+        "ms_error": 0.622222222222222
+      }
+    },
+    "low_agreement": {
+      "subject_ids": [
+        "S0",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "reader_ids": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "values_subject_by_reader": [
+        [
+          1.0,
+          3.0,
+          2.0
+        ],
+        [
+          3.0,
+          1.0,
+          2.0
+        ],
+        [
+          2.0,
+          2.0,
+          3.0
+        ],
+        [
+          3.0,
+          2.0,
+          1.0
+        ],
+        [
+          1.0,
+          2.0,
+          3.0
+        ],
+        [
+          2.0,
+          3.0,
+          1.0
+        ]
+      ],
+      "reference": {
+        "status": "ok",
+        "value": {
+          "ICC(2,1)": {
+            "type": "ICC(2,1)",
+            "estimate": -0.6,
+            "confidence": 0.95,
+            "ci95": [
+              -0.6452861928361239,
+              -0.33571358631021153
+            ],
+            "f_statistic": 0.05263157894736845,
+            "df1": 5,
+            "df2": 10,
+            "p_value": 0.9977056838228661
+          },
+          "ICC(3,1)": {
+            "type": "ICC(3,1)",
+            "estimate": -0.4615384615384615,
+            "confidence": 0.95,
+            "ci95": [
+              -0.49073909752457356,
+              -0.2774782681135507
+            ],
+            "f_statistic": 0.05263157894736845,
+            "df1": 5,
+            "df2": 10,
+            "p_value": 0.9977056838228661
+          }
+        },
+        "warnings": []
+      },
+      "anova": {
+        "n_subjects": 6,
+        "n_readers": 3,
+        "grand_mean": 2.0555555555555554,
+        "ms_subject": 0.055555555555555594,
+        "ms_reader": 0.055555555555555455,
+        "ms_error": 1.0555555555555558
+      }
+    },
+    "perfect_agreement": {
+      "subject_ids": [
+        "S0",
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "reader_ids": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "values_subject_by_reader": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          2.0,
+          2.0,
+          2.0
+        ],
+        [
+          3.0,
+          3.0,
+          3.0
+        ],
+        [
+          4.0,
+          4.0,
+          4.0
+        ]
+      ],
+      "reference": {
+        "status": "ok",
+        "value": {
+          "ICC(2,1)": {
+            "type": "ICC(2,1)",
+            "estimate": 1.0,
+            "confidence": 0.95,
+            "ci95": [
+              "NaN",
+              "NaN"
+            ],
+            "f_statistic": "Inf",
+            "df1": 3,
+            "df2": 6,
+            "p_value": 0.0
+          },
+          "ICC(3,1)": {
+            "type": "ICC(3,1)",
+            "estimate": 1.0,
+            "confidence": 0.95,
+            "ci95": [
+              "NaN",
+              "NaN"
+            ],
+            "f_statistic": "Inf",
+            "df1": 3,
+            "df2": 6,
+            "p_value": 0.0
+          }
+        },
+        "warnings": [
+          "divide by zero encountered in double_scalars",
+          "invalid value encountered in double_scalars"
+        ]
+      },
+      "anova": {
+        "n_subjects": 4,
+        "n_readers": 3,
+        "grand_mean": 2.5,
+        "ms_subject": 5.0,
+        "ms_reader": 0.0,
+        "ms_error": 0.0
+      }
+    },
+    "constant": {
+      "subject_ids": [
+        "S0",
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "reader_ids": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "values_subject_by_reader": [
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "reference": {
+        "status": "ok",
+        "value": {
+          "ICC(2,1)": {
+            "type": "ICC(2,1)",
+            "estimate": "NaN",
+            "confidence": 0.95,
+            "ci95": [
+              "NaN",
+              "NaN"
+            ],
+            "f_statistic": "NaN",
+            "df1": 3,
+            "df2": 6,
+            "p_value": "NaN"
+          },
+          "ICC(3,1)": {
+            "type": "ICC(3,1)",
+            "estimate": "NaN",
+            "confidence": 0.95,
+            "ci95": [
+              "NaN",
+              "NaN"
+            ],
+            "f_statistic": "NaN",
+            "df1": 3,
+            "df2": 6,
+            "p_value": "NaN"
+          }
+        },
+        "warnings": [
+          "invalid value encountered in double_scalars"
+        ]
+      },
+      "anova": {
+        "n_subjects": 4,
+        "n_readers": 3,
+        "grand_mean": 1.0,
+        "ms_subject": 0.0,
+        "ms_reader": 0.0,
+        "ms_error": 0.0
+      }
+    },
+    "missing": {
+      "subject_ids": [
+        "S0",
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "reader_ids": [
+        "R0",
+        "R1",
+        "R2"
+      ],
+      "values_subject_by_reader": [
+        [
+          1.0,
+          2.0,
+          1.0
+        ],
+        [
+          2.0,
+          null,
+          3.0
+        ],
+        [
+          3.0,
+          4.0,
+          2.0
+        ],
+        [
+          5.0,
+          5.0,
+          6.0
+        ]
+      ],
+      "reference": {
+        "status": "error",
+        "error_type": "ValueError",
+        "message": "Either missing values are present in data or data are unbalanced. Please remove them manually or use nan_policy='omit'.",
+        "warnings": []
+      }
+    }
+  }
+}

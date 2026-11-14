@@ -125,6 +125,32 @@ not a requirement that Linux produce byte-identical binaries.
   covariance, coefficients, OR and normal-Wald CIs are frozen. A small optimizer
   gradient is not a separation diagnostic; rank deficiency, separation and
   nonconvergence remain explicit inference errors.
+- `icc_reference.json`: actual public Pingouin 0.5.5 ICC(2,1) and ICC(3,1)
+  outputs on balanced, biased-reader, low-agreement, perfect, constant and
+  missing-rating matrices. Only temporary output-format rounding is disabled
+  and then restored; no numerical reference is reconstructed from printed
+  two-decimal intervals. A separate complete public dependency lock reproduces
+  the isolated ICC environment. Hand ANOVA mean squares cross-check the point
+  estimates. Negative estimates and bounds remain negative. Perfect agreement
+  retains point estimate 1, undefined CI and infinite F as in the reference;
+  constant data retains undefined statistics with diagnostics; missing data
+  errors. Neither an omitted ICC type nor mixed/incomplete ratings is accepted.
+- `separation_reference.json`: complete/quasi/overlap/rank-deficient hand data
+  and independent SciPy/HiGHS LP certificates, including 1e±12 feature scaling.
+  The augmented design is maxabs-scaled before SVD and LP. Certificate vectors
+  are not unique, so feasibility and the optimal signed-margin sum are checked,
+  without demanding a particular vector. A positive objective with a strictly
+  nonnegative verified certificate detects separation; small positive or
+  negative-margin certificates are indeterminate and reject inference.
+  An optimal zero objective only means no direction was detected at the declared
+  resolution; observed-information and convergence checks are still required.
+  One optimal vector cannot classify complete versus quasi separation.
+
+The clinical Logistic fixture reuses lesion rows to validate numerical solvers;
+its 94/92 complete cases are sample counts, not independent-patient counts.
+Public clinical inference defaults to patient analysis and rejects repeated
+patients, or requires explicit sample analysis with a dependence warning. This
+scope clarification does not change the frozen numerical fixture bytes.
 
 `Lab_D65` uses the sRGB transfer, the W3C D65 RGB-to-XYZ matrix and the CIELAB
 piecewise formula with D65 white. It does not adapt to D50. The profile preserves
