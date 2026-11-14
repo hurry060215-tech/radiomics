@@ -1,7 +1,9 @@
 //! Golden A's independent black-box solver acceptance and stationary-point audit.
 use ov_radiomics_core::contracts::NumericBuffer;
+use ov_radiomics_core::models::TreeNode;
 use ov_radiomics_core::models::{
-    self, KnnWeights, ModelPrediction, ModelSpec, ModelState, ModelTarget, SparseMethod, SparseSpec,
+    self, KnnWeights, MaxFeatures, ModelPrediction, ModelSpec, ModelState, ModelTarget,
+    SparseMethod, SparseSpec,
 };
 use serde_json::Value;
 
@@ -345,5 +347,375 @@ fn sparse_native_states_satisfy_independent_kkt_and_frozen_support() {
                 .collect::<Vec<_>>()
         );
         assert_eq!(fit.support, support);
+    }
+}
+
+#[test]
+fn predictive_zero_penalty_is_rejected_and_shared_solver_matches_positive_fit() {
+    let (x, y, _, _) = prepare("binary");
+    assert!(models::fit(
+        &ModelSpec::LR {
+            lambda: 0.,
+            tolerance: 1e-9,
+            max_iterations: 5000
+        },
+        &x,
+        &y
+    )
+    .is_err());
+    let fit = models::fit(
+        &ModelSpec::LR {
+            lambda: 0.1,
+            tolerance: 1e-9,
+            max_iterations: 5000,
+        },
+        &x,
+        &y,
+    )
+    .unwrap();
+    let (state, report) = models::solve_logistic(&x, &y, 0.1, 1e-9, 5000).unwrap();
+    assert_eq!(state, fit.state);
+    assert_eq!(report, fit.report);
+}
+
+#[test]
+fn forest_five_seed_patient_behavior_gates_are_independent_per_dataset() {
+    let forest = read("forest_reference.json");
+    let inputs = read("model_inputs.json");
+    for task in ["binary", "multiclass", "regression"] {
+        let (x, y, evaluate, model_reference) = prepare(task);
+        let reference = &forest["datasets"][task];
+        let ids = reference["test_sample_ids"].as_array().unwrap();
+        let eval_ids = model_reference["evaluation_sample_ids"].as_array().unwrap();
+        let values: Vec<_> = ids
+            .iter()
+            .flat_map(|id| {
+                let index = eval_ids.iter().position(|v| v == id).unwrap();
+                evaluate.values[index * evaluate.cols..(index + 1) * evaluate.cols]
+                    .iter()
+                    .copied()
+            })
+            .collect();
+        let testing = NumericBuffer {
+            rows: ids.len(),
+            cols: evaluate.cols,
+            missing: vec![false; values.len()],
+            values,
+        };
+        let source = inputs["datasets"][task]["records"].as_array().unwrap();
+        let groups: Vec<Vec<usize>> = reference["test_patient_ids"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|patient| {
+                ids.iter()
+                    .enumerate()
+                    .filter_map(|(i, id)| {
+                        (source.iter().find(|r| r["sample_id"] == *id).unwrap()["patient_id"]
+                            == *patient)
+                            .then_some(i)
+                    })
+                    .collect()
+            })
+            .collect();
+        assert!(groups.iter().all(|g| g.len() == 2));
+        let actual_y: Vec<_> = reference["test_patient_targets"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|v| v.as_f64().unwrap())
+            .collect();
+        let mut metrics = vec![];
+        for (seed_index, seed) in forest["model_seeds"].as_array().unwrap().iter().enumerate() {
+            let spec = ModelSpec::RandomForest {
+                trees: 200,
+                max_depth: None,
+                min_samples_split: 2,
+                min_samples_leaf: 1,
+                max_features: if task == "regression" {
+                    MaxFeatures::All
+                } else {
+                    MaxFeatures::Sqrt
+                },
+                bootstrap: true,
+                seed: seed.as_u64().unwrap(),
+            };
+            let fitted = models::fit(&spec, &x, &y).unwrap();
+            let prediction = fitted.predict(&testing).unwrap();
+            let restored: models::FittedModel =
+                serde_json::from_slice(&serde_json::to_vec(&fitted).unwrap()).unwrap();
+            assert_eq!(prediction, restored.predict(&testing).unwrap());
+            if seed_index == 0 {
+                let workers: Vec<_> = (0..3)
+                    .map(|_| {
+                        let x = x.clone();
+                        let y = y.clone();
+                        let spec = spec.clone();
+                        std::thread::spawn(move || models::fit(&spec, &x, &y).unwrap())
+                    })
+                    .collect();
+                for worker in workers {
+                    assert_eq!(worker.join().unwrap(), fitted);
+                }
+            }
+            match prediction {
+                ModelPrediction::Regression { values } => {
+                    let patient: Vec<_> = groups
+                        .iter()
+                        .map(|g| g.iter().map(|&i| values[i]).sum::<f64>() / g.len() as f64)
+                        .collect();
+                    let rmse = (patient
+                        .iter()
+                        .zip(&actual_y)
+                        .map(|(p, y)| (p - y).powi(2))
+                        .sum::<f64>()
+                        / actual_y.len() as f64)
+                        .sqrt();
+                    metrics.push(vec![rmse]);
+                }
+                ModelPrediction::Classification {
+                    classes,
+                    probabilities,
+                } => {
+                    let count = classes.len();
+                    let patient: Vec<Vec<f64>> = groups
+                        .iter()
+                        .map(|g| {
+                            (0..count)
+                                .map(|c| {
+                                    g.iter()
+                                        .map(|&i| probabilities.values[i * count + c])
+                                        .sum::<f64>()
+                                        / g.len() as f64
+                                })
+                                .collect()
+                        })
+                        .collect();
+                    if task == "binary" {
+                        let positives: Vec<_> = actual_y
+                            .iter()
+                            .enumerate()
+                            .filter_map(|(i, &y)| (y == 1.).then_some(patient[i][1]))
+                            .collect();
+                        let negatives: Vec<_> = actual_y
+                            .iter()
+                            .enumerate()
+                            .filter_map(|(i, &y)| (y == 0.).then_some(patient[i][1]))
+                            .collect();
+                        let auc = positives
+                            .iter()
+                            .flat_map(|p| {
+                                negatives.iter().map(move |n| {
+                                    if p > n {
+                                        1.
+                                    } else if p == n {
+                                        0.5
+                                    } else {
+                                        0.
+                                    }
+                                })
+                            })
+                            .sum::<f64>()
+                            / (positives.len() * negatives.len()) as f64;
+                        let brier = patient
+                            .iter()
+                            .zip(&actual_y)
+                            .map(|(p, y)| (p[1] - y).powi(2))
+                            .sum::<f64>()
+                            / actual_y.len() as f64;
+                        metrics.push(vec![auc, brier]);
+                    } else {
+                        let predicted: Vec<_> = patient
+                            .iter()
+                            .map(|p| {
+                                (0..count)
+                                    .min_by(|&a, &b| p[b].total_cmp(&p[a]).then(a.cmp(&b)))
+                                    .unwrap()
+                            })
+                            .collect();
+                        let mut total = 0.;
+                        for c in 0..count {
+                            let tp = actual_y
+                                .iter()
+                                .zip(&predicted)
+                                .filter(|(y, p)| **y == c as f64 && **p == c)
+                                .count();
+                            let fp = actual_y
+                                .iter()
+                                .zip(&predicted)
+                                .filter(|(y, p)| **y != c as f64 && **p == c)
+                                .count();
+                            let fn_count = actual_y
+                                .iter()
+                                .zip(&predicted)
+                                .filter(|(y, p)| **y == c as f64 && **p != c)
+                                .count();
+                            let denom = 2 * tp + fp + fn_count;
+                            total += if denom == 0 {
+                                0.
+                            } else {
+                                2. * tp as f64 / denom as f64
+                            };
+                        }
+                        metrics.push(vec![total / count as f64]);
+                    }
+                }
+            }
+        }
+        let mean = |j: usize| metrics.iter().map(|row| row[j]).sum::<f64>() / metrics.len() as f64;
+        let reference_metrics = &reference["mean_metrics"];
+        if task == "binary" {
+            assert!(
+                mean(0) >= reference_metrics["auc"].as_f64().unwrap() - 0.03,
+                "binary patient AUC {}",
+                mean(0)
+            );
+            assert!(
+                mean(1) <= reference_metrics["brier"].as_f64().unwrap() + 0.03,
+                "binary patient Brier {}",
+                mean(1)
+            );
+        } else if task == "multiclass" {
+            assert!(
+                mean(0) >= reference_metrics["macro_f1"].as_f64().unwrap() - 0.04,
+                "multiclass patient macro-F1 {}",
+                mean(0)
+            );
+        } else {
+            let expected = reference_metrics["rmse"].as_f64().unwrap();
+            let allowed =
+                (expected * 0.1).max(reference["test_target_std_ddof0"].as_f64().unwrap() * 0.02);
+            assert!(
+                mean(0) - expected <= allowed,
+                "regression patient RMSE {} > {}+{}",
+                mean(0),
+                expected,
+                allowed
+            );
+        }
+        println!("{task} native five-seed patient mean={metrics:?}");
+    }
+}
+
+#[test]
+fn hand_cart_ties_and_leaf_predictions_match_frozen_math() {
+    let hand = read("forest_hand.json");
+    for case in hand["cases"].as_array().unwrap() {
+        let rows = case["x"].as_array().unwrap();
+        let cols = rows[0].as_array().unwrap().len();
+        let values: Vec<_> = rows
+            .iter()
+            .flat_map(|row| row.as_array().unwrap().iter().map(|v| v.as_f64().unwrap()))
+            .collect();
+        let x = NumericBuffer {
+            rows: rows.len(),
+            cols,
+            missing: vec![false; values.len()],
+            values,
+        };
+        let target = if case["task"] == "regression" {
+            ModelTarget::Regression {
+                values: case["y"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_f64().unwrap())
+                    .collect(),
+            }
+        } else {
+            ModelTarget::Classification {
+                classes: case["classes"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.to_string())
+                    .collect(),
+                labels: case["y"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_u64().unwrap() as usize)
+                    .collect(),
+            }
+        };
+        let spec = ModelSpec::RandomForest {
+            trees: 1,
+            max_depth: Some(case["max_depth"].as_u64().unwrap() as usize),
+            min_samples_split: 2,
+            min_samples_leaf: 1,
+            max_features: MaxFeatures::All,
+            bootstrap: false,
+            seed: 11,
+        };
+        let fit = models::fit(&spec, &x, &target).unwrap();
+        let ModelState::Forest { trees, .. } = &fit.state else {
+            panic!("Wrong state");
+        };
+        let root = &trees[0].nodes[0];
+        match root {
+            TreeNode::Leaf { impurity, .. } => {
+                assert_eq!(case["root_is_leaf"], true);
+                close(
+                    *impurity,
+                    case["root_impurity"].as_f64().unwrap(),
+                    1e-10,
+                    1e-8,
+                );
+            }
+            TreeNode::Split {
+                feature,
+                threshold,
+                impurity,
+                impurity_decrease,
+                ..
+            } => {
+                assert_eq!(*feature, case["root_feature"].as_u64().unwrap() as usize);
+                assert_eq!(*threshold, case["root_threshold"].as_f64().unwrap());
+                close(
+                    *impurity,
+                    case["root_impurity"].as_f64().unwrap(),
+                    1e-10,
+                    1e-8,
+                );
+                close(
+                    *impurity_decrease,
+                    case["root_impurity_decrease"].as_f64().unwrap(),
+                    1e-10,
+                    1e-8,
+                );
+            }
+        }
+        if let Some(rows) = case["evaluation_x"].as_array() {
+            let values: Vec<_> = rows
+                .iter()
+                .flat_map(|row| row.as_array().unwrap().iter().map(|v| v.as_f64().unwrap()))
+                .collect();
+            let evaluate = NumericBuffer {
+                rows: rows.len(),
+                cols,
+                missing: vec![false; values.len()],
+                values,
+            };
+            match fit.predict(&evaluate).unwrap() {
+                ModelPrediction::Regression { values } => assert_eq!(
+                    values,
+                    case["predictions"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .map(|v| v.as_f64().unwrap())
+                        .collect::<Vec<_>>()
+                ),
+                ModelPrediction::Classification { probabilities, .. } => assert_eq!(
+                    probabilities.values,
+                    case["probabilities"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .flat_map(|row| row.as_array().unwrap().iter().map(|v| v.as_f64().unwrap()))
+                        .collect::<Vec<_>>()
+                ),
+            }
+        }
     }
 }
