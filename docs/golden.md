@@ -192,6 +192,17 @@ not a requirement that Linux produce byte-identical binaries.
   Coverage is exact, padding is excluded, and every block uses the original
   canvas's global pixel index. The `.1`/nextafter boundary case prevents an
   apparently tiny coordinate tolerance from hiding a changed coverage cell.
+- `wsidata_contract_spec.py`, its inputs and reference JSON: strict optional
+  WSI metadata normalization and generation-time geometry/TileSpec snapshots.
+  The Rust builder receives only actual rectangle geometry and declared scale,
+  not ambiguous upstream x/y columns. Tile IDs, obs tile IDs, row IDs and region
+  linkage form a checked bijection. Missing historical manifests, stale or
+  corrupted snapshots, unproven padding and unsupported transforms error.
+  Continuous metadata roles normalize to lossless f64 with exact hexadecimal
+  canonicalization, including signed zero and subnormals. A declared IEEE
+  roundoff bound applies only to nominal-span consistency; it never changes
+  coordinates, cache equality or raster membership. The real Python geometry
+  reader also rejects interior rings before constructing this normalized input.
 
 The clinical Logistic fixture reuses lesion rows to validate numerical solvers;
 its 94/92 complete cases are sample counts, not independent-patient counts.

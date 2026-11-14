@@ -1,0 +1,287 @@
+{
+  "schema": "python_golden_v1.wsidata_contract.inputs.v1",
+  "tile_key": "tiles",
+  "source": "synthetic_known_source",
+  "tile_spec": {
+    "width": 2,
+    "height": 2,
+    "stride_width": 2,
+    "stride_height": 2,
+    "mpp": 1,
+    "ops_level": 1,
+    "ops_downsample": 1,
+    "base_level": 0,
+    "base_downsample": 2,
+    "tissue_name": "known"
+  },
+  "shape_to_level0": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "slide_shape_wh": [
+    20,
+    20
+  ],
+  "level0_mpp_xy": [
+    0.5,
+    0.5
+  ],
+  "shape_rows": [
+    {
+      "tile_id": "T0",
+      "x": 2,
+      "y": 2,
+      "geometry_corners": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "tile_id": "T1",
+      "x": 6,
+      "y": 2,
+      "geometry_corners": [
+        [
+          4,
+          0
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          0
+        ]
+      ]
+    }
+  ],
+  "table_region": "tiles",
+  "obs_tile_ids": [
+    "T1",
+    "T0"
+  ],
+  "obs_row_ids": [
+    "barcode_B",
+    "barcode_A"
+  ],
+  "expected_row_order": [
+    1,
+    0
+  ],
+  "explicit_transform_variant": {
+    "shape_to_level0": [
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "shape_rows": [
+      {
+        "tile_id": "T0",
+        "geometry_corners": [
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "tile_id": "T1",
+        "geometry_corners": [
+          [
+            2,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            0
+          ]
+        ]
+      }
+    ]
+  },
+  "failure_variants": [
+    "duplicate_shape_ID",
+    "duplicate_obs_tile_ID",
+    "same_N_wrong_IDs",
+    "wrong_region",
+    "missing_generation_manifest",
+    "same_IDs_changed_geometry",
+    "same_IDs_changed_tilespec",
+    "rotated_polygon",
+    "non_axis_aligned_transform",
+    "unknown_edge_validity",
+    "nonzero_base_level"
+  ],
+  "license": "CC0-1.0 original synthetic geometry and identity records",
+  "translation_variant": {
+    "shape_to_level0": [
+      [
+        1.0,
+        0.0,
+        0.1
+      ],
+      [
+        0.0,
+        1.0,
+        0.1
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "edge_validity_variant": {
+    "shape_rows": [
+      {
+        "tile_id": "edge",
+        "geometry_corners": [
+          [
+            18,
+            0
+          ],
+          [
+            22,
+            0
+          ],
+          [
+            22,
+            4
+          ],
+          [
+            18,
+            4
+          ],
+          [
+            18,
+            0
+          ]
+        ],
+        "valid_pixels": [
+          0,
+          0,
+          1,
+          2
+        ]
+      }
+    ],
+    "expected_valid_pixels": [
+      0,
+      0,
+      1,
+      2
+    ]
+  },
+  "nominal_span_verification": {
+    "operations": 6,
+    "max_relative_bound": 1e-10,
+    "scope": "metadata validation only, actual coordinates/hex snapshots/raster inequalities unchanged"
+  },
+  "patient_id": "P1",
+  "slide_id": "Slide1",
+  "feature_names": [
+    "embedding_0",
+    "embedding_1"
+  ],
+  "embedding_values": [
+    [
+      2,
+      20
+    ],
+    [
+      1,
+      10
+    ]
+  ],
+  "expected_aligned_values": [
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      20
+    ]
+  ]
+}
