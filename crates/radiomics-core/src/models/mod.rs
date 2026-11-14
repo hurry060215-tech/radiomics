@@ -3,8 +3,10 @@ use crate::contracts::{unique_nonempty, NumericBuffer};
 use crate::errors::{ErrorCode, RadResult, RadiomicsError};
 use serde::{Deserialize, Serialize};
 
+mod forest;
 mod linear;
 mod sparse;
+pub use forest::{DecisionTree, MaxFeatures, TreeNode};
 pub use sparse::{fit_sparse, SparseFit, SparseMethod, SparseSpec};
 
 pub(crate) fn invalid(message: impl Into<String>) -> RadiomicsError {
@@ -45,6 +47,15 @@ pub enum ModelSpec {
         priors: Option<Vec<f64>>,
         var_smoothing: f64,
     },
+    RandomForest {
+        trees: usize,
+        max_depth: Option<usize>,
+        min_samples_split: usize,
+        min_samples_leaf: usize,
+        max_features: MaxFeatures,
+        bootstrap: bool,
+        seed: u64,
+    },
 }
 impl ModelSpec {
     pub fn validate(&self) -> RadResult<()> {
@@ -76,6 +87,25 @@ impl ModelSpec {
                     validate_priors(p)?;
                 }
                 Ok(())
+            }
+            Self::RandomForest {
+                trees,
+                max_depth,
+                min_samples_split,
+                min_samples_leaf,
+                max_features,
+                ..
+            } => {
+                if *trees == 0
+                    || max_depth == &Some(0)
+                    || *min_samples_split < 2
+                    || *min_samples_leaf == 0
+                    || matches!(max_features, MaxFeatures::Count { count: 0 })
+                {
+                    Err(invalid("Forest needs trees>0, depth>0 when set, min_samples_split>=2, min_samples_leaf>0 and positive max_features."))
+                } else {
+                    Ok(())
+                }
             }
         }
     }
@@ -217,6 +247,11 @@ pub enum ModelState {
         priors: Vec<f64>,
         epsilon: f64,
     },
+    Forest {
+        classes: Vec<String>,
+        trees: Vec<DecisionTree>,
+        rng_scheme: String,
+    },
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -289,6 +324,7 @@ impl FittedModel {
                 target: ModelTarget::Classification { classes, .. },
                 ..
             } => Some(classes),
+            ModelState::Forest { classes, .. } if !classes.is_empty() => Some(classes),
             _ => None,
         }
     }
@@ -399,6 +435,32 @@ impl FittedModel {
                 }
                 self.report.validate(false)?;
             }
+            (
+                ModelSpec::RandomForest {
+                    trees: expected,
+                    max_features,
+                    ..
+                },
+                ModelState::Forest {
+                    classes,
+                    trees,
+                    rng_scheme,
+                },
+            ) => {
+                if !classes.is_empty() {
+                    validate_classes(classes)?;
+                }
+                if trees.len() != *expected || rng_scheme != crate::random::RNG_SCHEME {
+                    return Err(invalid(
+                        "Forest tree count or recorded RNG scheme is invalid.",
+                    ));
+                }
+                max_features.count(self.feature_count)?;
+                for tree in trees {
+                    tree.validate(self.feature_count, classes)?;
+                }
+                self.report.validate(false)?;
+            }
             _ => {
                 return Err(invalid(
                     "Model specification and fitted state type disagree.",
@@ -501,7 +563,33 @@ impl FittedModel {
                     probabilities: buffer(x.rows, classes.len(), probabilities),
                 })
             }
+            ModelState::Forest { classes, trees, .. } => forest::predict(trees, classes, x),
         }
+    }
+}
+
+impl crate::bundle::FittedState for FittedModel {
+    fn validate(&self, manifest: &crate::bundle::ModelManifest) -> RadResult<()> {
+        FittedModel::validate(self)?;
+        manifest.validate()?;
+        if manifest.feature_names.len() != self.feature_count
+            || self.classes().unwrap_or(&[]) != manifest.classes.as_slice()
+        {
+            return Err(invalid(
+                "Model manifest feature or class order disagrees with the typed fitted state.",
+            ));
+        }
+        let valid_task = match manifest.task {
+            crate::contracts::Task::Regression => self.classes().is_none(),
+            crate::contracts::Task::Binary => self.classes().is_some_and(|c| c.len() == 2),
+            crate::contracts::Task::Multiclass => self.classes().is_some_and(|c| c.len() >= 3),
+        };
+        if !valid_task {
+            return Err(invalid(
+                "Model manifest task disagrees with the fitted state.",
+            ));
+        }
+        Ok(())
     }
 }
 
@@ -538,6 +626,7 @@ pub fn fit(spec: &ModelSpec, x: &NumericBuffer, target: &ModelTarget) -> RadResu
             priors,
             var_smoothing,
         } => fit_nb(x, target, priors, *var_smoothing)?,
+        ModelSpec::RandomForest { .. } => forest::fit(spec, x, target)?,
     };
     let model = FittedModel {
         spec: spec.clone(),

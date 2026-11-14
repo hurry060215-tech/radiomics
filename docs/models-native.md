@@ -27,6 +27,7 @@ turn multiclass targets into continuous regression values. Regression uses
 | `Ridge { lambda, rank_tolerance }` | Mean squared loss divided by two plus `lambda/2 * sum(coefficients²)` using the same SVD implementation. Positive regularization accepts deficient feature designs. `lambda=0` requires full rank. |
 | `KNN { k, weights }` | Binary/multiclass probabilities or regression means; Euclidean distances; `uniform` or `distance` weighting. Exact zero-distance neighbors receive all distance weight. Equal distances use original training-row order. |
 | `GaussianNB { priors, var_smoothing }` | Binary/multiclass Gaussian likelihoods. Class variances are population variances plus `var_smoothing * max(training population variance)`. Priors are explicit class-ordered probabilities or empirical class proportions. |
+| `RandomForest { trees, max_depth, min_samples_split, min_samples_leaf, max_features, bootstrap, seed }` | CART classification with Gini impurity or regression with squared-error impurity; bootstrap draws contain the same number of rows as training. Class leaves hold empirical probabilities; regression leaves hold means. |
 
 `rank_tolerance` is relative to the largest singular value and must lie strictly
 between zero and one. Smoothing and regularization are finite nonnegative
@@ -89,3 +90,41 @@ selection leakage and complete `.rad` pipeline packaging have separate checks.
 The native optimizer's coefficient values and iteration sequence need not match
 sklearn's optimizer, while the frozen objective, gradient and predictions must.
 No external estimator name is used for a different native algorithm.
+
+## Forest rules and acceptance
+
+`MaxFeatures` is explicitly `All`, `Sqrt` or `Count { count }`. A node samples
+candidate features without replacement, then checks them in original feature
+order. A candidate threshold is the midpoint of consecutive distinct sorted
+values. Equal impurity improvements choose the lowest feature index and then
+the lowest threshold. Prediction sends `x <= threshold` to the left child.
+Pure nodes, depth limits and explicit minimum sample requirements terminate
+growth. Every tree uses the same implementation for classification and
+regression, with task-specific impurity and leaf values.
+
+The shared RNG scheme is recorded in fitted state:
+`sha256-chacha8-rand0.8.5-rand_chacha0.3.1-v1`. Each tree calls
+`component_rng(seed, "random-forest-tree-v1", tree_index_u64.to_le_bytes())`.
+Bootstrap sampling consumes that tree's stream first, followed by node feature
+subsampling in deterministic depth-first order. `All` does not consume random
+draws for feature ordering. There is no inner thread pool; the outer workflow
+controls concurrency. Adding a tree does not change earlier trees' random
+streams. This scheme is intentionally separate from the legacy bootstrap-index
+compatibility contract and from sklearn's tree RNG.
+
+Trees use flat node arrays with explicit child indices. Validation checks
+reachability, parent counts, forward child topology, finite split thresholds,
+sample count conservation, class probability sums and the recorded RNG scheme.
+Malformed or nonconverged states cannot pass `.rad` model validation.
+
+Frozen acceptance uses five hand CART cases, plus three fixed tasks with 200
+trees for each seed `11, 23, 37, 53, 71`. The behavioral comparison aggregates
+the two lesion predictions per test patient before computing each task's gate.
+Binary AUC/Brier, multiclass macro-F1 and regression RMSE have separate frozen
+thresholds; an aggregate across tasks cannot hide failure. Within the native
+implementation, repeated fits, outer thread pools with one and three workers,
+and JSON save/load reproduce exactly. The native forest is not required to
+reconstruct sklearn's trees from the same numeric seed.
+
+Performance is assessed in the separate ML & Stats benchmark suite. Passing
+these numerical/behavioral tests does not assert a speed or peak-memory result.
