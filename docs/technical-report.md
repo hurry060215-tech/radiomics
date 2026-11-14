@@ -209,6 +209,21 @@ GitHub Actions 的实际已核实证据为 [run43602824324](https://github.com/h
 
 ## 8. 限制与后续工作
 
+### 独立部署端点测量补充
+
+L5 在不可变 v3 构建上单独测量两个新进程端点，每个固定七次、无预热，
+没有计算不同工作量之间的速度比。CLI `--version` 的 median 为 3.611 ms、
+IQR 为 0.567 ms、经验 p95 为 48.817 ms；首个 67.938 ms 慢样本被保留。
+Python 隔离模式导入并查询 `backend_info` 的 median 为 45.052 ms、IQR 为
+3.447 ms、经验 p95 为 51.142 ms。这是端点启动证据，不是图像或模型计算耗时。
+
+固定 wheel 为 3,723,631 压缩字节，CLI 为 9,058,304 字节。一个全新环境中的
+单次离线 `--no-deps` wheel 包体安装耗时 0.762398 s（n=1）；它不包含基础
+Python、NumPy/Pandas/Matplotlib、依赖解析、下载或环境创建成本。启动后项目
+自身 59 个普通文件合计 10,074,196 逻辑字节，不能解释为磁盘簇占用或全部依赖
+体积。原始记录保存在 `E:/radiomics-build/benchmark-v2/deployment-v3-1/`。
+这补充部署成本的有限证据，不改变三套算法/工作流性能的独立评价。
+
 主要性能限制是 prepared-array 入口，尤其公开 CT2.50×慢与高灰度合成3D的 runtime 回归；CT完整流程1.225×也低于目标。代码可见数组/图像/mask 在多个 JSON/PyO3 请求中重复转换与验证；它是应优先 profiling 的开销假设，尚无独立 stage/allocator 数据能量化归因。下一步应在同一固定案例上分解转换、验证、分箱、矩阵/标量和输出，再考虑共用连续缓冲区或原生 owned image 对象。改变软件后以新不可变快照重跑相同网格，保留本次结果，不改 seed/数据/次数/容差/目标。
 
 当前不覆盖 DICOM/RTSTRUCT、配准优化器、N4、通用 WSI/KFB、复杂染色分离、mesh表面积/球形度、LoG/Wavelet/LBP、2.5D、局部纹理图、SLIC/GPU生境、非标准拓扑/分形/ITH、ComBat、复杂生存分析、NRI/IDI、深度训练、自动分割、MIL、GUI 和论文自动生成。外部已处理结果可以显式输入，但不因此成为本包原生算法。
