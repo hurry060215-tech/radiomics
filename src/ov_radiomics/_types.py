@@ -158,7 +158,9 @@ class ImageSample(_NativeObject):
             for name, invalid in zip(names, missing) if invalid]
         table = dict(data=dict(rows=1, cols=len(names), values=np.where(missing, 0., values).tolist(),
             missing=missing.tolist()), samples=[self.metadata],
-            features=[dict(name=name, definition='python_golden_v1 explicit native Original subset', unit=None) for name in names],
+            features=[dict(name=name, definition='python_golden_v1 explicit Original subset; see features-native.md',
+                unit=name.rsplit('_',1)[-1] if name.rsplit('_',1)[-1] in
+                    ('mm','mm2','mm3','native','native2','native3','index','voxels') else None) for name in names],
             effective_parameters=dict(extraction=config, roi_label=roi_label, families=families), quality=quality)
         return FeatureTable(table)
 

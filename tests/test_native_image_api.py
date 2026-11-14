@@ -16,6 +16,7 @@ def test_native_array_image_mask_geometry_preparation_and_extraction():
     table = sample.extract(config)
     assert table.features.original_firstorder_Mean.item() == 2.
     assert table.features.original_shape_basic_Area_mm2.item() == 36.
+    assert next(definition['unit'] for definition in table.definitions if definition['name']=='original_shape_basic_Area_mm2')=='mm2'
     family=sample.extract(config,families=['firstorder'])
     assert len(family.definitions)==16
     assert all(definition['name'].startswith('original_firstorder_') for definition in family.definitions)
