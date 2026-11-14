@@ -155,3 +155,15 @@ load and file-cache state were not controlled. This snapshot's numerical and
 operation checks pass within the measured scope; the disclosed performance
 misses remain performance work, and formal publication/version changes still
 require separate authorization.
+
+### Subsequent Windows process-supervision finding
+
+Later inspection identified that this Windows venv's `Scripts/python.exe` is
+a launcher with a separate base-Python worker. Coordinator polling of the
+initial Popen PID therefore does not by itself prove real-time supervision of
+the actual worker's RSS or complete descendant cleanup on timeout. The recorded
+peak still incorporates the real worker's own post-transport lifetime high-water
+footer, so the observed peak values and post-completion 2 GiB comparisons remain
+valid. They must not be presented as a tested guarantee of immediate termination
+at the budget boundary. A subsequent owned-process-tree watchdog repair is being
+validated separately; no original observation or frozen measurement is replaced.
