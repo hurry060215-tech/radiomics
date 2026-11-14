@@ -191,3 +191,10 @@ def test_ct_is_append_only_with_case_specific_binning_and_dynamic_complete_count
     records=[dict(status='ok') for _ in range(840)]
     assert module.overall_status(summaries,cache,records,expected_case_count=60)['correctness_status']=='passed_measured_applicable_cases'
     assert module.overall_status(summaries,cache,records[:-1],expected_case_count=60)['correctness_status'].startswith('failed_')
+
+
+def test_windows_localized_metadata_is_captured_as_bytes_without_locale_reader_failure():
+    text='电源方案 GUID: 12345678 (平衡)'
+    for encoding in ('utf-8','utf-16','gb18030'):
+        observed,_=module.decode_windows_metadata(text.encode(encoding))
+        assert observed==text

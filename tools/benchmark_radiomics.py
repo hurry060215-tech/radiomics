@@ -733,12 +733,26 @@ def machine_details(fixtures,output):
         details['missing_provenance']=[key for key in details['missing_provenance'] if key!='physical core count']
     if sys.platform=='win32':
         try:
-            mode=subprocess.check_output(['powercfg','/getactivescheme'],text=True,timeout=10,stderr=subprocess.DEVNULL).strip()
+            raw_mode=subprocess.check_output(['powercfg','/getactivescheme'],timeout=10,stderr=subprocess.DEVNULL)
+            mode,encoding=decode_windows_metadata(raw_mode)
             details['power_mode']=mode;details['missing_provenance']=[key for key in details['missing_provenance'] if key!='power mode']
-        except (OSError,subprocess.SubprocessError,UnicodeError):
+            details['power_mode_output_encoding']=encoding;details['power_mode_raw_hex']=raw_mode.hex()
+        except (OSError,subprocess.SubprocessError,UnicodeError,TypeError):
             pass
     details['background_load']='Other host processes not controlled by runner; all seven fixed observations retained and spread reported.'
     return details
+
+
+def decode_windows_metadata(raw):
+    if not isinstance(raw,bytes):
+        raise TypeError('Windows metadata command must be captured as bytes.')
+    encodings=['utf-16'] if raw.startswith((b'\xff\xfe',b'\xfe\xff')) else ['utf-16-le','utf-8','gb18030'] if b'\0' in raw[:64] else ['utf-8','gb18030']
+    for encoding in encodings:
+        try:
+            return raw.decode(encoding).strip(),encoding
+        except UnicodeError:
+            continue
+    return raw.decode('utf-8',errors='replace').strip(),'utf-8-replacement; original bytes retained'
 
 
 def cases(plan,manifest,ct_plan=None):
