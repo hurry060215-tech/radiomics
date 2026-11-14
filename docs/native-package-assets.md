@@ -17,6 +17,14 @@ license without shipping unusable CT-specific tests in the sdist. Archive
 membership is checked before standalone tutorial/test validation; membership
 alone is not a claim that every packaged command was executed.
 
+The `source-delivery-v1` archive was actually unpacked and all six native tutorial
+scripts were run from that unpacked tree with the installed immutable-v3 wheel
+in the native-only environment. All six exited successfully, using the archive's
+own helper/fixtures and producing models, tables and overlay figures. Evidence is
+`E:/radiomics-build/source-delivery-v1/tutorial-evidence.json`, which records the
+archive hash and individual output provenance. This checks packaged tutorial
+execution; the separate derived-lock source-build evidence remains distinct.
+
 For an immutable, native-host wheel/CLI snapshot from a clean source commit:
 
 ```powershell
