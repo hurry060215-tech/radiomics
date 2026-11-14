@@ -11,6 +11,60 @@ fn input_error(error: core::InputError) -> PyErr {
 mod _native {
     use super::*;
 
+    #[pyfunction]
+    fn create_split_plan(
+        py: Python<'_>,
+        observations: String,
+        task: String,
+        classes: Vec<String>,
+        outer_k: usize,
+        inner_k: usize,
+        seed: u64,
+    ) -> PyResult<String> {
+        py.detach(|| {
+            let rows: Vec<core::split::SplitObservation> = serde_json::from_str(&observations)?;
+            let task: core::contracts::Task =
+                serde_json::from_value(serde_json::Value::String(task))?;
+            let plan =
+                core::split::SplitPlan::from_cohorts(&rows, task, classes, outer_k, inner_k, seed)?;
+            Ok(serde_json::to_string(&plan)?)
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn validate_split_plan(py: Python<'_>, plan: String) -> PyResult<String> {
+        py.detach(|| {
+            let plan: core::split::SplitPlan = serde_json::from_str(&plan)?;
+            plan.fingerprint()
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn validate_split_observations(
+        py: Python<'_>,
+        plan: String,
+        observations: String,
+    ) -> PyResult<()> {
+        py.detach(|| {
+            let plan: core::split::SplitPlan = serde_json::from_str(&plan)?;
+            let rows: Vec<core::split::SplitObservation> = serde_json::from_str(&observations)?;
+            plan.validate_observations(&rows)
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    fn assert_shared_split_plan(py: Python<'_>, first: String, second: String) -> PyResult<()> {
+        py.detach(|| {
+            let first: core::split::SplitPlan = serde_json::from_str(&first)?;
+            let second: core::split::SplitPlan = serde_json::from_str(&second)?;
+            first.assert_shared(&second)
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
+
     #[pymodule_export]
     const CORE_VERSION: &str = env!("CARGO_PKG_VERSION");
 

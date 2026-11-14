@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/radiomics-core", "crates/radiomics-python"]
+members = ["crates/radiomics-core", "crates/radiomics-python", "crates/radiomics-cli"]
 resolver = "2"
 
 [workspace.package]

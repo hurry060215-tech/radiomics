@@ -134,13 +134,13 @@ impl Geometry {
             SpatialUnit::Unknown => 1.0,
             unit => unit.millimeter_factor()?,
         };
-        // Bound discrepancy over all voxel-center corners, rather than just affine entries.
+        // Outer voxel corners also test singleton-axis spacing and orientation.
         for corner in 0..8 {
             let index = std::array::from_fn(|j| {
                 if corner & (1 << j) == 0 {
-                    0.0
+                    -0.5
                 } else {
-                    (self.shape[j] - 1) as f64
+                    self.shape[j] as f64 - 0.5
                 }
             });
             let x = self.world(index);
@@ -550,12 +550,51 @@ impl PredictionTable {
                 .collect::<Vec<_>>(),
             "Prediction sample IDs",
         )?;
+        let unit_ids: Vec<String> = self
+            .rows
+            .iter()
+            .map(|r| match self.unit {
+                PredictionUnit::Patient => r.patient_id.clone(),
+                PredictionUnit::Slide => r.slide_id.clone().unwrap_or_default(),
+                PredictionUnit::Tile => r.tile_id.clone().unwrap_or_default(),
+                PredictionUnit::Sample => r.sample_id.clone(),
+            })
+            .collect();
+        unique_nonempty(&unit_ids, "Prediction unit IDs")?;
+        let mut slide_parents = BTreeMap::new();
+        let mut tile_parents = BTreeMap::new();
         for row in &self.rows {
-            if row.patient_id.is_empty() || row.cohort.is_empty() || row.training_source.is_empty()
+            if row.patient_id.trim().is_empty()
+                || row.cohort.trim().is_empty()
+                || row.training_source.trim().is_empty()
             {
                 return Err(invalid(
                     "Predictions require patient, cohort and training provenance.",
                 ));
+            }
+            if let Some(slide) = &row.slide_id {
+                if slide.trim().is_empty()
+                    || slide_parents
+                        .insert(slide, &row.patient_id)
+                        .is_some_and(|p| p != &row.patient_id)
+                {
+                    return Err(invalid(
+                        "A slide ID must be nonempty and belong to exactly one patient.",
+                    ));
+                }
+            }
+            if let Some(tile) = &row.tile_id {
+                let slide = row
+                    .slide_id
+                    .as_ref()
+                    .ok_or_else(|| invalid("A tile requires a parent slide ID."))?;
+                if tile.trim().is_empty()
+                    || tile_parents.insert(tile, slide).is_some_and(|s| s != slide)
+                {
+                    return Err(invalid(
+                        "A tile ID must be nonempty and belong to exactly one slide.",
+                    ));
+                }
             }
             if self.unit == PredictionUnit::Tile
                 && row.tile_id.as_ref().is_none_or(|v| v.is_empty())

@@ -1,0 +1,17 @@
+[package]
+name = "ov-radiomics-cli"
+description = "Independent Python-free radiomics command line workflow"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "radiomics"
+path = "src/main.rs"
+
+[dependencies]
+ov-radiomics-core = { path = "../radiomics-core" }
+clap = { version = "4", features = ["derive"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }

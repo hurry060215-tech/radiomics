@@ -4,6 +4,10 @@ An independently maintained Python package with a Rust numerical core: medical i
 
 The canonical repository is [hurry060215-tech/radiomics](https://github.com/hurry060215-tech/radiomics). OmicVerse and other projects can consume the package through ordinary Python imports; this repository is developed and released independently.
 
+Native development is tracked in the [implementation and acceptance ledger](docs/native-development.md).
+The sections below describe the original Python workflow. New native functionality
+is accepted module by module; the development plan is not a claim of full support.
+
 **Initial scope:** a single-center binary classification study with one row per independent patient. The repository includes real PyRadiomics extraction, train-fitted feature selection, eight classifier adapters, clinical statistics, logistic probability fusion, and publication-oriented plots. It does not contain patient data or depend on Onekey.
 
 ## Install
