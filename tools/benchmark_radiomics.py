@@ -130,7 +130,7 @@ def prepare(plan,plan_sha,output):
         directory=output/spec['id'];directory.mkdir()
         source=None
         if 'source' in spec:
-            source=ROOT/spec['source'];frozen=json.loads((source/'manifest.json').read_text())
+            source=ROOT/spec['source'];frozen=json.loads((source/'manifest.json').read_text(encoding='utf-8'))
             for name in ('image.nii.gz','mask.nii.gz'):
                 if sha256_file(source/name)!=frozen['files_sha256'][name]:
                     raise ValueError('IBSI source bytes no longer match their independent frozen manifest.')
@@ -201,7 +201,7 @@ def shape_basic_spec(mask,affine):
 
 
 def compare_artifacts(reference,native,plan):
-    a=json.loads(Path(reference).read_text());b=json.loads(Path(native).read_text())
+    a=json.loads(Path(reference).read_text(encoding='utf-8'));b=json.loads(Path(native).read_text(encoding='utf-8'))
     if a['sample_ids']!=b['sample_ids'] or a['feature_names']!=b['feature_names']:
         return dict(passed=False,reason='Exact sample ID/order or feature order mismatch.')
     if len(a['values'])!=len(b['values']):
@@ -227,6 +227,14 @@ def compare_artifacts(reference,native,plan):
                 failures.append(dict(sample_id=a['sample_ids'][row],feature=name,reference=expected,actual=actual))
     return dict(passed=not failures,compared_values=sum(map(len,a['values'])),maximum_absolute_error=maximum_absolute_error,
         mismatch_count=len(failures),first_mismatches=failures[:20])
+
+
+def safe_compare_artifacts(reference,native,plan):
+    try:
+        return compare_artifacts(reference,native,plan)
+    except Exception as exc:
+        return dict(passed=False,reason='Numerical comparison artifact/protocol failed; completed backend observations are retained.',
+            error=f'{type(exc).__name__}: {exc}',traceback=traceback.format_exc())
 
 
 def peak_resident_bytes():
@@ -259,7 +267,7 @@ def process_memory(pid):
         finally:
             kernel.CloseHandle(handle)
     try:
-        lines=Path(f'/proc/{pid}/status').read_text().splitlines()
+        lines=Path(f'/proc/{pid}/status').read_text(encoding='utf-8').splitlines()
         stats={line.split(':',1)[0]:line.split(':',1)[1].strip() for line in lines if ':' in line}
         return int(stats['VmRSS'].split()[0])*1024,int(stats['VmHWM'].split()[0])*1024
     except (OSError,ValueError,KeyError):
@@ -272,15 +280,28 @@ def package_files(package):
         if p.is_file() and p.suffix.lower() in ('.py','.pyd','.so','.dll')}
 
 
+def validate_reference_files(actual,expected,revision,declared_revision):
+    if not expected or revision!=declared_revision:
+        raise RuntimeError('Reference source/build provenance is missing or has a different approved public revision; pending, not verified.')
+    if not any(name.endswith(('.pyd','.so')) for name in expected) or not any(name.endswith('.py') for name in expected):
+        raise RuntimeError('Expected reference provenance must include source and compiled-extension hashes.')
+    for name,digest in expected.items():
+        if actual.get(name)!=digest:
+            raise RuntimeError(f'Reference file {name} differs from the frozen public3.0.1 source/build artifact. A different platform build needs independently reviewed expected build hashes, not a version-string pass.')
+
+
 def worker_setup(request,plan):
     import numpy as np
     import pandas as pd
-    versions={}
-    for name in ('numpy','pandas','matplotlib','SimpleITK','pyradiomics','scipy','scikit-learn','statsmodels','joblib','threadpoolctl'):
-        try:
-            versions[name]=importlib.metadata.version(name)
-        except importlib.metadata.PackageNotFoundError:
-            versions[name]=None
+    audit=bool(request.get('describe_only'))
+    versions=request.get('preflight_environment',{}).get('versions',{})
+    if audit:
+        versions={}
+        for name in ('numpy','pandas','matplotlib','SimpleITK','pyradiomics','scipy','scikit-learn','statsmodels','joblib','threadpoolctl'):
+            try:
+                versions[name]=importlib.metadata.version(name)
+            except importlib.metadata.PackageNotFoundError:
+                versions[name]=None
     state=dict(request=request,plan=plan,np=np,pd=pd)
     if request['backend']=='rust':
         import inspect
@@ -289,18 +310,28 @@ def worker_setup(request,plan):
         root=Path(rad.__file__).resolve()
         if 'site-packages' not in root.parts:
             raise RuntimeError('Native benchmark must use a dedicated installed immutable wheel, never an editable source tree.')
-        files=package_files(rad)
-        if files!=request['expected_native_package_files']:
-            raise RuntimeError('Installed native package bytes differ from the frozen wheel.')
+        files=None
+        if audit:
+            files=package_files(rad)
+            if files!=request['expected_native_package_files']:
+                raise RuntimeError('Installed native package bytes differ from the frozen wheel.')
+        elif str(root.parent)!=request['expected_package_path']:
+            raise RuntimeError('Measured native module came from a different installed package path.')
         if 'families' not in inspect.signature(rad.ImageSample.extract).parameters:
             raise RuntimeError('The frozen wheel lacks the reviewed selective-family interface; L1 must not time full extraction.')
         state['rad']=rad
         build_info=None
-        if hasattr(_native,'build_info'):
+        if audit and hasattr(_native,'build_info'):
             build_info=_native.build_info()
             if isinstance(build_info,str):
                 build_info=json.loads(build_info)
-        details=dict(package_path=str(root.parent),package_files_sha256=files,core_version=_native.CORE_VERSION,native_build_info=build_info)
+        details=dict(package_path=str(root.parent),core_version=_native.CORE_VERSION,native_build_info=build_info)
+        if not hasattr(_native,'IMPLEMENTATION_SHA256') or _native.IMPLEMENTATION_SHA256!=request['native_build']['core_implementation_sha256']:
+            raise RuntimeError('Installed native core implementation constant differs from the mandatory immutable build receipt.')
+        state['implementation_sha256']=_native.IMPLEMENTATION_SHA256
+        details['core_implementation_sha256']=_native.IMPLEMENTATION_SHA256
+        if audit:
+            details['package_files_sha256']=files
         if any(name in sys.modules for name in ('radiomics','SimpleITK','sklearn','statsmodels')):
             raise RuntimeError('Native measurement unexpectedly imported an external reference backend.')
     else:
@@ -309,7 +340,7 @@ def worker_setup(request,plan):
         import radiomics
         import SimpleITK as sitk
         from radiomics.featureextractor import RadiomicsFeatureExtractor
-        if radiomics.__version__!='v3.0.1' or versions['numpy']!=plan['reference']['numpy'] or sitk.Version_VersionString()!=plan['reference']['simpleitk']:
+        if radiomics.__version__!='v3.0.1' or np.__version__!=plan['reference']['numpy'] or sitk.Version_VersionString()!=plan['reference']['simpleitk']:
             raise RuntimeError('Reference must actually import frozen public PyRadiomics3.0.1/NumPy1.23.0/SimpleITK2.4.1; no 3.1 substitution.')
         if any(name.startswith('ov_radiomics') for name in sys.modules):
             raise RuntimeError('Reference worker imported the native project package.')
@@ -323,21 +354,50 @@ def worker_setup(request,plan):
         if set(extractor.enabledImagetypes)!= {'Original'} or extractor.enabledFeatures!=plan['reference']['features']:
             raise RuntimeError('Reference enabled feature/image scope differs from the frozen explicit selection.')
         state.update(sitk=sitk,reference_classes=classes,extractor=extractor)
-        details=dict(package_path=str(Path(radiomics.__file__).parent),package_files_sha256=package_files(radiomics),
+        package_path=str(Path(radiomics.__file__).resolve().parent)
+        if not audit and package_path!=request['expected_package_path']:
+            raise RuntimeError('Measured reference module came from a different verified package path.')
+        details=dict(package_path=package_path,
             pyradiomics_version=radiomics.__version__,effective_extractor_settings=extractor.settings,
             enabled_features=extractor.enabledFeatures,enabled_image_types=extractor.enabledImagetypes,
             simpleitk_effective_threads=sitk.ProcessObject.GetGlobalDefaultNumberOfThreads())
-    try:
-        import threadpoolctl
-        pools=threadpoolctl.threadpool_info()
-    except ImportError:
-        pools=None
-    details.update(python_executable=sys.executable,python_version=platform.python_version(),versions=versions,
-        thread_environment={key:os.environ.get(key) for key in plan['execution']['thread_environment']},observed_thread_libraries=pools,
-        resident_memory_metric='Windows PeakWorkingSetSize' if sys.platform=='win32' else 'Linux ru_maxrss*1024',
-        peak_before_fixture_bytes=peak_resident_bytes())
+        if audit:
+            files=package_files(radiomics)
+            expected=request.get('expected_reference',{})
+            validate_reference_files(files,expected.get('files'),expected.get('revision'),plan['reference']['pyradiomics_revision'])
+            details.update(package_files_sha256=files,approved_public_revision=expected['revision'],reference_build_hashes_verified=True)
+    import threadpoolctl
+    # The limiter is local to the owned worker and restored by worker() below.
+    # Observe the effective libraries after applying the declared inner limit.
+    state['thread_limiter']=threadpoolctl.threadpool_limits(limits=1)
+    pools=threadpoolctl.threadpool_info()
+    validate_thread_resources(pools,details.get('simpleitk_effective_threads'),request['backend'])
+    state['observed_thread_libraries']=pools
+    if audit:
+        dependencies={}
+        for name in ('numpy.core._multiarray_umath','SimpleITK._SimpleITK'):
+            module=sys.modules.get(name);path=getattr(module,'__file__',None)
+            if path is not None:
+                dependencies[str(Path(path).resolve())]=sha256_file(path)
+        for pool in pools:
+            path=pool.get('filepath')
+            if path and Path(path).is_file():
+                dependencies[str(Path(path).resolve())]=sha256_file(path)
+        details.update(python_executable=sys.executable,python_version=platform.python_version(),versions=versions,
+            thread_environment={key:os.environ.get(key) for key in plan['execution']['thread_environment']},observed_thread_libraries=pools,
+            dependency_binary_files_sha256=dependencies,
+            resident_memory_metric='Windows PeakWorkingSetSize' if sys.platform=='win32' else 'Linux ru_maxrss*1024',
+            peak_before_fixture_bytes=peak_resident_bytes())
     state['environment']=details
     return state
+
+
+def validate_thread_resources(pools,itk_threads,backend):
+    recognized=[pool for pool in pools or [] if pool.get('user_api') in ('blas','openmp')]
+    if not recognized or any(pool.get('num_threads')!=1 for pool in recognized):
+        raise RuntimeError('Actual BLAS/OpenMP thread resources are unavailable or exceed the predeclared inner limit1; not a matched-resource comparison.')
+    if backend=='python' and itk_threads!=1:
+        raise RuntimeError('Actual SimpleITK inner thread count differs from1.')
 
 
 def sitk_images(state,values,mask,affine):
@@ -383,7 +443,7 @@ def prepared_call(state,output):
     if set(frame.columns)!=set(['ID']+columns):
         raise RuntimeError('Prepared public API emitted an extra/missing feature; never filter an unmatched larger family silently.')
     return dict(features=frame[['ID']+columns].sort_values('ID').reset_index(drop=True),diagnostics=None,
-        cache_summary=None,implementation_sha256=None,output_directory=None)
+        cache_summary=None,implementation_sha256=state.get('implementation_sha256'),output_directory=None)
 
 
 def reference_preparation(state,image,roi,affine):
@@ -415,8 +475,8 @@ def e2e_call(state,output):
         result=rad.extract(samples,params=config,backend='rust',n_jobs=case['threads'],cache=request.get('cache_directory'))
         if result.config['failures'] or len(result.features)!=case['roi_count']:
             raise RuntimeError('Native batch did not retain every declared ROI as a successful feature row.')
-        expected=request['native_build'].get('implementation_sha256')
-        if expected is not None and result.config['implementation_sha256']!=expected:
+        expected=request['native_build']['core_implementation_sha256']
+        if result.config['implementation_sha256']!=expected:
             raise RuntimeError('Runtime implementation digest differs from the fixed native build manifest.')
         result.save(output)
         return dict(features=result.features,diagnostics=result.diagnostics,
@@ -458,20 +518,24 @@ def artifact_from_frame(frame,columns,count):
 
 
 def worker(request):
-    plan,digest=load_plan(request['plan'],request['approved_plan_sha256'])
+    # Hash/source/input audits happen in coordinator preflight outside cold wall
+    # time. The measured worker receives the already approved control snapshot.
+    plan=request['plan_contents']
     state=worker_setup(request,plan)
+    try:
+        return worker_execute(request,plan,state)
+    finally:
+        state['thread_limiter'].restore_original_limits()
+
+
+def worker_execute(request,plan,state):
     if request.get('describe_only'):
         return dict(status='ok',environment=state['environment'])
-    manifest=json.loads((Path(request['fixtures'])/'manifest.json').read_text())
-    if manifest['approved_plan_sha256']!=digest:
-        raise RuntimeError('Prepared inputs use a different predeclared plan.')
-    dataset=next(d for d in manifest['datasets'] if d['id']==request['case']['dataset'])
+    dataset=request['dataset_contents']
     directory=Path(request['fixtures'])/dataset['directory']
-    for name,expected in dataset['files_sha256'].items():
-        if sha256_file(directory/name)!=expected:
-            raise RuntimeError('Prepared input content changed after freezing.')
-    state.update(dataset=dataset,values=state['np'].load(directory/'values.npy',allow_pickle=False),
-        mask=state['np'].load(directory/'mask.npy',allow_pickle=False))
+    state['dataset']=dataset
+    if request['case']['level'] in ('L1','L2'):
+        state.update(values=state['np'].load(directory/'values.npy',allow_pickle=False),mask=state['np'].load(directory/'mask.npy',allow_pickle=False))
     call=prepared_call if request['case']['level'] in ('L1','L2') else e2e_call
     observation=Path(request['observation_directory']);observation.mkdir(parents=True,exist_ok=False)
     warmup=[]
@@ -479,17 +543,13 @@ def worker(request):
         started=time.perf_counter();result=call(state,observation/f'warmup-{i}')
         duration=time.perf_counter()-started
         warm_artifact=artifact_from_frame(result['features'],expected_columns(plan,len(dataset['shape_xyz']),request['case'].get('family')),request['case']['roi_count'])
-        write_json(observation/f'warmup-{i}-comparison.json',warm_artifact)
         warmup.append(dict(elapsed_seconds=duration,roi_count=request['case']['roi_count'],cache_summary=result['cache_summary'],
-            output_digest=json_hash(warm_artifact),comparison_artifact=str(observation/f'warmup-{i}-comparison.json')))
+            comparison_values=warm_artifact))
         del result
     import gc
     gc.collect();started=time.perf_counter();result=call(state,observation/'timed')
     elapsed=time.perf_counter()-started
     artifact=artifact_from_frame(result['features'],expected_columns(plan,len(dataset['shape_xyz']),request['case'].get('family')),request['case']['roi_count'])
-    write_json(observation/'comparison.json',artifact)
-    if any(item['output_digest']!=json_hash(artifact) for item in warmup):
-        raise RuntimeError('Warmup and timed calls produced different feature/identity results in the same fixed worker.')
     cache=result['cache_summary'];mode=request['case']['state']
     if mode in ('cache_population','verified_cache_hit'):
         if cache is None or not cache['enabled']:
@@ -497,16 +557,15 @@ def worker(request):
         wanted_hits=request['case']['roi_count'] if mode=='verified_cache_hit' else 0
         if cache['hits']!=wanted_hits or cache['misses']!=request['case']['roi_count']-wanted_hits or cache['rejected'] or cache['write_failures']:
             raise RuntimeError('Measured cache hit/miss/rejection/write counts differ from the declared state.')
-    output_files={str(p.relative_to(observation)).replace('\\','/'):dict(bytes=p.stat().st_size,sha256=sha256_file(p)) for p in sorted(observation.rglob('*')) if p.is_file()}
     peak=peak_resident_bytes()
     if peak is None or peak<=0:
         raise RuntimeError('The declared full-process resident-memory metric is unavailable.')
     return dict(status='ok' if peak<=plan['execution']['memory_budget_bytes'] else 'failed',
         error=None if peak<=plan['execution']['memory_budget_bytes'] else 'OperationalFailure: process peak RSS exceeded the fixed 2GiB memory budget.',
-        elapsed_seconds=elapsed,peak_memory_bytes=peak,comparison_artifact=str(observation/'comparison.json'),
-        output_digest=json_hash(artifact),output_files=output_files,output_bytes=sum(d['bytes'] for name,d in output_files.items() if name.startswith('timed/')),
+        elapsed_seconds=elapsed,peak_memory_bytes=peak,comparison_values=artifact,
         warmup=warmup,timed_roi_count=request['case']['roi_count'],warmup_roi_count=request['warmup_calls']*request['case']['roi_count'],
-        cache_summary=cache,implementation_sha256=result['implementation_sha256'],environment=state['environment'],
+        cache_summary=cache,implementation_sha256=result['implementation_sha256'],environment_snapshot_sha256=request['environment_snapshot_sha256'],
+        observed_thread_libraries=state['observed_thread_libraries'],simpleitk_effective_threads=state['environment'].get('simpleitk_effective_threads'),
         stage_seconds=None,stage_status='Full declared public call measured; no invented per-stage instrumentation.',
         allocation_count=None,allocation_bytes=None,allocation_status='Unmeasured; peak RSS is a process metric, not an allocation count.')
 
@@ -536,7 +595,7 @@ def physical_core_count():
         return count
     try:
         groups=set()
-        for processor in Path('/proc/cpuinfo').read_text().split('\n\n'):
+        for processor in Path('/proc/cpuinfo').read_text(encoding='utf-8').split('\n\n'):
             values={line.split(':',1)[0].strip():line.split(':',1)[1].strip() for line in processor.splitlines() if ':' in line}
             if 'physical id' in values and 'core id' in values:
                 groups.add((values['physical id'],values['core id']))
@@ -592,15 +651,83 @@ def cases(plan,manifest):
     return output
 
 
+def frozen_reference_provenance(plan):
+    directory=ROOT/'golden/python_golden_v1';manifest=json.loads((directory/'manifest.json').read_text(encoding='utf-8'))
+    path=directory/'reference.json'
+    if sha256_file(path)!=manifest['files_sha256']['reference.json']:
+        raise RuntimeError('Frozen reference provenance bytes differ from the accepted Golden manifest.')
+    environment=json.loads(path.read_text(encoding='utf-8'))['environment']
+    if environment['pyradiomics_revision']!=plan['reference']['pyradiomics_revision']:
+        raise RuntimeError('Frozen public reference revision differs from the predeclared benchmark.')
+    return dict(revision=environment['pyradiomics_revision'],files=environment['pyradiomics_files_sha256'],
+        golden_reference_sha256=sha256_file(path))
+
+
+def audit_observation_inputs(request):
+    """All expensive byte audits are outside the owned worker's cold wall clock."""
+    load_plan(request['plan'],request['approved_plan_sha256'])
+    if request.get('describe_only'):
+        return dict(probe=True)
+    environment=request['audit_environment'];directory=Path(environment['package_path'])
+    actual={str(path.relative_to(directory)).replace('\\','/'):sha256_file(path) for path in sorted(directory.rglob('*'))
+        if path.is_file() and path.suffix.lower() in ('.py','.pyd','.so','.dll')}
+    if actual!=environment['package_files_sha256']:
+        raise RuntimeError('Source/installed package bytes changed outside the immutable preflight snapshot.')
+    for path,digest in environment['dependency_binary_files_sha256'].items():
+        if sha256_file(path)!=digest:
+            raise RuntimeError('A compiled numerical dependency changed after non-timed preflight.')
+    dataset=request['dataset_contents'];root=Path(request['fixtures'])/dataset['directory']
+    for name,digest in dataset['files_sha256'].items():
+        if sha256_file(root/name)!=digest:
+            raise RuntimeError('Prepared input bytes changed after non-timed preflight.')
+    return dict(package_sha256=json_hash(actual),input_sha256=dataset['input_sha256'],files_verified=len(actual)+len(dataset['files_sha256']),
+        dependency_binary_files_sha256=environment['dependency_binary_files_sha256'])
+
+
+def merge_peak_memory(worker_peak,coordinator_peak):
+    values=[value for value in (worker_peak,coordinator_peak) if isinstance(value,(int,float)) and value>0]
+    return int(max(values)) if values else None
+
+
+def finish_worker_transport(result,request,footer_peak):
+    """Numerical artifact persistence/digests are parent postflight, not cold API work."""
+    if request.get('describe_only'):
+        return result
+    directory=Path(request['observation_directory'])
+    artifact=result.pop('comparison_values',None)
+    if artifact is not None:
+        directory.mkdir(parents=True,exist_ok=True);write_json(directory/'comparison.json',artifact)
+        result.update(comparison_artifact=str(directory/'comparison.json'),output_digest=json_hash(artifact))
+    for i,item in enumerate(result.get('warmup',[])):
+        values=item.pop('comparison_values',None)
+        if values is not None:
+            write_json(directory/f'warmup-{i}-comparison.json',values)
+            item.update(comparison_artifact=str(directory/f'warmup-{i}-comparison.json'),output_digest=json_hash(values))
+            if values!=artifact:
+                result.update(status='failed',error='Warmup and timed calls differ within the fixed worker; reproducibility failed.')
+    files={str(path.relative_to(directory)).replace('\\','/'):dict(bytes=path.stat().st_size,sha256=sha256_file(path))
+        for path in sorted(directory.rglob('*')) if path.is_file()} if directory.exists() else {}
+    result.update(output_files=files,output_bytes=sum(item['bytes'] for name,item in files.items() if name.startswith('timed/')))
+    return result
+
+
 def launch_worker(executable,request,request_path,stdout_path,stderr_path,budget,timeout):
     """Only this runner's subprocess is monitored/killed; raw errors are retained."""
-    write_json(request_path,request)
+    try:
+        preflight=audit_observation_inputs(request)
+    except Exception as exc:
+        return dict(status='failed',error=f'PreflightAuditFailure: {type(exc).__name__}: {exc}',
+            peak_memory_bytes=None,process_wall_seconds=None,worker_started=False)
+    payload={key:value for key,value in request.items() if key!='audit_environment'}
+    write_json(request_path,payload)
     environment=dict(os.environ)
     environment.pop('PYTHONPATH',None);environment.pop('PYTHONHOME',None)
     plan,_=load_plan(request['plan'],request['approved_plan_sha256'])
     environment.update(plan['execution']['thread_environment']);environment['MPLBACKEND']='Agg'
-    observed_peak=0;sample_count=0;enforced=None;started=time.perf_counter()
+    environment['PYTHONDONTWRITEBYTECODE']='1'
+    observed_peak=0;sample_count=0;enforced=None
     with Path(stdout_path).open('xb') as out,Path(stderr_path).open('xb') as err:
+        started=time.perf_counter()
         process=subprocess.Popen([str(executable),str(Path(__file__).resolve()),'--worker',str(request_path)],
             cwd=ROOT,env=environment,stdout=out,stderr=err)
         while process.poll() is None:
@@ -614,29 +741,75 @@ def launch_worker(executable,request,request_path,stdout_path,stderr_path,budget
                 enforced='OperationalFailure: owned worker exceeded the predeclared observation timeout.'
                 process.kill();break
             time.sleep(.02)
-        process.wait()
-    wall=time.perf_counter()-started
+        process.wait();wall=time.perf_counter()-started
+    # Wall clock is stopped before file audits, protocol parsing, comparisons,
+    # canonical sidecar persistence and output-file re-reading/digests.
     try:
-        result=json.loads(Path(stdout_path).read_text(encoding='utf-8'))
-    except (ValueError,OSError) as exc:
-        result=dict(status='failed',error=f'Worker protocol failure: {type(exc).__name__}: {exc}')
+        messages=[json.loads(line) for line in Path(stdout_path).read_text(encoding='utf-8').splitlines() if line.strip()]
+        if len(messages)!=2 or any(not isinstance(message,dict) for message in messages):
+            raise ValueError('Expected one numerical result and one lifetime-memory footer.')
+        result=messages[0];footer_peak=messages[1].get('worker_peak_after_transport_bytes')
+        if type(footer_peak) is not int or footer_peak<=0:
+            raise ValueError('Lifetime-memory footer is missing or invalid; do not underreport final transport stage.')
+    except Exception as exc:
+        result=dict(status='failed',error=f'Worker protocol failure: {type(exc).__name__}: {exc}');footer_peak=None
+    worker_peak=merge_peak_memory(result.get('peak_memory_bytes'),footer_peak)
+    result['worker_peak_memory_bytes']=worker_peak
+    result['peak_memory_bytes']=merge_peak_memory(worker_peak,observed_peak)
     result.update(process_wall_seconds=wall,worker_exit_code=process.returncode,
         coordinator_peak_resident_bytes=observed_peak or None,resident_poll_samples=sample_count,
         resident_poll_seconds=.02,stdout_path=str(stdout_path),stderr_path=str(stderr_path))
     if process.returncode!=0 or enforced is not None:
         result['status']='failed';result['error']=enforced or result.get('error') or f'Worker exit {process.returncode}'
-    if result.get('peak_memory_bytes') is None:
-        result['peak_memory_bytes']=observed_peak or None
+    if result.get('peak_memory_bytes') is not None and result['peak_memory_bytes']>budget:
+        result.update(status='failed',error='OperationalFailure: full observed lifetime peak exceeded fixed memory budget.')
+    try:
+        postflight=audit_observation_inputs(request)
+        result['non_timed_audits']=dict(before=preflight,after=postflight)
+        result=finish_worker_transport(result,request,footer_peak)
+    except Exception as exc:
+        result.update(status='failed',error=f'NonTimedAuditOrTransportFailure: {type(exc).__name__}: {exc}')
     if request.get('case',{}).get('state')=='cold_process_total':
         result['api_elapsed_seconds']=result.get('elapsed_seconds');result['elapsed_seconds']=wall
     return result
 
 
+def validate_build_manifest(build,wheel,base):
+    def hex_digest(value,length):
+        return isinstance(value,str) and len(value)==length and all(c in '0123456789abcdef' for c in value)
+    if build.get('schema')!='radiomics.native-build.v1' or build.get('source_tree_clean') is not True:
+        raise ValueError('A clean, versioned native build receipt is mandatory; empty/unverified manifests are not accepted.')
+    for key,length in [('source_revision',40),('source_tree',40),('cargo_lock_sha256',64),('core_implementation_sha256',64)]:
+        if not hex_digest(build.get(key),length):
+            raise ValueError('Missing/invalid required native build provenance: '+key)
+    for key in ('rustc_verbose','rust_target','python_version','maturin_version'):
+        if not isinstance(build.get(key),str) or not build[key].strip():
+            raise ValueError('Missing required native build provenance: '+key)
+    if build.get('profile')!=dict(name='release',opt_level=3,lto='thin',codegen_units=1):
+        raise ValueError('The frozen native receipt must identify the declared optimized release profile.')
+    flags=build.get('rust_flags',{})
+    if any(key not in flags or flags[key] is not None and not isinstance(flags[key],str) for key in ('RUSTFLAGS','CARGO_ENCODED_RUSTFLAGS')):
+        raise ValueError('Both explicit native Rust flag states are required.')
+    commands=build.get('build_commands')
+    if not isinstance(commands,list) or not commands or any(not isinstance(cmd,list) or not cmd or any(not isinstance(arg,str) or not arg for arg in cmd) for cmd in commands):
+        raise ValueError('Native build commands must be retained as nonempty argv lists.')
+    for key in ('wheel','cli'):
+        artifact=build.get(key,{})
+        if not isinstance(artifact.get('path'),str) or not hex_digest(artifact.get('sha256'),64):
+            raise ValueError('Native receipt requires path and SHA256 for '+key)
+        path=Path(artifact['path']);path=path if path.is_absolute() else Path(base)/path
+        if not path.is_file() or sha256_file(path)!=artifact['sha256']:
+            raise ValueError('Native '+key+' artifact differs from its mandatory receipt.')
+    if sha256_file(wheel)!=build['wheel']['sha256']:
+        raise ValueError('Requested wheel bytes differ from the receipt.')
+
+
 def package_snapshot(args,output):
-    wheel=Path(args.native_wheel).resolve();build=json.loads(Path(args.native_build_manifest).read_text())
-    expected=build.get('wheel_sha256')
-    if expected is not None and sha256_file(wheel)!=expected:
-        raise ValueError('Native wheel differs from the supplied immutable build manifest.')
+    wheel=Path(args.native_wheel).resolve();receipt=Path(args.native_build_manifest).resolve();build=json.loads(receipt.read_text(encoding='utf-8'))
+    validate_build_manifest(build,wheel,receipt.parent)
+    recorded_tree=subprocess.check_output(['git','rev-parse',build['source_revision']+'^{tree}'],cwd=ROOT,text=True).strip()
+    if recorded_tree!=build['source_tree']:
+        raise ValueError('Native build source revision/tree differ from the repository object provenance.')
     directory=output/'snapshot';directory.mkdir()
     copy=directory/wheel.name;shutil.copyfile(wheel,copy)
     write_json(directory/'native-build.json',build)
@@ -646,9 +819,13 @@ def package_snapshot(args,output):
 
 
 def observation_base(args,snapshot,case,backend,output):
+    environment=snapshot['audited_environments'][backend]
     return dict(plan=str(Path(args.plan).resolve()),approved_plan_sha256=args.approved_plan_sha256,
         fixtures=str(Path(args.fixtures).resolve()),case=case,backend=backend,
-        expected_native_package_files=snapshot['native_wheel']['package_files_sha256'],native_build=snapshot['native_build'],
+        plan_contents=snapshot['plan_contents'],dataset_contents=snapshot['dataset_contents'][case['dataset']],
+        native_build={'core_implementation_sha256':snapshot['native_build']['core_implementation_sha256']},
+        audit_environment=environment,expected_package_path=environment['package_path'],
+        preflight_environment={'versions':environment['versions']},environment_snapshot_sha256=json_hash(environment),
         observation_directory=str(output),warmup_calls=0 if case['state'] in ('cold_process_total','cache_population') else 1)
 
 
@@ -690,14 +867,16 @@ def run(args,plan,plan_sha):
     output=Path(args.output).resolve()
     if output.exists():
         raise FileExistsError('Measurement output must be fresh; no repeated favorable-run overwrite.')
-    fixtures=Path(args.fixtures).resolve();manifest=json.loads((fixtures/'manifest.json').read_text())
+    fixtures=Path(args.fixtures).resolve();manifest=json.loads((fixtures/'manifest.json').read_text(encoding='utf-8'))
     if manifest['approved_plan_sha256']!=plan_sha:
         raise ValueError('Input corpus was prepared from different plan bytes.')
     output.mkdir(parents=True);snapshot=package_snapshot(args,output)
     write_json(output/'plan.json',plan);write_json(output/'input-manifest.json',manifest)
     environments={}
+    reference_expected=frozen_reference_provenance(plan)
     for backend,executable in [('python',args.reference_python),('rust',args.native_python)]:
-        request=dict(plan=str(Path(args.plan).resolve()),approved_plan_sha256=plan_sha,backend=backend,describe_only=True,
+        request=dict(plan=str(Path(args.plan).resolve()),plan_contents=plan,approved_plan_sha256=plan_sha,backend=backend,describe_only=True,
+            expected_reference=reference_expected,
             expected_native_package_files=snapshot['native_wheel']['package_files_sha256'],native_build=snapshot['native_build'])
         result=launch_worker(executable,request,output/f'probe-{backend}.json',output/f'probe-{backend}.stdout.json',output/f'probe-{backend}.stderr.txt',
             plan['execution']['memory_budget_bytes'],plan['execution']['maximum_observation_seconds'])
@@ -711,6 +890,8 @@ def run(args,plan,plan_sha):
         plan_sha256=plan_sha,input_manifest_sha256=sha256_file(fixtures/'manifest.json'),
         benchmark_runner_source_revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         command_arguments=vars(args)))
+    snapshot['audited_environments']={backend:result['environment'] for backend,result in environments.items()}
+    snapshot['plan_contents']=plan;snapshot['dataset_contents']={dataset['id']:dataset for dataset in manifest['datasets']}
     summaries=[];all_records=[];baseline={}
     declared=cases(plan,manifest)
     for case_index,case in enumerate(declared):
@@ -726,7 +907,7 @@ def run(args,plan,plan_sha):
                 pair_records[backend]=raw_observation(case,backend,pair,order,result)
             comparison=dict(passed=False,reason='At least one backend execution failed; retain timings as diagnostic only.')
             if all(r['status']=='ok' for r in pair_records.values()):
-                comparison=compare_artifacts(pair_records['python']['comparison_artifact'],pair_records['rust']['comparison_artifact'],plan)
+                comparison=safe_compare_artifacts(pair_records['python'].get('comparison_artifact'),pair_records['rust'].get('comparison_artifact'),plan)
             for record in pair_records.values():
                 record['correctness_checked']=bool(comparison['passed']);record['comparison']=comparison
                 records.append(record);all_records.append(record);append_record(output/'raw-observations.jsonl',record)
@@ -738,8 +919,9 @@ def run(args,plan,plan_sha):
             valid_speed_comparison=summary['valid_speed_comparison'],ratio_python_over_rust=summary.get('ratio_python_over_rust')))
         print(f"[{case_index+1}/{len(declared)}] {case['id']}: "+str(summary.get('ratio_python_over_rust','invalid')),flush=True)
     cache_records=run_cache_series(args,plan,snapshot,manifest,output,baseline)
+    statuses=overall_status(summaries,cache_records,all_records)
     report=dict(schema='radiomics.benchmark.v2.report.v1',suite='radiomics',plan_sha256=plan_sha,
-        correctness_status='passed_measured_applicable_cases' if all(s['valid_speed_comparison'] for s in summaries) else 'failed_or_incomplete_measured_cases',
+        correctness_status=statuses['correctness_status'],operational_status=statuses['operational_status'],
         performance_policy='Targets/regression thresholds are disclosed separately from numerical correctness; no cross-suite total score.',
         performance_scope='Public API calls and described same-process batch workflows, not pure Rust kernels or a new blanket IBSI conformance claim.',
         machine=machine,native_build=snapshot['native_build'],results=summaries,cache_series=cache_records,
@@ -768,7 +950,7 @@ def run_cache_series(args,plan,snapshot,manifest,output,baseline):
             record=raw_observation(case,'rust',pair,0,result)
             comparison=dict(passed=False,reason='No valid uncached native baseline or cache-series execution failed.')
             if result['status']=='ok' and dataset in baseline:
-                comparison=compare_artifacts(baseline[dataset],result['comparison_artifact'],plan)
+                comparison=safe_compare_artifacts(baseline[dataset],result.get('comparison_artifact'),plan)
             record['correctness_checked']=comparison['passed'];record['comparison']=comparison
             records.append(record);append_record(output/'raw-observations.jsonl',record)
     summary=dict(backend='rust',comparative_speedup=False,population_and_hit_observations=records,
@@ -781,6 +963,17 @@ def run_cache_series(args,plan,snapshot,manifest,output,baseline):
                 peak_memory_bytes=[r['peak_memory_bytes'] for r in chosen],actual_cache_summaries=[r['cache_summary'] for r in chosen])
     write_json(directory/'summary.json',summary)
     return summary
+
+
+def overall_status(summaries,cache,primary_records=None):
+    cache_rows=cache.get('population_and_hit_observations',[])
+    complete=(len(cache_rows)==14 and len(summaries)==58)
+    numerical=complete and all(summary.get('valid_speed_comparison') is True for summary in summaries) and all(
+        row.get('status')=='ok' and row.get('correctness_checked') is True for row in cache_rows)
+    records=(primary_records or [])+cache_rows
+    operational=complete and primary_records is not None and len(primary_records)==812 and all(row.get('status')=='ok' for row in records)
+    return dict(correctness_status='passed_measured_applicable_cases' if numerical else 'failed_or_incomplete_measured_cases',
+        operational_status='passed_recorded_observations' if operational else 'failed_or_incomplete_recorded_observations')
 
 
 def scaling_summaries(summaries):
@@ -828,7 +1021,7 @@ def write_report_markdown(path,report):
         '- Raw records and all failed observations remain in `raw-observations.jsonl`; no cross-suite combined acceleration score is produced.',
         '- Batch sources intentionally repeat a disclosed synthetic image/ROI with unique identifiers. Content cache is disabled for uncached throughput. Native cache population/hits are a separate noncomparative series.',
         '- Peak RSS covers one complete worker process lifetime, including imports, fixed fixture buffers, warmup, timed calls and result-transport bookkeeping. Both backends use outer threads in that same process. These numbers are not Python traced allocations or per-call allocation counts.',
-        '- Cold means fresh interpreter process, with process-launch-to-exit protocol time retained. It is not a flushed-disk-cache measurement or Python-free CLI startup result.',
+        '- Cold means fresh interpreter process, with startup/import/API/export/numerical-report transport retained. External package/input audits and artifact-file hashing occur outside the cold clock. It is not a flushed-disk-cache measurement or Python-free CLI startup result.',
         '- Observed scaling is limited to the frozen workers=1/4 and ROI-count grid under a 2GiB budget. It does not establish a theoretical maximum throughput.',
         '- Median/IQR/p95 and alternating raw pairs describe uncertainty. Gains within observed noise should not be advertised as acceleration.',
         '- This is not a new IBSI conformance claim, clinical validation or blanket project Release Gate pass. The independent IBSI matrix and Golden rules are unchanged.',
@@ -852,7 +1045,7 @@ def main():
     parser.add_argument('--worker',help=argparse.SUPPRESS)
     args=parser.parse_args()
     if args.worker:
-        request=json.loads(Path(args.worker).read_text())
+        request=json.loads(Path(args.worker).read_text(encoding='utf-8'))
         try:
             result=worker(request)
         except Exception as exc:
@@ -862,7 +1055,14 @@ def main():
             except Exception:
                 peak=None
             result=dict(status='failed',error=f'{type(exc).__name__}: {exc}',peak_memory_bytes=peak)
-        print(json.dumps(clean(result),allow_nan=False,sort_keys=True))
+        print(json.dumps(clean(result),allow_nan=False,sort_keys=True),flush=True)
+        # Observe the kernel HWM after the numerical result has been serialized
+        # and transported, rather than underreporting that final process stage.
+        try:
+            footer_peak=peak_resident_bytes()
+        except Exception:
+            footer_peak=None
+        print(json.dumps(dict(worker_peak_after_transport_bytes=footer_peak)),flush=True)
         return 0 if result['status']=='ok' else 1
     if args.prepare==args.run:
         parser.error('Choose exactly one of --prepare or --run.')

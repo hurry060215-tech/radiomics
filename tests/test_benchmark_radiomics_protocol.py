@@ -61,3 +61,84 @@ def test_report_writer_works_on_supported_python_without_claiming_missing_eviden
     report=dict(plan_sha256='a'*64,results=[],missing_evidence=['allocator counts unmeasured'])
     module.write_report_markdown(tmp_path/'report.md',report)
     assert 'allocator counts unmeasured' in (tmp_path/'report.md').read_text()
+
+
+def test_public_version_string_cannot_replace_frozen_source_and_compiled_hashes():
+    expected={'glcm.py':'a'*64,'_cmatrices.cp39-win_amd64.pyd':'b'*64}
+    module.validate_reference_files(dict(expected),expected,'c'*40,'c'*40)
+    changed=dict(expected);changed['glcm.py']='d'*64
+    with pytest.raises(RuntimeError,match='differs from the frozen'):
+        module.validate_reference_files(changed,expected,'c'*40,'c'*40)
+    with pytest.raises(RuntimeError,match='missing'):
+        module.validate_reference_files(changed,None,'c'*40,'c'*40)
+    with pytest.raises(RuntimeError,match='compiled-extension'):
+        module.validate_reference_files({'glcm.py':'a'*64},{'glcm.py':'a'*64},'c'*40,'c'*40)
+
+
+def test_actual_thread_and_lifetime_memory_probes_cannot_be_replaced_by_labels():
+    for pools in (None,[],[{'user_api':'blas','num_threads':24}],[{'user_api':'unknown','num_threads':1}]):
+        with pytest.raises(RuntimeError,match='matched-resource'):
+            module.validate_thread_resources(pools,1,'python')
+    module.validate_thread_resources([{'user_api':'blas','num_threads':1}],1,'python')
+    with pytest.raises(RuntimeError,match='SimpleITK'):
+        module.validate_thread_resources([{'user_api':'blas','num_threads':1}],4,'python')
+    assert module.merge_peak_memory(100,200)==200
+    assert module.merge_peak_memory(300,200)==300
+    assert module.merge_peak_memory(None,200)==200
+
+
+def test_comparison_file_failure_is_retained_and_cache_failure_blocks_overall_pass(tmp_path):
+    plan,_=module.load_plan(ROOT/'benchmarks/v2/radiomics-plan.json')
+    (tmp_path/'broken.json').write_text('{broken',encoding='utf-8')
+    comparison=module.safe_compare_artifacts(tmp_path/'broken.json',tmp_path/'missing.json',plan)
+    assert comparison['passed'] is False and comparison['error']
+    primary=[{'valid_speed_comparison':True} for _ in range(58)]
+    cache=dict(population_and_hit_observations=[dict(status='ok',correctness_checked=True) for _ in range(14)])
+    records=[dict(status='ok') for _ in range(812)]
+    assert module.overall_status(primary,cache,records)['correctness_status']=='passed_measured_applicable_cases'
+    cache['population_and_hit_observations'][0]['status']='failed'
+    states=module.overall_status(primary,cache,records)
+    assert states['correctness_status'].startswith('failed_')
+    assert states['operational_status'].startswith('failed_')
+
+
+def test_native_receipt_requires_real_fields_and_both_artifact_hashes(tmp_path):
+    with pytest.raises(ValueError,match='mandatory'):
+        module.validate_build_manifest({},tmp_path/'none.whl',tmp_path)
+    wheel=tmp_path/'wheel.whl';wheel.write_bytes(b'synthetic protocol fixture, not executable')
+    cli=tmp_path/'cli';cli.write_bytes(b'synthetic cli fixture, not executable')
+    build=dict(schema='radiomics.native-build.v1',source_tree_clean=True,source_revision='a'*40,source_tree='b'*40,
+        cargo_lock_sha256='c'*64,core_implementation_sha256='d'*64,rustc_verbose='fixture rustc',rust_target='fixture target',
+        profile=dict(name='release',opt_level=3,lto='thin',codegen_units=1),rust_flags=dict(RUSTFLAGS=None,CARGO_ENCODED_RUSTFLAGS=None),
+        build_commands=[['cargo','build','--release']],python_version='fixture python',maturin_version='fixture maturin',
+        wheel=dict(path=str(wheel),sha256=module.sha256_file(wheel)),cli=dict(path=str(cli),sha256=module.sha256_file(cli)))
+    module.validate_build_manifest(build,wheel,tmp_path)
+    cli.write_bytes(b'changed')
+    with pytest.raises(ValueError,match='cli artifact'):
+        module.validate_build_manifest(build,wheel,tmp_path)
+
+
+def test_cold_wall_excludes_before_after_file_audits_and_uses_transport_peak(tmp_path,monkeypatch):
+    plan,digest=module.load_plan(ROOT/'benchmarks/v2/radiomics-plan.json')
+    events=[];clock=iter([10.,12.])
+    def audit(request):
+        events.append('audit');return {'verified':True}
+    def tick():
+        value=next(clock);events.append('start' if value==10. else 'stop');return value
+    class FakeProcess:
+        pid=123;returncode=0
+        def __init__(self,*args,stdout,**kwargs):
+            events.append('spawn');stdout.write((json.dumps(dict(status='ok',elapsed_seconds=.5,peak_memory_bytes=100))+'\n').encode())
+            stdout.write((json.dumps(dict(worker_peak_after_transport_bytes=200))+'\n').encode())
+        def poll(self):return 0
+        def wait(self):return 0
+    monkeypatch.setattr(module,'audit_observation_inputs',audit)
+    monkeypatch.setattr(module.time,'perf_counter',tick)
+    monkeypatch.setattr(module.subprocess,'Popen',FakeProcess)
+    monkeypatch.setattr(module,'finish_worker_transport',lambda result,*args:events.append('postflight_transport') or result)
+    request=dict(plan=str(ROOT/'benchmarks/v2/radiomics-plan.json'),approved_plan_sha256=digest,
+        case=dict(state='cold_process_total'),observation_directory=str(tmp_path/'observation'))
+    result=module.launch_worker('not executed',request,tmp_path/'request.json',tmp_path/'stdout.json',tmp_path/'stderr.txt',2**31,1800)
+    assert events==['audit','start','spawn','stop','audit','postflight_transport']
+    assert result['elapsed_seconds']==2. and result['api_elapsed_seconds']==.5
+    assert result['worker_peak_memory_bytes']==200 and result['peak_memory_bytes']==200
