@@ -34,7 +34,7 @@
   },
   "shape_basic": {
     "scope": "Eleven project descriptors computed by native extraction and a separately identified independent NumPy specification: count, index bbox min/size XYZ, RAS world centroid XYZ, and pixel area/voxel volume. Never mesh morphology.",
-    "primary_full_api_scope": "55 named radiomics features plus matched shape_basic work on both sides; report shape_basic separately from six feature families",
+    "primary_full_api_scope": "L2/L3/L4 explicitly select the 55 named radiomics features on both sides. shape_basic has its own L1 native-versus-independent-spec row and is never included in the six feature-family speed tables.",
     "independent_reference_specification": "Count selected integer voxel indices; integer min/max bbox; arithmetic mean index transformed by original complete affine; determinant/cross-product voxel support measure.",
     "geometry_tolerance_mm": 1e-6,
     "count_bbox_comparison": "exact"
@@ -58,18 +58,18 @@
     "license": "CC0-1.0 original synthetic input; not clinical data"
   },
   "datasets": [
-    {"id": "synthetic_2d_g8", "shape_xyz": [32, 24], "gray_levels": 8, "levels": ["L2", "L3"]},
-    {"id": "synthetic_2d_g32", "shape_xyz": [48, 40], "gray_levels": 32, "levels": ["L2"]},
-    {"id": "synthetic_3d_g8", "shape_xyz": [16, 14, 12], "gray_levels": 8, "levels": ["L2"]},
-    {"id": "synthetic_3d_g32", "shape_xyz": [24, 20, 16], "gray_levels": 32, "levels": ["L2", "L3"]},
-    {"id": "ibsi_digital_3d", "source": "golden/ibsi_digital_v1", "shape_xyz": [5, 4, 4], "levels": ["L2", "L3"], "license": "CC-BY-4.0 Alex Zwanenburg; original source bytes retained; this performance series is not a new IBSI conformance claim"},
+    {"id": "synthetic_2d_g8", "shape_xyz": [32, 24], "gray_levels": 8, "levels": ["L1", "L2", "L3"]},
+    {"id": "synthetic_2d_g32", "shape_xyz": [48, 40], "gray_levels": 32, "levels": ["L1", "L2"]},
+    {"id": "synthetic_3d_g8", "shape_xyz": [16, 14, 12], "gray_levels": 8, "levels": ["L1", "L2"]},
+    {"id": "synthetic_3d_g32", "shape_xyz": [24, 20, 16], "gray_levels": 32, "levels": ["L1", "L2", "L3"]},
+    {"id": "ibsi_digital_3d", "source": "golden/ibsi_digital_v1", "shape_xyz": [5, 4, 4], "levels": ["L1", "L2", "L3"], "license": "CC-BY-4.0 Alex Zwanenburg; original source bytes retained; this performance series is not a new IBSI conformance claim"},
     {"id": "throughput_3d_g8", "shape_xyz": [8, 8, 8], "gray_levels": 8, "levels": ["L4"]},
     {"id": "throughput_3d_g32", "shape_xyz": [12, 12, 12], "gray_levels": 32, "levels": ["L4"]}
   ],
   "levels": {
-    "L1": {"status": "pending_selected_family_native_interface", "policy": "Never time whole extraction and label it a single family. Six individual-family and shape_basic timings need shared selective core interfaces; no family formula copied into the runner."},
+    "L1": {"state": "warm_prepared_arrays", "roi_count_per_call": 16, "threads": [1], "families": ["firstorder", "glcm", "glrlm", "glszm", "gldm", "ngtdm", "shape_basic"], "requires": "Native ImageSample.extract(families=[one]) skips unselected matrix/scalar work; the main agent supplies this shared interface before measurement", "policy": "Time only the selected family through the public array API. Include conversion/binning/matrix/scalar work actually performed; do not claim separately instrumented stages or allocator counts that were not measured. shape_basic is a distinct native-versus-independent-spec row. No formulas for the six families copied into the runner."},
     "L2": {"state": "warm_prepared_arrays", "roi_count_per_call": 16, "threads": [1], "input": "Fixed already-decoded arrays/ROI; no file I/O, preprocessing or content cache in measured call; both sides include public buffer/image conversion, extraction and table formation"},
-    "L3": {"states": ["warm_uncached", "cold_process_total"], "roi_count_per_call": 8, "threads": [1], "preparation": [{"operation": "clip_range", "lower": 2.0, "upper_policy": "synthetic gray_levels, IBSI 6"}, {"operation": "crop_voxels", "margin_voxels": [1, 1, 1]}], "scope": "Cohort CSV read, NIfTI image+ROI read, declared clip/crop with affine update, 55+shape_basic extraction, public DataFrame/diagnostics conversion and CSV/config export. PyRadiomics original only, no mesh/filter/unsupported features."},
+    "L3": {"states": ["warm_uncached", "cold_process_total"], "roi_count_per_call": 8, "threads": [1], "preparation": [{"operation": "clip_range", "lower": 2.0, "upper_policy": "synthetic gray_levels, IBSI 6"}, {"operation": "crop_voxels", "margin_voxels": [1, 1, 1]}], "scope": "Cohort CSV read, NIfTI image+ROI read, declared clip/crop with affine update, exact 55 selected radiomics features, public DataFrame/diagnostics conversion and CSV/config export. PyRadiomics original only, no mesh/shape_basic/filter/unsupported features."},
     "L4": {"state": "warm_uncached", "roi_counts": [100, 500, 1000], "threads": [1, 4], "preparation": [], "scope": "Complete same-process batch API plus cohort/NIfTI reads and CSV export; unique sample/patient IDs with repeated explicitly disclosed synthetic source image/ROI; cache disabled; outer workers only"},
     "cache": {"backend": "rust_only", "dataset": "synthetic_3d_g32", "roi_count_per_call": 8, "threads": [1], "states": ["cache_population", "verified_cache_hit"], "comparative_speedup": false, "policy": "Record actual core hit/miss counts, population cost, input/config/implementation identities; no comparison of cached Rust with uncached Python. Pending native hit/miss instrumentation."},
     "L5": {"status": "separate deployment evidence", "policy": "Python API measurements here do not establish Python-free CLI startup/install cost; retain independent CLI/no-Python tests and later startup series."}
