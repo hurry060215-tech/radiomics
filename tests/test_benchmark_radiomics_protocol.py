@@ -170,6 +170,22 @@ def test_ct_is_append_only_with_case_specific_binning_and_dynamic_complete_count
     assert declared[58]['native_extraction']['discretization']['width']==25.
     assert declared[58]['roi_count']==1 and declared[58]['preparation']==[]
     assert declared[59]['preparation']==[dict(operation='crop_voxels',margin_voxels=[0,0,0])]
+    binding_path=ROOT/'benchmarks/v2/radiomics-dimension-binding.json'
+    binding,binding_sha=module.load_dimension_binding(binding_path,digest,ct_digest,module.sha256_file(binding_path))
+    bound=module.bind_inactive_axis(declared,binding)
+    changed=[]
+    for old,new in zip(declared,bound):
+        if old!=new:
+            changed.append(new['id'])
+            assert {key for key in old if old[key]!=new[key]}=={'preparation','configuration_sha256'}
+            assert old['preparation'][-1]['margin_voxels']==[1,1,1]
+            assert new['preparation'][-1]['margin_voxels']==[1,1,0]
+        else:
+            assert old['configuration_sha256']==new['configuration_sha256']
+    assert changed==['L3-synthetic_2d_g8-full-n8-j1-warm_uncached','L3-synthetic_2d_g8-full-n8-j1-cold_process_total']
+    assert [case['id'] for case in declared]==[case['id'] for case in bound]
+    with pytest.raises(ValueError,match='unapproved'):
+        module.load_dimension_binding(binding_path,digest,ct_digest,'0'*64)
     cache=dict(population_and_hit_observations=[dict(status='ok',correctness_checked=True) for _ in range(14)])
     summaries=[dict(valid_speed_comparison=True) for _ in range(60)]
     records=[dict(status='ok') for _ in range(840)]

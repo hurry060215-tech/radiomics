@@ -122,6 +122,17 @@ append plan is refused. Global expected counts derive from the actual approved
 case declaration, so missing observations cannot be hidden by using the observed
 summary length as its own expectation.
 
+The exact reviewed inactive-axis binding in
+[`radiomics-dimension-binding.json`](../benchmarks/v2/radiomics-dimension-binding.json)
+is also explicit via `--dimension-binding` and
+`--approved-dimension-binding-sha256`. Untimed preflight found that true2D's
+three-slot crop API requires inactive z=0. The binding keeps the intended xy
+one-pixel margin and maps only the two 2D L3 states to `[1,1,0]`; 3D remains
+`[1,1,1]`, CT remains `[0,0,0]`, and the reference's actual active-axis crop is
+unchanged. The original plan bytes and failed untimed evidence are retained.
+Without this reviewed binding, no implicit adaptation is performed. Tests require
+all other60-case fields and every other effective-config SHA to remain unchanged.
+
 L3 cold rows have no warmup and use coordinator process-launch-to-exit time,
 including imports, required local resource configuration, full API work and
 numerical report transport. Package/input audits occur before launch/after exit;

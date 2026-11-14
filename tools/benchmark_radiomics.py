@@ -74,6 +74,39 @@ def load_ct_plan(path,base_sha,approved=None):
     return supplement,digest
 
 
+def load_dimension_binding(path,base_sha,ct_sha,approved):
+    raw=Path(path).read_bytes();binding=json.loads(raw);digest=hashlib.sha256(raw).hexdigest()
+    if digest!=approved or binding['base_plan_sha256']!=base_sha or ct_sha is not None and binding['ct_append_sha256']!=ct_sha:
+        raise ValueError('Inactive-axis binding is absent/unapproved or points to different immutable plans.')
+    if binding['schema']!='radiomics.benchmark.v2.inactive_axis_binding.v1' or binding['effective_native_and_reference_vector']!=[1,1,0]:
+        raise ValueError('The only approved interface clarification keeps xy1 and sets inactive2D z to0.')
+    return binding,digest
+
+
+def bind_inactive_axis(declared,binding):
+    # Case identity/data/order remain intact. Do not silently infer3D versus2D
+    # from a singleton shape axis; the binding names the declared true2D case.
+    result=[];changed=[];scope=binding['applies_only_to']
+    for original in declared:
+        case=dict(original)
+        if case['dataset']==scope['dataset'] and case['level']==scope['level'] and case['state'] in scope['states']:
+            steps=[]
+            for step in case['preparation']:
+                step=dict(step)
+                if step['operation']==scope['operation']:
+                    if step['margin_voxels']!=binding['original_base_vector']:
+                        raise ValueError('Inactive-axis binding does not match the preserved original configuration.')
+                    step['margin_voxels']=binding['effective_native_and_reference_vector']
+                steps.append(step)
+            case['preparation']=steps
+            case['configuration_sha256']=json_hash({key:value for key,value in case.items() if key not in ('id','configuration_sha256')})
+            changed.append(case['id'])
+        result.append(case)
+    if len(changed)!=2:
+        raise ValueError('Exactly the two approved true2D L3 states must be bound; no other case changes are allowed.')
+    return result
+
+
 def read_nifti_fixture(path):
     """Fixture preparation only: scalar NIfTI-1 with explicit sform, not runtime reader replacement."""
     import numpy as np
@@ -650,6 +683,7 @@ def worker_execute(request,plan,state):
         cache_summary=cache,implementation_sha256=result['implementation_sha256'],environment_snapshot_sha256=request['environment_snapshot_sha256'],
         effective_native_extraction=state['native_extraction'],effective_reference_settings=state['reference_settings'],
         observed_thread_libraries=state['observed_thread_libraries'],simpleitk_effective_threads=state['environment'].get('simpleitk_effective_threads'),
+        dimension_binding_sha256=request.get('dimension_binding_sha256'),
         stage_seconds=None,stage_status='Full declared public call measured; no invented per-stage instrumentation.',
         allocation_count=None,allocation_bytes=None,allocation_status='Unmeasured; peak RSS is a process metric, not an allocation count.')
 
@@ -936,6 +970,7 @@ def observation_base(args,snapshot,case,backend,output):
         native_build={'core_implementation_sha256':snapshot['native_build']['core_implementation_sha256']},
         audit_environment=environment,expected_package_path=environment['package_path'],
         preflight_environment={'versions':environment['versions']},environment_snapshot_sha256=json_hash(environment),
+        dimension_binding_sha256=snapshot.get('dimension_binding_sha256'),
         observation_directory=str(output),warmup_calls=0 if case['state'] in ('cold_process_total','cache_population') else 1)
 
 
@@ -1003,10 +1038,12 @@ def run(args,plan,plan_sha):
             raise ValueError('Prepared public CT supplement differs from its pre-measurement approval.')
     elif manifest.get('ct_supplement_sha256'):
         raise ValueError('A CT corpus requires its exact approved supplemental plan, not an implicit extra dataset.')
+    binding,binding_sha=load_dimension_binding(args.dimension_binding,plan_sha,ct_sha,args.approved_dimension_binding_sha256)
     output.mkdir(parents=True);snapshot=package_snapshot(args,output)
     write_json(output/'plan.json',plan);write_json(output/'input-manifest.json',manifest)
     if ct_plan is not None:
         write_json(output/'ct-plan.json',ct_plan)
+    write_json(output/'dimension-binding.json',binding)
     environments={}
     reference_expected=frozen_reference_provenance(plan)
     for backend,executable in [('python',args.reference_python),('rust',args.native_python)]:
@@ -1022,13 +1059,14 @@ def run(args,plan,plan_sha):
     # Coordinator package state is not the measured native wheel/source identity.
     machine=machine_details(fixtures,output)
     write_json(output/'provenance.json',dict(machine=machine,environments=environments,native_snapshot=snapshot,
-        plan_sha256=plan_sha,ct_plan_sha256=ct_sha,input_manifest_sha256=sha256_file(fixtures/'manifest.json'),
+        plan_sha256=plan_sha,ct_plan_sha256=ct_sha,dimension_binding_sha256=binding_sha,input_manifest_sha256=sha256_file(fixtures/'manifest.json'),
         benchmark_runner_source_revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
         command_arguments=vars(args)))
     snapshot['audited_environments']={backend:result['environment'] for backend,result in environments.items()}
     snapshot['plan_contents']=plan;snapshot['dataset_contents']={dataset['id']:dataset for dataset in manifest['datasets']}
+    snapshot['dimension_binding_sha256']=binding_sha
     summaries=[];all_records=[];baseline={};ct_expected=frozen_ct_artifact(plan,manifest,fixtures,output)
-    declared=cases(plan,manifest,ct_plan)
+    declared=bind_inactive_axis(cases(plan,manifest,ct_plan),binding)
     for case_index,case in enumerate(declared):
         case_directory=output/case['id'];case_directory.mkdir();records=[]
         for pair in range(plan['execution']['paired_repetitions']):
@@ -1039,6 +1077,7 @@ def run(args,plan,plan_sha):
                 result=launch_worker(args.reference_python if backend=='python' else args.native_python,request,
                     case_directory/f'pair-{pair:02}-{backend}.request.json',case_directory/f'pair-{pair:02}-{backend}.stdout.json',case_directory/f'pair-{pair:02}-{backend}.stderr.txt',
                     plan['execution']['memory_budget_bytes'],plan['execution']['maximum_observation_seconds'])
+                result['dimension_binding_sha256']=binding_sha
                 pair_records[backend]=raw_observation(case,backend,pair,order,result)
             comparison=dict(passed=False,reason='At least one backend execution failed; retain timings as diagnostic only.')
             if all(r['status']=='ok' for r in pair_records.values()):
@@ -1060,7 +1099,7 @@ def run(args,plan,plan_sha):
     cache_records=run_cache_series(args,plan,snapshot,manifest,output,baseline)
     statuses=overall_status(summaries,cache_records,all_records,expected_case_count=len(declared),repeats=plan['execution']['paired_repetitions'])
     report=dict(schema='radiomics.benchmark.v2.report.v1',suite='radiomics',plan_sha256=plan_sha,
-        ct_plan_sha256=ct_sha,expected_primary_cases=len(declared),expected_primary_backend_observations=len(declared)*14,
+        ct_plan_sha256=ct_sha,dimension_binding_sha256=binding_sha,expected_primary_cases=len(declared),expected_primary_backend_observations=len(declared)*14,
         correctness_status=statuses['correctness_status'],operational_status=statuses['operational_status'],
         performance_policy='Targets/regression thresholds are disclosed separately from numerical correctness; no cross-suite total score.',
         performance_scope='Public API calls and described same-process batch workflows, not pure Rust kernels or a new blanket IBSI conformance claim.',
@@ -1087,6 +1126,7 @@ def run_cache_series(args,plan,snapshot,manifest,output,baseline):
             result=launch_worker(args.native_python,request,directory/f'pair-{pair:02}-{state}.request.json',
                 directory/f'pair-{pair:02}-{state}.stdout.json',directory/f'pair-{pair:02}-{state}.stderr.txt',
                 plan['execution']['memory_budget_bytes'],plan['execution']['maximum_observation_seconds'])
+            result['dimension_binding_sha256']=snapshot.get('dimension_binding_sha256')
             record=raw_observation(case,'rust',pair,0,result)
             comparison=dict(passed=False,reason='No valid uncached native baseline or cache-series execution failed.')
             if result['status']=='ok' and dataset in baseline:
@@ -1189,6 +1229,8 @@ def main():
     parser.add_argument('--ct-protocol')
     parser.add_argument('--ct-reference')
     parser.add_argument('--ct-crop-reference')
+    parser.add_argument('--dimension-binding')
+    parser.add_argument('--approved-dimension-binding-sha256')
     parser.add_argument('--worker',help=argparse.SUPPRESS)
     args=parser.parse_args()
     if args.worker:
@@ -1219,6 +1261,8 @@ def main():
         parser.error('--run requires the exact approved plan SHA, fresh output, both interpreter paths, fixed wheel and build manifest.')
     if args.ct_plan and not args.approved_ct_plan_sha256:
         parser.error('CT prepare/measurement requires its separately reviewed exact supplemental SHA.')
+    if args.run and not all((args.dimension_binding,args.approved_dimension_binding_sha256)):
+        parser.error('Measurement requires the explicitly approved true2D inactive-axis interface binding; no silent margin adaptation.')
     plan,digest=load_plan(args.plan,args.approved_plan_sha256 if args.run else None)
     if args.prepare:
         ct_plan=ct_sha=None
