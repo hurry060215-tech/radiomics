@@ -1,0 +1,3613 @@
+{
+  "schema": "python_golden_v1.pathology.reference.v1",
+  "reference_python": "3.9.21",
+  "specification_sha256": "de07e123d5064a27a71c086b4868d9d9021186958709a089a261d479913c73de",
+  "input_sha256": "2f23581540ed7b7aa315ef787d32461d1343b4566b0840c2a43e31396669712a",
+  "source_references": {
+    "sRGB_XYZ_matrix": "https://www.w3.org/TR/2026/CRD-css-color-4-20261112/#color-conversion-code",
+    "HSV_BT601": "https://docs.opencv.org/4.13.0/de/d25/imgproc_color_conversions.html",
+    "Laplacian": "https://docs.opencv.org/4.13.0/d5/d0f/tutorial_py_gradients.html"
+  },
+  "coordinates": "Level0 pixel-edge x-right/y-down. Object centroid averages patch pixel centers x+.5,y+.5. MPP passed to objects is patch-pixel MPP, derived from level0 MPP times tile extent/patch dimensions.",
+  "color_profile": "sRGB / D65 XYZ / Lab_D65 without D50 adaptation. For r=g=b the theoretical a=b=0 identity is exact; no epsilon rounding for other colors. Hue degrees circular statistics excludes S=0.",
+  "comparison": "IDs, coordinate topology, masks, histogram counts, reasons and denominators exact; scalar QC/statistics atol1e-10 rtol1e-8; color/Lab/circular outputs atol1e-6 rtol1e-5. Missing states exact.",
+  "patches": {
+    "white_3x3": {
+      "qc": {
+        "scores": {
+          "white_fraction": 1.0,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 0.0,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": 0.0
+        },
+        "valid_pixels": 9,
+        "border_pixels": 8,
+        "laplacian_pixels": 1,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [
+          "white_fraction_above_maximum",
+          "tissue_fraction_below_minimum",
+          "laplacian_variance_below_minimum"
+        ],
+        "accepted": false
+      },
+      "default_no_exclusion": {
+        "scores": {
+          "white_fraction": 1.0,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 0.0,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": 0.0
+        },
+        "valid_pixels": 9,
+        "border_pixels": 8,
+        "laplacian_pixels": 1,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [],
+        "accepted": true
+      },
+      "colors": {
+        "status": "ok",
+        "channels": {
+          "R": {
+            "statistics": {
+              "mean": 255,
+              "std": 0.0,
+              "minimum": 255,
+              "maximum": 255,
+              "q25": 255,
+              "q50": 255,
+              "q75": 255
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                9
+              ],
+              "denominator": 9,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "G": {
+            "statistics": {
+              "mean": 255,
+              "std": 0.0,
+              "minimum": 255,
+              "maximum": 255,
+              "q25": 255,
+              "q50": 255,
+              "q75": 255
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                9
+              ],
+              "denominator": 9,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "B": {
+            "statistics": {
+              "mean": 255,
+              "std": 0.0,
+              "minimum": 255,
+              "maximum": 255,
+              "q25": 255,
+              "q50": 255,
+              "q75": 255
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                9
+              ],
+              "denominator": 9,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "S": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                9,
+                0,
+                0,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "V": {
+            "statistics": {
+              "mean": 1.0,
+              "std": 0.0,
+              "minimum": 1.0,
+              "maximum": 1.0,
+              "q25": 1.0,
+              "q50": 1.0,
+              "q75": 1.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                9
+              ],
+              "denominator": 9,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "L": {
+            "statistics": {
+              "mean": 100.0,
+              "std": 0.0,
+              "minimum": 100.0,
+              "maximum": 100.0,
+              "q25": 100.0,
+              "q50": 100.0,
+              "q75": 100.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                25,
+                50,
+                75,
+                100
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                9
+              ],
+              "denominator": 9,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "a": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                9,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "b": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                9,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "hue": {
+          "count": 0,
+          "mean_degrees": null,
+          "resultant_length": null,
+          "circular_variance": null,
+          "histogram": {
+            "edges": [
+              0,
+              60,
+              120,
+              180,
+              240,
+              300,
+              360
+            ],
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "denominator": 0,
+            "probabilities": null
+          }
+        }
+      },
+      "colors_tissue_only": {
+        "status": "empty_statistical_mask",
+        "channels": {},
+        "hue": null
+      }
+    },
+    "black_3x3": {
+      "qc": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 1.0,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": 0.0
+        },
+        "valid_pixels": 9,
+        "border_pixels": 8,
+        "laplacian_pixels": 1,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [
+          "black_border_fraction_above_maximum",
+          "tissue_fraction_below_minimum",
+          "laplacian_variance_below_minimum"
+        ],
+        "accepted": false
+      },
+      "default_no_exclusion": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 1.0,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": 0.0
+        },
+        "valid_pixels": 9,
+        "border_pixels": 8,
+        "laplacian_pixels": 1,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [],
+        "accepted": true
+      },
+      "colors": {
+        "status": "ok",
+        "channels": {
+          "R": {
+            "statistics": {
+              "mean": 0,
+              "std": 0.0,
+              "minimum": 0,
+              "maximum": 0,
+              "q25": 0,
+              "q50": 0,
+              "q75": 0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                9,
+                0,
+                0,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "G": {
+            "statistics": {
+              "mean": 0,
+              "std": 0.0,
+              "minimum": 0,
+              "maximum": 0,
+              "q25": 0,
+              "q50": 0,
+              "q75": 0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                9,
+                0,
+                0,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "B": {
+            "statistics": {
+              "mean": 0,
+              "std": 0.0,
+              "minimum": 0,
+              "maximum": 0,
+              "q25": 0,
+              "q50": 0,
+              "q75": 0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                9,
+                0,
+                0,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "S": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                9,
+                0,
+                0,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "V": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                9,
+                0,
+                0,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "L": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                25,
+                50,
+                75,
+                100
+              ],
+              "counts": [
+                9,
+                0,
+                0,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "a": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                9,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "b": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                9,
+                0
+              ],
+              "denominator": 9,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "hue": {
+          "count": 0,
+          "mean_degrees": null,
+          "resultant_length": null,
+          "circular_variance": null,
+          "histogram": {
+            "edges": [
+              0,
+              60,
+              120,
+              180,
+              240,
+              300,
+              360
+            ],
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "denominator": 0,
+            "probabilities": null
+          }
+        }
+      },
+      "colors_tissue_only": {
+        "status": "empty_statistical_mask",
+        "channels": {},
+        "hue": null
+      }
+    },
+    "hue_wrap": {
+      "qc": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 0.0,
+          "black_border_fraction": 0.0,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 2,
+        "border_pixels": 2,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          false,
+          false
+        ],
+        "exclusion_reasons": [
+          "tissue_fraction_below_minimum",
+          "laplacian_variance_undefined"
+        ],
+        "accepted": false
+      },
+      "default_no_exclusion": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 0.0,
+          "black_border_fraction": 0.0,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 2,
+        "border_pixels": 2,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          false,
+          false
+        ],
+        "exclusion_reasons": [],
+        "accepted": true
+      },
+      "colors": {
+        "status": "ok",
+        "channels": {
+          "R": {
+            "statistics": {
+              "mean": 255,
+              "std": 0.0,
+              "minimum": 255,
+              "maximum": 255,
+              "q25": 255.0,
+              "q50": 255.0,
+              "q75": 255.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                2
+              ],
+              "denominator": 2,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "G": {
+            "statistics": {
+              "mean": 0.5,
+              "std": 0.5,
+              "minimum": 0,
+              "maximum": 1,
+              "q25": 0.25,
+              "q50": 0.5,
+              "q75": 0.75
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                2,
+                0,
+                0,
+                0
+              ],
+              "denominator": 2,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "B": {
+            "statistics": {
+              "mean": 0.5,
+              "std": 0.5,
+              "minimum": 0,
+              "maximum": 1,
+              "q25": 0.25,
+              "q50": 0.5,
+              "q75": 0.75
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                2,
+                0,
+                0,
+                0
+              ],
+              "denominator": 2,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "S": {
+            "statistics": {
+              "mean": 1.0,
+              "std": 0.0,
+              "minimum": 1.0,
+              "maximum": 1.0,
+              "q25": 1.0,
+              "q50": 1.0,
+              "q75": 1.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                2
+              ],
+              "denominator": 2,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "V": {
+            "statistics": {
+              "mean": 1.0,
+              "std": 0.0,
+              "minimum": 1.0,
+              "maximum": 1.0,
+              "q25": 1.0,
+              "q50": 1.0,
+              "q75": 1.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                2
+              ],
+              "denominator": 2,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "L": {
+            "statistics": {
+              "mean": 53.25008083180889,
+              "std": 0.010587037673872146,
+              "minimum": 53.239493794135015,
+              "maximum": 53.26066786948276,
+              "q25": 53.24478731297195,
+              "q50": 53.25008083180889,
+              "q75": 53.25537435064582
+            },
+            "histogram": {
+              "edges": [
+                0,
+                25,
+                50,
+                75,
+                100
+              ],
+              "counts": [
+                0,
+                0,
+                2,
+                0
+              ],
+              "denominator": 2,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "a": {
+            "statistics": {
+              "mean": 80.05921137986327,
+              "std": 0.03741130548972649,
+              "minimum": 80.02180007437354,
+              "maximum": 80.096622685353,
+              "q25": 80.04050572711841,
+              "q50": 80.05921137986327,
+              "q75": 80.07791703260813
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                2
+              ],
+              "denominator": 2,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "b": {
+            "statistics": {
+              "mean": 67.08021886593139,
+              "std": 0.13112515979963035,
+              "minimum": 66.94909370613176,
+              "maximum": 67.21134402573102,
+              "q25": 67.01465628603158,
+              "q50": 67.08021886593139,
+              "q75": 67.1457814458312
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                2
+              ],
+              "denominator": 2,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          }
+        },
+        "hue": {
+          "count": 2,
+          "mean_degrees": 1.3666561137515358e-15,
+          "resultant_length": 0.9999915676957319,
+          "circular_variance": 8.432304268057855e-06,
+          "histogram": {
+            "edges": [
+              0,
+              60,
+              120,
+              180,
+              240,
+              300,
+              360
+            ],
+            "counts": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "denominator": 2,
+            "probabilities": [
+              0.5,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.5
+            ]
+          }
+        }
+      },
+      "colors_tissue_only": {
+        "status": "empty_statistical_mask",
+        "channels": {},
+        "hue": null
+      }
+    },
+    "hue_undefined_gray": {
+      "qc": {
+        "scores": {
+          "white_fraction": 0.25,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 0.25,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 4,
+        "border_pixels": 4,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [
+          "tissue_fraction_below_minimum",
+          "laplacian_variance_undefined"
+        ],
+        "accepted": false
+      },
+      "default_no_exclusion": {
+        "scores": {
+          "white_fraction": 0.25,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 0.25,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 4,
+        "border_pixels": 4,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [],
+        "accepted": true
+      },
+      "colors": {
+        "status": "ok",
+        "channels": {
+          "R": {
+            "statistics": {
+              "mean": 111.75,
+              "std": 94.27718440853015,
+              "minimum": 0,
+              "maximum": 255,
+              "q25": 48.0,
+              "q50": 96.0,
+              "q75": 159.75
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "denominator": 4,
+              "probabilities": [
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ]
+            }
+          },
+          "G": {
+            "statistics": {
+              "mean": 111.75,
+              "std": 94.27718440853015,
+              "minimum": 0,
+              "maximum": 255,
+              "q25": 48.0,
+              "q50": 96.0,
+              "q75": 159.75
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "denominator": 4,
+              "probabilities": [
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ]
+            }
+          },
+          "B": {
+            "statistics": {
+              "mean": 111.75,
+              "std": 94.27718440853015,
+              "minimum": 0,
+              "maximum": 255,
+              "q25": 48.0,
+              "q50": 96.0,
+              "q75": 159.75
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "denominator": 4,
+              "probabilities": [
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ]
+            }
+          },
+          "S": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                4,
+                0,
+                0,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "V": {
+            "statistics": {
+              "mean": 0.43823529411764706,
+              "std": 0.36971444866090253,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "q25": 0.18823529411764706,
+              "q50": 0.3764705882352941,
+              "q75": 0.6264705882352941
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "denominator": 4,
+              "probabilities": [
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ]
+            }
+          },
+          "L": {
+            "statistics": {
+              "mean": 45.16960679790452,
+              "std": 36.89252370608744,
+              "minimum": 0.0,
+              "maximum": 100.0,
+              "q25": 20.32006030458679,
+              "q50": 40.33921359580904,
+              "q75": 65.18876008912677
+            },
+            "histogram": {
+              "edges": [
+                0,
+                25,
+                50,
+                75,
+                100
+              ],
+              "counts": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "denominator": 4,
+              "probabilities": [
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ]
+            }
+          },
+          "a": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                4,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "b": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                4,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "hue": {
+          "count": 0,
+          "mean_degrees": null,
+          "resultant_length": null,
+          "circular_variance": null,
+          "histogram": {
+            "edges": [
+              0,
+              60,
+              120,
+              180,
+              240,
+              300,
+              360
+            ],
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "denominator": 0,
+            "probabilities": null
+          }
+        }
+      },
+      "colors_tissue_only": {
+        "status": "empty_statistical_mask",
+        "channels": {},
+        "hue": null
+      }
+    },
+    "rgb_primary_and_complements": {
+      "qc": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 0.0,
+          "black_border_fraction": 0.0,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 6,
+        "border_pixels": 6,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [
+          "tissue_fraction_below_minimum",
+          "laplacian_variance_undefined"
+        ],
+        "accepted": false
+      },
+      "default_no_exclusion": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 0.0,
+          "black_border_fraction": 0.0,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 6,
+        "border_pixels": 6,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [],
+        "accepted": true
+      },
+      "colors": {
+        "status": "ok",
+        "channels": {
+          "R": {
+            "statistics": {
+              "mean": 127.5,
+              "std": 127.5,
+              "minimum": 0,
+              "maximum": 255,
+              "q25": 0.0,
+              "q50": 127.5,
+              "q75": 255.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                3,
+                0,
+                0,
+                3
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.5,
+                0.0,
+                0.0,
+                0.5
+              ]
+            }
+          },
+          "G": {
+            "statistics": {
+              "mean": 127.5,
+              "std": 127.5,
+              "minimum": 0,
+              "maximum": 255,
+              "q25": 0.0,
+              "q50": 127.5,
+              "q75": 255.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                3,
+                0,
+                0,
+                3
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.5,
+                0.0,
+                0.0,
+                0.5
+              ]
+            }
+          },
+          "B": {
+            "statistics": {
+              "mean": 127.5,
+              "std": 127.5,
+              "minimum": 0,
+              "maximum": 255,
+              "q25": 0.0,
+              "q50": 127.5,
+              "q75": 255.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                3,
+                0,
+                0,
+                3
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.5,
+                0.0,
+                0.0,
+                0.5
+              ]
+            }
+          },
+          "S": {
+            "statistics": {
+              "mean": 1.0,
+              "std": 0.0,
+              "minimum": 1.0,
+              "maximum": 1.0,
+              "q25": 1.0,
+              "q50": 1.0,
+              "q75": 1.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                6
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "V": {
+            "statistics": {
+              "mean": 1.0,
+              "std": 0.0,
+              "minimum": 1.0,
+              "maximum": 1.0,
+              "q25": 1.0,
+              "q50": 1.0,
+              "q75": 1.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                6
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "L": {
+            "statistics": {
+              "mean": 70.30825843702056,
+              "std": 23.424277551464407,
+              "minimum": 32.30087290398018,
+              "maximum": 97.13855934179699,
+              "q25": 55.00851953520988,
+              "q50": 74.0291252321057,
+              "q75": 90.26994401494403
+            },
+            "histogram": {
+              "edges": [
+                0,
+                25,
+                50,
+                75,
+                100
+              ],
+              "counts": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.16666666666666666,
+                0.3333333333333333,
+                0.5
+              ]
+            }
+          },
+          "a": {
+            "statistics": {
+              "mean": 16.950395258630188,
+              "std": 71.6667014568627,
+              "minimum": -86.18159689039895,
+              "maximum": 98.23744381318427,
+              "q25": -41.44915899386674,
+              "q50": 28.81764974643464,
+              "q75": 79.86640271917895
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                1,
+                2,
+                0,
+                3
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.16666666666666666,
+                0.3333333333333333,
+                0.0,
+                0.5
+              ]
+            }
+          },
+          "b": {
+            "statistics": {
+              "mean": 10.34339379461437,
+              "std": 76.65307089234112,
+              "minimum": -107.85546553974265,
+              "maximum": 94.48384001557011,
+              "q25": -49.153928988895295,
+              "q50": 26.537139124636344,
+              "q75": 79.19078108315303
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                1,
+                2,
+                0,
+                3
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.16666666666666666,
+                0.3333333333333333,
+                0.0,
+                0.5
+              ]
+            }
+          }
+        },
+        "hue": {
+          "count": 6,
+          "mean_degrees": null,
+          "resultant_length": 5.74182141399611e-17,
+          "circular_variance": 0.9999999999999999,
+          "histogram": {
+            "edges": [
+              0,
+              60,
+              120,
+              180,
+              240,
+              300,
+              360
+            ],
+            "counts": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "denominator": 6,
+            "probabilities": [
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666
+            ]
+          }
+        }
+      },
+      "colors_tissue_only": {
+        "status": "empty_statistical_mask",
+        "channels": {},
+        "hue": null
+      }
+    },
+    "padding_excluded": {
+      "qc": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 0.0,
+          "black_border_fraction": 0.0,
+          "tissue_fraction": 1.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 6,
+        "border_pixels": 6,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [
+          "laplacian_variance_undefined"
+        ],
+        "accepted": false
+      },
+      "default_no_exclusion": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 0.0,
+          "black_border_fraction": 0.0,
+          "tissue_fraction": 1.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 6,
+        "border_pixels": 6,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [],
+        "accepted": true
+      },
+      "colors": {
+        "status": "ok",
+        "channels": {
+          "R": {
+            "statistics": {
+              "mean": 128,
+              "std": 0.0,
+              "minimum": 128,
+              "maximum": 128,
+              "q25": 128.0,
+              "q50": 128.0,
+              "q75": 128.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                0,
+                0,
+                6,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "G": {
+            "statistics": {
+              "mean": 0,
+              "std": 0.0,
+              "minimum": 0,
+              "maximum": 0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                6,
+                0,
+                0,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "B": {
+            "statistics": {
+              "mean": 128,
+              "std": 0.0,
+              "minimum": 128,
+              "maximum": 128,
+              "q25": 128.0,
+              "q50": 128.0,
+              "q75": 128.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                0,
+                0,
+                6,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "S": {
+            "statistics": {
+              "mean": 1.0,
+              "std": 0.0,
+              "minimum": 1.0,
+              "maximum": 1.0,
+              "q25": 1.0,
+              "q50": 1.0,
+              "q75": 1.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                6
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "V": {
+            "statistics": {
+              "mean": 0.5019607843137255,
+              "std": 0.0,
+              "minimum": 0.5019607843137255,
+              "maximum": 0.5019607843137255,
+              "q25": 0.5019607843137255,
+              "q50": 0.5019607843137255,
+              "q75": 0.5019607843137255
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                0,
+                0,
+                6,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "L": {
+            "statistics": {
+              "mean": 29.78377834493743,
+              "std": 0.0,
+              "minimum": 29.78377834493743,
+              "maximum": 29.78377834493743,
+              "q25": 29.78377834493743,
+              "q50": 29.78377834493743,
+              "q75": 29.78377834493743
+            },
+            "histogram": {
+              "edges": [
+                0,
+                25,
+                50,
+                75,
+                100
+              ],
+              "counts": [
+                0,
+                6,
+                0,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "a": {
+            "statistics": {
+              "mean": 58.92977456247528,
+              "std": 0.0,
+              "minimum": 58.92977456247528,
+              "maximum": 58.92977456247528,
+              "q25": 58.92977456247528,
+              "q50": 58.92977456247528,
+              "q75": 58.92977456247528
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                6,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "b": {
+            "statistics": {
+              "mean": -36.489487385413554,
+              "std": 0.0,
+              "minimum": -36.489487385413554,
+              "maximum": -36.489487385413554,
+              "q25": -36.489487385413554,
+              "q50": -36.489487385413554,
+              "q75": -36.489487385413554
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                6,
+                0,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "hue": {
+          "count": 6,
+          "mean_degrees": 300.0,
+          "resultant_length": 1.0,
+          "circular_variance": 0.0,
+          "histogram": {
+            "edges": [
+              0,
+              60,
+              120,
+              180,
+              240,
+              300,
+              360
+            ],
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              6
+            ],
+            "denominator": 6,
+            "probabilities": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        }
+      },
+      "colors_tissue_only": {
+        "status": "ok",
+        "channels": {
+          "R": {
+            "statistics": {
+              "mean": 128,
+              "std": 0.0,
+              "minimum": 128,
+              "maximum": 128,
+              "q25": 128.0,
+              "q50": 128.0,
+              "q75": 128.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                0,
+                0,
+                6,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "G": {
+            "statistics": {
+              "mean": 0,
+              "std": 0.0,
+              "minimum": 0,
+              "maximum": 0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                6,
+                0,
+                0,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "B": {
+            "statistics": {
+              "mean": 128,
+              "std": 0.0,
+              "minimum": 128,
+              "maximum": 128,
+              "q25": 128.0,
+              "q50": 128.0,
+              "q75": 128.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                0,
+                0,
+                6,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "S": {
+            "statistics": {
+              "mean": 1.0,
+              "std": 0.0,
+              "minimum": 1.0,
+              "maximum": 1.0,
+              "q25": 1.0,
+              "q50": 1.0,
+              "q75": 1.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                0,
+                0,
+                0,
+                6
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          "V": {
+            "statistics": {
+              "mean": 0.5019607843137255,
+              "std": 0.0,
+              "minimum": 0.5019607843137255,
+              "maximum": 0.5019607843137255,
+              "q25": 0.5019607843137255,
+              "q50": 0.5019607843137255,
+              "q75": 0.5019607843137255
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                0,
+                0,
+                6,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "L": {
+            "statistics": {
+              "mean": 29.78377834493743,
+              "std": 0.0,
+              "minimum": 29.78377834493743,
+              "maximum": 29.78377834493743,
+              "q25": 29.78377834493743,
+              "q50": 29.78377834493743,
+              "q75": 29.78377834493743
+            },
+            "histogram": {
+              "edges": [
+                0,
+                25,
+                50,
+                75,
+                100
+              ],
+              "counts": [
+                0,
+                6,
+                0,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "a": {
+            "statistics": {
+              "mean": 58.92977456247528,
+              "std": 0.0,
+              "minimum": 58.92977456247528,
+              "maximum": 58.92977456247528,
+              "q25": 58.92977456247528,
+              "q50": 58.92977456247528,
+              "q75": 58.92977456247528
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                6,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "b": {
+            "statistics": {
+              "mean": -36.489487385413554,
+              "std": 0.0,
+              "minimum": -36.489487385413554,
+              "maximum": -36.489487385413554,
+              "q25": -36.489487385413554,
+              "q50": -36.489487385413554,
+              "q75": -36.489487385413554
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                6,
+                0,
+                0
+              ],
+              "denominator": 6,
+              "probabilities": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "hue": {
+          "count": 6,
+          "mean_degrees": 300.0,
+          "resultant_length": 1.0,
+          "circular_variance": 0.0,
+          "histogram": {
+            "edges": [
+              0,
+              60,
+              120,
+              180,
+              240,
+              300,
+              360
+            ],
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              6
+            ],
+            "denominator": 6,
+            "probabilities": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        }
+      }
+    },
+    "binary_grid_5x5": {
+      "qc": {
+        "scores": {
+          "white_fraction": 0.48,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 0.5,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": 1027555.5555555554
+        },
+        "valid_pixels": 25,
+        "border_pixels": 16,
+        "laplacian_pixels": 9,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [
+          "tissue_fraction_below_minimum"
+        ],
+        "accepted": false
+      },
+      "default_no_exclusion": {
+        "scores": {
+          "white_fraction": 0.48,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 0.5,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": 1027555.5555555554
+        },
+        "valid_pixels": 25,
+        "border_pixels": 16,
+        "laplacian_pixels": 9,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [],
+        "accepted": true
+      },
+      "colors": {
+        "status": "ok",
+        "channels": {
+          "R": {
+            "statistics": {
+              "mean": 122.4,
+              "std": 127.39795916732733,
+              "minimum": 0,
+              "maximum": 255,
+              "q25": 0,
+              "q50": 0,
+              "q75": 255
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                13,
+                0,
+                0,
+                12
+              ],
+              "denominator": 25,
+              "probabilities": [
+                0.52,
+                0.0,
+                0.0,
+                0.48
+              ]
+            }
+          },
+          "G": {
+            "statistics": {
+              "mean": 122.4,
+              "std": 127.39795916732733,
+              "minimum": 0,
+              "maximum": 255,
+              "q25": 0,
+              "q50": 0,
+              "q75": 255
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                13,
+                0,
+                0,
+                12
+              ],
+              "denominator": 25,
+              "probabilities": [
+                0.52,
+                0.0,
+                0.0,
+                0.48
+              ]
+            }
+          },
+          "B": {
+            "statistics": {
+              "mean": 122.4,
+              "std": 127.39795916732733,
+              "minimum": 0,
+              "maximum": 255,
+              "q25": 0,
+              "q50": 0,
+              "q75": 255
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                13,
+                0,
+                0,
+                12
+              ],
+              "denominator": 25,
+              "probabilities": [
+                0.52,
+                0.0,
+                0.0,
+                0.48
+              ]
+            }
+          },
+          "S": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                25,
+                0,
+                0,
+                0
+              ],
+              "denominator": 25,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "V": {
+            "statistics": {
+              "mean": 0.48,
+              "std": 0.4995998398718719,
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 1.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                13,
+                0,
+                0,
+                12
+              ],
+              "denominator": 25,
+              "probabilities": [
+                0.52,
+                0.0,
+                0.0,
+                0.48
+              ]
+            }
+          },
+          "L": {
+            "statistics": {
+              "mean": 48.0,
+              "std": 49.95998398718719,
+              "minimum": 0.0,
+              "maximum": 100.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 100.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                25,
+                50,
+                75,
+                100
+              ],
+              "counts": [
+                13,
+                0,
+                0,
+                12
+              ],
+              "denominator": 25,
+              "probabilities": [
+                0.52,
+                0.0,
+                0.0,
+                0.48
+              ]
+            }
+          },
+          "a": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                25,
+                0
+              ],
+              "denominator": 25,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "b": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                25,
+                0
+              ],
+              "denominator": 25,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "hue": {
+          "count": 0,
+          "mean_degrees": null,
+          "resultant_length": null,
+          "circular_variance": null,
+          "histogram": {
+            "edges": [
+              0,
+              60,
+              120,
+              180,
+              240,
+              300,
+              360
+            ],
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "denominator": 0,
+            "probabilities": null
+          }
+        }
+      },
+      "colors_tissue_only": {
+        "status": "empty_statistical_mask",
+        "channels": {},
+        "hue": null
+      }
+    },
+    "neutral_histogram_boundary": {
+      "qc": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 0.25,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 4,
+        "border_pixels": 4,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [
+          "tissue_fraction_below_minimum",
+          "laplacian_variance_undefined"
+        ],
+        "accepted": false
+      },
+      "default_no_exclusion": {
+        "scores": {
+          "white_fraction": 0.0,
+          "low_saturation_fraction": 1.0,
+          "black_border_fraction": 0.25,
+          "tissue_fraction": 0.0,
+          "laplacian_variance": null
+        },
+        "valid_pixels": 4,
+        "border_pixels": 4,
+        "laplacian_pixels": 0,
+        "tissue_mask": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "exclusion_reasons": [],
+        "accepted": true
+      },
+      "colors": {
+        "status": "ok",
+        "channels": {
+          "R": {
+            "statistics": {
+              "mean": 22,
+              "std": 8.093207028119323,
+              "minimum": 12,
+              "maximum": 33,
+              "q25": 15.75,
+              "q50": 21.5,
+              "q75": 27.75
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                4,
+                0,
+                0,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "G": {
+            "statistics": {
+              "mean": 22,
+              "std": 8.093207028119323,
+              "minimum": 12,
+              "maximum": 33,
+              "q25": 15.75,
+              "q50": 21.5,
+              "q75": 27.75
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                4,
+                0,
+                0,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "B": {
+            "statistics": {
+              "mean": 22,
+              "std": 8.093207028119323,
+              "minimum": 12,
+              "maximum": 33,
+              "q25": 15.75,
+              "q50": 21.5,
+              "q75": 27.75
+            },
+            "histogram": {
+              "edges": [
+                0,
+                64,
+                128,
+                192,
+                256
+              ],
+              "counts": [
+                4,
+                0,
+                0,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "S": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                4,
+                0,
+                0,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "V": {
+            "statistics": {
+              "mean": 0.08627450980392157,
+              "std": 0.03173806677693852,
+              "minimum": 0.047058823529411764,
+              "maximum": 0.12941176470588237,
+              "q25": 0.061764705882352944,
+              "q50": 0.08431372549019608,
+              "q75": 0.10882352941176471
+            },
+            "histogram": {
+              "edges": [
+                0,
+                0.25,
+                0.5,
+                0.75,
+                1
+              ],
+              "counts": [
+                4,
+                0,
+                0,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "L": {
+            "statistics": {
+              "mean": 7.596887400410672,
+              "std": 3.6718784205061388,
+              "minimum": 3.320975449118258,
+              "maximum": 12.740010373302407,
+              "q25": 4.6277409823540125,
+              "q50": 7.163281889611012,
+              "q75": 10.132428307667672
+            },
+            "histogram": {
+              "edges": [
+                0,
+                25,
+                50,
+                75,
+                100
+              ],
+              "counts": [
+                4,
+                0,
+                0,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "a": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                4,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "b": {
+            "statistics": {
+              "mean": 0.0,
+              "std": 0.0,
+              "minimum": 0.0,
+              "maximum": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0
+            },
+            "histogram": {
+              "edges": [
+                -128,
+                -64,
+                0,
+                64,
+                128
+              ],
+              "counts": [
+                0,
+                0,
+                4,
+                0
+              ],
+              "denominator": 4,
+              "probabilities": [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "hue": {
+          "count": 0,
+          "mean_degrees": null,
+          "resultant_length": null,
+          "circular_variance": null,
+          "histogram": {
+            "edges": [
+              0,
+              60,
+              120,
+              180,
+              240,
+              300,
+              360
+            ],
+            "counts": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "denominator": 0,
+            "probabilities": null
+          }
+        }
+      },
+      "colors_tissue_only": {
+        "status": "empty_statistical_mask",
+        "channels": {},
+        "hue": null
+      }
+    }
+  },
+  "tilings": [
+    [
+      {
+        "x0": 0,
+        "y0": 0,
+        "width0": 2,
+        "height0": 2,
+        "patch_width": 2,
+        "patch_height": 2,
+        "valid_pixels": [
+          0,
+          0,
+          2,
+          2
+        ]
+      },
+      {
+        "x0": 1,
+        "y0": 0,
+        "width0": 2,
+        "height0": 2,
+        "patch_width": 2,
+        "patch_height": 2,
+        "valid_pixels": [
+          0,
+          0,
+          2,
+          2
+        ]
+      }
+    ],
+    [
+      {
+        "x0": 0,
+        "y0": 0,
+        "width0": 4,
+        "height0": 6,
+        "patch_width": 2,
+        "patch_height": 2,
+        "valid_pixels": [
+          0,
+          0,
+          2,
+          2
+        ]
+      },
+      {
+        "x0": 2,
+        "y0": 0,
+        "width0": 4,
+        "height0": 6,
+        "patch_width": 2,
+        "patch_height": 2,
+        "valid_pixels": [
+          0,
+          0,
+          2,
+          2
+        ]
+      },
+      {
+        "x0": 4,
+        "y0": 0,
+        "width0": 4,
+        "height0": 6,
+        "patch_width": 2,
+        "patch_height": 2,
+        "valid_pixels": [
+          0,
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "x0": 0,
+        "y0": 3,
+        "width0": 4,
+        "height0": 6,
+        "patch_width": 2,
+        "patch_height": 2,
+        "valid_pixels": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      {
+        "x0": 2,
+        "y0": 3,
+        "width0": 4,
+        "height0": 6,
+        "patch_width": 2,
+        "patch_height": 2,
+        "valid_pixels": [
+          0,
+          0,
+          2,
+          1
+        ]
+      },
+      {
+        "x0": 4,
+        "y0": 3,
+        "width0": 4,
+        "height0": 6,
+        "patch_width": 2,
+        "patch_height": 2,
+        "valid_pixels": [
+          0,
+          0,
+          1,
+          1
+        ]
+      }
+    ],
+    []
+  ],
+  "masks": {
+    "instance_fragmented": {
+      "coverage": {
+        "denominator": 16,
+        "counts": {
+          "0": 12,
+          "1": 2,
+          "2": 2
+        },
+        "fractions": {
+          "0": 0.75,
+          "1": 0.125,
+          "2": 0.125
+        }
+      },
+      "objects": {
+        "status": "ok",
+        "mask_kind": "instance",
+        "object_count": 2,
+        "objects": [
+          {
+            "object_id": 1,
+            "source_label": 1,
+            "area_px": 2,
+            "centroid_pixel_centers": [
+              2.0,
+              2.0
+            ],
+            "bbox_xywh": [
+              0,
+              0,
+              4,
+              4
+            ],
+            "touches_valid_boundary": true,
+            "area_um2": 0.25
+          },
+          {
+            "object_id": 2,
+            "source_label": 2,
+            "area_px": 2,
+            "centroid_pixel_centers": [
+              2.0,
+              1.5
+            ],
+            "bbox_xywh": [
+              1,
+              1,
+              2,
+              1
+            ],
+            "touches_valid_boundary": false,
+            "area_um2": 0.25
+          }
+        ],
+        "size_distribution": {
+          "mean": 2,
+          "std": 0.0,
+          "minimum": 2,
+          "maximum": 2,
+          "q25": 2.0,
+          "q50": 2.0,
+          "q75": 2.0
+        },
+        "warnings": [
+          "patch_local_instance_counts_must_not_be_summed_across_overlapping_tiles"
+        ],
+        "count_scope": "patch_local"
+      }
+    },
+    "semantic_diagonal_4": {
+      "coverage": {
+        "denominator": 9,
+        "counts": {
+          "0": 6,
+          "1": 2,
+          "2": 1
+        },
+        "fractions": {
+          "0": 0.6666666666666666,
+          "1": 0.2222222222222222,
+          "2": 0.1111111111111111
+        }
+      },
+      "objects": {
+        "status": "ok",
+        "mask_kind": "semantic",
+        "object_count": 3,
+        "objects": [
+          {
+            "object_id": 1,
+            "source_label": 1,
+            "area_px": 1,
+            "centroid_pixel_centers": [
+              0.5,
+              0.5
+            ],
+            "bbox_xywh": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "touches_valid_boundary": true,
+            "area_um2": null
+          },
+          {
+            "object_id": 2,
+            "source_label": 1,
+            "area_px": 1,
+            "centroid_pixel_centers": [
+              1.5,
+              1.5
+            ],
+            "bbox_xywh": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "touches_valid_boundary": false,
+            "area_um2": null
+          },
+          {
+            "object_id": 3,
+            "source_label": 2,
+            "area_px": 1,
+            "centroid_pixel_centers": [
+              2.5,
+              2.5
+            ],
+            "bbox_xywh": [
+              2,
+              2,
+              1,
+              1
+            ],
+            "touches_valid_boundary": true,
+            "area_um2": null
+          }
+        ],
+        "size_distribution": {
+          "mean": 1,
+          "std": 0.0,
+          "minimum": 1,
+          "maximum": 1,
+          "q25": 1.0,
+          "q50": 1,
+          "q75": 1.0
+        },
+        "warnings": [],
+        "count_scope": "patch_local"
+      }
+    },
+    "semantic_diagonal_8": {
+      "coverage": {
+        "denominator": 9,
+        "counts": {
+          "0": 6,
+          "1": 2,
+          "2": 1
+        },
+        "fractions": {
+          "0": 0.6666666666666666,
+          "1": 0.2222222222222222,
+          "2": 0.1111111111111111
+        }
+      },
+      "objects": {
+        "status": "ok",
+        "mask_kind": "semantic",
+        "object_count": 2,
+        "objects": [
+          {
+            "object_id": 1,
+            "source_label": 1,
+            "area_px": 2,
+            "centroid_pixel_centers": [
+              1.0,
+              1.0
+            ],
+            "bbox_xywh": [
+              0,
+              0,
+              2,
+              2
+            ],
+            "touches_valid_boundary": true,
+            "area_um2": null
+          },
+          {
+            "object_id": 2,
+            "source_label": 2,
+            "area_px": 1,
+            "centroid_pixel_centers": [
+              2.5,
+              2.5
+            ],
+            "bbox_xywh": [
+              2,
+              2,
+              1,
+              1
+            ],
+            "touches_valid_boundary": true,
+            "area_um2": null
+          }
+        ],
+        "size_distribution": {
+          "mean": 1.5,
+          "std": 0.5,
+          "minimum": 1,
+          "maximum": 2,
+          "q25": 1.25,
+          "q50": 1.5,
+          "q75": 1.75
+        },
+        "warnings": [],
+        "count_scope": "patch_local"
+      }
+    },
+    "mask_padding_excluded": {
+      "coverage": {
+        "denominator": 4,
+        "counts": {
+          "0": 3,
+          "1": 1,
+          "9": 0
+        },
+        "fractions": {
+          "0": 0.75,
+          "1": 0.25,
+          "9": 0.0
+        }
+      },
+      "objects": {
+        "status": "ok",
+        "mask_kind": "instance",
+        "object_count": 1,
+        "objects": [
+          {
+            "object_id": 1,
+            "source_label": 1,
+            "area_px": 1,
+            "centroid_pixel_centers": [
+              1.5,
+              1.5
+            ],
+            "bbox_xywh": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "touches_valid_boundary": true,
+            "area_um2": null
+          }
+        ],
+        "size_distribution": {
+          "mean": 1,
+          "std": 0.0,
+          "minimum": 1,
+          "maximum": 1,
+          "q25": 1,
+          "q50": 1,
+          "q75": 1
+        },
+        "warnings": [],
+        "count_scope": "patch_local"
+      }
+    }
+  },
+  "failures": {
+    "zero_border_band": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "border_band_px must be a positive integer",
+      "warnings": []
+    },
+    "zero_downsample": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "downsample must contain two positive finite scales",
+      "warnings": []
+    },
+    "nonfinite_histogram_edges": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "fixed histogram edges must increase strictly",
+      "warnings": []
+    },
+    "negative_patch_mpp": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "patch-pixel MPP must contain two positive finite scales",
+      "warnings": []
+    }
+  },
+  "restrictions": [
+    "RGB8 only for QC/colors. Gray8/Gray16 require an explicit mapping; native errors Unsupported otherwise.",
+    "No inferred MPP from DPI or magnification.",
+    "Patch-local object counts are not a global deduplicated cell count.",
+    "Patient model probabilities cannot be broadcast into local tile predictions.",
+    "Default QC scores retain patches; only explicit limits exclude."
+  ]
+}

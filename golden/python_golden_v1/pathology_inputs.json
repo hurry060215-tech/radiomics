@@ -1,0 +1,771 @@
+{
+  "schema": "python_golden_v1.pathology.inputs.v1",
+  "fixed_edges": {
+    "R": [
+      0,
+      64,
+      128,
+      192,
+      256
+    ],
+    "G": [
+      0,
+      64,
+      128,
+      192,
+      256
+    ],
+    "B": [
+      0,
+      64,
+      128,
+      192,
+      256
+    ],
+    "S": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "V": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "H": [
+      0,
+      60,
+      120,
+      180,
+      240,
+      300,
+      360
+    ],
+    "L": [
+      0,
+      25,
+      50,
+      75,
+      100
+    ],
+    "a": [
+      -128,
+      -64,
+      0,
+      64,
+      128
+    ],
+    "b": [
+      -128,
+      -64,
+      0,
+      64,
+      128
+    ]
+  },
+  "qc_config": {
+    "white_threshold": 240,
+    "low_saturation_threshold": 0.1,
+    "black_threshold": 15,
+    "border_band_px": 1,
+    "tissue_s_min": 0.1,
+    "tissue_v_min": 0.05,
+    "tissue_v_max": 0.95,
+    "max_white_fraction": 0.8,
+    "max_low_saturation_fraction": null,
+    "max_black_border_fraction": 0.5,
+    "min_tissue_fraction": 0.1,
+    "min_laplacian_variance": 1
+  },
+  "patches": [
+    {
+      "id": "white_3x3",
+      "width": 3,
+      "height": 3,
+      "valid_pixels": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "pixels": [
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "id": "black_3x3",
+      "width": 3,
+      "height": 3,
+      "valid_pixels": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "pixels": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "hue_wrap",
+      "width": 2,
+      "height": 1,
+      "valid_pixels": [
+        0,
+        0,
+        2,
+        1
+      ],
+      "pixels": [
+        [
+          255,
+          0,
+          1
+        ],
+        [
+          255,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "hue_undefined_gray",
+      "width": 2,
+      "height": 2,
+      "valid_pixels": [
+        0,
+        0,
+        2,
+        2
+      ],
+      "pixels": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          64,
+          64,
+          64
+        ],
+        [
+          128,
+          128,
+          128
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "id": "rgb_primary_and_complements",
+      "width": 3,
+      "height": 2,
+      "valid_pixels": [
+        0,
+        0,
+        3,
+        2
+      ],
+      "pixels": [
+        [
+          255,
+          0,
+          0
+        ],
+        [
+          0,
+          255,
+          0
+        ],
+        [
+          0,
+          0,
+          255
+        ],
+        [
+          0,
+          255,
+          255
+        ],
+        [
+          255,
+          0,
+          255
+        ],
+        [
+          255,
+          255,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "padding_excluded",
+      "width": 4,
+      "height": 4,
+      "valid_pixels": [
+        0,
+        0,
+        3,
+        2
+      ],
+      "pixels": [
+        [
+          128,
+          0,
+          128
+        ],
+        [
+          128,
+          0,
+          128
+        ],
+        [
+          128,
+          0,
+          128
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          128,
+          0,
+          128
+        ],
+        [
+          128,
+          0,
+          128
+        ],
+        [
+          128,
+          0,
+          128
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ]
+    },
+    {
+      "id": "binary_grid_5x5",
+      "width": 5,
+      "height": 5,
+      "valid_pixels": [
+        0,
+        0,
+        5,
+        5
+      ],
+      "pixels": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "neutral_histogram_boundary",
+      "width": 2,
+      "height": 2,
+      "valid_pixels": [
+        0,
+        0,
+        2,
+        2
+      ],
+      "pixels": [
+        [
+          17,
+          17,
+          17
+        ],
+        [
+          33,
+          33,
+          33
+        ],
+        [
+          26,
+          26,
+          26
+        ],
+        [
+          12,
+          12,
+          12
+        ]
+      ]
+    }
+  ],
+  "tilings": [
+    {
+      "width": 3,
+      "height": 2,
+      "patch_size": [
+        2,
+        2
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "edge": "drop",
+      "downsample": [
+        1,
+        1
+      ]
+    },
+    {
+      "width": 3,
+      "height": 2,
+      "patch_size": [
+        2,
+        2
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "edge": "pad",
+      "downsample": [
+        2,
+        3
+      ]
+    },
+    {
+      "width": 1,
+      "height": 1,
+      "patch_size": [
+        4,
+        4
+      ],
+      "stride": [
+        4,
+        4
+      ],
+      "edge": "drop",
+      "downsample": [
+        1,
+        1
+      ]
+    }
+  ],
+  "masks": [
+    {
+      "id": "instance_fragmented",
+      "width": 4,
+      "height": 4,
+      "valid_pixels": [
+        0,
+        0,
+        4,
+        4
+      ],
+      "mask_kind": "instance",
+      "connectivity": 4,
+      "mpp": [
+        0.25,
+        0.5
+      ],
+      "overlapping_tiles": true,
+      "classes": [
+        0,
+        1,
+        2
+      ],
+      "labels": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        2,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "semantic_diagonal_4",
+      "width": 3,
+      "height": 3,
+      "valid_pixels": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "mask_kind": "semantic",
+      "connectivity": 4,
+      "mpp": null,
+      "overlapping_tiles": false,
+      "classes": [
+        0,
+        1,
+        2
+      ],
+      "labels": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "id": "semantic_diagonal_8",
+      "width": 3,
+      "height": 3,
+      "valid_pixels": [
+        0,
+        0,
+        3,
+        3
+      ],
+      "mask_kind": "semantic",
+      "connectivity": 8,
+      "mpp": null,
+      "overlapping_tiles": false,
+      "classes": [
+        0,
+        1,
+        2
+      ],
+      "labels": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "id": "mask_padding_excluded",
+      "width": 3,
+      "height": 3,
+      "valid_pixels": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "mask_kind": "instance",
+      "connectivity": 4,
+      "mpp": null,
+      "overlapping_tiles": false,
+      "classes": [
+        0,
+        1,
+        9
+      ],
+      "labels": [
+        9,
+        9,
+        9,
+        9,
+        1,
+        0,
+        9,
+        0,
+        0
+      ]
+    }
+  ],
+  "license": "CC0-1.0",
+  "provenance": "Original synthetic patches, masks and coordinates; no patient data or native outputs.",
+  "pixel_scale_case": {
+    "level0_mpp_um": [
+      0.25,
+      0.5
+    ],
+    "tile_width0": 8,
+    "tile_height0": 12,
+    "patch_width": 4,
+    "patch_height": 4,
+    "patch_pixel_mpp_um": [
+      0.5,
+      1.5
+    ],
+    "two_pixel_object_area_um2": 1.5
+  }
+}

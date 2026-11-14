@@ -2,7 +2,7 @@
   "schema": "python_golden_v1.acceptance.v1",
   "profile": "python_golden_v1",
   "status": "frozen_by_main_agent_review",
-  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance.",
+  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation.",
   "baseline_revision": "2512e16979a544207f84c943e619ef33e02d3dc7",
   "reference_source": {
     "pyradiomics_tag": "v3.0.1",
@@ -74,6 +74,10 @@
     "requirements-reference.txt": "43bd63b4fabedadccd4c77e9df95b6d3dd976aab9d9227cb91e5f9d0be104265",
     "binning_edges.json": "e0ccc89ea83766c220aaf94fb2d8d9695a582500330acd3166ea0056520cdb47",
     "model_inputs.json": "ce154ab4ba1390661cd5bd3c4828f99aae96becd779620622903e26c99a06fea",
-    "model_reference.json": "3fffb6a4eeb9f84e7b3e213fdfa0cd6f851b33e340cae385e03662b52edc766c"
+    "model_reference.json": "3fffb6a4eeb9f84e7b3e213fdfa0cd6f851b33e340cae385e03662b52edc766c",
+    "pathology_spec.py": "de07e123d5064a27a71c086b4868d9d9021186958709a089a261d479913c73de",
+    "pathology_inputs.json": "2f23581540ed7b7aa315ef787d32461d1343b4566b0840c2a43e31396669712a",
+    "pathology_reference.json": "9e4a7384601a53db4d4f96dce73f0013bad5f756c85151bc37b74defc57a7571",
+    "pathology_hand.json": "f5560a6f7d1a100d8f694c1d9f65d5f3716654045bdbdb8826977b09495abce7"
   }
 }

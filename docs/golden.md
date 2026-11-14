@@ -56,6 +56,26 @@ not a requirement that Linux produce byte-identical binaries.
   gradients/KKT, convergence and class order are frozen. They validate numerical
   solvers; nested workflow leakage and model selection still require separate
   acceptance tests.
+- `pathology_spec.py`, `pathology_inputs.json`, `pathology_reference.json` and
+  `pathology_hand.json`: a small reviewed pure-Python specification, eight RGB8
+  patch inputs, three tiling cases, four instance/semantic masks and independent
+  hand calculations. QC includes only valid pixels, Laplacian uses interior
+  valid pixels, and explicit thresholds decide exclusion. RGB/HSV/Lab_D65
+  channel statistics and fixed histogram counts, circular Hue, padding-excluded
+  annotation coverage, patch-local object geometry and scale conversion are
+  frozen before the Rust pixel implementation. Gray8/Gray16 are read as raw
+  image/texture values and require an explicit mapping for QC/colors.
+
+`Lab_D65` uses the sRGB transfer, the W3C D65 RGB-to-XYZ matrix and the CIELAB
+piecewise formula with D65 white. It does not adapt to D50. The profile preserves
+the theoretical identity `a=b=0` exactly when `R=G=B`; this prevents an arbitrary
+floating-point sign at the fixed histogram's zero edge. Other colors are not
+rounded by an epsilon rule. Missing Hue or insufficient Laplacian support stays
+missing. Object coordinates use pixel edges at integers and centers at `x+.5,
+y+.5`. Object MPP is the **patch-pixel** scale: multiply level-0 MPP by
+`width0/patch_width` and `height0/patch_height`. Missing MPP produces pixel units
+only. Patch counts remain local even when tiles overlap; this does not create a
+deduplicated whole-slide cell count.
 
 The model objectives use sample means, with unpenalized intercepts. L2 Logistic
 uses `mean(NLL) + lambda/2 * ||W||²`, mapped to sklearn

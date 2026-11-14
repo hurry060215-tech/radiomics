@@ -1,0 +1,13 @@
+{
+  "schema": "python_golden_v1.pathology.hand.v1",
+  "provenance": "Independent hand arithmetic by Golden A, before native pathology implementation.",
+  "white_3x3": {"valid_pixels": 9, "white_fraction": 1, "low_saturation_fraction": 1, "black_border_fraction": 0, "tissue_fraction": 0, "laplacian_variance": 0},
+  "black_3x3": {"valid_pixels": 9, "white_fraction": 0, "low_saturation_fraction": 1, "black_border_fraction": 1, "tissue_fraction": 0, "laplacian_variance": 0},
+  "padding_excluded": {"valid_pixels": 6, "white_fraction": 0, "low_saturation_fraction": 0, "black_border_fraction": 0, "tissue_fraction": 1, "laplacian_variance": null, "R_mean": 128, "G_mean": 0, "B_mean": 128},
+  "binary_grid_5x5": {"valid_pixels": 25, "white_fraction": 0.48, "low_saturation_fraction": 1, "black_border_fraction": 0.5, "tissue_fraction": 0, "laplacian_pixels": 9, "laplacian_variance": 1027555.5555555555},
+  "instance_fragmented": {"object_count": 2, "areas_px": [2, 2], "areas_um2": [0.25, 0.25], "centroids": [[2.0, 2.0], [2.0, 1.5]], "boundary": [true, false]},
+  "semantic_diagonal_4": {"object_count": 3},
+  "semantic_diagonal_8": {"object_count": 2},
+  "mask_padding_excluded": {"denominator": 4, "counts": {"0": 3, "1": 1, "9": 0}, "object_count": 1},
+  "pixel_scale": {"level0_mpp_um": [0.25, 0.5], "downsample_xy": [2, 3], "patch_pixel_mpp_um": [0.5, 1.5], "area_of_two_patch_pixels_um2": 1.5}
+}
