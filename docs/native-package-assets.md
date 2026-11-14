@@ -118,6 +118,23 @@ The receipt records both paths and every command. These are local development
 checks, not evidence of registry publication or independent crates.io install.
 The binding crate's existing `publish=false` remains intact.
 
+Keep Cargo's package extraction directory outside the original workspace when
+running standalone archive tests. An unpacked crate beneath the repository's
+`.build-tools/` can be mistaken for a member of the parent workspace even though
+its archive is valid. The final core archive was verified after extraction to
+`D:/radiomics-final-build/core-source-v1/`, where all 150 tests passed under
+Rust 1.85 with `--all-targets --locked`. The earlier parent-workspace error is
+retained in `final-core-crate-v2` logs; no source/expected value was changed.
+
+The updated derived Python source archive also passed its locked all-targets
+build and produced a wheel under Rust 1.85. That wheel was installed in a
+separate source-test environment, and all 206 enabled Python tests were actually
+run from the unpacked archive with `--import-mode=importlib -o pythonpath=`.
+Its artifact-only lock removes unused CLI nodes while preserving all retained
+dependency identities; the repository lock remains unchanged. Evidence is under
+`.build-tools/final-native-source-v1/`. These are separate from the 71 tests of
+the final native-only Windows wheel, which intentionally omits reference packages.
+
 ## Python source distribution with a derived artifact-only lock
 
 Maturin includes the staged Cargo assets in its source archive. Its rewritten
