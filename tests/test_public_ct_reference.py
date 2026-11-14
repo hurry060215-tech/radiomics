@@ -65,3 +65,20 @@ def test_noncommercial_sources_never_download_inside_git_and_cached_hashes_are_c
     protocol={'source':{'files':{'image.nii.gz':dict(bytes=123,sha256='0'*64,url='https://example.invalid/not-called')}}}
     with pytest.raises(ValueError,match='length/SHA256 mismatch'):
         tool.download(tmp_path,protocol)
+
+
+def test_tight_bbox_supplement_preserves_full_roi_features_and_world_geometry():
+    crop=json.loads((PROFILE/'bbox_crop_reference.json').read_text(encoding='utf-8'))
+    full=json.loads((PROFILE/'reference.json').read_text(encoding='utf-8'))
+    manifest=json.loads((PROFILE/'bbox_crop_manifest.json').read_text(encoding='utf-8'))
+    assert manifest['reference_sha256']==hashlib.sha256((PROFILE/'bbox_crop_reference.json').read_bytes()).hexdigest()
+    assert crop['full_reference_sha256']==hashlib.sha256((PROFILE/'reference.json').read_bytes()).hexdigest()
+    assert crop['protocol_sha256']==hashlib.sha256((PROFILE/'protocol.json').read_bytes()).hexdigest()
+    assert crop['roi_voxels']==125256
+    assert crop['geometry']['shape_xyz']==[100,99,26]
+    assert len(crop['features'])==55
+    assert all(row['passed'] and row['absolute_error']==0 for row in crop['full_vs_crop'])
+    for axis in 'XYZ':
+        assert crop['basic_shape']['original_shape_basic_BoundingBoxMin'+axis+'_index']==0
+        assert crop['basic_shape']['original_shape_basic_Centroid'+axis+'_mm']==pytest.approx(full['basic_shape']['original_shape_basic_Centroid'+axis+'_mm'],abs=1e-6,rel=0)
+    assert crop['basic_shape']['original_shape_basic_Volume_mm3']==full['basic_shape']['original_shape_basic_Volume_mm3']
