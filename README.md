@@ -1,6 +1,8 @@
 # ov-radiomics
 
-An independent Python package with a Rust numerical core for the OmicVerse ecosystem: medical images and ROI masks → radiomics models → clinical models → probability fusion and evaluation.
+An independently maintained Python package with a Rust numerical core: medical images and ROI masks → radiomics models → clinical models → probability fusion and evaluation.
+
+The canonical repository is [hurry060215-tech/radiomics](https://github.com/hurry060215-tech/radiomics). OmicVerse and other projects can consume the package through ordinary Python imports; this repository is developed and released independently.
 
 **Initial scope:** a single-center binary classification study with one row per independent patient. The repository includes real PyRadiomics extraction, train-fitted feature selection, eight classifier adapters, clinical statistics, logistic probability fusion, and publication-oriented plots. It does not contain patient data or depend on Onekey.
 
