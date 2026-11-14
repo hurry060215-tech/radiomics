@@ -1,5 +1,9 @@
 # Independent M0–M5 completion audit
 
+The original `45140bff` audit below is a historical cutoff. The final closure
+follow-up at the end supersedes its pending markers where later, separately
+identified evidence closes them; it does not rewrite the original observations.
+
 Read-only audit of root source `45140bff46b3ef1ae7eff9a170acb3a1116308b1` and
 the version-scoped evidence available with it. The root worktree was clean when
 read. This audit adds no algorithm, API, dependency, timing or success criterion.
@@ -188,3 +192,73 @@ ComBat, complex survival, NRI/IDI, deep training, automatic segmentation, MIL,
 GUI and paper generation remain deferred. No placeholder or support claim is
 required for them. Existing externally prepared results may enter supported
 contracts; accepting them does not implement the deferred processing.
+
+## Final closure follow-up: 2026-11-15
+
+This follow-up reads existing source, receipts, raw observations and completed
+CI results. It introduces no algorithm changes, new measurements or relaxed
+acceptance criteria. Root source inspected for the final packaging notes was
+`342d2179d7c5e8127ca697e0b92327b5eb5313dc`. The final code-bearing revision is
+`76808bb468f44a586ebf12db5a9be175b40b010d`; the difference from that revision to
+the inspected root was only `docs/native-package-assets.md`. Later report-only
+commits must retain the artifact/version qualifications below.
+
+| Original remaining item | Final status | Concrete closure and limits |
+|---|---|---|
+| 1. CLI center-specific evaluation | Closed, I/V | `evaluate --by-center` was merged at `76808bb`. It aligns the original prediction source, validates actual source-unit center metadata, then reuses existing evaluation/patient aggregation and native metrics for each center without renaming cohorts. Missing/unknown centers, mixed centers within an already aggregated patient/slide and invalid provenance are errors; a sample-level patient may genuinely span centers and is partitioned before aggregation. Three focused E2E cases, the full 16-test CLI suite, Clippy and 210 Python tests passed in Root's recorded checks. The independently inspected nine-job CI run at that code revision also succeeded. |
+| 2. Final source-distribution assets and execution | Closed within recorded artifacts, V | Root added the six tutorials and licensed frozen fixtures to the source asset list. `E:/radiomics-build/source-delivery-v1/tutorial-evidence.json` records six exit-zero tutorials from the unpacked archive (archive SHA256 `0ec85f15506c8b0a79241644b1eaff35048f05a968f10cb64198aa5a7a24db6a`) using the separately installed immutable-v3 wheel. Final derived sdist receipts additionally record a locked Rust1.85 build and wheel installation, 206 enabled Python tests and all six tutorials; the final v4 native-only wheel has 71 passing installed tests. The same core `.crate` unpacked outside the repository at `D:/radiomics-final-build/core-source-v1` passed 150 tests under Rust1.85. This does not claim an independent crates.io registry installation: core remains unpublished. |
+| 3. ML & Statistics / Pathology224 | Measurements and independent artifact review complete; tracked report integration remains with Root | The predeclared 16 cases contain all 224 observations (seven pairs per case), every raw status is `ok`, and `complete_declared_grid=true`. Both suite statuses are `passed_recorded_cases`. The inspected report is `E:/radiomics-build/benchmark-v2/learning-pathology-full-v2-16case-1/report.json`, SHA256 `8d41bc67078339724be24476ce2e40ddeecd65a89c7b9f820eabe69d9652cdc5`; its sibling `raw-observations.jsonl` retains all observations. There are no runtime or memory target misses in this grid. Archive/report commits and final technical-report links are a documentation handoff, rather than unrun numerical work. |
+| 4. L5 startup/install/call overhead | Closed for the declared L5 measurement scope, V | `docs/deployment-benchmark-v2-results.md` and `benchmarks/results/deployment-native-45140bff/` retain seven fresh-process CLI starts, seven Python import/backend queries and one offline wheel-payload installation. CLI median is 3.611 ms and Python import/query median 45.052 ms, with their IQR/p95 and all raw values retained. The single payload installation took 0.762398 s; it is an n=1 payload observation, not full dependency or Python/venv installation cost. The endpoints differ, so no language speed ratio is asserted. The first slow CLI startup is retained. OS cache was not purged. Linux startup and complete dependency-install latency remain unmeasured scope limitations. |
+| 5. Final code CI, artifact identity and documentation | Code/deployment evidence closed; final report reconciliation is Root's handoff | Completed runs `43615312443` and `43615315617` succeeded at `76808bb`. The former has nine successful jobs, including Windows/Linux native-only checks and a no-Python/no-network CLI container. Immutable-v4 `build-manifest.json` identifies that revision and the unchanged core implementation SHA256 `a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8`. README links now lead to delivery/report documentation; the final report must incorporate the completed224 archive and this superseding audit rather than repeating the historical pending markers above. |
+
+The final source-package receipts are under
+`.build-tools/final-native-source-v1/`. They record
+`retained_nodes_unchanged=true`, `repository_lock_unchanged=true`, a passed locked
+check and a passed wheel build. The derived wheel SHA256 is
+`06dc498f26fcb274e81d02692c1a3740f3e0d9c0c233dc329f6c8b2ccd28d959`.
+The original `final-core-crate-v2/preparation.json` remains **failed**: its
+Cargo verification extraction was under the Root workspace, selecting the
+workspace fixture context. It is not relabeled passed. The separately executed
+outside-repository 150-test result closes standalone core-source acceptance;
+both pieces of evidence and the path-context diagnosis remain available in
+`docs/native-package-assets.md`. External NC public-CT assets and their derived
+protocol remain outside base-package asset lists; their earlier independent CT
+acceptance is separate from the 206 enabled package tests.
+
+For the completed224 grid, the ten ML/statistics result rows have a maximum
+median native/reference runtime ratio of `1.0193622612401778`; the six pathology
+rows have a maximum of `0.34673004950728203`. The maximum median RSS ratio over
+the 16 cases is `1.0599699021820919`, below `1.20`; the maximum measured worker
+footer peak is `201.9375 MiB`. These are per-case results, not an average that
+combines the three software suites. The binding identifies source `48ecb310`
+and its immutable-v2 wheel, with core implementation SHA256 `a39c66ee…`.
+The report records its source-text binding, raw-byte fixture hashes and the
+explicitly approved CRLF/LF-only comparison for two reference scripts. Final-v4
+installation/CLI evidence is separate; these timings are not silently rebadged
+as measurements of every later Python/CLI source change.
+
+Remaining measurement limitations are explicit: no multicore scaling for this
+224 grid, no bootstrap/DeLong predictive-CI runtime case, and uncontrolled OS
+disk cache/background load. Windows launcher supervision plus sampled/footer
+memory accounting establishes the recorded observed resource result, **not
+absolute instantaneous memory containment**. A stronger shared launcher is
+future infrastructure work; no observation is resampled or discarded to hide
+this limitation.
+
+The numerical and support qualifications from the original audit continue to
+apply: the independently declared IBSI digital track reports raw Kurtosis as
+nonconformant rather than changing the Python-compatible definition; the PAT1
+configuration is not a claim of IBSI CT A–E conformance; real-CT Radiomics L2/L3
+performance target misses remain disclosed. Optional-container evidence covers
+the pinned real AnnData/WSIData/GeoDataFrame metadata and predecoded-image path,
+not vendor/WSI decoding or a tested full upstream Torch dependency installation.
+Unknown physical scale is not inferred from reader defaults. No later report
+may turn these scoped passes into universal clinical validity or an assertion
+that all features in a family are implemented.
+
+At this follow-up there is no remaining implementation request identified by
+this audit within the agreed non-deferred scope. Root still needs to finish the
+final archive/report/support-status reconciliation and attach the actual
+artifact links before declaring the complete delivery closed. The explicitly
+deferred feature list above, formal registry publication, a version-number
+change and changes to ov remain outside this round's authorization.
