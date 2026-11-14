@@ -151,6 +151,9 @@ mod _native {
     #[pymodule_export]
     const CORE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
+    #[pymodule_export]
+    const IMPLEMENTATION_SHA256: &str = core::workflow::implementation_sha256();
+
     #[pyfunction]
     fn read_cohort(py: Python<'_>, path: String) -> PyResult<String> {
         py.detach(|| {

@@ -8,6 +8,19 @@ edits dependency requirements or updates the repository Cargo.lock/Golden.
 
 ## Asset preparation and source compilation
 
+For an immutable, native-host wheel/CLI snapshot from a clean source commit:
+
+```powershell
+python tools/build_native_snapshot.py --output artifacts/new-native-snapshot
+```
+
+This uses the existing compiler/maturin without installing or publishing. It
+fixes release optimization to level 3, thin LTO and one codegen unit; records
+source commit/tree, compiler/target/flags, lock hash, wheel/CLI/file hashes and
+the compiled `_native.IMPLEMENTATION_SHA256`; and rejects source changes during
+the build. Its receipt identifies a build, not correctness or speed acceptance.
+Performance workers verify the receipt and installed bytes before measuring.
+
 ```powershell
 python tools/package_native.py --output artifacts/package-preparation
 ```

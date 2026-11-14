@@ -15,7 +15,7 @@ use std::{
     sync::atomic::{AtomicUsize, Ordering},
 };
 
-pub fn implementation_sha256() -> &'static str {
+pub const fn implementation_sha256() -> &'static str {
     env!("RAD_IMPLEMENTATION_SHA256")
 }
 fn invalid(message: impl Into<String>) -> RadiomicsError {
