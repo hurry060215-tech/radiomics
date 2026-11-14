@@ -1,6 +1,6 @@
 # 独立 Rust 影像组学与轻量病理分析引擎：架构、数值验证与性能技术报告
 
-**文档状态：可审查草稿，待主 agent 整合最终验收结果。**
+**文档状态：实测技术报告，按所列源码快照、数据集及验证范围解释。**
 
 项目：[hurry060215-tech/radiomics](https://github.com/hurry060215-tech/radiomics)；Python 包/导入名保留 `ov-radiomics` / `ov_radiomics`，版本保留 `0.1.0`。
 
@@ -14,7 +14,7 @@ Radiomics 性能对象：不可变源码快照 `48ecb310a2d9ccb5da821733ee1190ce
 
 Radiomics Benchmark v2 在固定 Windows 机器上完成 **60 个 case、840 个双后端主观测及 14 个原生缓存观测**，全部执行与适用数值比较通过，无观测丢弃或 2 GiB 预算超限。性能结果随入口与工作量显著变化：真实公开 CT 的 prepared-array 路径为参考速度的 **0.400×**，即 Rust 慢 **2.50×**；CT 的 NIfTI→裁剪→完整导出路径为 **1.225×**，未达到 1.5× 目标。小型合成/phantom 流程中的较高加速比仅代表其固定场景。该结果支持统一原生内核和独立部署的工程价值，同时暴露数组边界转换与完整流程性能的优化需求。
 
-机器学习/统计与病理性能套件在本稿中标为 **pending**，等待独立验收工作包交付，本文不为其填写未经核验的耗时、加速比或内存数字。本报告评价研究软件行为，不提供临床有效性、诊断性能或论文录用结论。
+机器学习/统计与病理另完成224条固定观测，执行及输出匹配全部通过，逐行耗时与RSS工程目标通过；回归热运行0.981倍属于近似同速而非加速。病理结果仅对冻结的小型Python规格与声明合成工作量成立。本报告评价研究软件行为，不提供临床有效性、诊断性能或论文录用结论。
 
 ## 1. 动机与研究问题
 
@@ -149,8 +149,8 @@ WSIData 的关联验证同时使用 authoritative polygon 几何、`tile_spec`�
 | 套件 | 参考 | 核心问题 | 本稿状态 |
 |---|---|---|---|
 | Radiomics | 公开 PyRadiomics3.0.1；独立 shape_basic 规格；IBSI/公开 CT | 一致性、数组/算子/完整流程时间、RSS、吞吐和扩展 | 完整840+14观测已归档，含明确性能 miss |
-| Machine Learning & Statistics | 冻结 sklearn/SciPy/statsmodels/目标函数 | 数值与收敛、预测质量、泄漏、训练/评价时间和内存 | **Pending：由独立验收工作包补入最终报告** |
-| Pathology | 冻结可审查 Python 规格与手算输入 | QC、颜色/对象、ID 对齐、聚合、覆盖图与吞吐 | **Pending：由独立验收工作包补入最终报告** |
+| Machine Learning & Statistics | 冻结 sklearn/SciPy/statsmodels/目标函数 | 数值与收敛、预测质量、泄漏、训练/评价时间和内存 | **完整观测已完成，逐行结果见6.2** |
+| Pathology | 冻结可审查 Python 规格与手算输入 | QC、颜色/对象、ID 对齐、聚合、覆盖图与吞吐 | **完整观测已完成，逐行结果见6.2** |
 
 正确性/API/稳定性/独立运行/跨平台安装为 Release Gate；速度、内存效率和并行扩展为 Performance Target。L2 native/reference runtime≤1.10 和 RSS≤1.20 是本项目工程回归线；L2/L3≥1.5× 为目标。性能未达标应披露、分析和建立优化任务，不自动否定数值正确性；崩溃或超过绝对内存预算仍是操作性失败。
 
@@ -187,15 +187,39 @@ Radiomics L1 分六大族与 shape_basic，只有被选择的 Rust family 执行
 
 L1 多项 public-array family 调用慢于参考；它们包含边界转换/验证，不等于内部数值内核的独占算子时间。L4 小型重复输入的1000 ROI/4 workers 最大观测原生速率约为2654 ROI/s（8³/gray8）和1934 ROI/s（12³/gray32）；该速率不代表真实 CT 队列。相应 native4/1 扩展为1.373×、2.210×，并非线性扩展。缓存 hit 单独7次 median6.789ms、每次真实 hits8/misses0；population median36.810ms保留，不与 uncached Python 混作加速比。
 
-### 6.2 其他套件待整合
+### 6.2 机器学习、统计与病理实测
 
-<!-- BEGIN_PENDING_ML_STATS_BENCHMARK -->
-**Machine Learning & Statistics 性能：pending。** 独立工作包应补入批准 plan/源码/环境摘要、逐任务原始观测、median/IQR/p95、峰 RSS、预测/收敛/训练来源比较，以及性能 miss。当前仅已有数值/行为/泄漏正确性证据，不能据此填写加速或内存通过结论。
-<!-- END_PENDING_ML_STATS_BENCHMARK -->
+另两套预声明工作流共224/224条观测完成并输出匹配，16个case/state均有双方七次
+记录。最大原生/参考耗时比为1.019362（回归热运行），最大RSS比为1.059970，
+分别满足1.10与1.20工程目标；回归热运行按近似同速解释。最高真实worker峰值
+为201.94 MiB。完整方法、原始记录、阶段表和绑定见
+[独立ML/Pathology报告](learning-pathology-benchmark-v2-results.md)。
 
-<!-- BEGIN_PENDING_PATHOLOGY_BENCHMARK -->
-**Pathology 性能：pending。** 应分别报告 pixel/QC/颜色/灰度纹理、mask 对象、embedding 对齐、分层聚合和 tile 覆盖图的实际测量范围、输入大小/尺度、吞吐、内存与波动，不将 Radiomics 加速转借给病理流程。当前不填写未经交付的性能数字。
-<!-- END_PENDING_PATHOLOGY_BENCHMARK -->
+### Machine Learning & Statistics
+
+| Workload | State | Python median / IQR / p95 ms | Native median / IQR / p95 ms | Python/native | RSS Python / Native MiB | Native/reference RSS |
+|---|---|---:|---:|---:|---:|---:|
+| Binary LR | warm | 70.595 / 9.590 / 79.662 | 43.261 / 11.171 / 56.348 | 1.632× | 110.31 / 63.71 | 0.578× |
+| Binary LR | cold process | 867.617 / 64.551 / 982.627 | 439.036 / 14.463 / 465.355 | 1.976× | 109.35 / 63.07 | 0.577× |
+| Multiclass softmax | warm | 97.713 / 4.052 / 106.427 | 46.795 / 2.035 / 52.148 | 2.088× | 110.61 / 64.21 | 0.581× |
+| Multiclass softmax | cold process | 904.804 / 45.048 / 960.578 | 436.395 / 6.557 / 459.113 | 2.073× | 109.61 / 63.27 | 0.577× |
+| Ridge regression | warm | 38.245 / 1.483 / 39.190 | 38.985 / 2.555 / 43.612 | 0.981× | 110.05 / 63.84 | 0.580× |
+| Ridge regression | cold process | 856.173 / 50.394 / 896.802 | 438.519 / 29.557 / 468.126 | 1.952× | 109.29 / 62.66 | 0.573× |
+| Clinical secondary | warm | 21.723 / 0.757 / 23.261 | 10.145 / 0.309 / 10.734 | 2.141× | 121.36 / 58.47 | 0.482× |
+| Clinical secondary | cold process | 1035.110 / 29.436 / 1081.472 | 414.289 / 29.459 / 442.562 | 2.499× | 121.11 / 58.30 | 0.481× |
+| Pathology patient LR | warm | 42.202 / 0.785 / 42.616 | 21.190 / 0.805 / 21.503 | 1.992× | 108.54 / 61.08 | 0.563× |
+| Pathology patient LR | cold process | 872.388 / 30.888 / 946.202 | 418.875 / 23.255 / 441.688 | 2.083× | 108.48 / 60.67 | 0.559× |
+
+### Pathology
+
+| Workload | State | Python median / IQR / p95 ms | Native median / IQR / p95 ms | Python/native | RSS Python / Native MiB | Native/reference RSS |
+|---|---|---:|---:|---:|---:|---:|
+| Decoded pathology front end | warm | 10514.620 / 1121.177 / 10636.501 | 2327.506 / 35.157 / 2356.541 | 4.518× | 147.71 / 155.14 | 1.050× |
+| Decoded pathology front end | cold process | 9158.672 / 106.327 / 9245.997 | 3175.587 / 27.828 / 3207.222 | 2.884× | 103.83 / 110.05 | 1.060× |
+| PNG pathology front end | warm | 8392.431 / 1173.131 / 10638.696 | 2233.910 / 17.215 / 2254.160 | 3.757× | 149.89 / 155.06 | 1.035× |
+| PNG pathology front end | cold process | 9300.275 / 147.515 / 9514.168 | 3073.899 / 37.426 / 3143.689 | 3.026× | 106.18 / 110.35 | 1.039× |
+| Full-scene diagnostic | warm | 8446.231 / 120.408 / 9116.358 | 2286.582 / 39.256 / 2604.623 | 3.694× | 201.55 / 157.62 | 0.782× |
+| Full-scene diagnostic | cold process | 9650.902 / 85.121 / 9805.082 | 3081.062 / 26.673 / 3110.159 | 3.132× | 157.68 / 113.12 | 0.717× |
 
 ## 7. 部署、互操作与 CI 证据
 
@@ -270,4 +294,7 @@ python examples/native/06_embedding_overlay.py --output /fresh/tutorial06
 5. Virtanen P, Gommers R, Oliphant TE, et al. SciPy1.0: fundamental algorithms for scientific computing in Python. *Nature Methods*. 2020;17:261–272. [原始论文](https://doi.org/10.1038/s41592-019-0686-2)。统计 Golden 固定实际依赖与有效参数。
 6. [项目Golden manifest](../golden/python_golden_v1/manifest.json)、[双轨IBSI实际报告](golden-ibsi-digital-report.json)、[公开CT协议与验收](public-ct-native-acceptance.md)、[Benchmark v2规范](benchmark-v2.md)。这些可执行/机器可读证据限定本文的本项目结果，不能由一般方法论文替代。
 
-<!-- INTEGRATION_CHECKLIST: replace pending ML/Stats and Pathology sections only from independently accepted final artifacts; update latest-head CI evidence with exact commit/run; retain all Radiomics misses and source snapshot identity. -->
+已归档全部Radiomics854条与ML/Pathology224条观测，保留各自源码、环境及批准计划。
+Windows启动器下原父PID的即时内存监督覆盖不足；真实worker自报的post-transport
+HWM仍有效，已观测样本均通过预算检查，但不由此推断即时预算终止已经验证。
+[后续进程树helper](owned-process-tree-monitoring.md)单独测试，未接入或替换原测量。

@@ -14,7 +14,7 @@ clinical validation or permission to publish a new package version.
 | Models | Binary/multinomial LR, OLS/Ridge regression, KNN, classification GaussianNB, CART RandomForest | Three-task frozen predictions/objectives/convergence; forest exact small trees and separate behavioral thresholds. |
 | Validation / fusion | Patient-level plans, nested finite grids, weighted probabilities, verified OOF Logistic/softmax fusion | Actual patient sets and classes checked; held-out perturbations cannot alter fits/OOF; external cohort identities retained. |
 | Clinical / evaluation | Observed baseline, t/Welch/MW/KW/chi-square/Fisher, complete-case Logit OR/Wald CI, typed ICC, three-task metrics and patient bootstrap | Native CDF/quantile/random-index paths; separation/rank/convergence errors; DeLong/DCA/H–L remain binary. Calibration curves do not claim fitted recalibration. |
-| Research combinations | Strict keyed multi-region/modality concat, paired Delta, typed KMeans habitat, explicit center holdout | No registration or batch correction inferred. Cluster indices are local labels. Python per-center evaluation implemented; CLI center extension is under final validation. |
+| Research combinations | Strict keyed multi-region/modality concat, paired Delta, typed KMeans habitat, explicit center holdout | No registration or batch correction inferred. Cluster indices are local labels. Python and CLI per-center evaluation passed focused E2E and code-bearing CI. |
 | Pathology pixels | RGB8 PNG/JPEG, supported single-page TIFF, streamed patches, raw QC, fixed color histograms/circular Hue, gray textures, provided-mask objects | No implicit RGB/bit-depth conversion; padding excluded; instance counts remain patch local. |
 | Pathology hierarchy/maps | Tile-ID alignment, tile→slide→patient summaries, explicit weights, real tile scores, overlap means/counts and block outputs | Empty/excluded parents preserved; patient probabilities cannot be broadcast into local maps. |
 | Native interfaces | Shared Rust core, PyO3 conversion boundary and Python-free CLI | Explicit Rust/auto never fall back to reference algorithms. Portable supervised `.rad` models; typed habitat JSON. |
@@ -46,9 +46,12 @@ The complete [Radiomics benchmark](radiomics-benchmark-v2-results.md) preserves
 854 observations and explicit CT/prepared-array performance misses. The separate
 [L5 report](deployment-benchmark-v2-results.md) measures only its declared startup
 endpoints, one offline payload install and logical footprint. Complete dependency
-installation cost and allocator counts remain unmeasured. ML/Statistics and
-Pathology measurements are still being finalized; their numerical correctness
-tests do not imply performance targets passed.
+installation cost and allocator counts remain unmeasured. The separate
+[ML/Statistics and Pathology report](learning-pathology-benchmark-v2-results.md)
+retains all224 observations and per-row distributions. Its declared workloads
+passed the1.10 runtime/1.20 RSS engineering targets; near-equal regression warm
+runtime is not advertised as acceleration. Windows launcher supervision limits
+are explicit in the reports and do not imply strict process containment.
 
 ## Deferred, without placeholder implementations
 
