@@ -208,7 +208,7 @@ GitHub Actions 的实际已核实证据为 [run43602824324](https://github.com/h
 后续接口版本 `59a3c81ac801944a2d5219bac26cf0ba11fbc2cd` 的
 [CI run 43613986293](https://github.com/hurry060215-tech/radiomics/actions/runs/43613986293)
 也已实核九个作业全部成功，覆盖单位元数据、TableReader、Python center
-holdout/apply cohorts/by-center evaluation 和身份边界修复。当前主分支相对此
+holdout/apply cohorts/by-center evaluation 和身份边界修复。当前开发分支相对此
 提交的 `crates/`、`src/`、`pyproject.toml` 没有差异；尚待合入的 CLI 分中心评价
 扩展仍须另行验证。正式 PyPI/crates.io 发布、版本号变更和 ov 源码接入未自动执行。
 
