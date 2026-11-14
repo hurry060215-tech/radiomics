@@ -13,6 +13,8 @@
     "LICENSE.md": "c863fa4a2aa4d3152f4bcb58bb7bb63c95704805bbb4aec18cbea7c701d4f046",
     "mask.nii.gz": "3032d340944b577b83bc559ea7ae9a6034b84633a840eff39570ec17aa1d6281",
     "published_reference.json": "ff25cb886b5f6291f46ff767e980559adb97e9b8b1ef6e4945b85d00ba294c69",
-    "SOURCE_README.md": "9759bad4490e0f2443188a6f565c14d55fce8fdc90670c153962e375fbcdee00"
+    "SOURCE_README.md": "9759bad4490e0f2443188a6f565c14d55fce8fdc90670c153962e375fbcdee00",
+    "firstorder_spec.py": "ca4fa7dbc25e49db53d3841d00efee5b7cb92ba2978598b024cbdaf9a4c9c2fe",
+    "firstorder_fullprecision.json": "d75d742ca1639dad638076d293e1e00a420688d7afbde21b7f6099f1c9969ecf"
   }
 }
