@@ -401,6 +401,55 @@ fn softmax_and_ovr_support_ignore_class_names_and_index_permutation() {
     );
 }
 
+#[test]
+fn predictive_lr_requires_regularization_but_clinical_solver_is_shared_and_not_an_inference_result()
+{
+    let x = buffer(4, 1, vec![-2., -1., 1., 2.]);
+    let y = ModelTarget::Classification {
+        classes: vec!["negative".into(), "positive".into()],
+        labels: vec![0, 1, 0, 1],
+    };
+    let error = fit(
+        &ModelSpec::LR {
+            lambda: 0.0,
+            tolerance: 1e-9,
+            max_iterations: 1000,
+        },
+        &x,
+        &y,
+    )
+    .unwrap_err();
+    assert!(error.message.contains("strictly positive L2"));
+    let (state, report) = solve_logistic(&x, &y, 0.0, 1e-9, 1000).unwrap();
+    report.validate(true).unwrap();
+    let not_predictive = FittedModel {
+        spec: ModelSpec::LR {
+            lambda: 0.0,
+            tolerance: 1e-9,
+            max_iterations: 1000,
+        },
+        feature_count: 1,
+        state,
+        report,
+    };
+    assert!(not_predictive.validate().is_err());
+    let spec = ModelSpec::LR {
+        lambda: 0.1,
+        tolerance: 1e-9,
+        max_iterations: 1000,
+    };
+    let model = fit(&spec, &x, &y).unwrap();
+    let (state, report) = solve_logistic(&x, &y, 0.1, 1e-9, 1000).unwrap();
+    assert_eq!(model.state, state);
+    assert_eq!(model.report, report);
+    let mut broken = model;
+    broken.report.objective = None;
+    assert!(broken.validate().is_err());
+    broken.report.objective = Some(0.0);
+    broken.report.converged = false;
+    assert_eq!(broken.validate().unwrap_err().code, ErrorCode::Convergence);
+}
+
 fn forest_spec(seed: u64, regression: bool, trees: usize) -> ModelSpec {
     ModelSpec::RandomForest {
         trees,

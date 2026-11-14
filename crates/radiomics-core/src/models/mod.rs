@@ -66,6 +66,9 @@ impl ModelSpec {
                 max_iterations,
             } => {
                 penalty(*lambda)?;
+                if *lambda == 0.0 {
+                    return Err(invalid("Predictive LR requires strictly positive L2 lambda; unpenalized clinical inference requires its dedicated diagnostic workflow."));
+                }
                 optimizer(*tolerance, *max_iterations)
             }
             Self::Linear { rank_tolerance } => rank_threshold(*rank_tolerance),
@@ -602,7 +605,7 @@ pub fn fit(spec: &ModelSpec, x: &NumericBuffer, target: &ModelTarget) -> RadResu
             lambda,
             tolerance,
             max_iterations,
-        } => linear::fit_logistic(x, target, *lambda, *tolerance, *max_iterations)?,
+        } => solve_logistic(x, target, *lambda, *tolerance, *max_iterations)?,
         ModelSpec::Linear { rank_tolerance } => {
             linear::fit_regression(x, target, 0.0, *rank_tolerance)?
         }
@@ -636,6 +639,27 @@ pub fn fit(spec: &ModelSpec, x: &NumericBuffer, target: &ModelTarget) -> RadResu
     };
     model.validate()?;
     Ok(model)
+}
+
+/// Shared logistic numerical solve, including lambda=0 for clinical callers.
+/// A small gradient is a numerical stopping result, not proof that a finite
+/// unpenalized MLE exists. Clinical inference must independently check design
+/// rank, complete/quasi separation, information matrix and complete-case scope.
+/// Predictive `fit(ModelSpec::LR)` uses this same implementation with lambda>0.
+pub fn solve_logistic(
+    x: &NumericBuffer,
+    target: &ModelTarget,
+    lambda: f64,
+    tolerance: f64,
+    max_iterations: usize,
+) -> RadResult<(ModelState, FitReport)> {
+    penalty(lambda)?;
+    optimizer(tolerance, max_iterations)?;
+    design(x, true)?;
+    target.validate(x.rows)?;
+    let result = linear::fit_logistic(x, target, lambda, tolerance, max_iterations)?;
+    result.1.validate(true)?;
+    Ok(result)
 }
 
 fn fit_nb(

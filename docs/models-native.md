@@ -30,8 +30,9 @@ turn multiclass targets into continuous regression values. Regression uses
 | `RandomForest { trees, max_depth, min_samples_split, min_samples_leaf, max_features, bootstrap, seed }` | CART classification with Gini impurity or regression with squared-error impurity; bootstrap draws contain the same number of rows as training. Class leaves hold empirical probabilities; regression leaves hold means. |
 
 `rank_tolerance` is relative to the largest singular value and must lie strictly
-between zero and one. Smoothing and regularization are finite nonnegative
-parameters. Undefined class variances, nonrepresentable predictions, invalid
+between zero and one. Predictive LR requires strictly positive L2 `lambda`;
+other smoothing and regularization parameters are finite and nonnegative.
+Undefined class variances, nonrepresentable predictions, invalid
 targets, absent classes and input width mismatches produce structured errors.
 Feature-name alignment belongs to the pipeline/model manifest; the numerical
 kernel accepts columns in already validated fitted order.
@@ -43,6 +44,15 @@ optional numerical fields are `None`. Validation rejects false convergence,
 type/state mismatches, malformed buffers and missing numerical reports. A
 solver that reaches its iteration limit or fails line search returns
 `ErrorCode::Convergence` and does not return a model that can be saved.
+
+`solve_logistic(x, target, lambda, tolerance, max_iterations)` exposes the same
+single numerical solver to the clinical statistics module and allows
+`lambda=0`. Its return is a numerical state/report, not a clinical inference
+result. A small gradient does not prove that a finite unpenalized MLE exists.
+The clinical caller must additionally establish complete-case scope, design
+rank, absence of complete/quasi separation and a valid information matrix before
+reporting estimates or OR/Wald intervals. A `lambda=0` numerical state cannot be
+wrapped as a valid predictive `ModelSpec::LR` model.
 
 ## Shared sparse fitting
 
