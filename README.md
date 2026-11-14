@@ -5,6 +5,11 @@ An independently maintained Python package with a Rust numerical core: medical i
 The canonical repository is [hurry060215-tech/radiomics](https://github.com/hurry060215-tech/radiomics). OmicVerse and other projects can consume the package through ordinary Python imports; this repository is developed and released independently.
 
 Native development is tracked in the [implementation and acceptance ledger](docs/native-development.md).
+The [Chinese technical report](docs/technical-report.md) describes architecture,
+numerical validation and measured limitations. See the [support matrix](docs/support-matrix.md),
+[six executable native tutorials](docs/python-native.md),
+[Radiomics benchmark results](docs/radiomics-benchmark-v2-results.md) and
+[independent deployment measurements](docs/deployment-benchmark-v2-results.md).
 The sections below describe the original Python workflow. New native functionality
 is accepted module by module; the development plan is not a claim of full support.
 

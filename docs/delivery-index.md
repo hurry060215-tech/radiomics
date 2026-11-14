@@ -1,0 +1,45 @@
+# Development delivery index
+
+The package remains version 0.1.0. These are development artifacts and evidence,
+not a PyPI/crates.io publication or a declaration that every remaining gate is
+closed. The live completion audit and latest CI must be consulted together.
+
+## Read and reproduce
+
+- [Chinese technical report](technical-report.md): architecture, algorithms,
+  correctness, performance, deployment and limitations; unfinished suite results
+  remain explicitly pending until independently delivered.
+- [Support matrix](support-matrix.md) and [requirement audit](completion-audit.md).
+- [Six native tutorials](python-native.md), with fresh output directories.
+- [Native CLI](cli-workflows-native.md) and [pathology CLI](pathology-cli-native.md).
+- [Portable source assets and build instructions](native-package-assets.md).
+
+## Versioned evidence
+
+- [Radiomics results](radiomics-benchmark-v2-results.md): immutable source48ecb310,
+  854 retained observations, real CT speed misses and per-case uncertainty.
+- [L5 deployment](deployment-benchmark-v2-results.md): immutable source45140bff,
+  14 startup observations and one offline payload install, with limited scope.
+- [Public CT acceptance](public-ct-native-acceptance.md): independent scalar,
+  matrix, buffer and physical-coordinate checks.
+- [Actual optional containers](optional-interop-acceptance.md): pinned dense
+  AnnData/WSIData metadata paths, preserving exact IDs/history and unknown MPP.
+- [Independent API/IBSI audit](acceptance-v2-report.md).
+
+## Local build artifacts
+
+`E:/radiomics-build/snapshot-native-v3/build-manifest.json` binds the Windows
+wheel and CLI to source45140bff, compiler/target/release flags, implementation
+identity and every wheel member. The wheel is under `wheels/` and the executable
+under `cli/`. It was installed into the isolated native environment and passed
+71 native-only tests. Later CLI extensions require a newer final artifact.
+
+`E:/radiomics-build/source-delivery-v1/` contains the inspected source archive,
+unpacked tree, six successful tutorial outputs and `tutorial-evidence.json`.
+That receipt verifies tutorial/assets execution with the installed v3 wheel;
+it does not substitute for the separate locked source-build validation.
+
+Final artifacts and latest code-bearing CI will be appended once the remaining
+CLI center extension and two complete performance suites finish. Raw references,
+measurements and failures remain available; no unfavorable observation is removed
+to produce a completion claim.
