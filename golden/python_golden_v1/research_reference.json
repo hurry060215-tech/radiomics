@@ -1,0 +1,649 @@
+{
+  "schema": "python_golden_v1.research.reference.v1",
+  "specification_sha256": "b3abdee7da1f6dda8a0b6c5019b2192209d31638c9d8e2641396b5673c04ca68",
+  "input_sha256": "0e2e4790533bd0f23711a879c5d0af0b2cff3f07b425fd43f9ffd153e8a17a70",
+  "reference": {
+    "sklearn": "1.0.2",
+    "numpy": "1.23.0",
+    "algorithm": "Lloyd (sklearn1.0.2 spelling full)",
+    "n_init": 1,
+    "tol": 1e-12,
+    "seed": "unused for explicit initial centers"
+  },
+  "concat": {
+    "feature_names": [
+      "ct_tumor::Mean",
+      "ct_tumor::Energy",
+      "mr_tumor::Mean",
+      "mr_tumor::Energy",
+      "ct_ring::Mean",
+      "ct_ring::Energy"
+    ],
+    "key_fields": [
+      "patient_id",
+      "lesion_id",
+      "timepoint"
+    ],
+    "varying_fields": [
+      "modality",
+      "region"
+    ],
+    "rows": [
+      {
+        "metadata": {
+          "sample_id": "CT-P2",
+          "patient_id": "P2",
+          "slide_id": null,
+          "lesion_id": "L1",
+          "modality": null,
+          "region": null,
+          "timepoint": "T0",
+          "center": "A"
+        },
+        "values": [
+          4,
+          20,
+          40,
+          1600,
+          2,
+          8
+        ],
+        "source_sample_ids": {
+          "ct_tumor": "CT-P2",
+          "mr_tumor": "MR-P2",
+          "ct_ring": "peri-P2"
+        },
+        "source_metadata": {
+          "ct_tumor": {
+            "modality": "CT",
+            "region": "tumor"
+          },
+          "mr_tumor": {
+            "modality": "MR",
+            "region": "tumor"
+          },
+          "ct_ring": {
+            "modality": "CT",
+            "region": "ring_0_3mm"
+          }
+        }
+      },
+      {
+        "metadata": {
+          "sample_id": "CT-P1",
+          "patient_id": "P1",
+          "slide_id": null,
+          "lesion_id": "L1",
+          "modality": null,
+          "region": null,
+          "timepoint": "T0",
+          "center": "A"
+        },
+        "values": [
+          2,
+          8,
+          20,
+          400,
+          1,
+          2
+        ],
+        "source_sample_ids": {
+          "ct_tumor": "CT-P1",
+          "mr_tumor": "MR-P1",
+          "ct_ring": "peri-P1"
+        },
+        "source_metadata": {
+          "ct_tumor": {
+            "modality": "CT",
+            "region": "tumor"
+          },
+          "mr_tumor": {
+            "modality": "MR",
+            "region": "tumor"
+          },
+          "ct_ring": {
+            "modality": "CT",
+            "region": "ring_0_3mm"
+          }
+        }
+      },
+      {
+        "metadata": {
+          "sample_id": "CT-P1b",
+          "patient_id": "P1",
+          "slide_id": null,
+          "lesion_id": "L2",
+          "modality": null,
+          "region": null,
+          "timepoint": "T0",
+          "center": "A"
+        },
+        "values": [
+          3,
+          null,
+          30,
+          900,
+          1.5,
+          4.5
+        ],
+        "source_sample_ids": {
+          "ct_tumor": "CT-P1b",
+          "mr_tumor": "MR-P1b",
+          "ct_ring": "peri-P1b"
+        },
+        "source_metadata": {
+          "ct_tumor": {
+            "modality": "CT",
+            "region": "tumor"
+          },
+          "mr_tumor": {
+            "modality": "MR",
+            "region": "tumor"
+          },
+          "ct_ring": {
+            "modality": "CT",
+            "region": "ring_0_3mm"
+          }
+        }
+      }
+    ],
+    "registration": "caller_declared_already_registered; no registration algorithm executed"
+  },
+  "delta_missing_policy": {
+    "key_fields": [
+      "patient_id",
+      "lesion_id",
+      "modality",
+      "region"
+    ],
+    "feature_names": [
+      "Mean::difference",
+      "Mean::ratio",
+      "Mean::relative_change",
+      "Energy::difference",
+      "Energy::ratio",
+      "Energy::relative_change"
+    ],
+    "rows": [
+      {
+        "key": [
+          "P1",
+          "L1",
+          "CT",
+          "tumor"
+        ],
+        "baseline_sample_id": "P1L1T0",
+        "followup_sample_id": "P1L1T1",
+        "values": [
+          1,
+          1.5,
+          0.5,
+          -4,
+          0.5,
+          -0.5
+        ]
+      },
+      {
+        "key": [
+          "P1",
+          "L2",
+          "CT",
+          "tumor"
+        ],
+        "baseline_sample_id": "P1L2T0",
+        "followup_sample_id": "P1L2T1",
+        "values": [
+          1,
+          0.5,
+          -0.5,
+          2,
+          null,
+          null
+        ]
+      },
+      {
+        "key": [
+          "P2",
+          "L1",
+          "CT",
+          "tumor"
+        ],
+        "baseline_sample_id": "P2L1T0",
+        "followup_sample_id": "P2L1T1",
+        "values": [
+          5,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "baseline": "T0",
+    "followup": "T1",
+    "zero_denominator": "missing"
+  },
+  "delta_missing_precedes_zero": {
+    "key_fields": [
+      "patient_id",
+      "lesion_id",
+      "modality",
+      "region"
+    ],
+    "feature_names": [
+      "Mean::difference",
+      "Mean::ratio",
+      "Mean::relative_change"
+    ],
+    "rows": [
+      {
+        "key": [
+          "P1",
+          "L1",
+          "CT",
+          "tumor"
+        ],
+        "baseline_sample_id": "zero",
+        "followup_sample_id": "missing",
+        "values": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "baseline": "T0",
+    "followup": "T1",
+    "zero_denominator": "error"
+  },
+  "failures": {
+    "concat_missing_key_set": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "source key sets differ; no implicit inner join",
+      "warnings": []
+    },
+    "concat_duplicate_key": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "duplicate explicit key",
+      "warnings": []
+    },
+    "concat_metadata_conflict": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "conflicting source metadata: center",
+      "warnings": []
+    },
+    "concat_duplicate_prefix": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "source prefixes must be nonempty and unique",
+      "warnings": []
+    },
+    "concat_absent_key_field": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "join/pair key fields must be present nonempty strings",
+      "warnings": []
+    },
+    "concat_registration_undeclared": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "caller must explicitly declare required image registration completed",
+      "warnings": []
+    },
+    "delta_zero_default": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "zero baseline denominator",
+      "warnings": []
+    },
+    "delta_unpaired": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "unpaired baseline/followup keys",
+      "warnings": []
+    },
+    "delta_duplicate_pair": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "duplicate explicit key",
+      "warnings": []
+    },
+    "delta_extra_timepoint": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "unexpected timepoint; explicitly select the requested pair first",
+      "warnings": []
+    },
+    "delta_overflow": {
+      "status": "error",
+      "error_type": "ValueError",
+      "message": "delta numeric overflow",
+      "warnings": []
+    }
+  },
+  "habitat": {
+    "scaler": {
+      "mean": [
+        4.5,
+        4.5
+      ],
+      "variance": [
+        16.25,
+        16.25
+      ],
+      "scale": [
+        4.031128874149275,
+        4.031128874149275
+      ]
+    },
+    "training_scaled": [
+      [
+        -1.116312611302876,
+        -1.116312611302876
+      ],
+      [
+        -1.116312611302876,
+        -0.8682431421244593
+      ],
+      [
+        -0.8682431421244593,
+        -1.116312611302876
+      ],
+      [
+        -0.8682431421244593,
+        -0.8682431421244593
+      ],
+      [
+        0.8682431421244593,
+        0.8682431421244593
+      ],
+      [
+        0.8682431421244593,
+        1.116312611302876
+      ],
+      [
+        1.116312611302876,
+        0.8682431421244593
+      ],
+      [
+        1.116312611302876,
+        1.116312611302876
+      ]
+    ],
+    "initial_centers_scaled": [
+      [
+        -1.116312611302876,
+        -1.116312611302876
+      ],
+      [
+        0.8682431421244593,
+        0.8682431421244593
+      ]
+    ],
+    "labels": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "centers_scaled": [
+      [
+        -0.9922778767136677,
+        -0.9922778767136677
+      ],
+      [
+        0.9922778767136676,
+        0.9922778767136677
+      ]
+    ],
+    "centers_raw": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        8.5,
+        8.5
+      ]
+    ],
+    "inertia": 0.2461538461538459,
+    "n_iter": 2,
+    "evaluation_labels": [
+      0,
+      1,
+      1,
+      0
+    ],
+    "evaluation_distances": [
+      [
+        0.0,
+        2.8065856617824934
+      ],
+      [
+        2.806585661782494,
+        1.4901161193847656e-08
+      ],
+      [
+        1.420942265919669,
+        1.3858626860607024
+      ],
+      [
+        350.82325157570995,
+        350.8358809822841
+      ]
+    ],
+    "assigned_member_means": [
+      [
+        -0.9922778767136677,
+        -0.9922778767136677
+      ],
+      [
+        0.9922778767136676,
+        0.9922778767136677
+      ]
+    ],
+    "center_fixed_point_max_abs_residual": 0.0
+  },
+  "habitat_max_iter_reference": {
+    "scaler": {
+      "mean": [
+        6.0,
+        0.0
+      ],
+      "variance": [
+        25.666666666666668,
+        0.0
+      ],
+      "scale": [
+        5.066228051190222,
+        1.0
+      ]
+    },
+    "training_scaled": [
+      [
+        -1.184313050927584,
+        0.0
+      ],
+      [
+        -0.9869275424396534,
+        0.0
+      ],
+      [
+        -0.7895420339517227,
+        0.0
+      ],
+      [
+        0.7895420339517227,
+        0.0
+      ],
+      [
+        0.9869275424396534,
+        0.0
+      ],
+      [
+        1.184313050927584,
+        0.0
+      ]
+    ],
+    "initial_centers_scaled": [
+      [
+        -1.184313050927584,
+        0.0
+      ],
+      [
+        -0.9869275424396534,
+        0.0
+      ]
+    ],
+    "labels": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1
+    ],
+    "centers_scaled": [
+      [
+        -1.184313050927584,
+        0.0
+      ],
+      [
+        0.23686261018551685,
+        0.0
+      ]
+    ],
+    "centers_raw": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        7.2,
+        0.0
+      ]
+    ],
+    "inertia": 1.9605194805194799,
+    "n_iter": 1,
+    "evaluation_labels": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1
+    ],
+    "evaluation_distances": [
+      [
+        0.0,
+        1.421175661113101
+      ],
+      [
+        0.19738550848792988,
+        1.2237901526251704
+      ],
+      [
+        0.3947710169758612,
+        1.0264046441372396
+      ],
+      [
+        1.9738550848793068,
+        0.5526794237662058
+      ],
+      [
+        2.1712405933672376,
+        0.7500649322541365
+      ],
+      [
+        2.368626101855168,
+        0.9474504407420673
+      ]
+    ],
+    "assigned_member_means": [
+      [
+        -0.9869275424396534,
+        0.0
+      ],
+      [
+        0.9869275424396534,
+        0.0
+      ]
+    ],
+    "center_fixed_point_max_abs_residual": 0.7500649322541366
+  },
+  "conventions": {
+    "concat": "Exact explicit keys; first-source row order, source order then source feature order. Only declared modality/region differences allowed, output mixed fields missing and per-source values retained. Caller must declare required registration already completed; no image registration performed.",
+    "delta": "Sorted(patient,lesion,modality,region) pair order; feature order explicit; difference=followup-baseline,ratio=followup/baseline,relative=(followup-baseline)/baseline without percent. Missing precedes zero check; difference remains observed under explicit zero-as-missing; unexpected timepoint rejected before pairing.",
+    "habitat": "Train-only Standard(ddof0; zero variance scale1); raw explicit centers transformed with training state. Euclidean squared nearest-center assignment; exact ties lower cluster index. Cluster numbers have no cross-patient tissue meaning. Evaluation IDs/features never fit scaler or centers.",
+    "native_failure_rules": {
+      "max_iter": "Non-fixed-point output at iteration limit is explicit NonConvergence, never saved as a successful habitat model; sklearn itself returns this partial reference.",
+      "empty_cluster": "An empty assigned cluster is an explicit native error; no hidden sklearn relocation. Duplicate explicit centers create this failure on the fixed training matrix.",
+      "default_plus_plus": "New native kmeans++ uses the project recorded ChaCha8 component RNG scheme; same seed need not yield sklearn initial centers. Require native repeat/thread/save-load identity and compare simple-data inertia to the explicit fixed reference, not equal RNG sequences."
+    },
+    "tolerances": {
+      "labels": "exact for these fixed explicit centers",
+      "scaler_centers_inertia": {
+        "atol": 1e-10,
+        "rtol": 1e-08
+      },
+      "prediction_state": "evaluation feature/label changes cannot alter fit"
+    },
+    "initial_center_space": "Explicit initial_centers_raw are original feature units, converted using only the fitted training Standard state; they are not already scaled.",
+    "reference_convergence": "sklearn1.0.2 uses tol*mean(var(training_scaled,axis=0,ddof=0)) as an absolute threshold for sum of squared center shifts, or strict unchanged assignments. This is not a per-element scalar tolerance. The normal fixture has unit variance in both columns, hence the threshold is 1e-12.",
+    "native_convergence": "A successful native Lloyd fit requires stable nearest-center assignments (ties lowest cluster index), no empty cluster and centers equal to the assigned member means within declared scalar tolerance; report iterations and convergence. At max_iter, a non-fixed-point result errors, including the frozen partial reference. Initial repeated centers are rejected as empty-cluster input/fit, not silently relocated."
+  },
+  "habitat_old_midpoint_diagnostic": {
+    "evaluation_values": [
+      [
+        4.5,
+        4.5
+      ]
+    ],
+    "evaluation_labels": [
+      1
+    ],
+    "evaluation_distances": [
+      [
+        1.403292830891247,
+        1.4032928308912467
+      ]
+    ],
+    "applicability": "Diagnostic only: fitted floating centers are not bit-exact symmetric, so this is not an exact native assignment tie gate."
+  },
+  "habitat_exact_tie": {
+    "centers_scaled": [
+      [
+        -1.0,
+        0.0
+      ],
+      [
+        1.0,
+        0.0
+      ]
+    ],
+    "evaluation_scaled": [
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    "squared_distances": [
+      [
+        1.0,
+        1.0
+      ]
+    ],
+    "labels": [
+      0
+    ],
+    "applicability": "Exact binary floating arithmetic; equidistant assignment retains lowest cluster index."
+  }
+}
