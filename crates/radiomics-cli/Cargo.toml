@@ -12,7 +12,7 @@ name = "radiomics"
 path = "src/main.rs"
 
 [dependencies]
-ov-radiomics-core = { path = "../radiomics-core" }
+ov-radiomics-core = { path = "../radiomics-core", version = "0.1.0" }
 clap = { version = "4", features = ["derive"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }
 serde = { version = "1", features = ["derive"] }
