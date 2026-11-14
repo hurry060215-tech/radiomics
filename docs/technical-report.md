@@ -195,6 +195,12 @@ L1 多项 public-array family 调用慢于参考；它们包含边界转换/验�
 为201.94 MiB。完整方法、原始记录、阶段表和绑定见
 [独立ML/Pathology报告](learning-pathology-benchmark-v2-results.md)。
 
+这组模型性能测量设置 `CI=None`，不包含预测 bootstrap/DeLong 置信区间；
+临床次级工作量包含96条样本记录，基线有效95条、完整病例推断92条，不能
+当成96名独立患者。病理合成输入含12名研究患者及一个全排除空结果哨兵，
+共25张切片、600个tile。病理前端行测量QC、颜色、对齐聚合、真实tile覆盖图
+与导出；患者模型训练归入独立ML行，完整场景另作诊断，避免混淆计时范围。
+
 ### Machine Learning & Statistics
 
 | Workload | State | Python median / IQR / p95 ms | Native median / IQR / p95 ms | Python/native | RSS Python / Native MiB | Native/reference RSS |
@@ -223,7 +229,7 @@ L1 多项 public-array family 调用慢于参考；它们包含边界转换/验�
 
 ## 7. 部署、互操作与 CI 证据
 
-Windows 不可变 wheel 的原生环境测试刻意不安装 sklearn、SciPy、statsmodels、PyRadiomics、SimpleITK、joblib、ov/WSIData；当前快照的 installed-native-only64项及基础教程 CLI/Python一致性检查通过。CLI 子进程测试在空 executable search path 运行；`.rad` 跨进程加载在相同 f64 输入上预测一致。这些证据不意味着所有平台/依赖版本都已验证。
+Windows 不可变 wheel 的原生环境测试刻意不安装 sklearn、SciPy、statsmodels、PyRadiomics、SimpleITK、joblib、ov/WSIData；用于性能测量的旧v2快照通过64项 installed-native-only 检查，最终运行代码的v4快照通过71项，基础教程 CLI/Python一致性检查通过。CLI 子进程测试在空 executable search path 运行；`.rad` 跨进程加载在相同 f64 输入上预测一致。这些证据不意味着所有平台/依赖版本都已验证。
 
 实际 optional 容器验证在独立 Windows CPython3.11.15、AnnData0.12.6、SpatialData0.7.3、WSIData0.12.0 pinned revision`0f93c4d8...` 上通过有限 smoke：真实 container、已解码 Image2DReader metadata、H5AD 往返、显式 IDs、历史快照和未知 MPP 行为。该环境未安装 Torch/vendor reader；真实测试不建立通用 WSI 解码、全部 WSIData 依赖、backed/lazy/sparse embedding 的支持结论。[具体环境与范围](optional-interop-acceptance.md)
 
