@@ -1,7 +1,400 @@
 //! Shared native tests and distribution operations; reference definitions are frozen.
 use crate::errors::{ErrorCode, RadResult, RadiomicsError};
 use serde::{Deserialize, Serialize};
-use statrs::distribution::{Beta, ChiSquared, ContinuousCDF, Normal};
+use statrs::distribution::{Beta, ChiSquared, ContinuousCDF, Normal, StudentsT};
+
+/// JSON preserves NaN/Inf state explicitly rather than replacing it with null or zero.
+pub mod float_state {
+    use serde::{Deserialize, Deserializer, Serializer};
+    pub fn serialize<S: Serializer>(value: &f64, s: S) -> Result<S::Ok, S::Error> {
+        if value.is_finite() {
+            s.serialize_f64(*value)
+        } else {
+            s.serialize_str(if value.is_nan() {
+                "NaN"
+            } else if value.is_sign_positive() {
+                "Inf"
+            } else {
+                "-Inf"
+            })
+        }
+    }
+    pub fn deserialize<'de, D: Deserializer<'de>>(d: D) -> Result<f64, D::Error> {
+        #[derive(Deserialize)]
+        #[serde(untagged)]
+        enum Value {
+            Number(f64),
+            Text(String),
+        }
+        match Value::deserialize(d)? {
+            Value::Number(v) => Ok(v),
+            Value::Text(s) => match s.as_str() {
+                "NaN" => Ok(f64::NAN),
+                "Inf" => Ok(f64::INFINITY),
+                "-Inf" => Ok(f64::NEG_INFINITY),
+                _ => Err(serde::de::Error::custom("Unknown nonfinite scalar state.")),
+            },
+        }
+    }
+}
+
+pub mod float_vec_state {
+    use serde::{ser::SerializeSeq, Deserialize, Deserializer, Serialize, Serializer};
+    struct Scalar(f64);
+    impl Serialize for Scalar {
+        fn serialize<S: Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
+            super::float_state::serialize(&self.0, s)
+        }
+    }
+    impl<'de> Deserialize<'de> for Scalar {
+        fn deserialize<D: Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
+            super::float_state::deserialize(d).map(Self)
+        }
+    }
+    pub fn serialize<S: Serializer>(values: &[f64], s: S) -> Result<S::Ok, S::Error> {
+        let mut seq = s.serialize_seq(Some(values.len()))?;
+        for &value in values {
+            seq.serialize_element(&Scalar(value))?;
+        }
+        seq.end()
+    }
+    pub fn deserialize<'de, D: Deserializer<'de>>(d: D) -> Result<Vec<f64>, D::Error> {
+        Ok(Vec::<Scalar>::deserialize(d)?
+            .into_iter()
+            .map(|v| v.0)
+            .collect())
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[serde(tag = "distribution", rename_all = "snake_case", deny_unknown_fields)]
+pub enum Distribution {
+    Normal,
+    StudentT { df: f64 },
+    ChiSquare { df: f64 },
+    F { dfn: f64, dfd: f64 },
+}
+impl Distribution {
+    fn validate(&self) -> RadResult<()> {
+        let valid = match *self {
+            Self::Normal => true,
+            Self::StudentT { df } | Self::ChiSquare { df } => df.is_finite() && df > 0.,
+            Self::F { dfn, dfd } => [dfn, dfd].iter().all(|v| v.is_finite() && *v > 0.),
+        };
+        if !valid {
+            return Err(invalid(
+                "Distribution degrees of freedom must be finite and positive.",
+            ));
+        }
+        Ok(())
+    }
+    pub fn cdf(self, x: f64) -> RadResult<f64> {
+        self.probability(x, false)
+    }
+    pub fn sf(self, x: f64) -> RadResult<f64> {
+        self.probability(x, true)
+    }
+    fn probability(self, x: f64, survival: bool) -> RadResult<f64> {
+        self.validate()?;
+        if x.is_nan() {
+            return Err(invalid("A distribution argument cannot be NaN."));
+        }
+        macro_rules! evaluate {
+            ($d:expr) => {{
+                let d = $d;
+                if survival {
+                    d.sf(x)
+                } else {
+                    d.cdf(x)
+                }
+            }};
+        }
+        let value = match self {
+            Self::Normal => evaluate!(Normal::new(0., 1.).unwrap()),
+            Self::StudentT { df } => evaluate!(StudentsT::new(0., 1., df).unwrap()),
+            Self::ChiSquare { df } => evaluate!(ChiSquared::new(df).unwrap()),
+            Self::F { dfn, dfd } => {
+                if x <= 0. {
+                    if survival {
+                        1.
+                    } else {
+                        0.
+                    }
+                } else if x.is_infinite() {
+                    if survival {
+                        0.
+                    } else {
+                        1.
+                    }
+                } else {
+                    let ratio = (dfn / dfd) * x;
+                    if ratio.is_infinite() {
+                        if survival {
+                            0.
+                        } else {
+                            1.
+                        }
+                    } else if survival {
+                        // Reciprocal argument avoids subtractive upper-tail loss.
+                        statrs::function::beta::beta_reg(dfd / 2., dfn / 2., 1. / (1. + ratio))
+                    } else {
+                        statrs::function::beta::beta_reg(dfn / 2., dfd / 2., ratio / (1. + ratio))
+                    }
+                }
+            }
+        };
+        if !value.is_finite() {
+            return Err(invalid(
+                "Distribution probability is numerically undefined.",
+            ));
+        }
+        Ok(value)
+    }
+    pub fn quantile(self, p: f64) -> RadResult<f64> {
+        self.validate()?;
+        if !p.is_finite() || !(0.0..=1.0).contains(&p) {
+            return Err(invalid(
+                "Distribution quantile probability must lie in [0,1].",
+            ));
+        }
+        if p == 1. {
+            return Ok(f64::INFINITY);
+        }
+        if p == 0. {
+            return Ok(if matches!(self, Self::Normal | Self::StudentT { .. }) {
+                f64::NEG_INFINITY
+            } else {
+                0.
+            });
+        }
+        let value = match self {
+            Self::Normal => Normal::new(0., 1.).unwrap().inverse_cdf(p),
+            Self::StudentT { .. } => {
+                if p == 0.5 {
+                    0.
+                } else {
+                    let magnitude =
+                        self.positive_quantile(if p < 0.5 { p } else { 1. - p }, true)?;
+                    if p < 0.5 {
+                        -magnitude
+                    } else {
+                        magnitude
+                    }
+                }
+            }
+            Self::ChiSquare { .. } | Self::F { .. } => {
+                self.positive_quantile(if p > 0.5 { 1. - p } else { p }, p > 0.5)?
+            }
+        };
+        if !value.is_finite() {
+            return Err(invalid(
+                "Interior distribution quantile is numerically undefined.",
+            ));
+        }
+        Ok(value)
+    }
+
+    // Invert the stable tail, retaining a relative bracket even for df<1 extreme
+    // quantiles. statrs' direct Student-t inverse does not meet the frozen tail
+    // reference in that regime; no tolerance or reference value is changed.
+    fn positive_quantile(self, target: f64, survival: bool) -> RadResult<f64> {
+        let below = |x| -> RadResult<bool> {
+            Ok(if survival {
+                self.sf(x)? > target
+            } else {
+                self.cdf(x)? < target
+            })
+        };
+        let mut high = 1f64;
+        let mut low;
+        if below(high)? {
+            loop {
+                low = high;
+                high *= 2.;
+                if !high.is_finite() {
+                    return Err(invalid("Distribution quantile exceeds finite f64 range."));
+                }
+                if !below(high)? {
+                    break;
+                }
+            }
+        } else {
+            low = high / 2.;
+            while !below(low)? {
+                high = low;
+                low /= 2.;
+                if low == 0. {
+                    break;
+                }
+            }
+        }
+        for _ in 0..160 {
+            let middle = low + (high - low) / 2.;
+            if middle == low || middle == high {
+                break;
+            }
+            if below(middle)? {
+                low = middle;
+            } else {
+                high = middle;
+            }
+        }
+        Ok(low + (high - low) / 2.)
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TTestResult {
+    #[serde(with = "float_state")]
+    pub statistic: f64,
+    #[serde(with = "float_state")]
+    pub p_value: f64,
+    pub degrees_of_freedom: f64,
+    pub diagnostic: Option<String>,
+}
+/// Independent two-sided Student or Welch t-test, without implicit missing-value deletion.
+pub fn t_test(a: &[f64], b: &[f64], equal_variance: bool) -> RadResult<TTestResult> {
+    finite(a, 2)?;
+    finite(b, 2)?;
+    let (ma, va) = population_mean_variance(a)?;
+    let (mb, vb) = population_mean_variance(b)?;
+    let (na, nb) = (a.len() as f64, b.len() as f64);
+    let sa = va * na / (na - 1.);
+    let sb = vb * nb / (nb - 1.);
+    let (variance, df) = if equal_variance {
+        let df = na + nb - 2.;
+        (
+            ((na - 1.) * sa + (nb - 1.) * sb) / df * (1. / na + 1. / nb),
+            df,
+        )
+    } else {
+        let a = sa / na;
+        let b = sb / nb;
+        let df = (a + b).powi(2) / (a.powi(2) / (na - 1.) + b.powi(2) / (nb - 1.));
+        (a + b, if df.is_nan() { 1. } else { df })
+    };
+    let statistic = (ma - mb) / variance.sqrt();
+    let p_value = if statistic.is_nan() {
+        f64::NAN
+    } else {
+        2. * Distribution::StudentT { df }.sf(statistic.abs())?
+    };
+    Ok(TTestResult {
+        statistic,
+        p_value,
+        degrees_of_freedom: df,
+        diagnostic: (variance == 0.).then(|| {
+            "Degenerate zero within-group variance; nonfinite statistic retained explicitly.".into()
+        }),
+    })
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ChiSquareResult {
+    pub statistic: f64,
+    pub p_value: f64,
+    pub degrees_of_freedom: usize,
+    pub expected: crate::contracts::NumericBuffer,
+}
+/// Pearson contingency chi-square without Yates correction.
+pub fn chi_square(table: &[Vec<u64>]) -> RadResult<ChiSquareResult> {
+    let rows = table.len();
+    let cols = table.first().map_or(0, Vec::len);
+    if rows < 2 || cols < 2 || table.iter().any(|r| r.len() != cols) {
+        return Err(invalid(
+            "Chi-square requires a rectangular table with at least two rows and columns.",
+        ));
+    }
+    let row_sum: Vec<f64> = table
+        .iter()
+        .map(|r| r.iter().map(|&v| v as f64).sum())
+        .collect();
+    let col_sum: Vec<f64> = (0..cols)
+        .map(|j| table.iter().map(|r| r[j] as f64).sum())
+        .collect();
+    let total = row_sum.iter().sum::<f64>();
+    if row_sum.contains(&0.) || col_sum.contains(&0.) || !total.is_finite() {
+        return Err(invalid(
+            "Chi-square expected counts contain a zero or undefined cell.",
+        ));
+    }
+    let mut expected = Vec::new();
+    let mut statistic = 0.;
+    for (i, row) in table.iter().enumerate() {
+        for (j, &count) in row.iter().enumerate() {
+            let e = row_sum[i] * col_sum[j] / total;
+            expected.push(e);
+            statistic += (count as f64 - e).powi(2) / e;
+        }
+    }
+    let df = (rows - 1) * (cols - 1);
+    let p_value = Distribution::ChiSquare { df: df as f64 }.sf(statistic)?;
+    Ok(ChiSquareResult {
+        statistic,
+        p_value,
+        degrees_of_freedom: df,
+        expected: crate::contracts::NumericBuffer {
+            rows,
+            cols,
+            missing: vec![false; expected.len()],
+            values: expected,
+        },
+    })
+}
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct FisherResult {
+    #[serde(with = "float_state")]
+    pub odds_ratio: f64,
+    pub p_value: f64,
+}
+fn log_choose(n: u64, k: u64) -> f64 {
+    use statrs::function::gamma::ln_gamma;
+    if k > n {
+        return f64::NEG_INFINITY;
+    }
+    ln_gamma(n as f64 + 1.) - ln_gamma(k as f64 + 1.) - ln_gamma((n - k) as f64 + 1.)
+}
+/// Two-sided Fisher 2×2: sum hypergeometric probabilities no larger than observed.
+pub fn fisher_exact(table: [[u64; 2]; 2]) -> RadResult<FisherResult> {
+    let [[a, b], [c, d]] = table;
+    let row1 = a
+        .checked_add(b)
+        .ok_or_else(|| invalid("Fisher counts overflow."))?;
+    let row2 = c
+        .checked_add(d)
+        .ok_or_else(|| invalid("Fisher counts overflow."))?;
+    let column1 = a
+        .checked_add(c)
+        .ok_or_else(|| invalid("Fisher counts overflow."))?;
+    let total = row1
+        .checked_add(row2)
+        .ok_or_else(|| invalid("Fisher counts overflow."))?;
+    let odds_ratio = (a as f64 * d as f64) / (b as f64 * c as f64);
+    if row1 == 0 || row2 == 0 || column1 == 0 || column1 == total {
+        return Ok(FisherResult {
+            odds_ratio: f64::NAN,
+            p_value: 1.,
+        });
+    }
+    let log_probability = |x| {
+        log_choose(column1, x) + log_choose(total - column1, row1 - x) - log_choose(total, row1)
+    };
+    let observed = log_probability(a);
+    let mut probability = 0.;
+    for x in column1.saturating_sub(row2)..=column1.min(row1) {
+        let logp = log_probability(x);
+        if logp <= observed + (1e-14f64).ln_1p() {
+            probability += logp.exp();
+        }
+    }
+    Ok(FisherResult {
+        odds_ratio,
+        p_value: probability.min(1.),
+    })
+}
 
 fn invalid(message: &str) -> RadiomicsError {
     RadiomicsError::new(ErrorCode::InvalidInput, message)

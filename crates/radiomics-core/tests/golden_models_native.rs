@@ -254,7 +254,7 @@ fn native_model_predictions_and_independently_recomputed_stationarity() {
             for (a, b) in actual.iter().zip(expected_values) {
                 close(*a, b, 1e-6, 1e-5);
             }
-            if fit.report.objective.is_some() {
+            if let Some(reported_objective) = fit.report.objective {
                 let lambda = if name == "Linear" { 0. } else { 0.1 };
                 let (objective, residual) = objective_gradient(&x, &y, &fit.state, lambda);
                 assert!(
@@ -267,7 +267,7 @@ fn native_model_predictions_and_independently_recomputed_stationarity() {
                     1e-10,
                     1e-8,
                 );
-                close(fit.report.objective.unwrap(), objective, 1e-12, 1e-12);
+                close(reported_objective, objective, 1e-12, 1e-12);
             }
         }
     }

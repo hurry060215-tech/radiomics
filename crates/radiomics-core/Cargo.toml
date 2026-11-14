@@ -20,6 +20,7 @@ nalgebra = "0.33"
 rand = "=0.8.5"
 rand_chacha = "=0.3.1"
 statrs = { version = "=0.18.0", default-features = false }
+minilp = "=0.2.2"
 
 [build-dependencies]
 sha2 = "0.10"

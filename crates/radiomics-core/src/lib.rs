@@ -12,6 +12,7 @@ pub mod errors;
 pub mod features;
 pub mod imaging;
 pub mod models;
+pub mod preprocessing;
 pub mod random;
 pub mod split;
 pub mod statistics;
