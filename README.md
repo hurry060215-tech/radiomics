@@ -44,8 +44,10 @@ plots. The independent CLI exposes extraction, training, prediction, evaluation
 and fusion, plus pathology patch, aggregation and overlay commands. Keyed
 multimodal/region concatenation, Delta and typed KMeans habitats use the same core.
 See the [development/acceptance ledger](docs/native-development.md) for scope,
-independent Golden evidence and outstanding release gates. This working build is
-not the completed M0–M5 release.
+independent Golden evidence and the completed development delivery. M0–M5 are
+closed within the [documented scope and artifact evidence](docs/delivery-index.md),
+with disclosed performance target misses and measurement limits. Registry
+publication and version changes require separate authorization.
 
 ```python
 import ov_radiomics as rad

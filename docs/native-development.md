@@ -68,18 +68,18 @@ mapping; changing external labels cannot change its fingerprint.
 | Numeric median/category mode, one-hot; Standard/MinMax/Robust; constant/variance/correlation/univariate/BH/sparse filters | Native | Core and Python fit states integrated; independent screening/preprocessing Golden and error checks pass |
 | Binary/multiclass/regression: LR, OLS, Ridge, KNN; classification GaussianNB; CART RandomForest | Native | Implemented; independent objectives/KKT, convergence, model-quality and persistence checks pass |
 | Binary/regression squared-loss LASSO; multiclass OvR L1 Logistic feature union | Native | Shared solver; category-renaming invariant and exact support checks pass |
-| Grouped fixed holdout/nested CV/grid, center holdout, feature concatenation, weighted probability fusion and OOF Logistic fusion | Native | Grouped pipelines/fusion integrated with true patient sets and leakage checks; keyed feature concatenation remains pending |
+| Grouped fixed holdout/nested CV/grid, center holdout, feature concatenation, weighted probability fusion and OOF Logistic fusion | Native | Integrated with actual patient sets, leakage checks and strict keyed feature concatenation; independent frozen research checks pass |
 | Baseline/test distributions, Fisher 2×2, unpenalized logistic OR/Wald CI and complete-case reporting | Native | Shared Logistic solver, LP separation/rank/score checks; frozen inference passes; Python enforces explicit patient/sample units |
 | ICC(2,1), ICC(3,1) for complete balanced subject×reader matrices | Native | Typed result/CI and degenerate states match frozen reference; public Python API integrated |
 | ROC/PR, calibration, confusion, patient bootstrap, macro/micro/weighted classification, MAE/RMSE/R² | Native | Full Rust evaluator/CDF/quantiles/bins/bootstrap integrated; exact legacy sample indices and independent evaluation checks pass |
 | DeLong, DCA, H–L | Binary only | Existing Python/reference semantics retained; multiclass must use explicitly scoped binary comparisons |
-| Multi-region/peritumoral/multimodal, keyed Delta, KMeans habitat, center-specific evaluation | Native | G pending; no inferred registration or batch correction |
+| Multi-region/peritumoral/multimodal, keyed Delta, KMeans habitat, center-specific evaluation | Native | Integrated and independently checked; Python/CLI center holdout and per-center evaluation pass; no inferred registration or batch correction |
 | PNG/JPEG RGB8; single-page TIFF Gray8/Gray16/RGB8 | Native | Integrated with rejection of pyramidal/vendor/unsupported pixel types |
 | Patch streaming/padding, raw QC/reasons, semantic coverage, RGB/HSV/Lab D65 features, shared grayscale textures | Native | Core and streaming Python iterator integrated; independent pixel/color/mask Golden pass; padding excluded |
 | Existing semantic/instance mask objects; hierarchical mean/std/max/quartiles/area weighting | Native | Core and Python integrated; independent hierarchy/weight/missing-state checks pass; object counts stay patch local |
 | Tile score rasterization, overlap means/coverage, transparent or NaN uncovered pixels, chunked output | Native | Owned block iterator and Python NPZ/manifest export integrated; exact global-coordinate coverage checks pass |
 | External CSV/Parquet/NumPy features/embeddings and precomputed masks/registration/filter results | External input | Exact IDs/keys required; native model workflow reused |
-| AnnData/WSIData | Optional Python adapter | Strict ID/geometry/generation-time history contract implemented and frozen tests pass; live third-party package installation/runtime checks pending |
+| AnnData/WSIData | Optional Python adapter | Frozen checks and real pinned dense AnnData/WSIData metadata/predecoded-image smoke pass; no vendor decoder, sparse/backed or full Torch dependency claim |
 | sklearn/statsmodels/PyRadiomics and existing extra Python models | Optional reference/external backend | Lazy reference paths; native wheel tested without these packages; they are never called by backend=rust |
 | Plotting | Python | Native results/tables with units, provenance and valid coordinates |
 | DICOM/RTSTRUCT, registration optimizer, N4, WSI/KFB, complex stains | Deferred | No placeholder implementation or support claim |
@@ -102,10 +102,11 @@ contracts do not imply that the legacy Python training workflow is native.
 The [Golden manifest](../golden/python_golden_v1/manifest.json) freezes initial
 reference provenance, formula conventions, explicit parameters, failure behavior,
 hashes and tolerances. [Golden rebuilding](golden.md) describes candidate review.
-It is not a declaration that M0–M5 have passed. Remaining references must be
-frozen before their algorithm implementation, including fixed three-task model
+Reference provenance is scoped by module and snapshot. Fixed three-task model
 data/objectives, pathology specifications, licensed IBSI/CT data and performance
-datasets. A module author cannot replace expected outputs to make a test pass.
+datasets have separate frozen manifests and acceptance reports linked from the
+[delivery index](delivery-index.md). A module author cannot replace expected
+outputs to make a test pass.
 
 Required numeric rule: abs(actual-reference) <= atol + rtol×abs(reference).
 IDs/orders/classes/masks/bins/counts/split sets are exact; coordinates are within
@@ -142,17 +143,19 @@ retains 840 paired backend observations and 14 cache observations. All applicabl
 numerical/resource checks passed. Performance targets are mixed: actual CT
 prepared-array extraction is slower (0.400× speedup), while CT end-to-end is
 1.225×, below the 1.5× target. Small synthetic end-to-end gains are not generalized
-to CT. ML/Statistics and Pathology performance remain pending their own complete
-measurement; L5 install/startup timing and allocator instrumentation are unmeasured.
+to CT. ML/Statistics and Pathology have completed their separate224-observation
+grid, with all recorded runtime/RSS engineering thresholds passed. L5 records14
+startup observations and one offline wheel-payload installation; full dependency
+installation cost and allocator instrumentation remain unmeasured limitations.
 
 | Milestone | Required completion | Status |
 |---|---|---|
-| M0 | Scope, six contracts, formulas/params, all required reference environments/data | Six contracts and independently frozen image/model/statistics/pathology/research references integrated; scoped IBSI and licensed external CT references verified; remaining suite measurements pending |
+| M0 | Scope, six contracts, formulas/params, all required reference environments/data | Complete within declared scope; independent references, parameters, failures and suite manifests retained |
 | M1 | Python-free NIfTI→preprocessing→Original features→CLI, exact matrix/geometry Golden | Golden, scoped IBSI, public CT 396 comparisons and 28 exact matrices passed; Python-free CLI verified; Radiomics performance measured with explicit misses |
-| M2 | Three-task native selection/models/stats/CV/fusion/.rad and leakage audit | Core/CLI/Python integrated; independent three-task nested-fit/leakage/persistence checks pass; remaining full delivery/installation audit pending |
-| M3 | Strictly keyed multi-region/modality/Delta/habitat/center workflows | Native keyed concat/Delta/habitat and frozen tests integrated; Python center holdout/per-center evaluation and CLI holdout added with focused validation; final scope audit pending |
-| M4 | Independent patch and embedding pipelines, aggregation/maps without GPU/ov | Core/Python/CLI and executable tutorials pass; actual pinned AnnData/WSIData dense metadata paths verified; full Pathology performance pending |
-| M5 | Python/CLI, Windows/Linux wheels/crate artifacts, six runnable tutorials, full installation/performance acceptance | Pending |
+| M2 | Three-task native selection/models/stats/CV/fusion/.rad and leakage audit | Complete within declared scope; independent numerical, nested-fit/leakage, persistence and recorded performance checks pass |
+| M3 | Strictly keyed multi-region/modality/Delta/habitat/center workflows | Complete within declared scope; frozen research checks and Python/CLI center workflows pass |
+| M4 | Independent patch and embedding pipelines, aggregation/maps without GPU/ov | Complete within declared scope; independent pixel/aggregation/coordinate checks, actual optional dense containers and separate performance grid pass |
+| M5 | Python/CLI, Windows/Linux wheels/crate artifacts, six runnable tutorials, full installation/performance acceptance | Development delivery complete within documented scope; nine-job code CI, installed v4 wheel, standalone crate/source builds and six tutorials verified. Performance misses and measurement limits disclosed; registry publication excluded |
 
 Final tutorials cover NIfTI/ROI extraction; imaging+clinical binary modeling;
 multiclass/regression; peritumoral/multimodal/Delta/existing habitat masks;
@@ -189,3 +192,11 @@ passed 71 native-only tests, including the added table/center APIs and identity
 boundaries. The receipt and wheel/CLI are at
 `E:/radiomics-build/snapshot-native-v3/`; this does not replace the immutable v2
 software used for performance measurement.
+
+Final runtime source `76808bb` passed all nine jobs in
+[CI43615315617](https://github.com/hurry060215-tech/radiomics/actions/runs/43615315617).
+Immutable v4 includes CLI center evaluation and passed71 installed-native-only
+tests. The standalone core archive passed150 Rust1.85 tests outside this
+workspace; the derived source wheel passed206 enabled Python tests.
+[Package evidence](native-package-assets.md), [completion audit](completion-audit.md)
+and [delivery index](delivery-index.md) retain artifact identities and limitations.

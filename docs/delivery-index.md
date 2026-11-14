@@ -1,8 +1,10 @@
 # Development delivery index
 
 The package remains version 0.1.0. These are development artifacts and evidence,
-not a PyPI/crates.io publication or a declaration that every remaining gate is
-closed. The live completion audit and latest CI must be consulted together.
+not a PyPI/crates.io publication. The agreed development scope is complete with
+the numerical, installation and artifact evidence below. Performance target
+misses and measurement limits remain disclosed. The versioned completion audit
+and latest PR CI must be consulted together.
 
 ## Read and reproduce
 
