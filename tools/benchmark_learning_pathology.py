@@ -12,6 +12,7 @@ import sys
 import traceback
 
 ROOT=Path(__file__).resolve().parents[1]
+SOURCE_TEXT_BINDING_SHA256='0a0944f104703e3008a93ad36ec56e5e6d473828fe6890e950c602e1f7f97c9c'
 
 
 def unique_object(pairs):
@@ -52,12 +53,38 @@ def load_plan(path,approved_sha256=None,source_root=ROOT):
         raise ValueError('Plan bytes differ from the exact main-reviewed SHA256.')
     if plan.get('schema')!='radiomics.benchmark.v2.learning_pathology_plan.v1':
         raise ValueError('Expected the independent learning/pathology benchmark plan.')
-    for name,expected in plan['source_files_sha256'].items():
-        if file_hash(Path(source_root)/name)!=expected:
-            raise ValueError('Frozen benchmark source/input differs: '+name)
+    verify_plan_sources(plan,digest,source_root)
     if plan['execution']['paired_repetitions']!=7 or plan['execution']['memory_budget_bytes']!=2**31:
         raise ValueError('The reviewed repetition/memory policy must not be changed silently.')
     return plan,digest
+
+
+def verify_plan_sources(plan,plan_sha256,source_root=ROOT):
+    """Only the two main-approved public scripts may use their exact LF form."""
+    binding_path=ROOT/'benchmarks/v2/learning-pathology-source-text-binding.json'
+    if file_hash(binding_path)!=SOURCE_TEXT_BINDING_SHA256:
+        raise ValueError('Source representation binding differs from the exact independently reviewed bytes.')
+    binding=read_json(binding_path)
+    whitelist={'tools/golden_workflow.py','tools/golden_models.py'}
+    if binding['plan_sha256_unchanged']!=plan_sha256 or set(binding['files'])!=whitelist:
+        raise ValueError('The source-text binding cannot authorize other plans or paths.')
+    evidence={}
+    for name,expected in plan['source_files_sha256'].items():
+        raw=(Path(source_root)/name).read_bytes();actual=hashlib.sha256(raw).hexdigest()
+        if name not in whitelist:
+            if actual!=expected:raise ValueError('Frozen benchmark source/input differs: '+name)
+            evidence[name]=dict(raw_sha256=actual,comparison='raw_bytes_exact')
+            continue
+        approved=binding['files'][name];canonical=raw.replace(b'\r\n',b'\n')
+        if approved['original_plan_raw_sha256']!=expected or actual not in (expected,approved['accepted_LF_raw_sha256']):
+            raise ValueError('Unapproved public-source byte representation: '+name)
+        if b'\r' in canonical or raw.startswith(b'\xef\xbb\xbf') or hashlib.sha256(canonical).hexdigest()!=approved['canonical_LF_sha256']:
+            raise ValueError('Canonicalization cannot accept a source/content edit: '+name)
+        if len(canonical)!=approved['canonical_LF_bytes']:
+            raise ValueError('Canonical source length changed: '+name)
+        evidence[name]=dict(raw_sha256=actual,canonical_LF_sha256=approved['canonical_LF_sha256'],
+            CRLF_count=raw.count(b'\r\n'),comparison='explicit_approved_CRLF_or_LF_only')
+    return evidence
 
 
 def pathology_model_plan(dataset):
@@ -410,6 +437,7 @@ RUNNER_FILES=['tools/benchmark_learning_pathology.py','tools/benchmark_lp_learni
 
 def request_base(args,plan,plan_sha,backend,output):
     return dict(plan=str(Path(args.plan).resolve()),approved_plan_sha256=plan_sha,plan_contents=plan,backend=backend,
+        source_text_binding_sha256=SOURCE_TEXT_BINDING_SHA256,source_text_evidence=verify_plan_sources(plan,plan_sha),
         runner_sources_sha256={name:file_hash(ROOT/name) for name in RUNNER_FILES},
         native_build=read_json(args.native_build_manifest),observation_directory=str(output),
         fixtures=str(Path(args.fixtures).resolve()),specification_root=str(ROOT/'golden/python_golden_v1'),
@@ -431,6 +459,7 @@ def freeze_environments(args,plan,plan_sha):
     receipt=read_json(args.native_build_manifest)
     validate_receipt(receipt,Path(args.native_wheel),Path(args.native_build_manifest).resolve().parent)
     binding=dict(schema='radiomics.benchmark.v2.learning_pathology_binding.v1',plan_sha256=plan_sha,native_build=receipt,
+        source_text_binding_sha256=SOURCE_TEXT_BINDING_SHA256,source_text_evidence=verify_plan_sources(plan,plan_sha),
         native_build_manifest_sha256=file_hash(args.native_build_manifest),wheel_sha256=file_hash(args.native_wheel),
         runner_sources_sha256={name:file_hash(ROOT/name) for name in RUNNER_FILES},environments={})
     for backend in ('python','rust'):
@@ -538,7 +567,8 @@ def measure(args,plan,plan_sha,binding,cases):
                     validation_only=False,warmup_calls=1 if case['state']=='warm_uncached' else 0)
                 result=launch_request(args,request,directory/f'pair-{pair:02}-{backend}-transport',measured=True)
                 result.update({key:case[key] for key in ('suite','level','dataset','operation','state','threads','input_sha256','configuration_sha256')})
-                result.update(pair=pair,order=order,backend=backend,case_id=case['id'],binding_sha256=args.approved_binding_sha256,correctness_checked=False)
+                result.update(pair=pair,order=order,backend=backend,case_id=case['id'],binding_sha256=args.approved_binding_sha256,
+                    source_text_binding_sha256=SOURCE_TEXT_BINDING_SHA256,correctness_checked=False)
                 attempts[backend]=result
             comparison=(retained_comparison(attempts['python'].get('comparison_artifact'),attempts['rust'].get('comparison_artifact'),plan)
                 if all(row['status']=='ok' for row in attempts.values()) else dict(passed=False,error='A backend execution/operation failed.'))
@@ -569,6 +599,7 @@ def measure(args,plan,plan_sha,binding,cases):
             policy='No pooled speedup or cross-suite total; misses remain individual rows.')
     complete=len(summaries)==16 and len(raw)==224
     report=dict(schema='radiomics.benchmark.v2.learning_pathology_report.v1',plan_sha256=plan_sha,
+        source_text_binding_sha256=SOURCE_TEXT_BINDING_SHA256,source_text_evidence=verify_plan_sources(plan,plan_sha),
         binding_sha256=args.approved_binding_sha256,complete_declared_grid=complete,expected_cases=16,expected_observations=224,
         suites=by_suite,raw_observations='raw-observations.jsonl',performance_targets=dict(runtime_ratio=1.10,memory_ratio=1.20),
         missing_evidence=['No multicore scaling','No bootstrap/DeLong predictive-CI runtime','OS disk cache/background load uncontrolled',
