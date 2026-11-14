@@ -138,6 +138,7 @@ pub(super) fn fit_logistic(
         vec![0.0; outputs * (p + 1)],
         tolerance,
         max_iterations,
+        x.rows + outputs * p,
         objective,
     )?;
     let coefficients = weights
@@ -212,8 +213,20 @@ fn lbfgs(
     mut w: Vec<f64>,
     tolerance: f64,
     max_iterations: usize,
+    objective_summands: usize,
     objective: impl Fn(&[f64]) -> (f64, Vec<f64>),
 ) -> RadResult<(Vec<f64>, FitReport)> {
+    // A gamma_m bound for two separately accumulated nonnegative mean-loss /
+    // penalty sums. This is relative to the actual objective magnitude, not a
+    // user tolerance or an arbitrary absolute allowance. It is used only when
+    // the predicted Armijo decrease itself is below the rounding resolution.
+    let summed_epsilon = objective_summands as f64 * f64::EPSILON;
+    if summed_epsilon >= 1.0 {
+        return Err(convergence(
+            "Objective sum is too large for a finite roundoff bound.",
+        ));
+    }
+    let sum_roundoff = summed_epsilon / (1.0 - summed_epsilon);
     let (mut value, mut gradient) = objective(&w);
     let mut history: Vec<(Vec<f64>, Vec<f64>, f64)> = Vec::new();
     for iteration in 0..=max_iterations {
@@ -274,9 +287,15 @@ fn lbfgs(
                 .map(|(a, b)| a + step * b)
                 .collect();
             let (new_value, new_gradient) = objective(&candidate);
+            let roundoff_bound = sum_roundoff * (value.abs() + new_value.abs());
+            let armijo_decrease = -1e-4 * step * slope;
+            let near_roundoff = roundoff_bound.is_finite()
+                && armijo_decrease <= roundoff_bound
+                && (new_value - value).abs() <= roundoff_bound
+                && norm_inf(&new_gradient) < maximum;
             if new_value.is_finite()
                 && new_gradient.iter().all(|v| v.is_finite())
-                && new_value <= value + 1e-4 * step * slope
+                && (new_value <= value + 1e-4 * step * slope || near_roundoff)
             {
                 accepted = Some((candidate, new_value, new_gradient));
                 break;
