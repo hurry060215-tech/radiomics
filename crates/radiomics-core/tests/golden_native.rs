@@ -229,3 +229,33 @@ fn discrete_gray_values_and_raw_counts_match_public_301() {
         }
     }
 }
+
+#[test]
+fn floating_discretization_edges_match_frozen_arange_digitize() {
+    let edge_cases = fixture("binning_edges.json");
+    for case in edge_cases["cases"].as_array().unwrap() {
+        let id = case["id"].as_str().unwrap();
+        let (image, mask, config) = input(case);
+        let actual = features::discretize(&image, &mask, 1, &config.discretization);
+        if case["native_rule"] == "error_invalid_or_unsupported" {
+            let error =
+                actual.expect_err("Unrepresentable bins cannot become a successful all-zero ROI.");
+            assert!(
+                matches!(
+                    error.code,
+                    ov_radiomics_core::errors::ErrorCode::InvalidInput
+                        | ov_radiomics_core::errors::ErrorCode::Unsupported
+                ),
+                "{id}"
+            );
+        } else {
+            let expected: Vec<u32> = case["discretized"]["value"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_u64().unwrap() as u32)
+                .collect();
+            assert_eq!(actual.unwrap().values, expected, "{id}");
+        }
+    }
+}
