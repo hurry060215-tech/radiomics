@@ -27,10 +27,15 @@ test = ["pytest>=7", "nbformat>=5", "nbclient>=0.7", "ipykernel>=6"]
 manifest-path = "crates/radiomics-python/Cargo.toml"
 python-source = "src"
 module-name = "ov_radiomics._native"
-exclude = ["**/*.pdb", "**/*.pyc", "**/__pycache__/**"]
+exclude = ["**/*.pdb", "**/*.pyc", "**/__pycache__/**", "golden/public_ct_v1/**", "tests/*public_ct*", "tools/validate_public_ct.py"]
 include = [
     {path = "docs/**/*", format = "sdist"},
     {path = "tests/**/*", format = "sdist"},
+    {path = "tools/**/*.py", format = "sdist"},
+    {path = "examples/native/**/*.py", format = "sdist"},
+    {path = "golden/python_golden_v1/**/*", format = "sdist"},
+    {path = "golden/ibsi_digital_v1/**/*", format = "sdist"},
+    {path = "benchmarks/v2/**/*", format = "sdist"},
 ]
 
 [tool.pytest.ini_options]

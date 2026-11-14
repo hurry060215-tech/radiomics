@@ -8,6 +8,15 @@ edits dependency requirements or updates the repository Cargo.lock/Golden.
 
 ## Asset preparation and source compilation
 
+The Python sdist also carries the six native tutorials, their shared helper,
+the two redistributable Golden profiles, Python validation/build tools and
+benchmark plans. The noncommercial public CT profile and its dependent tests
+remain repository/external-validation assets and are explicitly excluded from
+the installation source archive. This separation preserves their independent
+license without shipping unusable CT-specific tests in the sdist. Archive
+membership is checked before standalone tutorial/test validation; membership
+alone is not a claim that every packaged command was executed.
+
 For an immutable, native-host wheel/CLI snapshot from a clean source commit:
 
 ```powershell

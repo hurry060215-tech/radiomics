@@ -8,7 +8,10 @@ Native development is tracked in the [implementation and acceptance ledger](docs
 The sections below describe the original Python workflow. New native functionality
 is accepted module by module; the development plan is not a claim of full support.
 
-**Initial scope:** a single-center binary classification study with one row per independent patient. The repository includes real PyRadiomics extraction, train-fitted feature selection, eight classifier adapters, clinical statistics, logistic probability fusion, and publication-oriented plots. It does not contain patient data or depend on Onekey.
+**Historical Python scope:** single-center binary classification with independent
+rows and optional external estimators. Current native workflows cover three tasks
+and grouped repeated samples. No private patient data or protected Onekey code is
+included. Public numerical reference data retain their separately stated licenses.
 
 ## Install
 
@@ -33,7 +36,8 @@ listed Original feature subset, grouped binary/multiclass/regression pipelines,
 native models, clinical tests/inference, evaluation, lightweight patch features,
 hierarchical aggregation and tile overlays. Python supplies array/table views and
 plots. The independent CLI exposes extraction, training, prediction, evaluation
-and fusion. Pathology CLI and remaining research combinations are still pending.
+and fusion, plus pathology patch, aggregation and overlay commands. Keyed
+multimodal/region concatenation, Delta and typed KMeans habitats use the same core.
 See the [development/acceptance ledger](docs/native-development.md) for scope,
 independent Golden evidence and outstanding release gates. This working build is
 not the completed M0–M5 release.
