@@ -20,3 +20,44 @@ workflow; repeated lesions cannot be treated as independent patients merely
 because this numerical function accepts row arrays. Tests compare all frozen
 inner/outer patient-level comparison scores for the three tasks, alongside
 known hand values and invalid class-order/missing-class/probability cases.
+
+## Reports and curves
+
+`binary_metrics(y, scores, threshold)` reuses the core binary summary and adds
+positive-class and per-class precision/recall/F1, accuracy, Brier score, clipped
+log loss, AP and separately named trapezoidal PR area. Precision/recall/F1 use
+the frozen zero-division value zero. PPV and NPV retain undefined NaN values when
+their prediction denominator is zero, preserving the existing public semantics.
+
+`classification_metrics` returns an exact integer confusion matrix, ordered
+per-class statistics and macro/micro/support-weighted summaries. Multiclass hard
+predictions use argmax, with ties assigned to the lowest declared class index.
+It also returns explicit OvR binary reports, macro/weighted/micro OvR AUC and
+average precision, log loss and the sum-across-classes Brier score. Binary
+thresholding uses `p >= threshold`. The frozen log loss clips probabilities to
+`[1e-15,1-1e-15]` and normalizes the clipped row before evaluating its true class.
+
+`regression_metrics` provides MAE, the shared RMSE and R². Actual sklearn 1.0.2
+reference behavior is retained: constant-perfect R² is one, constant-imperfect
+R² is zero, and a single-observation R² is NaN. The latter is serialized as an
+explicit nonfinite state rather than replaced with a finite score.
+
+`roc_curve` emits every distinct-score point (`drop_intermediate=False`), with
+the frozen sklearn 1.0.2 initial threshold `max(score)+1`. It does not replace
+that convention with the infinity sentinel of later versions.
+`precision_recall_curve` reverses distinct thresholds only through the first
+full-recall point, then appends precision one/recall zero. Average precision is
+the step integral; trapezoidal PR AUC is a different, explicitly named result.
+
+`calibration_curve` supports explicit uniform or quantile bins. The frozen
+1.0.2 uniform edges span `0` through `1+1e-8`; quantile edges use percentile
+probabilities and increase only the last edge by `1e-8`. Membership follows
+`digitize(right=False)-1`. It returns every input's bin index, all bin counts,
+and ordered means/fractions for nonempty bins. Empty bins retain counts of zero
+and are omitted from the mean arrays, matching the reference.
+
+Golden tests compare the complete binary and multiclass reports, every ROC/PR
+threshold and point, exact calibration membership/counts, both calibration
+strategies, regression results and declared degenerate states against the
+independently frozen patient-level reference. Numerical rows already represent
+the chosen evaluation unit; aggregation is not inferred from row count.

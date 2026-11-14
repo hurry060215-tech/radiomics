@@ -2,6 +2,18 @@
 use crate::contracts::Task;
 use crate::errors::{ErrorCode, RadResult, RadiomicsError};
 use crate::models::{ModelPrediction, ModelTarget};
+mod curves;
+mod reports;
+pub use curves::{
+    calibration_curve, precision_recall_curve, roc_curve, CalibrationCurve, CalibrationStrategy,
+    PrecisionRecallCurve, RocCurve,
+};
+pub use reports::{
+    binary_metrics, classification_metrics, regression_metrics, BinaryMetrics, ClassMetrics,
+    ClassificationMetrics, ConfusionMatrix, MetricAverage, RegressionMetrics,
+};
+#[cfg(test)]
+mod golden_tests;
 
 fn invalid(message: impl Into<String>) -> RadiomicsError {
     RadiomicsError::new(ErrorCode::InvalidInput, message)
