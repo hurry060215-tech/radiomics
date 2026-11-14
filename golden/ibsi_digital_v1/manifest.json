@@ -1,0 +1,18 @@
+{
+  "schema": "ibsi_digital_v1.source_freeze.v1",
+  "status": "independent_source_frozen_no_native_results",
+  "license": "CC-BY-4.0",
+  "author": "Alex Zwanenburg",
+  "attribution": "IBSI-1 digital phantom; original NIfTI bytes unmodified. Source README and license retained.",
+  "document_revision": "b952e71e9d40569e8a9ff3c740bc389c04dd6c28",
+  "data_revision": "6da96021bc91faf4c0cb7fd7fa56a4225d2064a8",
+  "scope": "3D, no resampling, fixed width1. Published precision and exact matrix facts are independent from PythonGolden tolerance. A separate fullprecision derivation is required before numeric native acceptance; no native actual output is stored here.",
+  "files_sha256": {
+    ".gitattributes": "a27ac568c09622e941944ef823c52ac7b48f6578ec0fa05aa9915b85eb39779d",
+    "image.nii.gz": "83773ac2a288aa93cf819a98eaf301c18d35d5876182ec9c18733184e2b7a83a",
+    "LICENSE.md": "c863fa4a2aa4d3152f4bcb58bb7bb63c95704805bbb4aec18cbea7c701d4f046",
+    "mask.nii.gz": "3032d340944b577b83bc559ea7ae9a6034b84633a840eff39570ec17aa1d6281",
+    "published_reference.json": "ff25cb886b5f6291f46ff767e980559adb97e9b8b1ef6e4945b85d00ba294c69",
+    "SOURCE_README.md": "9759bad4490e0f2443188a6f565c14d55fce8fdc90670c153962e375fbcdee00"
+  }
+}
