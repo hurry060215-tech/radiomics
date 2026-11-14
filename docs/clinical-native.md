@@ -1,0 +1,121 @@
+# Native complete-case binary logistic inference
+
+`clinical_native::logistic_inference` fits an **unpenalized** binary logistic
+model on complete cases for the selected variables and outcome. It uses the
+same numerical logistic solver as predictive LR, called with `lambda=0` through
+`models::solve_logistic`. Predictive `ModelSpec::LR` continues to require a
+strictly positive L2 penalty. There is no second optimizer, imputation, automatic
+stepwise selection or silent regularization in this inference path.
+
+```rust,ignore
+let result = logistic_inference(
+    &table, &optional_binary_outcome, &selected_features,
+    &reference_categories, &ClinicalConfig::default(),
+)?;
+result.validate()?;
+```
+
+The numerical kernel receives a `TabularData` plus one `Option<u8>` outcome per
+row, with zero/one class semantics. It examines missingness only for selected
+features and the outcome, preserving the original row indices. Each univariate
+fit therefore has its own complete-case population. The result reports
+`n_input`, `n_used`, `n_dropped` and `used_indices`; it does not infer which rows
+were used merely from a final count. Numeric and categorical inputs are aligned
+by name, so input columns may be reordered.
+
+Categorical variables use treatment contrasts. The provided baseline must be
+observed among complete cases; without an explicit baseline, the
+lexicographically first observed category is chosen and saved. Terms preserve
+the requested feature order and expand categorical terms as `name_category`
+(for example, `sex_M` with reference `F`). The intercept is `const`. Duplicate
+or colliding term names are explicit errors. A categorical variable with no
+comparison level cannot silently become an intercept-only model.
+
+## Separation and existence safeguards
+
+Inference first augments an intercept, divides every design column by its
+maximum absolute value, and checks the SVD rank using the configured relative
+tolerance (default `1e-12`). A zero column uses scale one and remains
+rank-deficient. More complete cases than augmented columns and both outcome
+classes are required.
+
+The frozen separation LP has signed design rows `z_i=(2*y_i-1)*scaled_row_i`,
+coefficient bounds `[-1,1]`, constraints `z_i * beta >= 0`, and maximizes the sum
+of all signed margins. Its output is one of:
+
+- `Separated`: an independently recomputed nonnegative certificate has margin
+  sum greater than `n_rows * n_augmented_columns * 1e-9`.
+- `NoSeparationDetected`: a verified zero certificate attains the solver's
+  reported exact zero optimum, within the declared numerical resolution.
+- `Indeterminate`: invalid/ambiguous certificates, a small positive objective,
+  negative recomputed margins or solver failure.
+- `RankDeficient`: failed scaled augmented design rank before the LP.
+
+Bounds allow only the frozen `1e-9` certificate verification tolerance. Row
+feasibility is independently checked at
+`-1e-9 * (1 + sum(abs(scaled_row)))`; a negative margin within that tolerance
+still does **not** become an accepted separation certificate. A positive
+reported objective below the sign resolution remains indeterminate.
+
+For numerical stability the same LP is represented as
+`beta = beta_plus - beta_minus`, with both nonnegative parts bounded by one.
+This covers exactly `[-1,1]` and avoids lower-bound translation roundoff around
+zero. If the solver reports an **exact** optimal objective of zero, an
+independent all-zero certificate can be constructed and verified against the
+original constraints and optimum. The raw optimizer coefficients, margins and
+recomputed objective are retained alongside the chosen certificate and its
+source. No raw negative margin is clipped, and a reported positive objective
+is never relabeled as zero.
+
+An LP optimum is not a unique coefficient vector. In particular, an optimum
+containing zero margins does not identify the complete-versus-quasi separation
+subtype. Both kinds prevent an accepted finite unpenalized inference. Even
+`NoSeparationDetected` is not sufficient by itself: convergence, an independently
+recomputed score and a valid finite observed-information inverse must also pass.
+
+## Estimation and outputs
+
+The shared solver may fit internally standardized numerical columns, then
+restore coefficients to the original units. The covariance is obtained from
+the observed Fisher information, with column scaling used for stable rank and
+positive-definiteness checks. Both the original-unit information and covariance
+are returned. The original-unit score is recomputed independently; its norm in
+the standardized fit coordinates must meet the requested stopping tolerance.
+
+The default configuration is confidence `0.95`, numerical tolerance `1e-12`,
+200 iterations and rank tolerance `1e-12`. Results include coefficients,
+covariance, information, score and scaled score norm, SE, z statistics,
+two-sided normal p-values, coefficient Wald limits, OR and OR limits,
+apparent probabilities, log likelihood, rank, convergence report and numerical
+diagnostics. Normal probabilities and quantiles call the shared distribution
+implementation. OR/OR-limit overflow is retained as explicit `Inf` using the
+shared float serializers, with a numerical-range diagnostic; coefficient-scale
+inference must remain finite.
+
+At the final solver steps, objective changes can be smaller than the rounding
+resolution of the accumulated mean loss. The single shared L-BFGS line search
+keeps its ordinary Armijo path and can additionally accept a finite candidate
+only when the predicted Armijo decrease and absolute objective difference are
+within `gamma_m * (abs(f_old) + abs(f_new))`, where
+`gamma_m=m*eps/(1-m*eps)` and `m=n_rows+n_outputs*n_features`, **and** the actual
+gradient infinity norm strictly decreases. This numerical-resolution branch
+does not alter the configured stopping threshold or reference tolerances.
+
+## Analysis unit and evidence
+
+This Rust numerical kernel treats supplied rows as observations and has no
+patient ID field. The public clinical workflow must enforce its explicit
+analysis unit and patient identity safeguards. The frozen 94/92-row numerical
+examples contain repeated lesions and establish row-level mathematical parity;
+they do not establish 94/92 independent patients or valid repeated-measure
+clinical inference. A row-scope diagnostic is retained in the numerical result.
+Apparent training probabilities are not held-out validation performance.
+
+Frozen statsmodels 0.13.2 references cover three univariate models and one
+multivariable model, per-model complete cases, coefficients, covariance,
+information, score, SE/z/p, OR/Wald limits, probabilities and likelihood.
+Separate fixtures freeze complete/quasi separation, overlap, rank deficiency,
+and `1e-12`/`1e12` feature scaling. Tests also verify missing-case/rank/separation/
+nonconvergence errors, named-column alignment, baseline reparameterization,
+JSON state preservation and explicit OR overflow. No reference values or
+tolerances are updated to make the native implementation pass.
