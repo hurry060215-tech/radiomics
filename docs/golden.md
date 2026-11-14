@@ -162,6 +162,17 @@ not a requirement that Linux produce byte-identical binaries.
   while held-out and unlabeled external patients retain their cohort. Neither
   matching fold integers alone nor broadcasting patient scores to tile maps
   is accepted as alignment.
+- `evaluation_reference.json`: patient-level binary and multiclass curves,
+  macro/micro/weighted summaries, calibration, regression and a 64-draw binary
+  patient bootstrap. Public sklearn 1.0.2 conventions are explicit: ROC starts
+  at `max(score)+1`; PR retains thresholds back to its first full-recall point;
+  uniform calibration uses `linspace(0,1+1e-8)`, quantile calibration expands
+  only the final edge, and `digitize(right=False)` defines membership. Stored
+  memberships independently reproduce every reference bin mean. AP's step
+  integral and trapezoidal PR AUC have separate names. Native bootstrap must
+  preserve the frozen legacy binary sampling indices; new components use the
+  documented native RNG scheme. Constant and single-observation R² behavior is
+  recorded explicitly instead of guessed.
 
 The clinical Logistic fixture reuses lesion rows to validate numerical solvers;
 its 94/92 complete cases are sample counts, not independent-patient counts.
