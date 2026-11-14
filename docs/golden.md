@@ -39,6 +39,13 @@ not a requirement that Linux produce byte-identical binaries.
   on these ten synthetic inputs. This does not establish general equivalence.
 - `manifest.json`: per-layer tolerances, source provenance, failure behavior,
   fixture hashes, and the remaining acceptance requirements.
+- `binning_edges.json`: 15 additional actual PyRadiomics 3.0.1/NumPy 1.23.0
+  decimal/nextafter/count/large-constant boundary cases, frozen before the native
+  floating-edge repair. Finite positive gray labels must match exactly. At
+  magnitude `1e16`, reference count binning errors and width binning produces
+  nonpositive ROI labels. Native code explicitly rejects these configurations
+  as invalid/unsupported under its positive-label contract; it must not export
+  a successful all-zero ROI. Actual reference outputs remain in the fixture.
 
 GLCM is symmetric, distance one, with no physical-distance weighting. Default
 GLCM/GLRLM features average independent direction results. The additional

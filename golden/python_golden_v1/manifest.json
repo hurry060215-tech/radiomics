@@ -52,7 +52,8 @@
   "failure_contract": {
     "empty_roi": "Reference feature classes error; native extraction must error and retain sample failure record.",
     "singleton": "Direct class calculation frozen: GLCM/GLRLM return NaN; finite feature results retained for other families. This does not assert the full PyRadiomics extractor accepts its default minimum ROI dimensions.",
-    "unknown_profile_or_unsupported_configuration": "Explicit error; never silently substitute a Python backend or alternative algorithm."
+    "unknown_profile_or_unsupported_configuration": "Explicit error; never silently substitute a Python backend or alternative algorithm.",
+    "unrepresentable_discretization": "Reference errors or nonpositive gray labels at huge magnitude are recorded verbatim in binning_edges.json; native returns explicit InvalidInput/Unsupported because zero is reserved for outside ROI. Other cases require exact labels."
   },
   "input_license": "Original synthetic fixtures dedicated to CC0-1.0; source implementations retain their own licenses.",
   "pending_acceptance": [
@@ -70,6 +71,7 @@
     "hand_calculations.json": "21ff2dbfd8c17427e6c586191a28df6840800023027475eab2faaecad4f16d99",
     "pyradiomics_310_differences.json": "721807ddabe11184dadc298764b5c68ca0461bb293d6de2b8c6bf5aac604cc2b",
     "reference.json": "39428b095751f38590d2f91ab27081090747567a3cad93b4d4c3a5a37c0beb22",
-    "requirements-reference.txt": "43bd63b4fabedadccd4c77e9df95b6d3dd976aab9d9227cb91e5f9d0be104265"
+    "requirements-reference.txt": "43bd63b4fabedadccd4c77e9df95b6d3dd976aab9d9227cb91e5f9d0be104265",
+    "binning_edges.json": "e0ccc89ea83766c220aaf94fb2d8d9695a582500330acd3166ea0056520cdb47"
   }
 }
