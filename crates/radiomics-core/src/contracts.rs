@@ -295,6 +295,36 @@ pub struct FeatureDefinition {
     pub definition: String,
     pub unit: Option<String>,
 }
+
+/// Raw numerical and categorical feature columns. IDs and outcomes are supplied
+/// separately by workflow metadata/targets. Categorical storage is row-major.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct TabularData {
+    pub rows: usize,
+    pub numeric_names: Vec<String>,
+    pub numeric: NumericBuffer,
+    pub categorical_names: Vec<String>,
+    pub categorical_values: Vec<Option<String>>,
+}
+impl TabularData {
+    pub fn validate(&self) -> RadResult<()> {
+        self.numeric.validate()?;
+        let mut names = self.numeric_names.clone();
+        names.extend(self.categorical_names.clone());
+        unique_nonempty(&names, "Tabular feature names")?;
+        if self.rows == 0
+            || names.is_empty()
+            || self.numeric.rows != self.rows
+            || self.numeric.cols != self.numeric_names.len()
+            || self.rows.checked_mul(self.categorical_names.len())
+                != Some(self.categorical_values.len())
+        {
+            return Err(invalid("Tabular dimensions, names or categorical buffer disagree, or no observations/features exist."));
+        }
+        Ok(())
+    }
+}
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct FeatureTable {

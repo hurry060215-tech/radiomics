@@ -34,7 +34,8 @@ into valid zeros. Image intensities can retain NaN outside the selected intensit
 ROI; feature computation rejects nonfinite selected intensities. Geometry has a
 full 4×4 affine in its declared native unit. Unknown units never become presumed
 millimeters. Orthogonal-distance algorithms reject shear. Image/mask alignment
-checks all voxel-center grid corners to 1e-6 mm when units are known.
+checks all outer voxel-grid corners to 1e-6 mm when units are known, including
+singleton-axis spacing and direction.
 
 `.rad` schema 1 is a JSON envelope containing `manifest` and a typed `fitted`
 state. Its manifest records ordered features/classes, task, binary-only threshold,
@@ -118,12 +119,25 @@ parameters. Per-dataset mean binary AUC loss <=0.03 and Brier increase <=0.03;
 multiclass macro-F1 loss <=0.04; regression RMSE increase <=max(0.10×reference RMSE,
 0.02×test-target SD). Do not require sklearn's tree sequence for the same seed.
 
-Full public API/CLI benchmarks require fixed hardware/data, equal thread/memory
-budgets, warmup then seven alternating repeats, cold/warm/cache/I/O/conversion/
-compute/export timing and peak memory. Extraction speedup >=1.5×; other full
-workflows median runtime <=1.10× reference; peak memory ordinarily <=1.20×.
-Failure becomes an optimization task; data/seeds/tolerances cannot change after
-results. No extraction or workflow performance claim has been established yet.
+The user-approved [Radiomics Benchmark v2](benchmark-v2.md) replaces the uniform
+extraction speed gate. Release Gate covers applicable correctness, API compatibility,
+numerical stability, independent operation and cross-platform installation.
+Performance Target is tracked separately: L1 reports individual operators without
+a uniform speed gate; L2 uses <=1.10× native/reference runtime as an engineering
+regression threshold and >=1.5× acceleration as a target; L3 end-to-end targets
+>=1.5×; L4 covers 100/500/1,000 ROI throughput/scaling; L5 covers deployment.
+The <=1.20× memory ratio remains engineering regression protection. Correct slow
+results require disclosure/optimization and do not automatically fail numerical
+acceptance or prevent a properly scoped experimental release. Actual publication
+still requires separate authorization.
+
+Radiomics, Machine Learning & Statistics, and Pathology have separate suites.
+Reports retain raw runs, CPU/toolchain/dependency/thread manifests, cold/warm/cache
+states, median/IQR/p95 and sample size; at least seven alternating warm pairs are
+required. No data/seed/tolerance changes are allowed after seeing results.
+PyRadiomics compatibility and independent IBSI conformance have separate per-feature
+statuses and evidence; pending IBSI checks never become assumed passes.
+No extraction or workflow performance target has yet been measured as passed.
 
 | Milestone | Required completion | Status |
 |---|---|---|

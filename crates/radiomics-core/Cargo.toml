@@ -19,6 +19,7 @@ rayon = "1"
 nalgebra = "0.33"
 rand = "=0.8.5"
 rand_chacha = "=0.3.1"
+statrs = { version = "=0.18.0", default-features = false }
 
 [build-dependencies]
 sha2 = "0.10"
