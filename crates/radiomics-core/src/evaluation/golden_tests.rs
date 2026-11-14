@@ -231,3 +231,182 @@ fn regression_and_degenerate_r2_follow_frozen_reference_not_invented_zeroes() {
         .unwrap()
         .contains("\"NaN\""));
 }
+
+#[test]
+fn native_delong_dca_and_hl_bins_tails_match_the_original_python_baseline() {
+    let fixture: Value = serde_json::from_str(include_str!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../../golden/python_golden_v1/reference.json"
+    )))
+    .unwrap();
+    let reference = &fixture["baseline_metrics"];
+    let y: Vec<_> = reference["inputs"]["y"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|v| v.as_u64().unwrap() as u8)
+        .collect();
+    let a = numbers(&reference["inputs"]["a"]);
+    let b = numbers(&reference["inputs"]["b"]);
+    let interval = delong_interval(&y, &a, 0.95).unwrap();
+    close(
+        interval.auc,
+        reference["binary_delong"]["auc"].as_f64().unwrap(),
+    );
+    close(
+        interval.low,
+        reference["binary_delong"]["ci_low"].as_f64().unwrap(),
+    );
+    close(
+        interval.high,
+        reference["binary_delong"]["ci_high"].as_f64().unwrap(),
+    );
+    let paired = paired_delong(&y, &a, &b).unwrap();
+    for (value, key) in [
+        (paired.auc_a, "auc_a"),
+        (paired.auc_b, "auc_b"),
+        (paired.difference, "difference"),
+        (paired.z, "z"),
+        (paired.p_value, "p_value"),
+    ] {
+        close(value, reference["paired_delong"][key].as_f64().unwrap());
+    }
+    for (name, scores) in [("a", &a), ("b", &b)] {
+        let dca = decision_curve(&y, scores, &[0.5, 0.2, 0.5, 0.8]).unwrap();
+        let expected: Vec<_> = reference["dca"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|r| r["model"] == name)
+            .collect();
+        for (i, row) in expected.iter().enumerate() {
+            close(
+                dca.model_net_benefit[i],
+                row["net_benefit"].as_f64().unwrap(),
+            );
+        }
+        let all: Vec<_> = reference["dca"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|r| r["model"] == "Treat all")
+            .collect();
+        for (a, b) in dca.treat_all.iter().zip(all) {
+            close(*a, b["net_benefit"].as_f64().unwrap());
+        }
+    }
+    let hl = hosmer_lemeshow(&y, &a, 4).unwrap();
+    let expected = &reference["hosmer_lemeshow"];
+    close(hl.statistic, expected["statistic"].as_f64().unwrap());
+    close(hl.p_value, expected["p_value"].as_f64().unwrap());
+    assert_eq!(hl.df, expected["df"].as_u64().unwrap() as usize);
+    for (bin, r) in hl.table.iter().zip(expected["table"].as_array().unwrap()) {
+        assert_eq!(bin.n, r["n"].as_f64().unwrap() as u64);
+        close(bin.observed, r["observed"].as_f64().unwrap());
+        close(bin.expected, r["expected"].as_f64().unwrap());
+    }
+}
+#[test]
+fn explicit_bootstrap_indices_reproduce_old16_and_patient64_auc_intervals() {
+    let old: Value = serde_json::from_str(include_str!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/../../golden/python_golden_v1/reference.json"
+    )))
+    .unwrap();
+    let old = &old["baseline_metrics"];
+    let y: Vec<_> = old["inputs"]["y"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|v| v.as_u64().unwrap() as u8)
+        .collect();
+    let p = numbers(&old["inputs"]["a"]);
+    let draws: Vec<Vec<_>> = old["bootstrap_indices"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|row| {
+            row.as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_u64().unwrap() as usize)
+                .collect()
+        })
+        .collect();
+    let result = bootstrap_auc_explicit(&y, &p, &draws, 0.95).unwrap();
+    close(
+        result.low,
+        old["binary_bootstrap"]["ci_low"].as_f64().unwrap(),
+    );
+    close(
+        result.high,
+        old["binary_bootstrap"]["ci_high"].as_f64().unwrap(),
+    );
+    let fixture = fixture();
+    let case = &fixture["cases"]["binary"];
+    let y: Vec<_> = case["y"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|v| v.as_u64().unwrap() as u8)
+        .collect();
+    let p: Vec<_> = case["predictions"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|row| row[1].as_f64().unwrap())
+        .collect();
+    let reference = &fixture["patient_binary_bootstrap"];
+    let draws: Vec<Vec<_>> = reference["indices"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|row| {
+            row.as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_u64().unwrap() as usize)
+                .collect()
+        })
+        .collect();
+    let output = bootstrap_auc_explicit(&y, &p, &draws, 0.95).unwrap();
+    vec_close(&output.replicate_scores, &reference["auc_replicates"]);
+    close(output.low, reference["ci"][0].as_f64().unwrap());
+    close(output.high, reference["ci"][1].as_f64().unwrap());
+    let classes = vec!["negative".into(), "positive".into()];
+    let target = ModelTarget::Classification {
+        classes: classes.clone(),
+        labels: y.iter().map(|&v| v as usize).collect(),
+    };
+    let values: Vec<_> = p.iter().flat_map(|&p| [1.0 - p, p]).collect();
+    let prediction = ModelPrediction::Classification {
+        classes,
+        probabilities: NumericBuffer {
+            rows: y.len(),
+            cols: 2,
+            missing: vec![false; values.len()],
+            values,
+        },
+    };
+    assert_eq!(
+        output,
+        bootstrap_model_score_explicit(Task::Binary, &target, &prediction, &draws, 0.95).unwrap()
+    );
+}
+#[test]
+fn binary_inference_undefined_and_invalid_requests_are_explicit() {
+    let y = [0, 0, 1, 1];
+    let a = [0., 0., 1., 1.];
+    let b = [1., 1., 0., 0.];
+    let paired = paired_delong(&y, &a, &b).unwrap();
+    assert!(paired.z.is_infinite());
+    assert_eq!(paired.p_value, 0.0);
+    assert!(serde_json::to_string(&paired).unwrap().contains("\"Inf\""));
+    assert_eq!(paired_delong(&y, &a, &a).unwrap().p_value, 1.0);
+    assert!(hosmer_lemeshow(&y, &[0.5; 4], 10).is_err());
+    assert!(hosmer_lemeshow(&y, &a, 2).is_err());
+    assert!(decision_curve(&y, &a, &[1.0]).is_err());
+    assert!(delong_interval(&[0, 1], &[0., 1.], 0.95).is_err());
+    assert!(bootstrap_auc_explicit(&y, &a, &[vec![0, 1, 2, 4], vec![0, 1, 2, 3]], 0.95).is_err());
+    assert!(bootstrap_auc_explicit(&y, &a, &[vec![0; 4], vec![1; 4]], 0.95).is_err());
+}

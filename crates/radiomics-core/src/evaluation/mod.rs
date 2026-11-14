@@ -2,11 +2,18 @@
 use crate::contracts::Task;
 use crate::errors::{ErrorCode, RadResult, RadiomicsError};
 use crate::models::{ModelPrediction, ModelTarget};
+mod bootstrap;
 mod curves;
+mod inference;
 mod reports;
+pub use bootstrap::{bootstrap_auc_explicit, bootstrap_model_score_explicit, BootstrapInterval};
 pub use curves::{
     calibration_curve, precision_recall_curve, roc_curve, CalibrationCurve, CalibrationStrategy,
     PrecisionRecallCurve, RocCurve,
+};
+pub use inference::{
+    decision_curve, delong_interval, hosmer_lemeshow, paired_delong, AucInterval, DecisionCurve,
+    HosmerLemeshow, HosmerLemeshowBin, PairedDelong,
 };
 pub use reports::{
     binary_metrics, classification_metrics, regression_metrics, BinaryMetrics, ClassMetrics,

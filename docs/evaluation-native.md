@@ -61,3 +61,46 @@ threshold and point, exact calibration membership/counts, both calibration
 strategies, regression results and declared degenerate states against the
 independently frozen patient-level reference. Numerical rows already represent
 the chosen evaluation unit; aggregation is not inferred from row count.
+
+## Binary inference and explicit bootstrap
+
+`delong_interval` reuses the core placement-variance calculation and obtains
+its normal quantile from `statistics::Distribution`. Limits are explicitly
+bounded to 0–1, matching the frozen baseline. `paired_delong` reuses the paired
+variance kernel and the shared normal survival function. Equal scores with zero
+paired variance return z zero/p one; a nonzero AUC difference with zero variance
+retains an explicit infinite z and p zero.
+
+`decision_curve` reuses the existing sorted-threshold net-benefit kernel, keeping
+threshold order and repeated thresholds. It adds the corresponding treat-all
+and treat-none vectors. Thresholds must lie strictly between zero and one.
+
+`hosmer_lemeshow` now constructs quantile bins in Rust using the shared linear
+quantile primitive. Duplicate edges are removed, intervals are right-closed
+with the minimum included, and only nonempty groups enter the test. It calls
+the existing H–L statistic kernel and shared chi-square survival function.
+Fewer than three distinct/nonempty bins or expected bin probabilities zero/one
+are errors. Results expose raw quantile edges, per-row membership and the group
+table; presentation rounding of interval labels belongs to the Python display
+adapter, not the numerical binning algorithm.
+
+DeLong, decision curves and H–L accept binary labels and scores only. Applying
+them to a particular multiclass OvR problem requires the caller to construct
+and name that explicit binary target; there is no automatic multiclass-overall
+interpretation.
+
+`bootstrap_auc_explicit` computes a percentile AUC interval from supplied index
+arrays and creates no random-number generator. Each draw must have the declared
+evaluation row count, valid indices and both classes. Invalid draws are errors,
+not silently omitted or redrawn. Every replicate AUC calls the existing core
+kernel; interval limits use shared linear quantiles.
+`bootstrap_model_score_explicit` applies the same approach to the task's primary
+comparison metric. Multiclass draws must retain every declared class. The
+result records all replicate scores and its `explicit_indices` source.
+
+Tests reproduce the baseline's 16 frozen bootstrap draws and the newer
+patient-level fixture's 64 draws, including every replicate AUC and CI. The
+baseline DeLong interval/test, DCA repeated thresholds, H–L group counts,
+expected/observed values, statistic and p-value also pass the original frozen
+tolerances. Seeded entry points must delegate sampling to the shared random
+module; these explicit-index functions contain no separate RNG implementation.
