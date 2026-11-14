@@ -20,6 +20,9 @@ pub enum EvaluationUnit {
     Sample,
     Patient,
 }
+fn is_false(value: &bool) -> bool {
+    !*value
+}
 #[derive(Debug, Args, Serialize)]
 pub struct EvaluateCommand {
     #[arg(long)]
@@ -30,6 +33,10 @@ pub struct EvaluateCommand {
     pub output: PathBuf,
     #[arg(long, value_enum, default_value = "patient")]
     pub prediction_unit: EvaluationUnit,
+    /// Additionally evaluate each recorded center, partitioning actual source units.
+    #[arg(long)]
+    #[serde(skip_serializing_if = "is_false")]
+    pub by_center: bool,
     #[arg(long, default_value_t = 0.5)]
     pub threshold: f64,
     #[arg(long, default_value_t = 0.95)]
@@ -82,6 +89,38 @@ fn data_groups(data: &StudyData, unit: PredictionUnit) -> BTreeMap<&str, Vec<usi
         }
     }
     groups
+}
+fn center_sources(
+    source: &PredictionTable,
+    data: &StudyData,
+) -> RadResult<BTreeMap<String, PredictionTable>> {
+    // Validate the same real unit/parent/cohort association used by ordinary
+    // evaluation before deriving any center-specific population.
+    align_source(source, data)?;
+    let groups = data_groups(data, source.unit);
+    let mut result: BTreeMap<String, PredictionTable> = BTreeMap::new();
+    for row in &source.rows {
+        let key = unit_key(row, source.unit)?;
+        let indices = &groups[key];
+        let centers: BTreeSet<_> = indices
+            .iter()
+            .map(|&i| data.samples[i].center.as_deref())
+            .collect();
+        let center=if centers.len()==1 {
+            centers.iter().next().copied().flatten().filter(|value|!value.trim().is_empty())
+        } else {None}.ok_or_else(||invalid(format!("Center evaluation requires one known center for actual {:?} prediction '{key}'; missing/mixed centers cannot disaggregate an already aggregated score. Supply genuine finer-unit predictions or correct the metadata.",source.unit)))?;
+        result
+            .entry(center.to_owned())
+            .or_insert_with(|| PredictionTable {
+                task: source.task,
+                unit: source.unit,
+                classes: source.classes.clone(),
+                rows: vec![],
+            })
+            .rows
+            .push(row.clone());
+    }
+    Ok(result)
 }
 fn align_source(source: &PredictionTable, data: &StudyData) -> RadResult<BTreeSet<usize>> {
     source.validate()?;
@@ -209,6 +248,8 @@ struct CohortReport {
     format: &'static str,
     schema_version: u32,
     cohort: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    center: Option<String>,
     status: &'static str,
     performance_scope: &'static str,
     n_predictions: usize,
@@ -293,6 +334,7 @@ fn cohort_report(
         format: "radiomics.cli.cohort-evaluation",
         schema_version: 1,
         cohort,
+        center: None,
         status: "prediction_only",
         performance_scope: scope,
         n_predictions: table.rows.len(),
@@ -421,6 +463,70 @@ fn cohort_report(
         _ => return Err(invalid("Evaluation target/prediction resolution failed.")),
     }
     Ok(report)
+}
+fn cohort_groups(predictions: &PredictionTable) -> BTreeMap<String, Vec<usize>> {
+    let mut result = BTreeMap::new();
+    for (i, row) in predictions.rows.iter().enumerate() {
+        result
+            .entry(row.cohort.clone())
+            .or_insert_with(Vec::new)
+            .push(i);
+    }
+    result
+}
+fn grouped_reports(
+    predictions: &PredictionTable,
+    truth: &[Option<Truth>],
+    source_unit: PredictionUnit,
+    args: &EvaluateCommand,
+    thresholds: &[f64],
+    center: Option<&str>,
+) -> RadResult<Vec<(PredictionTable, CohortReport)>> {
+    let mut reports = Vec::new();
+    for (name, indices) in cohort_groups(predictions) {
+        let table = PredictionTable {
+            task: predictions.task,
+            unit: predictions.unit,
+            classes: predictions.classes.clone(),
+            rows: indices
+                .iter()
+                .map(|&i| predictions.rows[i].clone())
+                .collect(),
+        };
+        let labels: Vec<_> = indices.iter().map(|&i| truth[i].clone()).collect();
+        let mut report = cohort_report(&table, &labels, source_unit, args, thresholds)?;
+        if report.cohort != name {
+            return Err(schema("Cohort identity changed during grouping."));
+        }
+        report.center = center.map(str::to_owned);
+        reports.push((table, report));
+    }
+    Ok(reports)
+}
+fn report_files(names: &mut Vec<PathBuf>, prefix: &str, source: &PredictionTable) {
+    for suffix in [".json", "-metrics.csv", "-bootstrap.csv"] {
+        names.push(format!("{prefix}{suffix}").into());
+    }
+    for curve in curve_prefixes(prefix, source.task, source.classes.len()) {
+        names.extend(curve_files(&curve));
+    }
+    if source.task == Task::Binary {
+        names.push(format!("{prefix}-dca.csv").into());
+        names.push(format!("{prefix}-hosmer-lemeshow.csv").into());
+    }
+}
+struct CenterEvaluation {
+    center: String,
+    predictions: PredictionTable,
+    alignment: Value,
+    reports: Vec<(PredictionTable, CohortReport)>,
+}
+fn report_summary(report: &CohortReport, prefix: &str) -> Value {
+    let mut summary = json!({"cohort":report.cohort,"status":report.status,"performance_scope":report.performance_scope,"n_predictions":report.n_predictions,"file":format!("{prefix}.json"),"effective_unit":report.effective_prediction_unit});
+    if let Some(center) = &report.center {
+        summary["center"] = json!(center);
+    }
+    summary
 }
 fn curve_prefixes(prefix: &str, task: Task, k: usize) -> Vec<String> {
     match task {
@@ -692,9 +798,35 @@ pub fn evaluate(args: EvaluateCommand) -> RadResult<u8> {
     let study_spec_directory = std::fs::canonicalize(parent(&args.data))?;
     let (predictions, truth, alignment) =
         evaluation_rows(&source, &loaded.data, args.prediction_unit)?;
-    let mut cohorts: BTreeMap<String, Vec<usize>> = BTreeMap::new();
-    for (i, row) in predictions.rows.iter().enumerate() {
-        cohorts.entry(row.cohort.clone()).or_default().push(i);
+    let thresholds: Vec<_> = (1..100).map(|i| i as f64 / 100.0).collect();
+    let reports = grouped_reports(&predictions, &truth, source.unit, &args, &thresholds, None)?;
+    let mut centers = Vec::new();
+    if args.by_center {
+        for (center, input) in center_sources(&source, &loaded.data)? {
+            let (center_predictions, center_truth, mut center_alignment) =
+                evaluation_rows(&input, &loaded.data, args.prediction_unit)?;
+            center_alignment["center"] = json!(center);
+            center_alignment["center_partition_unit"] = json!(source.unit);
+            center_alignment["center_source_sample_ids"] = json!(input
+                .rows
+                .iter()
+                .map(|row| &row.sample_id)
+                .collect::<Vec<_>>());
+            let center_reports = grouped_reports(
+                &center_predictions,
+                &center_truth,
+                source.unit,
+                &args,
+                &thresholds,
+                Some(&center),
+            )?;
+            centers.push(CenterEvaluation {
+                center,
+                predictions: center_predictions,
+                alignment: center_alignment,
+                reports: center_reports,
+            });
+        }
     }
     let mut names: Vec<PathBuf> = [
         "source-predictions.json",
@@ -708,39 +840,18 @@ pub fn evaluate(args: EvaluateCommand) -> RadResult<u8> {
     .into_iter()
     .map(PathBuf::from)
     .collect();
-    for index in 0..cohorts.len() {
-        let prefix = format!("cohort-{index:03}");
-        for suffix in [".json", "-metrics.csv", "-bootstrap.csv"] {
-            names.push(format!("{prefix}{suffix}").into());
+    for index in 0..reports.len() {
+        report_files(&mut names, &format!("cohort-{index:03}"), &source);
+    }
+    for (i, center) in centers.iter().enumerate() {
+        for suffix in ["-predictions.json", "-predictions.csv", "-alignment.json"] {
+            names.push(format!("center-{i:03}{suffix}").into());
         }
-        for curve in curve_prefixes(&prefix, source.task, source.classes.len()) {
-            names.extend(curve_files(&curve));
-        }
-        if source.task == Task::Binary {
-            names.push(format!("{prefix}-dca.csv").into());
-            names.push(format!("{prefix}-hosmer-lemeshow.csv").into());
+        for j in 0..center.reports.len() {
+            report_files(&mut names, &format!("center-{i:03}-cohort-{j:03}"), &source);
         }
     }
     let output = Output::preflight(&args.output, args.overwrite, names)?;
-    let thresholds: Vec<_> = (1..100).map(|i| i as f64 / 100.0).collect();
-    let mut reports = Vec::new();
-    for (name, indices) in &cohorts {
-        let table = PredictionTable {
-            task: predictions.task,
-            unit: predictions.unit,
-            classes: predictions.classes.clone(),
-            rows: indices
-                .iter()
-                .map(|&i| predictions.rows[i].clone())
-                .collect(),
-        };
-        let labels: Vec<_> = indices.iter().map(|&i| truth[i].clone()).collect();
-        let report = cohort_report(&table, &labels, source.unit, &args, &thresholds)?;
-        if report.cohort != *name {
-            return Err(schema("Cohort identity changed during grouping."));
-        }
-        reports.push((table, report));
-    }
     output.begin()?;
     output.json("source-predictions.json", &source)?;
     output.predictions("predictions.json", "predictions.csv", &predictions)?;
@@ -751,14 +862,36 @@ pub fn evaluate(args: EvaluateCommand) -> RadResult<u8> {
     for (index, (table, report)) in reports.iter().enumerate() {
         let prefix = format!("cohort-{index:03}");
         export_cohort(&output, &prefix, table, report)?;
-        summary.push(json!({"cohort":report.cohort,"status":report.status,"performance_scope":report.performance_scope,"n_predictions":report.n_predictions,"file":format!("{prefix}.json"),"effective_unit":report.effective_prediction_unit}));
+        summary.push(report_summary(report, &prefix));
     }
     let status = if reports.iter().all(|(_, r)| r.status == "prediction_only") {
         "prediction_only"
     } else {
         "complete"
     };
-    output.json("summary.json",&json!({"format":"radiomics.cli.evaluation","schema_version":1,"status":status,"task":source.task,"classes":source.classes,"source_unit":source.unit,"effective_unit":predictions.unit,"cohorts":summary}))?;
+    let mut summary = json!({"format":"radiomics.cli.evaluation","schema_version":1,"status":status,"task":source.task,"classes":source.classes,"source_unit":source.unit,"effective_unit":predictions.unit,"cohorts":summary});
+    if args.by_center {
+        let mut center_summary = Vec::new();
+        for (i, center) in centers.iter().enumerate() {
+            let prefix = format!("center-{i:03}");
+            output.predictions(
+                &format!("{prefix}-predictions.json"),
+                &format!("{prefix}-predictions.csv"),
+                &center.predictions,
+            )?;
+            output.json(&format!("{prefix}-alignment.json"), &center.alignment)?;
+            let mut cohorts = Vec::new();
+            for (j, (table, report)) in center.reports.iter().enumerate() {
+                let name = format!("{prefix}-cohort-{j:03}");
+                export_cohort(&output, &name, table, report)?;
+                cohorts.push(report_summary(report, &name));
+            }
+            center_summary.push(json!({"center":center.center,"source_unit":source.unit,"effective_unit":center.predictions.unit,"predictions_file":format!("{prefix}-predictions.json"),"alignment_file":format!("{prefix}-alignment.json"),"cohorts":cohorts}));
+        }
+        summary["by_center"] = json!(true);
+        summary["centers"] = json!(center_summary);
+    }
+    output.json("summary.json", &summary)?;
     println!(
         "{}",
         json!({"status":status,"command":"evaluate","output":args.output,"cohorts":reports.len(),"prediction_unit":predictions.unit})

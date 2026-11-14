@@ -87,3 +87,34 @@ They also verify preserved supplied plans, scoped overwrite, user-note
 preservation, unknown schema/kind errors, bare relative paths and fitted-state
 invariance after held-out file changes. These are native subprocess tests, not
 Python wrappers or mocked command calls.
+
+## Explicit center evaluation
+
+```sh
+radiomics evaluate --predictions predictions.json --data study.json \
+  --by-center --prediction-unit patient --output evaluation-by-center
+```
+
+The default overall/cohort evaluation is retained. `--by-center` adds indexed
+center-specific prediction JSON/CSV, alignment reports, per-cohort metrics,
+curves and intervals, with center/cohort names recorded separately in summary
+metadata. Center names are data and never become filesystem path components.
+Training, test and multiple external cohort identities are preserved rather
+than renamed into a center label. Unlabeled cohorts stay prediction-only.
+
+Center partitions are formed from **actual source prediction units before**
+the existing native patient aggregation. Genuine sample/tile/slide predictions
+can therefore support separate center-level patient scores. They still use the
+same tile→slide→equal-slide patient rule and native metrics/bootstrap routines;
+there is no second numerical implementation. Each center's patient table is
+saved separately, so one patient observed at multiple centers is not duplicated
+inside a single canonical patient-unit PredictionTable.
+
+Each predicted source unit needs one nonempty known center in the supplied study
+metadata. An already aggregated patient/slide score with mixed or missing center
+metadata errors explicitly; it cannot be broadcast or decomposed into center
+scores. Patient scores with an unambiguous recorded center are valid and remain
+unchanged. Existing outcome/class/cohort/parent checks apply, and a center/cohort
+with insufficient observed classes reports the ordinary native error rather
+than fabricated zero performance. All validation/calculation completes before
+creating new output files. Without the flag, center metadata is not required.
