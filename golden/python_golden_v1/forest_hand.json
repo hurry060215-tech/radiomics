@@ -1,0 +1,13 @@
+{
+  "schema": "python_golden_v1.forest.hand.v1",
+  "provenance": "Independent hand-derived CART splits and leaves; no sklearn random-tree structure is treated as an exact native tree.",
+  "license": "CC0-1.0",
+  "tie_rule": "For equal impurity decrease within the candidate feature subset, choose the lowest original feature index, then the lowest split threshold. Threshold comparison is x<=threshold to left.",
+  "cases": [
+    {"id": "binary_stump", "task": "binary", "x": [[0],[1],[2],[3],[4],[5]], "y": [0,0,0,1,1,1], "classes": [0,1], "bootstrap": false, "max_depth": 1, "max_features": "all", "root_feature": 0, "root_threshold": 2.5, "root_impurity": 0.5, "root_impurity_decrease": 0.5, "evaluation_x": [[-1],[0],[2.5],[3],[7]], "probabilities": [[1,0],[1,0],[1,0],[0,1],[0,1]]},
+    {"id": "duplicate_feature_tie", "task": "binary", "x": [[0,0],[1,1],[2,2],[3,3]], "y": [0,0,1,1], "classes": [0,1], "bootstrap": false, "max_depth": 1, "max_features": "all", "root_feature": 0, "root_threshold": 1.5, "root_impurity": 0.5, "root_impurity_decrease": 0.5},
+    {"id": "multiclass_threshold_tie", "task": "multiclass", "x": [[0],[1],[2],[3],[4],[5]], "y": [0,0,1,1,2,2], "classes": [0,1,2], "bootstrap": false, "max_depth": 2, "max_features": "all", "root_feature": 0, "root_threshold": 1.5, "root_impurity": 0.6666666666666666, "root_impurity_decrease": 0.3333333333333333, "evaluation_x": [[-1],[1.5],[2],[3.5],[4],[9]], "probabilities": [[1,0,0],[1,0,0],[0,1,0],[0,1,0],[0,0,1],[0,0,1]]},
+    {"id": "regression_stump", "task": "regression", "x": [[0],[1],[2],[3]], "y": [0,0,2,2], "classes": [], "bootstrap": false, "max_depth": 1, "max_features": "all", "root_feature": 0, "root_threshold": 1.5, "root_impurity": 1.0, "root_impurity_decrease": 1.0, "evaluation_x": [[-1],[1.5],[2],[8]], "predictions": [0,0,2,2]},
+    {"id": "constant_regression_leaf", "task": "regression", "x": [[0],[1],[2]], "y": [5,5,5], "classes": [], "bootstrap": false, "max_depth": 3, "max_features": "all", "root_is_leaf": true, "root_impurity": 0.0, "evaluation_x": [[-1],[1],[9]], "predictions": [5,5,5]}
+  ]
+}

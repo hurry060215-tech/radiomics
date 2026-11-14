@@ -65,6 +65,16 @@ not a requirement that Linux produce byte-identical binaries.
   annotation coverage, patch-local object geometry and scale conversion are
   frozen before the Rust pixel implementation. Gray8/Gray16 are read as raw
   image/texture values and require an explicit mapping for QC/colors.
+- `forest_reference.json` and `forest_hand.json`: 200-tree forests on each of
+  the same three fixed datasets, five fixed model seeds, explicit parameters,
+  per-sample predictions and patient aggregates. Two lesion scores are averaged
+  before the primary patient-level behavioral metrics. Five hand-derived CART
+  cases freeze splits, leaf predictions and the tie rule (lowest original
+  candidate feature index, then lowest threshold). Sklearn trees and native
+  trees need not be identical. The user's per-dataset AUC/Brier, macro-F1 and
+  RMSE limits apply to five-seed means independently, with native repeatability
+  across thread counts and serialization checked separately. These small
+  synthetic datasets test software behavior, not clinical model performance.
 
 `Lab_D65` uses the sRGB transfer, the W3C D65 RGB-to-XYZ matrix and the CIELAB
 piecewise formula with D65 white. It does not adapt to D50. The profile preserves

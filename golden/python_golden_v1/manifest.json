@@ -2,7 +2,7 @@
   "schema": "python_golden_v1.acceptance.v1",
   "profile": "python_golden_v1",
   "status": "frozen_by_main_agent_review",
-  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation.",
+  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation. Forest behavioral references use fixed five seeds, 200 trees and patient-level score means on the same three inputs.",
   "baseline_revision": "2512e16979a544207f84c943e619ef33e02d3dc7",
   "reference_source": {
     "pyradiomics_tag": "v3.0.1",
@@ -59,7 +59,6 @@
   "pending_acceptance": [
     "IBSI digital phantom acquisition with explicit redistribution permission and independent IBSI feature comparison",
     "Public CT/ROI licensed fixture and feature reference",
-    "Pinned three-task model datasets, objective/KKT references and five-seed 200-tree behavioral reference",
     "Pathology pixel/mask/embedding fixtures and independent specifications",
     "Native CLI/Python workflow leakage, serialization and installation checks",
     "Seven-repeat alternating end-to-end performance and memory gates"
@@ -78,6 +77,8 @@
     "pathology_spec.py": "de07e123d5064a27a71c086b4868d9d9021186958709a089a261d479913c73de",
     "pathology_inputs.json": "2f23581540ed7b7aa315ef787d32461d1343b4566b0840c2a43e31396669712a",
     "pathology_reference.json": "9e4a7384601a53db4d4f96dce73f0013bad5f756c85151bc37b74defc57a7571",
-    "pathology_hand.json": "f5560a6f7d1a100d8f694c1d9f65d5f3716654045bdbdb8826977b09495abce7"
+    "pathology_hand.json": "f5560a6f7d1a100d8f694c1d9f65d5f3716654045bdbdb8826977b09495abce7",
+    "forest_reference.json": "2aab2c11a1ceb470cdda227494b300654b9d9ed15eba9e411f4bd6dd8d53d314",
+    "forest_hand.json": "11feb05433ceec788b19e3949171f4adc86af333d7931f5632f85cf06ff7a5a3"
   }
 }
