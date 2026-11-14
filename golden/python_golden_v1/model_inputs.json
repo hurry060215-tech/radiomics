@@ -1,0 +1,5591 @@
+{
+  "schema": "python_golden_v1.models.inputs.v1",
+  "license": "CC0-1.0",
+  "provenance": "Original synthetic data generated with NumPy1.23 RandomState seed20261114, 66 patients/task, two lesions/patient.",
+  "datasets": {
+    "binary": {
+      "feature_names": [
+        "signal_a",
+        "signal_b",
+        "noise_a",
+        "noise_b"
+      ],
+      "classes": [
+        "negative",
+        "positive"
+      ],
+      "records": [
+        {
+          "sample_id": "binary-P000-L0",
+          "patient_id": "binary-P000",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1897617578352637,
+            0.4275442985559805,
+            1.0365113066012355,
+            0.6844715744059482
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P000-L1",
+          "patient_id": "binary-P000",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.0087776406413194,
+            0.3732881221903422,
+            1.1033769449211248,
+            0.6201367887086289
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P001-L0",
+          "patient_id": "binary-P001",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.33184004658238,
+            0.19370562301497413,
+            -0.9455803920602898,
+            0.412252679391816
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P001-L1",
+          "patient_id": "binary-P001",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.6134768597011904,
+            0.09271494457916524,
+            -0.6954882136628011,
+            0.31380284283966103
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P002-L0",
+          "patient_id": "binary-P002",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.4274511551807123,
+            0.6609236553087137,
+            -0.4324940328477339,
+            1.686415310274381
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P002-L1",
+          "patient_id": "binary-P002",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.4360231189924475,
+            0.4074284922979812,
+            -0.5114117335592295,
+            1.8173846023745646
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P003-L0",
+          "patient_id": "binary-P003",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.3155637902122144,
+            1.8518559674535442,
+            2.1709413583614707,
+            1.9049223909420385
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P003-L1",
+          "patient_id": "binary-P003",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.2392871612993,
+            1.8144678884965224,
+            2.2220328778562255,
+            2.200738987996083
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P004-L0",
+          "patient_id": "binary-P004",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.14292679308536607,
+            0.041407814103260346,
+            -0.9407058096188898,
+            2.4475368010923337
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P004-L1",
+          "patient_id": "binary-P004",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.14546648832401188,
+            -0.12178838860732577,
+            -0.9754379803834512,
+            2.427217604024902
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P005-L0",
+          "patient_id": "binary-P005",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.9401792268688142,
+            2.2004248488512257,
+            2.0749884598991053,
+            0.43827257476035614
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P005-L1",
+          "patient_id": "binary-P005",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.7975624129504072,
+            2.0866544003096035,
+            2.049253080352404,
+            0.7749476169728469
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P006-L0",
+          "patient_id": "binary-P006",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.4370761667045822,
+            -0.7713841963185997,
+            0.7234022214658006,
+            -0.06341944082751597
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P006-L1",
+          "patient_id": "binary-P006",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.399978503258399,
+            -0.9416808708949179,
+            0.8029604530801073,
+            -0.02352525187918006
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P007-L0",
+          "patient_id": "binary-P007",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.17833183811447817,
+            0.9536888369832301,
+            0.5318126256393158,
+            0.41268078847786976
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P007-L1",
+          "patient_id": "binary-P007",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.31968263267520414,
+            0.738288742312921,
+            0.48675781822323066,
+            0.5922203408992832
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P008-L0",
+          "patient_id": "binary-P008",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.39730787872171713,
+            -1.3902626089697867,
+            0.8106761806433558,
+            1.0958791448101175
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P008-L1",
+          "patient_id": "binary-P008",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.20993197069551486,
+            -1.4581799021079884,
+            0.6175244644099712,
+            0.8723501695955169
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P009-L0",
+          "patient_id": "binary-P009",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5577615744538029,
+            0.05198670516736231,
+            0.7287409417998971,
+            0.7268549635881586
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P009-L1",
+          "patient_id": "binary-P009",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.3076019697085409,
+            0.1871564216894831,
+            0.6048194500004814,
+            0.3899242545110384
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P010-L0",
+          "patient_id": "binary-P010",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5743116127600097,
+            -0.4052688798782281,
+            -0.9917116588634566,
+            1.7756077229705343
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P010-L1",
+          "patient_id": "binary-P010",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5980195866712947,
+            -0.07660185459549185,
+            -1.0518597214300496,
+            1.8532554612135936
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P011-L0",
+          "patient_id": "binary-P011",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.037033156212181284,
+            0.18951677846348397,
+            -0.4547865659006698,
+            -1.148158146097937
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P011-L1",
+          "patient_id": "binary-P011",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.21638619637336265,
+            0.12099958325763166,
+            -0.23462513696898604,
+            -1.1776839910086845
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P012-L0",
+          "patient_id": "binary-P012",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.7175490355571021,
+            -0.36201840980133654,
+            -1.0864574224110217,
+            -0.19087605019048284
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P012-L1",
+          "patient_id": "binary-P012",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.8160406400475742,
+            -0.36954080942357886,
+            -1.252083255908614,
+            -0.41750939295134426
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P013-L0",
+          "patient_id": "binary-P013",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            3.0147398518805892,
+            1.049983529609046,
+            0.4015281644400216,
+            1.1045216431488936
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P013-L1",
+          "patient_id": "binary-P013",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            3.2131663615945034,
+            1.1637398574994184,
+            0.5400981693089899,
+            0.9100531925695625
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P014-L0",
+          "patient_id": "binary-P014",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.25472126146723945,
+            2.339411820061591,
+            0.04734072423762519,
+            -1.02088026985648
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P014-L1",
+          "patient_id": "binary-P014",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.18230165509585983,
+            2.6460154689654067,
+            0.1800300551651367,
+            -0.8965353752836528
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P015-L0",
+          "patient_id": "binary-P015",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.9098530927200152,
+            1.056631662969894,
+            -1.0164718627894433,
+            -0.051038731246265456
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P015-L1",
+          "patient_id": "binary-P015",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.596165020338683,
+            1.2175940856483267,
+            -1.042282313256051,
+            -0.2883509622721559
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P016-L0",
+          "patient_id": "binary-P016",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.3259761955172016,
+            -0.24437895534164022,
+            0.6710237212800486,
+            -0.33650078787493015
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P016-L1",
+          "patient_id": "binary-P016",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.4881814568678213,
+            -0.08784663163891603,
+            0.7405002173104928,
+            -0.2563880116907694
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P017-L0",
+          "patient_id": "binary-P017",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5378384552277703,
+            3.2244637981346296,
+            -1.0958154472403074,
+            0.6931596517846991
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P017-L1",
+          "patient_id": "binary-P017",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.3850170870149193,
+            3.153289573465833,
+            -0.9184764628866385,
+            0.5769249409656676
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P018-L0",
+          "patient_id": "binary-P018",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.1763352944773436,
+            0.24005278004230352,
+            -0.7606567784920416,
+            2.9235674975745183
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P018-L1",
+          "patient_id": "binary-P018",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.11285065550609462,
+            0.48151646810919896,
+            -0.9198661202218715,
+            2.9327579935572037
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P019-L0",
+          "patient_id": "binary-P019",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.832001551398039,
+            2.4553235790895154,
+            -1.6295433060999365,
+            0.6595255352935213
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P019-L1",
+          "patient_id": "binary-P019",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.796899204712962,
+            2.525647059284206,
+            -1.2979904026352735,
+            0.4628067789193164
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P020-L0",
+          "patient_id": "binary-P020",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.02737705884374997,
+            2.1018283523673014,
+            -0.10215911032070468,
+            -0.09220365509631394
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P020-L1",
+          "patient_id": "binary-P020",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.35439359113336055,
+            1.7012724924714406,
+            -0.10871710664748513,
+            0.07439790972078507
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P021-L0",
+          "patient_id": "binary-P021",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.967274565517398,
+            0.12859415130214846,
+            0.18651949961228742,
+            -0.08418803380723372
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P021-L1",
+          "patient_id": "binary-P021",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.21693492968554,
+            -0.07925570391764758,
+            0.268305637704474,
+            0.12685215044320453
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P022-L0",
+          "patient_id": "binary-P022",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.0822195607516087,
+            1.0012431567529043,
+            0.30090864003968476,
+            -1.4477996178675563
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P022-L1",
+          "patient_id": "binary-P022",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9684260131124554,
+            0.9807250615820193,
+            0.0670151450460994,
+            -1.4198967239318263
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P023-L0",
+          "patient_id": "binary-P023",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.748514610895586,
+            -0.7056563799417996,
+            1.151909078728552,
+            0.30938827896264054
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P023-L1",
+          "patient_id": "binary-P023",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.9470046640095617,
+            -0.8462651083979902,
+            1.0385095796462427,
+            0.3477442754222412
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P024-L0",
+          "patient_id": "binary-P024",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.28283012476083347,
+            1.3620665531866902,
+            0.06246562348704886,
+            -0.21850055389992543
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P024-L1",
+          "patient_id": "binary-P024",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.22070419010520476,
+            1.4215303888995727,
+            -0.3658578832884149,
+            -0.14617986799537552
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P025-L0",
+          "patient_id": "binary-P025",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            3.3342518530001324,
+            0.6102152633628912,
+            -0.36024849377687485,
+            0.6690720244869555
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P025-L1",
+          "patient_id": "binary-P025",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            3.3100779661787274,
+            0.36713616491671947,
+            -0.41436661436082545,
+            0.3945811019362994
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P026-L0",
+          "patient_id": "binary-P026",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.0586802797923436,
+            -0.21135854136774188,
+            0.39195773392845357,
+            0.8657193634720933
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P026-L1",
+          "patient_id": "binary-P026",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.1292938015116936,
+            -0.16283328137651,
+            0.4502374857626196,
+            0.47246640907390575
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P027-L0",
+          "patient_id": "binary-P027",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.1648386364839448,
+            2.012842474320882,
+            0.47288843348401893,
+            -0.1800132202757041
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P027-L1",
+          "patient_id": "binary-P027",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.39829491307678866,
+            2.2112028507009303,
+            0.72392217138325,
+            -0.27390048779798104
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P028-L0",
+          "patient_id": "binary-P028",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7206002502398385,
+            -0.23407113302006777,
+            -1.2675241001296171,
+            -1.4240047096083237
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P028-L1",
+          "patient_id": "binary-P028",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.703924441265459,
+            -0.09138894841761008,
+            -0.9866795352270079,
+            -1.1287097319788453
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P029-L0",
+          "patient_id": "binary-P029",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.46873078270986357,
+            -0.8439918368071277,
+            2.930789760454662,
+            -0.24138721423766976
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P029-L1",
+          "patient_id": "binary-P029",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.3409999697280254,
+            -0.9250982388634679,
+            2.988296604756624,
+            -0.3248993310890774
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P030-L0",
+          "patient_id": "binary-P030",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.976523332737654,
+            1.3030066461641518,
+            0.840154833884414,
+            -0.09531168779395349
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P030-L1",
+          "patient_id": "binary-P030",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1390807864054064,
+            1.045029336422349,
+            0.5997101600269208,
+            -0.16338914025116136
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P031-L0",
+          "patient_id": "binary-P031",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7795536135745723,
+            1.147058139385575,
+            0.2253510677558873,
+            0.030641726430291616
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P031-L1",
+          "patient_id": "binary-P031",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.998027819506892,
+            0.92104893484434,
+            0.38170562671498454,
+            -0.2450305817796739
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P032-L0",
+          "patient_id": "binary-P032",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1181925132459045,
+            -0.15339324383099712,
+            2.259690695382333,
+            0.5377408034701214
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P032-L1",
+          "patient_id": "binary-P032",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.8737402504123057,
+            -0.13548435575680895,
+            2.6125658645015273,
+            0.5859109157331256
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P033-L0",
+          "patient_id": "binary-P033",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.5701505502933384,
+            2.252560447113903,
+            1.3648210861580783,
+            -0.8957203866580284
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P033-L1",
+          "patient_id": "binary-P033",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.2458491757263714,
+            2.2907749294060293,
+            0.9653392735818298,
+            -1.3737005706457202
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P034-L0",
+          "patient_id": "binary-P034",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.5664056026597473,
+            0.5218346827386658,
+            0.03705771507774814,
+            0.5739836853044904
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P034-L1",
+          "patient_id": "binary-P034",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7108527618275231,
+            0.5209594893820003,
+            0.26596733690317603,
+            0.5746013212605128
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P035-L0",
+          "patient_id": "binary-P035",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.026366681972117667,
+            -0.26002323509497793,
+            -0.6543492325004192,
+            -0.43675675861811486
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P035-L1",
+          "patient_id": "binary-P035",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.07046826794695293,
+            -0.48330405364419393,
+            -0.679088476716792,
+            -0.3829576206068511
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P036-L0",
+          "patient_id": "binary-P036",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.3187517059412994,
+            -0.07489997728966225,
+            -1.4244863080650283,
+            -0.5974390056357209
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P036-L1",
+          "patient_id": "binary-P036",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.3609899019901313,
+            -0.1812335587614331,
+            -1.6154000405117162,
+            -1.0874547720918624
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P037-L0",
+          "patient_id": "binary-P037",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.46979473432776164,
+            0.5834525061087065,
+            -0.36946471232232153,
+            0.231056037893123
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P037-L1",
+          "patient_id": "binary-P037",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.47311143756812835,
+            0.3148738467698143,
+            -0.4148862002627617,
+            0.22284198819546266
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P038-L0",
+          "patient_id": "binary-P038",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.1874978822577534,
+            0.8752403114789151,
+            -0.5181476771477089,
+            -0.15669309118268207
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P038-L1",
+          "patient_id": "binary-P038",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.33170573860947217,
+            0.7609829479693995,
+            -0.6472197352306006,
+            -0.36322522289586784
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P039-L0",
+          "patient_id": "binary-P039",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.573117938037319,
+            0.23328460668932183,
+            -1.2773791196280961,
+            -0.20186786804362983
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P039-L1",
+          "patient_id": "binary-P039",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.8014911735736963,
+            0.18841335364318867,
+            -1.1601285111012742,
+            -0.3607437910355905
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P040-L0",
+          "patient_id": "binary-P040",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.005238867132611073,
+            0.5484912648171214,
+            -0.6624491843511061,
+            -1.1926405961585442
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P040-L1",
+          "patient_id": "binary-P040",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.023509706953344933,
+            0.8868063156257349,
+            -0.5674081137701801,
+            -1.3329534432013794
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P041-L0",
+          "patient_id": "binary-P041",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.8240034389131813,
+            -0.20131402121922037,
+            0.12356571091276741,
+            -0.6965191999523692
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P041-L1",
+          "patient_id": "binary-P041",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.642718225071295,
+            0.10003430269097568,
+            -0.06316502253668499,
+            -0.7940847529801695
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P042-L0",
+          "patient_id": "binary-P042",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5684930739472338,
+            0.5021751682690005,
+            -0.026683323310875515,
+            1.1015133036466978
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P042-L1",
+          "patient_id": "binary-P042",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.7114387740874596,
+            0.6334051225864251,
+            0.004918964658550601,
+            1.5655073986896038
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P043-L0",
+          "patient_id": "binary-P043",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.4026294142777895,
+            0.4672401921383563,
+            2.002038954878493,
+            0.46301453667640496
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P043-L1",
+          "patient_id": "binary-P043",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.7206144202015299,
+            0.5441803148548218,
+            2.1205142538133868,
+            0.48123756529464434
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P044-L0",
+          "patient_id": "binary-P044",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.8708602778143103,
+            0.6714506210769573,
+            -1.8587455336792822,
+            -0.49060128920360113
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P044-L1",
+          "patient_id": "binary-P044",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.673536524154698,
+            0.6321841025209531,
+            -1.7208961993252991,
+            -0.8516634568053969
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P045-L0",
+          "patient_id": "binary-P045",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.7667548749347468,
+            1.5293632659177852,
+            0.2631661245649811,
+            -1.0392541623946292
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P045-L1",
+          "patient_id": "binary-P045",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.792803654559326,
+            1.8243302856501022,
+            0.02674274277592939,
+            -0.8778999319498189
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P046-L0",
+          "patient_id": "binary-P046",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.7757322953789257,
+            1.9801056372554449,
+            0.11195677491322184,
+            0.11163433949081909
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P046-L1",
+          "patient_id": "binary-P046",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1449374224770397,
+            1.8361340167214812,
+            0.3418635440308489,
+            0.17902028332305414
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P047-L0",
+          "patient_id": "binary-P047",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.601454582823907,
+            -0.33111396225351886,
+            -0.5149514197968289,
+            2.278414815963323
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P047-L1",
+          "patient_id": "binary-P047",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.5275825095995907,
+            -0.3696308686762091,
+            -0.5880583407931613,
+            2.2422215916609844
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P048-L0",
+          "patient_id": "binary-P048",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.09058912104725936,
+            -0.5215084211141707,
+            -0.3362743380957125,
+            0.42761404903935135
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P048-L1",
+          "patient_id": "binary-P048",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.12976940885133628,
+            -0.5614528454663978,
+            -0.43560363767253174,
+            -0.0122189773910176
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P049-L0",
+          "patient_id": "binary-P049",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.3775278771837043,
+            -0.09784943354248388,
+            1.4333390289795556,
+            1.3862962914099481
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P049-L1",
+          "patient_id": "binary-P049",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.25151881165897505,
+            -0.31517285453491894,
+            1.4476840787375833,
+            1.3870035808522165
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P050-L0",
+          "patient_id": "binary-P050",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.2979497281415473,
+            -1.302706987927249,
+            0.690255148647648,
+            0.1202735195295959
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P050-L1",
+          "patient_id": "binary-P050",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.2949335783656739,
+            -1.218235742871927,
+            0.7660978745517977,
+            0.11246728209104966
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P051-L0",
+          "patient_id": "binary-P051",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.2518800826523464,
+            -0.6433871911920419,
+            0.09208198079665998,
+            1.3753955700348703
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P051-L1",
+          "patient_id": "binary-P051",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.290958200724752,
+            -0.9450298554613097,
+            0.1489574242430522,
+            1.6857943277436567
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P052-L0",
+          "patient_id": "binary-P052",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.7334511028382065,
+            1.2399612818476424,
+            0.707268292137579,
+            -1.6764648537510394
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P052-L1",
+          "patient_id": "binary-P052",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.6169635018748804,
+            1.1766344922554886,
+            0.6907177173083041,
+            -1.5625761537600245
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P053-L0",
+          "patient_id": "binary-P053",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.9997078759281943,
+            0.08078833956566278,
+            -1.473837618577176,
+            -0.39668247037518783
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P053-L1",
+          "patient_id": "binary-P053",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.1281380877627973,
+            0.21177644304578314,
+            -1.09205882459045,
+            -0.5467462842484938
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P054-L0",
+          "patient_id": "binary-P054",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.986771203843987,
+            0.05189936846621677,
+            -1.9986911936065288,
+            0.20698749424970989
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P054-L1",
+          "patient_id": "binary-P054",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.9608476235456407,
+            0.08401235354242323,
+            -1.928930703998691,
+            0.1264707385262868
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P055-L0",
+          "patient_id": "binary-P055",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.6663501578092188,
+            0.4637909926641977,
+            1.8244839880147823,
+            1.541379849379378
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P055-L1",
+          "patient_id": "binary-P055",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.7061041379282333,
+            0.7983473299557856,
+            1.9317329643148453,
+            1.8232217617120363
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P056-L0",
+          "patient_id": "binary-P056",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.3940184242126544,
+            -1.4022803762330192,
+            0.4605236693218227,
+            1.427360534326989
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P056-L1",
+          "patient_id": "binary-P056",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.34215197450829876,
+            -1.4714729323250457,
+            0.4567977794884188,
+            1.243752085781654
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P057-L0",
+          "patient_id": "binary-P057",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.9059164512846697,
+            -0.029703212847338678,
+            0.3605585200112754,
+            -0.8088113337562217
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P057-L1",
+          "patient_id": "binary-P057",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.1124102862723677,
+            -0.1763663320037765,
+            0.20899408892568522,
+            -0.8479583627573573
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P058-L0",
+          "patient_id": "binary-P058",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.7324549722744214,
+            -0.09371380649036526,
+            -1.363988402530925,
+            0.07990054208143761
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P058-L1",
+          "patient_id": "binary-P058",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -1.0780620889913053,
+            -0.02832333537255649,
+            -1.2670097924264998,
+            0.09591540093627193
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "binary-P059-L0",
+          "patient_id": "binary-P059",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.9278370842887774,
+            0.5696530952458169,
+            -0.5245472371014784,
+            -0.061569742030491925
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P059-L1",
+          "patient_id": "binary-P059",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.9263953666334953,
+            0.615420251105466,
+            -0.687488511281366,
+            -0.16866015920416821
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "binary-P060-L0",
+          "patient_id": "binary-P060",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.4416703434692075,
+            0.7532463016489771,
+            -1.201022556031483,
+            1.2261644249626347
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P060-L1",
+          "patient_id": "binary-P060",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.3557023584379688,
+            0.7710730926701987,
+            -1.131948379541803,
+            1.3523267605827185
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P061-L0",
+          "patient_id": "binary-P061",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.044559751557177285,
+            -1.1548150249221112,
+            -0.8272920379737045,
+            0.472275907355056
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P061-L1",
+          "patient_id": "binary-P061",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.14979450326960875,
+            -1.1177031402355602,
+            -0.6859435586968372,
+            0.4289316744073272
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P062-L0",
+          "patient_id": "binary-P062",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.141482169464224,
+            -0.800646309829526,
+            0.12721487065157971,
+            0.45648258400219877
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P062-L1",
+          "patient_id": "binary-P062",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.2610469863788536,
+            -0.810026939512909,
+            0.15801004816434505,
+            0.5519715761124635
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P063-L0",
+          "patient_id": "binary-P063",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.599199324932393,
+            0.3721686669777906,
+            -0.6976390917567213,
+            -0.4463919679852207
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P063-L1",
+          "patient_id": "binary-P063",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.752563505408094,
+            0.5784274837354499,
+            -1.0033715838752244,
+            -0.6934658490686197
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P064-L0",
+          "patient_id": "binary-P064",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.11201418833117362,
+            0.4913206761404124,
+            1.7194530553973961,
+            1.2548783192162265
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P064-L1",
+          "patient_id": "binary-P064",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.02834029165771791,
+            0.5201545506789503,
+            1.870648103856964,
+            1.4184201802328011
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P065-L0",
+          "patient_id": "binary-P065",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.1157773668530906,
+            1.6784786890068324,
+            -0.11427166127655225,
+            -0.6259657925417343
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "binary-P065-L1",
+          "patient_id": "binary-P065",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.3570194321213909,
+            1.8298996509394572,
+            -0.20152313865100788,
+            -0.6877848471615834
+          ],
+          "target": null
+        }
+      ]
+    },
+    "multiclass": {
+      "feature_names": [
+        "signal_a",
+        "signal_b",
+        "noise_a",
+        "noise_b"
+      ],
+      "classes": [
+        "benign",
+        "intermediate",
+        "malignant"
+      ],
+      "records": [
+        {
+          "sample_id": "multiclass-P000-L0",
+          "patient_id": "multiclass-P000",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.4952243412844375,
+            0.7723425713201766,
+            -1.3428188897217948,
+            -0.454964847211773
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P000-L1",
+          "patient_id": "multiclass-P000",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.5025934806480976,
+            0.7981669402880249,
+            -1.4021575302745586,
+            -0.5264043042846628
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P001-L0",
+          "patient_id": "multiclass-P001",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.5846041214605261,
+            0.374188640143765,
+            -1.6272976923542986,
+            -0.21643643485255407
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P001-L1",
+          "patient_id": "multiclass-P001",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.41187053635259996,
+            0.5774787277003074,
+            -1.7354863396195428,
+            -0.2225613946260675
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P002-L0",
+          "patient_id": "multiclass-P002",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.7025258822842896,
+            -0.2969652741155427,
+            0.8719534716018511,
+            -0.7480706631834086
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P002-L1",
+          "patient_id": "multiclass-P002",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.8992363882265156,
+            -0.4099276562211808,
+            0.7170021164371714,
+            -0.8874122800441236
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P003-L0",
+          "patient_id": "multiclass-P003",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.1973830703229649,
+            0.24431883912938948,
+            -1.724583932576069,
+            -1.0657722367556683
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P003-L1",
+          "patient_id": "multiclass-P003",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.4471122045882627,
+            0.48028641924717175,
+            -1.7603408546039692,
+            -1.1940533296886167
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P004-L0",
+          "patient_id": "multiclass-P004",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.0815111323648972,
+            -0.44088572589150277,
+            0.06690041275284722,
+            0.07245617917319117
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P004-L1",
+          "patient_id": "multiclass-P004",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.1890293945187889,
+            -0.5745696830379827,
+            0.279073171499698,
+            0.06056810852169367
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P005-L0",
+          "patient_id": "multiclass-P005",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.7420640374353622,
+            -1.7247238123718158,
+            0.40546885568090524,
+            -2.7165076165057465
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P005-L1",
+          "patient_id": "multiclass-P005",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.869745755465261,
+            -1.6779789252587578,
+            0.41208290550731524,
+            -2.779660995410141
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P006-L0",
+          "patient_id": "multiclass-P006",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.41306553573459837,
+            0.8203805956501875,
+            0.24824694642734096,
+            0.14884064679861114
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P006-L1",
+          "patient_id": "multiclass-P006",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.5250460962241503,
+            0.8038052698942302,
+            0.2917603708547382,
+            0.22342828683210125
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P007-L0",
+          "patient_id": "multiclass-P007",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.776577457304048,
+            -0.16603820035810768,
+            0.004396107519658132,
+            0.08164927860852529
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P007-L1",
+          "patient_id": "multiclass-P007",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.7208258979196107,
+            -0.4340977171424727,
+            0.14723577015704636,
+            0.2422427154261647
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P008-L0",
+          "patient_id": "multiclass-P008",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.0003146732675825,
+            1.7853823235626374,
+            0.3548770866977119,
+            1.716484814458405
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P008-L1",
+          "patient_id": "multiclass-P008",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.126721953625288,
+            1.701212412179739,
+            0.3830377232812008,
+            1.697939743851796
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P009-L0",
+          "patient_id": "multiclass-P009",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.362940776460383,
+            0.22230048927172713,
+            0.664378239291465,
+            0.9481609017189626
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P009-L1",
+          "patient_id": "multiclass-P009",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.6986756635036058,
+            0.40781849657964375,
+            0.8359943962607427,
+            0.9691060106096253
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P010-L0",
+          "patient_id": "multiclass-P010",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.6288049297300562,
+            1.2349245627324272,
+            0.8937937202816492,
+            1.1285026324605243
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P010-L1",
+          "patient_id": "multiclass-P010",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1023698056810645,
+            1.4303162752762706,
+            0.9388076275499352,
+            1.0594376971935044
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P011-L0",
+          "patient_id": "multiclass-P011",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.5309955006394191,
+            0.1921725740747618,
+            0.7512189360654842,
+            -1.649940595711814
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P011-L1",
+          "patient_id": "multiclass-P011",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.333063956303717,
+            0.11964073629704772,
+            0.7984283379031636,
+            -1.7005114119408227
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P012-L0",
+          "patient_id": "multiclass-P012",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.7516893443102419,
+            -0.28301951715173035,
+            1.1689814108089873,
+            -0.03426924069988342
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P012-L1",
+          "patient_id": "multiclass-P012",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.9333440077458403,
+            -0.4226447905995245,
+            1.080219057478186,
+            0.026424005744607997
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P013-L0",
+          "patient_id": "multiclass-P013",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.4241285009734196,
+            0.8575242921911728,
+            -1.6488061639472726,
+            -0.2758904631659084
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P013-L1",
+          "patient_id": "multiclass-P013",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.11652957521041019,
+            1.0988542749790458,
+            -1.8620289705756738,
+            -0.07887576862514135
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P014-L0",
+          "patient_id": "multiclass-P014",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.9566561600512918,
+            -0.5198335602067838,
+            1.1067921082816152,
+            -0.004037555097193335
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P014-L1",
+          "patient_id": "multiclass-P014",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1113039104562445,
+            -0.3563109542577122,
+            1.3533603717852913,
+            -0.06594594372153874
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P015-L0",
+          "patient_id": "multiclass-P015",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.4837858093342955,
+            1.6553119838554182,
+            -1.4497912034076492,
+            -0.44835576205484917
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P015-L1",
+          "patient_id": "multiclass-P015",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.3329190128721222,
+            1.5070785364646175,
+            -1.519794853821362,
+            -0.2721028989766354
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P016-L0",
+          "patient_id": "multiclass-P016",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.758692195613102,
+            0.39889251660206804,
+            0.9866632726753206,
+            -1.2880768879445403
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P016-L1",
+          "patient_id": "multiclass-P016",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.7171277100425457,
+            0.6439040518060553,
+            0.7724743647373853,
+            -1.573027665082456
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P017-L0",
+          "patient_id": "multiclass-P017",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.301845795796554,
+            0.5148054634847937,
+            -1.2358875955515018,
+            -0.8695282083077541
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P017-L1",
+          "patient_id": "multiclass-P017",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.2137097489986424,
+            0.34923868048530093,
+            -1.38684807803909,
+            -0.8717878718518776
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P018-L0",
+          "patient_id": "multiclass-P018",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.4814137548304536,
+            -0.6825198873268918,
+            2.1750834136644097,
+            -0.039164422814486836
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P018-L1",
+          "patient_id": "multiclass-P018",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.5204529937336149,
+            -0.766628097025009,
+            2.1824127516301854,
+            -0.0864592363423653
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P019-L0",
+          "patient_id": "multiclass-P019",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5371245100079576,
+            -0.9605962607034069,
+            -0.7193841948247512,
+            0.7074399027202758
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P019-L1",
+          "patient_id": "multiclass-P019",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.4132775845685502,
+            -0.8153177659461417,
+            -0.8169995712171326,
+            0.7268552419629389
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P020-L0",
+          "patient_id": "multiclass-P020",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.6213529254308534,
+            -1.3246775135391564,
+            1.3153526570106329,
+            0.13512888972681003
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P020-L1",
+          "patient_id": "multiclass-P020",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.3941887543745548,
+            -1.3288846935245995,
+            1.4753232329984924,
+            0.15813020392151597
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P021-L0",
+          "patient_id": "multiclass-P021",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.07718358750929885,
+            -1.0525406030140287,
+            -2.1795973140278093,
+            0.5027550138167934
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P021-L1",
+          "patient_id": "multiclass-P021",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.11550572599638737,
+            -1.0542004549679278,
+            -2.132014309456711,
+            0.38039222972364045
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P022-L0",
+          "patient_id": "multiclass-P022",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.7052331877201884,
+            -0.8270153849189847,
+            -0.12942459907429044,
+            1.4842959596031027
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P022-L1",
+          "patient_id": "multiclass-P022",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.6444539922977562,
+            -0.5796163077134513,
+            -0.2740078772971106,
+            1.3166777658267312
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P023-L0",
+          "patient_id": "multiclass-P023",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.4848498866650828,
+            -0.6944141083329546,
+            -0.2551759622739346,
+            0.3349386804112018
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P023-L1",
+          "patient_id": "multiclass-P023",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.449362230511388,
+            -0.6525526353886818,
+            -0.41789198099097435,
+            0.3798740557060519
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P024-L0",
+          "patient_id": "multiclass-P024",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7280882560952773,
+            0.6241219043130539,
+            0.9007523486912901,
+            -1.2452579629463822
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P024-L1",
+          "patient_id": "multiclass-P024",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9533441534601064,
+            0.6826464289768185,
+            0.9481099879776946,
+            -0.9149275313455068
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P025-L0",
+          "patient_id": "multiclass-P025",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.29575048049731,
+            0.9926420360162129,
+            0.7830233403054728,
+            -1.245316891172365
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P025-L1",
+          "patient_id": "multiclass-P025",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.4464421528703406,
+            0.9529720545652566,
+            0.9451283739190572,
+            -1.331295673157826
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P026-L0",
+          "patient_id": "multiclass-P026",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.1218519655118453,
+            -0.5659325151854693,
+            0.04930769748078845,
+            -0.006115965907547982
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P026-L1",
+          "patient_id": "multiclass-P026",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.6549606756088442,
+            -1.0008281473501799,
+            -0.18809217107862297,
+            -0.05570721423600833
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P027-L0",
+          "patient_id": "multiclass-P027",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.0241854799554355,
+            -0.5364896146856626,
+            1.8254351500394193,
+            0.9673077378230354
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P027-L1",
+          "patient_id": "multiclass-P027",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.1338604829039496,
+            -0.7609250231463613,
+            1.879366688456262,
+            0.9887184187527093
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P028-L0",
+          "patient_id": "multiclass-P028",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.1235022213189011,
+            0.6537183611205113,
+            1.5015750827850116,
+            -0.2674818433145596
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P028-L1",
+          "patient_id": "multiclass-P028",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.01158236856830186,
+            0.5902882176631123,
+            1.3020486567240128,
+            -0.3278690005001987
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P029-L0",
+          "patient_id": "multiclass-P029",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.36209540791851347,
+            -0.6327123132245607,
+            1.291995498379596,
+            -0.17526161280733302
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P029-L1",
+          "patient_id": "multiclass-P029",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.513411771876465,
+            -0.5210020933617902,
+            1.2238889618421198,
+            -0.12288016931657941
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P030-L0",
+          "patient_id": "multiclass-P030",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.7083142391918533,
+            -0.17168057690565824,
+            2.496661720171863,
+            0.6989436531495887
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P030-L1",
+          "patient_id": "multiclass-P030",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.6842473630702164,
+            0.049509585231250056,
+            2.541899090416288,
+            0.8125318078385956
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P031-L0",
+          "patient_id": "multiclass-P031",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.2581832728780444,
+            -1.1104395389423696,
+            -0.6684967167117395,
+            -2.603898291980958
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P031-L1",
+          "patient_id": "multiclass-P031",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.2814588110899752,
+            -1.0957779835801316,
+            -0.4375375633731561,
+            -2.6950083273162337
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P032-L0",
+          "patient_id": "multiclass-P032",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.778400082582371,
+            -1.1477855566234048,
+            2.145347450188751,
+            -0.7743727656088276
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P032-L1",
+          "patient_id": "multiclass-P032",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.6703874715766274,
+            -0.8942172705473496,
+            2.2753383831778824,
+            -0.6934575265683869
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P033-L0",
+          "patient_id": "multiclass-P033",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.20700675350626974,
+            1.503531290957151,
+            -1.1842985937602715,
+            0.1139060121928301
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P033-L1",
+          "patient_id": "multiclass-P033",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.060580806617200056,
+            1.4099321564002867,
+            -1.2910274988960455,
+            0.22055858612436058
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P034-L0",
+          "patient_id": "multiclass-P034",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.47195057589036804,
+            0.15637905929274343,
+            -0.20885198476191782,
+            1.0359599699821722
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P034-L1",
+          "patient_id": "multiclass-P034",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.5917256998629589,
+            0.009426621665461377,
+            -0.11818700976053552,
+            0.725294273835889
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P035-L0",
+          "patient_id": "multiclass-P035",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.7958692182465633,
+            -0.8708712769335402,
+            -1.212297262567616,
+            0.8520290347412237
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P035-L1",
+          "patient_id": "multiclass-P035",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.8995097259155788,
+            -0.9768734948160609,
+            -0.9873509572507749,
+            0.7336838941488106
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P036-L0",
+          "patient_id": "multiclass-P036",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.40395476226419685,
+            0.07044377541810509,
+            1.5401027585191969,
+            -0.6691057760214968
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P036-L1",
+          "patient_id": "multiclass-P036",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.3819908284493809,
+            -0.14072473140250982,
+            1.5628948170960726,
+            -0.5250085947203937
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P037-L0",
+          "patient_id": "multiclass-P037",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.0923697910879355,
+            1.7723646051832074,
+            0.6356517801707742,
+            -1.7552832200458814
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P037-L1",
+          "patient_id": "multiclass-P037",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1924349792846738,
+            1.7829767543362196,
+            0.8263171926662307,
+            -1.7567169168936076
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P038-L0",
+          "patient_id": "multiclass-P038",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.2877991619321367,
+            0.23749952949167935,
+            0.9039024435636285,
+            0.5860328120600182
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P038-L1",
+          "patient_id": "multiclass-P038",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.136631968003277,
+            0.2861182291861471,
+            1.073910566686787,
+            0.7633433180206797
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P039-L0",
+          "patient_id": "multiclass-P039",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.5012415249269756,
+            0.4579640454700885,
+            0.5422103021472664,
+            0.23468819909905003
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P039-L1",
+          "patient_id": "multiclass-P039",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7572908100872162,
+            0.3347793697379741,
+            0.7511213046430023,
+            0.18601497193891722
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P040-L0",
+          "patient_id": "multiclass-P040",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.539355352096054,
+            1.7734551647391277,
+            0.9515519237853225,
+            -0.19990582409414098
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P040-L1",
+          "patient_id": "multiclass-P040",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.5171636909044488,
+            1.6157180214995441,
+            0.8136002026476247,
+            0.07766508932161595
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P041-L0",
+          "patient_id": "multiclass-P041",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.7980881352585805,
+            -0.7185115288536453,
+            1.7140608859526303,
+            -0.011210116198075173
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P041-L1",
+          "patient_id": "multiclass-P041",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.754471637324256,
+            -0.8347757738464197,
+            2.0274971826382022,
+            0.24780249380449987
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P042-L0",
+          "patient_id": "multiclass-P042",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.6200630462914676,
+            -0.8951768689641347,
+            0.7815049004454256,
+            0.9084070753871143
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P042-L1",
+          "patient_id": "multiclass-P042",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.4725482192911485,
+            -0.9201140324254732,
+            0.9274751288753323,
+            1.2032430367240705
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P043-L0",
+          "patient_id": "multiclass-P043",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.4023137181151767,
+            0.8750190124741167,
+            1.484719619343607,
+            0.17907854630660477
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P043-L1",
+          "patient_id": "multiclass-P043",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5538651262370526,
+            1.0944502690609794,
+            1.338608551511553,
+            -0.21480042950330114
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P044-L0",
+          "patient_id": "multiclass-P044",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.1510269691482558,
+            -1.1158070222458265,
+            -0.03523469348817321,
+            -0.027919157157655083
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P044-L1",
+          "patient_id": "multiclass-P044",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.241934453155574,
+            -1.1082435336710876,
+            -0.060690714090369524,
+            -0.07876412417937242
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P045-L0",
+          "patient_id": "multiclass-P045",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.12372144503519372,
+            -0.5654643239270231,
+            0.8399943311450063,
+            0.6118841667694463
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P045-L1",
+          "patient_id": "multiclass-P045",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.13911530461150268,
+            -0.4187338469265067,
+            0.7999462746141098,
+            0.3000082079244704
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P046-L0",
+          "patient_id": "multiclass-P046",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.3724078140373002,
+            2.3174991697708407,
+            -0.06391642765621264,
+            -0.028630413873807478
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P046-L1",
+          "patient_id": "multiclass-P046",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.5499641148932533,
+            2.495028923099513,
+            0.28517342562725534,
+            -0.1266659490040254
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P047-L0",
+          "patient_id": "multiclass-P047",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5825142539895649,
+            -0.11008056395453839,
+            0.0850646636759732,
+            0.055786008107817614
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P047-L1",
+          "patient_id": "multiclass-P047",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.4719551284824337,
+            -0.2951497762030588,
+            0.26893119580117575,
+            0.021203653942063132
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P048-L0",
+          "patient_id": "multiclass-P048",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -2.325034204393712,
+            0.9311713558932125,
+            -0.9127092817147908,
+            0.3361821590835277
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P048-L1",
+          "patient_id": "multiclass-P048",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -2.362671603887878,
+            0.7048763117656702,
+            -1.0459617616771635,
+            0.42620215168163
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P049-L0",
+          "patient_id": "multiclass-P049",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.9742316963316011,
+            2.2686772757593303,
+            -1.1611069352660253,
+            0.40123517388633967
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P049-L1",
+          "patient_id": "multiclass-P049",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.024713961721734,
+            2.099927991205922,
+            -1.4377555380569633,
+            0.5138336601892848
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P050-L0",
+          "patient_id": "multiclass-P050",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            2.0223389080358416,
+            0.9749247934709928,
+            0.46800690115573995,
+            -0.32776220202821305
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P050-L1",
+          "patient_id": "multiclass-P050",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.8654331888315576,
+            0.7319841959333817,
+            0.43144186178083455,
+            -0.4571045079645962
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P051-L0",
+          "patient_id": "multiclass-P051",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.01913987062047073,
+            -0.7349799280247319,
+            0.9208621064214032,
+            -0.28501512602264384
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P051-L1",
+          "patient_id": "multiclass-P051",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.16128493601900465,
+            -0.720776404220185,
+            0.7797421866287004,
+            -0.16385656786190173
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P052-L0",
+          "patient_id": "multiclass-P052",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.7717464771924691,
+            1.591239726135648,
+            0.4550986808934996,
+            1.8596608478068848
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P052-L1",
+          "patient_id": "multiclass-P052",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.624586127692182,
+            1.405607468718748,
+            0.4364216985952864,
+            1.6558898816430776
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P053-L0",
+          "patient_id": "multiclass-P053",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            2.692399432142649,
+            1.2072347862518193,
+            -0.28585580663941934,
+            -0.6673153685865965
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P053-L1",
+          "patient_id": "multiclass-P053",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            2.646953341836449,
+            1.2945739382456576,
+            -0.3684246504076596,
+            -0.7559272814662107
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P054-L0",
+          "patient_id": "multiclass-P054",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.23535996067833057,
+            -0.22036053004921502,
+            -1.3882389266331352,
+            0.19649577389993808
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P054-L1",
+          "patient_id": "multiclass-P054",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.1565887567536519,
+            -0.22209653864557213,
+            -1.2912326348518939,
+            0.4682660338252489
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P055-L0",
+          "patient_id": "multiclass-P055",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.3362937886475725,
+            2.2993762140075127,
+            0.4173790641823556,
+            0.5281750256485399
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P055-L1",
+          "patient_id": "multiclass-P055",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.3912281361190981,
+            2.07679964647342,
+            0.18701266919380247,
+            0.3690948460121309
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P056-L0",
+          "patient_id": "multiclass-P056",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.9819461057645082,
+            -0.1697727869998661,
+            -0.9953383785102491,
+            0.21085589266999558
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P056-L1",
+          "patient_id": "multiclass-P056",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.2941230675814523,
+            -0.18343105995499026,
+            -0.6092344689773738,
+            0.39527951660038807
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P057-L0",
+          "patient_id": "multiclass-P057",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.7944648401062893,
+            0.5811492601637088,
+            -0.29252138886781887,
+            0.20740922517505067
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P057-L1",
+          "patient_id": "multiclass-P057",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.1508386762313254,
+            0.3648646506898656,
+            -0.4481876728082855,
+            0.3565473277226069
+          ],
+          "target": 0
+        },
+        {
+          "sample_id": "multiclass-P058-L0",
+          "patient_id": "multiclass-P058",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.8517544926739834,
+            0.7998033520384512,
+            0.099050327714099,
+            -0.006113140801977501
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P058-L1",
+          "patient_id": "multiclass-P058",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.8316384079428425,
+            0.423445581897695,
+            -0.001428649586304287,
+            -0.021555604793295602
+          ],
+          "target": 1
+        },
+        {
+          "sample_id": "multiclass-P059-L0",
+          "patient_id": "multiclass-P059",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.7589133486185589,
+            0.3964217006882872,
+            0.9925903465436059,
+            -1.1536482582002368
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P059-L1",
+          "patient_id": "multiclass-P059",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.8223376169077659,
+            0.5937285384357147,
+            0.8946630532105114,
+            -1.1782717365533417
+          ],
+          "target": 2
+        },
+        {
+          "sample_id": "multiclass-P060-L0",
+          "patient_id": "multiclass-P060",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.0948071848971719,
+            -0.5251862292607079,
+            1.3940253702566237,
+            1.9019426987282622
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P060-L1",
+          "patient_id": "multiclass-P060",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.0110780714860015,
+            -0.6432500214865648,
+            1.6978506179760602,
+            2.060461890025888
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P061-L0",
+          "patient_id": "multiclass-P061",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.12740732444055458,
+            -0.5600302517382494,
+            2.209299255942016,
+            -1.302115319171193
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P061-L1",
+          "patient_id": "multiclass-P061",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.10971610411295418,
+            -0.4000136130227996,
+            1.9853378363280836,
+            -1.4493864952916966
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P062-L0",
+          "patient_id": "multiclass-P062",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.7476852236706746,
+            -0.8344513396741562,
+            -0.018088213587664215,
+            1.5204983422923053
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P062-L1",
+          "patient_id": "multiclass-P062",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.1121585313453328,
+            -0.8662012400003982,
+            0.29185397519559575,
+            1.460655795054385
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P063-L0",
+          "patient_id": "multiclass-P063",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            -1.115209945590697,
+            -1.028259571242461,
+            1.0428418894801432,
+            0.47612141672571606
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P063-L1",
+          "patient_id": "multiclass-P063",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            -0.9767542597015965,
+            -0.8379272122278674,
+            0.9085499989489558,
+            0.7758682373186815
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P064-L0",
+          "patient_id": "multiclass-P064",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.8468773082560291,
+            0.07319390686216326,
+            0.9132686833690292,
+            -0.061347409333753905
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P064-L1",
+          "patient_id": "multiclass-P064",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.6826177427478336,
+            0.03801467579179507,
+            0.7160652562082639,
+            0.23735139883000111
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P065-L0",
+          "patient_id": "multiclass-P065",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            4.09604071303556,
+            0.5843072955346992,
+            0.7477732921842497,
+            0.44840696378806516
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "multiclass-P065-L1",
+          "patient_id": "multiclass-P065",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            4.158949189527631,
+            0.7437351095100222,
+            0.8071102046753427,
+            0.4693372817474816
+          ],
+          "target": null
+        }
+      ]
+    },
+    "regression": {
+      "feature_names": [
+        "signal_a",
+        "signal_b",
+        "noise_a",
+        "noise_b"
+      ],
+      "classes": [],
+      "records": [
+        {
+          "sample_id": "regression-P000-L0",
+          "patient_id": "regression-P000",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.17785424650091455,
+            0.9154705747161059,
+            0.669341077313782,
+            -0.8845162580234622
+          ],
+          "target": -0.3931375438855306
+        },
+        {
+          "sample_id": "regression-P000-L1",
+          "patient_id": "regression-P000",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.48443390261719504,
+            0.9451629860902955,
+            0.7388299133709055,
+            -0.7639566277383132
+          ],
+          "target": -0.3931375438855306
+        },
+        {
+          "sample_id": "regression-P001-L0",
+          "patient_id": "regression-P001",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9893107436973402,
+            0.00686904783871034,
+            1.0927427542513937,
+            -1.2209309252252916
+          ],
+          "target": -1.0225753797598685
+        },
+        {
+          "sample_id": "regression-P001-L1",
+          "patient_id": "regression-P001",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9700527286245517,
+            0.08294932044322362,
+            1.028111392235929,
+            -1.2437265174315388
+          ],
+          "target": -1.0225753797598685
+        },
+        {
+          "sample_id": "regression-P002-L0",
+          "patient_id": "regression-P002",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.0484413105568301,
+            -0.8655470680319294,
+            -2.42563484330081,
+            -0.41773550135628557
+          ],
+          "target": -0.6342975107765865
+        },
+        {
+          "sample_id": "regression-P002-L1",
+          "patient_id": "regression-P002",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.07315160538868021,
+            -0.5848732267422608,
+            -2.4883514928450263,
+            -0.448504917028039
+          ],
+          "target": -0.6342975107765865
+        },
+        {
+          "sample_id": "regression-P003-L0",
+          "patient_id": "regression-P003",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.8690766581799214,
+            -0.4908404910118688,
+            -0.22549683395072118,
+            -0.6707885083038128
+          ],
+          "target": 2.82852348156856
+        },
+        {
+          "sample_id": "regression-P003-L1",
+          "patient_id": "regression-P003",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.0355786839071484,
+            -0.552254885630726,
+            -0.3344403402212266,
+            -0.7601338478352461
+          ],
+          "target": 2.82852348156856
+        },
+        {
+          "sample_id": "regression-P004-L0",
+          "patient_id": "regression-P004",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.575444086865017,
+            -0.0014048365504925678,
+            -1.9903386756719783,
+            3.099040638728047
+          ],
+          "target": 1.5239266989161504
+        },
+        {
+          "sample_id": "regression-P004-L1",
+          "patient_id": "regression-P004",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.434707273988294,
+            -0.01183151517810617,
+            -1.942068143728287,
+            2.797757474769218
+          ],
+          "target": 1.5239266989161504
+        },
+        {
+          "sample_id": "regression-P005-L0",
+          "patient_id": "regression-P005",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9142626225927056,
+            0.9260794196621869,
+            0.1135435798259915,
+            1.7462020184500961
+          ],
+          "target": -2.1245756390905024
+        },
+        {
+          "sample_id": "regression-P005-L1",
+          "patient_id": "regression-P005",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9737184592341827,
+            1.0040546308910605,
+            0.16700761002602374,
+            1.8017847233790196
+          ],
+          "target": -2.1245756390905024
+        },
+        {
+          "sample_id": "regression-P006-L0",
+          "patient_id": "regression-P006",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.06871137018048179,
+            0.6320931065347599,
+            0.4349688243810042,
+            -0.30944236682279547
+          ],
+          "target": -0.6812721835864234
+        },
+        {
+          "sample_id": "regression-P006-L1",
+          "patient_id": "regression-P006",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.16379871450140215,
+            0.6878792327190683,
+            0.20018765868777727,
+            -0.34514625159338336
+          ],
+          "target": -0.6812721835864234
+        },
+        {
+          "sample_id": "regression-P007-L0",
+          "patient_id": "regression-P007",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.6464738320520786,
+            0.5294170566677714,
+            -0.025138963934530918,
+            -0.13941324095432925
+          ],
+          "target": -0.773019818564386
+        },
+        {
+          "sample_id": "regression-P007-L1",
+          "patient_id": "regression-P007",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.6539361040113202,
+            0.6677978591659828,
+            0.07020997182413712,
+            -0.10242170869566043
+          ],
+          "target": -0.773019818564386
+        },
+        {
+          "sample_id": "regression-P008-L0",
+          "patient_id": "regression-P008",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.849645096717126,
+            -1.2882535797005303,
+            0.8578321723105493,
+            -0.6753975612855049
+          ],
+          "target": 4.3651586009408705
+        },
+        {
+          "sample_id": "regression-P008-L1",
+          "patient_id": "regression-P008",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.0764908723127786,
+            -1.4504568394211452,
+            0.7407281052535202,
+            -0.8910529739231463
+          ],
+          "target": 4.3651586009408705
+        },
+        {
+          "sample_id": "regression-P009-L0",
+          "patient_id": "regression-P009",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.0574384777288872,
+            0.1715836877947275,
+            1.3571204613770922,
+            -0.10146834686534756
+          ],
+          "target": 1.638853762550038
+        },
+        {
+          "sample_id": "regression-P009-L1",
+          "patient_id": "regression-P009",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.0344948748975362,
+            0.23785620379529454,
+            1.6328830158986412,
+            -0.1866633099742286
+          ],
+          "target": 1.638853762550038
+        },
+        {
+          "sample_id": "regression-P010-L0",
+          "patient_id": "regression-P010",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.07565769922005361,
+            0.23216533222651473,
+            0.4626996432666281,
+            1.0291566501157683
+          ],
+          "target": 0.7791850536623491
+        },
+        {
+          "sample_id": "regression-P010-L1",
+          "patient_id": "regression-P010",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.08493444071540596,
+            0.2500003272462592,
+            0.9035093081290171,
+            0.7569473725458593
+          ],
+          "target": 0.7791850536623491
+        },
+        {
+          "sample_id": "regression-P011-L0",
+          "patient_id": "regression-P011",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1055041256968592,
+            0.555912687560021,
+            0.7824717660534081,
+            0.08596377860928593
+          ],
+          "target": 1.4639479424614321
+        },
+        {
+          "sample_id": "regression-P011-L1",
+          "patient_id": "regression-P011",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.8394428966529123,
+            0.4597088229727989,
+            0.9271069212249008,
+            0.3882956673364622
+          ],
+          "target": 1.4639479424614321
+        },
+        {
+          "sample_id": "regression-P012-L0",
+          "patient_id": "regression-P012",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.0071734196988886,
+            1.764575681676366,
+            -0.35151607191902295,
+            -1.4258274774235162
+          ],
+          "target": -3.0285100792134108
+        },
+        {
+          "sample_id": "regression-P012-L1",
+          "patient_id": "regression-P012",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.007979005564971,
+            1.6618450563464284,
+            -0.22802469779778675,
+            -1.362307677035726
+          ],
+          "target": -3.0285100792134108
+        },
+        {
+          "sample_id": "regression-P013-L0",
+          "patient_id": "regression-P013",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.5453660746971769,
+            -0.5175556360871274,
+            -0.8041719531124759,
+            -0.6186186130580202
+          ],
+          "target": -0.6138889459304646
+        },
+        {
+          "sample_id": "regression-P013-L1",
+          "patient_id": "regression-P013",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.49174572223451984,
+            -0.7794124356416056,
+            -0.9498704723691755,
+            -0.6441249909625758
+          ],
+          "target": -0.6138889459304646
+        },
+        {
+          "sample_id": "regression-P014-L0",
+          "patient_id": "regression-P014",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.024887886088957728,
+            -0.4642689822929723,
+            0.28093042310819205,
+            0.5142437927393273
+          ],
+          "target": 0.15114660217104092
+        },
+        {
+          "sample_id": "regression-P014-L1",
+          "patient_id": "regression-P014",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.19287234214623672,
+            -0.30863480458066184,
+            0.2377830869569811,
+            0.485965585671074
+          ],
+          "target": 0.15114660217104092
+        },
+        {
+          "sample_id": "regression-P015-L0",
+          "patient_id": "regression-P015",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.2991244736077525,
+            1.146246874625342,
+            -0.5770373471094445,
+            1.3472382987216323
+          ],
+          "target": -1.0275847057059102
+        },
+        {
+          "sample_id": "regression-P015-L1",
+          "patient_id": "regression-P015",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.03571058338022014,
+            1.2598449743800237,
+            -0.5640398949040208,
+            1.4602537065167507
+          ],
+          "target": -1.0275847057059102
+        },
+        {
+          "sample_id": "regression-P016-L0",
+          "patient_id": "regression-P016",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.6423217640587965,
+            -2.269639060706841,
+            -0.9574593063024375,
+            0.9175219202857968
+          ],
+          "target": 0.43777169007548977
+        },
+        {
+          "sample_id": "regression-P016-L1",
+          "patient_id": "regression-P016",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7964792166249917,
+            -2.335276812063428,
+            -0.9882446765830964,
+            1.042035952689186
+          ],
+          "target": 0.43777169007548977
+        },
+        {
+          "sample_id": "regression-P017-L0",
+          "patient_id": "regression-P017",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.6707837812505038,
+            1.6019591263134076,
+            1.8006547792695131,
+            0.540952042707244
+          ],
+          "target": -0.6106378546333907
+        },
+        {
+          "sample_id": "regression-P017-L1",
+          "patient_id": "regression-P017",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9339965067077974,
+            1.4508595867754344,
+            1.7764056244535047,
+            0.5198371578170304
+          ],
+          "target": -0.6106378546333907
+        },
+        {
+          "sample_id": "regression-P018-L0",
+          "patient_id": "regression-P018",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5428586539554435,
+            -1.715631467548131,
+            -1.2906364596291389,
+            -1.2241267802925049
+          ],
+          "target": 1.3594851334379423
+        },
+        {
+          "sample_id": "regression-P018-L1",
+          "patient_id": "regression-P018",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5962383149045253,
+            -1.9298601184761912,
+            -1.1639937550048494,
+            -1.161288825683302
+          ],
+          "target": 1.3594851334379423
+        },
+        {
+          "sample_id": "regression-P019-L0",
+          "patient_id": "regression-P019",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.6318395716506853,
+            -0.6847725012509014,
+            -0.24945711204504564,
+            -0.27085611654789954
+          ],
+          "target": 4.85601823304952
+        },
+        {
+          "sample_id": "regression-P019-L1",
+          "patient_id": "regression-P019",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.5846476696056895,
+            -0.6343070775388743,
+            -0.30530225556629675,
+            -0.6252039674683335
+          ],
+          "target": 4.85601823304952
+        },
+        {
+          "sample_id": "regression-P020-L0",
+          "patient_id": "regression-P020",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.21688149521038436,
+            -2.2302072788586433,
+            -0.1247796880134649,
+            -0.24312519493835208
+          ],
+          "target": 0.6594724656291094
+        },
+        {
+          "sample_id": "regression-P020-L1",
+          "patient_id": "regression-P020",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.5640685678163813,
+            -1.8676766534135534,
+            -0.12984512608909562,
+            -0.20646832661803183
+          ],
+          "target": 0.6594724656291094
+        },
+        {
+          "sample_id": "regression-P021-L0",
+          "patient_id": "regression-P021",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.18760742908716588,
+            -1.2170398379234297,
+            -0.9323050156555216,
+            0.4523253755374786
+          ],
+          "target": 0.6710189846188076
+        },
+        {
+          "sample_id": "regression-P021-L1",
+          "patient_id": "regression-P021",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.0655221090469456,
+            -1.2638236502859261,
+            -0.7606464460330231,
+            0.44167410552583575
+          ],
+          "target": 0.6710189846188076
+        },
+        {
+          "sample_id": "regression-P022-L0",
+          "patient_id": "regression-P022",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.4436363877153218,
+            0.6232809232390066,
+            0.38900609445060785,
+            -0.3661022698996397
+          ],
+          "target": -0.3337645912162367
+        },
+        {
+          "sample_id": "regression-P022-L1",
+          "patient_id": "regression-P022",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.23843133323947943,
+            0.4351167048728923,
+            0.33396334604753697,
+            -0.07841118473313399
+          ],
+          "target": -0.3337645912162367
+        },
+        {
+          "sample_id": "regression-P023-L0",
+          "patient_id": "regression-P023",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.002465533398555264,
+            -0.1918753940372757,
+            0.8633173666646636,
+            2.333519125657355
+          ],
+          "target": 1.2892795088939917
+        },
+        {
+          "sample_id": "regression-P023-L1",
+          "patient_id": "regression-P023",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.21025098380166723,
+            -0.30420760738514263,
+            0.960591679117892,
+            2.3181656914751616
+          ],
+          "target": 1.2892795088939917
+        },
+        {
+          "sample_id": "regression-P024-L0",
+          "patient_id": "regression-P024",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.26133269306790663,
+            -1.4611989474977514,
+            -0.7342570242373783,
+            1.2647886213985609
+          ],
+          "target": -0.34511668052390904
+        },
+        {
+          "sample_id": "regression-P024-L1",
+          "patient_id": "regression-P024",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.21300388428420503,
+            -1.6166788062338056,
+            -0.8593687461134937,
+            1.2569023449854826
+          ],
+          "target": -0.34511668052390904
+        },
+        {
+          "sample_id": "regression-P025-L0",
+          "patient_id": "regression-P025",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1980898606338823,
+            -1.018134270304339,
+            -0.8105337075597073,
+            0.8947204656284056
+          ],
+          "target": 1.9955090048202695
+        },
+        {
+          "sample_id": "regression-P025-L1",
+          "patient_id": "regression-P025",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.8478824897477895,
+            -1.0342721316554386,
+            -0.7380710478050161,
+            0.8144195908824281
+          ],
+          "target": 1.9955090048202695
+        },
+        {
+          "sample_id": "regression-P026-L0",
+          "patient_id": "regression-P026",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.100155868838508,
+            0.46890094274574834,
+            -0.4303953082585552,
+            1.3440723039655869
+          ],
+          "target": -1.4157318130869583
+        },
+        {
+          "sample_id": "regression-P026-L1",
+          "patient_id": "regression-P026",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.14511038577895252,
+            0.4339622807718022,
+            -0.19243654277868025,
+            1.149200152592768
+          ],
+          "target": -1.4157318130869583
+        },
+        {
+          "sample_id": "regression-P027-L0",
+          "patient_id": "regression-P027",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.0917690607280721,
+            1.5444687599254794,
+            -0.48352468406774335,
+            -1.160041067016442
+          ],
+          "target": -3.366256470054383
+        },
+        {
+          "sample_id": "regression-P027-L1",
+          "patient_id": "regression-P027",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.364948152713406,
+            1.5106853504379492,
+            -0.5729621439316961,
+            -1.224466573814567
+          ],
+          "target": -3.366256470054383
+        },
+        {
+          "sample_id": "regression-P028-L0",
+          "patient_id": "regression-P028",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.7354895013965637,
+            -1.2142163770122254,
+            -1.0929717586884156,
+            -0.8614770872248543
+          ],
+          "target": 2.960261305418143
+        },
+        {
+          "sample_id": "regression-P028-L1",
+          "patient_id": "regression-P028",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.7812415439614087,
+            -1.2113160962436116,
+            -0.9380854797524777,
+            -0.9981762171143448
+          ],
+          "target": 2.960261305418143
+        },
+        {
+          "sample_id": "regression-P029-L0",
+          "patient_id": "regression-P029",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7042861289140888,
+            -0.19950622342655358,
+            0.21297340879468132,
+            2.411427327435169
+          ],
+          "target": -0.7428011762199344
+        },
+        {
+          "sample_id": "regression-P029-L1",
+          "patient_id": "regression-P029",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.5639480680078536,
+            -0.4751660399046469,
+            0.24520456209555874,
+            2.563660294374057
+          ],
+          "target": -0.7428011762199344
+        },
+        {
+          "sample_id": "regression-P030-L0",
+          "patient_id": "regression-P030",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.1911175648816552,
+            1.8793525985622208,
+            -0.48275394463265686,
+            0.4326008233343046
+          ],
+          "target": -0.0415980217777214
+        },
+        {
+          "sample_id": "regression-P030-L1",
+          "patient_id": "regression-P030",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.2158022575448897,
+            2.0507647836421943,
+            -0.6826041587349976,
+            0.3271417464117834
+          ],
+          "target": -0.0415980217777214
+        },
+        {
+          "sample_id": "regression-P031-L0",
+          "patient_id": "regression-P031",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.0975720908746989,
+            -1.7289672751409613,
+            -0.8198404621552238,
+            0.08366140607723858
+          ],
+          "target": 2.182883812662175
+        },
+        {
+          "sample_id": "regression-P031-L1",
+          "patient_id": "regression-P031",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.3738832725842136,
+            -1.755131503895055,
+            -0.6734610882481379,
+            -0.0061801189392132055
+          ],
+          "target": 2.182883812662175
+        },
+        {
+          "sample_id": "regression-P032-L0",
+          "patient_id": "regression-P032",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.26989090617877065,
+            -1.221839947860609,
+            -1.054089668709051,
+            -1.2527940432136202
+          ],
+          "target": -0.18093170467011788
+        },
+        {
+          "sample_id": "regression-P032-L1",
+          "patient_id": "regression-P032",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.04849777687657822,
+            -1.2701514657589659,
+            -1.0779039186243071,
+            -1.4691475807549639
+          ],
+          "target": -0.18093170467011788
+        },
+        {
+          "sample_id": "regression-P033-L0",
+          "patient_id": "regression-P033",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.133723240345614,
+            1.2400404883437932,
+            0.5026282495995286,
+            -0.7054510706659136
+          ],
+          "target": -2.7127419046074195
+        },
+        {
+          "sample_id": "regression-P033-L1",
+          "patient_id": "regression-P033",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.4718816619967345,
+            1.4088376801339488,
+            0.32340139231865156,
+            -0.6566879918073969
+          ],
+          "target": -2.7127419046074195
+        },
+        {
+          "sample_id": "regression-P034-L0",
+          "patient_id": "regression-P034",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.6926004978253097,
+            -1.4160005592786822,
+            0.9563479087284017,
+            1.2043407722024773
+          ],
+          "target": 0.603101408429164
+        },
+        {
+          "sample_id": "regression-P034-L1",
+          "patient_id": "regression-P034",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.6540773773832117,
+            -1.4655859329229817,
+            0.8528698644329473,
+            1.3325958047045188
+          ],
+          "target": 0.603101408429164
+        },
+        {
+          "sample_id": "regression-P035-L0",
+          "patient_id": "regression-P035",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.6264770539892253,
+            0.9902154250690446,
+            0.04574488396129263,
+            -1.480738076184378
+          ],
+          "target": 0.007267893410533702
+        },
+        {
+          "sample_id": "regression-P035-L1",
+          "patient_id": "regression-P035",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.6410703054410586,
+            0.7761396538652012,
+            0.2939920838906278,
+            -1.5602939454991045
+          ],
+          "target": 0.007267893410533702
+        },
+        {
+          "sample_id": "regression-P036-L0",
+          "patient_id": "regression-P036",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -2.056819519277261,
+            1.0098986703672561,
+            -0.6166792555936335,
+            0.45129016276572725
+          ],
+          "target": -3.8402354579835296
+        },
+        {
+          "sample_id": "regression-P036-L1",
+          "patient_id": "regression-P036",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -2.0987310831322104,
+            0.7940551770680803,
+            -0.6192136081989053,
+            0.556965122376364
+          ],
+          "target": -3.8402354579835296
+        },
+        {
+          "sample_id": "regression-P037-L0",
+          "patient_id": "regression-P037",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.2740220872871126,
+            0.3674655905531419,
+            -0.39644546283048127,
+            -1.2600901145891181
+          ],
+          "target": -1.7911339060516716
+        },
+        {
+          "sample_id": "regression-P037-L1",
+          "patient_id": "regression-P037",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -1.379403203666042,
+            0.5263541352736105,
+            -0.34286875181264437,
+            -1.2503966895210012
+          ],
+          "target": -1.7911339060516716
+        },
+        {
+          "sample_id": "regression-P038-L0",
+          "patient_id": "regression-P038",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.8144791889831586,
+            -0.2779024204264271,
+            -0.8540034643524093,
+            0.9735054143023772
+          ],
+          "target": 2.3496040855827425
+        },
+        {
+          "sample_id": "regression-P038-L1",
+          "patient_id": "regression-P038",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            1.7249747094836887,
+            0.009453067040380514,
+            -0.8902090097954062,
+            0.9429145348360727
+          ],
+          "target": 2.3496040855827425
+        },
+        {
+          "sample_id": "regression-P039-L0",
+          "patient_id": "regression-P039",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.501994627881212,
+            -0.12166246406601071,
+            0.5254997894772343,
+            0.25085694191672236
+          ],
+          "target": 4.992156145815172
+        },
+        {
+          "sample_id": "regression-P039-L1",
+          "patient_id": "regression-P039",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            2.672624179860956,
+            -0.15596041965923801,
+            0.3822798817895348,
+            0.10546287008887509
+          ],
+          "target": 4.992156145815172
+        },
+        {
+          "sample_id": "regression-P040-L0",
+          "patient_id": "regression-P040",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9835803162206785,
+            0.08501627494400862,
+            -0.6349746537562272,
+            -0.8635072170821245
+          ],
+          "target": -1.5405114377157385
+        },
+        {
+          "sample_id": "regression-P040-L1",
+          "patient_id": "regression-P040",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9659104843378282,
+            -0.13757098683593647,
+            -0.3761968266424365,
+            -0.5290894208452988
+          ],
+          "target": -1.5405114377157385
+        },
+        {
+          "sample_id": "regression-P041-L0",
+          "patient_id": "regression-P041",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.718039665829584,
+            0.9906167466377782,
+            0.8118938423412562,
+            0.005497714630135542
+          ],
+          "target": 1.8094470548180168
+        },
+        {
+          "sample_id": "regression-P041-L1",
+          "patient_id": "regression-P041",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            0.5990614147308938,
+            1.0703537668842404,
+            1.2040433369529449,
+            0.00268875311492614
+          ],
+          "target": 1.8094470548180168
+        },
+        {
+          "sample_id": "regression-P042-L0",
+          "patient_id": "regression-P042",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.9094045730354564,
+            0.12447501776499398,
+            0.3191306120320472,
+            -0.0364338887733521
+          ],
+          "target": -1.6026526623515596
+        },
+        {
+          "sample_id": "regression-P042-L1",
+          "patient_id": "regression-P042",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.8567368750452607,
+            0.5067832710393462,
+            0.20254409530516865,
+            0.48448042154106175
+          ],
+          "target": -1.6026526623515596
+        },
+        {
+          "sample_id": "regression-P043-L0",
+          "patient_id": "regression-P043",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7850157512881175,
+            1.087114322624978,
+            1.4670768560312517,
+            -0.6563342026109077
+          ],
+          "target": -1.0301913690497662
+        },
+        {
+          "sample_id": "regression-P043-L1",
+          "patient_id": "regression-P043",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.6426278238052365,
+            0.9841179650344465,
+            1.404981995642053,
+            -0.43057255817932916
+          ],
+          "target": -1.0301913690497662
+        },
+        {
+          "sample_id": "regression-P044-L0",
+          "patient_id": "regression-P044",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.10169674625623383,
+            -0.5402390020567555,
+            -1.4709285159333434,
+            -1.0867097860261483
+          ],
+          "target": -0.3609133780388019
+        },
+        {
+          "sample_id": "regression-P044-L1",
+          "patient_id": "regression-P044",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.3261085018343711,
+            -0.6224623527728672,
+            -1.2661906911797756,
+            -0.9606696643131485
+          ],
+          "target": -0.3609133780388019
+        },
+        {
+          "sample_id": "regression-P045-L0",
+          "patient_id": "regression-P045",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -2.70055224657707,
+            -0.786312206094952,
+            -1.2518568019944265,
+            0.8096831145573179
+          ],
+          "target": -3.776407180304439
+        },
+        {
+          "sample_id": "regression-P045-L1",
+          "patient_id": "regression-P045",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -2.6934465831684427,
+            -0.9468072123967001,
+            -1.5750240222160645,
+            0.6365786952695406
+          ],
+          "target": -3.776407180304439
+        },
+        {
+          "sample_id": "regression-P046-L0",
+          "patient_id": "regression-P046",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.45581265465207044,
+            0.4052675677115769,
+            0.3482097198751101,
+            -0.5440721834032461
+          ],
+          "target": -1.0408124759183468
+        },
+        {
+          "sample_id": "regression-P046-L1",
+          "patient_id": "regression-P046",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.3523379787256967,
+            0.47306653974814195,
+            0.47199669079110196,
+            -0.669832452668715
+          ],
+          "target": -1.0408124759183468
+        },
+        {
+          "sample_id": "regression-P047-L0",
+          "patient_id": "regression-P047",
+          "lesion_id": "0",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7718784387550566,
+            -0.36215398642878527,
+            -0.08574709579169851,
+            0.5071307643049866
+          ],
+          "target": -0.6454209007021146
+        },
+        {
+          "sample_id": "regression-P047-L1",
+          "patient_id": "regression-P047",
+          "lesion_id": "1",
+          "cohort": "train",
+          "center": "A",
+          "values": [
+            -0.7612250584323953,
+            -0.3360140451272782,
+            -0.06050158826340156,
+            0.5187804967264181
+          ],
+          "target": -0.6454209007021146
+        },
+        {
+          "sample_id": "regression-P048-L0",
+          "patient_id": "regression-P048",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.9122420185864478,
+            0.6589451212029223,
+            -0.23415898095592338,
+            0.46224507586199726
+          ],
+          "target": -1.9190474674139981
+        },
+        {
+          "sample_id": "regression-P048-L1",
+          "patient_id": "regression-P048",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.9262092689460478,
+            0.6411590769298209,
+            -0.31885586552285355,
+            0.33275790749444945
+          ],
+          "target": -1.9190474674139981
+        },
+        {
+          "sample_id": "regression-P049-L0",
+          "patient_id": "regression-P049",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.4850279818390348,
+            0.7849292639620142,
+            -0.23802799259777505,
+            0.05814038795352382
+          ],
+          "target": -1.243355768080613
+        },
+        {
+          "sample_id": "regression-P049-L1",
+          "patient_id": "regression-P049",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.4241595728953368,
+            0.980467595674266,
+            -0.2580430308182319,
+            -0.11107640399809401
+          ],
+          "target": -1.243355768080613
+        },
+        {
+          "sample_id": "regression-P050-L0",
+          "patient_id": "regression-P050",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.6898095643811057,
+            -0.40066256477256645,
+            -1.4957280071633925,
+            -2.220539531138534
+          ],
+          "target": 0.3734380914096632
+        },
+        {
+          "sample_id": "regression-P050-L1",
+          "patient_id": "regression-P050",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.62109775195195,
+            -0.21049757787745624,
+            -1.4761317241282321,
+            -2.1337162909880165
+          ],
+          "target": 0.3734380914096632
+        },
+        {
+          "sample_id": "regression-P051-L0",
+          "patient_id": "regression-P051",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.8893073039931936,
+            -0.42657381098405245,
+            -1.8178359816561562,
+            0.09426541745948473
+          ],
+          "target": 1.1044811370821301
+        },
+        {
+          "sample_id": "regression-P051-L1",
+          "patient_id": "regression-P051",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.8971094795111529,
+            0.00929395438129843,
+            -1.388930398747334,
+            0.0317096840072389
+          ],
+          "target": 1.1044811370821301
+        },
+        {
+          "sample_id": "regression-P052-L0",
+          "patient_id": "regression-P052",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -1.4768495675095885,
+            0.8680300684290144,
+            0.6413758006477372,
+            1.4646107093399965
+          ],
+          "target": -3.2815622453064406
+        },
+        {
+          "sample_id": "regression-P052-L1",
+          "patient_id": "regression-P052",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -1.4708043973059794,
+            0.8482510734298941,
+            0.3892202045916992,
+            1.4526616476214473
+          ],
+          "target": -3.2815622453064406
+        },
+        {
+          "sample_id": "regression-P053-L0",
+          "patient_id": "regression-P053",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.5196563029243307,
+            -1.5001118797196842,
+            -0.22703674961127707,
+            1.2817589443067732
+          ],
+          "target": 1.3873287664468523
+        },
+        {
+          "sample_id": "regression-P053-L1",
+          "patient_id": "regression-P053",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            0.4800423163162884,
+            -1.3079081127760088,
+            -0.14580251047574289,
+            1.3470824107491186
+          ],
+          "target": 1.3873287664468523
+        },
+        {
+          "sample_id": "regression-P054-L0",
+          "patient_id": "regression-P054",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.8979804487890302,
+            -0.17844569348083578,
+            -0.37406214264855453,
+            0.36706295413635154
+          ],
+          "target": 2.303597611342488
+        },
+        {
+          "sample_id": "regression-P054-L1",
+          "patient_id": "regression-P054",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.867040829729364,
+            -0.2511565604420668,
+            -0.2682383698386882,
+            0.19182002674996607
+          ],
+          "target": 2.303597611342488
+        },
+        {
+          "sample_id": "regression-P055-L0",
+          "patient_id": "regression-P055",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -1.2313888271209115,
+            -0.3014043107459608,
+            0.3041713543219753,
+            0.8026893459746446
+          ],
+          "target": -1.265054984777456
+        },
+        {
+          "sample_id": "regression-P055-L1",
+          "patient_id": "regression-P055",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -1.1841528523059506,
+            -0.39928143808388983,
+            0.298273799981224,
+            0.5646256986717824
+          ],
+          "target": -1.265054984777456
+        },
+        {
+          "sample_id": "regression-P056-L0",
+          "patient_id": "regression-P056",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.2797153703679036,
+            -0.09257270970293117,
+            1.2103918767615833,
+            -0.4383031532103505
+          ],
+          "target": 2.562612243118956
+        },
+        {
+          "sample_id": "regression-P056-L1",
+          "patient_id": "regression-P056",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.2834798577307398,
+            -0.21042062775594828,
+            1.268486210412097,
+            -0.3105574588675868
+          ],
+          "target": 2.562612243118956
+        },
+        {
+          "sample_id": "regression-P057-L0",
+          "patient_id": "regression-P057",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.8358748145953353,
+            -0.4716559114470457,
+            0.08342369217803222,
+            1.3456522695863509
+          ],
+          "target": -0.2419899947416686
+        },
+        {
+          "sample_id": "regression-P057-L1",
+          "patient_id": "regression-P057",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            -0.8303282842146977,
+            -0.31055757969009773,
+            -0.23738455123985977,
+            1.2529866541189705
+          ],
+          "target": -0.2419899947416686
+        },
+        {
+          "sample_id": "regression-P058-L0",
+          "patient_id": "regression-P058",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.3782960723601105,
+            -1.4029979064697922,
+            -2.3060028644637325,
+            0.9690589974537817
+          ],
+          "target": 1.9085367127750739
+        },
+        {
+          "sample_id": "regression-P058-L1",
+          "patient_id": "regression-P058",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            1.232900694214731,
+            -1.4005704271893986,
+            -2.335938809261433,
+            0.8645465953191246
+          ],
+          "target": 1.9085367127750739
+        },
+        {
+          "sample_id": "regression-P059-L0",
+          "patient_id": "regression-P059",
+          "lesion_id": "0",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            2.0301391795257144,
+            1.3691077028864496,
+            2.1904056332229453,
+            0.89216001563148
+          ],
+          "target": 2.2546845757214755
+        },
+        {
+          "sample_id": "regression-P059-L1",
+          "patient_id": "regression-P059",
+          "lesion_id": "1",
+          "cohort": "test",
+          "center": "B",
+          "values": [
+            2.0627524882508643,
+            1.6354474367553753,
+            2.4090926680510534,
+            1.1352803025299243
+          ],
+          "target": 2.2546845757214755
+        },
+        {
+          "sample_id": "regression-P060-L0",
+          "patient_id": "regression-P060",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            -0.7688791580376616,
+            -1.1978172142294174,
+            -0.6456649698843799,
+            -0.7446961690751126
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P060-L1",
+          "patient_id": "regression-P060",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            -0.4875301983110658,
+            -1.4704466022322722,
+            -0.6627323268970734,
+            -0.7219592046547706
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P061-L0",
+          "patient_id": "regression-P061",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.984200938676637,
+            1.2377462185948074,
+            2.0498362536804047,
+            -0.46769390837427083
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P061-L1",
+          "patient_id": "regression-P061",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.7605213446014826,
+            1.5357644012458818,
+            1.8612002250576685,
+            -0.10865892873693639
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P062-L0",
+          "patient_id": "regression-P062",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            -0.16299904129791795,
+            0.17936992618517303,
+            -1.3846978750237293,
+            2.1134929135100426
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P062-L1",
+          "patient_id": "regression-P062",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.273739043122556,
+            0.2065915094898112,
+            -1.4261548449809212,
+            2.1268758350998582
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P063-L0",
+          "patient_id": "regression-P063",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            -2.8122509636000976,
+            0.8771621026143251,
+            1.5835525244163509,
+            0.5545897508022744
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P063-L1",
+          "patient_id": "regression-P063",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            -2.7256537925813014,
+            0.978451011663578,
+            1.2806029154356655,
+            0.6427224638359404
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P064-L0",
+          "patient_id": "regression-P064",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.4557593244980715,
+            -0.2515812697352362,
+            1.5931074758028656,
+            -0.07123209495135567
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P064-L1",
+          "patient_id": "regression-P064",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            1.5662536934120421,
+            -0.047545474800985775,
+            1.50491630756965,
+            -0.021138102524199953
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P065-L0",
+          "patient_id": "regression-P065",
+          "lesion_id": "0",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.8169475981419666,
+            1.2819620773255695,
+            0.033398894643780215,
+            -0.7449742864396561
+          ],
+          "target": null
+        },
+        {
+          "sample_id": "regression-P065-L1",
+          "patient_id": "regression-P065",
+          "lesion_id": "1",
+          "cohort": "external_A",
+          "center": "C",
+          "values": [
+            0.8954959050129305,
+            1.346523049175372,
+            -0.16466271739351698,
+            -0.7577205764320429
+          ],
+          "target": null
+        }
+      ]
+    }
+  }
+}

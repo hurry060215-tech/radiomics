@@ -46,6 +46,28 @@ not a requirement that Linux produce byte-identical binaries.
   nonpositive ROI labels. Native code explicitly rejects these configurations
   as invalid/unsupported under its positive-label contract; it must not export
   a successful all-zero ROI. Actual reference outputs remain in the fixture.
+- `model_inputs.json` and `model_reference.json`: independent solver-level
+  references for three fixed synthetic tasks, each with 66 patients and two
+  lesions per patient. Forty-eight training patients, twelve test patients and
+  six unlabeled external patients retain separate identities. Scaling fits only
+  the 96 training rows. References include binary/multinomial LR, OLS/Ridge,
+  uniform/distance KNN, Gaussian NB, squared-loss LASSO and multiclass OvR L1
+  Logistic selection. Parameters, source revisions, predictions, objectives,
+  gradients/KKT, convergence and class order are frozen. They validate numerical
+  solvers; nested workflow leakage and model selection still require separate
+  acceptance tests.
+
+The model objectives use sample means, with unpenalized intercepts. L2 Logistic
+uses `mean(NLL) + lambda/2 * ||W||²`, mapped to sklearn
+`C=1/(n*lambda)`; Ridge uses `SSE/(2*n)+lambda/2*||w||²`, mapped to sklearn
+`alpha=n*lambda`. LASSO uses `SSE/(2*n)+alpha*||w||₁`; OvR L1 Logistic uses
+`mean(binary NLL)+alpha*||w||₁`, mapped to `C=1/(n*alpha)` separately for each
+class and takes the union of selected feature indices. Integer multiclass
+indices are labels, never a continuous regression response for sparse selection.
+The softmax common-intercept shift is nonidentifiable, so predictions, objective,
+gradient and centered intercepts define the comparison. OLS rejects deficient
+design rank even though sklearn can return a minimum-norm solution. The fixture
+records this deliberate native failure rule.
 
 GLCM is symmetric, distance one, with no physical-distance weighting. Default
 GLCM/GLRLM features average independent direction results. The additional
