@@ -179,6 +179,15 @@ fn summary(indices: &[usize], target: &ModelTarget) -> NodeSummary {
             }
         }
         ModelTarget::Regression { values } => {
+            let first = values[indices[0]];
+            if indices.iter().all(|&i| values[i] == first) {
+                return NodeSummary {
+                    prediction: vec![first],
+                    impurity: 0.0,
+                    counts: vec![],
+                    mean: first,
+                };
+            }
             let mean = indices.iter().map(|&i| values[i] / n).sum::<f64>();
             let impurity = indices
                 .iter()

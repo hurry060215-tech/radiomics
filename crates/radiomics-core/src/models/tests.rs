@@ -778,3 +778,38 @@ fn forest_is_reproducible_across_outer_threads_and_json_and_rejects_corrupt_topo
     *left = 0;
     assert!(invalid.validate().is_err());
 }
+
+#[test]
+fn constant_regression_targets_stay_single_leaf_despite_mean_rounding() {
+    for n in [3, 7, 23, 100, 101] {
+        let x = buffer(n, 1, (0..n).map(|i| i as f64).collect());
+        let y = ModelTarget::Regression {
+            values: vec![0.1; n],
+        };
+        let model = fit(
+            &ModelSpec::RandomForest {
+                trees: 1,
+                max_depth: None,
+                min_samples_split: 2,
+                min_samples_leaf: 1,
+                max_features: MaxFeatures::All,
+                bootstrap: false,
+                seed: 1,
+            },
+            &x,
+            &y,
+        )
+        .unwrap();
+        let ModelState::Forest { trees, .. } = &model.state else {
+            unreachable!()
+        };
+        assert_eq!(
+            trees[0].nodes,
+            vec![TreeNode::Leaf {
+                prediction: vec![0.1],
+                samples: n,
+                impurity: 0.0
+            }]
+        );
+    }
+}
