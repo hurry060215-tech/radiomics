@@ -528,3 +528,98 @@ fn sparse_selection_uses_shared_solver_and_explicit_per_class_union_threshold() 
         );
     }
 }
+
+#[test]
+fn multiclass_renaming_and_index_permutation_preserve_selection() {
+    let (input, _) = fixtures();
+    let data = numeric_table(&input);
+    let preprocess = fit_preprocessor(
+        &data,
+        &PreprocessConfig {
+            scaling: Scaling::Standard,
+            all_missing: AllMissingPolicy::Drop,
+        },
+    )
+    .unwrap();
+    let x = preprocess.transform(&data).unwrap();
+    let original = target(&input, "multiclass");
+    let crate::models::ModelTarget::Classification { labels, .. } = &original else {
+        unreachable!()
+    };
+    let renamed = crate::models::ModelTarget::Classification {
+        classes: vec!["z".into(), "a".into(), "m".into()],
+        labels: labels.iter().map(|c| (c + 1) % 3).collect(),
+    };
+    let config = SelectorConfig {
+        variance_threshold: 0.001,
+        univariate: UnivariateMethod::Auto,
+        p_threshold: 0.2,
+        adjust_bh: true,
+        sparse: Some(crate::models::SparseSpec {
+            method: crate::models::SparseMethod::OvrL1Logistic,
+            alpha: 0.03,
+            tolerance: 1e-9,
+            max_iterations: 10000,
+        }),
+        ..SelectorConfig::default()
+    };
+    let variances = preprocess.unscaled_variances().unwrap();
+    assert_eq!(
+        fit_selector(
+            &x,
+            &preprocess.output_names,
+            &original,
+            &config,
+            Some(&variances)
+        )
+        .unwrap()
+        .selected_names()
+        .unwrap(),
+        fit_selector(
+            &x,
+            &preprocess.output_names,
+            &renamed,
+            &config,
+            Some(&variances)
+        )
+        .unwrap()
+        .selected_names()
+        .unwrap()
+    );
+    let wrong = SelectorConfig {
+        univariate: UnivariateMethod::Pearson,
+        ..config
+    };
+    assert!(fit_selector(
+        &x,
+        &preprocess.output_names,
+        &original,
+        &wrong,
+        Some(&variances)
+    )
+    .unwrap_err()
+    .message
+    .contains("continuous targets"));
+}
+
+#[test]
+fn exactly_constant_buffers_are_removed_even_if_mean_roundoff_makes_variance_positive() {
+    let x = NumericBuffer {
+        rows: 101,
+        cols: 2,
+        values: (0..101).flat_map(|i| [0.1, i as f64]).collect(),
+        missing: vec![false; 202],
+    };
+    let names = vec!["constant".into(), "signal".into()];
+    let y = crate::models::ModelTarget::Regression {
+        values: (0..101).map(|i| i as f64).collect(),
+    };
+    let config = SelectorConfig {
+        univariate: UnivariateMethod::None,
+        corr_threshold: None,
+        ..SelectorConfig::default()
+    };
+    let fitted = fit_selector(&x, &names, &y, &config, None).unwrap();
+    assert_eq!(fitted.selected_names().unwrap(), vec!["signal"]);
+    assert_eq!(fitted.constant_features, vec![0]);
+}
