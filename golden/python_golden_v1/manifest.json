@@ -2,7 +2,7 @@
   "schema": "python_golden_v1.acceptance.v1",
   "profile": "python_golden_v1",
   "status": "frozen_by_main_agent_review",
-  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation. Forest behavioral references use fixed five seeds, 200 trees and patient-level score means on the same three inputs. Train-only table preprocessing, three-task univariate/BH and hand tests approved before native implementation. Distribution tails/quantiles, hypothesis tests and complete-case unpenalized Logit reference approved independently. Independent actual Pingouin ICC and hand/HiGHS separation references approved with explicit nonfinite and three-state diagnostic policies. Explicit patient nested-workflow references approved before native G implementation; sample_centers provenance included. Patient-level shared-plan OOF Logistic fusion and explicit weighted averaging approved before native implementation. Patient evaluation approved; unfreezed derived calibration edges/membership corrected to actual sklearn1.0.2 digitize conventions and independently checked before acceptance.",
+  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation. Forest behavioral references use fixed five seeds, 200 trees and patient-level score means on the same three inputs. Train-only table preprocessing, three-task univariate/BH and hand tests approved before native implementation. Distribution tails/quantiles, hypothesis tests and complete-case unpenalized Logit reference approved independently. Independent actual Pingouin ICC and hand/HiGHS separation references approved with explicit nonfinite and three-state diagnostic policies. Explicit patient nested-workflow references approved before native G implementation; sample_centers provenance included. Patient-level shared-plan OOF Logistic fusion and explicit weighted averaging approved before native implementation. Patient evaluation approved; unfreezed derived calibration edges/membership corrected to actual sklearn1.0.2 digitize conventions and independently checked before acceptance. Observed-data binary/multiclass baseline summaries approved with explicit missing-target and sample-unit policies.",
   "baseline_revision": "2512e16979a544207f84c943e619ef33e02d3dc7",
   "reference_source": {
     "pyradiomics_tag": "v3.0.1",
@@ -90,7 +90,8 @@
     "workflow_plans.json": "04f70a69fb0331d8faf0109ab5a9374e80a70ad607299d6072e0d63fcb80c6e6",
     "workflow_reference.json": "012b19af423e2079985f621e159e948fc0ebed4314468856e7d468789cf0c633",
     "fusion_reference.json": "9ee7bf8d5e0f99d36c961d67da76236f8872deae34d0363577c4fe056086fedd",
-    "evaluation_reference.json": "3c344d8cd3a2b1c309a804a9a73fc0fe0256612c51fa8b91937c11a4509a0826"
+    "evaluation_reference.json": "3c344d8cd3a2b1c309a804a9a73fc0fe0256612c51fa8b91937c11a4509a0826",
+    "baseline_reference.json": "4541b16d7c004295283f9a3a335f690c55fc1dda453b6dcc5c540465c2241348"
   },
   "benchmark_policy": {
     "version": 2,

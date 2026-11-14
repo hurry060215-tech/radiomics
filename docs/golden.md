@@ -173,6 +173,15 @@ not a requirement that Linux produce byte-identical binaries.
   preserve the frozen legacy binary sampling indices; new components use the
   documented native RNG scheme. Constant and single-observation R² behavior is
   recorded explicitly instead of guessed.
+- `baseline_reference.json`: observed-data binary and multiclass baseline
+  summaries with per-variable missing counts and observed denominators, sample
+  SD and linear quantiles. Continuous defaults are MW/KW; categorical auto uses
+  Fisher only for 2×2 with expected counts below five, otherwise chi-square
+  without Yates. Constant/all-missing variables remain explicit undefined
+  summaries. The binary fixture explicitly excludes its source's one missing
+  outcome during fixture assembly; the public API rejects missing outcomes.
+  Sample-level dependency warnings remain visible for these repeated-patient
+  numerical examples.
 
 The clinical Logistic fixture reuses lesion rows to validate numerical solvers;
 its 94/92 complete cases are sample counts, not independent-patient counts.

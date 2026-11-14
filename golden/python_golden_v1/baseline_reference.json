@@ -1,0 +1,3126 @@
+{
+  "schema": "python_golden_v1.baseline.reference.v1",
+  "packages": {
+    "numpy": "1.23.0",
+    "scipy": "1.13.1"
+  },
+  "source_sha256": {
+    "model_inputs.json": "ce154ab4ba1390661cd5bd3c4828f99aae96becd779620622903e26c99a06fea",
+    "statistics_reference.json": "8dae3abf7b60f073e7612cdbb943813ad424cd86d7fe53170d74b2d260625d4d"
+  },
+  "policy": {
+    "missing_outcome": "Error in baseline API; fixture assembly explicitly excludes its one source row with missing outcome, recorded separately. No implicit target deletion.",
+    "numeric": "Observed values separately for each variable/outcome group; sample SD ddof1 and linear q25/q50/q75. No imputation or complete-case deletion across variables.",
+    "categorical": "Counts and proportions divide by observed nonmissing variable values within outcome class; missing counts shown separately.",
+    "default_tests": "Binary continuous two-sided MW auto; multiclass continuous tie-corrected KW. Categorical auto: 2x2 with any expected<5 uses two-sided Fisher, otherwise Pearson chi-square without Yates, including multiclass tables.",
+    "degenerate": "Empty observed group or constant categorical variable retains counts and explicit undefined statistic/p plus diagnostic; never removes the variable or fills zeros as feature values.",
+    "unsupported": "Explicit Fisher on a non-2x2 table errors; no global multiclass Fisher approximation."
+  },
+  "datasets": {
+    "binary": {
+      "classes": [
+        "negative",
+        "positive"
+      ],
+      "rows": [
+        {
+          "sample_id": "binary-P000-L0",
+          "patient_id": "binary-P000",
+          "cohort": "train",
+          "target": 0,
+          "a": null,
+          "b": 0.4275442985559805,
+          "sex": "F",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P000-L1",
+          "patient_id": "binary-P000",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.0087776406413194,
+          "b": null,
+          "sex": "F",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P001-L1",
+          "patient_id": "binary-P001",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.6134768597011904,
+          "b": 0.09271494457916524,
+          "sex": null,
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P002-L0",
+          "patient_id": "binary-P002",
+          "cohort": "train",
+          "target": 0,
+          "a": -1.4274511551807123,
+          "b": 0.6609236553087137,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P002-L1",
+          "patient_id": "binary-P002",
+          "cohort": "train",
+          "target": 0,
+          "a": -1.4360231189924475,
+          "b": 0.4074284922979812,
+          "sex": "M",
+          "rare": null,
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P003-L0",
+          "patient_id": "binary-P003",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.3155637902122144,
+          "b": 1.8518559674535442,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P003-L1",
+          "patient_id": "binary-P003",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.2392871612993,
+          "b": 1.8144678884965224,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P004-L0",
+          "patient_id": "binary-P004",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.14292679308536607,
+          "b": 0.041407814103260346,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P004-L1",
+          "patient_id": "binary-P004",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.14546648832401188,
+          "b": -0.12178838860732577,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P005-L0",
+          "patient_id": "binary-P005",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.9401792268688142,
+          "b": 2.2004248488512257,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P005-L1",
+          "patient_id": "binary-P005",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.7975624129504072,
+          "b": 2.0866544003096035,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P006-L0",
+          "patient_id": "binary-P006",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.4370761667045822,
+          "b": -0.7713841963185997,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P006-L1",
+          "patient_id": "binary-P006",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.399978503258399,
+          "b": -0.9416808708949179,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P007-L0",
+          "patient_id": "binary-P007",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.17833183811447817,
+          "b": 0.9536888369832301,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P007-L1",
+          "patient_id": "binary-P007",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.31968263267520414,
+          "b": 0.738288742312921,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P008-L0",
+          "patient_id": "binary-P008",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.39730787872171713,
+          "b": -1.3902626089697867,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P008-L1",
+          "patient_id": "binary-P008",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.20993197069551486,
+          "b": -1.4581799021079884,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P009-L0",
+          "patient_id": "binary-P009",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.5577615744538029,
+          "b": 0.05198670516736231,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P009-L1",
+          "patient_id": "binary-P009",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.3076019697085409,
+          "b": 0.1871564216894831,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P010-L0",
+          "patient_id": "binary-P010",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.5743116127600097,
+          "b": -0.4052688798782281,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P010-L1",
+          "patient_id": "binary-P010",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.5980195866712947,
+          "b": -0.07660185459549185,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P011-L0",
+          "patient_id": "binary-P011",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.037033156212181284,
+          "b": 0.18951677846348397,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P011-L1",
+          "patient_id": "binary-P011",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.21638619637336265,
+          "b": 0.12099958325763166,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P012-L0",
+          "patient_id": "binary-P012",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.7175490355571021,
+          "b": -0.36201840980133654,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P012-L1",
+          "patient_id": "binary-P012",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.8160406400475742,
+          "b": -0.36954080942357886,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P013-L0",
+          "patient_id": "binary-P013",
+          "cohort": "train",
+          "target": 1,
+          "a": 3.0147398518805892,
+          "b": 1.049983529609046,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P013-L1",
+          "patient_id": "binary-P013",
+          "cohort": "train",
+          "target": 1,
+          "a": 3.2131663615945034,
+          "b": 1.1637398574994184,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P014-L0",
+          "patient_id": "binary-P014",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.25472126146723945,
+          "b": 2.339411820061591,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P014-L1",
+          "patient_id": "binary-P014",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.18230165509585983,
+          "b": 2.6460154689654067,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P015-L0",
+          "patient_id": "binary-P015",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.9098530927200152,
+          "b": 1.056631662969894,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P015-L1",
+          "patient_id": "binary-P015",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.596165020338683,
+          "b": 1.2175940856483267,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P016-L0",
+          "patient_id": "binary-P016",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.3259761955172016,
+          "b": -0.24437895534164022,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P016-L1",
+          "patient_id": "binary-P016",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.4881814568678213,
+          "b": -0.08784663163891603,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P017-L0",
+          "patient_id": "binary-P017",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.5378384552277703,
+          "b": 3.2244637981346296,
+          "sex": "M",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P017-L1",
+          "patient_id": "binary-P017",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.3850170870149193,
+          "b": 3.153289573465833,
+          "sex": "M",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P018-L0",
+          "patient_id": "binary-P018",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.1763352944773436,
+          "b": 0.24005278004230352,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P018-L1",
+          "patient_id": "binary-P018",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.11285065550609462,
+          "b": 0.48151646810919896,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P019-L0",
+          "patient_id": "binary-P019",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.832001551398039,
+          "b": 2.4553235790895154,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P019-L1",
+          "patient_id": "binary-P019",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.796899204712962,
+          "b": 2.525647059284206,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P020-L0",
+          "patient_id": "binary-P020",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.02737705884374997,
+          "b": 2.1018283523673014,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P020-L1",
+          "patient_id": "binary-P020",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.35439359113336055,
+          "b": 1.7012724924714406,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P021-L0",
+          "patient_id": "binary-P021",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.967274565517398,
+          "b": 0.12859415130214846,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P021-L1",
+          "patient_id": "binary-P021",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.21693492968554,
+          "b": -0.07925570391764758,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P022-L0",
+          "patient_id": "binary-P022",
+          "cohort": "train",
+          "target": 0,
+          "a": -1.0822195607516087,
+          "b": 1.0012431567529043,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P022-L1",
+          "patient_id": "binary-P022",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.9684260131124554,
+          "b": 0.9807250615820193,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P023-L0",
+          "patient_id": "binary-P023",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.748514610895586,
+          "b": -0.7056563799417996,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P023-L1",
+          "patient_id": "binary-P023",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.9470046640095617,
+          "b": -0.8462651083979902,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P024-L0",
+          "patient_id": "binary-P024",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.28283012476083347,
+          "b": 1.3620665531866902,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P024-L1",
+          "patient_id": "binary-P024",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.22070419010520476,
+          "b": 1.4215303888995727,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P025-L0",
+          "patient_id": "binary-P025",
+          "cohort": "train",
+          "target": 1,
+          "a": 3.3342518530001324,
+          "b": 0.6102152633628912,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P025-L1",
+          "patient_id": "binary-P025",
+          "cohort": "train",
+          "target": 1,
+          "a": 3.3100779661787274,
+          "b": 0.36713616491671947,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P026-L0",
+          "patient_id": "binary-P026",
+          "cohort": "train",
+          "target": 0,
+          "a": -1.0586802797923436,
+          "b": -0.21135854136774188,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P026-L1",
+          "patient_id": "binary-P026",
+          "cohort": "train",
+          "target": 0,
+          "a": -1.1292938015116936,
+          "b": -0.16283328137651,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P027-L0",
+          "patient_id": "binary-P027",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.1648386364839448,
+          "b": 2.012842474320882,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P027-L1",
+          "patient_id": "binary-P027",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.39829491307678866,
+          "b": 2.2112028507009303,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P028-L0",
+          "patient_id": "binary-P028",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.7206002502398385,
+          "b": -0.23407113302006777,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P028-L1",
+          "patient_id": "binary-P028",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.703924441265459,
+          "b": -0.09138894841761008,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P029-L0",
+          "patient_id": "binary-P029",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.46873078270986357,
+          "b": -0.8439918368071277,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P029-L1",
+          "patient_id": "binary-P029",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.3409999697280254,
+          "b": -0.9250982388634679,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P030-L0",
+          "patient_id": "binary-P030",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.976523332737654,
+          "b": 1.3030066461641518,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P030-L1",
+          "patient_id": "binary-P030",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.1390807864054064,
+          "b": 1.045029336422349,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P031-L0",
+          "patient_id": "binary-P031",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.7795536135745723,
+          "b": 1.147058139385575,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P031-L1",
+          "patient_id": "binary-P031",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.998027819506892,
+          "b": 0.92104893484434,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P032-L0",
+          "patient_id": "binary-P032",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.1181925132459045,
+          "b": -0.15339324383099712,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P032-L1",
+          "patient_id": "binary-P032",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.8737402504123057,
+          "b": -0.13548435575680895,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P033-L0",
+          "patient_id": "binary-P033",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.5701505502933384,
+          "b": 2.252560447113903,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P033-L1",
+          "patient_id": "binary-P033",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.2458491757263714,
+          "b": 2.2907749294060293,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P034-L0",
+          "patient_id": "binary-P034",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.5664056026597473,
+          "b": 0.5218346827386658,
+          "sex": "M",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P034-L1",
+          "patient_id": "binary-P034",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.7108527618275231,
+          "b": 0.5209594893820003,
+          "sex": "M",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P035-L0",
+          "patient_id": "binary-P035",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.026366681972117667,
+          "b": -0.26002323509497793,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P035-L1",
+          "patient_id": "binary-P035",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.07046826794695293,
+          "b": -0.48330405364419393,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P036-L0",
+          "patient_id": "binary-P036",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.3187517059412994,
+          "b": -0.07489997728966225,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P036-L1",
+          "patient_id": "binary-P036",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.3609899019901313,
+          "b": -0.1812335587614331,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P037-L0",
+          "patient_id": "binary-P037",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.46979473432776164,
+          "b": 0.5834525061087065,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P037-L1",
+          "patient_id": "binary-P037",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.47311143756812835,
+          "b": 0.3148738467698143,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P038-L0",
+          "patient_id": "binary-P038",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.1874978822577534,
+          "b": 0.8752403114789151,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P038-L1",
+          "patient_id": "binary-P038",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.33170573860947217,
+          "b": 0.7609829479693995,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P039-L0",
+          "patient_id": "binary-P039",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.573117938037319,
+          "b": 0.23328460668932183,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P039-L1",
+          "patient_id": "binary-P039",
+          "cohort": "train",
+          "target": 1,
+          "a": 2.8014911735736963,
+          "b": 0.18841335364318867,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P040-L0",
+          "patient_id": "binary-P040",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.005238867132611073,
+          "b": 0.5484912648171214,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P040-L1",
+          "patient_id": "binary-P040",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.023509706953344933,
+          "b": 0.8868063156257349,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P041-L0",
+          "patient_id": "binary-P041",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.8240034389131813,
+          "b": -0.20131402121922037,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P041-L1",
+          "patient_id": "binary-P041",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.642718225071295,
+          "b": 0.10003430269097568,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P042-L0",
+          "patient_id": "binary-P042",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.5684930739472338,
+          "b": 0.5021751682690005,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P042-L1",
+          "patient_id": "binary-P042",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.7114387740874596,
+          "b": 0.6334051225864251,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P043-L0",
+          "patient_id": "binary-P043",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.4026294142777895,
+          "b": 0.4672401921383563,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P043-L1",
+          "patient_id": "binary-P043",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.7206144202015299,
+          "b": 0.5441803148548218,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P044-L0",
+          "patient_id": "binary-P044",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.8708602778143103,
+          "b": 0.6714506210769573,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P044-L1",
+          "patient_id": "binary-P044",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.673536524154698,
+          "b": 0.6321841025209531,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P045-L0",
+          "patient_id": "binary-P045",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.7667548749347468,
+          "b": 1.5293632659177852,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P045-L1",
+          "patient_id": "binary-P045",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.792803654559326,
+          "b": 1.8243302856501022,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P046-L0",
+          "patient_id": "binary-P046",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.7757322953789257,
+          "b": 1.9801056372554449,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P046-L1",
+          "patient_id": "binary-P046",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.1449374224770397,
+          "b": 1.8361340167214812,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P047-L0",
+          "patient_id": "binary-P047",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.601454582823907,
+          "b": -0.33111396225351886,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "binary-P047-L1",
+          "patient_id": "binary-P047",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.5275825095995907,
+          "b": -0.3696308686762091,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        }
+      ],
+      "source_missing_target_rows_explicitly_omitted_when_constructing_fixture": 1,
+      "analysis_unit": "sample",
+      "n_input": 95,
+      "table": [
+        {
+          "feature": "a",
+          "type": "continuous",
+          "groups": {
+            "negative": {
+              "n": 47,
+              "missing": 1,
+              "mean": 0.30886305727413194,
+              "sd_ddof1": 0.866149333903319,
+              "median": 0.28283012476083347,
+              "q25": -0.16090089140067776,
+              "q75": 0.9926504866894867
+            },
+            "positive": {
+              "n": 47,
+              "missing": 0,
+              "mean": 1.1420882086360002,
+              "sd_ddof1": 1.3353414488410582,
+              "median": 0.967274565517398,
+              "q25": 0.0053332371200318085,
+              "q75": 2.5716342441653284
+            }
+          },
+          "method": "mann_whitney",
+          "statistic": 735.0,
+          "p_value": 0.005265250415855463,
+          "contingency": null,
+          "expected_counts": null,
+          "diagnostic": null
+        },
+        {
+          "feature": "b",
+          "type": "continuous",
+          "groups": {
+            "negative": {
+              "n": 47,
+              "missing": 1,
+              "mean": 0.4480246365603047,
+              "sd_ddof1": 0.9101711558312497,
+              "median": 0.48151646810919896,
+              "q25": -0.15811326260375355,
+              "q75": 0.9337656886038771
+            },
+            "positive": {
+              "n": 47,
+              "missing": 0,
+              "mean": 0.8258591677503272,
+              "sd_ddof1": 1.096087337277457,
+              "median": 0.5834525061087065,
+              "q25": 0.09637462363507046,
+              "q75": 1.8193990870733123
+            }
+          },
+          "method": "mann_whitney",
+          "statistic": 904.0,
+          "p_value": 0.1304371910080201,
+          "contingency": null,
+          "expected_counts": null,
+          "diagnostic": null
+        },
+        {
+          "feature": "all_missing",
+          "type": "continuous",
+          "groups": {
+            "negative": {
+              "n": 0,
+              "missing": 48,
+              "mean": "NaN",
+              "sd_ddof1": "NaN",
+              "median": "NaN",
+              "q25": "NaN",
+              "q75": "NaN"
+            },
+            "positive": {
+              "n": 0,
+              "missing": 47,
+              "mean": "NaN",
+              "sd_ddof1": "NaN",
+              "median": "NaN",
+              "q25": "NaN",
+              "q75": "NaN"
+            }
+          },
+          "method": "insufficient_observations",
+          "statistic": "NaN",
+          "p_value": "NaN",
+          "contingency": null,
+          "expected_counts": null,
+          "diagnostic": "At least one outcome group has no observed values for this variable. No imputation or cross-variable deletion."
+        },
+        {
+          "feature": "sex",
+          "type": "categorical",
+          "groups": {
+            "negative": {
+              "n": 48,
+              "missing": 0,
+              "counts": {
+                "F": 16,
+                "M": 32
+              },
+              "proportions": {
+                "F": 0.3333333333333333,
+                "M": 0.6666666666666666
+              }
+            },
+            "positive": {
+              "n": 46,
+              "missing": 1,
+              "counts": {
+                "F": 16,
+                "M": 30
+              },
+              "proportions": {
+                "F": 0.34782608695652173,
+                "M": 0.6521739130434783
+              }
+            }
+          },
+          "method": "chi_square_no_yates",
+          "statistic": 0.021972884525479106,
+          "p_value": 0.8821592559724711,
+          "contingency": [
+            [
+              16,
+              16
+            ],
+            [
+              32,
+              30
+            ]
+          ],
+          "expected_counts": [
+            [
+              16.340425531914892,
+              15.659574468085106
+            ],
+            [
+              31.659574468085108,
+              30.340425531914892
+            ]
+          ],
+          "diagnostic": null
+        },
+        {
+          "feature": "rare",
+          "type": "categorical",
+          "groups": {
+            "negative": {
+              "n": 47,
+              "missing": 1,
+              "counts": {
+                "N": 43,
+                "R": 4
+              },
+              "proportions": {
+                "N": 0.9148936170212766,
+                "R": 0.0851063829787234
+              }
+            },
+            "positive": {
+              "n": 47,
+              "missing": 0,
+              "counts": {
+                "N": 45,
+                "R": 2
+              },
+              "proportions": {
+                "N": 0.9574468085106383,
+                "R": 0.0425531914893617
+              }
+            }
+          },
+          "method": "fisher_2x2",
+          "statistic": 0.4777777777777778,
+          "p_value": 0.6770808024885591,
+          "contingency": [
+            [
+              43,
+              45
+            ],
+            [
+              4,
+              2
+            ]
+          ],
+          "expected_counts": [
+            [
+              44.0,
+              44.0
+            ],
+            [
+              3.0,
+              3.0
+            ]
+          ],
+          "diagnostic": null
+        },
+        {
+          "feature": "constant_category",
+          "type": "categorical",
+          "groups": {
+            "negative": {
+              "n": 48,
+              "missing": 0,
+              "counts": {
+                "only": 48
+              },
+              "proportions": {
+                "only": 1.0
+              }
+            },
+            "positive": {
+              "n": 47,
+              "missing": 0,
+              "counts": {
+                "only": 47
+              },
+              "proportions": {
+                "only": 1.0
+              }
+            }
+          },
+          "method": "constant_or_absent_class",
+          "statistic": "NaN",
+          "p_value": "NaN",
+          "contingency": [
+            [
+              48,
+              47
+            ]
+          ],
+          "expected_counts": null,
+          "diagnostic": "Categorical variable has fewer than two observed levels; no association test is defined."
+        },
+        {
+          "feature": "missing_category",
+          "type": "categorical",
+          "groups": {
+            "negative": {
+              "n": 0,
+              "missing": 48,
+              "counts": {},
+              "proportions": {}
+            },
+            "positive": {
+              "n": 0,
+              "missing": 47,
+              "counts": {},
+              "proportions": {}
+            }
+          },
+          "method": "insufficient_observations",
+          "statistic": "NaN",
+          "p_value": "NaN",
+          "contingency": null,
+          "expected_counts": null,
+          "diagnostic": "At least one outcome group has no observed values for this variable. No imputation or cross-variable deletion."
+        }
+      ],
+      "diagnostics": [
+        "Original data contains two lesions per patient: row-level numerical reference only; public patient inference must reject repeats or require explicit sample-unit analysis with dependence warning."
+      ]
+    },
+    "multiclass": {
+      "classes": [
+        "benign",
+        "intermediate",
+        "malignant"
+      ],
+      "rows": [
+        {
+          "sample_id": "multiclass-P000-L0",
+          "patient_id": "multiclass-P000",
+          "cohort": "train",
+          "target": 0,
+          "a": null,
+          "b": 0.7723425713201766,
+          "sex": "F",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P000-L1",
+          "patient_id": "multiclass-P000",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.5025934806480976,
+          "b": null,
+          "sex": "F",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P001-L0",
+          "patient_id": "multiclass-P001",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.5846041214605261,
+          "b": 0.374188640143765,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P001-L1",
+          "patient_id": "multiclass-P001",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.41187053635259996,
+          "b": 0.5774787277003074,
+          "sex": null,
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P002-L0",
+          "patient_id": "multiclass-P002",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.7025258822842896,
+          "b": -0.2969652741155427,
+          "sex": "M",
+          "rare": null,
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P002-L1",
+          "patient_id": "multiclass-P002",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.8992363882265156,
+          "b": -0.4099276562211808,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P003-L0",
+          "patient_id": "multiclass-P003",
+          "cohort": "train",
+          "target": 0,
+          "a": -1.1973830703229649,
+          "b": 0.24431883912938948,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P003-L1",
+          "patient_id": "multiclass-P003",
+          "cohort": "train",
+          "target": 0,
+          "a": -1.4471122045882627,
+          "b": 0.48028641924717175,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P004-L0",
+          "patient_id": "multiclass-P004",
+          "cohort": "train",
+          "target": 1,
+          "a": -1.0815111323648972,
+          "b": -0.44088572589150277,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P004-L1",
+          "patient_id": "multiclass-P004",
+          "cohort": "train",
+          "target": 1,
+          "a": -1.1890293945187889,
+          "b": -0.5745696830379827,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P005-L0",
+          "patient_id": "multiclass-P005",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.7420640374353622,
+          "b": -1.7247238123718158,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P005-L1",
+          "patient_id": "multiclass-P005",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.869745755465261,
+          "b": -1.6779789252587578,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P006-L0",
+          "patient_id": "multiclass-P006",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.41306553573459837,
+          "b": 0.8203805956501875,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P006-L1",
+          "patient_id": "multiclass-P006",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.5250460962241503,
+          "b": 0.8038052698942302,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P007-L0",
+          "patient_id": "multiclass-P007",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.776577457304048,
+          "b": -0.16603820035810768,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P007-L1",
+          "patient_id": "multiclass-P007",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.7208258979196107,
+          "b": -0.4340977171424727,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P008-L0",
+          "patient_id": "multiclass-P008",
+          "cohort": "train",
+          "target": 2,
+          "a": 2.0003146732675825,
+          "b": 1.7853823235626374,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P008-L1",
+          "patient_id": "multiclass-P008",
+          "cohort": "train",
+          "target": 2,
+          "a": 2.126721953625288,
+          "b": 1.701212412179739,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P009-L0",
+          "patient_id": "multiclass-P009",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.362940776460383,
+          "b": 0.22230048927172713,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P009-L1",
+          "patient_id": "multiclass-P009",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.6986756635036058,
+          "b": 0.40781849657964375,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P010-L0",
+          "patient_id": "multiclass-P010",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.6288049297300562,
+          "b": 1.2349245627324272,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P010-L1",
+          "patient_id": "multiclass-P010",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.1023698056810645,
+          "b": 1.4303162752762706,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P011-L0",
+          "patient_id": "multiclass-P011",
+          "cohort": "train",
+          "target": 2,
+          "a": 1.5309955006394191,
+          "b": 0.1921725740747618,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P011-L1",
+          "patient_id": "multiclass-P011",
+          "cohort": "train",
+          "target": 2,
+          "a": 1.333063956303717,
+          "b": 0.11964073629704772,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P012-L0",
+          "patient_id": "multiclass-P012",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.7516893443102419,
+          "b": -0.28301951715173035,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P012-L1",
+          "patient_id": "multiclass-P012",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.9333440077458403,
+          "b": -0.4226447905995245,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P013-L0",
+          "patient_id": "multiclass-P013",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.4241285009734196,
+          "b": 0.8575242921911728,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P013-L1",
+          "patient_id": "multiclass-P013",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.11652957521041019,
+          "b": 1.0988542749790458,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P014-L0",
+          "patient_id": "multiclass-P014",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.9566561600512918,
+          "b": -0.5198335602067838,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P014-L1",
+          "patient_id": "multiclass-P014",
+          "cohort": "train",
+          "target": 2,
+          "a": 1.1113039104562445,
+          "b": -0.3563109542577122,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P015-L0",
+          "patient_id": "multiclass-P015",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.4837858093342955,
+          "b": 1.6553119838554182,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P015-L1",
+          "patient_id": "multiclass-P015",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.3329190128721222,
+          "b": 1.5070785364646175,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P016-L0",
+          "patient_id": "multiclass-P016",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.758692195613102,
+          "b": 0.39889251660206804,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P016-L1",
+          "patient_id": "multiclass-P016",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.7171277100425457,
+          "b": 0.6439040518060553,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P017-L0",
+          "patient_id": "multiclass-P017",
+          "cohort": "train",
+          "target": 2,
+          "a": 2.301845795796554,
+          "b": 0.5148054634847937,
+          "sex": "M",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P017-L1",
+          "patient_id": "multiclass-P017",
+          "cohort": "train",
+          "target": 2,
+          "a": 2.2137097489986424,
+          "b": 0.34923868048530093,
+          "sex": "M",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P018-L0",
+          "patient_id": "multiclass-P018",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.4814137548304536,
+          "b": -0.6825198873268918,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P018-L1",
+          "patient_id": "multiclass-P018",
+          "cohort": "train",
+          "target": 0,
+          "a": 1.5204529937336149,
+          "b": -0.766628097025009,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P019-L0",
+          "patient_id": "multiclass-P019",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.5371245100079576,
+          "b": -0.9605962607034069,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P019-L1",
+          "patient_id": "multiclass-P019",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.4132775845685502,
+          "b": -0.8153177659461417,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P020-L0",
+          "patient_id": "multiclass-P020",
+          "cohort": "train",
+          "target": 2,
+          "a": -0.6213529254308534,
+          "b": -1.3246775135391564,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P020-L1",
+          "patient_id": "multiclass-P020",
+          "cohort": "train",
+          "target": 2,
+          "a": -0.3941887543745548,
+          "b": -1.3288846935245995,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P021-L0",
+          "patient_id": "multiclass-P021",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.07718358750929885,
+          "b": -1.0525406030140287,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P021-L1",
+          "patient_id": "multiclass-P021",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.11550572599638737,
+          "b": -1.0542004549679278,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P022-L0",
+          "patient_id": "multiclass-P022",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.7052331877201884,
+          "b": -0.8270153849189847,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P022-L1",
+          "patient_id": "multiclass-P022",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.6444539922977562,
+          "b": -0.5796163077134513,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P023-L0",
+          "patient_id": "multiclass-P023",
+          "cohort": "train",
+          "target": 2,
+          "a": 2.4848498866650828,
+          "b": -0.6944141083329546,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P023-L1",
+          "patient_id": "multiclass-P023",
+          "cohort": "train",
+          "target": 2,
+          "a": 2.449362230511388,
+          "b": -0.6525526353886818,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P024-L0",
+          "patient_id": "multiclass-P024",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.7280882560952773,
+          "b": 0.6241219043130539,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P024-L1",
+          "patient_id": "multiclass-P024",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.9533441534601064,
+          "b": 0.6826464289768185,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P025-L0",
+          "patient_id": "multiclass-P025",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.29575048049731,
+          "b": 0.9926420360162129,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P025-L1",
+          "patient_id": "multiclass-P025",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.4464421528703406,
+          "b": 0.9529720545652566,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P026-L0",
+          "patient_id": "multiclass-P026",
+          "cohort": "train",
+          "target": 2,
+          "a": -1.1218519655118453,
+          "b": -0.5659325151854693,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P026-L1",
+          "patient_id": "multiclass-P026",
+          "cohort": "train",
+          "target": 2,
+          "a": -0.6549606756088442,
+          "b": -1.0008281473501799,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P027-L0",
+          "patient_id": "multiclass-P027",
+          "cohort": "train",
+          "target": 0,
+          "a": -1.0241854799554355,
+          "b": -0.5364896146856626,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P027-L1",
+          "patient_id": "multiclass-P027",
+          "cohort": "train",
+          "target": 0,
+          "a": -1.1338604829039496,
+          "b": -0.7609250231463613,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P028-L0",
+          "patient_id": "multiclass-P028",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.1235022213189011,
+          "b": 0.6537183611205113,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P028-L1",
+          "patient_id": "multiclass-P028",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.01158236856830186,
+          "b": 0.5902882176631123,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P029-L0",
+          "patient_id": "multiclass-P029",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.36209540791851347,
+          "b": -0.6327123132245607,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P029-L1",
+          "patient_id": "multiclass-P029",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.513411771876465,
+          "b": -0.5210020933617902,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P030-L0",
+          "patient_id": "multiclass-P030",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.7083142391918533,
+          "b": -0.17168057690565824,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P030-L1",
+          "patient_id": "multiclass-P030",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.6842473630702164,
+          "b": 0.049509585231250056,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P031-L0",
+          "patient_id": "multiclass-P031",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.2581832728780444,
+          "b": -1.1104395389423696,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P031-L1",
+          "patient_id": "multiclass-P031",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.2814588110899752,
+          "b": -1.0957779835801316,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P032-L0",
+          "patient_id": "multiclass-P032",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.778400082582371,
+          "b": -1.1477855566234048,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P032-L1",
+          "patient_id": "multiclass-P032",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.6703874715766274,
+          "b": -0.8942172705473496,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P033-L0",
+          "patient_id": "multiclass-P033",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.20700675350626974,
+          "b": 1.503531290957151,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P033-L1",
+          "patient_id": "multiclass-P033",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.060580806617200056,
+          "b": 1.4099321564002867,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P034-L0",
+          "patient_id": "multiclass-P034",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.47195057589036804,
+          "b": 0.15637905929274343,
+          "sex": "M",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P034-L1",
+          "patient_id": "multiclass-P034",
+          "cohort": "train",
+          "target": 1,
+          "a": -0.5917256998629589,
+          "b": 0.009426621665461377,
+          "sex": "M",
+          "rare": "R",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P035-L0",
+          "patient_id": "multiclass-P035",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.7958692182465633,
+          "b": -0.8708712769335402,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P035-L1",
+          "patient_id": "multiclass-P035",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.8995097259155788,
+          "b": -0.9768734948160609,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P036-L0",
+          "patient_id": "multiclass-P036",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.40395476226419685,
+          "b": 0.07044377541810509,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P036-L1",
+          "patient_id": "multiclass-P036",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.3819908284493809,
+          "b": -0.14072473140250982,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P037-L0",
+          "patient_id": "multiclass-P037",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.0923697910879355,
+          "b": 1.7723646051832074,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P037-L1",
+          "patient_id": "multiclass-P037",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.1924349792846738,
+          "b": 1.7829767543362196,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P038-L0",
+          "patient_id": "multiclass-P038",
+          "cohort": "train",
+          "target": 2,
+          "a": 1.2877991619321367,
+          "b": 0.23749952949167935,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P038-L1",
+          "patient_id": "multiclass-P038",
+          "cohort": "train",
+          "target": 2,
+          "a": 1.136631968003277,
+          "b": 0.2861182291861471,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P039-L0",
+          "patient_id": "multiclass-P039",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.5012415249269756,
+          "b": 0.4579640454700885,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P039-L1",
+          "patient_id": "multiclass-P039",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.7572908100872162,
+          "b": 0.3347793697379741,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P040-L0",
+          "patient_id": "multiclass-P040",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.539355352096054,
+          "b": 1.7734551647391277,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P040-L1",
+          "patient_id": "multiclass-P040",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.5171636909044488,
+          "b": 1.6157180214995441,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P041-L0",
+          "patient_id": "multiclass-P041",
+          "cohort": "train",
+          "target": 2,
+          "a": 1.7980881352585805,
+          "b": -0.7185115288536453,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P041-L1",
+          "patient_id": "multiclass-P041",
+          "cohort": "train",
+          "target": 2,
+          "a": 1.754471637324256,
+          "b": -0.8347757738464197,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P042-L0",
+          "patient_id": "multiclass-P042",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.6200630462914676,
+          "b": -0.8951768689641347,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P042-L1",
+          "patient_id": "multiclass-P042",
+          "cohort": "train",
+          "target": 0,
+          "a": 0.4725482192911485,
+          "b": -0.9201140324254732,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P043-L0",
+          "patient_id": "multiclass-P043",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.4023137181151767,
+          "b": 0.8750190124741167,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P043-L1",
+          "patient_id": "multiclass-P043",
+          "cohort": "train",
+          "target": 1,
+          "a": 0.5538651262370526,
+          "b": 1.0944502690609794,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P044-L0",
+          "patient_id": "multiclass-P044",
+          "cohort": "train",
+          "target": 2,
+          "a": 2.1510269691482558,
+          "b": -1.1158070222458265,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P044-L1",
+          "patient_id": "multiclass-P044",
+          "cohort": "train",
+          "target": 2,
+          "a": 2.241934453155574,
+          "b": -1.1082435336710876,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P045-L0",
+          "patient_id": "multiclass-P045",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.12372144503519372,
+          "b": -0.5654643239270231,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P045-L1",
+          "patient_id": "multiclass-P045",
+          "cohort": "train",
+          "target": 0,
+          "a": -0.13911530461150268,
+          "b": -0.4187338469265067,
+          "sex": "F",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P046-L0",
+          "patient_id": "multiclass-P046",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.3724078140373002,
+          "b": 2.3174991697708407,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P046-L1",
+          "patient_id": "multiclass-P046",
+          "cohort": "train",
+          "target": 1,
+          "a": 1.5499641148932533,
+          "b": 2.495028923099513,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P047-L0",
+          "patient_id": "multiclass-P047",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.5825142539895649,
+          "b": -0.11008056395453839,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        },
+        {
+          "sample_id": "multiclass-P047-L1",
+          "patient_id": "multiclass-P047",
+          "cohort": "train",
+          "target": 2,
+          "a": 0.4719551284824337,
+          "b": -0.2951497762030588,
+          "sex": "M",
+          "rare": "N",
+          "all_missing": null,
+          "constant_category": "only",
+          "missing_category": null
+        }
+      ],
+      "source_missing_target_rows_explicitly_omitted_when_constructing_fixture": 0,
+      "analysis_unit": "sample",
+      "n_input": 96,
+      "table": [
+        {
+          "feature": "a",
+          "type": "continuous",
+          "groups": {
+            "benign": {
+              "n": 31,
+              "missing": 1,
+              "mean": 0.028983419459416526,
+              "sd_ddof1": 0.8103241758918709,
+              "median": -0.07718358750929885,
+              "q25": -0.513143810575563,
+              "q75": 0.652155204680842
+            },
+            "intermediate": {
+              "n": 32,
+              "missing": 0,
+              "mean": 0.6406175765111022,
+              "sd_ddof1": 0.8966438557530862,
+              "median": 0.6748435900089723,
+              "q25": -0.11827273673753291,
+              "q75": 1.3909163987455604
+            },
+            "malignant": {
+              "n": 32,
+              "missing": 0,
+              "mean": 1.0741917795065854,
+              "sd_ddof1": 0.9410285479008009,
+              "median": 0.9280829429834353,
+              "q25": 0.6484191671798618,
+              "q75": 1.848644769760831
+            }
+          },
+          "method": "kruskal_wallis",
+          "statistic": 18.20666251061118,
+          "p_value": 0.00011129444007805643,
+          "contingency": null,
+          "expected_counts": null,
+          "diagnostic": null
+        },
+        {
+          "feature": "b",
+          "type": "continuous",
+          "groups": {
+            "benign": {
+              "n": 31,
+              "missing": 1,
+              "mean": 0.10889385127254352,
+              "sd_ddof1": 0.7976918195184026,
+              "median": 0.07044377541810509,
+              "q25": -0.5509769693063429,
+              "q75": 0.6533841666449363
+            },
+            "intermediate": {
+              "n": 32,
+              "missing": 0,
+              "mean": 0.5216770951151064,
+              "sd_ddof1": 1.0154160867369082,
+              "median": 0.6170961347345838,
+              "q25": -0.43579471932973024,
+              "q75": 1.132871846917391
+            },
+            "malignant": {
+              "n": 32,
+              "missing": 0,
+              "mean": -0.4560309391022503,
+              "sd_ddof1": 0.812896333249064,
+              "median": -0.599322414205015,
+              "q25": -0.9828621579495906,
+              "q75": -0.05265023889164186
+            }
+          },
+          "method": "kruskal_wallis",
+          "statistic": 16.417142402376896,
+          "p_value": 0.0002723095189836483,
+          "contingency": null,
+          "expected_counts": null,
+          "diagnostic": null
+        },
+        {
+          "feature": "all_missing",
+          "type": "continuous",
+          "groups": {
+            "benign": {
+              "n": 0,
+              "missing": 32,
+              "mean": "NaN",
+              "sd_ddof1": "NaN",
+              "median": "NaN",
+              "q25": "NaN",
+              "q75": "NaN"
+            },
+            "intermediate": {
+              "n": 0,
+              "missing": 32,
+              "mean": "NaN",
+              "sd_ddof1": "NaN",
+              "median": "NaN",
+              "q25": "NaN",
+              "q75": "NaN"
+            },
+            "malignant": {
+              "n": 0,
+              "missing": 32,
+              "mean": "NaN",
+              "sd_ddof1": "NaN",
+              "median": "NaN",
+              "q25": "NaN",
+              "q75": "NaN"
+            }
+          },
+          "method": "insufficient_observations",
+          "statistic": "NaN",
+          "p_value": "NaN",
+          "contingency": null,
+          "expected_counts": null,
+          "diagnostic": "At least one outcome group has no observed values for this variable. No imputation or cross-variable deletion."
+        },
+        {
+          "feature": "sex",
+          "type": "categorical",
+          "groups": {
+            "benign": {
+              "n": 32,
+              "missing": 0,
+              "counts": {
+                "F": 32
+              },
+              "proportions": {
+                "F": 1.0
+              }
+            },
+            "intermediate": {
+              "n": 31,
+              "missing": 1,
+              "counts": {
+                "M": 31
+              },
+              "proportions": {
+                "M": 1.0
+              }
+            },
+            "malignant": {
+              "n": 32,
+              "missing": 0,
+              "counts": {
+                "M": 32
+              },
+              "proportions": {
+                "M": 1.0
+              }
+            }
+          },
+          "method": "chi_square_no_yates",
+          "statistic": 95.00000000000001,
+          "p_value": 2.349698337452806e-21,
+          "contingency": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              0,
+              31,
+              32
+            ]
+          ],
+          "expected_counts": [
+            [
+              10.778947368421052,
+              10.442105263157895,
+              10.778947368421052
+            ],
+            [
+              21.221052631578946,
+              20.557894736842105,
+              21.221052631578946
+            ]
+          ],
+          "diagnostic": null
+        },
+        {
+          "feature": "rare",
+          "type": "categorical",
+          "groups": {
+            "benign": {
+              "n": 32,
+              "missing": 0,
+              "counts": {
+                "N": 30,
+                "R": 2
+              },
+              "proportions": {
+                "N": 0.9375,
+                "R": 0.0625
+              }
+            },
+            "intermediate": {
+              "n": 32,
+              "missing": 0,
+              "counts": {
+                "N": 30,
+                "R": 2
+              },
+              "proportions": {
+                "N": 0.9375,
+                "R": 0.0625
+              }
+            },
+            "malignant": {
+              "n": 31,
+              "missing": 1,
+              "counts": {
+                "N": 29,
+                "R": 2
+              },
+              "proportions": {
+                "N": 0.9354838709677419,
+                "R": 0.06451612903225806
+              }
+            }
+          },
+          "method": "chi_square_no_yates",
+          "statistic": 0.0014346985622810113,
+          "p_value": 0.9992829079523426,
+          "contingency": [
+            [
+              30,
+              30,
+              29
+            ],
+            [
+              2,
+              2,
+              2
+            ]
+          ],
+          "expected_counts": [
+            [
+              29.978947368421053,
+              29.978947368421053,
+              29.042105263157893
+            ],
+            [
+              2.0210526315789474,
+              2.0210526315789474,
+              1.9578947368421054
+            ]
+          ],
+          "diagnostic": null
+        },
+        {
+          "feature": "constant_category",
+          "type": "categorical",
+          "groups": {
+            "benign": {
+              "n": 32,
+              "missing": 0,
+              "counts": {
+                "only": 32
+              },
+              "proportions": {
+                "only": 1.0
+              }
+            },
+            "intermediate": {
+              "n": 32,
+              "missing": 0,
+              "counts": {
+                "only": 32
+              },
+              "proportions": {
+                "only": 1.0
+              }
+            },
+            "malignant": {
+              "n": 32,
+              "missing": 0,
+              "counts": {
+                "only": 32
+              },
+              "proportions": {
+                "only": 1.0
+              }
+            }
+          },
+          "method": "constant_or_absent_class",
+          "statistic": "NaN",
+          "p_value": "NaN",
+          "contingency": [
+            [
+              32,
+              32,
+              32
+            ]
+          ],
+          "expected_counts": null,
+          "diagnostic": "Categorical variable has fewer than two observed levels; no association test is defined."
+        },
+        {
+          "feature": "missing_category",
+          "type": "categorical",
+          "groups": {
+            "benign": {
+              "n": 0,
+              "missing": 32,
+              "counts": {},
+              "proportions": {}
+            },
+            "intermediate": {
+              "n": 0,
+              "missing": 32,
+              "counts": {},
+              "proportions": {}
+            },
+            "malignant": {
+              "n": 0,
+              "missing": 32,
+              "counts": {},
+              "proportions": {}
+            }
+          },
+          "method": "insufficient_observations",
+          "statistic": "NaN",
+          "p_value": "NaN",
+          "contingency": null,
+          "expected_counts": null,
+          "diagnostic": "At least one outcome group has no observed values for this variable. No imputation or cross-variable deletion."
+        }
+      ],
+      "diagnostics": [
+        "Original data contains two lesions per patient: row-level numerical reference only; public patient inference must reject repeats or require explicit sample-unit analysis with dependence warning."
+      ]
+    }
+  },
+  "reference_source_revision": "SciPy1.13.1 / 34a5ce2e0e51fc2005d3c2720bcd8296cd33af94"
+}
