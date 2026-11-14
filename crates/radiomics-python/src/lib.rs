@@ -69,6 +69,38 @@ mod _native {
     const CORE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
     #[pyfunction]
+    fn read_cohort(py: Python<'_>, path: String) -> PyResult<String> {
+        py.detach(|| {
+            let samples = core::workflow::read_cohort(path)?;
+            Ok(serde_json::to_string(&samples)?)
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
+    #[pyo3(signature=(samples, config, n_jobs=1, cache=None))]
+    fn extract_images(
+        py: Python<'_>,
+        samples: String,
+        config: String,
+        n_jobs: usize,
+        cache: Option<String>,
+    ) -> PyResult<String> {
+        py.detach(|| {
+            let samples: Vec<core::workflow::CohortSample> = serde_json::from_str(&samples)?;
+            let config: core::workflow::ExtractConfig = serde_json::from_str(&config)?;
+            let batch = core::workflow::extract_batch(
+                &samples,
+                &config,
+                n_jobs,
+                cache.as_deref().map(std::path::Path::new),
+            )?;
+            Ok(serde_json::to_string(&batch)?)
+        })
+        .map_err(|e: core::errors::RadiomicsError| PyValueError::new_err(e.to_string()))
+    }
+
+    #[pyfunction]
     fn auc(py: Python<'_>, y: Vec<u8>, scores: Vec<f64>) -> PyResult<f64> {
         py.detach(|| core::auc(&y, &scores)).map_err(input_error)
     }

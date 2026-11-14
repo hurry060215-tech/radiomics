@@ -5,7 +5,6 @@ import hashlib
 import json
 import numpy as np
 import pandas as pd
-from joblib import Parallel, delayed
 from ._validation import unique_ids
 
 
@@ -77,12 +76,21 @@ class ExtractionResult:
         (path / 'config.json').write_text(json.dumps(self.config, indent=2, default=str), encoding='utf-8')
 
 
-def extract(samples, params=None, roi_label=1, correct_mask=False, n_jobs=1, on_error="raise"):
+def extract(samples, params=None, roi_label=1, correct_mask=False, n_jobs=1, on_error="raise",
+            backend='python', profile=None, bin_width=None, bin_count=None, cache=None):
     """Extract ROI features. params is a PyRadiomics YAML path or parameter dictionary.
 
     Explicit correct_mask overrides the backend setting. No implicit disk cache.
     on_error='record' keeps failed IDs in diagnostics and features (NaN values).
     """
+    if backend in ('rust', 'auto'):
+        return _extract_native(samples, params, roi_label, correct_mask, n_jobs, on_error,
+                               profile, bin_width, bin_count, cache)
+    if backend != 'python':
+        raise ValueError('backend must be python, rust, or auto.')
+    if profile is not None or bin_width is not None or bin_count is not None or cache is not None:
+        raise ValueError('profile/bin_width/bin_count/cache are native options; use backend="rust" or configure the explicit Python params.')
+    from joblib import Parallel, delayed
     unique_ids(samples)
     if on_error not in ('raise', 'record') or samples.empty:
         raise ValueError("Use nonempty samples and on_error='raise' or 'record'.")
@@ -126,3 +134,78 @@ def extract(samples, params=None, roi_label=1, correct_mask=False, n_jobs=1, on_
                   'samples': samples.to_dict('records')}
     config_out['parameter_sha256'] = hashlib.sha256(json.dumps(effective, sort_keys=True, default=str).encode()).hexdigest()
     return ExtractionResult(pd.DataFrame([r[0] for r in results]), pd.DataFrame([r[1] for r in results]), config_out)
+
+
+def read_cohort(path):
+    """Read native cohort CSV: sample_id/patient_id/image/mask are required.
+
+    Paths are relative to the CSV. Output ID is the sample identifier; repeated
+    patient_id is preserved. Optional metadata stays outside numerical features.
+    """
+    from ._backend import resolve_backend
+    native = resolve_backend('rust')
+    records = json.loads(native.read_cohort(str(Path(path).resolve())))
+    return pd.DataFrame([dict(ID=row['metadata']['sample_id'],
+        **{k: v for k, v in row['metadata'].items() if k != 'sample_id'},
+        image=row['image'], mask=row['mask'], organ_mask=row['organ_mask']) for row in records])
+
+
+def _extract_native(samples, params, roi_label, correct_mask, n_jobs, on_error,
+                    profile, bin_width, bin_count, cache):
+    from ._backend import resolve_backend
+    import copy
+    unique_ids(samples)
+    if params is not None and (bin_width is not None or bin_count is not None):
+        raise ValueError('Choose a complete native params configuration or bin_width/bin_count keywords.')
+    if samples.empty or on_error not in ('raise', 'record'):
+        raise ValueError('Use nonempty samples and on_error=raise or record.')
+    if correct_mask:
+        raise ValueError('Native extraction requires explicit image/mask alignment; resample the mask explicitly.')
+    if isinstance(params, (str, Path)):
+        config = json.loads(Path(params).read_text(encoding='utf-8'))
+    elif params is None:
+        if (bin_width is None) == (bin_count is None):
+            raise ValueError('Native extraction requires exactly one explicit bin_width or bin_count.')
+        discretization = {'method': 'fixed_width', 'width': bin_width} if bin_width is not None else {'method': 'fixed_count', 'count': bin_count}
+        config = dict(extraction=dict(profile=profile or 'python_golden_v1',
+            discretization=discretization, aggregation='direction_mean',
+            gldm_alpha=0, voxel_array_shift=0.0), labels=[roi_label], preparation=[])
+    else:
+        if bin_width is not None or bin_count is not None:
+            raise ValueError('Choose a complete native params configuration or bin_width/bin_count keywords.')
+        config = copy.deepcopy(params)
+    if not isinstance(config, dict) or not isinstance(config.get('extraction'), dict):
+        raise ValueError('Unsupported native configuration. Supply ExtractConfig JSON; use backend="python" explicitly for external PyRadiomics settings.')
+    if profile is not None and config['extraction'].get('profile') != profile:
+        raise ValueError('profile conflicts with the supplied native configuration.')
+    rows = []
+    for row in samples.to_dict('records'):
+        def optional(key):
+            value = row.get(key)
+            return None if value is None or pd.isna(value) else str(value)
+        if pd.isna(row.get('patient_id', row['ID'])):
+            raise ValueError('patient_id must be complete when supplied.')
+        metadata = dict(sample_id=str(row['ID']), patient_id=str(row.get('patient_id', row['ID'])),
+            **{k: optional(k) for k in ('slide_id', 'lesion_id', 'modality', 'region', 'timepoint', 'center')})
+        rows.append(dict(metadata=metadata, image=str(Path(row['image']).resolve()),
+            mask=str(Path(row['mask']).resolve()), organ_mask=optional('organ_mask')))
+    native = resolve_backend('rust')
+    batch = json.loads(native.extract_images(json.dumps(rows, allow_nan=False),
+        json.dumps(config, allow_nan=False), n_jobs, str(Path(cache).resolve()) if cache is not None else None))
+    if batch['failures'] and on_error == 'raise':
+        failures = '; '.join(f"{f['metadata']['sample_id']}: {f['error']['message']}" for f in batch['failures'])
+        raise RuntimeError('Native extraction failed: ' + failures)
+    feature_rows = []
+    diagnostic_rows = []
+    for row in batch['records']:
+        identifier = row['metadata']['sample_id']
+        feature_rows.append(dict(ID=identifier, **{k: np.nan if v is None else v for k, v in row['features'].items()}))
+        diagnostic_rows.append(dict(ID=identifier, patient_id=row['metadata']['patient_id'],
+            ok=True, error='', cache_key=row['cache_key'], quality=json.dumps(row['quality'])))
+    for row in batch['failures']:
+        identifier = row['metadata']['sample_id']
+        feature_rows.append(dict(ID=identifier))
+        diagnostic_rows.append(dict(ID=identifier, patient_id=row['metadata']['patient_id'],
+            ok=False, error=row['error']['message'], error_code=row['error']['code']))
+    return ExtractionResult(pd.DataFrame(feature_rows).sort_values('ID').reset_index(drop=True),
+        pd.DataFrame(diagnostic_rows).sort_values('ID').reset_index(drop=True), batch)

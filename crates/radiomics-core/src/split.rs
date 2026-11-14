@@ -74,12 +74,7 @@ pub struct SplitPlan {
 }
 
 fn ordering(seed: u64, domain: &str, patient: &str) -> [u8; 32] {
-    let mut digest = Sha256::new();
-    digest.update(seed.to_le_bytes());
-    digest.update((domain.len() as u64).to_le_bytes());
-    digest.update(domain.as_bytes());
-    digest.update(patient.as_bytes());
-    digest.finalize().into()
+    crate::random::derive_seed(seed, domain, patient.as_bytes())
 }
 
 fn check_classes(
@@ -279,8 +274,15 @@ impl SplitPlan {
             result
                 .sample_patients
                 .insert(row.sample_id.clone(), row.patient_id.clone());
-            if row.center.as_ref().is_some_and(|s|s.trim().is_empty()) {return Err(error(ErrorCode::InvalidInput,"Center IDs must be nonempty when supplied."));}
-            result.sample_centers.insert(row.sample_id.clone(),row.center.clone());
+            if row.center.as_ref().is_some_and(|s| s.trim().is_empty()) {
+                return Err(error(
+                    ErrorCode::InvalidInput,
+                    "Center IDs must be nonempty when supplied.",
+                ));
+            }
+            result
+                .sample_centers
+                .insert(row.sample_id.clone(), row.center.clone());
             result
                 .cohorts
                 .entry(row.cohort.clone())
@@ -396,9 +398,18 @@ impl SplitPlan {
                 "Sample-patient map differs from the cohort population.",
             ));
         }
-        if self.sample_centers.keys().collect::<BTreeSet<_>>()!=self.sample_patients.keys().collect::<BTreeSet<_>>()
-            || self.sample_centers.values().flatten().any(|s|s.trim().is_empty()) {
-            return Err(error(ErrorCode::Alignment,"Sample center provenance is incomplete or invalid."));
+        if self.sample_centers.keys().collect::<BTreeSet<_>>()
+            != self.sample_patients.keys().collect::<BTreeSet<_>>()
+            || self
+                .sample_centers
+                .values()
+                .flatten()
+                .any(|s| s.trim().is_empty())
+        {
+            return Err(error(
+                ErrorCode::Alignment,
+                "Sample center provenance is incomplete or invalid.",
+            ));
         }
         if self.task == Task::Regression {
             if !self.patient_classes.is_empty() || !self.sample_classes.is_empty() {
@@ -516,7 +527,12 @@ impl SplitPlan {
                     "Training class differs from SplitPlan.",
                 ));
             }
-            if self.sample_centers.get(&row.sample_id)!=Some(&row.center) {return Err(error(ErrorCode::Alignment,"Sample center differs from SplitPlan."));}
+            if self.sample_centers.get(&row.sample_id) != Some(&row.center) {
+                return Err(error(
+                    ErrorCode::Alignment,
+                    "Sample center differs from SplitPlan.",
+                ));
+            }
         }
         Ok(())
     }
