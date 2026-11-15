@@ -1,0 +1,61 @@
+{
+  "schema": "radiomics.real.file-entry-validation.v1",
+  "base_revision": "0b8bb22f4c736e7f1fd384bfc7f1eda3102a9945",
+  "environment_python": "E:/radiomics-build/native-env/Scripts/python.exe",
+  "native_core_implementation": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+  "scope": "Actual file-input smoke and display, not speed/clinical effectiveness. No outcomes or patient model generated.",
+  "runs": [
+    {
+      "name": "public_PAT1_source_files",
+      "commands": [
+        "python examples/real/download_public_ct.py --output E:/radiomics-build/real-tutorial-pat1-v2 --from-cache E:/radiomics-build/public-ct-v1/source --acknowledge-license",
+        "python examples/real/nifti_extract.py --cohort E:/radiomics-build/real-tutorial-pat1-v1/cohort.csv --bin-width 25 --labels 1 --features basic --preview-window -500 400 --output E:/radiomics-build/real-tutorial-nifti-v1"
+      ],
+      "source_license": "CC-BY-NC-3.0 Philippe Lambin/CancerData; NIfTI Alex Zwanenburg",
+      "output_directory": "E:\\radiomics-build\\real-tutorial-nifti-v1",
+      "status": "passed",
+      "failed_samples": 0,
+      "feature_count": 27,
+      "roi_voxels": 125256,
+      "mean": -46.88272018905282,
+      "support_volume_mm3": 358681.451871528,
+      "preview_z": 23,
+      "artifact_sha256": {
+        "features.csv": "fdb94adbb3cfa72f7d8137c03dc5d094e1661f055bdaa840180142dcb0ac5d5f",
+        "metadata.csv": "7222c76d853933dc60a0d4ecdbd9e5246754528f88b75e6b3f6fc4f504d2dd66",
+        "preview\\sample-000.png": "3bbd99ea55ba3f23ab1fde37170497b8e4b603486ee32fd6977ff4dcdaff9c6a",
+        "provenance.json": "b79c74f8f62471460148acef476d73b8551c68afcf5380e033a4f72662934bc9"
+      }
+    },
+    {
+      "name": "existing_real_IHC_image",
+      "command": "python examples/real/patch_features.py --manifest E:/radiomics-build/real-tutorial-ihc-input-v1/patches.csv --coordinate-space image-local --identity-scope source-image --output E:/radiomics-build/real-tutorial-ihc-v2",
+      "source_file": "D:\\OnekeyPlatfrom50\\onekey_envs\\Lib\\site-packages\\skimage\\data\\ihc.png",
+      "source_sha256": "f8dd1aa387ddd1f49d8ad13b50921b237df8e9b262606d258770687b0ef93cef",
+      "source_distribution": "scikit-image0.24.0",
+      "source_documentation": "https://scikit-image.org/docs/0.24.x/api/skimage.data.html#skimage.data.immunohistochemistry",
+      "source_license_statement": "No known copyright restrictions; actual source image not copied into repository.",
+      "identity_scope": "Explicit operator source-image group only; not verified clinical patient/slide identity.",
+      "coordinate_scope": "Whole ordinary source-image local pixels; no WSI placement/MPP invented.",
+      "output_directory": "E:\\radiomics-build\\real-tutorial-ihc-v2",
+      "status": "passed",
+      "failed_files": 0,
+      "feature_count": 7,
+      "native_tissue_fraction": 0.6367225646972656,
+      "native_R_mean": 177.25387954711914,
+      "mpp": null,
+      "artifact_sha256": {
+        "tile-features.csv": "59c56e2833389944baeacb1474b09c424f60925e8f994d4d25ddab8c21907e81",
+        "group-features.csv": "089eb79b7a571ec2e4ad7df608a97b3e0f3b9a71c55c0405c0a1c149fd62b83d",
+        "tiles.json": "49175f7f7133528b98cbf35fb0ee309a25cf99fa5c1aa759a308a7f301d1dada",
+        "preview\\patch-000.png": "aa58e28a27816b3db573962de2b35171672cd533795e163c9d2a4253eda34be3",
+        "overlay-000.png": "a77cfca59ed68e1bb04e84f83a7c8150466267708e7394e270a9d4bc97f6ec0c"
+      }
+    }
+  ],
+  "tests": "python -m pytest tests/test_real_input_examples.py -q:2passed; no public medical voxel assets required by tests",
+  "plots_visually_checked": [
+    "Actual PAT1 image/ROI axial index23; voxel axes/display-only window and physical affine kept",
+    "Actual IHC original pixels/native QC tissue mask; measured whole-file tile feature and coverage view"
+  ]
+}
