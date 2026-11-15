@@ -132,14 +132,17 @@ def artifact_evidence(root, expected):
     return files, failures
 
 
-def execute_one(path, run_root, repo_root, kernel_root, timeout=300):
+def execute_one(path, run_root, repo_root, kernel_root, timeout=300, *,
+                expected_outputs=None, kernel_parameters=None, source_bindings=None):
     before_hash = sha256(path)
     original = nbformat.read(path, as_version=4)
     nbformat.validate(original)
     binding = original.metadata.get('radiomics_tutorial', {})
-    for relative, key in [(binding.get('example'), 'example_sha256'),
-                          ('examples/native/_shared.py', 'shared_sha256')]:
-        if not relative or sha256(repo_root / relative) != binding.get(key):
+    bindings = source_bindings if source_bindings is not None else {
+        binding.get('example'): binding.get('example_sha256'),
+        'examples/native/_shared.py': binding.get('shared_sha256')}
+    for relative, expected_hash in bindings.items():
+        if not relative or sha256(repo_root / relative) != expected_hash:
             raise ValueError(f'Tutorial helper/source binding mismatch: {relative}')
     notebook = nbformat.from_dict(json.loads(json.dumps(original)))
     # Clear stale outputs; a pre-executed notebook can never provide pass evidence.
@@ -156,6 +159,10 @@ def execute_one(path, run_root, repo_root, kernel_root, timeout=300):
     kernel_dir.mkdir()
     # Per-run kernelspec; no global kernel installation or changed source cells.
     prelude = [f'TUTORIAL_REPO_ROOT = {str(repo_root)!r}', f'TUTORIAL_RUN_ROOT = {str(artifacts)!r}']
+    for name, value in (kernel_parameters or {}).items():
+        if not name.isidentifier() or name in ('TUTORIAL_REPO_ROOT', 'TUTORIAL_RUN_ROOT'):
+            raise ValueError(f'Invalid/reserved kernel parameter: {name}')
+        prelude.append(f'{name} = {str(value)!r}')
     write_json(kernel_dir / 'kernel.json', {'argv': [sys.executable, '-m', 'ipykernel_launcher',
         '-f', '{connection_file}', '--IPKernelApp.exec_lines=' + json.dumps(prelude)],
         'display_name': 'Tutorial acceptance', 'language': 'python'})
@@ -174,7 +181,8 @@ def execute_one(path, run_root, repo_root, kernel_root, timeout=300):
     with executed.open('x', encoding='utf-8', newline='\n') as handle:
         nbformat.write(notebook, handle)
     cells, failures = cell_evidence(original, notebook)
-    outputs, artifact_failures = artifact_evidence(artifacts, EXPECTED[path.stem])
+    required = EXPECTED[path.stem] if expected_outputs is None else expected_outputs
+    outputs, artifact_failures = artifact_evidence(artifacts, required)
     failures.extend(artifact_failures)
     if error:
         failures.append('Kernel execution raised an exception; see execution_error.')
