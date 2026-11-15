@@ -53,4 +53,30 @@ Notebook输出完整 `split-assignments.csv`、`study.csv`、`training/split_pla
 
 模型分数只描述这一固定数据/划分的行为；不复现或比较原论文的算法结论，不把AUC作为医学诊断建议或外部泛化证据。真实数据并不自动等于临床验证，固定留出也不替代新的多中心队列。
 
-当前协议和源码先冻结，实际执行后的产物/receipt会作为单独版本证据补充，不在看到AUC后改seed、阈值、特征、训练比例或模型参数。
+## 实际执行记录：先冻结，再计算
+
+源码、输入摘要和计算协议先提交为 `da6ec6b7b8770d9ec8aea664b08c7f116a3b84bc`，再生成未执行Notebook并写入 `preexecution.json` 绑定提交、源文件SHA和NotebookSHA，随后首次调用原生训练。没有根据结果修改seed、阈值、特征、训练比例或模型参数。
+
+2026-11-15使用项目共享 `tools/run_tutorials.execute_one`，在新的Jupyter内核和独立工作目录实际执行：7个代码单元依次完成，`allow_errors=False`，无失败或执行异常，内核已结束；源Notebook字节在执行前后不变。Notebook保留表格、协议、模型输出、真实绘图和代码，不是另一训练脚本的包装页。
+
+| 实际检查 | 记录结果 |
+|---|---|
+| 源记录 | 569；B357、M212；30个显式数值预测器 |
+| 固定训练 | 454条，B285/M169 |
+| 固定test | 115条，B72/M43；没有与train共享source-record组 |
+| OOF AUC | 0.9959306550，仅训练source-record组的排除折预测 |
+| test AUC | 0.9886950904，仅本数据/固定留出，不代表临床效度或外部队列 |
+| `.rad`无标签加载预测 | 同一test去掉diagnosis，保持test队列；加载前后完整PredictionTable完全一致 |
+| 下载与缓存 | 离线复制后SHA相同；复用缓存源字节不变；Git内缓存先于mkdir被拒绝；同大小但错误SHA的文件被拒绝且不覆盖 |
+
+数据中既有fractal_dimension等变量作为外部数值列输入；这不新增本包的分形/图像算法支持。训练表观AUC也保留在cohort-metrics中，但不能代替OOF或固定留出。
+
+本机实际产物位于 `E:/radiomics-build/public-tabular-v1/`，这是开发验收位置，使用者无需这个盘符：
+
+- 执行前冻结信息：`preexecution.json`。
+- 执行页：`execution/08_public_tabular/08_public_tabular.ipynb`，SHA256 `fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40`。
+- 共享runner外层receipt：`execution-receipt.json`，SHA256 `0bfedc27d14e03c015001ac211c958352c17c03a12b0b744fa6f6fc3a555bb6f`。
+- 模型、完整划分、实际ROC与API receipt：`execution/08_public_tabular/artifacts/`。
+- 独立下载检查：`download-checks.json`。原始两个文件仍在外置 `source/`，未入仓。
+
+该次Python为3.9.21，运行marker为 `real-public-tabular-no-clinical-validity`，原生扩展SHA256为 `bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c`。单次教程执行证明文件到原生API、保存加载和图表路径，不是新的性能benchmark，也不替代项目算法Golden、跨平台CI或临床验证。
