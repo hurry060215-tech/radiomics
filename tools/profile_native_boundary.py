@@ -312,10 +312,11 @@ def main():
     parser.add_argument('--acknowledge-license',action='store_true')
     args=parser.parse_args()
     if args.repeats<1 or args.warmups<0:parser.error('repeats must be positive; warmups nonnegative.')
+    preexisting_output=args.output.exists()
     try:
         run(args)
     except Exception as error:
-        if args.output.is_dir() and not (args.output/'failure.json').exists():
+        if not preexisting_output and args.output.is_dir() and not (args.output/'failure.json').exists():
             write_json(args.output/'failure.json',dict(type=type(error).__name__,message=str(error)))
         raise
     print('Diagnostic report:',args.output/'report.json')
