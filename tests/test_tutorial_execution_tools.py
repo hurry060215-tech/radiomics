@@ -18,6 +18,19 @@ def runner():
     return run_tutorials
 
 
+def test_notebooks_have_same_source_bindings_with_windows_or_linux_checkout(tmp_path):
+    roots = [tmp_path/'lf', tmp_path/'crlf']
+    for root, ending in zip(roots, (b'\n', b'\r\n')):
+        folder = root/'examples/native'
+        folder.mkdir(parents=True)
+        for source in [*build.example_paths(ROOT), ROOT/'examples/native/_shared.py']:
+            data = source.read_bytes().replace(b'\r\n', b'\n').replace(b'\n', ending)
+            (folder/source.name).write_bytes(data)
+    first = build.generate_notebooks(roots[0], tmp_path/'left')
+    second = build.generate_notebooks(roots[1], tmp_path/'right')
+    assert [p.read_bytes() for p in first] == [p.read_bytes() for p in second]
+
+
 def test_repeat_generation_has_identical_bytes_and_portable_inline_code(tmp_path):
     first = build.generate_notebooks(ROOT, tmp_path/'first')
     second = build.generate_notebooks(ROOT, tmp_path/'second')

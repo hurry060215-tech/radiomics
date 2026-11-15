@@ -1,41 +1,41 @@
-# API 与 CLI
+# API与CLI参考
 
-Python 导入名为 `ov_radiomics`，发行包名为 `ov-radiomics`。
+以下页面从仓库内维护的Markdown生成，网页与源码共用说明。数组/表格转换和绘图
+留在Python，数值操作调用同一Rust核心。所有原生示例显式指定 `backend="rust"`。
 
-## Python 原生入口
+```{toctree}
+:maxdepth: 1
+:caption: Python与数据
 
-| 任务 | 入口 | 重要约定 |
-|---|---|---|
-| 读取队列 | `rad.read_cohort(...)` | 样本 ID 唯一，患者可有多个病灶 |
-| 提取特征 | `rad.extract(..., backend="rust")` | 明确分箱、几何与 ROI |
-| 筛选 | `rad.FeatureSelector(..., backend="rust")` | 所有拟合进入训练划分 |
-| 建模 | `rad.train_models(..., split_plan=plan, backend="rust")` | binary / multiclass / regression |
-| 评价 | `rad.evaluate(...)` | 默认患者级；保留队列身份 |
-| 模型加载 | `rad.load_model(path)` | 类型化 .rad；输入可按名称重排 |
-| 病理 | `rad.pathology` | patch、QC、聚合、真实 tile 覆盖图 |
-| 容器适配 | `rad.interop` | 按 tile ID 校验，不能仅比较行数 |
-
-训练、筛选和临床统计的兼容默认后端仍可能为 Python；原生教程显式指定 Rust。未知配置会报错。
-
-## 命令行
-
-```bash
-radiomics --help
-radiomics check --help
-radiomics extract --help
-radiomics train --help
-radiomics predict --help
-radiomics evaluate --help
-radiomics fuse --help
-radiomics pathology --help
+reference/api
+reference/image-native
+reference/features-native
+reference/native-extraction
+reference/table-io-native
+reference/preprocessing-native
+reference/learning-native
+reference/models-native
+reference/evaluation-native
+reference/clinical-native
+reference/reliability-native
+reference/research-native
+reference/pathology-pixels
+reference/pathology-aggregate
+reference/interop
 ```
 
-以同一提交编译的 CLI `--help` 为参数依据。配置文件与输出示例见各教程源码。独立 CLI 运行不依赖 Python。
+```{toctree}
+:maxdepth: 1
+:caption: CLI与验证报告
 
-## 详细参考下载
+reference/cli-workflows-native
+reference/pathology-cli-native
+reference/support-matrix
+reference/technical-report
+reference/radiomics-benchmark-v2-results
+reference/learning-pathology-benchmark-v2-results
+reference/deployment-benchmark-v2-results
+```
 
-{download}`API 说明源码 <../docs/api.md>`
-
-{download}`CLI 工作流参数说明 <../docs/cli-workflows-native.md>`
-
-{download}`病理 CLI 说明 <../docs/pathology-cli-native.md>`
+CLI是单独构建产物，wheel不会自动附带命令。运行 `radiomics --help` 核对当前程序，
+配置中输入列、类别顺序、患者单位和实际划分都必须明确；相同fold编号不能代替患者集合验证。

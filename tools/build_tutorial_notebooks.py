@@ -135,8 +135,9 @@ runtime['package_python_sha256'] = {p.relative_to(Path(rad.__file__).parent).as_
    content=f"{path.stem}:{index}:{item['cell_type']}:{item['source']}".encode('utf-8')
    item['id']='cell-'+hashlib.sha256(content).hexdigest()[:20]
   notebook['metadata']['radiomics_tutorial']={'example':path.relative_to(repo_root).as_posix(),
-   'example_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
-   'shared_sha256':hashlib.sha256((repo_root/'examples/native/_shared.py').read_bytes()).hexdigest(),
+   'source_hash_mode':'utf8-lf-v1',
+   'example_sha256':hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest(),
+   'shared_sha256':hashlib.sha256((repo_root/'examples/native/_shared.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest(),
    'dataset':'fixed synthetic software demonstration; not clinical evidence'}
   dest=output_dir/(path.stem+'.ipynb')
   with dest.open('w' if overwrite else 'x',encoding='utf-8',newline='\n') as handle:

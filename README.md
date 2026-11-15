@@ -1,184 +1,95 @@
 # radiomics
 
-An independently maintained Python package with a Rust numerical core: medical images and ROI masks → radiomics models → clinical models → probability fusion and evaluation.
+[![Tests](https://github.com/hurry060215-tech/radiomics/actions/workflows/tests.yml/badge.svg)](https://github.com/hurry060215-tech/radiomics/actions/workflows/tests.yml)
+[![Documentation](https://github.com/hurry060215-tech/radiomics/actions/workflows/docs.yml/badge.svg)](https://github.com/hurry060215-tech/radiomics/actions/workflows/docs.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-The canonical repository is [hurry060215-tech/radiomics](https://github.com/hurry060215-tech/radiomics). OmicVerse and other projects can consume the package through ordinary Python imports; this repository is developed and released independently.
+**An independent Rust engine for radiomics and lightweight pathology, with Python APIs and a Python-free CLI.**
 
-Native development is tracked in the [implementation and acceptance ledger](docs/native-development.md).
-The [Chinese technical report](docs/technical-report.md) describes architecture,
-numerical validation and measured limitations. See the [support matrix](docs/support-matrix.md),
-[six executable native tutorials](docs/python-native.md),
-[Radiomics benchmark results](docs/radiomics-benchmark-v2-results.md) and
-[independent deployment measurements](docs/deployment-benchmark-v2-results.md).
-The sections below describe the original Python workflow. New native functionality
-is accepted module by module; the development plan is not a claim of full support.
+[中文介绍](README.zh-CN.md) · [Installation](website/installation.md) · [Tutorials](website/tutorials/index.md) · [Your own data](docs/user-guide/file-workflows.md) · [API](docs/api.md) · [Technical report](docs/technical-report.md)
 
-**Historical Python scope:** single-center binary classification with independent
-rows and optional external estimators. Current native workflows cover three tasks
-and grouped repeated samples. No private patient data or protected Onekey code is
-included. Public numerical reference data retain their separately stated licenses.
+## What can I do with it?
+
+| Starting point | Workflow | Outputs |
+|---|---|---|
+| Scalar NIfTI images, ROI masks and clinical tables | Native preparation/extraction → patient-grouped selection and modeling → evaluation | Feature tables, QC, shared splits, `.rad` models and external predictions |
+| Ordinary patches, decoded images, existing masks or embeddings | QC/features → tile/slide/patient aggregation → native models | QC tables, aggregation, predictions and actual tile-score overlays |
+
+Binary classification, multiclass classification and regression share the same core. Python converts arrays/tables and draws figures; the CLI does not invoke Python. OmicVerse and other projects can use ordinary imports without owning or being required by this package.
+
+The current Original subset contains **55 named statistical/texture features plus 11 `shape_basic` descriptors**. See the [support matrix](docs/support-matrix.md) for exact boundaries. This is not a DICOM/RTSTRUCT reader, general WSI decoder, segmentation engine or deep-model trainer.
 
 ## Install
 
-From a checkout:
+The distribution is **`ov-radiomics`** and the import is **`ov_radiomics`**, avoiding a collision with PyRadiomics. Version remains **0.1.0**. No PyPI or crates.io publication is implied.
 
 ```bash
-# Source builds require Rust >= 1.85 plus a platform C/C++ linker.
-# A prebuilt wheel does not require Rust on the user's machine.
-python -m pip install -e ".[image,test,reference]"
-# Optional classifier backends:
-python -m pip install -e ".[boost]"
+git clone https://github.com/hurry060215-tech/radiomics.git
+cd radiomics
+python -m venv .venv
+# Linux: source .venv/bin/activate
+# Windows PowerShell: .\.venv\Scripts\Activate.ps1
+python -m pip install .
+python -c "import ov_radiomics as rad; print(rad.backend_info())"
 ```
 
-The distribution is named **ov-radiomics** and the import is **ov_radiomics**, avoiding a collision with PyRadiomics's `radiomics` import. No PyPI release is implied by this repository.
+Source builds require Rust **1.85+** and a platform C/C++ linker. A prebuilt Windows/Linux wheel from a successful [Actions run](https://github.com/hurry060215-tech/radiomics/actions/workflows/tests.yml) can be installed directly without Rust. Base native workflows need NumPy, pandas and matplotlib; they do not require sklearn, SciPy, statsmodels, PyRadiomics, SimpleITK, ov, WSIData, Torch or a GPU. Read the [installation guide](website/installation.md) for platform details, wheel downloads and the separately built CLI.
 
-The Rust core and Python bindings live in `crates/radiomics-core` and `crates/radiomics-python`. Maturin builds an ABI3 extension for CPython 3.9+; CI tests compiled wheels on Windows and Linux. Development wheels are available as CI artifacts, not a promised PyPI release.
-
-## Native engine development
-
-The shared Rust core now implements scalar NIfTI preparation, the explicitly
-listed Original feature subset, grouped binary/multiclass/regression pipelines,
-native models, clinical tests/inference, evaluation, lightweight patch features,
-hierarchical aggregation and tile overlays. Python supplies array/table views and
-plots. The independent CLI exposes extraction, training, prediction, evaluation
-and fusion, plus pathology patch, aggregation and overlay commands. Keyed
-multimodal/region concatenation, Delta and typed KMeans habitats use the same core.
-See the [development/acceptance ledger](docs/native-development.md) for scope,
-independent Golden evidence and the completed development delivery. M0–M5 are
-closed within the [documented scope and artifact evidence](docs/delivery-index.md),
-with disclosed performance target misses and measurement limits. Registry
-publication and version changes require separate authorization.
-
-```python
-import ov_radiomics as rad
-print(rad.backend_info())
-metrics = rad.binary_metrics(y_true, y_score, backend="rust")
-reference = rad.binary_metrics(y_true, y_score, backend="python")
-```
-
-`backend="auto"` selects only the compiled native implementation. An absent or
-broken extension raises a clear error; choose `backend="python"` explicitly for
-the optional reference implementation. `backend_info()` is a read-only probe and
-reports `unavailable` when the extension is absent. There are no environment
-switches or global backend options.
-
-Use `backend="rust"` explicitly for the native training/selection/clinical APIs;
-their compatibility defaults retain the historical optional Python backend.
-Native models save as typed `.rad` files and accept unlabeled external cohorts.
-Base installation does not require sklearn, SciPy, statsmodels, PyRadiomics,
-joblib, seaborn, ov or WSIData. Install `[reference,image]` for legacy workflows;
-`[plots]` adds optional seaborn plots. Basic ROC/calibration/confusion plots use
-the native core and matplotlib alone. See [build instructions](docs/rust.md).
-
-```python
-result = rad.train_models(data, "outcome", feature_names, task="multiclass",
-    patient_id="patient_id", split_plan=plan, backend="rust")
-metrics = rad.evaluate(result, prediction_unit="patient", backend="rust")
-result.save("new-native-results")
-model = rad.load_model("new-native-results/model-000.rad")
-```
-
-Performance and correctness have separate acceptance in
-[Benchmark v2](docs/benchmark-v2.md). No unmeasured extraction/end-to-end speedup
-or blanket IBSI conformance is claimed.
-
-The core package does not import SimpleITK/PyRadiomics until image functionality is requested. PyRadiomics has compiled dependencies; the initial local validation used Python 3.9, NumPy 1.23, sklearn 1.0.2 and PyRadiomics 3.1.0. Consult CI and `docs/validation.md` for actually tested combinations. Installation on other Python/NumPy versions is not guaranteed by the minimum dependency declarations.
-
-## Four-step tutorials
-
-1. [Images, extraction and radiomics modeling](examples/01_radiomics.ipynb)
-2. [Clinical baseline and logistic statistics](examples/02_clinical_statistics.ipynb)
-3. [Clinical model training](examples/03_clinical_model.ipynb)
-4. [Fusion, evaluation and nomogram](examples/04_fusion_evaluation.ipynb)
-
-Run the notebooks in order from `examples/`. They generate synthetic images and labels; all resulting scores are software demonstrations, not clinical findings. The same workflow is available as a script:
+## Start with an executed tutorial
 
 ```bash
-python examples/demo.py --output examples/output
+python examples/native/01_extract.py --output artifacts/first-extraction
+python -m pip install jupyterlab ipykernel
+jupyter lab
 ```
 
-The demo refuses to overwrite an existing image directory. Choose a fresh output directory for another run.
+Open a notebook in `website/tutorials/` and run its cells in order. Existing outputs show intermediate objects and figures; a fresh run creates a new result directory.
 
-## Basic usage
+| Tutorial | Data and lesson |
+|---|---|
+| [01 · NIfTI + ROI](website/tutorials/01_extract.ipynb) | Synthetic tiny images; inspect affine, parameters and exact 24-voxel ROI |
+| [02 · Imaging + clinical binary](website/tutorials/02_image_clinical_binary.ipynb) | Synthetic repeated lesions; shared patient splits and OOF fusion |
+| [03 · Multiclass + regression](website/tutorials/03_multiclass_regression.ipynb) | Explicit tasks/classes, native models and external prediction |
+| [04 · Regions, Delta + habitats](website/tutorials/04_regions_delta_habitat.ipynb) | Strict keys, anisotropic rings, longitudinal changes and local KMeans |
+| [05 · Patches → patients](website/tutorials/05_patch_patient.ipynb) | Synthetic RGB patches; QC, hierarchy and actual tile-feature maps |
+| [06 · Embeddings + local maps](website/tutorials/06_embedding_overlay.ipynb) | Explicit tile IDs, shuffled rows and true tile-level probabilities |
+| [07 · Real public CT](website/tutorials/07_public_ct.ipynb) | IBSI PAT1 CT/GTV, pinned downloads, ROI preview and native extraction |
 
-```python
-import pandas as pd
-import ov_radiomics as rad
+The first six are reproducible synthetic demonstrations, not clinical cohorts. The seventh uses real public CT under **CC-BY-NC-3.0**; it has no clinical outcomes and does not invent a classification study. Raw CT stays outside Git. See [data sources and licenses](website/datasets.md).
 
-samples = rad.match_images("study", image_dir="images", mask_dir="masks")
-qc = rad.check_images(samples, roi_label=1)
-features = rad.extract(samples, params="radiomics.yaml", roi_label=1)
+## Use your own files
 
-# ID strings must match the image filenames exactly, e.g. P001.nii.gz.
-labels = pd.read_csv("labels.csv", dtype={"ID": str})
-data = rad.join_data(features.features, labels)
-data = rad.split_data(data, target="label", test_size=0.2, random_state=0)
-
-selector = rad.FeatureSelector(
-    missing="median", univariate="mannwhitney", p_threshold=0.05,
-    corr_method="pearson", corr_threshold=0.9,
-    lasso=True, alpha="cv", cv=5,
-)
-result = rad.train_models(
-    data, target="label", features=features.features.columns.drop("ID"),
-    selector=selector, models=["LR", "SVM", "RandomForest"], cv=5,
-)
-metrics = rad.evaluate(result, threshold=0.5)
-result.save("results/rad")
-```
-
-A screen that retains no features raises a clear error. It does not silently relax the study's selection criteria. For exploratory examples, explicitly adjust `p_threshold`, disable `univariate`, or change `alpha`.
-
-Clinical training uses the same `train_models()` function with `categorical` and `continuous` settings. Keep the exact same patient split for radiomics and clinical models.
-
-```python
-oof = rad.fusion_data({"Rad": rad_result, "Clinical": clinical_result}, model="LR")
-fusion = rad.fit_fusion(oof)
-test = rad.fusion_data({"Rad": rad_result, "Clinical": clinical_result}, model="LR", cohort="test")
-test["Fusion"] = fusion.predict_proba(test)
-rad.plot_roc(test.y_true, test[["Rad", "Clinical", "Fusion"]])
-rad.plot_nomogram(fusion)
-```
-
-### OmicVerse entry point
-
-This stays a separate repository and Python package. OmicVerse can import it directly when needed:
-
-```python
-import ov_radiomics as radiomics
-samples = radiomics.match_images("study")
-```
-
-No runtime registration, monkey patching, or changes to OmicVerse are required. If OmicVerse chooses to expose this as `ov.radiomics`, it can use its own normal import mechanism. This repository does **not** claim that current OmicVerse already ships that entry point.
-
-## Method boundaries
-
-- `ID` is unique. Native pipelines preserve repeated scans/lesions with patient-grouped splits throughout nested fitting; the legacy Python workflow still requires independent rows and rejects repeated `patient_id` values.
-- Reserve the test cohort before any learned preprocessing or feature screening. Every outer CV fold refits the complete pipeline. LASSO alpha tuning also refits preprocessing within its inner folds.
-- AUC-based model comparisons report all folds; there is no search for a favorable test split.
-- Fusion trains on training-set OOF probabilities. The held-out test cohort is never used to fit it. Training-cohort predictions are labeled **apparent** performance.
-- OOF scores used to fit the fusion model are not themselves unbiased validation of that fusion model. Use the held-out cohort for its evaluation.
-- A model chosen by mean CV AUC has selection uncertainty: do not interpret that selected CV score as an independent final validation estimate.
-- Clinical baseline summaries report observed data and missing counts. They do not impute data or select features automatically. Select clinical variables on training data only; data-driven selection should itself be nested when estimating CV performance.
-- Logistic inference uses complete cases and reports dropped counts. It is unpenalized and distinct from regularized predictive LR. The native public clinical API rejects repeated patients unless a row-level `analysis_unit='sample'` is explicitly requested. No automatic stepwise analysis is performed.
-- ROC intervals and paired DeLong tests assume independent patients. Native evaluation aggregates predictions to patients before bootstrap by default; complex multicenter/repeated-measure inference is not implemented.
-- Calibration plots do not recalibrate the model. H–L returns its group table and fails when the requested grouping is undefined; a large p-value is not proof of calibration.
-- Binary/regression sparse selection uses squared-loss LASSO; multiclass uses OvR L1 Logistic and a union of selected features. Native alpha grids are tuned within patient-grouped whole pipelines. Legacy Python LASSO remains an explicit optional path. A squared-loss score is not a probability.
-- Native models use documented mean-loss regularization/objectives and convergence checks. External Python models use their named backend parameters. Neither path claims to reproduce Onekey's encrypted model factory.
-
-## Reference and validation
-
-- [API and parameter reference](docs/api.md)
-- [Scope and source-workflow mapping](docs/scope.md)
-- [Validation evidence](docs/validation.md)
-- [Provenance](docs/provenance.md)
+File-driven examples consume existing inputs and explicit column roles:
 
 ```bash
-python -m pytest -q
+python examples/real/nifti_extract.py --help
+python examples/real/train_table.py train --help
+python examples/real/train_table.py predict --help
+python examples/real/patch_features.py --help
 ```
 
-The original implementation in this repository is MIT licensed. External adapters
-call separately licensed libraries. Native algorithms are independently written
-against frozen public specifications/references; they do not incorporate encrypted
-Onekey source. Third-party libraries and licensed reference data retain their own
-licenses and attribution.
+Follow the [input contracts](docs/user-guide/input-contracts.md), [NIfTI/clinical workflow](docs/user-guide/file-workflows.md), [pathology/embedding guide](docs/user-guide/pathology.md) and [output/error guide](docs/user-guide/results-and-errors.md). These explain complete manifests/configurations, expected exports and how to replace the demonstration data. Outcomes and IDs stay outside the feature matrix; patients stay together through inner and outer fitting. A patient probability cannot be broadcast into a local tile prediction map.
+
+Training, selection and clinical APIs retain optional legacy defaults: request **`backend="rust"`** explicitly. `auto` requires the native extension and never silently falls back to a reference algorithm. Native models use versioned typed `.rad` files, with saved preprocessing, feature/class order and threshold. Historical optional-backend examples remain in [legacy Python workflows](docs/legacy-python.md).
+
+## Validation and measured limits
+
+Python compatibility freezes public PyRadiomics3.0.1; IBSI is an independent definition/reference track. Correctness and deployment gates are separate from performance targets. The [technical report](docs/technical-report.md) links numerical fixtures, raw runs, environment identities and limitations.
+
+- **Radiomics:** 854 archived observations. Five speed targets missed; real-CT feature extraction measured approximately **0.400×** reference speed, while complete CT input→CSV measured **1.225×**. Small synthetic speedups are not generalized to clinical workloads.
+- **ML/Statistics and Pathology:** 224 separate archived observations with matching outputs; results are limited to their declared workloads and frozen references.
+- **IBSI digital track:** 54/55 scoped definitions conformant, with raw Kurtosis explicitly nonconformant. This is not blanket IBSI certification or clinical validation.
+- **Deployment:** Windows/Linux native-only wheel checks and a no-Python/no-network CLI container. [Evidence index](docs/delivery-index.md) keeps each result tied to its tested revision.
+
+## Documentation and contributions
+
+The documentation follows the task-oriented organization of [OmicVerse](https://github.com/omicverse/omicverse) and its [tutorial repository](https://github.com/omicverse/omicverse-tutorials), with independently authored examples and evidence. Build a local searchable preview:
+
+```bash
+python -m pip install -r website/requirements.txt
+python tools/build_website_sources.py
+python -m sphinx -W --keep-going -b html website website/_build/html
+python -m http.server 8000 --directory website/_build/html
+```
+
+See [CONTRIBUTING](CONTRIBUTING.md) for checks and tutorial execution, [security/data handling](SECURITY.md) before reporting private data, and [GitHub issues](https://github.com/hurry060215-tech/radiomics/issues) for reproducible problems. HTML documentation and compiled development artifacts are uploaded by CI; no hosted website or formal registry release is assumed.

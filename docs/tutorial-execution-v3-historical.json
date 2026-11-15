@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-15",
+  "source_revision": "45140bff46b3ef1ae7eff9a170acb3a1116308b1",
+  "wheel_sha256": "8767c22d3344d0009669de7c5297c0db58b5f9144c506be04722fe70ab4ea9b3",
+  "environment": {
+    "ov-radiomics": "0.1.0",
+    "numpy": "2.0.2",
+    "pandas": "2.3.3",
+    "matplotlib": "3.9.4",
+    "nbclient": "0.10.2"
+  },
+  "execution": "Fresh kernel per notebook, ordered cells, allow_errors=False; actual cell outputs stored in ipynb",
+  "notebooks": [
+    {
+      "notebook": "01_extract.ipynb",
+      "status": "passed",
+      "seconds": 2.0094006,
+      "cells": 7
+    },
+    {
+      "notebook": "02_image_clinical_binary.ipynb",
+      "status": "passed",
+      "seconds": 2.4136066,
+      "cells": 13
+    },
+    {
+      "notebook": "03_multiclass_regression.ipynb",
+      "status": "passed",
+      "seconds": 1.8047596000000006,
+      "cells": 11
+    },
+    {
+      "notebook": "04_regions_delta_habitat.ipynb",
+      "status": "passed",
+      "seconds": 1.3556565999999997,
+      "cells": 11
+    },
+    {
+      "notebook": "05_patch_patient.ipynb",
+      "status": "passed",
+      "seconds": 2.6121889000000005,
+      "cells": 14
+    },
+    {
+      "notebook": "06_embedding_overlay.ipynb",
+      "status": "passed",
+      "seconds": 1.8405073000000005,
+      "cells": 15
+    }
+  ]
+}

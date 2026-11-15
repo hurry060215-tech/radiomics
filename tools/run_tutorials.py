@@ -142,7 +142,14 @@ def execute_one(path, run_root, repo_root, kernel_root, timeout=300, *,
         binding.get('example'): binding.get('example_sha256'),
         'examples/native/_shared.py': binding.get('shared_sha256')}
     for relative, expected_hash in bindings.items():
-        if not relative or sha256(repo_root / relative) != expected_hash:
+        if not relative:
+            raise ValueError(f'Tutorial helper/source binding mismatch: {relative}')
+        actual_hash = sha256(repo_root / relative)
+        if source_bindings is None and binding.get('source_hash_mode') == 'utf8-lf-v1':
+            actual_hash = hashlib.sha256((repo_root / relative).read_bytes().replace(b'\r\n', b'\n')).hexdigest()
+        elif source_bindings is None and binding.get('source_hash_mode') is not None:
+            raise ValueError('Unknown tutorial source hash mode.')
+        if actual_hash != expected_hash:
             raise ValueError(f'Tutorial helper/source binding mismatch: {relative}')
     notebook = nbformat.from_dict(json.loads(json.dumps(original)))
     # Clear stale outputs; a pre-executed notebook can never provide pass evidence.

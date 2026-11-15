@@ -108,6 +108,19 @@ jobs:
         env:
           MPLBACKEND: Agg
       - run: cargo build --release -p ov-radiomics-cli --locked
+      - name: Install isolated notebook execution tools
+        if: runner.os == 'Linux'
+        run: python -m pip install nbformat nbclient ipykernel
+      - name: Execute six synthetic tutorials with the installed native wheel
+        if: runner.os == 'Linux'
+        run: |
+          python tools/build_tutorial_notebooks.py --output artifacts/tutorial-inputs
+          python tools/run_tutorials.py --notebooks artifacts/tutorial-inputs --output artifacts/tutorial-execution
+      - uses: actions/upload-artifact@v4
+        if: runner.os == 'Linux' && always()
+        with:
+          name: executed-native-tutorials
+          path: artifacts/tutorial-execution
       - uses: actions/upload-artifact@v4
         with:
           name: native-cli-${{ matrix.os }}

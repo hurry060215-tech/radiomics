@@ -8,6 +8,17 @@ does not call an external estimator. `auto` requires a verified native extension
 an unbuilt source checkout must choose `backend='python'` explicitly for the
 optional reference path. `backend_info()` probes availability without running it.
 
+## Start with the user tutorials
+
+The [stepwise Notebook index](../website/tutorials/index.md) contains executed
+code and figures. The first six lessons below use fixed synthetic data; the
+[separate public CT lesson](../website/tutorials/07_public_ct.ipynb) uses genuine
+licensed PAT1 NIfTI/ROI inputs without inventing clinical outcomes. For your own
+files use the [input contracts](user-guide/input-contracts.md),
+[file-driven workflow](user-guide/file-workflows.md),
+[patch/embedding guide](user-guide/pathology.md) and
+[result/error guide](user-guide/results-and-errors.md).
+
 ## Complete executable examples
 
 Each script requires a **new** output directory and uses original synthetic/CC0
@@ -25,7 +36,9 @@ acceptance data. Scores are software demonstrations, not clinical evidence.
 Tutorials 02/03/05/06 consume the versioned synthetic JSON fixtures in this
 repository, without importing their reference implementations. See
 [strict WSIData adaptation](interop.md) for optional existing containers. The
-external-array tutorial does not claim that a real WSIData installation was tested.
+external-array lesson does not execute WSIData; separate
+[optional-container acceptance](optional-interop-acceptance.md) records the
+limited real pinned-container checks.
 
 ## Training and persistence
 
