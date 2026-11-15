@@ -35,3 +35,16 @@ def test_download_cache_refuses_git_worktree_and_unapproved_overwrite(tmp_path):
     cache=tmp_path/'external';cache.mkdir();target=cache/'NOTICE.md'
     example.exclusive_text(target,'fixed notice\n');example.exclusive_text(target,'fixed notice\n')
     with pytest.raises(FileExistsError):example.exclusive_text(target,'different\n')
+
+
+def test_license_ack_precedes_directory_creation_network_and_fixed_size_and_sha_are_checked(tmp_path,monkeypatch):
+    example=load('download_public_ct');destination=tmp_path/'must-not-exist'
+    monkeypatch.setattr(sys,'argv',['download_public_ct.py','--output',str(destination)])
+    def network_must_not_run(*args,**kwargs):raise AssertionError('Network attempted before license ACK.')
+    monkeypatch.setattr(example.urllib.request,'urlopen',network_must_not_run)
+    with pytest.raises(SystemExit) as error:example.main()
+    assert error.value.code==2 and not destination.exists()
+    path=tmp_path/'file';path.write_bytes(b'abc');digest=example.sha256(path)
+    example.verify_source_file(path,dict(bytes=3,sha256=digest))
+    with pytest.raises(ValueError,match='byte size'):example.verify_source_file(path,dict(bytes=4,sha256=digest))
+    with pytest.raises(ValueError,match='SHA256'):example.verify_source_file(path,dict(bytes=3,sha256='0'*64))

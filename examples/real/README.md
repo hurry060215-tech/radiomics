@@ -40,7 +40,7 @@ python examples/real/nifti_extract.py --cohort /external/public-pat1/cohort.csv 
 
 下载器只依赖随脚本分发的 [`public_ct_source.json`](public_ct_source.json)：固定公开 URL、文件大小/SHA、来源和署名事实，不依赖安装包中被排除的 numerical Golden。它输出原始 `image.nii.gz`、`mask.nii.gz`、`SOURCE_LICENSE.md`、`SOURCE_README.md`、`NOTICE.md`、`cohort.csv` 和 `source-manifest.json`。`PAT1` 是来源数据集的标识，不是新增临床结局；cohort 无训练 label/group。
 
-数据为 **CC-BY-NC-3.0**，原始贡献 Philippe Lambin/CancerData，NIfTI转换 Alex Zwanenburg，DOI `10.17195/candat.2016.08.1`。软件 MIT 不覆盖该数据许可。原图、准备数组和派生医学预览保留相应来源/许可；原始缓存拒绝写入任意 Git worktree。下载/复用前后检查固定 SHA，不覆盖已存在的不匹配文件。`--acknowledge-license` 记录调用者已查看许可，无交互询问，也不授予额外使用权。
+数据为 **CC-BY-NC-3.0**，原始贡献 Philippe Lambin/CancerData，NIfTI转换 Alex Zwanenburg，DOI `10.17195/candat.2016.08.1`。软件 MIT 不覆盖该数据许可。原图、准备数组和派生医学预览保留相应来源/许可；原始缓存拒绝写入任意 Git worktree。下载/复用前后检查固定 bytes和SHA，不覆盖已存在的不匹配文件。必须先查看许可并传入 `--acknowledge-license`，否则在创建目录/网络访问前退出；无交互询问，该标志也不授予额外使用权。
 
 ## 3. 已有普通 patch 文件 → QC/颜色 → 聚合 → 真 tile 特征覆盖图
 
