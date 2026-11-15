@@ -1,0 +1,65 @@
+{
+  "schema": "radiomics.real.public_tabular_source.v1",
+  "dataset": "UCI Breast Cancer Wisconsin (Diagnostic), repository ID 17",
+  "data_kind": "real-public-tabular-no-clinical-validity",
+  "official_page": "https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic",
+  "doi": "10.24432/C5DW2B",
+  "attribution": "Wolberg, W., Mangasarian, O., Street, N., and Street, W. (1993). Breast Cancer Wisconsin (Diagnostic). UCI Machine Learning Repository. https://doi.org/10.24432/C5DW2B",
+  "license": {
+    "identifier": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/",
+    "scope": "Source dataset and adapted data retain CC-BY-4.0 attribution. Software MIT licensing does not replace the data attribution.",
+    "raw_data_in_repository": false
+  },
+  "source_review_date": "2026-11-15",
+  "scope": "Real source FNA nuclear numeric measurements and M/B diagnosis, not radiomics extracted by this engine. Source IDs identify records; no longitudinal patient linkage is supplied or inferred.",
+  "files": {
+    "wdbc.data": {
+      "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data",
+      "bytes": 124103,
+      "sha256": "d606af411f3e5be8a317a5a8b652b425aaf0ff38ca683d5327ffff94c3695f4a"
+    },
+    "wdbc.names": {
+      "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.names",
+      "bytes": 4708,
+      "sha256": "840e04e3f20f8a5b326892f3b9cbc01c4cd6f7e6c597630b701ef6c0ac79f5ef"
+    }
+  },
+  "input": {
+    "rows": 569,
+    "columns": 32,
+    "source_id_column": 0,
+    "source_outcome_column": 1,
+    "outcome_values": ["B", "M"],
+    "feature_names": [
+      "radius_mean", "texture_mean", "perimeter_mean", "area_mean", "smoothness_mean", "compactness_mean", "concavity_mean", "concave_points_mean", "symmetry_mean", "fractal_dimension_mean",
+      "radius_se", "texture_se", "perimeter_se", "area_se", "smoothness_se", "compactness_se", "concavity_se", "concave_points_se", "symmetry_se", "fractal_dimension_se",
+      "radius_worst", "texture_worst", "perimeter_worst", "area_worst", "smoothness_worst", "compactness_worst", "concavity_worst", "concave_points_worst", "symmetry_worst", "fractal_dimension_worst"
+    ]
+  },
+  "protocol": {
+    "split_method": "within each original diagnosis, sort by (SHA256(UTF8(namespace + source_id)), source_id); first floor(0.8*n_class) records train, rest test",
+    "split_namespace": "uci-wdbc-holdout-v1|",
+    "training_fraction": 0.8,
+    "group_identity": "one source record ID per group, not independently verified clinical patient linkage",
+    "task": "binary",
+    "classes": ["B", "M"],
+    "positive_label": "M",
+    "numeric_features": "all 30 source measurements in declared order; no ID or diagnosis predictor",
+    "categorical_features": [],
+    "model": "LR",
+    "model_parameters": {"lambda": 0.1, "tolerance": 1e-10, "max_iterations": 5000},
+    "scale": "standard",
+    "selection": null,
+    "outer_cv": 3,
+    "inner_cv": 2,
+    "seed": 20261115,
+    "n_jobs": 1,
+    "fit_unit": "sample",
+    "scoring_unit": "patient",
+    "threshold": 0.5,
+    "ci_method": null,
+    "test_use": "held-out evaluation only; never parameter/feature/threshold selection; remove diagnosis for saved-model prediction while retaining test cohort identity",
+    "clinical_validity_claim": false
+  }
+}
