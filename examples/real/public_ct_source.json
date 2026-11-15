@@ -1,0 +1,43 @@
+{
+  "dataset": "IBSI-1 PAT1 CT/GTV-1 NIfTI",
+  "license": {
+    "contributor": "Philippe Lambin",
+    "identifier": "CC-BY-NC-3.0",
+    "nifti_conversion": "Alex Zwanenburg",
+    "package_assets_allowlist": false,
+    "publisher": "CancerData",
+    "raw_data_in_repository": false,
+    "scope": "Data and derived numerical references retain their source-specific provenance/terms; not covered by the software MIT license. Raw and prepared images stay in external artifacts.",
+    "url": "https://creativecommons.org/licenses/by-nc/3.0/"
+  },
+  "schema": "radiomics.real.public_ct_source_facts.v1",
+  "scope": "Public source URL/size/hash/license facts only. No CT voxels, prepared arrays, radiomic feature expectations or clinical labels are bundled.",
+  "source": {
+    "files": {
+      "SOURCE_LICENSE.md": {
+        "bytes": 19526,
+        "sha256": "03e3631fbf812e9158e525de9ebd062987f51810d219e795ba5c12e190828663",
+        "url": "https://raw.githubusercontent.com/theibsi/data_sets/6da96021bc91faf4c0cb7fd7fa56a4225d2064a8/ibsi_1_ct_radiomics_phantom/LICENSE.md"
+      },
+      "SOURCE_README.md": {
+        "bytes": 1504,
+        "sha256": "160af3a1d00f72519467bf44009aaa906597b61cb699635dd670de177c609b5e",
+        "url": "https://raw.githubusercontent.com/theibsi/data_sets/6da96021bc91faf4c0cb7fd7fa56a4225d2064a8/ibsi_1_ct_radiomics_phantom/README.md"
+      },
+      "image.nii.gz": {
+        "bytes": 3858588,
+        "sha256": "909129fdf99d5f5fd17bc568b1834d31edce8663ea6746c6020720bfc1d7bbcb",
+        "url": "https://raw.githubusercontent.com/theibsi/data_sets/6da96021bc91faf4c0cb7fd7fa56a4225d2064a8/ibsi_1_ct_radiomics_phantom/nifti/image/phantom.nii.gz"
+      },
+      "mask.nii.gz": {
+        "bytes": 8114,
+        "sha256": "0e9243e473b1255c60e6460df465d0b07b65436d6e0c691fe3d17bca0594ae78",
+        "url": "https://raw.githubusercontent.com/theibsi/data_sets/6da96021bc91faf4c0cb7fd7fa56a4225d2064a8/ibsi_1_ct_radiomics_phantom/nifti/mask/mask.nii.gz"
+      }
+    },
+    "official_specification": "https://ibsi.readthedocs.io/en/master/05_Reference_data_sets.html",
+    "original_doi": "10.17195/candat.2016.08.1",
+    "repository": "https://github.com/theibsi/data_sets",
+    "revision": "6da96021bc91faf4c0cb7fd7fa56a4225d2064a8"
+  }
+}

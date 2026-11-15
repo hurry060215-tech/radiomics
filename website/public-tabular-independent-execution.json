@@ -1,0 +1,208 @@
+{
+  "schema": "radiomics.independent-public-tabular-execution.v1",
+  "status": "passed",
+  "data_kind": "real-public-tabular-no-clinical-validity",
+  "source_bindings": {
+    "tools/build_public_tabular_notebook.py": "43077a7196cb2cc9e170d92ced558f069c917eb31a4d066f1b22465bc048a247",
+    "examples/real/download_public_tabular.py": "9576d773325dca9f4e15c0e49dcedf21368788fd2add720656011c55e0afae82",
+    "examples/real/public_tabular_source.json": "69545c681774f77d07cd87610c07ba2944e63c470d99bda44505223ab3647f07"
+  },
+  "result": {
+    "notebook": "08_public_tabular.ipynb",
+    "status": "passed",
+    "input_path": "D:\\OnekeyPlatfrom50\\radiomics\\website\\tutorials\\08_public_tabular.ipynb",
+    "input_sha256": "fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40",
+    "executed_path": "D:\\radiomics-tutorial-validation\\public-tabular-root-v1\\08_public_tabular\\08_public_tabular.ipynb",
+    "executed_sha256": "24a95354dcae4ee5f59c40544d879a9226f509474e04a3bb274037e10f4a4939",
+    "seconds": 1.9435539,
+    "execution_error": null,
+    "failures": [],
+    "kernel_prelude": [
+      "TUTORIAL_REPO_ROOT = 'D:\\\\OnekeyPlatfrom50\\\\radiomics'",
+      "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\public-tabular-root-v1\\\\08_public_tabular\\\\artifacts'",
+      "TUTORIAL_DATA_ROOT = 'E:/radiomics-build/public-tabular-v1/source'"
+    ],
+    "kernel_terminated": true,
+    "cells": [
+      {
+        "index": 2,
+        "id": "14d9dee599aebf7c",
+        "source_sha256": "9861f6c606e55f609b74c717fefe53677c9e1db299e6a0e8d60e09cd9873a3dd",
+        "execution_count": 1,
+        "errors": [],
+        "output_types": [
+          "display_data",
+          "stream"
+        ],
+        "images": []
+      },
+      {
+        "index": 4,
+        "id": "dac0f158fdcabb4e",
+        "source_sha256": "b8dd8fb2509c6b86b6e3afe7c3e20ebdc9e286860baff7bd93725fb69eac99b2",
+        "execution_count": 2,
+        "errors": [],
+        "output_types": [
+          "stream",
+          "display_data",
+          "display_data"
+        ],
+        "images": []
+      },
+      {
+        "index": 6,
+        "id": "fe2f10ccf6168005",
+        "source_sha256": "9e424ba99d0c92f52ca4bd1ac60a5f6c6f1eeab635881c4d714a992de963b93c",
+        "execution_count": 3,
+        "errors": [],
+        "output_types": [
+          "display_data",
+          "stream"
+        ],
+        "images": []
+      },
+      {
+        "index": 8,
+        "id": "4881d27c0c44fc6c",
+        "source_sha256": "a40c70c070ba8ff473824b6fdf8b82f01dbcf4787b0521b19bb880ad9c7be21d",
+        "execution_count": 4,
+        "errors": [],
+        "output_types": [
+          "display_data",
+          "stream"
+        ],
+        "images": []
+      },
+      {
+        "index": 10,
+        "id": "15fa6e407df9e5ba",
+        "source_sha256": "681167ff4a701bcc493d75a9da53ccd6e62bffd464f72c573ead0596efb058ae",
+        "execution_count": 5,
+        "errors": [],
+        "output_types": [
+          "display_data",
+          "display_data",
+          "display_data"
+        ],
+        "images": [
+          {
+            "bytes": 32059,
+            "sha256": "1b60b71c86caa497c69ddd35e0abb6d56a8af7e5a4160fb691a82198e9cc31e5"
+          }
+        ]
+      },
+      {
+        "index": 12,
+        "id": "0acb21e391f9e5f9",
+        "source_sha256": "c7ed357c24510f00662b59a7d2b6da67675c45c856fb27e912081920c50f1fc7",
+        "execution_count": 6,
+        "errors": [],
+        "output_types": [
+          "display_data",
+          "stream"
+        ],
+        "images": []
+      },
+      {
+        "index": 14,
+        "id": "bb9b04e92f15b8bf",
+        "source_sha256": "612bf81151ebd8f723ada3443ce56ce7aa747cb666a3b71b3fb75d29cb4ad2a6",
+        "execution_count": 7,
+        "errors": [],
+        "output_types": [
+          "stream"
+        ],
+        "images": []
+      }
+    ],
+    "output_files": {
+      "cohort-metrics.csv": {
+        "bytes": 784,
+        "sha256": "cd84c21dda28a581fc8825744dbe59145b8f8477a63d9b5bf6c927d48c52044b"
+      },
+      "DATA_NOTICE.md": {
+        "bytes": 514,
+        "sha256": "f108e9abb37de18c702603ba78fe1e0a00c3e3d7f870db3c6020fe0f785865dc"
+      },
+      "holdout-loaded-predictions.csv": {
+        "bytes": 21419,
+        "sha256": "c5a6ac7031273baa9ede760ede2d19842dc75adb60431852ab4369c6047bddb1"
+      },
+      "holdout-roc.png": {
+        "bytes": 49318,
+        "sha256": "b8c2479dd9a874df048c4adae3792e2a338b42477bbfb70df9f0f0526a52b1af"
+      },
+      "holdout-unlabeled.csv": {
+        "bytes": 36567,
+        "sha256": "0341fc61eb0878d9a8f06799d08aee59f2842d6d5b281fbc2a0148863743087d"
+      },
+      "model.rad": {
+        "bytes": 136699,
+        "sha256": "83a1f6b0556d9c7eb73f0e4cdca912b1de09f2594567552dbd862873654af927"
+      },
+      "oof-metrics.csv": {
+        "bytes": 524,
+        "sha256": "e7f4d5595bbabcb6ca959801409022ba27f4490fedf4c0d9f5a303047990a020"
+      },
+      "receipt.json": {
+        "bytes": 3553,
+        "sha256": "8832783a543b3f982bfac4920115310f4d5b740a3fa9553e7d908ad51a61270f"
+      },
+      "source-facts.json": {
+        "bytes": 3451,
+        "sha256": "69545c681774f77d07cd87610c07ba2944e63c470d99bda44505223ab3647f07"
+      },
+      "split-assignments.csv": {
+        "bytes": 60375,
+        "sha256": "698a2e05fed51bf2ef2976fb52a5db81ae424ee3d126a8ba42d72a59aaefaca2"
+      },
+      "study.csv": {
+        "bytes": 180585,
+        "sha256": "56ce88f96d8edc72adfdf26350431934cda549b7097e5812aecac1faaebd0131"
+      },
+      "training/api_config.json": {
+        "bytes": 775,
+        "sha256": "01d0bad44406c44916a227a728d7710752be1a6c5761fe6fdd4acf030a1c28c4"
+      },
+      "training/cv_results.csv": {
+        "bytes": 154,
+        "sha256": "6ce547299e611ecdfdb4fd2462f842f89b85be9a5ae1e84c652aa604dbfb5431"
+      },
+      "training/model-000.rad": {
+        "bytes": 136699,
+        "sha256": "83a1f6b0556d9c7eb73f0e4cdca912b1de09f2594567552dbd862873654af927"
+      },
+      "training/oof_predictions.csv": {
+        "bytes": 82579,
+        "sha256": "a1b53e662466bd867f30ea3b7ed1f0917e455da452f6d11ced388d0dcffd62c2"
+      },
+      "training/predictions.csv": {
+        "bytes": 106746,
+        "sha256": "6db19708f080556fba728c9f42155973089907d20662f1134f6f58ab2040a3b3"
+      },
+      "training/split_plan.json": {
+        "bytes": 121606,
+        "sha256": "e08d2d42dc48faa7a4d61fce2848c84c32870dd2a9d1e3ffabb0c14e0f24a574"
+      },
+      "training/training.json": {
+        "bytes": 647483,
+        "sha256": "0c19d583490985542c7008cabaffe8d2e77a5d4258c6498cf84b93f0c3831931"
+      },
+      "tutorial-runtime.json": {
+        "bytes": 495,
+        "sha256": "c301431ec16997cbb573af6eba15be548f61925eae79b0b081f2f3154d91ecb8"
+      }
+    },
+    "runtime": {
+      "data_kind": "real-public-tabular-no-clinical-validity",
+      "backend": {
+        "metrics_backend": "rust",
+        "rust_core_version": "0.1.0"
+      },
+      "python": "3.9.21 (main, Dec 11 2024, 16:35:24) [MSC v.1929 64 bit (AMD64)]",
+      "interpreter": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+      "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+      "source_facts_sha256": "69545c681774f77d07cd87610c07ba2944e63c470d99bda44505223ab3647f07"
+    }
+  }
+}

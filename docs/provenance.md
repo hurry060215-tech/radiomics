@@ -2,7 +2,7 @@
 
 This repository was written independently for the requested four-stage radiomics/clinical workflow. The supplied notebooks were read to identify user-facing steps and parameter requirements. No claim of a formal clean-room process is made: the implementer did read those notebooks.
 
-No Onekey package source, notebooks, YAML presets, figures, manuscript text, encrypted bytecode, pretrained weights, or datasets are redistributed here. The local encrypted runtime was not decrypted. Only newly written modules, newly written documentation, and synthetic-data tutorials are included.
+No Onekey package source, notebooks, YAML presets, figures, manuscript text, encrypted bytecode, pretrained weights, or datasets are redistributed here. The local encrypted runtime was not decrypted. This repository includes independently written modules/documentation, labeled synthetic tutorials, and separately attributed public-data tutorials. The real PAT1 CT and UCI WDBC inputs, their distinct licenses and derived displays are described on the [data provenance page](../website/datasets.md); raw source files remain outside Git and installation packages.
 
 The legacy external/reference path uses separately installed SimpleITK,
 PyRadiomics, SciPy, scikit-learn, statsmodels and joblib; optional adapters include

@@ -1,0 +1,28 @@
+name: Bug report
+description: Reproduce an installation, API, CLI or numerical issue without private data.
+body:
+  - type: markdown
+    attributes:
+      value: Do not upload patient data, credentials or identifying paths. Use a synthetic reproduction.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and version
+      description: OS, Python/Rust version, commit or wheel source, and backend_info() output.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Complete command/code, schema and explicit parameters, with public or synthetic inputs.
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and actual result
+      description: Complete error; numerical differences need definition/profile, actual/reference values and source.
+    validations:
+      required: true

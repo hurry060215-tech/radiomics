@@ -1,8 +1,8 @@
 # Patient-grouped native learning
 
 `learning::train` and `learning::predict` use the same Rust preprocessing,
-selection, model and metric implementations. Python/CLI integration is being
-completed separately; this document describes the implemented Rust workflow.
+selection, model and metric implementations. Python and CLI call this shared
+workflow; executable user entry points are described in the [file guide](user-guide/file-workflows.md).
 Inputs are typed `StudyData` (sample metadata, cohort assignments, `TabularData`,
 and a separate named outcome). IDs, outcome and cohort columns cannot enter
 the numerical features. Binary/multiclass class order is explicit.

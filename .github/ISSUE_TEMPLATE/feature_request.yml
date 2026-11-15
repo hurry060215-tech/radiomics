@@ -1,0 +1,20 @@
+name: Feature or tutorial request
+description: Describe input, intended result and method definition.
+body:
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Input and intended workflow
+      description: What data/prediction unit do you have, and what result do you need?
+    validations:
+      required: true
+  - type: textarea
+    id: definition
+    attributes:
+      label: Definition and reference
+      description: For algorithms give public formulas/parameters/data; for tutorials identify the missing step.
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Constraints
+      description: Format, scale, platform, license, optional dependencies and applicable deferred scope.
