@@ -70,3 +70,10 @@ jupyter lab
 打开 `website/tutorials/01_extract.ipynb` 按顺序运行。基础演示产生三个合成样本，每个ROI有24体素、体积576 mm³。下一步选择[公开真实CT](tutorials/07_public_ct.ipynb)或[自己的文件工作流](reference/user-guide/file-workflows.md)。
 
 结果目录默认不能覆盖，第二遍请换目录。扩展不可用时，先检查 Jupyter 内核是不是安装 wheel 的同一个 Python，不能切换到参考后端掩盖原生安装失败。
+
+```{toctree}
+:hidden:
+:maxdepth: 1
+
+快速开始 <quickstart>
+```

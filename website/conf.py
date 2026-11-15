@@ -10,7 +10,7 @@ html_theme_options = {
     'github_url': 'https://github.com/hurry060215-tech/radiomics',
     'navigation_depth': 3,
     'show_toc_level': 2,
-    'header_links_before_dropdown': 4,
+    'header_links_before_dropdown': 5,
     'navbar_end': ['theme-switcher', 'navbar-icon-links'],
 }
 html_context = {'default_mode': 'light'}

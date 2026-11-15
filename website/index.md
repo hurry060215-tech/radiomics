@@ -1,46 +1,39 @@
-# Radiomics：从输入文件到可审查的研究结果
+# 从影像与表格，走到可审查的研究结果
 
-独立 Rust 核心、Python API 与绘图、无Python依赖的CLI。面向标量NIfTI影像组学、临床表建模，以及普通病理图像和外部embedding的轻量分析。
+<div class="portal-intro">
+<p class="portal-kicker">RADIOMICS · 独立研究软件</p>
+<p class="portal-lead">Rust 负责计算，Python 负责交互与绘图，独立 CLI 支持无 Python 的运行环境。围绕明确的输入、患者划分、参数与输出，完成影像组学和轻量病理分析。</p>
+<div class="portal-actions"><a class="portal-primary" href="installation.html">安装与首次运行</a><a href="tutorials/index.html">选择学习路线 →</a><a href="user-guide/index.html">使用自己的数据 →</a></div>
+</div>
 
-**先选择自己的入口。** 安装后可以离线运行合成入门教程；公开CT教程使用真实公开影像，记录许可和SHA256；自己的研究数据使用文件驱动工作流。
+## 从你已有的输入开始
 
-| 你现在有的输入 | 建议入口 | 可检查的结果 |
-|---|---|---|
-| 第一次使用，没有数据 | [快速开始](quickstart.md) | 固定可核对的小型输出 |
-| 想看真实NIfTI/ROI | [公开CT逐步教程](tutorials/07_public_ct.ipynb) | 几何、ROI图、特征和质量记录 |
-| 想看真实公开表格训练 | [UCI数值建模教程](tutorials/08_public_tabular.ipynb) | 固定记录划分、原生LR、ROC和模型加载 |
-| 自己的影像和临床CSV | [自己的文件工作流](reference/user-guide/file-workflows.md) | 原生提取、患者分组建模、外部预测 |
-| 普通patch、mask或embedding | [病理与embedding指南](reference/user-guide/pathology.md) | QC、层级聚合、真实tile分数覆盖图 |
-| 想了解支持到哪一步 | [支持矩阵](reference/support-matrix.md) | 原生、外部适配、实验范围和暂缓内容 |
+<div class="portal-grid">
+<a class="route-card" href="tutorials/radiomics.html"><span class="route-label">01 · 影像组学</span><h3>NIfTI 与 ROI</h3><p>几何检查 → Original 特征 → 多区域、Delta 与基础生境。</p><span class="route-output">输出：特征表、参数与质量记录</span></a>
+<a class="route-card" href="tutorials/modeling.html"><span class="route-label">02 · 建模与统计</span><h3>特征表与真实结局</h3><p>列角色与患者划分 → 训练内拟合 → 分类／回归评价与外部预测。</p><span class="route-output">输出：OOF、评价图与 .rad 模型</span></a>
+<a class="route-card" href="tutorials/pathology.html"><span class="route-label">03 · 轻量病理</span><h3>普通 patch 与 embedding</h3><p>QC 与 ID 对齐 → tile / slide / patient 聚合 → 实际 tile 分数覆盖图。</p><span class="route-output">输出：层级特征、QC 与坐标图</span></a>
+<a class="route-card" href="tutorials/real-data.html"><span class="route-label">04 · 真实公开数据</span><h3>公开 CT 与数值记录</h3><p>核对来源与许可 → 读取真实文件 → 检查特征或固定记录留出结果。</p><span class="route-output">输出：可追溯文件、真实 ROI 预览与结果</span></a>
+</div>
 
-## 两条研究流程
+## 跟着教程学，带着自己的文件做
 
-1. NIfTI＋ROI＋临床表 → 几何/QC → Original特征 → 患者分组筛选与建模 → 分类/回归评价 → `.rad`保存与无标签外部预测。
-2. 普通patch／外部embedding／已有mask → QC与特征 → tile→slide→patient聚合 → 复用原生模型 → 结果表与真实tile分数覆盖图。
+第一次使用，先完成[安装检查与快速开始](quickstart.md)，再进入[八篇可逐单元运行的教程](tutorials/index.md)。01–06 使用固定合成数据学习软件行为；07 使用单例公开 CT；08 使用真实 UCI 细胞核测量表。每条路线都说明输入、步骤、输出和替换为自己数据的方法。
 
-核心计算和CLI不调用Python参考算法。Python训练、筛选和临床接口保留兼容默认，教程均显式指定 `backend="rust"`。不执行自动分割、深度模型训练、通用WSI解码或配准。
+已有研究文件时，从[用户指南](user-guide/index.md)准备 cohort、临床表、patch manifest 或 embedding 行 ID。影像与临床路径保留患者分组；病理路径保留 patient→slide→tile 层级和真实坐标。程序不从文件名或特征值猜结局。
 
-教程按“输入和来源 → 完整代码 → 中间检查 → 输出和解读 → 换成自己的数据”组织。合成分数只说明软件流程运行成功；单例公开CT没有训练结局，不能据此编造分类研究。
+## 先确认支持范围，再解释结果
+
+原生能力覆盖明确的 Original 特征子集、三任务建模和普通图像病理工具；自动分割、深度模型训练、通用 WSI 解码和配准不在本轮范围。请查[支持矩阵](reference/support-matrix.md)和[验证说明](validation.md)。Python 原生示例显式指定 `backend="rust"`，CLI 调用同一计算核心。
+
+合成分数只证明流程可运行。单例 CT 没有训练结局；UCI source ID 不能证明患者独立。患者模型概率也不能作为局部 tile 预测图。正确性、研究效能与性能分别报告，详见[验证与开发](development/index.md)。
 
 ```{toctree}
-:maxdepth: 2
-:caption: 开始使用
+:hidden:
+:maxdepth: 3
 
 安装 <installation>
-快速开始 <quickstart>
-数据 <datasets>
 教程 <tutorials/index>
-```
-
-```{toctree}
-:maxdepth: 2
-:caption: 自己的数据与方法参考
-
-输入契约 <reference/user-guide/input-contracts>
-研究流程 <reference/user-guide/file-workflows>
-病理 <reference/user-guide/pathology>
-常见问题 <reference/user-guide/results-and-errors>
+用户指南 <user-guide/index>
 API <reference>
-验证 <validation>
-贡献 <contributing>
+验证与开发 <development/index>
 ```

@@ -1,55 +1,52 @@
-# 教程：逐步运行，再换成自己的数据
+# 教程：按任务选择路线
 
-先[安装](../installation.md)，从仓库内启动Jupyter。每页都有实际代码、
-中间结果和运行图，按顺序执行单元。重新完整运行会使用新目录，避免覆盖结果。
+先完成[安装](../installation.md)，再从完整仓库启动 Jupyter。每篇 Notebook 都包含代码、中间检查、保存的实际输出和解释；按顺序执行单元，使用新的输出目录。网页构建只展示已保存输出，不自动下载数据或训练。
 
-| 教程 | 输入 | 学习重点 |
-|---|---|---|
-| 01 | 合成微型NIfTI/ROI | shape、affine、24体素ROI及特征 |
-| 02 | 合成影像＋临床 | 重复病灶、患者共享划分、OOF融合 |
-| 03 | 合成多分类/连续目标 | 原生任务、评价、保存和外部预测 |
-| 04 | 合成多区域/时间点矩阵 | 瘤周、严格键、Delta、局部生境 |
-| 05 | 合成普通PNG patch | QC、层级聚合和真实tile特征图 |
-| 06 | 合成外部embedding | 打乱行序的ID校验、tile概率图 |
-| 07 | 真实公开PAT1 CT/GTV | 固定来源/许可、真实ROI预览、文件提取 |
-| 08 | 真实UCI细胞核测量表与B/M标签 | 固定留出、原生LR、保存加载和无标签预测 |
+## 四条学习路线
 
-前六篇是离线软件演示，不是真实临床队列。第七篇显式下载或复用公开数据，
-原始CT许可为CC-BY-NC-3.0；没有临床结局，所以不训练诊断模型。
-第八篇使用CC-BY-4.0的真实数值记录，并说明细胞核测量不是本包提取的radiomics，
-不同source ID也不能证明患者独立；留出分数不是外部临床验证。
+<div class="portal-grid">
+<a class="route-card" href="radiomics.html"><span class="route-label">影像组学 · 01 → 04</span><h3>从 ROI 到 Original 特征</h3><p>NIfTI / mask → 几何与提取 → 多区域与时间点 → 特征和质量记录。</p><span class="data-badge synthetic">合成入门</span></a>
+<a class="route-card" href="modeling.html"><span class="route-label">建模与统计 · 02 → 03</span><h3>从特征到可保存的模型</h3><p>特征与结局 → 患者分组 → 分类／回归 → 评价、.rad 与外部预测。</p><span class="data-badge synthetic">合成入门</span></a>
+<a class="route-card" href="pathology.html"><span class="route-label">轻量病理 · 05 → 06</span><h3>从 patch 到层级结果</h3><p>普通图像 / embedding → QC、ID 对齐 → 聚合 → 真实 tile 分数覆盖图。</p><span class="data-badge synthetic">合成入门</span></a>
+<a class="route-card" href="real-data.html"><span class="route-label">真实数据 · 07 / 08</span><h3>检查真实文件与数据来源</h3><p>公开 CT 或细胞核测量表 → 许可与 SHA → 提取或固定记录留出 → 可追溯结果。</p><span class="data-badge real">真实公开数据</span></a>
+</div>
 
 ```{toctree}
-:maxdepth: 1
+:hidden:
+:maxdepth: 2
 
-01_extract
-02_image_clinical_binary
-03_multiclass_regression
-04_regions_delta_habitat
-05_patch_patient
-06_embedding_overlay
-07_public_ct
-08_public_tabular
+影像组学 <radiomics>
+建模与统计 <modeling>
+轻量病理 <pathology>
+真实数据路线 <real-data>
 ```
 
-## 下载Notebook
+## 八篇可执行教程
 
-下载单页仍需完整仓库中的示例辅助函数与固定数据，不能只把Notebook放到空目录。
+| 教程 | 数据来源 | 执行后检查什么 |
+|---|---|---|
+| [01 · 基础提取](01_extract.ipynb) | 合成微型 NIfTI / ROI | shape、affine、24 体素 ROI、特征和 QC |
+| [02 · 影像与临床二分类](02_image_clinical_binary.ipynb) | 合成影像与临床表 | 重复病灶、共享患者划分、OOF 与融合 |
+| [03 · 多分类与回归](03_multiclass_regression.ipynb) | 合成类别与连续目标 | 多任务评价、保存加载和外部预测 |
+| [04 · 区域与时间点](04_regions_delta_habitat.ipynb) | 合成多区域 / 时间点矩阵 | 瘤周、键对齐、Delta 与局部生境 |
+| [05 · Patch 到患者](05_patch_patient.ipynb) | 合成普通 PNG patch | QC、层级聚合和实际 tile 特征图 |
+| [06 · Embedding 与覆盖图](06_embedding_overlay.ipynb) | 合成外部 embedding | 打乱行序的 ID 校验、实际 tile 概率图 |
+| [07 · 公开 CT](07_public_ct.ipynb) | 真实 PAT1 CT / GTV，CC-BY-NC-3.0 | 来源、许可、真实 ROI 预览和文件提取 |
+| [08 · 公开数值表](08_public_tabular.ipynb) | 真实 UCI 记录与 B/M 标签，CC-BY-4.0 | 固定记录留出、原生 LR、保存加载与无标签预测 |
+
+01–06 是离线软件演示，不能作为真实临床效能证据。07 没有临床结局，不训练诊断模型。08 的细胞核测量不是本包提取的 radiomics；唯一 source ID 不证明患者独立，留出分数不构成外部临床验证。来源、署名和使用限制见[数据与许可](../datasets.md)。
+
+## 下载与替换数据
+
+下载单页仍需仓库内的示例辅助函数与固定数据。
 
 {download}`01 提取 <01_extract.ipynb>` ·
 {download}`02 二分类 <02_image_clinical_binary.ipynb>` ·
 {download}`03 多分类/回归 <03_multiclass_regression.ipynb>` ·
 {download}`04 研究组合 <04_regions_delta_habitat.ipynb>` ·
-{download}`05 病理patch <05_patch_patient.ipynb>` ·
+{download}`05 病理 patch <05_patch_patient.ipynb>` ·
 {download}`06 Embedding <06_embedding_overlay.ipynb>` ·
-{download}`07 公开CT <07_public_ct.ipynb>` ·
+{download}`07 公开 CT <07_public_ct.ipynb>` ·
 {download}`08 公开表格 <08_public_tabular.ipynb>`
 
-## 自己的数据
-
-清单、列角色、患者单位、真实坐标和输出解读见
-[输入契约](../reference/user-guide/input-contracts.md)、
-[文件工作流](../reference/user-guide/file-workflows.md)、
-[病理指南](../reference/user-guide/pathology.md)和
-[常见错误](../reference/user-guide/results-and-errors.md)。
-`examples/real/`入口不生成临床结局或猜测患者身份。
+换用自有数据时，按[用户指南](../user-guide/index.md)准备文件、列角色、患者单位和坐标。`examples/real/` 入口读取提供的身份与结局，不生成临床标签。
