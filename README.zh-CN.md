@@ -7,8 +7,9 @@
 |---|---|
 | 安装、平台要求和预编译产物 | [安装指南](website/installation.md) |
 | 无数据先跑通 | [快速开始](website/quickstart.md) |
-| 逐单元学习，查看实际输出和图 | [七篇Notebook](website/tutorials/index.md) |
+| 逐单元学习，查看实际输出和图 | [八篇Notebook](website/tutorials/index.md) |
 | 想看真实公开影像 | [IBSI PAT1 CT/ROI](website/tutorials/07_public_ct.ipynb) |
+| 真实公开表格的建模演示 | [UCI WDBC的569条记录](website/tutorials/08_public_tabular.ipynb) |
 | 使用自己的NIfTI、ROI、临床表 | [文件驱动研究流程](docs/user-guide/file-workflows.md) |
 | 使用patch、mask、embedding | [轻量病理教程](docs/user-guide/pathology.md) |
 | 想核对方法与性能 | [技术报告](docs/technical-report.md)、[支持矩阵](docs/support-matrix.md) |
@@ -33,7 +34,9 @@ python examples/native/01_extract.py --output artifacts/first-extraction
 版本化`.rad`保存与无标签外部预测；普通病理图像QC、特征、已有mask统计、严格ID对齐、
 切片/患者聚合与真实tile分数覆盖图。具体边界以支持矩阵为准。
 
-教程分开三种数据：六套合成演示、一例真实公开CT、用户已有文件。合成分数不代表
+教程分开合成演示、真实公开数据和用户已有文件。第08篇使用真实UCI细胞核测量和
+B/M结局，按记录ID分组；它不是本包提取的影像组学特征，也不能证明569位独立患者。
+合成分数不代表
 诊断效果；公开CT为CC-BY-NC-3.0且没有建模结局；真实工作流不会替用户生成结局、
 猜患者身份或从DPI推断病理尺度。原始公开CT不入Git。
 

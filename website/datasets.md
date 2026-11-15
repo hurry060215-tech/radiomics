@@ -4,6 +4,7 @@
 |---|---|---|---|
 | 六套入门教程的数值、NIfTI和RGB patch | 本仓库固定合成数据，相应fixture声明CC0 | 离线学习、数值与流程复现 | 真实诊断效能、临床泛化 |
 | IBSI PAT1 CT与GTV-1 | IBSI公开镜像，原始数据CC-BY-NC-3.0 | 真实NIfTI输入、几何/ROI预览、特征 | 多患者建模、IBSI CT A–E全面符合 |
+| UCI WDBC 569条记录 | Wolberg/Mangasarian/Street等；CC-BY-4.0 | 原生LR、固定记录留出、保存加载和图 | 本包radiomics提取、不同记录必定为独立患者、外部临床验证 |
 | 用户自己的影像、临床表、mask、embedding | 使用者负责访问授权和去标识化 | 实际研究流程 | 软件自动提供外部验证或伦理批准 |
 
 ## 公开CT
@@ -26,3 +27,15 @@
 ## 合成演示与真实输入的关系
 
 入门Notebook可以检查24体素ROI、固定患者划分和覆盖图计数。真实文件工作流复用同一API，但输入由用户提供。运行成功、特征数正确和模型分数较高，是三个不同问题；实际研究仍需独立结局、训练集内拟合和患者级外部验证。
+
+## 真实公开表格
+
+第08篇使用[UCI Breast Cancer Wisconsin Diagnostic官方数据](https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic)，
+DOI [10.24432/C5DW2B](https://doi.org/10.24432/C5DW2B)，CC-BY-4.0。
+其30项变量来自细针穿刺细胞核图像的既有测量，不是本包的NIfTI/纹理特征。
+`wdbc.data` SHA256固定为 `d606af411f3e5be8a317a5a8b652b425aaf0ff38ca683d5327ffff94c3695f4a`。
+
+原始CSV和说明保留外部缓存；Notebook保留来源、署名、改动和划分协议。
+真实B/M标签用于预声明的分层记录留出，不从特征生成结局。
+569个source ID只证明唯一记录，不足以证明患者独立或排除隐藏受试者关联。
+具体参数、列顺序和解释见[真实表格教程说明](reference/user-guide/public-tabular.md)。

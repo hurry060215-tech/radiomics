@@ -28,6 +28,7 @@ jupyter lab
 | patch到患者及图像导出 | [05 轻量病理](tutorials/05_patch_patient.ipynb) | 合成RGB图像 |
 | embedding按ID绑定与局部概率 | [06 Embedding](tutorials/06_embedding_overlay.ipynb) | 合成embedding与显式坐标 |
 | 真实公开文件、许可与ROI预览 | [07 公开CT](tutorials/07_public_ct.ipynb) | IBSI PAT1真实公开CT/GTV |
+| 真实数值与真实标签的原生训练 | [08 公开表格](tutorials/08_public_tabular.ipynb) | UCI WDBC，569条记录、30项细胞核测量 |
 
 ## 换成自己的文件
 

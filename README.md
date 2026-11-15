@@ -54,8 +54,9 @@ Open a notebook in `website/tutorials/` and run its cells in order. Existing out
 | [05 · Patches → patients](website/tutorials/05_patch_patient.ipynb) | Synthetic RGB patches; QC, hierarchy and actual tile-feature maps |
 | [06 · Embeddings + local maps](website/tutorials/06_embedding_overlay.ipynb) | Explicit tile IDs, shuffled rows and true tile-level probabilities |
 | [07 · Real public CT](website/tutorials/07_public_ct.ipynb) | IBSI PAT1 CT/GTV, pinned downloads, ROI preview and native extraction |
+| [08 · Real public numerical cohort](website/tutorials/08_public_tabular.ipynb) | UCI WDBC: 569 source records, real B/M labels, native LR and held-out prediction |
 
-The first six are reproducible synthetic demonstrations, not clinical cohorts. The seventh uses real public CT under **CC-BY-NC-3.0**; it has no clinical outcomes and does not invent a classification study. Raw CT stays outside Git. See [data sources and licenses](website/datasets.md).
+The first six are synthetic demonstrations. The seventh uses real public CT under **CC-BY-NC-3.0**, with no clinical outcomes. The eighth uses real **CC-BY-4.0** UCI cell-nucleus measurements; these are existing numerical features, not features extracted by this radiomics engine. Its source-record groups do not prove independent patients, and its holdout is not external clinical validation. Raw files stay outside Git. See [data sources and licenses](website/datasets.md).
 
 ## Use your own files
 

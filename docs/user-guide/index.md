@@ -17,6 +17,7 @@
 | [普通病理与外部 embedding](pathology.md) | 自有图像 manifest、层级聚合、embedding 行 ID 和真实 tile 覆盖图 |
 | [结果解读与排错](results-and-errors.md) | 输出文件怎么看；替换成自己数据时常见错误和处理方式 |
 | [教程实际验证范围](validation.md) | 运行过的三任务、CSV/Parquet、保存加载、负面场景与测试数据来源 |
+| [真实公开表格](public-tabular.md) | 569条真实UCI数值记录、固定留出、原生LR与保存加载，明确记录组和临床验证边界 |
 
 从仓库根目录运行 `examples/real/` 下的脚本。它们是可审查的使用范例，安装包的公共接口仍然是 `import ov_radiomics as rad`。下载源码的用户可使用：
 

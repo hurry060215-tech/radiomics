@@ -36,8 +36,20 @@ again before committing:
 ```bash
 python tools/build_tutorial_notebooks.py --output artifacts/tutorial-inputs
 python tools/build_public_ct_notebook.py
+python tools/build_public_tabular_notebook.py --output artifacts/08_public_tabular.ipynb
 python tools/run_tutorials.py --notebooks artifacts/tutorial-inputs --output artifacts/tutorial-execution
 ```
+
+The public CT track is separate and explicitly accepts the dataset license;
+choose an external cache and a fresh execution directory:
+
+```bash
+python tools/run_public_ct_tutorial.py --cache /outside/git/pat1 --output artifacts/public-ct-execution --acknowledge-license
+```
+
+The real UCI table lesson's input license, predeclared split and actual execution
+record are described in [its guide](docs/user-guide/public-tabular.md). Source-record
+groups do not establish independent patient identities or clinical validity.
 
 Use the executor's fresh output directory and a kernel containing the current
 native wheel. Preserve failures and execution receipts. Public-data downloads

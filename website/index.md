@@ -8,6 +8,7 @@
 |---|---|---|
 | 第一次使用，没有数据 | [快速开始](quickstart.md) | 固定可核对的小型输出 |
 | 想看真实NIfTI/ROI | [公开CT逐步教程](tutorials/07_public_ct.ipynb) | 几何、ROI图、特征和质量记录 |
+| 想看真实公开表格训练 | [UCI数值建模教程](tutorials/08_public_tabular.ipynb) | 固定记录划分、原生LR、ROC和模型加载 |
 | 自己的影像和临床CSV | [自己的文件工作流](reference/user-guide/file-workflows.md) | 原生提取、患者分组建模、外部预测 |
 | 普通patch、mask或embedding | [病理与embedding指南](reference/user-guide/pathology.md) | QC、层级聚合、真实tile分数覆盖图 |
 | 想了解支持到哪一步 | [支持矩阵](reference/support-matrix.md) | 原生、外部适配、实验范围和暂缓内容 |

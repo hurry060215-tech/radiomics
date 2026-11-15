@@ -12,9 +12,12 @@
 | 05 | 合成普通PNG patch | QC、层级聚合和真实tile特征图 |
 | 06 | 合成外部embedding | 打乱行序的ID校验、tile概率图 |
 | 07 | 真实公开PAT1 CT/GTV | 固定来源/许可、真实ROI预览、文件提取 |
+| 08 | 真实UCI细胞核测量表与B/M标签 | 固定留出、原生LR、保存加载和无标签预测 |
 
 前六篇是离线软件演示，不是真实临床队列。第七篇显式下载或复用公开数据，
 原始CT许可为CC-BY-NC-3.0；没有临床结局，所以不训练诊断模型。
+第八篇使用CC-BY-4.0的真实数值记录，并说明细胞核测量不是本包提取的radiomics，
+不同source ID也不能证明患者独立；留出分数不是外部临床验证。
 
 ```{toctree}
 :maxdepth: 1
@@ -26,6 +29,7 @@
 05_patch_patient
 06_embedding_overlay
 07_public_ct
+08_public_tabular
 ```
 
 ## 下载Notebook
@@ -38,7 +42,8 @@
 {download}`04 研究组合 <04_regions_delta_habitat.ipynb>` ·
 {download}`05 病理patch <05_patch_patient.ipynb>` ·
 {download}`06 Embedding <06_embedding_overlay.ipynb>` ·
-{download}`07 公开CT <07_public_ct.ipynb>`
+{download}`07 公开CT <07_public_ct.ipynb>` ·
+{download}`08 公开表格 <08_public_tabular.ipynb>`
 
 ## 自己的数据
 
