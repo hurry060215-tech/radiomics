@@ -102,11 +102,47 @@ probe直接包含被审查的 `radiomics-python/src/gateway.rs`，并直接调�
 
 第二优先级才是对剩余约105 ms核心进行真实内部profiling，区分离散化、GLCM/GLRLM/GLSZM/GLDM/NGTDM矩阵和标量，再决定数据结构与重复扫描优化。当前没有CPU采样、allocator计数或精确矩阵阶段数据，不能断言是哪一个纹理内核主导，也不应立即大规模重写。
 
+## 小规模实际内存诊断
+
+时间诊断后另作一次固定内存诊断，没有重测或替换正式性能套件：三条路径各3个fresh process，共9条观测，约4.6秒一次完成。代码快照 `bc550cd`，全部66特征仍与原冻结参考匹配。完整原始绝对RSS、阶段快照、实际PID与构建身份见[内存诊断数据](native-memory-diagnosis-data.json)，外置目录为 `D:/radiomics-native-boundary-diagnosis/memory-v1/`。
+
+Python worker直接读冻结cropped `.npy`，Rust worker直接读同一cropped typed JSON；协调者事先逐元素核对两种载体的values/labels、完整affine和bin配置。**所有worker都未先读完整NIfTI源卷**，避免全图解码setup峰值覆盖L2阶段。每个worker在自己的进程内调用Windows `GetProcessMemoryInfo`，报告当前WorkingSetSize和PeakWorkingSetSize，最后在写完输出后补footer。
+
+六个Python worker的venv launcher PID均与实际worker PID不同；工具分别记录两者。实际RSS始终来自worker自身API，其阶段PID和footer PID一致，未把Popen返回的launcher当成算法worker。三个Rust worker的launcher/worker PID相同。
+
+| 路径 | 3次绝对峰值MiB（全部保留） | 峰值中位数MiB | 预载后当前RSS中位数MiB | 预载结束时已达HWM中位数MiB | 随后新HWM增量中位数MiB |
+|---|---|---:|---:|---:|---:|
+| immutable完整L2公共数组调用 | 103.5625 / 103.2227 / 103.7070 | 103.5625 | 55.5820 | 55.5820 | 47.9805 |
+| 同Python启动环境的预编码gateway低层调用 | 77.6484 / 78.5195 / 78.9062 | 78.5195 | 57.6914 | 59.6328 | 18.8984 |
+| 独立Rust typed buffer预载后核心 | 11.8047 / 11.9023 / 11.7930 | 11.8047 | 6.5586 | 8.9922 | 2.8125 |
+
+第一、二行都有相同Python/NumPy/pandas/原生包导入和cropped数组启动成本，导入后的当前RSS中位数分别53.121、53.195 MiB；第二行另外保留约2 MB请求文本，因此它的预载setup稍大。第二行仍调用同一Rust特征核心，省略完整公共volume/sample/FeatureTable构造，**不是Python参考算法**，也不是已经交付的等价快速公共API。
+
+完整L2的实际阶段当前RSS中位数为：预载55.582 MiB、image构造66.828、mask构造69.516、sample构造81.582、最后对象保留81.723 MiB；累计峰值分别升至79.840、79.840、95.969、103.562 MiB。它说明当前常驻对象与临时往返都有可观察开销。四个各257400元素的独立Python list，仅浅容器大小就共9,249,888 bytes（8.821 MiB），未包含盒装标量、临时JSON、allocator和核心缓冲区；这是实际保留下界，未用逐元素相加重复计算共享小整数。
+
+第三行的独立Rust启动当前RSS约3.355 MiB，typed JSON解析时当前RSS8.500 MiB/HWM8.992 MiB，释放输入文本后的预载RSS6.559 MiB，核心返回后当前RSS8.125 MiB/HWM11.805 MiB。输入的Rust数值buffer为f64/u32，而Python `.npy`为f64/u8，载体大小也已单列记录。不能把不同启动环境的11.8/103.6之比宣传成Python-facing公共API节省了相同倍数。
+
+这些数据支持“重复对象/表示有具体内存成本、纯Rust独立核心可以在较小进程中运行”的有限结论。**它们没有建立Rust相对PyRadiomics同公共入口的内存优势**：本轮未运行后者内存对照。对用户选择高层后端，仍需保持结果一致并取得等价接口的速度或内存收益证据。
+
+PeakWorkingSetSize是截至末尾footer的生命周期HWM，不是可重置的特征阶段峰值；预载解析setup仍计入其中。正的新HWM只证明后续阶段超过此前峰值；`peak-loaded RSS`和`peak-prior HWM`都不是精确分配量。未作Linux实际运行、allocator测量、OS cache purge、预算强制或大数据最大内存声明。Root协调短quiet窗口；另worker报告边界处有上一条0.2257秒stdlib标量检查，无原生worker/大扫描；本节不作延迟结论，九条观测全部保留。
+
+复现使用新目录，不会改动原854条结果：
+
+```powershell
+python tools/profile_native_memory.py `
+  --fixtures E:/radiomics-build/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1 `
+  --request D:/radiomics-native-boundary-diagnosis/baseline-v3/array-request.json `
+  --build-manifest E:/radiomics-build/snapshot-native-v2/build-manifest.json `
+  --rust-probe target/release/examples/profile_native_boundary.exe `
+  --native-python E:/radiomics-build/ml-path-native-v2/Scripts/python.exe `
+  --output D:/fresh-memory-diagnostic-directory --repeats 3 --acknowledge-license
+```
+
 ## 是否仍有必要保留Rust
 
 按“仅在速度、峰值内存或精度有明确收益时采用Rust，优先结果一致”的选择标准，本轮还不能证明应该把所有高层流程都换成Rust。独立CLI、统一实现和保存加载是工程能力，不能单独替代用户要求的数值或资源收益。当前数组入口的重复数据表示是具体可修复问题，也不等价于证明修复后的Rust一定胜出。
 
-不能用“Rust”名称代替速度证据。PyRadiomics关键纹理由成熟C扩展执行；要声称语言或内核优势，还需要同输入、同计算边界、同资源的对应内核测量。104.7 ms纯Rust调用不能直接与157.7 ms的Python公共API相比后宣称内核加速。本轮只定位本包内部开销，既未建立峰值内存或更高精度收益，也未将原1.5×目标宣布通过。可以逐模块显式混用已经验证的高层后端，维持严格auto规则和特征定义/列顺序/数值一致；无需为了语言统一把更合适的路径强行替换。
+不能用“Rust”名称代替速度证据。PyRadiomics关键纹理由成熟C扩展执行；要声称语言或内核优势，还需要同输入、同计算边界、同资源的对应内核测量。104.7 ms纯Rust调用不能直接与157.7 ms的Python公共API相比后宣称内核加速。本轮定位了本包内部时间/内存开销，但未建立相对PyRadiomics等价公共API的内存或更高精度收益，也未将原1.5×目标宣布通过。可以逐模块显式混用已经验证的高层后端，维持严格auto规则和特征定义/列顺序/数值一致；无需为了语言统一把更合适的路径强行替换。
 
 候选修复若有收益，应先在新的不可变构建上保留所有原病例/原次数重新验证，再更新正式性能报告；本次854条观测始终保留。没有对应证据的阶段继续标为未证明，不宣传语言速度、内存或精度的普遍优势。
 

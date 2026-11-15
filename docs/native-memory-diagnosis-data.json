@@ -1,0 +1,857 @@
+{
+  "schema": "radiomics.native-memory-diagnosis.v1",
+  "kind": "diagnostic_not_formal_memory_benchmark",
+  "host": {
+    "platform": "Windows-10-10.0.22631-SP0",
+    "machine": "AMD64",
+    "logical_cpus": 24,
+    "cpu": "Intel(R) Core(TM) Ultra 9 285K",
+    "ram_bytes": 33663320064
+  },
+  "repeats": 3,
+  "raw": [
+    {
+      "round": 0,
+      "path": "python_l2",
+      "launcher_pid": 13724,
+      "exit_code": 0,
+      "command": [
+        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "--worker",
+        "python_l2",
+        "--fixtures",
+        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "--request",
+        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "--build-manifest",
+        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "--output",
+        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\00-python_l2\\worker.json"
+      ],
+      "status": "passed",
+      "worker": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_l2",
+        "pid": 6836,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 6836,
+            "rss_bytes": 55701504,
+            "lifetime_peak_rss_bytes": 57741312,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 6836,
+            "rss_bytes": 58281984,
+            "lifetime_peak_rss_bytes": 58281984,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "image_constructed",
+            "pid": 6836,
+            "rss_bytes": 70074368,
+            "lifetime_peak_rss_bytes": 83578880,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "mask_constructed",
+            "pid": 6836,
+            "rss_bytes": 72937472,
+            "lifetime_peak_rss_bytes": 83578880,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "sample_constructed",
+            "pid": 6836,
+            "rss_bytes": 84561920,
+            "lifetime_peak_rss_bytes": 100630528,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "l2_complete_objects_retained",
+            "pid": 6836,
+            "rss_bytes": 86138880,
+            "lifetime_peak_rss_bytes": 108593152,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libopenblas",
+            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "version": "0.3.20",
+            "threading_layer": "pthreads",
+            "architecture": "Prescott"
+          }
+        ],
+        "retained_shallow_lists": {
+          "distinct_list_objects": 4,
+          "elements_per_list": [
+            257400,
+            257400,
+            257400,
+            257400
+          ],
+          "shallow_list_bytes": 9249888,
+          "excludes": "Boxed scalar objects, allocator overhead, temporary JSON and core arrays; only a retained lower bound."
+        }
+      },
+      "worker_footer": {
+        "stage": "after_output_written",
+        "pid": 6836,
+        "rss_bytes": 86220800,
+        "lifetime_peak_rss_bytes": 108593152,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "worker_pid": 6836,
+      "lifetime_peak_rss_bytes": 108593152,
+      "loaded_rss_bytes": 58281984,
+      "loaded_hwm_bytes": 58281984,
+      "peak_minus_loaded_rss_bytes": 50311168,
+      "new_hwm_after_loaded_bytes": 50311168
+    },
+    {
+      "round": 0,
+      "path": "python_preencoded",
+      "launcher_pid": 38076,
+      "exit_code": 0,
+      "command": [
+        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "--worker",
+        "python_preencoded",
+        "--fixtures",
+        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "--request",
+        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "--build-manifest",
+        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "--output",
+        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\00-python_preencoded\\worker.json"
+      ],
+      "status": "passed",
+      "worker": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_preencoded",
+        "pid": 13508,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 13508,
+            "rss_bytes": 55721984,
+            "lifetime_peak_rss_bytes": 57761792,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 13508,
+            "rss_bytes": 58298368,
+            "lifetime_peak_rss_bytes": 58298368,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_and_request_text_loaded",
+            "pid": 13508,
+            "rss_bytes": 60493824,
+            "lifetime_peak_rss_bytes": 62529536,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "preencoded_gateway_complete",
+            "pid": 13508,
+            "rss_bytes": 61198336,
+            "lifetime_peak_rss_bytes": 81420288,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libopenblas",
+            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "version": "0.3.20",
+            "threading_layer": "pthreads",
+            "architecture": "Prescott"
+          }
+        ],
+        "retained_shallow_lists": null
+      },
+      "worker_footer": {
+        "stage": "after_output_written",
+        "pid": 13508,
+        "rss_bytes": 61337600,
+        "lifetime_peak_rss_bytes": 81420288,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "worker_pid": 13508,
+      "lifetime_peak_rss_bytes": 81420288,
+      "loaded_rss_bytes": 60493824,
+      "loaded_hwm_bytes": 62529536,
+      "peak_minus_loaded_rss_bytes": 20926464,
+      "new_hwm_after_loaded_bytes": 18890752
+    },
+    {
+      "round": 0,
+      "path": "rust_core",
+      "launcher_pid": 11800,
+      "exit_code": 0,
+      "command": [
+        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
+        "--memory-preloaded",
+        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\00-rust_core\\worker.json"
+      ],
+      "status": "passed",
+      "worker": {
+        "full_source_nifti_loaded": false,
+        "implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+        "loaded_numeric_bytes": 3088800,
+        "path": "rust_core",
+        "pid": 11800,
+        "schema": "radiomics.memory-worker.v1",
+        "snapshots": [
+          {
+            "lifetime_peak_rss_bytes": 3522560,
+            "pid": 11800,
+            "rss_bytes": 3522560,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "startup"
+          },
+          {
+            "lifetime_peak_rss_bytes": 9428992,
+            "pid": 11800,
+            "rss_bytes": 8912896,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "typed_parse_with_input_text"
+          },
+          {
+            "lifetime_peak_rss_bytes": 9428992,
+            "pid": 11800,
+            "rss_bytes": 6877184,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "preloaded_before_core"
+          },
+          {
+            "lifetime_peak_rss_bytes": 12378112,
+            "pid": 11800,
+            "rss_bytes": 7372800,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "after_core"
+          }
+        ]
+      },
+      "worker_footer": {
+        "lifetime_peak_rss_bytes": 12378112,
+        "pid": 11800,
+        "rss_bytes": 7450624,
+        "source": "own GetProcessMemoryInfo",
+        "stage": "after_output_written"
+      },
+      "worker_pid": 11800,
+      "lifetime_peak_rss_bytes": 12378112,
+      "loaded_rss_bytes": 6877184,
+      "loaded_hwm_bytes": 9428992,
+      "peak_minus_loaded_rss_bytes": 5500928,
+      "new_hwm_after_loaded_bytes": 2949120
+    },
+    {
+      "round": 1,
+      "path": "python_preencoded",
+      "launcher_pid": 38100,
+      "exit_code": 0,
+      "command": [
+        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "--worker",
+        "python_preencoded",
+        "--fixtures",
+        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "--request",
+        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "--build-manifest",
+        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "--output",
+        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\01-python_preencoded\\worker.json"
+      ],
+      "status": "passed",
+      "worker": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_preencoded",
+        "pid": 23868,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 23868,
+            "rss_bytes": 55779328,
+            "lifetime_peak_rss_bytes": 57819136,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 23868,
+            "rss_bytes": 58281984,
+            "lifetime_peak_rss_bytes": 58281984,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_and_request_text_loaded",
+            "pid": 23868,
+            "rss_bytes": 60481536,
+            "lifetime_peak_rss_bytes": 62517248,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "preencoded_gateway_complete",
+            "pid": 23868,
+            "rss_bytes": 61198336,
+            "lifetime_peak_rss_bytes": 82333696,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libopenblas",
+            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "version": "0.3.20",
+            "threading_layer": "pthreads",
+            "architecture": "Prescott"
+          }
+        ],
+        "retained_shallow_lists": null
+      },
+      "worker_footer": {
+        "stage": "after_output_written",
+        "pid": 23868,
+        "rss_bytes": 61284352,
+        "lifetime_peak_rss_bytes": 82333696,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "worker_pid": 23868,
+      "lifetime_peak_rss_bytes": 82333696,
+      "loaded_rss_bytes": 60481536,
+      "loaded_hwm_bytes": 62517248,
+      "peak_minus_loaded_rss_bytes": 21852160,
+      "new_hwm_after_loaded_bytes": 19816448
+    },
+    {
+      "round": 1,
+      "path": "rust_core",
+      "launcher_pid": 10912,
+      "exit_code": 0,
+      "command": [
+        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
+        "--memory-preloaded",
+        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\01-rust_core\\worker.json"
+      ],
+      "status": "passed",
+      "worker": {
+        "full_source_nifti_loaded": false,
+        "implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+        "loaded_numeric_bytes": 3088800,
+        "path": "rust_core",
+        "pid": 10912,
+        "schema": "radiomics.memory-worker.v1",
+        "snapshots": [
+          {
+            "lifetime_peak_rss_bytes": 3518464,
+            "pid": 10912,
+            "rss_bytes": 3518464,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "startup"
+          },
+          {
+            "lifetime_peak_rss_bytes": 9420800,
+            "pid": 10912,
+            "rss_bytes": 8912896,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "typed_parse_with_input_text"
+          },
+          {
+            "lifetime_peak_rss_bytes": 9420800,
+            "pid": 10912,
+            "rss_bytes": 6877184,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "preloaded_before_core"
+          },
+          {
+            "lifetime_peak_rss_bytes": 12480512,
+            "pid": 10912,
+            "rss_bytes": 8667136,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "after_core"
+          }
+        ]
+      },
+      "worker_footer": {
+        "lifetime_peak_rss_bytes": 12480512,
+        "pid": 10912,
+        "rss_bytes": 8749056,
+        "source": "own GetProcessMemoryInfo",
+        "stage": "after_output_written"
+      },
+      "worker_pid": 10912,
+      "lifetime_peak_rss_bytes": 12480512,
+      "loaded_rss_bytes": 6877184,
+      "loaded_hwm_bytes": 9420800,
+      "peak_minus_loaded_rss_bytes": 5603328,
+      "new_hwm_after_loaded_bytes": 3059712
+    },
+    {
+      "round": 1,
+      "path": "python_l2",
+      "launcher_pid": 5100,
+      "exit_code": 0,
+      "command": [
+        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "--worker",
+        "python_l2",
+        "--fixtures",
+        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "--request",
+        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "--build-manifest",
+        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "--output",
+        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\01-python_l2\\worker.json"
+      ],
+      "status": "passed",
+      "worker": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_l2",
+        "pid": 21824,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 21824,
+            "rss_bytes": 55812096,
+            "lifetime_peak_rss_bytes": 57851904,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 21824,
+            "rss_bytes": 58376192,
+            "lifetime_peak_rss_bytes": 58376192,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "image_constructed",
+            "pid": 21824,
+            "rss_bytes": 70213632,
+            "lifetime_peak_rss_bytes": 83718144,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "mask_constructed",
+            "pid": 21824,
+            "rss_bytes": 72892416,
+            "lifetime_peak_rss_bytes": 83718144,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "sample_constructed",
+            "pid": 21824,
+            "rss_bytes": 86966272,
+            "lifetime_peak_rss_bytes": 100257792,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "l2_complete_objects_retained",
+            "pid": 21824,
+            "rss_bytes": 85692416,
+            "lifetime_peak_rss_bytes": 108236800,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libopenblas",
+            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "version": "0.3.20",
+            "threading_layer": "pthreads",
+            "architecture": "Prescott"
+          }
+        ],
+        "retained_shallow_lists": {
+          "distinct_list_objects": 4,
+          "elements_per_list": [
+            257400,
+            257400,
+            257400,
+            257400
+          ],
+          "shallow_list_bytes": 9249888,
+          "excludes": "Boxed scalar objects, allocator overhead, temporary JSON and core arrays; only a retained lower bound."
+        }
+      },
+      "worker_footer": {
+        "stage": "after_output_written",
+        "pid": 21824,
+        "rss_bytes": 85884928,
+        "lifetime_peak_rss_bytes": 108236800,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "worker_pid": 21824,
+      "lifetime_peak_rss_bytes": 108236800,
+      "loaded_rss_bytes": 58376192,
+      "loaded_hwm_bytes": 58376192,
+      "peak_minus_loaded_rss_bytes": 49860608,
+      "new_hwm_after_loaded_bytes": 49860608
+    },
+    {
+      "round": 2,
+      "path": "rust_core",
+      "launcher_pid": 30792,
+      "exit_code": 0,
+      "command": [
+        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
+        "--memory-preloaded",
+        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\02-rust_core\\worker.json"
+      ],
+      "status": "passed",
+      "worker": {
+        "full_source_nifti_loaded": false,
+        "implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+        "loaded_numeric_bytes": 3088800,
+        "path": "rust_core",
+        "pid": 30792,
+        "schema": "radiomics.memory-worker.v1",
+        "snapshots": [
+          {
+            "lifetime_peak_rss_bytes": 3518464,
+            "pid": 30792,
+            "rss_bytes": 3518464,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "startup"
+          },
+          {
+            "lifetime_peak_rss_bytes": 9478144,
+            "pid": 30792,
+            "rss_bytes": 8953856,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "typed_parse_with_input_text"
+          },
+          {
+            "lifetime_peak_rss_bytes": 9478144,
+            "pid": 30792,
+            "rss_bytes": 6918144,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "preloaded_before_core"
+          },
+          {
+            "lifetime_peak_rss_bytes": 12365824,
+            "pid": 30792,
+            "rss_bytes": 8519680,
+            "source": "own GetProcessMemoryInfo",
+            "stage": "after_core"
+          }
+        ]
+      },
+      "worker_footer": {
+        "lifetime_peak_rss_bytes": 12365824,
+        "pid": 30792,
+        "rss_bytes": 8663040,
+        "source": "own GetProcessMemoryInfo",
+        "stage": "after_output_written"
+      },
+      "worker_pid": 30792,
+      "lifetime_peak_rss_bytes": 12365824,
+      "loaded_rss_bytes": 6918144,
+      "loaded_hwm_bytes": 9478144,
+      "peak_minus_loaded_rss_bytes": 5447680,
+      "new_hwm_after_loaded_bytes": 2887680
+    },
+    {
+      "round": 2,
+      "path": "python_l2",
+      "launcher_pid": 38256,
+      "exit_code": 0,
+      "command": [
+        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "--worker",
+        "python_l2",
+        "--fixtures",
+        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "--request",
+        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "--build-manifest",
+        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "--output",
+        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\02-python_l2\\worker.json"
+      ],
+      "status": "passed",
+      "worker": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_l2",
+        "pid": 38824,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 38824,
+            "rss_bytes": 55668736,
+            "lifetime_peak_rss_bytes": 57708544,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 38824,
+            "rss_bytes": 58249216,
+            "lifetime_peak_rss_bytes": 58249216,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "image_constructed",
+            "pid": 38824,
+            "rss_bytes": 69967872,
+            "lifetime_peak_rss_bytes": 83857408,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "mask_constructed",
+            "pid": 38824,
+            "rss_bytes": 72138752,
+            "lifetime_peak_rss_bytes": 83898368,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "sample_constructed",
+            "pid": 38824,
+            "rss_bytes": 85544960,
+            "lifetime_peak_rss_bytes": 100716544,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "l2_complete_objects_retained",
+            "pid": 38824,
+            "rss_bytes": 85573632,
+            "lifetime_peak_rss_bytes": 108744704,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libopenblas",
+            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "version": "0.3.20",
+            "threading_layer": "pthreads",
+            "architecture": "Prescott"
+          }
+        ],
+        "retained_shallow_lists": {
+          "distinct_list_objects": 4,
+          "elements_per_list": [
+            257400,
+            257400,
+            257400,
+            257400
+          ],
+          "shallow_list_bytes": 9249888,
+          "excludes": "Boxed scalar objects, allocator overhead, temporary JSON and core arrays; only a retained lower bound."
+        }
+      },
+      "worker_footer": {
+        "stage": "after_output_written",
+        "pid": 38824,
+        "rss_bytes": 85766144,
+        "lifetime_peak_rss_bytes": 108744704,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "worker_pid": 38824,
+      "lifetime_peak_rss_bytes": 108744704,
+      "loaded_rss_bytes": 58249216,
+      "loaded_hwm_bytes": 58249216,
+      "peak_minus_loaded_rss_bytes": 50495488,
+      "new_hwm_after_loaded_bytes": 50495488
+    },
+    {
+      "round": 2,
+      "path": "python_preencoded",
+      "launcher_pid": 33932,
+      "exit_code": 0,
+      "command": [
+        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "--worker",
+        "python_preencoded",
+        "--fixtures",
+        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "--request",
+        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "--build-manifest",
+        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "--output",
+        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\02-python_preencoded\\worker.json"
+      ],
+      "status": "passed",
+      "worker": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_preencoded",
+        "pid": 38336,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 38336,
+            "rss_bytes": 56020992,
+            "lifetime_peak_rss_bytes": 58060800,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 38336,
+            "rss_bytes": 58634240,
+            "lifetime_peak_rss_bytes": 58634240,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_and_request_text_loaded",
+            "pid": 38336,
+            "rss_bytes": 60829696,
+            "lifetime_peak_rss_bytes": 62865408,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "preencoded_gateway_complete",
+            "pid": 38336,
+            "rss_bytes": 61616128,
+            "lifetime_peak_rss_bytes": 82739200,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libopenblas",
+            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "version": "0.3.20",
+            "threading_layer": "pthreads",
+            "architecture": "Prescott"
+          }
+        ],
+        "retained_shallow_lists": null
+      },
+      "worker_footer": {
+        "stage": "after_output_written",
+        "pid": 38336,
+        "rss_bytes": 61755392,
+        "lifetime_peak_rss_bytes": 82739200,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "worker_pid": 38336,
+      "lifetime_peak_rss_bytes": 82739200,
+      "loaded_rss_bytes": 60829696,
+      "loaded_hwm_bytes": 62865408,
+      "peak_minus_loaded_rss_bytes": 21909504,
+      "new_hwm_after_loaded_bytes": 19873792
+    }
+  ],
+  "summaries": {
+    "python_l2": {
+      "lifetime_peak_rss_bytes": 108593152,
+      "loaded_rss_bytes": 58281984,
+      "loaded_hwm_bytes": 58281984,
+      "peak_minus_loaded_rss_bytes": 50311168,
+      "new_hwm_after_loaded_bytes": 50311168,
+      "n": 3
+    },
+    "python_preencoded": {
+      "lifetime_peak_rss_bytes": 82333696,
+      "loaded_rss_bytes": 60493824,
+      "loaded_hwm_bytes": 62529536,
+      "peak_minus_loaded_rss_bytes": 21852160,
+      "new_hwm_after_loaded_bytes": 19816448,
+      "n": 3
+    },
+    "rust_core": {
+      "lifetime_peak_rss_bytes": 12378112,
+      "loaded_rss_bytes": 6877184,
+      "loaded_hwm_bytes": 9428992,
+      "peak_minus_loaded_rss_bytes": 5500928,
+      "new_hwm_after_loaded_bytes": 2949120,
+      "n": 3
+    }
+  },
+  "native_build_manifest_sha256": "8828d0e7338ec5927f8a0505fed71e78b476d0cfd5e0ac23cec7195b8527ee92",
+  "native_extension_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
+  "rust_probe_binary_sha256": "14b9767e715d2aed7329451cdc0b2b2102fba17b72d83b91d563be910ea5dc30",
+  "request_sha256": "433962dc8ad047274857e8a065f5d2fc24efafa8b6e2559846521a26c122c1f9",
+  "prepared_image_f64_sha256": "e56ea27fc85b3bec6702f0ab6e7c63615ddd538df0bf0c19f921b145d919c88e",
+  "prepared_mask_u32_sha256": "c4d5595e6d4021ebd853a6eac1d0d3f88548ebbcee9565f02108c7f1254a13cd",
+  "helper_sha256": {
+    "profile_native_memory.py": "78c0818e06422e583621c02a03fedfca1731711c7fe7bdf969e7bf850b327715",
+    "profile_native_boundary.py": "19498c3a7aebc6bee98c10779eb1ffe9d2d95f3badd6604e8f73012560a3de9f"
+  },
+  "all_66_features_match_frozen_ct": true,
+  "full_source_nifti_loaded_in_workers": false,
+  "limitations": [
+    "Own-process Windows PeakWorkingSetSize is lifetime HWM, not a resettable feature-phase peak. Setup cannot be subtracted to obtain an exact phase peak.",
+    "loaded RSS and previous HWM are explicit; positive new_hwm_after_loaded proves the phase exceeded earlier lifetime HWM, not total allocation volume.",
+    "python_l2 and python_preencoded share imports/cropped arrays; preencoded additionally retains UTF-8 request text and omits the full public object/table contract.",
+    "Pure Rust has different startup cost and parses typed JSON, not .npy. Its standalone absolute peak cannot establish the memory of a Python-facing public API.",
+    "No OS cache purge, no Linux execution in this run, no allocator instrumentation, no memory-budget enforcement or general maximum-memory claim."
+  ],
+  "measurement_code_revision": "bc550cd",
+  "report_file_sha256": "6f990eaa9325f762c44e0bb90db53f165332cb273d54c4cacd7f4f12ba168757",
+  "raw_file_sha256": "988132c51104e6b99849695cac85e99ba842eff88a5f2f97fe48e77e5e9669fa",
+  "evidence_directory": "D:\\radiomics-native-boundary-diagnosis\\memory-v1",
+  "data_license": "PAT1 input is CC-BY-NC-3.0; no raw image, mask or image numerical arrays in this archive.",
+  "quiet_window": "Root paused testing/browser/Sphinx; other worker reported a preceding0.2257s stdlib scalar check at the boundary, with no native worker/heavy scan. No latency result is asserted here; all nine observations retained."
+}
