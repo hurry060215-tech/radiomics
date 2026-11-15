@@ -152,6 +152,8 @@ def run(args):
     native = resolve_backend('rust')
     probe_rustc = subprocess.check_output(['rustc','-Vv'],text=True).strip()
     build = json.loads(args.build_manifest.read_text())
+    if sha(ROOT/'Cargo.lock') != build['cargo_lock_sha256']:
+        raise ValueError('Probe Cargo.lock bytes must match the frozen build; restore its original LF checkout before compiling.')
     if sha(native.__file__) != build['wheel_files_sha256']['ov_radiomics/_native.pyd']:
         raise ValueError('Use the fixed immutable native-v2 extension for baseline diagnostics.')
     values, labels, spec, reference = load_inputs(fixtures, ROOT)
@@ -246,7 +248,10 @@ def run(args):
                     timings.append(dict(round=round-args.warmups,stage=name,nanoseconds=elapsed,phases=phases))
                     counts[name]=counts.get(name,0)+1
                     if observations is not None:
-                        traces.append(dict(round=round-args.warmups,requests=observations[0],deepcopies=observations[1]))
+                        trace=dict(round=round-args.warmups,requests=observations[0],deepcopies=observations[1])
+                        traces.append(trace)
+                        with (output/'request-traces.jsonl').open('a',encoding='utf-8') as stream:
+                            stream.write(json.dumps(trace)+'\n')
                 # Destruction is outside the outer clock in Python. Rust black_box
                 # probes include temporary-result destruction; this is disclosed.
                 del value
@@ -289,7 +294,7 @@ def run(args):
         all_66_features_match_frozen_ct=True,
         limitations=['Independent diagnostic stages overlap; do not add/subtract their medians or subtract official L2 and L3.',
             'Only instrumented request clocks and L3 same-call phases are nested stage observations; instrumentation has bookkeeping overhead.',
-            'Pure Rust probe uses current locked dependencies; immutable native-v2 wheel uses its recorded older Cargo.lock. Core implementation SHA must match.',
+            'Pure Rust probe and immutable native-v2 wheel require identical Cargo.lock bytes and core implementation SHA; no alternate dependency/algorithm baseline is substituted.',
             'Python outer timings exclude final temporary-result destruction; Rust probes include temporary drops.',
             'Single process warm OS-cache diagnostics, no new PyRadiomics speed comparison, allocator or per-instruction profile; no universal language claim.'])
     write_json(output/'report.json',report)
