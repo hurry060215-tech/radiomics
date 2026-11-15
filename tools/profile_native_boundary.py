@@ -47,7 +47,7 @@ def summary(values):
 def check_features(actual, reference):
     """The frozen 66 definitions, tolerances and nonfinite locations stay fixed."""
     import math
-    expected = reference['features']
+    expected = {**reference['features'], **reference.get('basic_shape', {})}
     if set(actual) != set(expected):
         raise ValueError('Feature identity differs from the frozen CT66 reference.')
     errors = []

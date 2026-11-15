@@ -16,6 +16,8 @@ def test_frozen_feature_set_and_tolerances_are_strict():
         profile.check_features({'a':10.+1e-4,'b':'NaN'},ref)
     with pytest.raises(ValueError,match='identity differs'):
         profile.check_features({'a':10.},ref)
+    profile.check_features({'a':10.,'voxel_count':12},
+        {'features':{'a':10.},'basic_shape':{'voxel_count':12}})
 
 
 def test_summary_retains_small_sample_uncertainty():
