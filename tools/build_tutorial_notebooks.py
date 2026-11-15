@@ -2,8 +2,9 @@
 import ast
 import json
 from pathlib import Path
-import textwrap
-import uuid
+import argparse
+import hashlib
+from tutorial_figures import FIGURES
 
 ROOT=Path(__file__).resolve().parents[1]
 TITLES=['NIfTI 与 ROI 基础提取','影像与临床二分类','多分类与连续值回归','多区域、Delta 与生境','病理 patch 到患者建模','Embedding 对齐与局部覆盖图']
@@ -40,63 +41,117 @@ TOPICS={
 }
 
 def cell(kind,source):
- d=dict(cell_type=kind,id=uuid.uuid4().hex[:12],metadata={},source=source)
+ d=dict(cell_type=kind,id="pending",metadata={},source=source)
  if kind=='code':d.update(execution_count=None,outputs=[])
  return d
 
-for number,path in enumerate(sorted((ROOT/'examples/native').glob('[0-9][0-9]_*.py'))):
- tree=ast.parse(path.read_text(encoding='utf-8'))
- main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')
- setup='''from pathlib import Path
+def example_paths(repo_root):
+ paths=[]
+ for number in range(1,7):
+  matches=sorted((Path(repo_root)/'examples/native').glob(f'{number:02d}_*.py'))
+  if len(matches)!=1:
+   raise ValueError(f'Expected exactly one example {number:02d}; got {matches}')
+  paths.extend(matches)
+ return paths
+
+def generate_notebooks(repo_root=ROOT,output_dir=None,*,overwrite=False):
+ if output_dir is None:
+  raise ValueError("An explicit output directory is required.")
+ repo_root=Path(repo_root).resolve()
+ output_dir=Path(output_dir).resolve()
+ output_dir.mkdir(parents=True,exist_ok=True)
+ if not overwrite and any((output_dir/(path.stem+'.ipynb')).exists() for path in example_paths(repo_root)):
+  raise FileExistsError('Tutorial output already exists; use a new directory or explicit --overwrite.')
+ generated=[]
+ for number,path in enumerate(example_paths(repo_root)):
+  tree=ast.parse(path.read_text(encoding='utf-8'))
+  main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')
+  setup='''from pathlib import Path
 import sys, tempfile
 from IPython.display import display, Image
 # 从 Notebook 所在目录或仓库根目录启动均可。
-REPO = next((p for p in [Path.cwd(), *Path.cwd().parents] if (p/'examples/native/_shared.py').exists()), None)
+REPO = Path(TUTORIAL_REPO_ROOT).resolve() if 'TUTORIAL_REPO_ROOT' in globals() else next((p for p in [Path.cwd(), *Path.cwd().parents] if (p/'examples/native/_shared.py').exists()), None)
 if REPO is None:
     raise RuntimeError('请先下载完整仓库，并在仓库内启动 Jupyter。')
 sys.path.insert(0, str(REPO/'examples/native'))
 import ov_radiomics as rad
 print(rad.backend_info())
 # 每次完整运行使用新目录，避免覆盖已有结果。
-output = Path(tempfile.mkdtemp(prefix='radiomics-'''+path.stem+'''-'))
+output = Path(TUTORIAL_RUN_ROOT) if 'TUTORIAL_RUN_ROOT' in globals() else Path(tempfile.mkdtemp(prefix='radiomics-'''+path.stem+'''-'))
+if 'TUTORIAL_RUN_ROOT' in globals():
+    output.mkdir(parents=True, exist_ok=False)
 root = output
 print('输出目录:', output)
-'''
- imports='\n'.join(ast.unparse(n) for n in tree.body if isinstance(n,(ast.Import,ast.ImportFrom)))
- helpers='\n\n'.join(ast.unparse(n) for n in tree.body if isinstance(n,ast.FunctionDef) and n.name!='main')
- cells=[cell('markdown',f'# {TITLES[number]}\n\n按 **Shift+Enter** 从上到下逐单元运行。变量保留在当前内核中；如果修改上游参数，请重新运行其后的单元。\n\n本教程使用固定合成数据，演示软件流程，不提供临床效能结论。需要完整仓库和对应原生安装包；源码环境为 `45140bf` 构建。'),cell('markdown','## 1. 环境与独立输出目录\n\n确认后端为 Rust。后续每步都可以检查中间对象；示例数据生成辅助函数只负责小型输入构造。'),cell('code',setup+'\n'+imports+'\n'+helpers)]
- nodes=[]
- for n in main.body:
-  code=ast.unparse(n)
-  if number==0 and ('parser' in code.split('\n')[0] or code.startswith('args =') or code.startswith('root =') or code.startswith('root.mkdir') or code.startswith('if args.cli:')):continue
-  if code.startswith('output = output_arguments'):continue
-  if number==2 and isinstance(n,ast.For):
-   for task in ['multiclass','regression']:
-    nodes.append(ast.Assign(targets=[ast.Name(id='task',ctx=ast.Store())],value=ast.Constant(task)))
-    nodes.extend(n.body)
-  else:nodes.append(n)
- groups=[];group=[];topic=None
- for n in nodes:
-  key=n.targets[0].id if isinstance(n,ast.Assign) and isinstance(n.targets[0],ast.Name) else None
-  if key in TOPICS or len(group)>=5:
-   if group:groups.append((topic,group))
-   group=[];topic=key
-  group.append(n)
- if group:groups.append((topic,group))
- for index,(topic,group) in enumerate(groups,2):
-  title,explanation=TOPICS.get(topic,('准备数据与保存中间结果','运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。'))
-  cells.append(cell('markdown',f'## {index}. {title}\n\n{explanation}'))
-  code='\n'.join(ast.unparse(ast.fix_missing_locations(n)) for n in group)
-  if topic in ('data','clinical','patients','tiles','training','report'):
-   code+=f"\nif hasattr({topic}, 'head'):\n    display({topic}.head())"
-  if topic in ('merged','change'):
-   code+=f'\ndisplay({topic}.features.head())'
-  cells.append(cell('code',code))
- cells.extend([cell('markdown','## 查看导出的图与文件\n\n查看图表的坐标、单位和预测层级。输出目录保留完整结果；这里显示前两幅图。'),cell('code',"for figure in sorted(output.glob('*.png'))[:2]:\n    display(Image(filename=str(figure)))\nprint('结果文件:', [p.name for p in sorted(output.iterdir())])"),cell('markdown','## 换成自己的数据\n\n保持示例的 ID、患者/切片层级与列角色约定，先替换数据读取步骤，再重新运行下游单元。先确认几何、单位、缺失状态和队列重叠；不要用测试集决定阈值或筛选参数。\n\n重新运行全部单元会新建结果目录；只重跑保存单元可能因为文件已存在而报错，这是显式防覆盖行为。')])
- notebook=dict(nbformat=4,nbformat_minor=5,metadata=dict(kernelspec=dict(display_name='Python 3',language='python',name='python3'),language_info=dict(name='python')),cells=cells)
- dest=ROOT/'website/tutorials'/(path.stem+'.ipynb');dest.write_text(json.dumps(notebook,ensure_ascii=False,indent=2),encoding='utf-8')
- # Notebook is now the page source; remove the superseded Markdown wrapper.
- wrapper=dest.with_suffix('.md')
- if wrapper.exists():wrapper.unlink()
- print(path.stem,len([c for c in cells if c['cell_type']=='code']),'code cells')
-conf=ROOT/'website/conf.py';conf.write_text(conf.read_text(encoding='utf-8').replace("exclude_patterns += ['tutorials/*.ipynb']",''),encoding='utf-8')
+import hashlib, importlib.metadata, json, platform
+runtime = {'interpreter': sys.executable, 'python': platform.python_version(),
+           'package_source': rad.__file__, 'backend': rad.backend_info(),
+           'packages': {name: importlib.metadata.version(name) for name in
+                        ('ov-radiomics', 'numpy', 'pandas', 'matplotlib', 'ipykernel')}}
+from ov_radiomics._backend import try_native
+extension = try_native()
+if extension is None:
+    raise RuntimeError('本教程需要真实 Rust 原生扩展。')
+runtime['native_path'] = extension.__file__
+runtime['native_sha256'] = hashlib.sha256(Path(extension.__file__).read_bytes()).hexdigest()
+runtime['package_python_sha256'] = {p.relative_to(Path(rad.__file__).parent).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                                  for p in sorted(Path(rad.__file__).parent.rglob('*.py'))}
+(output/'tutorial-runtime.json').write_text(json.dumps(runtime, ensure_ascii=False, indent=2), encoding='utf-8')
+ '''
+  imports='\n'.join(ast.unparse(n) for n in tree.body if isinstance(n,(ast.Import,ast.ImportFrom)))
+  helpers='\n\n'.join(ast.unparse(n) for n in tree.body if isinstance(n,ast.FunctionDef) and n.name!='main')
+  cells=[cell('markdown',f'# {TITLES[number]}\n\n按 **Shift+Enter** 从上到下逐单元运行。变量保留在当前内核中；如果修改上游参数，请重新运行其后的单元。\n\n本教程使用固定合成数据，演示软件流程，不提供临床效能结论。需要完整仓库和对应原生安装包；实际源码版本和原生扩展身份请查看本次执行收据。'),cell('markdown','## 1. 环境与独立输出目录\n\n确认后端为 Rust。后续每步都可以检查中间对象；示例数据生成辅助函数只负责小型输入构造。'),cell('code',setup+'\n'+imports+'\n'+helpers)]
+  nodes=[]
+  for n in main.body:
+   code=ast.unparse(n)
+   if number==0 and ('parser' in code.split('\n')[0] or code.startswith('args =') or code.startswith('root =') or code.startswith('root.mkdir') or code.startswith('if args.cli:')):continue
+   if code.startswith('output = output_arguments'):continue
+   if number==2 and isinstance(n,ast.For):
+    for task in ['multiclass','regression']:
+     nodes.append(ast.Assign(targets=[ast.Name(id='task',ctx=ast.Store())],value=ast.Constant(task)))
+     nodes.extend(n.body)
+   else:nodes.append(n)
+  groups=[];group=[];topic=None
+  for n in nodes:
+   key=n.targets[0].id if isinstance(n,ast.Assign) and isinstance(n.targets[0],ast.Name) else None
+   if key in TOPICS or len(group)>=5:
+    if group:groups.append((topic,group))
+    group=[];topic=key
+   group.append(n)
+  if group:groups.append((topic,group))
+  for index,(topic,group) in enumerate(groups,2):
+   title,explanation=TOPICS.get(topic,('准备数据与保存中间结果','运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。'))
+   cells.append(cell('markdown',f'## {index}. {title}\n\n{explanation}'))
+   code='\n'.join(ast.unparse(ast.fix_missing_locations(n)) for n in group)
+   if topic in ('data','clinical','patients','tiles','training','report'):
+    code+=f"\nif hasattr({topic}, 'head'):\n    display({topic}.head())"
+   if topic in ('merged','change'):
+    code+=f'\ndisplay({topic}.features.head())'
+   cells.append(cell('code',code))
+  if path.stem in FIGURES:
+   cells.extend([cell('markdown', '## 用实际结果绘图\n\n仅展示本次合成数据计算结果；请核对患者层级、坐标与单位。'), cell('code', FIGURES[path.stem])])
+  cells.extend([cell('markdown','## 查看导出的图与文件\n\n查看图表的坐标、单位和预测层级。输出目录保留完整结果；这里显示前两幅图。'),cell('code',"for figure in sorted(output.glob('*.png'))[:2]:\n    display(Image(filename=str(figure)))\nprint('结果文件:', [p.name for p in sorted(output.iterdir())])"),cell('markdown','## 换成自己的数据\n\n保持示例的 ID、患者/切片层级与列角色约定，先替换数据读取步骤，再重新运行下游单元。先确认几何、单位、缺失状态和队列重叠；不要用测试集决定阈值或筛选参数。\n\n重新运行全部单元会新建结果目录；只重跑保存单元可能因为文件已存在而报错，这是显式防覆盖行为。')])
+  notebook=dict(nbformat=4,nbformat_minor=5,metadata=dict(kernelspec=dict(display_name='Python 3',language='python',name='python3'),language_info=dict(name='python')),cells=cells)
+  for index,item in enumerate(cells):
+   content=f"{path.stem}:{index}:{item['cell_type']}:{item['source']}".encode('utf-8')
+   item['id']='cell-'+hashlib.sha256(content).hexdigest()[:20]
+  notebook['metadata']['radiomics_tutorial']={'example':path.relative_to(repo_root).as_posix(),
+   'example_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
+   'shared_sha256':hashlib.sha256((repo_root/'examples/native/_shared.py').read_bytes()).hexdigest(),
+   'dataset':'fixed synthetic software demonstration; not clinical evidence'}
+  dest=output_dir/(path.stem+'.ipynb')
+  with dest.open('w' if overwrite else 'x',encoding='utf-8',newline='\n') as handle:
+   handle.write(json.dumps(notebook,ensure_ascii=False,indent=2)+'\n')
+  generated.append(dest)
+ return generated
+
+def main():
+ parser=argparse.ArgumentParser(description=__doc__)
+ parser.add_argument('--repo-root',type=Path,default=ROOT)
+ parser.add_argument('--output',type=Path,required=True)
+ parser.add_argument('--overwrite',action='store_true')
+ args=parser.parse_args()
+ for path in generate_notebooks(args.repo_root,args.output,overwrite=args.overwrite):
+  print(path)
+
+if __name__=='__main__':
+ main()
