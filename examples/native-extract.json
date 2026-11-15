@@ -1,0 +1,11 @@
+{
+  "extraction": {
+    "profile": "python_golden_v1",
+    "discretization": {"method": "fixed_width", "width": 25.0},
+    "aggregation": "direction_mean",
+    "gldm_alpha": 0,
+    "voxel_array_shift": 0.0
+  },
+  "labels": [1],
+  "preparation": []
+}

@@ -1,0 +1,140 @@
+# Native models and sparse solvers
+
+`ov_radiomics_core::models` provides typed, serializable Rust fit/predict state.
+It does not call Python, sklearn, statsmodels or joblib. Public data are the
+shared row-major `NumericBuffer` plus explicit `ModelTarget` values. Missing
+values must be resolved by a train-fitted preprocessing pipeline before fitting
+or prediction; these numerical solvers never impute data themselves.
+
+```rust,ignore
+let model = models::fit(&spec, &training_features, &training_target)?;
+let prediction = model.predict(&external_features)?;
+model.validate()?;
+```
+
+`ModelTarget::Classification { classes, labels }` stores ordered class names and
+numeric class indices. Every declared class must appear in training. Class names
+are metadata; renaming classes or consistently permuting class indices does not
+turn multiclass targets into continuous regression values. Regression uses
+`ModelTarget::Regression { values }` with finite continuous outcomes.
+
+## Implemented predictive estimators
+
+| `ModelSpec` | Tasks and definition |
+| --- | --- |
+| `LR { lambda, tolerance, max_iterations }` | Binary logistic or multiclass softmax; mean negative log-likelihood plus `lambda/2 * sum(coefficients²)`. The intercept is never penalized. Both tasks share deterministic L-BFGS and a gradient-based stopping test. |
+| `Linear { rank_tolerance }` | OLS using a centered SVD solve. The relative singular-value threshold checks full design rank including the intercept; deficient designs return an error rather than a silently chosen minimum-norm fit. |
+| `Ridge { lambda, rank_tolerance }` | Mean squared loss divided by two plus `lambda/2 * sum(coefficients²)` using the same SVD implementation. Positive regularization accepts deficient feature designs. `lambda=0` requires full rank. |
+| `KNN { k, weights }` | Binary/multiclass probabilities or regression means; Euclidean distances; `uniform` or `distance` weighting. Exact zero-distance neighbors receive all distance weight. Equal distances use original training-row order. |
+| `GaussianNB { priors, var_smoothing }` | Binary/multiclass Gaussian likelihoods. Class variances are population variances plus `var_smoothing * max(training population variance)`. Priors are explicit class-ordered probabilities or empirical class proportions. |
+| `RandomForest { trees, max_depth, min_samples_split, min_samples_leaf, max_features, bootstrap, seed }` | CART classification with Gini impurity or regression with squared-error impurity; bootstrap draws contain the same number of rows as training. Class leaves hold empirical probabilities; regression leaves hold means. |
+
+`rank_tolerance` is relative to the largest singular value and must lie strictly
+between zero and one. Predictive LR requires strictly positive L2 `lambda`;
+other smoothing and regularization parameters are finite and nonnegative.
+Undefined class variances, nonrepresentable predictions, invalid
+targets, absent classes and input width mismatches produce structured errors.
+Feature-name alignment belongs to the pipeline/model manifest; the numerical
+kernel accepts columns in already validated fitted order.
+
+Every fitted model has `FitReport { converged, iterations, objective,
+gradient_or_kkt_inf }`. Numerical solvers report a finite objective and gradient
+norm. KNN and GaussianNB have no iterative optimization objective, so both
+optional numerical fields are `None`. Validation rejects false convergence,
+type/state mismatches, malformed buffers and missing numerical reports. A
+solver that reaches its iteration limit or fails line search returns
+`ErrorCode::Convergence` and does not return a model that can be saved.
+
+`solve_logistic(x, target, lambda, tolerance, max_iterations)` exposes the same
+single numerical solver to the clinical statistics module and allows
+`lambda=0`. Its return is a numerical state/report, not a clinical inference
+result. A small gradient does not prove that a finite unpenalized MLE exists.
+The clinical caller must additionally establish complete-case scope, design
+rank, absence of complete/quasi separation and a valid information matrix before
+reporting estimates or OR/Wald intervals. A `lambda=0` numerical state cannot be
+wrapped as a valid predictive `ModelSpec::LR` model.
+
+## Shared sparse fitting
+
+`fit_sparse(&SparseSpec, &NumericBuffer, &ModelTarget)` is the sole sparse solver
+implementation. It returns `SparseFit`: typed coefficient/intercept buffers,
+ordered classes, nonzero union support and a convergence report per fitted
+score. It does not select hyperparameters or perform CV internally. The research
+workflow must fit preprocessing and tune `alpha` inside patient-grouped folds.
+
+- `SquaredLasso`: cyclic coordinate descent for
+  `SSE/(2*n) + alpha * sum(abs(coefficient))`. It accepts regression and binary
+  labels to retain the existing binary selector's semantics. It explicitly
+  rejects multiclass classification.
+- `BinaryL1Logistic`: mean binary log loss plus the same L1 penalty, using
+  coordinate Newton steps with a composite Armijo line search.
+- `OvrL1Logistic`: the same binary L1 solver once per declared class, with union
+  support in original feature order. It never applies squared regression to
+  multiclass numeric labels.
+
+All intercepts are unpenalized. The KKT infinity norm is the maximum of the
+intercept gradient and coefficient stationarity violations. Nonzero coefficients
+use `abs(gradient + alpha * sign(coefficient))`; zero coefficients use
+`max(abs(gradient) - alpha, 0)`. `SparseFit::linear_scores` returns untransformed
+linear scores. In particular, binary squared-loss LASSO scores are **not**
+probabilities. Downstream selection can apply its explicitly configured
+coefficient threshold; the stored solver support records exact nonzero columns.
+
+## Reference mapping and evidence
+
+The independently frozen `python_golden_v1/model_reference.json` defines all
+objectives and parameters. With `n` training rows, reference sklearn mappings
+are `LR C = 1/(n*lambda)`, L1 Logistic `C = 1/(n*alpha)`, Ridge
+`alpha = n*lambda`, and LASSO `alpha = alpha`. Softmax intercepts have an
+unidentifiable common offset, so validation compares probabilities, centered
+state, objectives and gradients rather than requiring a particular offset.
+
+Tests cover binary, three-class and continuous outcomes from fixed synthetic
+patient/lesion data. They compare predictions to `atol=1e-6, rtol=1e-5`, objective
+values to `atol=1e-10, rtol=1e-8`, and require gradient/KKT infinity norm at most
+`1e-7`. They also check class-name/index permutation behavior, sparse support,
+JSON save/load identity, rank failures, missing inputs, absent classes and
+nonconvergence. These are solver-level tests; patient splitting, nested CV,
+selection leakage and complete `.rad` pipeline packaging have separate checks.
+
+The native optimizer's coefficient values and iteration sequence need not match
+sklearn's optimizer, while the frozen objective, gradient and predictions must.
+No external estimator name is used for a different native algorithm.
+
+## Forest rules and acceptance
+
+`MaxFeatures` is explicitly `All`, `Sqrt` or `Count { count }`. A node samples
+candidate features without replacement, then checks them in original feature
+order. A candidate threshold is the midpoint of consecutive distinct sorted
+values. Equal impurity improvements choose the lowest feature index and then
+the lowest threshold. Prediction sends `x <= threshold` to the left child.
+Pure nodes, depth limits and explicit minimum sample requirements terminate
+growth. Every tree uses the same implementation for classification and
+regression, with task-specific impurity and leaf values.
+
+The shared RNG scheme is recorded in fitted state:
+`sha256-chacha8-rand0.8.5-rand_chacha0.3.1-v1`. Each tree calls
+`component_rng(seed, "random-forest-tree-v1", tree_index_u64.to_le_bytes())`.
+Bootstrap sampling consumes that tree's stream first, followed by node feature
+subsampling in deterministic depth-first order. `All` does not consume random
+draws for feature ordering. There is no inner thread pool; the outer workflow
+controls concurrency. Adding a tree does not change earlier trees' random
+streams. This scheme is intentionally separate from the legacy bootstrap-index
+compatibility contract and from sklearn's tree RNG.
+
+Trees use flat node arrays with explicit child indices. Validation checks
+reachability, parent counts, forward child topology, finite split thresholds,
+sample count conservation, class probability sums and the recorded RNG scheme.
+Malformed or nonconverged states cannot pass `.rad` model validation.
+
+Frozen acceptance uses five hand CART cases, plus three fixed tasks with 200
+trees for each seed `11, 23, 37, 53, 71`. The behavioral comparison aggregates
+the two lesion predictions per test patient before computing each task's gate.
+Binary AUC/Brier, multiclass macro-F1 and regression RMSE have separate frozen
+thresholds; an aggregate across tasks cannot hide failure. Within the native
+implementation, repeated fits, outer thread pools with one and three workers,
+and JSON save/load reproduce exactly. The native forest is not required to
+reconstruct sklearn's trees from the same numeric seed.
+
+Performance is assessed in the separate ML & Stats benchmark suite. Passing
+these numerical/behavioral tests does not assert a speed or peak-memory result.

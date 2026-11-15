@@ -6,3 +6,26 @@ license.workspace = true
 rust-version.workspace = true
 repository.workspace = true
 description = "Independent Rust numerical kernels for binary radiomics model evaluation"
+readme = "package-assets/README.md"
+include = ["/src", "/tests", "/build.rs", "/package-assets"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+sha2 = "0.10"
+nifti = { version = "=0.17.0", default-features = false, features = ["nalgebra_affine"] }
+image = { version = "=0.25.6", default-features = false, features = ["png", "jpeg"] }
+tiff = "=0.9.1"
+csv = "1"
+rayon = "1"
+nalgebra = "0.33"
+rand = "=0.8.5"
+rand_chacha = "=0.3.1"
+rand_mt = "=4.2.2"
+statrs = { version = "=0.18.0", default-features = false }
+libm = "=0.2.16"
+minilp = "=0.2.2"
+parquet = { version = "=57.3.1", default-features = false, features = ["snap", "flate2-zlib-rs", "zstd"] }
+
+[build-dependencies]
+sha2 = "0.10"

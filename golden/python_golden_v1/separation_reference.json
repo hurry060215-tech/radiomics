@@ -1,0 +1,475 @@
+{
+  "schema": "python_golden_v1.logistic_separation.reference.v1",
+  "license": "CC0-1.0 original hand data",
+  "reference_packages": {
+    "numpy": "1.23.0",
+    "scipy": "1.13.1"
+  },
+  "specification": "Augment intercept, divide each design column by maxabs (zero column scale1), rank-check scaled design; signed rows=(2y-1)*scaled_design. beta bounds[-1,1], all signed margins>=0, maximize their sum. Positive objective proves a nonzero separation direction.",
+  "tolerances": {
+    "svd_relative_rank_threshold": 1e-12,
+    "certificate_bound_atol": 1e-09,
+    "certificate_row_feasibility": "z_i >= -1e-9*(1+sum(abs(scaled_design_row_i)))",
+    "objective_sign_tolerance": "n_rows*(n_features+1)*1e-9",
+    "ambiguous_positive_objective": "0<objective<=sign_tolerance must be indeterminate/error, never used to assert a finite MLE."
+  },
+  "certificate_comparison": "Do not compare beta vectors: LP optima need not be unique. Independently recompute feasibility and objective from returned beta and original labels/scaled design. Complete-separation optima can have zero margins; this LP establishes separation existence, not complete-versus-quasi subtype.",
+  "clinical_policy": "Separation/rank diagnostics precede unpenalized inference. Complete-case scope, observed-information invertibility and optimizer convergence must also pass. Prediction LR requires positive L2.",
+  "cases": [
+    {
+      "id": "complete",
+      "x": [
+        [
+          -2.0
+        ],
+        [
+          -1.0
+        ],
+        [
+          1.0
+        ],
+        [
+          2.0
+        ]
+      ],
+      "y": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "expected_diagnostic": "separated",
+      "column_maxabs_scales_including_intercept": [
+        1.0,
+        2.0
+      ],
+      "scaled_augmented_design": [
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          1.0,
+          0.5
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "singular_values": [
+        2.0,
+        1.5811388300841898
+      ],
+      "scaled_augmented_rank": 2,
+      "hand_certificate_scaled_beta": [
+        0.0,
+        1.0
+      ],
+      "hand_optimal_margin_sum": 3.0,
+      "reference_lp": {
+        "solver": "SciPy1.13.1.optimize.linprog/HiGHS",
+        "status": 0,
+        "scaled_beta": [
+          -0.5,
+          1.0
+        ],
+        "signed_margins": [
+          1.5,
+          1.0,
+          0.0,
+          0.5
+        ],
+        "margin_sum": 3.0
+      },
+      "hand_signed_margins": [
+        1.0,
+        0.5,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "id": "quasi",
+      "x": [
+        [
+          -1.0
+        ],
+        [
+          0.0
+        ],
+        [
+          0.0
+        ],
+        [
+          1.0
+        ]
+      ],
+      "y": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "expected_diagnostic": "separated",
+      "column_maxabs_scales_including_intercept": [
+        1.0,
+        1.0
+      ],
+      "scaled_augmented_design": [
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "singular_values": [
+        2.0,
+        1.4142135623730951
+      ],
+      "scaled_augmented_rank": 2,
+      "hand_certificate_scaled_beta": [
+        0.0,
+        1.0
+      ],
+      "hand_optimal_margin_sum": 2.0,
+      "reference_lp": {
+        "solver": "SciPy1.13.1.optimize.linprog/HiGHS",
+        "status": 0,
+        "scaled_beta": [
+          -0.0,
+          1.0
+        ],
+        "signed_margins": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "margin_sum": 2.0
+      },
+      "hand_signed_margins": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "overlap",
+      "x": [
+        [
+          -2.0
+        ],
+        [
+          -1.0
+        ],
+        [
+          1.0
+        ],
+        [
+          2.0
+        ]
+      ],
+      "y": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "expected_diagnostic": "overlap",
+      "column_maxabs_scales_including_intercept": [
+        1.0,
+        2.0
+      ],
+      "scaled_augmented_design": [
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          1.0,
+          0.5
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "singular_values": [
+        2.0,
+        1.5811388300841898
+      ],
+      "scaled_augmented_rank": 2,
+      "hand_certificate_scaled_beta": [
+        0.0,
+        0.0
+      ],
+      "hand_optimal_margin_sum": 0.0,
+      "reference_lp": {
+        "solver": "SciPy1.13.1.optimize.linprog/HiGHS",
+        "status": 0,
+        "scaled_beta": [
+          -0.0,
+          -0.0
+        ],
+        "signed_margins": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "margin_sum": 0.0
+      },
+      "hand_signed_margins": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "rank_deficient",
+      "x": [
+        [
+          1.0,
+          2.0
+        ],
+        [
+          2.0,
+          4.0
+        ],
+        [
+          3.0,
+          6.0
+        ],
+        [
+          4.0,
+          8.0
+        ]
+      ],
+      "y": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "expected_diagnostic": "rank_deficient",
+      "column_maxabs_scales_including_intercept": [
+        1.0,
+        4.0,
+        8.0
+      ],
+      "scaled_augmented_design": [
+        [
+          1.0,
+          0.25,
+          0.25
+        ],
+        [
+          1.0,
+          0.5,
+          0.5
+        ],
+        [
+          1.0,
+          0.75,
+          0.75
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "singular_values": [
+        2.722635290398115,
+        0.580738388156641,
+        0.0
+      ],
+      "scaled_augmented_rank": 2,
+      "hand_certificate_scaled_beta": null,
+      "hand_optimal_margin_sum": null,
+      "reference_lp": null,
+      "native_rule": "Reject rank-deficient design before solving logistic or LP."
+    },
+    {
+      "id": "complete_large_scale",
+      "x": [
+        [
+          -2000000000000.0
+        ],
+        [
+          -1000000000000.0
+        ],
+        [
+          1000000000000.0
+        ],
+        [
+          2000000000000.0
+        ]
+      ],
+      "y": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "expected_diagnostic": "separated",
+      "column_maxabs_scales_including_intercept": [
+        1.0,
+        2000000000000.0
+      ],
+      "scaled_augmented_design": [
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          1.0,
+          0.5
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "singular_values": [
+        2.0,
+        1.5811388300841898
+      ],
+      "scaled_augmented_rank": 2,
+      "hand_certificate_scaled_beta": [
+        0.0,
+        1.0
+      ],
+      "hand_optimal_margin_sum": 3.0,
+      "reference_lp": {
+        "solver": "SciPy1.13.1.optimize.linprog/HiGHS",
+        "status": 0,
+        "scaled_beta": [
+          -0.5,
+          1.0
+        ],
+        "signed_margins": [
+          1.5,
+          1.0,
+          0.0,
+          0.5
+        ],
+        "margin_sum": 3.0
+      },
+      "hand_signed_margins": [
+        1.0,
+        0.5,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "id": "complete_small_scale",
+      "x": [
+        [
+          -2e-12
+        ],
+        [
+          -1e-12
+        ],
+        [
+          1e-12
+        ],
+        [
+          2e-12
+        ]
+      ],
+      "y": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "expected_diagnostic": "separated",
+      "column_maxabs_scales_including_intercept": [
+        1.0,
+        2e-12
+      ],
+      "scaled_augmented_design": [
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          -0.5
+        ],
+        [
+          1.0,
+          0.5
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "singular_values": [
+        2.0,
+        1.5811388300841898
+      ],
+      "scaled_augmented_rank": 2,
+      "hand_certificate_scaled_beta": [
+        0.0,
+        1.0
+      ],
+      "hand_optimal_margin_sum": 3.0,
+      "reference_lp": {
+        "solver": "SciPy1.13.1.optimize.linprog/HiGHS",
+        "status": 0,
+        "scaled_beta": [
+          -0.5,
+          1.0
+        ],
+        "signed_margins": [
+          1.5,
+          1.0,
+          0.0,
+          0.5
+        ],
+        "margin_sum": 3.0
+      },
+      "hand_signed_margins": [
+        1.0,
+        0.5,
+        0.5,
+        1.0
+      ]
+    }
+  ],
+  "native_three_state_policy": {
+    "separated": "Optimal margin sum>sign_tolerance and a verified certificate with all recomputed margins>=0 and valid coefficient bounds.",
+    "indeterminate": "Any recomputed negative margin, even within row feasibility tolerance, or a small positive objective requires indeterminate/error unless a verified nonnegative certificate is obtained.",
+    "no_separation_detected": "Optimal zero objective with valid zero-direction certificate means no direction detected within declared resolution, not proof of finite MLE. Clinical information matrix and convergence checks remain required."
+  }
+}

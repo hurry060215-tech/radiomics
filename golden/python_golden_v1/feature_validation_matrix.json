@@ -1,0 +1,532 @@
+{
+  "schema": "radiomics.validation_matrix.v2",
+  "tri_state": "true=independently passed for documented scope; false=known nonconformance; null=not independently accepted",
+  "reference_profile": "python_golden_v1",
+  "benchmark_policy": "Benchmark v2: correctness and independent deployment are release gates; performance targets are reported separately. No aggregate across radiomics/ml_stats/pathology.",
+  "independent_ibsi_status": "accepted_digital_phantom_scope_with_declared_raw_kurtosis_deviation",
+  "features": [
+    {
+      "feature": "original_firstorder_Mean",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Median",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Minimum",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Maximum",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_10Percentile",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_90Percentile",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Range",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_InterquartileRange",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Variance",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_MeanAbsoluteDeviation",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Skewness",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Kurtosis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": false,
+      "deviation_reason": "Native profile retains raw standardized fourth moment; IBSI excess is raw minus3. This feature is explicitly nonconformant and is not relabeled by subtracting3 in the compatibility report.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Energy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_RootMeanSquared",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Entropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_firstorder_Uniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_JointAverage",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_JointEnergy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_JointEntropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_MaximumProbability",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_Contrast",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_Correlation",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_DifferenceAverage",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_Id",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_Idm",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glcm_SumSquares",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glrlm_ShortRunEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glrlm_LongRunEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glrlm_GrayLevelNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glrlm_GrayLevelNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glrlm_RunLengthNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glrlm_RunLengthNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glrlm_RunPercentage",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glrlm_RunEntropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glszm_SmallAreaEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glszm_LargeAreaEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glszm_GrayLevelNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glszm_GrayLevelNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glszm_SizeZoneNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glszm_SizeZoneNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glszm_ZonePercentage",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_glszm_ZoneEntropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_gldm_SmallDependenceEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_gldm_LargeDependenceEmphasis",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_gldm_GrayLevelNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_gldm_DependenceNonUniformity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_gldm_DependenceNonUniformityNormalized",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_gldm_GrayLevelVariance",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_gldm_DependenceVariance",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_gldm_DependenceEntropy",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_ngtdm_Coarseness",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_ngtdm_Contrast",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_ngtdm_Busyness",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_ngtdm_Complexity",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    },
+    {
+      "feature": "original_ngtdm_Strength",
+      "pyradiomics_compatible": true,
+      "ibsi_conformant": true,
+      "deviation_reason": "No deviation observed in the declared independent digital-phantom scope. Other preprocessing/binning scopes remain separately unaccepted; this is not global IBSI certification.",
+      "pyradiomics_evidence": "Frozen3.0.1 synthetic2D/3D/count matrices/degenerate cases; independent native acceptance; limited to explicit python_golden_v1 configuration.",
+      "ibsi_scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked",
+      "ibsi_evidence": "Independent public integer matrices and published feature intervals; firstorder additionally exact histogram/Fraction expectations; Native acceptance harness passed."
+    }
+  ],
+  "shape_basic": {
+    "pyradiomics_compatible": null,
+    "ibsi_conformant": null,
+    "deviation_reason": "Project-specific voxel/pixel count, affine bbox/centroid and determinant/cross-product area/volume; no claim to complete PyRadiomics/IBSI morphology family.",
+    "comparable_items": {
+      "VoxelCount": {
+        "expected": 74,
+        "comparison": "exact independent input count"
+      },
+      "Volume_mm3": {
+        "ibsi_mapping": "YEKZ voxel-counting volume",
+        "expected": 592,
+        "comparison": "exact independent voxel count times8mm3",
+        "scope": "IBSI1 digital phantom3D,FBS1,noresampling,distance1,GLCM symmetric,GLDMalpha0; direction mean and matrix merge separately checked"
+      }
+    }
+  },
+  "ibsi_source": {
+    "data_revision": "6da96021bc91faf4c0cb7fd7fa56a4225d2064a8",
+    "manual_revision": "b952e71e9d40569e8a9ff3c740bc389c04dd6c28",
+    "reference": "golden/ibsi_digital_v1",
+    "actual_report": "docs/golden-ibsi-digital-report.json"
+  },
+  "remaining_independent_scope": [
+    "2D IBSI cases",
+    "CT preprocessing/resampling configurations",
+    "Other binning and distance/weight configurations beyond the declared independent case"
+  ]
+}

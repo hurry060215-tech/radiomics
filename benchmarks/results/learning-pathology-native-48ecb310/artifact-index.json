@@ -1,0 +1,42 @@
+{
+  "schema": "radiomics.benchmark.v2.learning_pathology_archive.v1",
+  "source_directory": "E:\\radiomics-build\\benchmark-v2\\learning-pathology-full-v2-16case-1",
+  "native_source": "48ecb310a2d9ccb5da821733ee1190ce1764f27a",
+  "core_implementation": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+  "raw_sha256": "54a9892e92a65306dc8d6375718af9021a2c689491d15cdbda83d1898636449c",
+  "observations": 224,
+  "declared_cases": 16,
+  "successful_executions": 224,
+  "matching_outputs": 224,
+  "peak_rss_max_bytes": 211746816,
+  "artifacts": {
+    "approved-plan.json": {
+      "sha256": "33911b9585e934a43ec08e620bae37fcfd1061293799023b14243e49b80b874b",
+      "bytes": 23836
+    },
+    "approved-source-text-binding.json": {
+      "sha256": "0a0944f104703e3008a93ad36ec56e5e6d473828fe6890e950c602e1f7f97c9c",
+      "bytes": 2919
+    },
+    "binding.json": {
+      "sha256": "13254953c839f4aa51687a7acd2dfdd6b2db91981577803444a23105b47801a2",
+      "bytes": 731828
+    },
+    "provenance.json": {
+      "sha256": "81dac8dc9240fc1f41b4bf6eb8338f006ecf0a774fbdfd74349475dd9b145568",
+      "bytes": 3149
+    },
+    "raw-observations.jsonl.gz": {
+      "sha256": "f5ea58ab201229538c5fc3b5155cea8337b9805e1c3c438bae839283721862ac",
+      "bytes": 65836
+    },
+    "report.json": {
+      "sha256": "8d41bc67078339724be24476ce2e40ddeecd65a89c7b9f820eabe69d9652cdc5",
+      "bytes": 141605
+    },
+    "report.md": {
+      "sha256": "e61616ebe8ea86db126304adac2ad34406a6f13736d425810f7deda67d19cf48",
+      "bytes": 4434
+    }
+  }
+}

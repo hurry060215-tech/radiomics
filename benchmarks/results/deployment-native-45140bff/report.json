@@ -1,0 +1,610 @@
+{
+  "approved_plan_sha256": "d807983caaee9bb95f6046327c014bb9a2b86c6e421e77e96b66e938c0c6bfa6",
+  "artifact_footprint": {
+    "cli": {
+      "file_size_bytes": 9058304
+    },
+    "wheel": {
+      "file_size_bytes": 3723631,
+      "uncompressed_file_bytes": 9880697,
+      "zip_file_count": 31
+    }
+  },
+  "comparative_speedup": null,
+  "environment_footprint": {
+    "baseline": {
+      "logical_size_bytes": 16994242,
+      "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
+      "regular_file_count": 1305
+    },
+    "post_payload_install": {
+      "logical_size_bytes": 27068438,
+      "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
+      "regular_file_count": 1364
+    },
+    "post_startups": {
+      "logical_size_bytes": 27068438,
+      "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
+      "regular_file_count": 1364
+    }
+  },
+  "finished_utc": "2026-11-14T16:02:28.326629+00:00",
+  "installation": {
+    "argv": [
+      "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+      "-I",
+      "-m",
+      "pip",
+      "--disable-pip-version-check",
+      "install",
+      "--no-index",
+      "--no-deps",
+      "--no-cache-dir",
+      "E:\\radiomics-build\\snapshot-native-v3\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl"
+    ],
+    "elapsed_seconds": 0.7623983000000001,
+    "error": null,
+    "exit_code": 0,
+    "full_dependency_install_cost_measured": false,
+    "n": 1,
+    "scope": "Offline project-wheel payload only; dependencies/base Python/environment creation excluded.",
+    "status": "ok",
+    "stderr_path": "payload-install.stderr.txt",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_utf8": "",
+    "stdout_path": "payload-install.stdout.txt",
+    "stdout_sha256": "3bff4aa17a8165a5d98242a636c0edd66148f6b963d98f7eb6b0df8bb82a019f",
+    "stdout_utf8": "Processing e:\\radiomics-build\\snapshot-native-v3\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl\r\nInstalling collected packages: ov-radiomics\r\nSuccessfully installed ov-radiomics-0.1.0\r\n"
+  },
+  "installed_identity": {
+    "files_sha256": {
+      "__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
+      "_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+      "_native.pyd": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+      "_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+      "_native_common.py": "601d24923b0fbbd6a86dba26bdabd09e8975bab6bca4a661d682909a024edede",
+      "_native_learning.py": "657ae5c7aa3c2a4ea8dcd87542d6cac44e6c1ae8187014a8a472a69ca59e62ca",
+      "_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+      "_reference_clinical.py": "8d0aa05a2985d36d53bb9ebb79ecf2416ab043cb343faac73d93f0a69a94f909",
+      "_reference_metrics.py": "2b1b44b6d01c2d1acb5cdac4fb06954c65856ce41e2b9daf4303e47a8259615b",
+      "_reference_modeling.py": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566",
+      "_reference_selection.py": "5adc9c43e299496936690ff9e013e5c1d1170c63e84b21c501f7fb64ee788ed6",
+      "_types.py": "61c9e0c1e4377ae3da868051972ea5ac875eeca3475949999d8a1db46dbc4622",
+      "_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+      "clinical.py": "310a22c42492bbfd7eae36669cdee723acbfbdb6820f0e663bc1e39c1fa29750",
+      "habitat.py": "e5223172202766bc84790bf1d555a3b3e8c69e9f04d929682ec41e8f97bf5689",
+      "image.py": "5e03c7b76cc1a7170da19bd41f5a82ba22df28d523d0b6b27cf53e1bc792e75f",
+      "interop.py": "42952bb3d9c908b6ce7c70c7a54b37720f1e78bfb2dc47ff85a1b0528976e2ca",
+      "mask.py": "fa80bb714d2842f86e6eb2820f45c61b091c1d70dae0ef473eb127649ea6a47c",
+      "metrics.py": "d7bff475e63144f5e8efcffc914c1ebaac8e57257600fe94ad47998cb9948a00",
+      "modeling.py": "3aec1408c390ad522369069cae4caa25b87bd08ab7cffed58fc4b077dbeee722",
+      "pathology.py": "29cc475ea1a6ea722a7606ff1842feb39e72c2161aa4191409b4dfe3219391f4",
+      "plotting.py": "b5733fe2818a871c7a3519959bf378f793d4a38d78db154681f89184695cf06f",
+      "research.py": "0d0b32954c4e2c231ea3ef950fb2c816617a0412ce4923e893547fa39943c606",
+      "selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
+      "split.py": "e1ad5d7ca6b10d5f756735c9971d42f38bae40dd7d5fccfc969793d78a9d36a0",
+      "table.py": "1fb6ba46a5b2eb36dd60d2f077c51bd1bc1888de704463ac84bbeff1212f5dab"
+    },
+    "files_verified": 26,
+    "package_path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics"
+  },
+  "limitations": [
+    "One offline --no-deps wheel-payload install; no dependency resolution/download/install cost",
+    "Fresh interpreter/process, not flushed OS disk/bytecode cache",
+    "Logical bytes/file counts, not filesystem allocation/shared base Python size",
+    "Only Windows/native snapshot and these two endpoints measured; no algorithm or full-workflow timing",
+    "Seven repeats give empirical p95 only; unrelated OS/user background processes not controlled"
+  ],
+  "native_build": {
+    "build_commands": [
+      [
+        "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "D:\\OnekeyPlatfrom50\\radiomics\\tools\\package_native.py",
+        "--output",
+        "E:\\radiomics-build\\snapshot-native-v3\\package-assets"
+      ],
+      [
+        "cargo",
+        "build",
+        "--release",
+        "-p",
+        "ov-radiomics-cli",
+        "--locked"
+      ],
+      [
+        "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "-m",
+        "maturin",
+        "build",
+        "--release",
+        "--locked",
+        "--out",
+        "E:\\radiomics-build\\snapshot-native-v3\\wheels"
+      ]
+    ],
+    "cargo_lock_sha256": "de33d6dfd0542add75ca1ba0076b9d373a4e8f8af0aa93eb4c49fa35b6d552bb",
+    "cli": {
+      "path": "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+      "sha256": "2197ea4af3cc3078f660a26f5a1401c8c9b185ace3d1d31984c7ba74fbb471f4"
+    },
+    "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+    "evidence_scope": "Build identity only; correctness, installed-wheel, standards and performance gates require separate reports.",
+    "maturin_version": "1.16.0",
+    "profile": {
+      "codegen_units": 1,
+      "lto": "thin",
+      "name": "release",
+      "opt_level": 3
+    },
+    "profile_environment": {
+      "CARGO_PROFILE_RELEASE_CODEGEN_UNITS": "1",
+      "CARGO_PROFILE_RELEASE_LTO": "thin",
+      "CARGO_PROFILE_RELEASE_OPT_LEVEL": "3"
+    },
+    "published": false,
+    "python_version": "3.9.21",
+    "rust_flags": {
+      "CARGO_ENCODED_RUSTFLAGS": null,
+      "RUSTFLAGS": null
+    },
+    "rust_target": "x86_64-pc-windows-msvc",
+    "rustc_verbose": "rustc 1.100.0 (0ef1bc386 2026-11-09)\nbinary: rustc\ncommit-hash: 0ef1bc386059596dada8fb65b50425aab2ea637a\ncommit-date: 2026-11-09\nhost: x86_64-pc-windows-msvc\nrelease: 1.100.0\nLLVM version: 23.1.5",
+    "schema": "radiomics.native-build.v1",
+    "source_revision": "45140bff46b3ef1ae7eff9a170acb3a1116308b1",
+    "source_tree": "5ab33325c17192ff072ba56b7ab4d1f31404988e",
+    "source_tree_clean": true,
+    "version_changed": false,
+    "wheel": {
+      "path": "E:\\radiomics-build\\snapshot-native-v3\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+      "sha256": "8767c22d3344d0009669de7c5297c0db58b5f9144c506be04722fe70ab4ea9b3"
+    },
+    "wheel_files_sha256": {
+      "ov_radiomics-0.1.0.dist-info/METADATA": "83267cc4fd51cd135c2f6ca8237e29c7c14d930162aea2420143fcb6dd3976b4",
+      "ov_radiomics-0.1.0.dist-info/RECORD": "7161f2f75c2d5c5585c2c0b07c59ce585904a6005e65c49acd7144dadff740f7",
+      "ov_radiomics-0.1.0.dist-info/WHEEL": "c70f05f7105650e826e729b64bdb62863fdb2c939bef6ddb8e103491d00da362",
+      "ov_radiomics-0.1.0.dist-info/licenses/LICENSE": "bb3ee466242ddec58bdd536aca9386cb9bd7b517d0c15f16215c102a52c99c86",
+      "ov_radiomics-0.1.0.dist-info/sboms/ov-radiomics-python.cyclonedx.json": "de10f92a0e4c0cf33f9e62bb1392f0194e96f0d5321f7e631168ab6ca24881ca",
+      "ov_radiomics/__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
+      "ov_radiomics/_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+      "ov_radiomics/_native.pyd": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+      "ov_radiomics/_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+      "ov_radiomics/_native_common.py": "601d24923b0fbbd6a86dba26bdabd09e8975bab6bca4a661d682909a024edede",
+      "ov_radiomics/_native_learning.py": "657ae5c7aa3c2a4ea8dcd87542d6cac44e6c1ae8187014a8a472a69ca59e62ca",
+      "ov_radiomics/_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+      "ov_radiomics/_reference_clinical.py": "8d0aa05a2985d36d53bb9ebb79ecf2416ab043cb343faac73d93f0a69a94f909",
+      "ov_radiomics/_reference_metrics.py": "2b1b44b6d01c2d1acb5cdac4fb06954c65856ce41e2b9daf4303e47a8259615b",
+      "ov_radiomics/_reference_modeling.py": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566",
+      "ov_radiomics/_reference_selection.py": "5adc9c43e299496936690ff9e013e5c1d1170c63e84b21c501f7fb64ee788ed6",
+      "ov_radiomics/_types.py": "61c9e0c1e4377ae3da868051972ea5ac875eeca3475949999d8a1db46dbc4622",
+      "ov_radiomics/_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+      "ov_radiomics/clinical.py": "310a22c42492bbfd7eae36669cdee723acbfbdb6820f0e663bc1e39c1fa29750",
+      "ov_radiomics/habitat.py": "e5223172202766bc84790bf1d555a3b3e8c69e9f04d929682ec41e8f97bf5689",
+      "ov_radiomics/image.py": "5e03c7b76cc1a7170da19bd41f5a82ba22df28d523d0b6b27cf53e1bc792e75f",
+      "ov_radiomics/interop.py": "42952bb3d9c908b6ce7c70c7a54b37720f1e78bfb2dc47ff85a1b0528976e2ca",
+      "ov_radiomics/mask.py": "fa80bb714d2842f86e6eb2820f45c61b091c1d70dae0ef473eb127649ea6a47c",
+      "ov_radiomics/metrics.py": "d7bff475e63144f5e8efcffc914c1ebaac8e57257600fe94ad47998cb9948a00",
+      "ov_radiomics/modeling.py": "3aec1408c390ad522369069cae4caa25b87bd08ab7cffed58fc4b077dbeee722",
+      "ov_radiomics/pathology.py": "29cc475ea1a6ea722a7606ff1842feb39e72c2161aa4191409b4dfe3219391f4",
+      "ov_radiomics/plotting.py": "b5733fe2818a871c7a3519959bf378f793d4a38d78db154681f89184695cf06f",
+      "ov_radiomics/research.py": "0d0b32954c4e2c231ea3ef950fb2c816617a0412ce4923e893547fa39943c606",
+      "ov_radiomics/selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
+      "ov_radiomics/split.py": "e1ad5d7ca6b10d5f756735c9971d42f38bae40dd7d5fccfc969793d78a9d36a0",
+      "ov_radiomics/table.py": "1fb6ba46a5b2eb36dd60d2f077c51bd1bc1888de704463ac84bbeff1212f5dab"
+    }
+  },
+  "operational_status": "passed_declared_endpoints",
+  "platform": "Windows-10-10.0.22631-SP0",
+  "project_payload_footprint": {
+    "post_install": {
+      "logical_size_bytes": 10074196,
+      "paths": [
+        {
+          "logical_size_bytes": 9879171,
+          "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
+          "path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics",
+          "regular_file_count": 51
+        },
+        {
+          "logical_size_bytes": 195025,
+          "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
+          "path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics-0.1.0.dist-info",
+          "regular_file_count": 8
+        }
+      ],
+      "regular_file_count": 59
+    },
+    "post_startups": {
+      "logical_size_bytes": 10074196,
+      "paths": [
+        {
+          "logical_size_bytes": 9879171,
+          "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
+          "path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics",
+          "regular_file_count": 51
+        },
+        {
+          "logical_size_bytes": 195025,
+          "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
+          "path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics-0.1.0.dist-info",
+          "regular_file_count": 8
+        }
+      ],
+      "regular_file_count": 59
+    }
+  },
+  "python": {
+    "purelib": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages",
+    "version": "3.9.21 (main, Dec 11 2024, 16:35:24) [MSC v.1929 64 bit (AMD64)]"
+  },
+  "raw_observations": [
+    {
+      "argv": [
+        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "--version"
+      ],
+      "case_id": "cli_version_fresh_process",
+      "elapsed_seconds": 0.06793800000000072,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 0,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 0,
+      "status": "ok",
+      "stderr_path": "round-00-cli_version_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-00-cli_version_fresh_process.stdout.txt",
+      "stdout_sha256": "81954bababacfe33635fb0d936b9af82cc8269f2abefb2be987263a96ec2754c",
+      "stdout_utf8": "radiomics 0.1.0\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "-I",
+        "-c",
+        "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
+      ],
+      "case_id": "python_import_backend_info_fresh_process",
+      "elapsed_seconds": 0.052269700000000086,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 1,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 0,
+      "status": "ok",
+      "stderr_path": "round-00-python_import_backend_info_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-00-python_import_backend_info_fresh_process.stdout.txt",
+      "stdout_sha256": "9287fa7100784ac5ceb3338fba75bee7cd8fd672105656d31c2af656cc6bddce",
+      "stdout_utf8": "{\"backend\": {\"metrics_backend\": \"rust\", \"rust_core_version\": \"0.1.0\"}, \"implementation\": \"a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8\", \"version\": \"0.1.0\"}\r\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "-I",
+        "-c",
+        "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
+      ],
+      "case_id": "python_import_backend_info_fresh_process",
+      "elapsed_seconds": 0.044754199999999855,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 0,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 1,
+      "status": "ok",
+      "stderr_path": "round-01-python_import_backend_info_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-01-python_import_backend_info_fresh_process.stdout.txt",
+      "stdout_sha256": "9287fa7100784ac5ceb3338fba75bee7cd8fd672105656d31c2af656cc6bddce",
+      "stdout_utf8": "{\"backend\": {\"metrics_backend\": \"rust\", \"rust_core_version\": \"0.1.0\"}, \"implementation\": \"a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8\", \"version\": \"0.1.0\"}\r\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "--version"
+      ],
+      "case_id": "cli_version_fresh_process",
+      "elapsed_seconds": 0.0034692999999998975,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 1,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 1,
+      "status": "ok",
+      "stderr_path": "round-01-cli_version_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-01-cli_version_fresh_process.stdout.txt",
+      "stdout_sha256": "81954bababacfe33635fb0d936b9af82cc8269f2abefb2be987263a96ec2754c",
+      "stdout_utf8": "radiomics 0.1.0\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "--version"
+      ],
+      "case_id": "cli_version_fresh_process",
+      "elapsed_seconds": 0.0033216000000004797,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 0,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 2,
+      "status": "ok",
+      "stderr_path": "round-02-cli_version_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-02-cli_version_fresh_process.stdout.txt",
+      "stdout_sha256": "81954bababacfe33635fb0d936b9af82cc8269f2abefb2be987263a96ec2754c",
+      "stdout_utf8": "radiomics 0.1.0\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "-I",
+        "-c",
+        "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
+      ],
+      "case_id": "python_import_backend_info_fresh_process",
+      "elapsed_seconds": 0.04455899999999957,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 1,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 2,
+      "status": "ok",
+      "stderr_path": "round-02-python_import_backend_info_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-02-python_import_backend_info_fresh_process.stdout.txt",
+      "stdout_sha256": "9287fa7100784ac5ceb3338fba75bee7cd8fd672105656d31c2af656cc6bddce",
+      "stdout_utf8": "{\"backend\": {\"metrics_backend\": \"rust\", \"rust_core_version\": \"0.1.0\"}, \"implementation\": \"a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8\", \"version\": \"0.1.0\"}\r\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "-I",
+        "-c",
+        "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
+      ],
+      "case_id": "python_import_backend_info_fresh_process",
+      "elapsed_seconds": 0.04769749999999995,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 0,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 3,
+      "status": "ok",
+      "stderr_path": "round-03-python_import_backend_info_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-03-python_import_backend_info_fresh_process.stdout.txt",
+      "stdout_sha256": "9287fa7100784ac5ceb3338fba75bee7cd8fd672105656d31c2af656cc6bddce",
+      "stdout_utf8": "{\"backend\": {\"metrics_backend\": \"rust\", \"rust_core_version\": \"0.1.0\"}, \"implementation\": \"a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8\", \"version\": \"0.1.0\"}\r\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "--version"
+      ],
+      "case_id": "cli_version_fresh_process",
+      "elapsed_seconds": 0.003723000000000809,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 1,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 3,
+      "status": "ok",
+      "stderr_path": "round-03-cli_version_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-03-cli_version_fresh_process.stdout.txt",
+      "stdout_sha256": "81954bababacfe33635fb0d936b9af82cc8269f2abefb2be987263a96ec2754c",
+      "stdout_utf8": "radiomics 0.1.0\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "--version"
+      ],
+      "case_id": "cli_version_fresh_process",
+      "elapsed_seconds": 0.0031322000000004735,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 0,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 4,
+      "status": "ok",
+      "stderr_path": "round-04-cli_version_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-04-cli_version_fresh_process.stdout.txt",
+      "stdout_sha256": "81954bababacfe33635fb0d936b9af82cc8269f2abefb2be987263a96ec2754c",
+      "stdout_utf8": "radiomics 0.1.0\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "-I",
+        "-c",
+        "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
+      ],
+      "case_id": "python_import_backend_info_fresh_process",
+      "elapsed_seconds": 0.04412500000000019,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 1,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 4,
+      "status": "ok",
+      "stderr_path": "round-04-python_import_backend_info_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-04-python_import_backend_info_fresh_process.stdout.txt",
+      "stdout_sha256": "9287fa7100784ac5ceb3338fba75bee7cd8fd672105656d31c2af656cc6bddce",
+      "stdout_utf8": "{\"backend\": {\"metrics_backend\": \"rust\", \"rust_core_version\": \"0.1.0\"}, \"implementation\": \"a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8\", \"version\": \"0.1.0\"}\r\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "-I",
+        "-c",
+        "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
+      ],
+      "case_id": "python_import_backend_info_fresh_process",
+      "elapsed_seconds": 0.045052199999999765,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 0,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 5,
+      "status": "ok",
+      "stderr_path": "round-05-python_import_backend_info_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-05-python_import_backend_info_fresh_process.stdout.txt",
+      "stdout_sha256": "9287fa7100784ac5ceb3338fba75bee7cd8fd672105656d31c2af656cc6bddce",
+      "stdout_utf8": "{\"backend\": {\"metrics_backend\": \"rust\", \"rust_core_version\": \"0.1.0\"}, \"implementation\": \"a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8\", \"version\": \"0.1.0\"}\r\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "--version"
+      ],
+      "case_id": "cli_version_fresh_process",
+      "elapsed_seconds": 0.003610799999999692,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 1,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 5,
+      "status": "ok",
+      "stderr_path": "round-05-cli_version_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-05-cli_version_fresh_process.stdout.txt",
+      "stdout_sha256": "81954bababacfe33635fb0d936b9af82cc8269f2abefb2be987263a96ec2754c",
+      "stdout_utf8": "radiomics 0.1.0\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "--version"
+      ],
+      "case_id": "cli_version_fresh_process",
+      "elapsed_seconds": 0.004202800000000728,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 0,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 6,
+      "status": "ok",
+      "stderr_path": "round-06-cli_version_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-06-cli_version_fresh_process.stdout.txt",
+      "stdout_sha256": "81954bababacfe33635fb0d936b9af82cc8269f2abefb2be987263a96ec2754c",
+      "stdout_utf8": "radiomics 0.1.0\n"
+    },
+    {
+      "argv": [
+        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "-I",
+        "-c",
+        "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
+      ],
+      "case_id": "python_import_backend_info_fresh_process",
+      "elapsed_seconds": 0.04850919999999981,
+      "error": null,
+      "exit_code": 0,
+      "fresh_process": true,
+      "order": 1,
+      "output_matches_expected": true,
+      "output_validation_error": null,
+      "round": 6,
+      "status": "ok",
+      "stderr_path": "round-06-python_import_backend_info_fresh_process.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_utf8": "",
+      "stdout_path": "round-06-python_import_backend_info_fresh_process.stdout.txt",
+      "stdout_sha256": "9287fa7100784ac5ceb3338fba75bee7cd8fd672105656d31c2af656cc6bddce",
+      "stdout_utf8": "{\"backend\": {\"metrics_backend\": \"rust\", \"rust_core_version\": \"0.1.0\"}, \"implementation\": \"a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8\", \"version\": \"0.1.0\"}\r\n"
+    }
+  ],
+  "schema": "radiomics.benchmark.v2.deployment_report.v1",
+  "scope": "Two distinct startup endpoints; no cross-language speed ratio or pooled suite score.",
+  "setup": {
+    "argv": [
+      "D:\\OnekeyPlatfrom50\\onekey_envs\\python.exe",
+      "-I",
+      "-m",
+      "venv",
+      "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment"
+    ],
+    "system_site_packages": false,
+    "timed": false
+  },
+  "started_utc": "2026-11-14T16:02:21.449032+00:00",
+  "startup_results": {
+    "cli_version_fresh_process": {
+      "n": 7,
+      "statistics": {
+        "iqr_seconds": 0.00056745000000058,
+        "maximum_seconds": 0.06793800000000072,
+        "median_seconds": 0.003610799999999692,
+        "minimum_seconds": 0.0031322000000004735,
+        "n": 7,
+        "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+        "p95_seconds": 0.04881744000000068,
+        "q25_seconds": 0.0033954500000001886,
+        "q75_seconds": 0.003962900000000769
+      },
+      "valid": true
+    },
+    "python_import_backend_info_fresh_process": {
+      "n": 7,
+      "statistics": {
+        "iqr_seconds": 0.003446750000000165,
+        "maximum_seconds": 0.052269700000000086,
+        "median_seconds": 0.045052199999999765,
+        "minimum_seconds": 0.04412500000000019,
+        "n": 7,
+        "p95_interpretation": "empirical linear quantile; seven pairs do not estimate a precise tail guarantee",
+        "p95_seconds": 0.05114155,
+        "q25_seconds": 0.04465659999999971,
+        "q75_seconds": 0.04810334999999988
+      },
+      "valid": true
+    }
+  },
+  "suite": "deployment"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "radiomics.public_ct_v1.freeze_manifest.v1",
+  "status": "reference_candidate_awaiting_main_worker_review",
+  "native_executed": false,
+  "license": "CC-BY-NC-3.0 source-specific data/derived-reference provenance; software code remains MIT",
+  "raw_images_in_repository": false,
+  "package_assets_allowlist": false,
+  "source_revision": "6da96021bc91faf4c0cb7fd7fa56a4225d2064a8",
+  "reference_revision": "pyradiomics:c428a771c8cf682c462162b6babc836150d5d9d6",
+  "generator_path": "tools/validate_public_ct.py",
+  "generator_sha256": "25c42a50ad5e39ef0c26afecd3c8d961026d39e77eb4aea76c361bec42272075",
+  "files_sha256": {
+    "protocol.json": "7672da0b5f59e2601c582482eaa611123a607f269443d4860c925c05da8af248",
+    "reference.json": "82d4b1e955fd7770135a318d09dc2c47219614c2780c2e8082bf93f3917ab84b",
+    "requirements-reference.txt": "8779f23f842e2123eff666f99ae4615ea3a67000cf498a44c869fb99fa0de3a1",
+    "LICENSE_NOTICE.md": "f3a131d01cb87362cf7cb12cb55fb27c0655758c130b7920c8e81089d26434ea",
+    "README.md": "b05d39190dc4dd380cb947eaa59cd3713ce9b3b1649cb08c97bd47aa663aae32",
+    ".gitattributes": "0a6e8a5bc16b7dbe5187a13cba575fa7003802fdb4633aff469c228c824ea0f3"
+  },
+  "scope": "Two full PAT1 3D explicit-bin25 numerical compatibility cases (55 features each), original morphology basic geometry, fixed 16x16x8 subgrid exact/sparse texture matrices; not IBSI CT configuration conformance or a performance measurement.",
+  "failure_behavior": {
+    "bad_source_hash": "error before reuse/copy",
+    "input_inside_git": "error; raw source must stay external",
+    "wrong_reference_environment": "error; never substitute 3.1.0",
+    "existing_reference_output": "error; reviewed expected results are not overwritten",
+    "changed_units_scaling_noninteger_input": "error; no guessed unit/rounding correction",
+    "native_acceptance": "not run before candidate review"
+  },
+  "text_encoding": "UTF-8 with explicit LF; Windows implicit newline translation forbidden",
+  "pre_native_format_correction": "Initial candidate newline canonicalization corrected before native execution. All numerical values, matrices, effective parameters and tolerances unchanged; only protocol/file hash metadata and canonical text bytes updated.",
+  "generator_hash_canonicalization": "Repository source code normalized to UTF-8 LF, matching its Git blob across checkout line endings; input/reference fixtures remain byte-exact LF."
+}

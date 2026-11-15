@@ -1,0 +1,400 @@
+{
+  "schema": "python_golden_v1.wsidata_collision.reference.v1",
+  "source_sha256": {
+    "wsidata_contract_spec.py": "a5c2d4bbd6a8567a86e2c16d3d24c0b22c90f789e47414f0d7156faaa1a6c32b",
+    "wsidata_contract_guard.py": "1332d26dd7de53a63fb9132f502f6caa26c34b4d5d516ed9844b2d451fb66b36",
+    "wsidata_contract_reference.json": "5b0a8fe8109587e63d0edc013c743cce338b453c8a5a1915d3074f32829283a9"
+  },
+  "saved_generation_input": {
+    "tile_key": "tiles",
+    "shape_rows": [
+      {
+        "tile_id": "T0",
+        "geometry_corners": [
+          [
+            0,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "tile_id": "T1",
+        "geometry_corners": [
+          [
+            4,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      }
+    ],
+    "tile_spec": {
+      "width": 2,
+      "height": 2,
+      "stride_width": 2,
+      "stride_height": 2,
+      "mpp": 1,
+      "ops_level": 1,
+      "ops_downsample": 1,
+      "base_level": 0,
+      "base_downsample": 2,
+      "tissue_name": "known",
+      "custom": 1.0
+    },
+    "shape_to_level0": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "slide_shape_wh": [
+      20,
+      20
+    ],
+    "level0_mpp_xy": [
+      0.5,
+      0.5
+    ],
+    "source": "synthetic_known_source"
+  },
+  "current_input": {
+    "tile_key": "tiles",
+    "shape_rows": [
+      {
+        "tile_id": "T0",
+        "geometry_corners": [
+          [
+            0,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "tile_id": "T1",
+        "geometry_corners": [
+          [
+            4,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      }
+    ],
+    "tile_spec": {
+      "width": 2,
+      "height": 2,
+      "stride_width": 2,
+      "stride_height": 2,
+      "mpp": 1,
+      "ops_level": 1,
+      "ops_downsample": 1,
+      "base_level": 0,
+      "base_downsample": 2,
+      "tissue_name": "known",
+      "custom": {
+        "float64_hex": "0x1.0000000000000p+0"
+      }
+    },
+    "shape_to_level0": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "slide_shape_wh": [
+      20,
+      20
+    ],
+    "level0_mpp_xy": [
+      0.5,
+      0.5
+    ],
+    "source": "synthetic_known_source"
+  },
+  "saved_snapshot": {
+    "snapshot": {
+      "schema": "radiomics.wsidata.tile_manifest.v1",
+      "tile_key": "tiles",
+      "tiles": [
+        {
+          "tile_id": "T0",
+          "bounds0": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "patch_size": [
+            2,
+            2
+          ],
+          "valid_pixels": [
+            0,
+            0,
+            2,
+            2
+          ]
+        },
+        {
+          "tile_id": "T1",
+          "bounds0": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "patch_size": [
+            2,
+            2
+          ],
+          "valid_pixels": [
+            0,
+            0,
+            2,
+            2
+          ]
+        }
+      ],
+      "tile_spec": {
+        "width": 2,
+        "height": 2,
+        "stride_width": 2,
+        "stride_height": 2,
+        "mpp": 1.0,
+        "ops_level": 1,
+        "ops_downsample": 1.0,
+        "base_level": 0,
+        "base_downsample": 2.0,
+        "tissue_name": "known",
+        "custom": 1.0
+      },
+      "shape_to_level0": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "slide_shape_wh": [
+        20,
+        20
+      ],
+      "level0_mpp_xy": [
+        0.5,
+        0.5
+      ],
+      "source": "synthetic_known_source",
+      "nominal_span_validation": {
+        "operations": 6,
+        "epsilon": 2.220446049250313e-16,
+        "max_relative_roundoff": 1e-10,
+        "coordinate_policy": "actual coordinates retained unchanged; no raster tolerance"
+      }
+    },
+    "sha256": "2d93b4ea4d6bf9ae3c6d4d6a7a4648542a6f1b918ac88ac91b18002ac6a74f72"
+  },
+  "current_snapshot": {
+    "snapshot": {
+      "schema": "radiomics.wsidata.tile_manifest.v1",
+      "tile_key": "tiles",
+      "tiles": [
+        {
+          "tile_id": "T0",
+          "bounds0": [
+            0.0,
+            0.0,
+            4.0,
+            4.0
+          ],
+          "patch_size": [
+            2,
+            2
+          ],
+          "valid_pixels": [
+            0,
+            0,
+            2,
+            2
+          ]
+        },
+        {
+          "tile_id": "T1",
+          "bounds0": [
+            4.0,
+            0.0,
+            8.0,
+            4.0
+          ],
+          "patch_size": [
+            2,
+            2
+          ],
+          "valid_pixels": [
+            0,
+            0,
+            2,
+            2
+          ]
+        }
+      ],
+      "tile_spec": {
+        "width": 2,
+        "height": 2,
+        "stride_width": 2,
+        "stride_height": 2,
+        "mpp": 1.0,
+        "ops_level": 1,
+        "ops_downsample": 1.0,
+        "base_level": 0,
+        "base_downsample": 2.0,
+        "tissue_name": "known",
+        "custom": {
+          "float64_hex": "0x1.0000000000000p+0"
+        }
+      },
+      "shape_to_level0": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "slide_shape_wh": [
+        20,
+        20
+      ],
+      "level0_mpp_xy": [
+        0.5,
+        0.5
+      ],
+      "source": "synthetic_known_source",
+      "nominal_span_validation": {
+        "operations": 6,
+        "epsilon": 2.220446049250313e-16,
+        "max_relative_roundoff": 1e-10,
+        "coordinate_policy": "actual coordinates retained unchanged; no raster tolerance"
+      }
+    },
+    "sha256": "2d93b4ea4d6bf9ae3c6d4d6a7a4648542a6f1b918ac88ac91b18002ac6a74f72"
+  },
+  "legacy_digest_only_validation": {
+    "status": "ok",
+    "value": [
+      1,
+      0
+    ],
+    "warnings": []
+  },
+  "required_guard_validation": {
+    "status": "error",
+    "error_type": "ValueError",
+    "message": "embedding snapshot metadata structure, type or value differs",
+    "warnings": []
+  },
+  "policy": "Digest validity AND recursively identical normalized metadata structure/type/value are required. Existing schema, normal snapshots and digests remain unchanged. A float64_hex object is not evidence of the original metadata type.",
+  "approval": "Main agent approved the independent protocol guard before production WSI implementation; no native output was used."
+}

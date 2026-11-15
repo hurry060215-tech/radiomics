@@ -1,0 +1,74 @@
+{
+  "machine": {
+    "allocator": "not overridden by runner",
+    "background_load": "unrecorded",
+    "benchmark_sources_sha256": {
+      "tools/benchmark_metrics.py": "6fadd78890ee7349dd7b7efcd403835d76c227f0a9c58f067f6cc02419f5ce4b",
+      "tools/benchmark_protocol.py": "5d8bec3f06e72a1d8160dfa46e128d3105f08449efd20ab14e5ddb45a74a52c1"
+    },
+    "build_profile": "release requested by caller; binary build provenance must be supplied separately",
+    "cargo_lock_sha256": "ff310d5320801bf8d4a02308e560aa0876f7786521b8101f7334ce099dabc77d",
+    "compiled_extensions": {
+      "ov_radiomics._native": {
+        "path": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\_native.pyd",
+        "sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c"
+      },
+      "radiomics._cmatrices": {
+        "path": "D:\\OnekeyPlatfrom50\\onekey_envs\\lib\\site-packages\\radiomics\\_cmatrices.cp39-win_amd64.pyd",
+        "sha256": "d1bb355c67e92a3362fe5e95e69a10facd56c5185e7a0c182a16623e5bf67c29"
+      },
+      "radiomics._cshape": {
+        "path": "D:\\OnekeyPlatfrom50\\onekey_envs\\lib\\site-packages\\radiomics\\_cshape.cp39-win_amd64.pyd",
+        "sha256": "8350e1cb3bbf47529ae052fc469ac302b6a2d981a9129da1b53a787fab57cdbe"
+      }
+    },
+    "cpu": "Intel(R) Core(TM) Ultra 9 285K",
+    "file_cache_control": "uncontrolled",
+    "git_revision": "8d7d4f9f6076f5f0301b455dbc60062716f707d7",
+    "logical_cpus": 24,
+    "missing_provenance": [
+      "physical core count",
+      "power mode",
+      "background load",
+      "storage description"
+    ],
+    "packages": {
+      "SimpleITK": "2.4.1",
+      "maturin": "1.16.0",
+      "numpy": "1.23.0",
+      "pandas": "1.3.5",
+      "pyradiomics": "3.1.0",
+      "scikit-learn": "1.0.2",
+      "scipy": "1.13.1",
+      "statsmodels": "0.13.2"
+    },
+    "physical_cpus": null,
+    "platform": "Windows-10-10.0.22631-SP0",
+    "power_mode": "unrecorded",
+    "python": "3.9.21",
+    "python_executable": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+    "rust_flags": {
+      "CARGO_BUILD_TARGET": null,
+      "CARGO_ENCODED_RUSTFLAGS": null,
+      "RUSTFLAGS": null
+    },
+    "rustc_verbose": null,
+    "thread_environment": {
+      "MKL_NUM_THREADS": null,
+      "NUMEXPR_NUM_THREADS": null,
+      "OMP_NUM_THREADS": null,
+      "OPENBLAS_NUM_THREADS": null,
+      "RAYON_NUM_THREADS": null
+    },
+    "total_physical_memory_bytes": 33663320064,
+    "working_tree_status": ""
+  },
+  "runner_sources_sha256": {
+    "tools/benchmark_learning_pathology.py": "6b4cd9dbe8a772b9eed98c1f1cb1ea98cd3583b8a21abbbc0809ddbb4de09c1f",
+    "tools/benchmark_lp_learning.py": "64e2051d40c83d3fd003c05b77f2c41b168b60152908c95bb57a560f94efe101",
+    "tools/benchmark_lp_pathology.py": "0d6b7ebc9138201859d76ddf35802329a13a35724eb2c85330f1b2f9e8fdaecb",
+    "tools/benchmark_lp_reference.py": "22a4504c9bf1872f8b28e30b2826f3c7032e347273198b023b2be42fae8ee94f",
+    "tools/benchmark_lp_runtime.py": "1aa5619a2ec765bccbc3db1548dd13ba53ade0591eee70128d2cefa1d784db66",
+    "tools/benchmark_protocol.py": "5d8bec3f06e72a1d8160dfa46e128d3105f08449efd20ab14e5ddb45a74a52c1"
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "schema": "python_golden_v1.acceptance.v1",
+  "profile": "python_golden_v1",
+  "status": "frozen_by_main_agent_review",
+  "review_scope": "10 synthetic feature inputs, independent hand calculations, baseline metrics, explicit generic geometry grid, and separate 3.1.0 drift report. This is a limited initial reference set, not M0-M5 completion. Three-task solver references approved separately, not full workflow acceptance. Independently reviewed Python pathology pixel specification and hand outputs frozen before native implementation. Forest behavioral references use fixed five seeds, 200 trees and patient-level score means on the same three inputs. Train-only table preprocessing, three-task univariate/BH and hand tests approved before native implementation. Distribution tails/quantiles, hypothesis tests and complete-case unpenalized Logit reference approved independently. Independent actual Pingouin ICC and hand/HiGHS separation references approved with explicit nonfinite and three-state diagnostic policies. Explicit patient nested-workflow references approved before native G implementation; sample_centers provenance included. Patient-level shared-plan OOF Logistic fusion and explicit weighted averaging approved before native implementation. Patient evaluation approved; unfreezed derived calibration edges/membership corrected to actual sklearn1.0.2 digitize conventions and independently checked before acceptance. Observed-data binary/multiclass baseline summaries approved with explicit missing-target and sample-unit policies. Pathology hierarchy/weightedCDF/IDalignment/global-coordinate/raster reference approved before native I implementation; fractional global-center branch cases explicit. Strict WSIData normalized snapshot/identity contract approved before Rust builder; no trust fallback, twenty negative cases and nominal roundoff-only validation.",
+  "baseline_revision": "2512e16979a544207f84c943e619ef33e02d3dc7",
+  "reference_source": {
+    "pyradiomics_tag": "v3.0.1",
+    "pyradiomics_revision": "c428a771c8cf682c462162b6babc836150d5d9d6",
+    "sdist_url": "https://files.pythonhosted.org/packages/1b/35/c7f7fb7affd302fd8107dcee6b6e7aaf3708b75ad69d5f9a3dfcadb73eaa/pyradiomics-3.0.1.tar.gz",
+    "sdist_sha256": "47c57f441d6cb7973fa3b2ea48d3948df78e3348e1c69e1e2ff19001601fc2f5",
+    "geometry": "SimpleITK2.4.1, explicit RAS/LPS conversion; generic outer-edge grid, not PyRadiomics ROI grid"
+  },
+  "numeric_rule": "abs(actual-reference) <= atol + rtol*abs(reference)",
+  "tolerances": {
+    "ids_order_labels_discrete_values_counts_split_sets": {
+      "comparison": "exact"
+    },
+    "geometry_world_coordinates_mm": {
+      "atol": 1e-06,
+      "rtol": 0.0
+    },
+    "deterministic_statistics_texture": {
+      "atol": 1e-10,
+      "rtol": 1e-08
+    },
+    "ngtdm_difference_sums": {
+      "atol": 1e-10,
+      "rtol": 1e-08,
+      "reason": "Floating neighborhood means; counts remain exact integers."
+    },
+    "resampling_color": {
+      "atol": 1e-06,
+      "rtol": 1e-05
+    },
+    "linear_logistic_predictions": {
+      "atol": 1e-06,
+      "rtol": 1e-05,
+      "additional": "objective, gradient/KKT, and convergence must also pass"
+    },
+    "nonfinite": {
+      "comparison": "identical NaN/Inf/-Inf locations and status; JSON encodes these as strings"
+    }
+  },
+  "matrix_comparison": {
+    "glcm": "Exact symmetric integer counts per direction; arrays store gray_i,gray_j,angle. Preserve true gray-level labels.",
+    "glrlm": "Exact integer counts per direction; gray,run_length,angle. Empty-angle behavior follows 3.0.1 C source.",
+    "gldm_glszm": "Exact integer counts with original gray/size labels. Trailing all-zero size columns may be removed explicitly, never renumber populated labels.",
+    "ngtdm": "Columns n_i,s_i,i; n_i and i exact, s_i scalar tolerance. 3.0.1 includes isolated centers with s_i=0.",
+    "aggregation": "Default per-direction features averaged; explicit no_weighting sums matrices first. Both references are separate."
+  },
+  "failure_contract": {
+    "empty_roi": "Reference feature classes error; native extraction must error and retain sample failure record.",
+    "singleton": "Direct class calculation frozen: GLCM/GLRLM return NaN; finite feature results retained for other families. This does not assert the full PyRadiomics extractor accepts its default minimum ROI dimensions.",
+    "unknown_profile_or_unsupported_configuration": "Explicit error; never silently substitute a Python backend or alternative algorithm.",
+    "unrepresentable_discretization": "Reference errors or nonpositive gray labels at huge magnitude are recorded verbatim in binning_edges.json; native returns explicit InvalidInput/Unsupported because zero is reserved for outside ROI. Other cases require exact labels."
+  },
+  "input_license": "Original synthetic fixtures dedicated to CC0-1.0; source implementations retain their own licenses.",
+  "pending_acceptance": [
+    "IBSI digital phantom acquisition with explicit redistribution permission and independent IBSI feature comparison",
+    "Public CT/ROI licensed fixture and feature reference",
+    "Pathology pixel/mask/embedding fixtures and independent specifications",
+    "Native CLI/Python workflow leakage, serialization and installation checks",
+    "Benchmark v2: seven-repeat alternating radiomics/ml_stats/pathology performance reports and memory engineering budget, separate from Release Gate"
+  ],
+  "update_policy": "Generate candidates only into a fresh directory. Main agent reviews source, settings and numerical/exception differences before accepting. Module authors must not re-record expected values.",
+  "files_sha256": {
+    "cases.json": "15f32a9addb3d64a7017c84632b52bd7c70145af41518e62f3bc9a815bb84315",
+    "geometry.json": "b61ac2ca0263b5d8567c624407e585c1c73da6604a357b068b68d8079811d80e",
+    "hand_calculations.json": "21ff2dbfd8c17427e6c586191a28df6840800023027475eab2faaecad4f16d99",
+    "pyradiomics_310_differences.json": "721807ddabe11184dadc298764b5c68ca0461bb293d6de2b8c6bf5aac604cc2b",
+    "reference.json": "39428b095751f38590d2f91ab27081090747567a3cad93b4d4c3a5a37c0beb22",
+    "requirements-reference.txt": "43bd63b4fabedadccd4c77e9df95b6d3dd976aab9d9227cb91e5f9d0be104265",
+    "binning_edges.json": "e0ccc89ea83766c220aaf94fb2d8d9695a582500330acd3166ea0056520cdb47",
+    "model_inputs.json": "ce154ab4ba1390661cd5bd3c4828f99aae96becd779620622903e26c99a06fea",
+    "model_reference.json": "3fffb6a4eeb9f84e7b3e213fdfa0cd6f851b33e340cae385e03662b52edc766c",
+    "pathology_spec.py": "de07e123d5064a27a71c086b4868d9d9021186958709a089a261d479913c73de",
+    "pathology_inputs.json": "2f23581540ed7b7aa315ef787d32461d1343b4566b0840c2a43e31396669712a",
+    "pathology_reference.json": "9e4a7384601a53db4d4f96dce73f0013bad5f756c85151bc37b74defc57a7571",
+    "pathology_hand.json": "f5560a6f7d1a100d8f694c1d9f65d5f3716654045bdbdb8826977b09495abce7",
+    "forest_reference.json": "2aab2c11a1ceb470cdda227494b300654b9d9ed15eba9e411f4bd6dd8d53d314",
+    "forest_hand.json": "11feb05433ceec788b19e3949171f4adc86af333d7931f5632f85cf06ff7a5a3",
+    "table_inputs.json": "7397c47719d457df1be0d099a93f1f0e904fcc0a94945f553b784ecb0918d984",
+    "table_reference.json": "2d63c7c0add6e8d6810653736f186a367672ef28ab12daadd2ab54a73cc76a16",
+    "table_hand.json": "30b317bb421c2b77f6f8f5bb4d1b1fe03b42ec51af5c74dabdcf423bbc402b8b",
+    "statistics_reference.json": "8dae3abf7b60f073e7612cdbb943813ad424cd86d7fe53170d74b2d260625d4d",
+    "icc_reference.json": "535ba37d9731ab7cdc793b300195ecd23323a933f2a57fee5585d2e578252bd5",
+    "requirements-icc-reference.txt": "99cd5d99acfd37735c90d2709dc2a37283be14edc540569e931dbc86d0862140",
+    "separation_reference.json": "f47ada725601083b843b04f6d6f819fe04db0ea10520afbe50b4da511934f199",
+    "workflow_plans.json": "04f70a69fb0331d8faf0109ab5a9374e80a70ad607299d6072e0d63fcb80c6e6",
+    "workflow_reference.json": "012b19af423e2079985f621e159e948fc0ebed4314468856e7d468789cf0c633",
+    "fusion_reference.json": "9ee7bf8d5e0f99d36c961d67da76236f8872deae34d0363577c4fe056086fedd",
+    "evaluation_reference.json": "3c344d8cd3a2b1c309a804a9a73fc0fe0256612c51fa8b91937c11a4509a0826",
+    "baseline_reference.json": "4541b16d7c004295283f9a3a335f690c55fc1dda453b6dcc5c540465c2241348",
+    "pathology_aggregate_spec.py": "bda53e363705c7cf13e029709d81273fc7fde0cfcc8123798ec859266d5af3ac",
+    "pathology_aggregate_inputs.json": "5e767cdc8483f0cc5f49c820efe19ea5560ee9bac96847ae6a922505b46b3b08",
+    "pathology_aggregate_reference.json": "7d21243c8536b4f3c036260219000523473f3d8370292d13c2b18b9ce02f95db",
+    "wsidata_contract_spec.py": "a5c2d4bbd6a8567a86e2c16d3d24c0b22c90f789e47414f0d7156faaa1a6c32b",
+    "wsidata_contract_inputs.json": "6463012d0909ce6615431a50c8eaf232e3a94c119bbd081fb060b31c260b3f54",
+    "wsidata_contract_reference.json": "5b0a8fe8109587e63d0edc013c743cce338b453c8a5a1915d3074f32829283a9",
+    "wsidata_contract_guard.py": "1332d26dd7de53a63fb9132f502f6caa26c34b4d5d516ed9844b2d451fb66b36",
+    "wsidata_collision_reference.json": "0ce3e95278b50e1f5c460846cde954d25583cae0d0882d063946906ad78a0f38",
+    "research_spec.py": "b3abdee7da1f6dda8a0b6c5019b2192209d31638c9d8e2641396b5673c04ca68",
+    "research_inputs.json": "0e2e4790533bd0f23711a879c5d0af0b2cff3f07b425fd43f9ffd153e8a17a70",
+    "research_reference.json": "3cb7c29e28ef47aa0205cbf6656884f1092932f7312762731a114853f7fb03a8"
+  },
+  "benchmark_policy": {
+    "version": 2,
+    "release_gate": [
+      "correctness",
+      "API contract",
+      "stability",
+      "independent execution",
+      "cross-platform installation"
+    ],
+    "performance": "Separate reported engineering targets; missing target requires disclosure and optimization, not automatic algorithm failure or prohibition of an experimental release. Actual publication requires separate authorization.",
+    "suites": [
+      "radiomics",
+      "ml_stats",
+      "pathology"
+    ],
+    "combined_score": "forbidden",
+    "radiomics_levels": {
+      "L1": "Each feature family separately, no uniform speedup gate",
+      "L2": "Fixed preprocessed image/ROI, complete supported feature set; Rust <=1.10x engineering regression reference and >=1.5x target",
+      "L3": "Complete I/O, preparation, extraction and export; >=1.5x target",
+      "L4": "100/500/1000 ROIs across sizes/gray levels/thread counts; ROI/s, peak memory and stable throughput budget",
+      "L5": "Deployment and independent startup"
+    },
+    "reporting": [
+      "median",
+      "IQR",
+      "p95",
+      "all raw timings",
+      "CPU",
+      "threads",
+      "Rust flags",
+      "Python and C library versions",
+      "cold/warm",
+      "cache state",
+      "single-thread and scaling"
+    ],
+    "memory": "<=1.20x matched-reference peak memory remains an engineering protection budget, reported explicitly"
+  },
+  "reference_scope_notes": {
+    "clinical_logistic_statistics_reference": "Sample-level solver reference with two lesions per patient; n_used/n_dropped are rows. Clinical patient inference rejects repeated patients by default; explicit sample analysis must state dependence. Existing numerical fixture unchanged.",
+    "wsidata_digest_collision": "Required supplementary wsidata_contract_guard.py checks recursive normalized structure/type/value after validating digests. The original frozen specification/reference bytes and normal digest protocol remain unchanged; wsidata_collision_reference.json independently demonstrates the float-tag opaque-object collision and required rejection.",
+    "research_combinations": "Pre-implementation keyed concat/Delta and explicit-init Lloyd reference candidate; revised near-midpoint evaluation approved before native implementation, old point retained as diagnostic and independent exact tie frozen separately. Main-worker review required before native development. Direct Euclidean distance is frozen independently from sklearn expanded-norm diagnostics before native distance testing; existing scalar tolerance unchanged."
+  }
+}

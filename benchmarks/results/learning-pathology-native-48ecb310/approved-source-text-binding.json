@@ -1,0 +1,36 @@
+{
+  "schema": "radiomics.benchmark.v2.source_text_binding.v1",
+  "status": "pre_measurement_cross_platform_representation_clarification",
+  "plan_sha256_unchanged": "33911b9585e934a43ec08e620bae37fcfd1061293799023b14243e49b80b874b",
+  "reason": "The original Windows plan recorded CRLF byte hashes for two public Python specification scripts. Linux Git checkout has the same source with LF. Independent byte comparison proves the only difference is one CR byte per line. No benchmark result caused this clarification.",
+  "canonicalization": "UTF8 bytes; replace CRLF with LF only. Reject bare CR, BOM or any other byte/content change. Actual raw hash must be exactly one of the two approved hashes below; canonical LF hash must also match. Do not normalize arbitrary files or accept semantic/whitespace edits.",
+  "files": {
+    "tools/golden_workflow.py": {
+      "original_plan_raw_sha256": "bc829260ad47bf4103132727824ecee652084166091f8c2f7e05e4ea1ddf9abb",
+      "original_CRLF_bytes": 13025,
+      "CRLF_lines": 212,
+      "accepted_LF_raw_sha256": "6ca15683361711f1a712562461ce5179525fb652f3467f7c938e77f984435637",
+      "canonical_LF_sha256": "6ca15683361711f1a712562461ce5179525fb652f3467f7c938e77f984435637",
+      "canonical_LF_bytes": 12813,
+      "byte_proof": "Replacing all 212 CRLF sequences by LF removes exactly212 bytes; replacing LF by CRLF reconstructs the original byte stream exactly."
+    },
+    "tools/golden_models.py": {
+      "original_plan_raw_sha256": "296127da29b6d398ec3ce9865634a9547776341c8daaf26e3055a3e0d3fd993a",
+      "original_CRLF_bytes": 13866,
+      "CRLF_lines": 207,
+      "accepted_LF_raw_sha256": "c602b7cae027eab3e6eb11c6ed653ba670d9a573396cfbbcf7d47941b5178bd3",
+      "canonical_LF_sha256": "c602b7cae027eab3e6eb11c6ed653ba670d9a573396cfbbcf7d47941b5178bd3",
+      "canonical_LF_bytes": 13659,
+      "byte_proof": "Replacing all207 CRLF sequences by LF removes exactly207 bytes; replacing LF by CRLF reconstructs the original byte stream exactly."
+    }
+  },
+  "unchanged": [
+    "The original plan file bytes and its33911 SHA256",
+    "All seven remaining frozen input/specification hashes remain raw-byte strict",
+    "All public Python source logic, parameter values, function bodies and reference numerical definitions",
+    "All datasets, IDs, folds, seeds, enabled fields, tolerances and performance targets",
+    "The eight workloads/two states/seven pairs/224 observations and fixed native v2 artifacts"
+  ],
+  "execution_evidence": "Record this exact approved binding SHA and each actual raw/canonical source hash in environment/input/measurement provenance. Without the approved binding, only the original raw plan hashes are accepted.",
+  "initial_failure_evidence": "Linux CI source4a65829: tools/golden_workflow.py LF SHA6ca156... did not equal the plan's Windows CRLF bc829...; failure is preserved, not replaced by regenerated numerical expectations."
+}

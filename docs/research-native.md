@@ -1,0 +1,107 @@
+# Native keyed research transformations and basic habitats
+
+These Rust modules use the existing contiguous numeric buffers, FeatureTable,
+metadata, errors, fitted preprocessing and recorded component RNG. No Python,
+registration optimizer, hidden batch correction, topology or spatial clustering
+is performed. Public namespace/CLI integration is managed by the main worker;
+this document describes the implemented core API and its acceptance scope.
+
+## Strict feature concatenation
+
+`research::concat(&[NamedFeatureTable], &ConcatConfig)` returns a common
+`FeatureTable` plus row provenance. Each input has an explicit unique source
+prefix. Metadata keys are a nonempty unique list of `MetadataField` values, such
+as patient/lesion/timepoint. Each source must contain exactly the same unique key
+population; there is no silent inner join, positional matching, first-row choice
+or row-count-only identity check.
+
+Output rows follow the first source, columns follow source order and each source's
+feature order, and names are `prefix::feature`. Feature definitions and units,
+all input effective parameters, source sample IDs and explicitly varying metadata
+are retained. Source quality records are relabeled to the output sample IDs.
+Only explicitly declared modality/region differences may vary; all other metadata
+must agree, including missing versus observed values. A varying field is missing
+in the output when its input values differ, with the actual source values retained
+in provenance. `already_registered=true` is a caller declaration that required
+registration was completed externally, never evidence that this module registered
+images or checked biological lesion correspondence.
+
+## Paired Delta
+
+`research::delta(&FeatureTable, &DeltaConfig)` pairs exactly by patient, lesion,
+modality and region for the selected baseline/followup timepoints. Output pair
+order is sorted lexicographically by those string keys; it does not depend on
+source row order. Each original feature yields, in order:
+
+| Output | Formula | Unit |
+|---|---|---|
+| difference | followup − baseline | Original feature unit |
+| ratio | followup / baseline | Dimensionless |
+| relative_change | (followup − baseline) / baseline | Dimensionless fraction, not percent |
+
+Both timepoints must exist once per key. Additional timepoints, missing keys,
+duplicate pairs, center/slide conflicts, nonfinite observed inputs and arithmetic
+overflow are errors. Missing inputs propagate to all three outputs before zero
+denominators are tested. `ZeroDenominator::Error` is the default policy;
+`Missing` explicitly retains an observed difference and marks only the two ratios
+missing. Quality records describe both forms of missing output. The output uses
+unique canonical serialized pair IDs, and preserves source IDs, parameters,
+feature definitions, pairing keys and timepoint configuration outside the numeric
+matrix.
+
+## Basic KMeans habitat state
+
+`habitat::fit(&NumericBuffer, ids, feature_names, &HabitatConfig)` fits only the
+supplied training observations. Inputs are complete finite numerical matrices;
+missing values are rejected rather than imputed. Feature names and row IDs must
+be nonempty/unique and match the matrix. IDs canonically order fitting reductions
+and random choices, so an input-row permutation preserves fitted state.
+
+Scaling reuses `fit_preprocessor` and `FittedPreprocessor`; Standard is the
+default and its zero-variance behavior is the existing shared implementation.
+Explicit centers are in raw feature units and pass through that training-only
+fitted state. The alternative initialization is one deterministic KMeans++ run:
+the first observed point is uniformly selected, subsequent points have squared
+distance weights to their closest center, and random draws use
+`sha256-chacha8-rand0.8.5-rand_chacha0.3.1-v1` with the habitat component namespace.
+This does not promise sklearn's same-seed initialization or multiple restarts.
+
+Assignments use squared Euclidean distance, with exact ties retaining the lowest
+cluster index. Centers use the common population-mean routine. Lloyd iterations
+use the declared relative center-shift threshold, converted with the mean training
+scaled-column variance. A successful fit additionally verifies that assignments
+under the new centers are unchanged and those centers are the corresponding
+member means. The report retains iterations, inertia, absolute shift tolerance,
+assignment fixed-point status and centroid residual. Empty clusters and an
+iteration-limit result without that fixed point raise explicit errors and produce
+no successful fitted model. There is no silent center relocation.
+
+`FittedHabitat` is a typed, versioned serializable state holding the fitted shared
+scaler, centers, original feature order, initialization configuration, training
+IDs/content digest, RNG scheme and convergence report. Call `validate()` after
+deserialization and before persistence/use; unknown schema or nonconverged state
+is rejected. This unsupervised state does not invent a binary/multiclass task or
+reuse predictive class names. The main integration layer controls the external
+container/file/API policy.
+
+`FittedHabitat::predict` reorders numerical columns by saved name and returns
+identified cluster labels plus direct Euclidean distances in scaled space.
+Prediction does not fit or alter preprocessing/centers, and `centers_raw()` uses
+the saved inverse scaling for reporting. A patient's cluster index is local to
+that fit and cannot be interpreted as the same tissue type across patients.
+
+## Verification and limitations
+
+The independently reviewed pre-implementation reference is described in
+[research-golden.md](research-golden.md). Six native tests compare exact keys,
+IDs, row/column order, missing states and assignments, deterministic numerical
+scaler/center/inertia/direct-distance values at `atol=1e-10, rtol=1e-8`, explicit
+failures, held-out prediction immutability, named-column reordering, serialization
+round trips and five KMeans++ seeds across one/four outer worker threads. The
+original sklearn expanded-norm transform distances remain diagnostic only; no
+reference values or tolerances were changed to accommodate implementation output.
+
+These are synthetic correctness checks, not clinical validation, performance
+measurements, image registration, batch correction or cross-patient tissue
+annotation. They do not complete the remaining M3–M5 workflow, packaging and
+performance acceptance.

@@ -1,0 +1,18 @@
+{
+  "schema": "python_golden_v1.inputs.v1",
+  "license": "CC0-1.0",
+  "provenance": "Original synthetic fixtures authored for this project; no patient data.",
+  "axis_order": "shape_xyz; x-fastest flat buffers; ndarray view is z,y,x for 3D and y,x for 2D",
+  "cases": [
+    {"id": "hand_2d", "shape": [3, 2], "values": [1, 1, 2, 2, 3, 3], "mask": [1, 1, 1, 1, 1, 1], "binWidth": 1.0},
+    {"id": "hand_3d", "shape": [3, 2, 2], "values": [1, 1, 2, 2, 3, 3, 1, 4, 2, 4, 3, 1], "mask": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "binWidth": 1.0},
+    {"id": "negative_boundaries", "shape": [3, 2], "values": [-4, -2, -1, 0, 2, 6], "mask": [1, 1, 1, 1, 1, 1], "binWidth": 2.0},
+    {"id": "missing_gray_levels", "shape": [3, 2], "values": [1, 1, 4, 4, 6, 6], "mask": [1, 1, 1, 1, 1, 1], "binWidth": 1.0},
+    {"id": "constant_width", "shape": [3, 2], "values": [7, 7, 7, 7, 7, 7], "mask": [1, 1, 1, 1, 1, 1], "binWidth": 1.0},
+    {"id": "constant_count_even", "shape": [3, 2], "values": [7, 7, 7, 7, 7, 7], "mask": [1, 1, 1, 1, 1, 1], "binCount": 4},
+    {"id": "constant_count_odd", "shape": [3, 2], "values": [7, 7, 7, 7, 7, 7], "mask": [1, 1, 1, 1, 1, 1], "binCount": 5},
+    {"id": "single_voxel", "shape": [3, 3], "values": [0, 0, 0, 0, 7, 0, 0, 0, 0], "mask": [0, 0, 0, 0, 1, 0, 0, 0, 0], "binWidth": 1.0},
+    {"id": "isolated_voxels", "shape": [3, 3], "values": [1, 0, 3, 0, 0, 0, 2, 0, 4], "mask": [1, 0, 1, 0, 0, 0, 1, 0, 1], "binWidth": 1.0},
+    {"id": "empty_roi", "shape": [2, 2], "values": [1, 2, 3, 4], "mask": [0, 0, 0, 0], "binWidth": 1.0}
+  ]
+}

@@ -13,3 +13,4 @@ target/
 *.pyd
 *.pdb
 *.so
+/crates/*/package-assets/

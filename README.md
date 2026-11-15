@@ -4,7 +4,19 @@ An independently maintained Python package with a Rust numerical core: medical i
 
 The canonical repository is [hurry060215-tech/radiomics](https://github.com/hurry060215-tech/radiomics). OmicVerse and other projects can consume the package through ordinary Python imports; this repository is developed and released independently.
 
-**Initial scope:** a single-center binary classification study with one row per independent patient. The repository includes real PyRadiomics extraction, train-fitted feature selection, eight classifier adapters, clinical statistics, logistic probability fusion, and publication-oriented plots. It does not contain patient data or depend on Onekey.
+Native development is tracked in the [implementation and acceptance ledger](docs/native-development.md).
+The [Chinese technical report](docs/technical-report.md) describes architecture,
+numerical validation and measured limitations. See the [support matrix](docs/support-matrix.md),
+[six executable native tutorials](docs/python-native.md),
+[Radiomics benchmark results](docs/radiomics-benchmark-v2-results.md) and
+[independent deployment measurements](docs/deployment-benchmark-v2-results.md).
+The sections below describe the original Python workflow. New native functionality
+is accepted module by module; the development plan is not a claim of full support.
+
+**Historical Python scope:** single-center binary classification with independent
+rows and optional external estimators. Current native workflows cover three tasks
+and grouped repeated samples. No private patient data or protected Onekey code is
+included. Public numerical reference data retain their separately stated licenses.
 
 ## Install
 
@@ -13,7 +25,7 @@ From a checkout:
 ```bash
 # Source builds require Rust >= 1.85 plus a platform C/C++ linker.
 # A prebuilt wheel does not require Rust on the user's machine.
-python -m pip install -e ".[image,test]"
+python -m pip install -e ".[image,test,reference]"
 # Optional classifier backends:
 python -m pip install -e ".[boost]"
 ```
@@ -22,9 +34,20 @@ The distribution is named **ov-radiomics** and the import is **ov_radiomics**, a
 
 The Rust core and Python bindings live in `crates/radiomics-core` and `crates/radiomics-python`. Maturin builds an ABI3 extension for CPython 3.9+; CI tests compiled wheels on Windows and Linux. Development wheels are available as CI artifacts, not a promised PyPI release.
 
-## Rust migration: first stage
+## Native engine development
 
-Binary AUC/confusion counts/Brier score, DeLong placement variance, DCA net benefit, and the grouped H–L statistic now have Rust kernels. Python retains the API, DataFrames, distribution functions, bootstrap random draws and H–L quantile grouping. PyRadiomics extraction, sklearn modeling, clinical inference and plotting remain Python/library integrations.
+The shared Rust core now implements scalar NIfTI preparation, the explicitly
+listed Original feature subset, grouped binary/multiclass/regression pipelines,
+native models, clinical tests/inference, evaluation, lightweight patch features,
+hierarchical aggregation and tile overlays. Python supplies array/table views and
+plots. The independent CLI exposes extraction, training, prediction, evaluation
+and fusion, plus pathology patch, aggregation and overlay commands. Keyed
+multimodal/region concatenation, Delta and typed KMeans habitats use the same core.
+See the [development/acceptance ledger](docs/native-development.md) for scope,
+independent Golden evidence and the completed development delivery. M0–M5 are
+closed within the [documented scope and artifact evidence](docs/delivery-index.md),
+with disclosed performance target misses and measurement limits. Registry
+publication and version changes require separate authorization.
 
 ```python
 import ov_radiomics as rad
@@ -33,9 +56,31 @@ metrics = rad.binary_metrics(y_true, y_score, backend="rust")
 reference = rad.binary_metrics(y_true, y_score, backend="python")
 ```
 
-The default `backend="auto"` uses the compiled extension when present, or the Python reference when running an unbuilt source checkout. A broken extension raises its import error rather than silently falling back. `backend="rust"` requires the extension. There are no environment switches or global backend options.
+`backend="auto"` selects only the compiled native implementation. An absent or
+broken extension raises a clear error; choose `backend="python"` explicitly for
+the optional reference implementation. `backend_info()` is a read-only probe and
+reports `unavailable` when the extension is absent. There are no environment
+switches or global backend options.
 
-See [Rust architecture, build instructions and parity tests](docs/rust.md). This is an incremental migration, **not a complete Rust reimplementation of radiomics extraction or machine learning**.
+Use `backend="rust"` explicitly for the native training/selection/clinical APIs;
+their compatibility defaults retain the historical optional Python backend.
+Native models save as typed `.rad` files and accept unlabeled external cohorts.
+Base installation does not require sklearn, SciPy, statsmodels, PyRadiomics,
+joblib, seaborn, ov or WSIData. Install `[reference,image]` for legacy workflows;
+`[plots]` adds optional seaborn plots. Basic ROC/calibration/confusion plots use
+the native core and matplotlib alone. See [build instructions](docs/rust.md).
+
+```python
+result = rad.train_models(data, "outcome", feature_names, task="multiclass",
+    patient_id="patient_id", split_plan=plan, backend="rust")
+metrics = rad.evaluate(result, prediction_unit="patient", backend="rust")
+result.save("new-native-results")
+model = rad.load_model("new-native-results/model-000.rad")
+```
+
+Performance and correctness have separate acceptance in
+[Benchmark v2](docs/benchmark-v2.md). No unmeasured extraction/end-to-end speedup
+or blanket IBSI conformance is claimed.
 
 The core package does not import SimpleITK/PyRadiomics until image functionality is requested. PyRadiomics has compiled dependencies; the initial local validation used Python 3.9, NumPy 1.23, sklearn 1.0.2 and PyRadiomics 3.1.0. Consult CI and `docs/validation.md` for actually tested combinations. Installation on other Python/NumPy versions is not guaranteed by the minimum dependency declarations.
 
@@ -108,18 +153,18 @@ No runtime registration, monkey patching, or changes to OmicVerse are required. 
 
 ## Method boundaries
 
-- `ID` is unique. Repeated scans/lesions per patient require aggregation before this initial workflow; `patient_id=` explicitly rejects repeated patients.
+- `ID` is unique. Native pipelines preserve repeated scans/lesions with patient-grouped splits throughout nested fitting; the legacy Python workflow still requires independent rows and rejects repeated `patient_id` values.
 - Reserve the test cohort before any learned preprocessing or feature screening. Every outer CV fold refits the complete pipeline. LASSO alpha tuning also refits preprocessing within its inner folds.
 - AUC-based model comparisons report all folds; there is no search for a favorable test split.
 - Fusion trains on training-set OOF probabilities. The held-out test cohort is never used to fit it. Training-cohort predictions are labeled **apparent** performance.
 - OOF scores used to fit the fusion model are not themselves unbiased validation of that fusion model. Use the held-out cohort for its evaluation.
 - A model chosen by mean CV AUC has selection uncertainty: do not interpret that selected CV score as an independent final validation estimate.
 - Clinical baseline summaries report observed data and missing counts. They do not impute data or select features automatically. Select clinical variables on training data only; data-driven selection should itself be nested when estimating CV performance.
-- Logistic inference uses complete cases and reports dropped counts. It is unpenalized and distinct from sklearn predictive LR. No automatic stepwise analysis is performed.
-- ROC intervals and paired DeLong tests assume independent patients; cluster bootstrap and multicenter/repeated-measure inference are not implemented.
+- Logistic inference uses complete cases and reports dropped counts. It is unpenalized and distinct from regularized predictive LR. The native public clinical API rejects repeated patients unless a row-level `analysis_unit='sample'` is explicitly requested. No automatic stepwise analysis is performed.
+- ROC intervals and paired DeLong tests assume independent patients. Native evaluation aggregates predictions to patients before bootstrap by default; complex multicenter/repeated-measure inference is not implemented.
 - Calibration plots do not recalibrate the model. H–L returns its group table and fails when the requested grouping is undefined; a large p-value is not proof of calibration.
-- The LASSO selector uses squared loss, as in the source workflow; its linear score is not a probability. Fusion uses classifier probabilities.
-- Classifier parameters are explicit sklearn/backend defaults plus documented adapter overrides, not unverified replicas of Onekey's encrypted model factory.
+- Binary/regression sparse selection uses squared-loss LASSO; multiclass uses OvR L1 Logistic and a union of selected features. Native alpha grids are tuned within patient-grouped whole pipelines. Legacy Python LASSO remains an explicit optional path. A squared-loss score is not a probability.
+- Native models use documented mean-loss regularization/objectives and convergence checks. External Python models use their named backend parameters. Neither path claims to reproduce Onekey's encrypted model factory.
 
 ## Reference and validation
 
@@ -132,4 +177,8 @@ No runtime registration, monkey patching, or changes to OmicVerse are required. 
 python -m pytest -q
 ```
 
-The original implementation in this repository is MIT licensed. Third-party libraries retain their own licenses; model adapters do not reimplement PyRadiomics, sklearn, or their dependencies.
+The original implementation in this repository is MIT licensed. External adapters
+call separately licensed libraries. Native algorithms are independently written
+against frozen public specifications/references; they do not incorporate encrypted
+Onekey source. Third-party libraries and licensed reference data retain their own
+licenses and attribution.

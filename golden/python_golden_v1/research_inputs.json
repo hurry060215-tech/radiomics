@@ -1,0 +1,404 @@
+{
+  "schema": "python_golden_v1.research.inputs.v1",
+  "concat": {
+    "sources": [
+      {
+        "prefix": "ct_tumor",
+        "feature_names": [
+          "Mean",
+          "Energy"
+        ],
+        "rows": [
+          {
+            "sample_id": "CT-P2",
+            "patient_id": "P2",
+            "slide_id": null,
+            "lesion_id": "L1",
+            "modality": "CT",
+            "region": "tumor",
+            "timepoint": "T0",
+            "center": "A",
+            "values": {
+              "Mean": 4,
+              "Energy": 20
+            }
+          },
+          {
+            "sample_id": "CT-P1",
+            "patient_id": "P1",
+            "slide_id": null,
+            "lesion_id": "L1",
+            "modality": "CT",
+            "region": "tumor",
+            "timepoint": "T0",
+            "center": "A",
+            "values": {
+              "Mean": 2,
+              "Energy": 8
+            }
+          },
+          {
+            "sample_id": "CT-P1b",
+            "patient_id": "P1",
+            "slide_id": null,
+            "lesion_id": "L2",
+            "modality": "CT",
+            "region": "tumor",
+            "timepoint": "T0",
+            "center": "A",
+            "values": {
+              "Mean": 3,
+              "Energy": null
+            }
+          }
+        ]
+      },
+      {
+        "prefix": "mr_tumor",
+        "feature_names": [
+          "Mean",
+          "Energy"
+        ],
+        "rows": [
+          {
+            "sample_id": "MR-P1b",
+            "patient_id": "P1",
+            "slide_id": null,
+            "lesion_id": "L2",
+            "modality": "MR",
+            "region": "tumor",
+            "timepoint": "T0",
+            "center": "A",
+            "values": {
+              "Mean": 30,
+              "Energy": 900
+            }
+          },
+          {
+            "sample_id": "MR-P2",
+            "patient_id": "P2",
+            "slide_id": null,
+            "lesion_id": "L1",
+            "modality": "MR",
+            "region": "tumor",
+            "timepoint": "T0",
+            "center": "A",
+            "values": {
+              "Mean": 40,
+              "Energy": 1600
+            }
+          },
+          {
+            "sample_id": "MR-P1",
+            "patient_id": "P1",
+            "slide_id": null,
+            "lesion_id": "L1",
+            "modality": "MR",
+            "region": "tumor",
+            "timepoint": "T0",
+            "center": "A",
+            "values": {
+              "Mean": 20,
+              "Energy": 400
+            }
+          }
+        ]
+      },
+      {
+        "prefix": "ct_ring",
+        "feature_names": [
+          "Mean",
+          "Energy"
+        ],
+        "rows": [
+          {
+            "sample_id": "peri-P1",
+            "patient_id": "P1",
+            "slide_id": null,
+            "lesion_id": "L1",
+            "modality": "CT",
+            "region": "ring_0_3mm",
+            "timepoint": "T0",
+            "center": "A",
+            "values": {
+              "Mean": 1,
+              "Energy": 2
+            }
+          },
+          {
+            "sample_id": "peri-P1b",
+            "patient_id": "P1",
+            "slide_id": null,
+            "lesion_id": "L2",
+            "modality": "CT",
+            "region": "ring_0_3mm",
+            "timepoint": "T0",
+            "center": "A",
+            "values": {
+              "Mean": 1.5,
+              "Energy": 4.5
+            }
+          },
+          {
+            "sample_id": "peri-P2",
+            "patient_id": "P2",
+            "slide_id": null,
+            "lesion_id": "L1",
+            "modality": "CT",
+            "region": "ring_0_3mm",
+            "timepoint": "T0",
+            "center": "A",
+            "values": {
+              "Mean": 2,
+              "Energy": 8
+            }
+          }
+        ]
+      }
+    ],
+    "key_fields": [
+      "patient_id",
+      "lesion_id",
+      "timepoint"
+    ],
+    "varying_fields": [
+      "modality",
+      "region"
+    ],
+    "already_registered": true
+  },
+  "delta": {
+    "rows": [
+      {
+        "sample_id": "P1L1T1",
+        "patient_id": "P1",
+        "slide_id": null,
+        "lesion_id": "L1",
+        "modality": "CT",
+        "region": "tumor",
+        "timepoint": "T1",
+        "center": "A",
+        "values": {
+          "Mean": 3,
+          "Energy": 4
+        }
+      },
+      {
+        "sample_id": "P2L1T0",
+        "patient_id": "P2",
+        "slide_id": null,
+        "lesion_id": "L1",
+        "modality": "CT",
+        "region": "tumor",
+        "timepoint": "T0",
+        "center": "A",
+        "values": {
+          "Mean": 0,
+          "Energy": null
+        }
+      },
+      {
+        "sample_id": "P1L2T1",
+        "patient_id": "P1",
+        "slide_id": null,
+        "lesion_id": "L2",
+        "modality": "CT",
+        "region": "tumor",
+        "timepoint": "T1",
+        "center": "A",
+        "values": {
+          "Mean": -1,
+          "Energy": 2
+        }
+      },
+      {
+        "sample_id": "P1L1T0",
+        "patient_id": "P1",
+        "slide_id": null,
+        "lesion_id": "L1",
+        "modality": "CT",
+        "region": "tumor",
+        "timepoint": "T0",
+        "center": "A",
+        "values": {
+          "Mean": 2,
+          "Energy": 8
+        }
+      },
+      {
+        "sample_id": "P2L1T1",
+        "patient_id": "P2",
+        "slide_id": null,
+        "lesion_id": "L1",
+        "modality": "CT",
+        "region": "tumor",
+        "timepoint": "T1",
+        "center": "A",
+        "values": {
+          "Mean": 5,
+          "Energy": 0
+        }
+      },
+      {
+        "sample_id": "P1L2T0",
+        "patient_id": "P1",
+        "slide_id": null,
+        "lesion_id": "L2",
+        "modality": "CT",
+        "region": "tumor",
+        "timepoint": "T0",
+        "center": "A",
+        "values": {
+          "Mean": -2,
+          "Energy": 0
+        }
+      }
+    ],
+    "feature_names": [
+      "Mean",
+      "Energy"
+    ],
+    "baseline": "T0",
+    "followup": "T1"
+  },
+  "habitat": {
+    "training_ids": [
+      "T0",
+      "T1",
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7"
+    ],
+    "training_values": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        8,
+        8
+      ],
+      [
+        8,
+        9
+      ],
+      [
+        9,
+        8
+      ],
+      [
+        9,
+        9
+      ]
+    ],
+    "evaluation_ids": [
+      "V0",
+      "V1",
+      "V2",
+      "V3"
+    ],
+    "evaluation_values": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        8.5,
+        8.5
+      ],
+      [
+        4.6,
+        4.5
+      ],
+      [
+        1000,
+        -1000
+      ]
+    ],
+    "initial_centers_raw": [
+      [
+        0,
+        0
+      ],
+      [
+        8,
+        8
+      ]
+    ],
+    "tol": 1e-12,
+    "max_iter": 100,
+    "old_midpoint_diagnostic": {
+      "evaluation_values": [[4.5, 4.5]],
+      "applicability": "Diagnostic only: fitted floating centers are not bit-exact symmetric, so this is not an exact native assignment tie gate."
+    },
+    "exact_tie": {
+      "centers_scaled": [[-1.0, 0.0], [1.0, 0.0]],
+      "evaluation_scaled": [[0.0, 0.0]],
+      "applicability": "Exact binary floating arithmetic; equidistant assignment retains lowest cluster index."
+    },
+    "nonconvergence": {
+      "training_values": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          11,
+          0
+        ],
+        [
+          12,
+          0
+        ]
+      ],
+      "initial_centers_raw": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "max_iter": 1
+    },
+    "empty_cluster_initial_centers_raw": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  }
+}

@@ -1,6 +1,45 @@
 # API reference
 
-Import all functions with `import ov_radiomics as rad`. Signatures below are generated from the implementation.
+Import with `import ov_radiomics as rad`. The native APIs and optional legacy
+Python/reference APIs are distinct execution paths. The compatibility defaults
+for selection/training/clinical functions remain `backend='python'`; request
+`backend='rust'` (or native `auto`) for the independent core. No native request
+invokes a reference estimator or silently changes an unsupported algorithm.
+
+## Current native interfaces
+
+- [Image preparation and geometry](image-native.md), [feature subset and profiles](features-native.md),
+  [cohort extraction](native-extraction.md), [CSV/Parquet roles and joins](table-io-native.md).
+- [Grouped three-task learning and portable .rad files](learning-native.md),
+  [models/objectives](models-native.md), [screening](preprocessing-native.md),
+  [evaluation](evaluation-native.md), [clinical inference](clinical-native.md),
+  [baseline tables](baseline-native.md), [typed ICC](reliability-native.md).
+- [Thin external/WSIData adapters](interop.md), [native Python workflows](python-native.md)
+  and [CLI commands](cli-workflows-native.md).
+
+Native sample IDs are unique; patients may have multiple lesions/slides. Every
+fitted stage uses the actual patient sets in the shared SplitPlan, including
+inner tuning and fusion. External cohorts remain distinct. Models store ordered
+features/classes, preprocessing/selection/model state, threshold and training
+provenance. `rad.load_model(path).predict(dataframe)` supports outcome-free
+pipeline prediction, including feature-column reordering. Native `evaluate`
+defaults to patient aggregation and the saved model threshold; a standalone
+binary PredictionTable requires an explicit saved threshold. Macro/micro/weighted
+summaries are flattened and complete native reports remain in DataFrame
+`attrs['native_reports']`.
+
+Clinical native APIs default to `analysis_unit='patient'`, reject repeated patient
+rows and require identified inputs. Explicit `analysis_unit='sample'` records a
+row-level scope; it does not establish patient independence. CDF/quantiles,
+H–L grouping and legacy-compatible bootstrap indices now execute in Rust.
+
+## Legacy Python/reference API below
+
+The remaining reference tables describe the original optional Python workflow,
+including its independent-row/binary limits, sklearn objects and joblib format.
+They do not describe native capabilities or native persistence. Some old metric
+implementation notes are retained as migration history; current native numerical
+ownership is specified above and in [Rust architecture](rust.md).
 
 ## Input and result contracts
 
@@ -22,7 +61,7 @@ Import all functions with `import ov_radiomics as rad`. Signatures below are gen
 - `fusion_data` strictly aligns patients, outcomes and OOF fold IDs. It currently requires `ID` as the ID column. Use the same CV seed, folds and row order for both components.
 - `fit_fusion` accepts marked OOF predictions and trains LR on those score columns. The caller is responsible for truthful provenance when supplying custom tables. `.predict_proba()` needs only the named probability columns.
 - `binary_metrics`: one 1D positive-class probability vector. Threshold is explicit and never optimized on the supplied outcomes. CI methods: `delong`, stratified `bootstrap`, or `None`. Bootstrap is patient-level only under this workflow's independent-row assumption.
-- Metric functions and `evaluate` accept `backend="auto"`, `"rust"`, or `"python"`. Auto uses a compiled extension when available; an absent extension permits Python fallback. A broken DLL does not. `backend_info()` reports the selected default. Distribution functions, quantile grouping and bootstrap random draws remain Python for reproducibility.
+- Metric functions accept `backend="auto"`, `"rust"`, or `"python"`. Auto requires the native extension; absent/broken modules never trigger reference fallback. `backend_info()` is read-only. Native distributions, grouping and bootstrap execute in Rust; the explicit Python reference retains its frozen behavior. `evaluate` without a backend infers the engine from an existing typed result; explicit auto only accepts native results.
 - `delong_test` returns ordinary two-sided `p_value` and `z`. Identical scores return p=1; a nonzero difference with zero estimated variance returns p=0. DeLong needs at least two observations per class.
 - `decision_curve`: thresholds strictly inside (0,1); includes treat-all and treat-none baselines. No prevalence correction for case-control sampling is performed.
 - `hosmer_lemeshow`: quantile groups with duplicate boundaries removed, df = actual groups - 2. Undefined groups raise errors.

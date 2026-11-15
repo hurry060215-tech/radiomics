@@ -1,0 +1,2124 @@
+{
+  "schema": "ibsi_digital_v1.published_reference.v1",
+  "track": "Independent IBSI; no PyRadiomics or native outputs used to establish these expectations.",
+  "document_repository": "https://github.com/theibsi/ibsi-doc",
+  "document_revision": "b952e71e9d40569e8a9ff3c740bc389c04dd6c28",
+  "source_sha256": {
+    "03_Image_features.rst": "427afdd2ea0196ecade329ab0096a68f65273bd023f3457217fe630b825ed0bd",
+    "06_Digital_phantom_texture_matrices.rst": "30c55e4827b0ca7aa92e9cf5c57eebad3fa791a113e245426a8426b1c345d089"
+  },
+  "data_repository": "https://github.com/theibsi/data_sets",
+  "data_revision": "6da96021bc91faf4c0cb7fd7fa56a4225d2064a8",
+  "license": "CC-BY-4.0",
+  "attribution": "IBSI-1 digital phantom, original design by Alex Zwanenburg; source NIfTI files unmodified.",
+  "input_sha256": {
+    "image.nii.gz": "83773ac2a288aa93cf819a98eaf301c18d35d5876182ec9c18733184e2b7a83a",
+    "mask.nii.gz": "3032d340944b577b83bc559ea7ae9a6034b84633a840eff39570ec17aa1d6281",
+    "LICENSE.md": "c863fa4a2aa4d3152f4bcb58bb7bb63c95704805bbb4aec18cbea7c701d4f046",
+    "SOURCE_README.md": "9759bad4490e0f2443188a6f565c14d55fce8fdc90670c153962e375fbcdee00"
+  },
+  "spatial_unit_code": 2,
+  "configuration": {
+    "ndim": 3,
+    "bin_width": 1,
+    "resampling": null,
+    "normalization": null,
+    "distance": 1,
+    "distance_norm": "Chebyshev",
+    "gldm_alpha": 0,
+    "glcm_symmetric": true,
+    "directional_modes": [
+      "3D, averaged",
+      "3D, merged"
+    ]
+  },
+  "precision_policy": "Published numeric tolerance is retained verbatim. When the digital table prints an em-dash tolerance, compare against its declared printed half-unit interval, not a fabricated full-precision scalar. This independent track does not change any PythonGolden atol/rtol. Integer count matrices are exact; NGTDM printed difference sums have explicitly recorded printed precision.",
+  "features": [
+    {
+      "feature": "original_firstorder_Mean",
+      "source_anchor": "feat_stat_mean",
+      "ibsi_identifier": "Q4LE",
+      "source_section_line": 1584,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "2.15",
+          "value": 2.15,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1602
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_Median",
+      "source_anchor": "feat_stat_median",
+      "ibsi_identifier": "Y12H",
+      "source_section_line": 1723,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "1",
+          "value": 1.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1739
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_Minimum",
+      "source_anchor": "feat_stat_minimum",
+      "ibsi_identifier": "1GSF",
+      "source_section_line": 1753,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "1",
+          "value": 1.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1771
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_Maximum",
+      "source_anchor": "feat_stat_maximum",
+      "ibsi_identifier": "84IY",
+      "source_section_line": 1852,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "6",
+          "value": 6.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1870
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_10Percentile",
+      "source_anchor": "feat_stat_p10",
+      "ibsi_identifier": "QG58",
+      "source_section_line": 1784,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "1",
+          "value": 1.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1801
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_90Percentile",
+      "source_anchor": "feat_stat_p90",
+      "ibsi_identifier": "8DWT",
+      "source_section_line": 1815,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "4",
+          "value": 4.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1832
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_Range",
+      "source_anchor": "feat_stat_range",
+      "ibsi_identifier": "2OJQ",
+      "source_section_line": 1919,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "5",
+          "value": 5.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1936
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_InterquartileRange",
+      "source_anchor": "feat_stat_iqr",
+      "ibsi_identifier": "SALO",
+      "source_section_line": 1884,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "3",
+          "value": 3.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1905
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_Variance",
+      "source_anchor": "feat_stat_variance",
+      "ibsi_identifier": "ECT3",
+      "source_section_line": 1617,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "3.05",
+          "value": 3.05,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1637
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_MeanAbsoluteDeviation",
+      "source_anchor": "feat_stat_mean_absolute_dev",
+      "ibsi_identifier": "4FUA",
+      "source_section_line": 1950,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "1.55",
+          "value": 1.55,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1970
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_Skewness",
+      "source_anchor": "feat_stat_skewness",
+      "ibsi_identifier": "KE2A",
+      "source_section_line": 1651,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "1.08",
+          "value": 1.08,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1672
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_Kurtosis",
+      "source_anchor": "feat_stat_kurtosis",
+      "ibsi_identifier": "IPH6",
+      "source_section_line": 1686,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": ":math:`-`\\ 0.355",
+          "value": -0.355,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 1709
+        }
+      ],
+      "definition_deviation": "Native python_golden_v1 emits raw kurtosis; IBSI excess is raw minus3. Native profile is not conformant for this feature."
+    },
+    {
+      "feature": "original_firstorder_Energy",
+      "source_anchor": "feat_stat_energy",
+      "ibsi_identifier": "N8CA",
+      "source_section_line": 2140,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "567",
+          "value": 567.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 2159
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_RootMeanSquared",
+      "source_anchor": "feat_stat_root_mean_square",
+      "ibsi_identifier": "5ZWQ",
+      "source_section_line": 2172,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "2.77",
+          "value": 2.77,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 2192
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_Entropy",
+      "source_anchor": "feat_int_hist_entropy",
+      "ibsi_identifier": "TLU2",
+      "source_section_line": 2873,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "1.27",
+          "value": 1.27,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 2898
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_firstorder_Uniformity",
+      "source_anchor": "feat_int_hist_uniformity",
+      "ibsi_identifier": "BJ5W",
+      "source_section_line": 2912,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.512",
+          "value": 0.512,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 2936
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_JointAverage",
+      "source_anchor": "feat_cm_joint_average",
+      "ibsi_identifier": "60VM",
+      "source_section_line": 3693,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "2.14",
+          "value": 2.14,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3718
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "2.15",
+          "value": 2.15,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3720
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_JointEnergy",
+      "source_anchor": "feat_cm_uniformity",
+      "ibsi_identifier": "8ZQL",
+      "source_section_line": 4249,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "0.303",
+          "value": 0.303,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4278
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "0.291",
+          "value": 0.291,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4280
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_JointEntropy",
+      "source_anchor": "feat_cm_joint_entropy",
+      "ibsi_identifier": "TU9B",
+      "source_section_line": 3816,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "2.4",
+          "value": 2.4,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3840
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "2.57",
+          "value": 2.57,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3842
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_MaximumProbability",
+      "source_anchor": "feat_cm_joint_maximum",
+      "ibsi_identifier": "GYBY",
+      "source_section_line": 3634,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "0.503",
+          "value": 0.503,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3659
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "0.509",
+          "value": 0.509,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3661
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_Contrast",
+      "source_anchor": "feat_cm_contrast",
+      "ibsi_identifier": "ACUI",
+      "source_section_line": 4312,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "5.32",
+          "value": 5.32,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4344
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "5.12",
+          "value": 5.12,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4346
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_Correlation",
+      "source_anchor": "feat_cm_correlation",
+      "ibsi_identifier": "NI2N",
+      "source_section_line": 4775,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "0.157",
+          "value": 0.157,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4818
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "0.183",
+          "value": 0.183,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4820
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_DifferenceAverage",
+      "source_anchor": "feat_cm_difference_average",
+      "ibsi_identifier": "TF7R",
+      "source_section_line": 3874,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "1.43",
+          "value": 1.43,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3902
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "1.38",
+          "value": 1.38,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3904
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_Id",
+      "source_anchor": "feat_cm_inverse_difference",
+      "ibsi_identifier": "IB1Z",
+      "source_section_line": 4440,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "0.677",
+          "value": 0.677,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4473
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "0.688",
+          "value": 0.688,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4475
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_Idm",
+      "source_anchor": "feat_cm_inverse_difference_moment",
+      "ibsi_identifier": "WF0Z",
+      "source_section_line": 4577,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "0.618",
+          "value": 0.618,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4611
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "0.631",
+          "value": 0.631,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 4613
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glcm_SumSquares",
+      "source_anchor": "feat_cm_joint_variance",
+      "ibsi_identifier": "UR99",
+      "source_section_line": 3753,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "3.1",
+          "value": 3.1,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3782
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "3.13",
+          "value": 3.13,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 3784
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glrlm_ShortRunEmphasis",
+      "source_anchor": "feat_rlm_short_runs_emphasis",
+      "ibsi_identifier": "22OV",
+      "source_section_line": 5345,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "0.705",
+          "value": 0.705,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5369
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "0.729",
+          "value": 0.729,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5371
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glrlm_LongRunEmphasis",
+      "source_anchor": "feat_rlm_long_runs_emphasis",
+      "ibsi_identifier": "W4KF",
+      "source_section_line": 5404,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "3.06",
+          "value": 3.06,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5428
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "2.76",
+          "value": 2.76,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5430
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glrlm_GrayLevelNonUniformity",
+      "source_anchor": "feat_rlm_grey_level_non_uniformity",
+      "ibsi_identifier": "R5YN",
+      "source_section_line": 5821,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "21.8",
+          "value": 21.8,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5846
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "281",
+          "value": 281.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5848
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glrlm_GrayLevelNonUniformityNormalized",
+      "source_anchor": "feat_rlm_grey_level_non_uniformity_normalised",
+      "ibsi_identifier": "OVBL",
+      "source_section_line": 5881,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "0.43",
+          "value": 0.43,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5905
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "0.43",
+          "value": 0.43,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5907
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glrlm_RunLengthNonUniformity",
+      "source_anchor": "feat_rlm_run_length_non_uniformity",
+      "ibsi_identifier": "W92Y",
+      "source_section_line": 5939,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "26.9",
+          "value": 26.9,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5964
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "328",
+          "value": 328.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 5966
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glrlm_RunLengthNonUniformityNormalized",
+      "source_anchor": "feat_rlm_run_length_non_uniformity_normalised",
+      "ibsi_identifier": "IC23",
+      "source_section_line": 5998,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "0.513",
+          "value": 0.513,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6022
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "0.501",
+          "value": 0.501,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6024
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glrlm_RunPercentage",
+      "source_anchor": "feat_rlm_run_percentage",
+      "ibsi_identifier": "9ZK5",
+      "source_section_line": 6056,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "0.68",
+          "value": 0.68,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6086
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "0.68",
+          "value": 0.68,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6088
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glrlm_RunEntropy",
+      "source_anchor": "feat_rlm_run_entropy",
+      "ibsi_identifier": "HJ9O",
+      "source_section_line": 6242,
+      "rows": [
+        {
+          "aggregation": "3D, averaged",
+          "printed_value": "2.43",
+          "value": 2.43,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6266
+        },
+        {
+          "aggregation": "3D, merged",
+          "printed_value": "2.62",
+          "value": 2.62,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6268
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glszm_SmallAreaEmphasis",
+      "source_anchor": "small-zone-emphasis",
+      "ibsi_identifier": null,
+      "source_section_line": 6398,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.255",
+          "value": 0.255,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6412
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glszm_LargeAreaEmphasis",
+      "source_anchor": "feat_szm_large_zone_emphasis",
+      "ibsi_identifier": "48P8",
+      "source_section_line": 6430,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "550",
+          "value": 550.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6449
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glszm_GrayLevelNonUniformity",
+      "source_anchor": "feat_szm_grey_level_non_uniformity",
+      "ibsi_identifier": "JNSA",
+      "source_section_line": 6704,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "1.4",
+          "value": 1.4,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6725
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glszm_GrayLevelNonUniformityNormalized",
+      "source_anchor": "feat_szm_grey_level_non_uniformity_normalised",
+      "ibsi_identifier": "Y1RO",
+      "source_section_line": 6743,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.28",
+          "value": 0.28,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6763
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glszm_SizeZoneNonUniformity",
+      "source_anchor": "feat_szm_zone_size_non_uniformity",
+      "ibsi_identifier": "4JP3",
+      "source_section_line": 6781,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "1",
+          "value": 1.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6802
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glszm_SizeZoneNonUniformityNormalized",
+      "source_anchor": "feat_szm_zone_size_non_uniformity_normalised",
+      "ibsi_identifier": "VB3A",
+      "source_section_line": 6820,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.2",
+          "value": 0.2,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6840
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glszm_ZonePercentage",
+      "source_anchor": "feat_szm_zone_percentage",
+      "ibsi_identifier": "P30P",
+      "source_section_line": 6858,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.0676",
+          "value": 0.0676,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 5e-05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 6879
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_glszm_ZoneEntropy",
+      "source_anchor": "feat_szm_zone_size_entropy",
+      "ibsi_identifier": "GU8N",
+      "source_section_line": 6981,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "2.32",
+          "value": 2.32,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 7000
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_gldm_SmallDependenceEmphasis",
+      "source_anchor": "feat_ngldm_low_dependence_emphasis",
+      "ibsi_identifier": "SODN",
+      "source_section_line": 8300,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.045",
+          "value": 0.045,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8321
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_gldm_LargeDependenceEmphasis",
+      "source_anchor": "feat_ngldm_high_dependence_emphasis",
+      "ibsi_identifier": "IMOQ",
+      "source_section_line": 8339,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "109",
+          "value": 109.0,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.5,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8360
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_gldm_GrayLevelNonUniformity",
+      "source_anchor": "feat_ngldm_grey_level_non_uniformity",
+      "ibsi_identifier": "FP8K",
+      "source_section_line": 8617,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "37.9",
+          "value": 37.9,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8639
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_gldm_DependenceNonUniformity",
+      "source_anchor": "feat_ngldm_dependence_count_non_uniformity",
+      "ibsi_identifier": "Z87G",
+      "source_section_line": 8699,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "4.86",
+          "value": 4.86,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8722
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_gldm_DependenceNonUniformityNormalized",
+      "source_anchor": "feat_ngldm_normalised_dependence_count_non_uniformity",
+      "ibsi_identifier": "OKJI",
+      "source_section_line": 8740,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.0657",
+          "value": 0.0657,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 5e-05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8760
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_gldm_GrayLevelVariance",
+      "source_anchor": "feat_ngldm_grey_level_variance",
+      "ibsi_identifier": "1PFV",
+      "source_section_line": 8821,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "3.05",
+          "value": 3.05,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8845
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_gldm_DependenceVariance",
+      "source_anchor": "feat_ngldm_dependence_count_variance",
+      "ibsi_identifier": "DNX2",
+      "source_section_line": 8864,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "22.1",
+          "value": 22.1,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8888
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_gldm_DependenceEntropy",
+      "source_anchor": "feat_ngldm_dependence_count_entropy",
+      "ibsi_identifier": "FCBV",
+      "source_section_line": 8906,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "4.4",
+          "value": 4.4,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8932
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_ngtdm_Coarseness",
+      "source_anchor": "feat_ngtdm_coarseness",
+      "ibsi_identifier": "QCDE",
+      "source_section_line": 7931,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.0296",
+          "value": 0.0296,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 5e-05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 7960
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_ngtdm_Contrast",
+      "source_anchor": "feat_ngtdm_contrast",
+      "ibsi_identifier": "65HE",
+      "source_section_line": 7978,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.584",
+          "value": 0.584,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8006
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_ngtdm_Busyness",
+      "source_anchor": "feat_ngtdm_busyness",
+      "ibsi_identifier": "NQ30",
+      "source_section_line": 8024,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "6.54",
+          "value": 6.54,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8054
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_ngtdm_Complexity",
+      "source_anchor": "feat_ngtdm_complexity",
+      "ibsi_identifier": "HDEZ",
+      "source_section_line": 8072,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "13.5",
+          "value": 13.5,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.05,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8096
+        }
+      ],
+      "definition_deviation": null
+    },
+    {
+      "feature": "original_ngtdm_Strength",
+      "source_anchor": "feat_ngtdm_strength",
+      "ibsi_identifier": "1X9X",
+      "source_section_line": 8114,
+      "rows": [
+        {
+          "aggregation": "3D",
+          "printed_value": "0.763",
+          "value": 0.763,
+          "printed_tolerance": "\u2014",
+          "published_tolerance": null,
+          "printed_half_unit": 0.0005,
+          "acceptance": "published_printed_precision_interval",
+          "consensus": "very strong",
+          "source_line": 8136
+        }
+      ],
+      "definition_deviation": null
+    }
+  ],
+  "matrices": {
+    "glcm_merged": {
+      "source_title": "Grey level co-occurrence matrix (3D, merged)",
+      "source_line": 1068,
+      "rows": [
+        {
+          "printed": [
+            "1.0",
+            "1.0",
+            "536"
+          ],
+          "values": [
+            1.0,
+            1.0,
+            536.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "3.0",
+            "14"
+          ],
+          "values": [
+            1.0,
+            3.0,
+            14.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "4.0",
+            "105"
+          ],
+          "values": [
+            1.0,
+            4.0,
+            105.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "6.0",
+            "61"
+          ],
+          "values": [
+            1.0,
+            6.0,
+            61.0
+          ]
+        },
+        {
+          "printed": [
+            "3.0",
+            "1.0",
+            "14"
+          ],
+          "values": [
+            3.0,
+            1.0,
+            14.0
+          ]
+        },
+        {
+          "printed": [
+            "3.0",
+            "4.0",
+            "5"
+          ],
+          "values": [
+            3.0,
+            4.0,
+            5.0
+          ]
+        },
+        {
+          "printed": [
+            "3.0",
+            "6.0",
+            "6"
+          ],
+          "values": [
+            3.0,
+            6.0,
+            6.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "1.0",
+            "105"
+          ],
+          "values": [
+            4.0,
+            1.0,
+            105.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "3.0",
+            "5"
+          ],
+          "values": [
+            4.0,
+            3.0,
+            5.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "4.0",
+            "64"
+          ],
+          "values": [
+            4.0,
+            4.0,
+            64.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "6.0",
+            "28"
+          ],
+          "values": [
+            4.0,
+            6.0,
+            28.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "1.0",
+            "61"
+          ],
+          "values": [
+            6.0,
+            1.0,
+            61.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "3.0",
+            "6"
+          ],
+          "values": [
+            6.0,
+            3.0,
+            6.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "4.0",
+            "28"
+          ],
+          "values": [
+            6.0,
+            4.0,
+            28.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "6.0",
+            "16"
+          ],
+          "values": [
+            6.0,
+            6.0,
+            16.0
+          ]
+        }
+      ]
+    },
+    "glrlm_merged": {
+      "source_title": "Grey level run length matrix (3D, merged)",
+      "source_line": 2051,
+      "rows": [
+        {
+          "printed": [
+            "1.0",
+            "1.0",
+            "190.0"
+          ],
+          "values": [
+            1.0,
+            1.0,
+            190.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "2.0",
+            "140.0"
+          ],
+          "values": [
+            1.0,
+            2.0,
+            140.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "3.0",
+            "31.0"
+          ],
+          "values": [
+            1.0,
+            3.0,
+            31.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "4.0",
+            "18.0"
+          ],
+          "values": [
+            1.0,
+            4.0,
+            18.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "5.0",
+            "3.0"
+          ],
+          "values": [
+            1.0,
+            5.0,
+            3.0
+          ]
+        },
+        {
+          "printed": [
+            "3.0",
+            "1.0",
+            "13.0"
+          ],
+          "values": [
+            3.0,
+            1.0,
+            13.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "1.0",
+            "149.0"
+          ],
+          "values": [
+            4.0,
+            1.0,
+            149.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "2.0",
+            "24.0"
+          ],
+          "values": [
+            4.0,
+            2.0,
+            24.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "3.0",
+            "1.0"
+          ],
+          "values": [
+            4.0,
+            3.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "4.0",
+            "2.0"
+          ],
+          "values": [
+            4.0,
+            4.0,
+            2.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "1.0",
+            "78.0"
+          ],
+          "values": [
+            6.0,
+            1.0,
+            78.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "2.0",
+            "3.0"
+          ],
+          "values": [
+            6.0,
+            2.0,
+            3.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "3.0",
+            "1.0"
+          ],
+          "values": [
+            6.0,
+            3.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "4.0",
+            "1.0"
+          ],
+          "values": [
+            6.0,
+            4.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "glszm": {
+      "source_title": "Grey level size zone matrix (3D)",
+      "source_line": 2198,
+      "rows": [
+        {
+          "printed": [
+            "1.0",
+            "50",
+            "1"
+          ],
+          "values": [
+            1.0,
+            50.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "3.0",
+            "1",
+            "1"
+          ],
+          "values": [
+            3.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "2",
+            "1"
+          ],
+          "values": [
+            4.0,
+            2.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "14",
+            "1"
+          ],
+          "values": [
+            4.0,
+            14.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "7",
+            "1"
+          ],
+          "values": [
+            6.0,
+            7.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "gldm": {
+      "source_title": "Neighbouring grey level dependence matrix (3D)",
+      "source_line": 2607,
+      "rows": [
+        {
+          "printed": [
+            "1.0",
+            "5.0",
+            "2"
+          ],
+          "values": [
+            1.0,
+            5.0,
+            2.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "6.0",
+            "2"
+          ],
+          "values": [
+            1.0,
+            6.0,
+            2.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "7.0",
+            "1"
+          ],
+          "values": [
+            1.0,
+            7.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "8.0",
+            "6"
+          ],
+          "values": [
+            1.0,
+            8.0,
+            6.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "9.0",
+            "4"
+          ],
+          "values": [
+            1.0,
+            9.0,
+            4.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "10.0",
+            "6"
+          ],
+          "values": [
+            1.0,
+            10.0,
+            6.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "11.0",
+            "5"
+          ],
+          "values": [
+            1.0,
+            11.0,
+            5.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "12.0",
+            "5"
+          ],
+          "values": [
+            1.0,
+            12.0,
+            5.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "13.0",
+            "3"
+          ],
+          "values": [
+            1.0,
+            13.0,
+            3.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "14.0",
+            "2"
+          ],
+          "values": [
+            1.0,
+            14.0,
+            2.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "15.0",
+            "5"
+          ],
+          "values": [
+            1.0,
+            15.0,
+            5.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "16.0",
+            "3"
+          ],
+          "values": [
+            1.0,
+            16.0,
+            3.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "17.0",
+            "3"
+          ],
+          "values": [
+            1.0,
+            17.0,
+            3.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "18.0",
+            "2"
+          ],
+          "values": [
+            1.0,
+            18.0,
+            2.0
+          ]
+        },
+        {
+          "printed": [
+            "1.0",
+            "21.0",
+            "1"
+          ],
+          "values": [
+            1.0,
+            21.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "3.0",
+            "1.0",
+            "1"
+          ],
+          "values": [
+            3.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "2.0",
+            "2"
+          ],
+          "values": [
+            4.0,
+            2.0,
+            2.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "4.0",
+            "2"
+          ],
+          "values": [
+            4.0,
+            4.0,
+            2.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "5.0",
+            "6"
+          ],
+          "values": [
+            4.0,
+            5.0,
+            6.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "6.0",
+            "4"
+          ],
+          "values": [
+            4.0,
+            6.0,
+            4.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "7.0",
+            "2"
+          ],
+          "values": [
+            4.0,
+            7.0,
+            2.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "2.0",
+            "1"
+          ],
+          "values": [
+            6.0,
+            2.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "3.0",
+            "4"
+          ],
+          "values": [
+            6.0,
+            3.0,
+            4.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "4.0",
+            "1"
+          ],
+          "values": [
+            6.0,
+            4.0,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "5.0",
+            "1"
+          ],
+          "values": [
+            6.0,
+            5.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "ngtdm": {
+      "source_title": "Neighbourhood grey tone difference matrix (3D)",
+      "source_line": 2448,
+      "rows": [
+        {
+          "printed": [
+            "1.0",
+            "39.946954",
+            "50"
+          ],
+          "values": [
+            1.0,
+            39.946954,
+            50.0
+          ]
+        },
+        {
+          "printed": [
+            "3.0",
+            "0.200000",
+            "1"
+          ],
+          "values": [
+            3.0,
+            0.2,
+            1.0
+          ]
+        },
+        {
+          "printed": [
+            "4.0",
+            "20.825401",
+            "16"
+          ],
+          "values": [
+            4.0,
+            20.825401,
+            16.0
+          ]
+        },
+        {
+          "printed": [
+            "6.0",
+            "24.127005",
+            "7"
+          ],
+          "values": [
+            6.0,
+            24.127005,
+            7.0
+          ]
+        }
+      ]
+    }
+  }
+}

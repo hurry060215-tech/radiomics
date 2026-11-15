@@ -1,0 +1,169 @@
+{
+  "roi_count": 74,
+  "intensity_sum": 159,
+  "sum_of_squares": 567,
+  "histogram": [
+    {
+      "gray": 1,
+      "count": 50
+    },
+    {
+      "gray": 3,
+      "count": 1
+    },
+    {
+      "gray": 4,
+      "count": 16
+    },
+    {
+      "gray": 6,
+      "count": 7
+    }
+  ],
+  "rational_reference": {
+    "Mean": {
+      "numerator": 159,
+      "denominator": 74
+    },
+    "Median": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "Minimum": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "Maximum": {
+      "numerator": 6,
+      "denominator": 1
+    },
+    "10Percentile": {
+      "numerator": 1,
+      "denominator": 1
+    },
+    "90Percentile": {
+      "numerator": 4,
+      "denominator": 1
+    },
+    "Range": {
+      "numerator": 5,
+      "denominator": 1
+    },
+    "InterquartileRange": {
+      "numerator": 3,
+      "denominator": 1
+    },
+    "Variance": {
+      "numerator": 16677,
+      "denominator": 5476
+    },
+    "MeanAbsoluteDeviation": {
+      "numerator": 2125,
+      "denominator": 1369
+    },
+    "Kurtosis": {
+      "numerator": -32875958,
+      "denominator": 92707443
+    },
+    "Energy": {
+      "numerator": 567,
+      "denominator": 1
+    },
+    "Uniformity": {
+      "numerator": 1403,
+      "denominator": 2738
+    }
+  },
+  "central_moment_fractions": {
+    "2": {
+      "numerator": 16677,
+      "denominator": 5476
+    },
+    "3": {
+      "numerator": 583545,
+      "denominator": 101306
+    },
+    "4": {
+      "numerator": 735739113,
+      "denominator": 29986576
+    }
+  },
+  "ibsi_features": {
+    "Mean": 2.1486486486486487,
+    "Median": 1.0,
+    "Minimum": 1.0,
+    "Maximum": 6.0,
+    "10Percentile": 1.0,
+    "90Percentile": 4.0,
+    "Range": 5.0,
+    "InterquartileRange": 3.0,
+    "Variance": 3.045471146822498,
+    "MeanAbsoluteDeviation": 1.552227903579255,
+    "Kurtosis": -0.3546204806878343,
+    "Energy": 567.0,
+    "Uniformity": 0.512417823228634,
+    "Skewness": 1.0838207225574559,
+    "RootMeanSquared": 2.768061083531605,
+    "Entropy": 1.2656115555865246
+  },
+  "native_raw_kurtosis_definition": 2.645379519312166,
+  "exact_integer_features": [
+    "Median",
+    "Minimum",
+    "Maximum",
+    "10Percentile",
+    "90Percentile",
+    "Range",
+    "InterquartileRange",
+    "Energy"
+  ],
+  "schema": "ibsi_digital_v1.firstorder.fullprecision.v1",
+  "reference_type": "Independent exact-histogram/Fraction specification; no PyRadiomics or native calculation.",
+  "decoder_versions": {
+    "SimpleITK": "2.4.1",
+    "NumPy": "1.23.0"
+  },
+  "geometry": {
+    "shape_xyz": [
+      5,
+      4,
+      4
+    ],
+    "spacing_mm": [
+      2.0,
+      2.0,
+      2.0
+    ],
+    "origin_lps_mm": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "direction_lps": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "specification_sha256": "ca4fa7dbc25e49db53d3841d00efee5b7cb92ba2978598b024cbdaf9a4c9c2fe",
+  "input_sha256": {
+    "image.nii.gz": "83773ac2a288aa93cf819a98eaf301c18d35d5876182ec9c18733184e2b7a83a",
+    "mask.nii.gz": "3032d340944b577b83bc559ea7ae9a6034b84633a840eff39570ec17aa1d6281"
+  },
+  "tolerances": {
+    "exact": "ROI count, histogram, rational-derived integral features",
+    "other_atol": 1e-10,
+    "other_rtol": 1e-08
+  },
+  "kurtosis_policy": "IBSI excess comparison is not passed by the native raw feature; difference3 is an explicit definition deviation. Independent raw definition is recorded only to explain and test this deviation, not to relabel the feature IBSI conformant.",
+  "basic_voxel_shape": {
+    "VoxelCount": 74,
+    "Volume_mm3": 592.0
+  }
+}

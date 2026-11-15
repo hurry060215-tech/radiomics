@@ -1,0 +1,8 @@
+{
+  "reference": "PyRadiomics v3.0.1",
+  "compared": "v3.1.0",
+  "scope": "The 10 committed synthetic fixtures only; no claim of general version equivalence.",
+  "comparison": "Exact JSON values, statuses, and warnings; numeric tolerance not used to hide drift.",
+  "different_entries": 0,
+  "differences": []
+}

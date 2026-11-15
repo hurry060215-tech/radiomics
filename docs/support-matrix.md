@@ -1,0 +1,67 @@
+# Current support and acceptance boundaries
+
+This matrix describes the implemented research-software scope. Evidence remains
+version scoped; neither a development build nor a performance result is a
+clinical validation or permission to publish a new package version.
+
+| Area | Native support | Evidence / boundary |
+|---|---|---|
+| Image input | Scalar 2D/3D NIfTI, `.nii/.nii.gz`, full affine and units | Geometry/round-trip/invalid-input tests; public CT compatibility. Unsliced 4D, complex and multichannel NIfTI are errors. |
+| Preparation / ROI | Explicit crop, spacing/reference resampling, clipping/scaling, label/components/dilation, anisotropic mm rings | Shared Rust operations; mask nearest-neighbor only; physical distance rejects unknown units/shear. |
+| Image features | Original 55 named first-order/texture descriptors plus 11 `shape_basic` descriptors | [Exact feature list](features-native.md); no claim that every member of a feature family is supported. |
+| Table I/O | CSV/Parquet with explicit ID/outcome/feature roles, strict joins, missing markers and manifests | Rust parser; Python `read_study` / `FeatureTable.read` views do not require pyarrow. |
+| Preprocessing / selection | Median/mode, one-hot, Standard/MinMax/Robust, variance, Pearson redundancy, task-specific univariate/BH/sparse selection | Train-only fitted state; all-missing/unknown category/zero-feature errors. |
+| Models | Binary/multinomial LR, OLS/Ridge regression, KNN, classification GaussianNB, CART RandomForest | Three-task frozen predictions/objectives/convergence; forest exact small trees and separate behavioral thresholds. |
+| Validation / fusion | Patient-level plans, nested finite grids, weighted probabilities, verified OOF Logistic/softmax fusion | Actual patient sets and classes checked; held-out perturbations cannot alter fits/OOF; external cohort identities retained. |
+| Clinical / evaluation | Observed baseline, t/Welch/MW/KW/chi-square/Fisher, complete-case Logit OR/Wald CI, typed ICC, three-task metrics and patient bootstrap | Native CDF/quantile/random-index paths; separation/rank/convergence errors; DeLong/DCA/H–L remain binary. Calibration curves do not claim fitted recalibration. |
+| Research combinations | Strict keyed multi-region/modality concat, paired Delta, typed KMeans habitat, explicit center holdout | No registration or batch correction inferred. Cluster indices are local labels. Python and CLI per-center evaluation passed focused E2E and code-bearing CI. |
+| Pathology pixels | RGB8 PNG/JPEG, supported single-page TIFF, streamed patches, raw QC, fixed color histograms/circular Hue, gray textures, provided-mask objects | No implicit RGB/bit-depth conversion; padding excluded; instance counts remain patch local. |
+| Pathology hierarchy/maps | Tile-ID alignment, tile→slide→patient summaries, explicit weights, real tile scores, overlap means/counts and block outputs | Empty/excluded parents preserved; patient probabilities cannot be broadcast into local maps. |
+| Native interfaces | Shared Rust core, PyO3 conversion boundary and Python-free CLI | Explicit Rust/auto never fall back to reference algorithms. Portable supervised `.rad` models; typed habitat JSON. |
+
+## Optional external adapters
+
+The legacy Python reference/extra-model path remains explicitly optional, with
+lazy sklearn/SciPy/statsmodels/PyRadiomics/joblib imports. Their availability does
+not count as native implementation. Base native tests omit these packages.
+
+Actual pinned AnnData/WSIData dense, in-memory metadata/H5AD adaptation was
+tested with real containers, geometry, table IDs, historical snapshots and MPP.
+See [the precise environment and limitations](optional-interop-acceptance.md).
+This is not complete WSIData dependency, backed/sparse, decoder or training
+coverage. Ordinary arrays and the basic pathology path work without these packages.
+
+Externally prepared masks, registered images, filtered features and embeddings
+may enter the declared contracts. This does not implement the upstream processing.
+
+## Standards and performance
+
+`python_golden_v1` is a compatibility profile for public PyRadiomics 3.0.1.
+The independent IBSI digital checks are separately scoped: 54 selected features
+conform in the declared configurations; raw Kurtosis differs from excess kurtosis
+and remains explicitly nonconformant. Public CT numerical compatibility does not
+claim IBSI CT configuration conformance. There is no blanket IBSI certification.
+
+The complete [Radiomics benchmark](radiomics-benchmark-v2-results.md) preserves
+854 observations and explicit CT/prepared-array performance misses. The separate
+[L5 report](deployment-benchmark-v2-results.md) measures only its declared startup
+endpoints, one offline payload install and logical footprint. Complete dependency
+installation cost and allocator counts remain unmeasured. The separate
+[ML/Statistics and Pathology report](learning-pathology-benchmark-v2-results.md)
+retains all224 observations and per-row distributions. Its declared workloads
+passed the1.10 runtime/1.20 RSS engineering targets; near-equal regression warm
+runtime is not advertised as acceleration. Windows launcher supervision limits
+are explicit in the reports and do not imply strict process containment.
+
+## Deferred, without placeholder implementations
+
+DICOM/RTSTRUCT; registration optimizers/N4; general WSI/KFB/vendor decoding;
+complex stain separation; mesh surface/sphericity; LoG/Wavelet/LBP and local
+sliding textures; 2.5D; SLIC/GPU habitats; nonstandard topology/fractal/ITH;
+ComBat; complex survival/NRI/IDI; deep training/automatic segmentation/MIL;
+GUI and automatic paper generation remain outside this round.
+
+Formal PyPI/crates.io publication, version changes and ov source integration
+require separate authorization. The six executable tutorials are documented in
+[native Python workflows](python-native.md); the [completion audit](completion-audit.md)
+tracks remaining delivery gates rather than redefining completion around this matrix.

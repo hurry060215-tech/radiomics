@@ -1,0 +1,1 @@
+{"backend": {"metrics_backend": "rust", "rust_core_version": "0.1.0"}, "implementation": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8", "version": "0.1.0"}

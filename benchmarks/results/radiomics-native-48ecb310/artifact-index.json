@@ -1,0 +1,47 @@
+{
+  "approved_plan_byte_evidence": {
+    "base": "approved-base-plan.json",
+    "ct": "approved-ct-plan.json",
+    "dimension": "approved-dimension-binding.json",
+    "note": "approved-*.json preserve exact reviewed source bytes; plan.json/ct-plan.json/dimension-binding.json are separately labeled canonical serialized run-control copies, semantically equal but not claimed byte-identical."
+  },
+  "compressed_raw": {
+    "cache_observations": 14,
+    "observations": 854,
+    "path": "raw-observations.jsonl.gz",
+    "primary_observations": 840,
+    "uncompressed_bytes": 4887613,
+    "uncompressed_sha256": "d07efc26d21dd4138c408fbfe89a9ef7252a83e53971d06483bc04aec627355a"
+  },
+  "earlier_metadata_only_failed_attempt": {
+    "directory": "E:/radiomics-build/benchmark-v2/radiomics-full-v2-60case-1",
+    "raw_observations": 0,
+    "reason": "Localized Windows powercfg stdout decoding failed before case1; metadata-only correction ad10b72; no performance observations discarded."
+  },
+  "files_sha256": {
+    ".gitattributes": "5a5027fb0f1fec52cfed8267800fbeb555df6e96c894922989f79905be1e83ab",
+    "approved-base-plan.json": "a37b033956721ce3ae6ef54fa4cc4a9e62bf001b50611b4886a873e77786058c",
+    "approved-ct-plan.json": "14192fe46356e5cc9e494779ab1f5556a6012b7602e9f9e5c20979d5591be963",
+    "approved-dimension-binding.json": "36730dda2d5cc0d928879684df57285d761e1d45e56571ed598e11b77b1509c7",
+    "ct-plan.json": "5f7e80640f4bfda4db27e90b1c32b7b2ca9fb0bd7b77c123c168cdf12ab9736d",
+    "dimension-binding.json": "398a9a93eada2b352a278b7c5a1767cd4830634ad57d2fd8f12a47c8e614bf9b",
+    "input-manifest.json": "4f0b5b555b97b34342095fd984cf92d1ba632baed18eea13ba21db2161138e9b",
+    "plan.json": "3db75000f877d71dfb5eec0c8b3fc993d8dbfae9f39515b41d24a74b00e18738",
+    "provenance.json": "bc2a07ff6f2eb5b236dc23b0349ce42619d8d7ea8ab311c928154298fa53b4cc",
+    "raw-observations.jsonl.gz": "35c6ef15ecbf4f779d8542cff4c1d70f3beadd39c9c8e5e1f53ad33a8b6e544c",
+    "report.json": "04b8fe3d47e266c4bc3b6bafa49a8104e7b54b3793664ff450153db50e9ce14e",
+    "report.md": "f57477e88a5ee6aa75b765562a483f3c45df51c54b5048c5c3470533eb9319d2"
+  },
+  "first_algorithm_request_utc_from_filesystem": "2026-11-14T15:04:49.926618+00:00",
+  "large_public_output_artifacts": "Per-worker API CSV/config, comparison JSON and stdout/stderr remain under the external run directory; raw records retain paths/hashes/bytes. No raw CT voxel data or prepared arrays are added to Git.",
+  "license_notice": "Software runner is MIT; public CT data/derived source references retain CC-BY-NC-3.0 and its attribution; IBSI digital phantom retains CC-BY-4.0. Reports are measurement evidence, not patient-level clinical findings.",
+  "native_source_revision": "48ecb310a2d9ccb5da821733ee1190ce1764f27a",
+  "native_wheel_sha256": "f2c8e0cbf55bfdf56ee4efb7b4d664112028618cb6bf03e0761170730214c160",
+  "protocol_wall_seconds_from_file_timestamps": 1317.4071259498596,
+  "report_written_utc_from_filesystem": "2026-11-14T15:26:47.333744+00:00",
+  "run_directory": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2",
+  "runner_source_revision": "ad10b726aea39232a332c937ff09b52880d13a80",
+  "schema": "radiomics.benchmark.v2.artifact-index.v1",
+  "suite": "radiomics",
+  "task_team_host_window": "Main and other workers confirmed no local builds, installs, other suite measurements or heavy tests during this Radiomics run; unrelated OS/user processes not controlled."
+}

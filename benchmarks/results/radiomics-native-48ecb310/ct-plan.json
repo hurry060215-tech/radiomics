@@ -1,0 +1,181 @@
+{
+  "append_only": true,
+  "base_plan_sha256": "a37b033956721ce3ae6ef54fa4cc4a9e62bf001b50611b4886a873e77786058c",
+  "cases": [
+    {
+      "id": "L2-public_ct_pat1-full-n1-j1-warm_prepared_arrays",
+      "input": "Already decoded tight-bbox arrays/ROI with updated complete affine; no file I/O or preprocessing in measured public call",
+      "level": "L2",
+      "preparation": [],
+      "roi_count": 1,
+      "state": "warm_prepared_arrays",
+      "threads": 1
+    },
+    {
+      "id": "L3-public_ct_pat1-full-n1-j1-warm_uncached",
+      "input": "Original source NIfTI+ROI, cohort CSV, explicit crop margin0, complete API/conversion/CSV export",
+      "level": "L3",
+      "preparation": [
+        {
+          "margin_voxels": [
+            0,
+            0,
+            0
+          ],
+          "operation": "crop_voxels"
+        }
+      ],
+      "roi_count": 1,
+      "state": "warm_uncached",
+      "threads": 1
+    }
+  ],
+  "dataset": {
+    "attribution": "Philippe Lambin / CancerData; NIfTI conversion Alex Zwanenburg",
+    "id": "public_ct_pat1",
+    "intensity_policy": "Lossless float32-to-f64 conversion of exact source integer-valued HU; no rounding, clipping, normalization, resampling or resegmentation. The separate [-500,400] resegmentation accuracy case is not this performance input.",
+    "labels": [
+      1
+    ],
+    "license": "CC-BY-NC-3.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/3.0/",
+    "morphology_and_intensity_roi_voxels": 125256,
+    "original_doi": "10.17195/candat.2016.08.1",
+    "prepared_affine_ras_mm": [
+      [
+        -0.9769999980926514,
+        0,
+        0,
+        124.56750082969666
+      ],
+      [
+        0,
+        -0.9769999980926514,
+        0,
+        29.798503637313843
+      ],
+      [
+        0,
+        0,
+        3,
+        -49.400001525878906
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "prepared_local_roi_bbox_min_xyz": [
+      0,
+      0,
+      0
+    ],
+    "raw_and_prepared_images_in_repository_or_package": false,
+    "source_affine_ras_mm": [
+      [
+        -0.9769999980926514,
+        0,
+        0,
+        174.39450073242188
+      ],
+      [
+        0,
+        -0.9769999980926514,
+        0,
+        79.62550354003906
+      ],
+      [
+        0,
+        0,
+        3,
+        -100.4000015258789
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "source_files_sha256": {
+      "SOURCE_LICENSE.md": "03e3631fbf812e9158e525de9ebd062987f51810d219e795ba5c12e190828663",
+      "SOURCE_README.md": "160af3a1d00f72519467bf44009aaa906597b61cb699635dd670de177c609b5e",
+      "image.nii.gz": "909129fdf99d5f5fd17bc568b1834d31edce8663ea6746c6020720bfc1d7bbcb",
+      "mask.nii.gz": "0e9243e473b1255c60e6460df465d0b07b65436d6e0c691fe3d17bca0594ae78"
+    },
+    "source_repository": "https://github.com/theibsi/data_sets",
+    "source_revision": "6da96021bc91faf4c0cb7fd7fa56a4225d2064a8",
+    "source_shape_xyz": [
+      204,
+      201,
+      60
+    ],
+    "tight_crop": {
+      "margin_voxels": [
+        0,
+        0,
+        0
+      ],
+      "size_xyz": [
+        100,
+        99,
+        26
+      ],
+      "start_xyz": [
+        51,
+        51,
+        17
+      ]
+    },
+    "title": "IBSI-1 PAT1 CT/GTV-1 NIfTI"
+  },
+  "execution_unchanged": {
+    "limits": "Same fixed timeout, inner threads1, source/version audits, raw retention, atol1e-10/rtol1e-8, exact IDs/bbox/counts and geometry1e-6mm; memory over budget stays operational failure, no post-result budget increase",
+    "memory_budget_bytes": 2147483648,
+    "order": "Even pair Python then Rust; odd pair Rust then Python",
+    "paired_repetitions": 7,
+    "peak_memory": "Same complete-worker-process lifetime peak resident metric and parent/worker maximum as base plan",
+    "targets": "Same L2 runtime engineering ratio1.10, L2/L3 acceleration target1.5 and resident-memory engineering ratio1.20; no threshold relaxation",
+    "warmup_calls_per_worker": 1
+  },
+  "feature_scope": "Same frozen explicit Original55 feature list and matched independent shape_basic11 specification on both backends; no mesh/filter/deprecated feature. Raw kurtosis retains python_golden_v1 semantics; CT source does not imply IBSI conformance.",
+  "native_cache_observations_unchanged": 14,
+  "native_extraction": {
+    "aggregation": "direction_mean",
+    "discretization": {
+      "method": "fixed_width",
+      "width": 25.0
+    },
+    "gldm_alpha": 0,
+    "profile": "python_golden_v1",
+    "voxel_array_shift": 0.0
+  },
+  "original_case_count_unchanged": 58,
+  "preflight_requirements": [
+    "Main and independent acceptance approve this exact supplemental JSON SHA before native CT calls or measurement",
+    "Approved LF original/crop reference bytes and source NIfTI/license hashes match bindings",
+    "Cropped shape and complete affine match frozen crop reference; local bbox indices reset while world geometry and scalar meaning remain intact",
+    "Both measured backends match each other and the frozen tight-crop scalar/basic-shape reference; failures retained, never re-record expectations"
+  ],
+  "reason": "Pre-measurement addition of the fixed public CT/ROI required by the original development plan; not selected after observing native correctness, speed or memory results. Original 58 cases, seed, parameters, repetitions and thresholds remain unchanged.",
+  "reference_bindings": {
+    "original_reference": {
+      "repository_path": "golden/public_ct_v1/reference.json",
+      "sha256": "82d4b1e955fd7770135a318d09dc2c47219614c2780c2e8082bf93f3917ab84b"
+    },
+    "protocol": {
+      "repository_path": "golden/public_ct_v1/protocol.json",
+      "sha256": "7672da0b5f59e2601c582482eaa611123a607f269443d4860c925c05da8af248"
+    },
+    "tight_bbox_reference": {
+      "repository_path": "golden/public_ct_v1/bbox_crop_reference.json",
+      "sha256": "8f08962ebc4a0eac4b283597960d0336ffed1157bdc928d2b9b3c3d14e8ee442"
+    }
+  },
+  "schema": "radiomics.benchmark.v2.public_ct_append.v1",
+  "status": "predeclared_pending_main_review_no_native_or_timing",
+  "total_primary_backend_observations": 840,
+  "total_primary_cases": 60
+}

@@ -1,15 +1,49 @@
-"""Radiomics and clinical probability fusion. Image backends are optional."""
-from .image import match_images, check_images, extract, ExtractionResult
-from .selection import FeatureSelector
-from .clinical import baseline_table, univariate_logistic, multivariable_logistic
-from .modeling import (split_data, make_classifier, train_models, evaluate, fusion_data,
-                       fit_fusion, TrainingResult, FusionResult)
-from .metrics import binary_metrics, delong_test, decision_curve, hosmer_lemeshow
-from ._validation import join_data
+"""Independent native radiomics with optional reference backends and Python plots."""
+from importlib import import_module
 from ._backend import backend_info
-from .plotting import (plot_roc, plot_calibration, plot_dca, plot_confusion_matrix,
-    plot_prediction_scores, plot_correlation, plot_lasso_path, plot_lasso_cv,
-    plot_feature_weights, plot_cv_results, plot_metrics, plot_feature_summary,
-    plot_feature_pvalues, plot_embedding, plot_learning_curve, plot_nomogram)
+from .split import SplitPlan
 
 __version__ = '0.1.0'
+
+# Old public symbols still resolve to the same function/class; reference packages
+# are imported only when their functionality is requested.
+_EXPORTS = {
+    'image': ('match_images', 'check_images', 'extract', 'read_cohort', 'ExtractionResult'),
+    'selection': ('FeatureSelector',),
+    'table': ('read_study','read_feature_table','LoadedStudy'),
+    'clinical': ('baseline_table', 'univariate_logistic', 'multivariable_logistic', 'icc'),
+    'modeling': ('split_data', 'make_classifier', 'train_models', 'evaluate', 'fusion_data',
+                 'fit_fusion', 'TrainingResult', 'FusionResult'),
+    'metrics': ('binary_metrics', 'delong_test', 'decision_curve', 'hosmer_lemeshow'),
+    '_validation': ('join_data',),
+    '_types': ('ImageSample', 'ImageVolume', 'MaskVolume', 'FeatureTable', 'TileTable', 'ModelBundle', 'PredictionTable', 'load_model'),
+    'plotting': ('plot_roc', 'plot_calibration', 'plot_dca', 'plot_confusion_matrix',
+        'plot_prediction_scores', 'plot_correlation', 'plot_lasso_path', 'plot_lasso_cv',
+        'plot_feature_weights', 'plot_cv_results', 'plot_metrics', 'plot_feature_summary',
+        'plot_feature_pvalues', 'plot_embedding', 'plot_learning_curve', 'plot_nomogram'),
+}
+_LOOKUP = {name: module for module, names in _EXPORTS.items() for name in names}
+__all__ = ['backend_info', 'SplitPlan', *_LOOKUP]
+
+
+def __getattr__(name):
+    if name in {'image', 'mask', 'interop', 'pathology', 'research', 'habitat', 'table'}:
+        module = import_module('.' + name, __name__)
+        globals()[name] = module
+        return module
+    module = _LOOKUP.get(name)
+    if module is None:
+        raise AttributeError(f'module {__name__!r} has no attribute {name!r}')
+    try:
+        value = getattr(import_module('.' + module, __name__), name)
+    except ModuleNotFoundError as exc:
+        if exc.name.split('.')[0] in {'sklearn', 'statsmodels', 'scipy', 'joblib'}:
+            raise ImportError(f'{name} requires the optional Python reference backend; '
+                'install ov-radiomics[reference].') from exc
+        raise
+    globals()[name] = value
+    return value
+
+
+def __dir__():
+    return sorted(set(globals()) | set(__all__))

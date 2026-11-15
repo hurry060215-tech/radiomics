@@ -1,0 +1,13 @@
+{
+  "schema": "radiomics.public_ct_v1.bbox_freeze.v1",
+  "status": "reference_candidate_awaiting_main_review",
+  "native_executed": false,
+  "license": "CC-BY-NC-3.0 source-specific provenance; excluded from package-assets",
+  "protocol_sha256": "7672da0b5f59e2601c582482eaa611123a607f269443d4860c925c05da8af248",
+  "full_reference_sha256": "82d4b1e955fd7770135a318d09dc2c47219614c2780c2e8082bf93f3917ab84b",
+  "reference_sha256": "8f08962ebc4a0eac4b283597960d0336ffed1157bdc928d2b9b3c3d14e8ee442",
+  "generator_path": "tests/public_ct_bbox_reference.py",
+  "generator_sha256": "5cef9ef70efbe93e8bce181396ff76fc331d1a495c5bb25d1ecfb6b27bd0acc6",
+  "generator_hash_canonicalization": "UTF-8 LF repository source",
+  "scope": "Explicit tight bounding-box crop of original morph/intensity ROI with no clipping/resampling/rounding. Independent 301 recalculation before CT native/performance execution; original freeze untouched."
+}

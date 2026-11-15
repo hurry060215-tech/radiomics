@@ -1,0 +1,928 @@
+{
+  "schema": "python_golden_v1.binning_edges.v1",
+  "reference": {
+    "pyradiomics": "3.0.1",
+    "numpy": "1.23.0"
+  },
+  "provenance": "Independent actual execution before native floating-edge repair; all original synthetic data CC0-1.0.",
+  "scope": "Actual NumPy arange/linspace/digitize behavior, not idealized floor formula.",
+  "comparison": "Exact gray labels and finite/error state; bin edges exact f64 values.",
+  "cases": [
+    {
+      "id": "decimal_binWidth_0.1",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        -0.6,
+        -0.4,
+        -0.2,
+        0.0,
+        0.2,
+        0.6
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binWidth": 0.1,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.6000000000000001,
+          -0.5000000000000001,
+          -0.40000000000000013,
+          -0.30000000000000016,
+          -0.20000000000000018,
+          -0.1000000000000002,
+          -2.220446049250313e-16,
+          0.09999999999999976,
+          0.19999999999999973,
+          0.2999999999999997,
+          0.3999999999999997,
+          0.49999999999999956,
+          0.5999999999999996,
+          0.6999999999999997
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          13
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "decimal_binWidth_0.2",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        -0.6,
+        -0.4,
+        -0.2,
+        0.0,
+        0.2,
+        0.6
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binWidth": 0.2,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.6000000000000001,
+          -0.4000000000000001,
+          -0.20000000000000007,
+          0.0,
+          0.19999999999999996,
+          0.3999999999999999,
+          0.6000000000000001,
+          0.8
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "decimal_binCount_3",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        -0.6,
+        -0.4,
+        -0.2,
+        0.0,
+        0.2,
+        0.6
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binCount": 3,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.6,
+          -0.2,
+          0.19999999999999996,
+          1.6
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          1,
+          1,
+          2,
+          2,
+          3,
+          3
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "decimal_binCount_7",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        -0.6,
+        -0.4,
+        -0.2,
+        0.0,
+        0.2,
+        0.6
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binCount": 7,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.6,
+          -0.42857142857142855,
+          -0.2571428571428571,
+          -0.08571428571428574,
+          0.08571428571428574,
+          0.25714285714285723,
+          0.4285714285714285,
+          1.6
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "decimal_binCount_10",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        -0.6,
+        -0.4,
+        -0.2,
+        0.0,
+        0.2,
+        0.6
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binCount": 10,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.6,
+          -0.48,
+          -0.36,
+          -0.24,
+          -0.12,
+          0.0,
+          0.12,
+          0.24,
+          0.36,
+          0.4800000000000001,
+          1.6
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          1,
+          2,
+          4,
+          6,
+          7,
+          10
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "nextafter_binWidth_0.1",
+      "shape": [
+        3,
+        6
+      ],
+      "values": [
+        -0.6000000000000001,
+        -0.6,
+        -0.5999999999999999,
+        -0.4000000000000001,
+        -0.4,
+        -0.39999999999999997,
+        -0.20000000000000004,
+        -0.2,
+        -0.19999999999999998,
+        -5e-324,
+        0.0,
+        5e-324,
+        0.19999999999999998,
+        0.2,
+        0.20000000000000004,
+        0.5999999999999999,
+        0.6,
+        0.6000000000000001
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binWidth": 0.1,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.7000000000000001,
+          -0.6000000000000001,
+          -0.5000000000000001,
+          -0.40000000000000013,
+          -0.30000000000000016,
+          -0.20000000000000018,
+          -0.1000000000000002,
+          -2.220446049250313e-16,
+          0.09999999999999976,
+          0.19999999999999973,
+          0.2999999999999997,
+          0.3999999999999996,
+          0.49999999999999967,
+          0.5999999999999998,
+          0.6999999999999996
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          2,
+          2,
+          2,
+          4,
+          4,
+          4,
+          6,
+          6,
+          6,
+          8,
+          8,
+          8,
+          10,
+          10,
+          10,
+          14,
+          14,
+          14
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "nextafter_binWidth_0.2",
+      "shape": [
+        3,
+        6
+      ],
+      "values": [
+        -0.6000000000000001,
+        -0.6,
+        -0.5999999999999999,
+        -0.4000000000000001,
+        -0.4,
+        -0.39999999999999997,
+        -0.20000000000000004,
+        -0.2,
+        -0.19999999999999998,
+        -5e-324,
+        0.0,
+        5e-324,
+        0.19999999999999998,
+        0.2,
+        0.20000000000000004,
+        0.5999999999999999,
+        0.6,
+        0.6000000000000001
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binWidth": 0.2,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.8,
+          -0.6000000000000001,
+          -0.40000000000000013,
+          -0.20000000000000018,
+          -2.220446049250313e-16,
+          0.19999999999999973,
+          0.3999999999999997,
+          0.5999999999999996,
+          0.7999999999999996
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          5,
+          5,
+          5,
+          6,
+          6,
+          6,
+          8,
+          8,
+          8
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "nextafter_binCount_3",
+      "shape": [
+        3,
+        6
+      ],
+      "values": [
+        -0.6000000000000001,
+        -0.6,
+        -0.5999999999999999,
+        -0.4000000000000001,
+        -0.4,
+        -0.39999999999999997,
+        -0.20000000000000004,
+        -0.2,
+        -0.19999999999999998,
+        -5e-324,
+        0.0,
+        5e-324,
+        0.19999999999999998,
+        0.2,
+        0.20000000000000004,
+        0.5999999999999999,
+        0.6,
+        0.6000000000000001
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binCount": 3,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.6000000000000001,
+          -0.2,
+          0.20000000000000007,
+          1.6
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "nextafter_binCount_7",
+      "shape": [
+        3,
+        6
+      ],
+      "values": [
+        -0.6000000000000001,
+        -0.6,
+        -0.5999999999999999,
+        -0.4000000000000001,
+        -0.4,
+        -0.39999999999999997,
+        -0.20000000000000004,
+        -0.2,
+        -0.19999999999999998,
+        -5e-324,
+        0.0,
+        5e-324,
+        0.19999999999999998,
+        0.2,
+        0.20000000000000004,
+        0.5999999999999999,
+        0.6,
+        0.6000000000000001
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binCount": 7,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.6000000000000001,
+          -0.4285714285714286,
+          -0.2571428571428572,
+          -0.08571428571428574,
+          0.08571428571428574,
+          0.25714285714285723,
+          0.4285714285714286,
+          1.6
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          4,
+          4,
+          4,
+          5,
+          5,
+          5,
+          7,
+          7,
+          7
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "nextafter_binCount_10",
+      "shape": [
+        3,
+        6
+      ],
+      "values": [
+        -0.6000000000000001,
+        -0.6,
+        -0.5999999999999999,
+        -0.4000000000000001,
+        -0.4,
+        -0.39999999999999997,
+        -0.20000000000000004,
+        -0.2,
+        -0.19999999999999998,
+        -5e-324,
+        0.0,
+        5e-324,
+        0.19999999999999998,
+        0.2,
+        0.20000000000000004,
+        0.5999999999999999,
+        0.6,
+        0.6000000000000001
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binCount": 10,
+      "bin_edges": {
+        "status": "ok",
+        "value": [
+          -0.6000000000000001,
+          -0.4800000000000001,
+          -0.36000000000000004,
+          -0.24,
+          -0.12,
+          0.0,
+          0.1200000000000001,
+          0.2400000000000001,
+          0.3600000000000001,
+          0.4800000000000002,
+          1.6
+        ],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          1,
+          1,
+          1,
+          2,
+          2,
+          2,
+          4,
+          4,
+          4,
+          5,
+          6,
+          6,
+          7,
+          7,
+          7,
+          10,
+          10,
+          10
+        ],
+        "warnings": []
+      },
+      "native_rule": "exact_discrete_labels"
+    },
+    {
+      "id": "large_constant_binWidth_0.1",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binWidth": 0.1,
+      "bin_edges": {
+        "status": "ok",
+        "value": [],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "warnings": []
+      },
+      "native_rule": "error_invalid_or_unsupported"
+    },
+    {
+      "id": "large_constant_binWidth_0.2",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binWidth": 0.2,
+      "bin_edges": {
+        "status": "ok",
+        "value": [],
+        "warnings": []
+      },
+      "discretized": {
+        "status": "ok",
+        "value": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "warnings": []
+      },
+      "native_rule": "error_invalid_or_unsupported"
+    },
+    {
+      "id": "large_constant_binCount_3",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binCount": 3,
+      "bin_edges": {
+        "status": "error",
+        "error_type": "IndexError",
+        "message": "index -9223372036854775808 is out of bounds for axis 0 with size 4",
+        "warnings": [
+          "divide by zero encountered in double_scalars",
+          "invalid value encountered in multiply"
+        ]
+      },
+      "discretized": {
+        "status": "error",
+        "error_type": "IndexError",
+        "message": "index -9223372036854775808 is out of bounds for axis 0 with size 4",
+        "warnings": [
+          "divide by zero encountered in double_scalars",
+          "invalid value encountered in multiply"
+        ]
+      },
+      "native_rule": "error_invalid_or_unsupported"
+    },
+    {
+      "id": "large_constant_binCount_7",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binCount": 7,
+      "bin_edges": {
+        "status": "error",
+        "error_type": "IndexError",
+        "message": "index -9223372036854775808 is out of bounds for axis 0 with size 8",
+        "warnings": [
+          "divide by zero encountered in double_scalars",
+          "invalid value encountered in multiply"
+        ]
+      },
+      "discretized": {
+        "status": "error",
+        "error_type": "IndexError",
+        "message": "index -9223372036854775808 is out of bounds for axis 0 with size 8",
+        "warnings": [
+          "divide by zero encountered in double_scalars",
+          "invalid value encountered in multiply"
+        ]
+      },
+      "native_rule": "error_invalid_or_unsupported"
+    },
+    {
+      "id": "large_constant_binCount_10",
+      "shape": [
+        3,
+        2
+      ],
+      "values": [
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16,
+        1e+16
+      ],
+      "mask": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "binCount": 10,
+      "bin_edges": {
+        "status": "error",
+        "error_type": "IndexError",
+        "message": "index -9223372036854775808 is out of bounds for axis 0 with size 11",
+        "warnings": [
+          "divide by zero encountered in double_scalars",
+          "invalid value encountered in multiply"
+        ]
+      },
+      "discretized": {
+        "status": "error",
+        "error_type": "IndexError",
+        "message": "index -9223372036854775808 is out of bounds for axis 0 with size 11",
+        "warnings": [
+          "divide by zero encountered in double_scalars",
+          "invalid value encountered in multiply"
+        ]
+      },
+      "native_rule": "error_invalid_or_unsupported"
+    }
+  ],
+  "native_rejection_rule": "A reference configuration that errors or cannot produce positive ROI gray labels is explicitly rejected as InvalidInput/Unsupported by the native positive-label contract. Reference outputs are preserved; no numeric tolerance is relaxed."
+}

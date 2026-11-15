@@ -9,13 +9,15 @@ description = "Independent radiomics, clinical modeling, and probability fusion 
 readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.9"
-dependencies = ["numpy>=1.23", "pandas>=1.3", "scipy>=1.9", "scikit-learn>=1.0", "statsmodels>=0.13", "matplotlib>=3.5", "seaborn>=0.11", "joblib>=1.1"]
+dependencies = ["numpy>=1.23", "pandas>=1.3", "matplotlib>=3.5"]
 
 [project.urls]
 Repository = "https://github.com/hurry060215-tech/radiomics"
 Issues = "https://github.com/hurry060215-tech/radiomics/issues"
 
 [project.optional-dependencies]
+reference = ["scipy>=1.9", "scikit-learn>=1.0", "statsmodels>=0.13", "joblib>=1.1", "seaborn>=0.11"]
+plots = ["seaborn>=0.11"]
 image = ["SimpleITK>=2.2", "pyradiomics>=3.0", "PyYAML>=6"]
 boost = ["xgboost>=1.6", "lightgbm>=3.3"]
 smote = ["imbalanced-learn>=0.9"]
@@ -25,10 +27,15 @@ test = ["pytest>=7", "nbformat>=5", "nbclient>=0.7", "ipykernel>=6"]
 manifest-path = "crates/radiomics-python/Cargo.toml"
 python-source = "src"
 module-name = "ov_radiomics._native"
-exclude = ["**/*.pdb", "**/*.pyc", "**/__pycache__/**"]
+exclude = ["**/*.pdb", "**/*.pyc", "**/__pycache__/**", "golden/public_ct_v1/**", "tests/*public_ct*", "tools/validate_public_ct.py"]
 include = [
     {path = "docs/**/*", format = "sdist"},
     {path = "tests/**/*", format = "sdist"},
+    {path = "tools/**/*.py", format = "sdist"},
+    {path = "examples/native/**/*.py", format = "sdist"},
+    {path = "golden/python_golden_v1/**/*", format = "sdist"},
+    {path = "golden/ibsi_digital_v1/**/*", format = "sdist"},
+    {path = "benchmarks/v2/**/*", format = "sdist"},
 ]
 
 [tool.pytest.ini_options]

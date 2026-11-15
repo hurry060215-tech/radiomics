@@ -1,0 +1,3 @@
+Processing e:\radiomics-build\snapshot-native-v3\wheels\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl
+Installing collected packages: ov-radiomics
+Successfully installed ov-radiomics-0.1.0

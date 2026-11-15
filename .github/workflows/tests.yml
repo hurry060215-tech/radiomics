@@ -9,7 +9,7 @@ jobs:
         with:
           components: rustfmt, clippy
       - run: cargo fmt --all -- --check
-      - run: cargo test -p ov-radiomics-core --locked
+      - run: cargo test -p ov-radiomics-core -p ov-radiomics-cli --locked
       - run: cargo clippy --workspace --all-targets --locked -- -D warnings
   core:
     runs-on: ${{ matrix.os }}
@@ -29,9 +29,9 @@ jobs:
           python-version: ${{ matrix.python }}
       - uses: dtolnay/rust-toolchain@stable
       - run: python -m pip install 'maturin>=1.9,<2' pytest nbformat nbclient ipykernel
+      - run: python tools/package_native.py --output artifacts/package-assets-receipt
       - run: python -m maturin build --release --locked --out dist
-      - shell: bash
-        run: python -m pip install dist/*.whl
+      - run: python -c "import glob,subprocess,sys; subprocess.check_call([sys.executable,'-m','pip','install',glob.glob('dist/*.whl')[0]+'[reference]'])"
       - run: python -c "import ov_radiomics as rad; assert rad.backend_info()['metrics_backend'] == 'rust'"
       - run: python -m pytest -q --import-mode=importlib -o pythonpath=
         env:
@@ -53,12 +53,12 @@ jobs:
           import subprocess, sys, tomllib
           with open('pyproject.toml', 'rb') as handle:
               project = tomllib.load(handle)['project']
-          subprocess.check_call([sys.executable, '-m', 'pip', 'install', *project['dependencies'], *project['optional-dependencies']['test']])
+          subprocess.check_call([sys.executable, '-m', 'pip', 'install', *project['dependencies'], *project['optional-dependencies']['reference'], *project['optional-dependencies']['test']])
           PY
-      - run: python -c "import ov_radiomics as rad; assert rad.backend_info()['metrics_backend'] == 'python'"
+      - run: python -c "import ov_radiomics as rad; assert rad.backend_info()['metrics_backend'] == 'unavailable'; assert rad.binary_metrics([0,0,1,1],[.1,.4,.35,.8],backend='python').auc == .75"
         env:
           PYTHONPATH: src
-      - run: python -m pytest -q
+      - run: python -m pytest -q tests/test_golden_reference.py tests/test_golden_models.py tests/test_golden_statistics.py tests/test_golden_baseline.py tests/test_golden_tables.py tests/test_golden_workflow.py tests/test_golden_fusion.py tests/test_golden_evaluation.py tests/test_golden_forest.py tests/test_golden_icc.py tests/test_golden_ibsi.py tests/test_golden_pathology.py tests/test_golden_pathology_aggregate.py tests/test_golden_separation.py tests/test_golden_research.py tests/test_golden_wsidata.py tests/test_benchmark_protocol.py tests/test_interop_conversion.py
         env:
           MPLBACKEND: Agg
           PYTHONPATH: src
@@ -72,7 +72,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - run: python -m pip install 'numpy<2' 'setuptools<81' wheel SimpleITK PyWavelets pykwalify
       - run: python -m pip install --no-build-isolation 'pyradiomics==3.0.1'
-      - run: python -m pip install -e '.[test,boost]'
+      - run: python tools/package_native.py --output artifacts/package-assets-receipt
+      - run: python -m pip install -e '.[test,boost,reference]'
       - run: python -c "import ov_radiomics as rad; assert rad.backend_info()['metrics_backend'] == 'rust'"
       - run: python -m pytest -q
         env:
@@ -86,3 +87,55 @@ jobs:
             artifacts/demo/*.csv
             artifacts/demo/*.png
             artifacts/demo/provenance.json
+  native-only:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: dtolnay/rust-toolchain@stable
+      - run: python -m pip install 'maturin>=1.9,<2' pytest
+      - run: python tools/package_native.py --output artifacts/package-assets-receipt
+      - run: python -m maturin build --release --locked --out dist
+      - run: python -c "import glob,subprocess,sys; subprocess.check_call([sys.executable,'-m','pip','install',glob.glob('dist/*.whl')[0]])"
+      - name: Check reference packages are absent
+        run: python -c "import importlib.util; assert all(importlib.util.find_spec(m) is None for m in ('sklearn','statsmodels','scipy','radiomics','SimpleITK','joblib','omicverse','wsidata'))"
+      - run: python -m pytest -q tests/test_native_extraction.py tests/test_native_image_api.py tests/test_split_plan.py tests/test_native_learning_api.py tests/test_native_clinical_api.py tests/test_native_pathology_api.py tests/test_native_research_api.py tests/test_native_api_audit.py tests/test_interop_native.py --import-mode=importlib -o pythonpath=
+        env:
+          MPLBACKEND: Agg
+      - run: cargo build --release -p ov-radiomics-cli --locked
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-cli-${{ matrix.os }}
+          path: |
+            target/release/radiomics
+            target/release/radiomics.exe
+  cli-no-python:
+    runs-on: ubuntu-latest
+    needs: native-only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: native-cli-ubuntu-latest
+          path: cli-artifact
+      - run: chmod +x cli-artifact/radiomics
+      - run: docker pull ubuntu:24.04
+      - name: Run native workflows with no Python and no container network
+        run: |
+          mkdir -p artifacts/cli-no-python
+          docker image inspect ubuntu:24.04 --format '{{.Id}}' > artifacts/cli-no-python/container-image.txt
+          docker run --rm --network none \
+            --mount type=bind,source="$GITHUB_WORKSPACE",target=/src,readonly \
+            --mount type=bind,source="$GITHUB_WORKSPACE/cli-artifact",target=/cli,readonly \
+            --mount type=bind,source="$GITHUB_WORKSPACE/artifacts/cli-no-python",target=/out \
+            ubuntu:24.04 sh /src/tools/check_cli_no_python.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cli-no-python-evidence
+          path: artifacts/cli-no-python
