@@ -1,0 +1,2208 @@
+{
+  "schema": "radiomics.onekey_workflow_gap_audit.v1",
+  "baseline_revision": "9315841648f18ae55aacb565f89e8763a0c4998b",
+  "date": "2026-11-15",
+  "scope": "Static visible README/markdown/code only; no Onekey execution/output inspection/bytecode/source replication; package source/API inspection, not new runtime tests.",
+  "equivalence_definition": "等效 means user-step capability under this package declared definitions, never numerical identity to Onekey/opaque defaults.",
+  "cell_index_convention": "zero-based original Notebook cells array",
+  "readme": {
+    "path": "README.md",
+    "sha256": "b1ad6a5f0a289b3d3bf03eca8ed9b5f18ecc45e4bdd5cbfb0c4ce6cfc343663c",
+    "topic_ids": [
+      "extraction",
+      "fusion",
+      "icc",
+      "nomogram",
+      "survival"
+    ]
+  },
+  "source_inventory": [
+    {
+      "path": "comp1-传统组学/Comp1-1传统组学特征抽取.ipynb",
+      "sha256": "e379ea384a7d92be679d2f8bff62fa5a4d49f8044e78655883b24ccbe201f400",
+      "cells": 28
+    },
+    {
+      "path": "comp1-传统组学/Comp1.Lasso-Cox生存分析-多中心.ipynb",
+      "sha256": "db4d9f58f2e735bfbb0fe63cfa8eb9bb8ab18b2b0dfe869f07c0f2bd154e3f7a",
+      "cells": 40
+    },
+    {
+      "path": "comp1-传统组学/Comp1传统组学任务-ICC以及多中心.ipynb",
+      "sha256": "9b47c031fb7e6957869927c96ebf7fb91a12a84d1a944883d40ad3947cb6ec95",
+      "cells": 72
+    },
+    {
+      "path": "comp1-传统组学/Comp1传统组学任务-回归.ipynb",
+      "sha256": "6d3c7963e153d35f2870bdec0c0562cc65fb5c6bf0531fe84814737aba76f23b",
+      "cells": 66
+    },
+    {
+      "path": "comp1-传统组学/Comp1传统组学任务-多中心-多分类.ipynb",
+      "sha256": "c7b9cd0bd6d67700d794daed03e52969b2ad3ab4868b26629cd0268b54f3929e",
+      "cells": 72
+    },
+    {
+      "path": "comp1-传统组学/Comp1传统组学任务-多分类.ipynb",
+      "sha256": "4f3dba07e1e6c2ce4e8ed703b01e8726e63087b093b0404c12ad8e51fd54bf63",
+      "cells": 72
+    },
+    {
+      "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+      "sha256": "6f5cc826d246cd3defc85b4fbfaf50a3056ce4f839291a43d651bfc3cd480d00",
+      "cells": 79
+    },
+    {
+      "path": "comp2-结构化数据/---------------》 视频教程 《---------------.ipynb",
+      "sha256": "212eab8fee4fad4e8204e5b3dfc51b5d5f8e3fab68d35e0d2dfcf5180a4dd506",
+      "cells": 4
+    },
+    {
+      "path": "comp2-结构化数据/Comp2-结构化数据-二分类.ipynb",
+      "sha256": "828d8fb0ebd5fa42499f11dcf3fcc7a60f04293d1e11900c020a054b24f5a68e",
+      "cells": 61
+    },
+    {
+      "path": "comp2-结构化数据/Comp2-结构化数据-回归.ipynb",
+      "sha256": "09d3a8fd46faceb347879348f21576bf63397b5df2fe8732fa747c83cb2aa024",
+      "cells": 47
+    },
+    {
+      "path": "comp2-结构化数据/Comp2-结构化数据-多中心-多分类.ipynb",
+      "sha256": "537d52551f7d151bbea48a128b505890ec9f2866df553fd07b8583e98756b475",
+      "cells": 52
+    },
+    {
+      "path": "comp2-结构化数据/Comp2-结构化数据-多中心二分类.ipynb",
+      "sha256": "2ff97275c7ad075785cc3e12a8c6e56e45c35d68372dd6ce9b1dd3ff4fe13d3c",
+      "cells": 57
+    },
+    {
+      "path": "comp2-结构化数据/Comp2-结构化数据-多分类.ipynb",
+      "sha256": "5ec54a749580f5f1376f0c94de64678627eda95028e0190094ba385569d2c798",
+      "cells": 52
+    },
+    {
+      "path": "comp2-结构化数据/Comp2.1 量表分析.ipynb",
+      "sha256": "1ce29662eae80854a9f612c09be6fc60cc446b20f2b24eeb836d31cec193cbd4",
+      "cells": 50
+    },
+    {
+      "path": "comp2-结构化数据/Comp2.2 生存率分析.ipynb",
+      "sha256": "f7b6bde31cc5cea9f012af4bf925807ee8c7c27e52cf6d5b9e92d40dc890caa1",
+      "cells": 37
+    },
+    {
+      "path": "comp2-结构化数据/OnekeyNet.ipynb",
+      "sha256": "508658cc8382ba6bfc94eb81bda80f9c9b41fc8c468086035a7b861bb7900c50",
+      "cells": 3
+    },
+    {
+      "path": "comp3-融合/---------------》 视频教程 《---------------.ipynb",
+      "sha256": "008bf5930c94f5380c01fa490dfb093bc0a08e6f3f523978efac50d239c614b1",
+      "cells": 4
+    },
+    {
+      "path": "comp3-融合/Module1. Transformer融合.ipynb",
+      "sha256": "3f9226882bc0c0a62e20a4c5cb4fcb5ba8a6ab30a382d61366e21bfbc6052fae",
+      "cells": 3
+    },
+    {
+      "path": "comp3-融合/Module2. 特征前融合.ipynb",
+      "sha256": "cfd5065fabd031d3d7300a34baf77fa98a63c689f3d0f20715a381760549ff34",
+      "cells": 5
+    },
+    {
+      "path": "comp3-融合/Module3. Ensemble.ipynb",
+      "sha256": "276f32e5ae3b7114b7990560f52f81a8a5e5dcd5bec3c122ef35d26242cbafdc",
+      "cells": 3
+    },
+    {
+      "path": "comp3-融合/Module4. 多实例学习特征聚合.ipynb",
+      "sha256": "5f7211e4e843ce422d55e675db9f3e8f7a5167ded8c3f565e30e03cd2249f773",
+      "cells": 7
+    },
+    {
+      "path": "comp3-融合/废弃/Comp3-1组学(模态)融合 - 前融合.ipynb",
+      "sha256": "c92e3e0726dcdfac2ef7350ee84e0a35efda481a5a7166c6f6740bedeee4df8e",
+      "cells": 40
+    },
+    {
+      "path": "comp3-融合/废弃/Comp3-2组学(模态)融合 - Ensemble后融合.ipynb",
+      "sha256": "77fc4a9c146ad7dd05f956106d9d2cb33a55d6daf2b84459f6fd300773c0a4e3",
+      "cells": 40
+    },
+    {
+      "path": "comp3-融合/废弃/Comp3-3组学(模态)融合 - Stacking后融合.ipynb",
+      "sha256": "a79f7bc9001e2e2ad5d18e7a27e7a03e6dde1050b4f2cdffc9b9893bfacb17fb",
+      "cells": 20
+    },
+    {
+      "path": "comp6-可解释性/Transformer SHAP可解释性.ipynb",
+      "sha256": "b865a7f20291a57691f6f16941e5d6ea89324030a0a0305e717bf9f1eb34922f",
+      "cells": 2
+    },
+    {
+      "path": "comp6-可解释性/列线图-Nomogram.ipynb",
+      "sha256": "eebd2618f59355c448fa0afe3581f43407939a744c234d609a5815ddf06d93e2",
+      "cells": 10
+    },
+    {
+      "path": "comp6-可解释性/机器学习-SHAP value.ipynb",
+      "sha256": "17ad961b6893ccab70f0cf76f5f1b218343cdae9574b0a98ea48956a103e734f",
+      "cells": 7
+    },
+    {
+      "path": "comp6-可解释性/机器学习-特征重要性及公式.ipynb",
+      "sha256": "2ce0f3925f9500de9c0546b03e791911444f4ad6fb6aaa1631d950a4d9487d9e",
+      "cells": 5
+    },
+    {
+      "path": "comp6-可解释性/深度学习-Grad-CAM.ipynb",
+      "sha256": "f8ba370f157d0cac47c4b59490905192fbf2aca3ded0c76696445d812d60a6be",
+      "cells": 7
+    },
+    {
+      "path": "comp6-可解释性/生境、病理特征-降维可视化.ipynb",
+      "sha256": "c6ee6b8757ffaee9f758ab78694c1c652081f538d56586b051f3e82dc8c0861a",
+      "cells": 16
+    },
+    {
+      "path": "comp8-Modules/Combat批次矫正.ipynb",
+      "sha256": "21745506c9bc3055364bda9f2e232a6ae76e7e5ec638f819744e1110f0edb9be",
+      "cells": 5
+    },
+    {
+      "path": "comp8-Modules/ICC特征筛选.ipynb",
+      "sha256": "a0844711eb0da60fa6e7e96e01f1d0be051b33d149451c9f1de27b853775db97",
+      "cells": 6
+    },
+    {
+      "path": "comp8-Modules/Metrics.ipynb",
+      "sha256": "cdce7a6a6ec5ef2445a970c699c7b491abbbbff38c661e32181d0a742bda0436",
+      "cells": 3
+    },
+    {
+      "path": "comp8-Modules/交叉验证AUC.ipynb",
+      "sha256": "6829343c89e3e72ce64d48bda7bab322eb342e9890802a0d0683364b3493f1df",
+      "cells": 2
+    },
+    {
+      "path": "comp8-Modules/单_多因素回归.ipynb",
+      "sha256": "d5178c79ea47804b4e681a45b0312cc4e74015594606dcf6f71dd6fc4b538150",
+      "cells": 7
+    },
+    {
+      "path": "comp8-Modules/指标汇总.ipynb",
+      "sha256": "c1364e7472598d502b9451c021ceaeac8adeef40ee1e34742c3f511ee09d5d34",
+      "cells": 3
+    },
+    {
+      "path": "comp8-Modules/统计分析.ipynb",
+      "sha256": "c1cfe53ce0cdebbb61ca863ab6d3240ca30dfb61594393b8a5556e65f32706f9",
+      "cells": 8
+    },
+    {
+      "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step1. Rad.ipynb",
+      "sha256": "97ebd34170d4f9bff98a13fd4256023c5f1c62ff79fe3b591b97a6b70d686823",
+      "cells": 78
+    },
+    {
+      "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step2. 临床基线统计分析.ipynb",
+      "sha256": "e3e3c1adaeb2572a75625198b8b64d09d6b5b5f5330e63f5529033b8507f9154",
+      "cells": 20
+    },
+    {
+      "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step3. Clinical.ipynb",
+      "sha256": "98b2f5e2441e15f8cbcb5d9871e6876c3b10c54bcb7de309c987f3102d0ba24e",
+      "cells": 36
+    },
+    {
+      "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step4. 指标汇总.ipynb",
+      "sha256": "e1795854e470c399498d992748e09da18a91f18b8eac7ce4cbfd9be703f59912",
+      "cells": 21
+    },
+    {
+      "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/---------------》 视频教程 《---------------.ipynb",
+      "sha256": "6c4654a6174bf86ecc4fad09de35d3d912b628f4c92a445288d26c79eff968f1",
+      "cells": 2
+    },
+    {
+      "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step0.生成数据划分.ipynb",
+      "sha256": "0d4f15309ca8bf43ca966a5f501bcc4bece0d36399707db5d1d4a05024502e01",
+      "cells": 7
+    },
+    {
+      "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step1. Radiomics.ipynb",
+      "sha256": "db4a684214965a5df210241d621b4687708a10d628388aebc8e2075cdc2775be",
+      "cells": 78
+    },
+    {
+      "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step2. 临床基线统计分析.ipynb",
+      "sha256": "63462bb996f5513f39d6a02f8b5bf91ab1f7fc9ad02c819fb64948518eb21b81",
+      "cells": 21
+    },
+    {
+      "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step3. Clinical.ipynb",
+      "sha256": "3f35c849b93ec554d5fcc8ad30fb3f235a0dcbcbfcacb9c6e44f49742bf8813e",
+      "cells": 35
+    },
+    {
+      "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step4.1 算法模型对比.ipynb",
+      "sha256": "7a5d1d0752df5cf93e192a6f5c3c84eda7fca7b876e27890531554503d4eb9e6",
+      "cells": 4
+    },
+    {
+      "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step4.2 指标汇总-Nomogram.ipynb",
+      "sha256": "6435c26b169eed8e8ea6bdea414430e583d0d25a653b65daecdefb2e400ffba2",
+      "cells": 5
+    }
+  ],
+  "notebook_count": 48,
+  "source_cell_count": 1302,
+  "all_static_code_cells_parsed": true,
+  "inventory_artifact_sha256": "c194ef26cc3e2175296bea47b152129f9cf6b80b4eb3c6274a49d3c97d919cbf",
+  "current_package_files": [
+    {
+      "path": "crates/radiomics-cli/src/workflow_commands/evaluate.rs",
+      "sha256": "9d1930ad58cb4544480e1d6e8af9bb8bb5847a4074bc2ddb2e5d9033b1703ebb"
+    },
+    {
+      "path": "crates/radiomics-core/src/models/sparse.rs",
+      "sha256": "ffb8325880c9118fa10777e42f8378962877456f26ed55305f15151db9482f53"
+    },
+    {
+      "path": "docs/api.md",
+      "sha256": "25789df45a62d4dd41818eb8e017db78e31ae2f6ecf1c624b96d564278515861"
+    },
+    {
+      "path": "docs/evaluation-native.md",
+      "sha256": "976ca3a5e1d4ec46af8a63d5975e10ff81930f978c0c3cc360093d90e32a0dea"
+    },
+    {
+      "path": "docs/features-native.md",
+      "sha256": "9dbb3a263294ed051a34c91eda86b882a5461ef16d61a3202944bd84d24c1a7c"
+    },
+    {
+      "path": "docs/learning-native.md",
+      "sha256": "655ffd7cfa0d0f0d43745d4cee051896c9ddd3d61baddf8d3562b1f9923954dc"
+    },
+    {
+      "path": "docs/legacy-python.md",
+      "sha256": "864f81316cff494517d2b026e068de09980c433d7c12ef2cc0c1570b5e8eff4b"
+    },
+    {
+      "path": "docs/models-native.md",
+      "sha256": "e921e683c3e23c9a0281e7cea68ad786147a04a52546b9cb98da8ca2dd7c496f"
+    },
+    {
+      "path": "docs/native-extraction.md",
+      "sha256": "470230974bbe3f967d3037de53144ed1c4d3c236b15472c08cff6b97739244d9"
+    },
+    {
+      "path": "docs/pathology-aggregate.md",
+      "sha256": "73533145d563ffac6c4a2604cffd30a9a47f9590ac29ec79c1041bbb8aabb766"
+    },
+    {
+      "path": "docs/preprocessing-native.md",
+      "sha256": "43c020e567b94c890e32d83384c36aad76c1546d72e0431727e77e60bbbb1fa1"
+    },
+    {
+      "path": "docs/provenance.md",
+      "sha256": "a7d437a3ad340cc76b974ceb923fa6be7d92dc57f421c4c0ab92f0128919dbe6"
+    },
+    {
+      "path": "docs/python-native.md",
+      "sha256": "2c9e188092b0affcb8b330ad6358e322742c6510ed7c9bbd14a001056f5074e6"
+    },
+    {
+      "path": "docs/reliability-native.md",
+      "sha256": "52b9562f2b4355f09af474d7da1b7af107c672adc1c10756663245c85724773c"
+    },
+    {
+      "path": "docs/research-native.md",
+      "sha256": "1262af806abbe8fd1b465ef5370eca16e78dd3b21954df56ad6c8de4c83b9584"
+    },
+    {
+      "path": "docs/scope.md",
+      "sha256": "a9467f03a49e350e1e0d5201701a6dd78b1d8cad7b18e6d3102fb58920af0fa9"
+    },
+    {
+      "path": "docs/support-matrix.md",
+      "sha256": "ee8e0451b818598ed00697e33a66303ac59fdf0175e7d9c7e6aefd3c004f036f"
+    },
+    {
+      "path": "docs/table-io-native.md",
+      "sha256": "d9b9a4cd3075bb3c011fff7216c22555b6c722749390b9758bfe10e8bfe9f2bc"
+    },
+    {
+      "path": "docs/validation.md",
+      "sha256": "7959866228bf59b53ef1d6faa744ea787949f5ff8c6622e9b92d507566c11a12"
+    },
+    {
+      "path": "examples/native/02_image_clinical_binary.py",
+      "sha256": "5ee419162e3209882c656a989a20b9031141f76bf6a9dca7eee6d6e2115a9611"
+    },
+    {
+      "path": "src/ov_radiomics/_native_clinical.py",
+      "sha256": "0eb8464d033b780b806de01e560ee1a1a054004a230a5bb4ef256627da64afa4"
+    },
+    {
+      "path": "src/ov_radiomics/_native_learning.py",
+      "sha256": "0c9459dfbb607f5343567b91a82c012ef39c54455e49bd03563c9a4b550967f5"
+    },
+    {
+      "path": "src/ov_radiomics/_native_selection.py",
+      "sha256": "fa6d4d628d1c293d5398b82431c8db198ff6b80264c1c2f7f9d69e220a1488f6"
+    },
+    {
+      "path": "src/ov_radiomics/_reference_modeling.py",
+      "sha256": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566"
+    },
+    {
+      "path": "src/ov_radiomics/_reference_selection.py",
+      "sha256": "091bfd98e76db4455ddc1deef213c374e392a7e3a21f15bf2052c74d7cb11891"
+    },
+    {
+      "path": "src/ov_radiomics/_types.py",
+      "sha256": "4b71fdab07d4469a94b8626cb3ee81cea5c0af8a62eb8bb44c98fc3aa8cc3162"
+    },
+    {
+      "path": "src/ov_radiomics/image.py",
+      "sha256": "4d17bbc772a1d7401bb9e92b1e92a1a7c78e02fa5247f6675cf8efd34d982d11"
+    },
+    {
+      "path": "src/ov_radiomics/mask.py",
+      "sha256": "19fa563c90b11a76eaa2d5a6d6891865960e780e24eb15f4ad0826faffec008b"
+    },
+    {
+      "path": "src/ov_radiomics/metrics.py",
+      "sha256": "d7bff475e63144f5e8efcffc914c1ebaac8e57257600fe94ad47998cb9948a00"
+    },
+    {
+      "path": "src/ov_radiomics/plotting.py",
+      "sha256": "24de2b6a4dc17b4c552d8e03ccca6c5d939a400764d2f08660b30a1bd81cc270"
+    },
+    {
+      "path": "src/ov_radiomics/research.py",
+      "sha256": "f0785cfe8651900e593bde9871977f4bfe88ac2c3f1281d69958f984c81f8e76"
+    },
+    {
+      "path": "src/ov_radiomics/split.py",
+      "sha256": "e984b90e7f5ff8cd9a4b9253eb95d59c01f3d97634c3a599ba7da656861ce785"
+    },
+    {
+      "path": "src/ov_radiomics/table.py",
+      "sha256": "63a899bb4b394b9f5e772dfb4152be0c33d7618e0b5575973aca184d531b7998"
+    },
+    {
+      "path": "tests/test_native_learning_api.py",
+      "sha256": "219b830b9ae881c2251f462e2e55e0ce0d7d37ea20967338f540487856cbde8b"
+    }
+  ],
+  "rows": [
+    {
+      "id": "image_pair_geometry",
+      "onekey_user_step": "影像/mask配对与几何检查",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1-1传统组学特征抽取.ipynb",
+          "cell_index": 2,
+          "cell_type": "code",
+          "cell_source_sha256": "ae5f5372dd46eb4235db948447bcccd492c4b1d4d000ef36945c8f5ecffcd995",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.Radiology.diagnose_3d_image_mask_settings"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.Radiology.diagnose_3d_image_mask_settings"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1-1传统组学特征抽取.ipynb",
+          "cell_index": 2,
+          "cell_type": "code",
+          "cell_source_sha256": "ae5f5372dd46eb4235db948447bcccd492c4b1d4d000ef36945c8f5ecffcd995",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.Radiology.get_image_mask_from_dir"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.Radiology.get_image_mask_from_dir"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/image.py",
+          "line": 174,
+          "entry": "def read_cohort"
+        },
+        {
+          "path": "src/ov_radiomics/image.py",
+          "line": 48,
+          "entry": "def check_images"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "本包有显式cohort、完整affine和单位检查；不证明Onekey内部算法相同。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "original_subset",
+      "onekey_user_step": "抽取常规数值特征",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 10,
+          "cell_type": "code",
+          "cell_source_sha256": "a895c1aa8466f03ebde8fe5896e7109fb047804ac7115ab238e9adbdc3e50c5e",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.Radiology.ConventionalRadiomics"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.Radiology.ConventionalRadiomics"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 10,
+          "cell_type": "code",
+          "cell_source_sha256": "a895c1aa8466f03ebde8fe5896e7109fb047804ac7115ab238e9adbdc3e50c5e",
+          "visible_function_symbols": [
+            "radiomics.extract"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/image.py",
+          "line": 114,
+          "entry": "def extract"
+        },
+        {
+          "path": "docs/features-native.md",
+          "line": 1,
+          "entry": "Original"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "原生只有55项明确强度/纹理及shape_basic，不能把完整feature family当已支持。",
+      "priority": "P2",
+      "recommended_action": "链接精确子集与有效配置；其他已有特征为外部输入。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "resampling",
+      "onekey_user_step": "配置网格和重采样",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1-1传统组学特征抽取.ipynb",
+          "cell_index": 2,
+          "cell_type": "code",
+          "cell_source_sha256": "ae5f5372dd46eb4235db948447bcccd492c4b1d4d000ef36945c8f5ecffcd995",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.Radiology.diagnose_3d_image_mask_settings"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.Radiology.diagnose_3d_image_mask_settings"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 10,
+          "cell_type": "code",
+          "cell_source_sha256": "a895c1aa8466f03ebde8fe5896e7109fb047804ac7115ab238e9adbdc3e50c5e",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.Radiology.ConventionalRadiomics"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.Radiology.ConventionalRadiomics"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/image.py",
+          "line": 281,
+          "entry": "def resample_spacing"
+        },
+        {
+          "path": "src/ov_radiomics/image.py",
+          "line": 290,
+          "entry": "def resample_like"
+        },
+        {
+          "path": "src/ov_radiomics/mask.py",
+          "line": 29,
+          "entry": "def resample_like"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "本包原生nearest/linear、mask nearest有明确网格；Onekey隐藏插值/默认网格不可由调用名确认。",
+      "priority": "P2",
+      "recommended_action": "区分本包网格和PyRadiomics配置，不承诺未知Onekey数值行为。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "filters",
+      "onekey_user_step": "常规组学中的图像过滤配置",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 10,
+          "cell_type": "code",
+          "cell_source_sha256": "a895c1aa8466f03ebde8fe5896e7109fb047804ac7115ab238e9adbdc3e50c5e",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.Radiology.ConventionalRadiomics"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.Radiology.ConventionalRadiomics"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "docs/features-native.md",
+          "line": 64,
+          "entry": "no image filters"
+        },
+        {
+          "path": "docs/support-matrix.md",
+          "line": 59,
+          "entry": "LoG/Wavelet/LBP"
+        }
+      ],
+      "status": "显式暂缓",
+      "gap_impact": "LoG/Wavelet/LBP、2.5D等明确暂缓；接受外部filtered features不等于执行过滤。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "explicitly_deferred"
+    },
+    {
+      "id": "batch_extraction",
+      "onekey_user_step": "批量提取与导出",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 7,
+          "cell_type": "code",
+          "cell_source_sha256": "a25671260251429bdd80772c6c83ddc4f6cdc30dbe28ca061a94f1b4895808be",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.Radiology.get_image_mask_from_dir"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.Radiology.get_image_mask_from_dir"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 10,
+          "cell_type": "code",
+          "cell_source_sha256": "a895c1aa8466f03ebde8fe5896e7109fb047804ac7115ab238e9adbdc3e50c5e",
+          "visible_function_symbols": [
+            "radiomics.extract"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 10,
+          "cell_type": "code",
+          "cell_source_sha256": "a895c1aa8466f03ebde8fe5896e7109fb047804ac7115ab238e9adbdc3e50c5e",
+          "visible_function_symbols": [
+            "rad_data.to_csv"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/image.py",
+          "line": 114,
+          "entry": "def extract"
+        },
+        {
+          "path": "docs/native-extraction.md",
+          "line": 17,
+          "entry": "cache"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "n_jobs、排序、失败和内容缓存已有；batch extraction与ComBat batch correction不同。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "table_join",
+      "onekey_user_step": "连接特征/标签/临床",
+      "onekey_evidence": [
+        {
+          "path": "comp2-结构化数据/Comp2-结构化数据-二分类.ipynb",
+          "cell_index": 6,
+          "cell_type": "code",
+          "cell_source_sha256": "e5c3c52e4541e4954a384bc735ebe9b399d3235f74bd031b6edcaa1a635b0d7f",
+          "visible_function_symbols": [
+            "onekey_algo.custom.utils.print_join_info"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.utils.print_join_info"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step2. 临床基线统计分析.ipynb",
+          "cell_index": 1,
+          "cell_type": "code",
+          "cell_source_sha256": "d3e0dafccb6b31968f3c4783bde28d444feaf217a32734bf254d59649af4e154",
+          "visible_function_symbols": [
+            "pandas.merge"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/table.py",
+          "line": 61,
+          "entry": "def read_study"
+        },
+        {
+          "path": "docs/table-io-native.md",
+          "line": 23,
+          "entry": "ClinicalJoinKey::Patient"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "显式sample/patient键与exact/left、dtype和冲突记录；不凭行数匹配。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "imputation_scaling",
+      "onekey_user_step": "缺失填补和缩放",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 20,
+          "cell_type": "code",
+          "cell_source_sha256": "dbaa430254c05afc605a180366393c9be1cbec7e04316824b6410c3e6c4beadd",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.normalize_df"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.normalize_df"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step2. 临床基线统计分析.ipynb",
+          "cell_index": 13,
+          "cell_type": "code",
+          "cell_source_sha256": "54c4445ff66d69f59e82ec5acaf84e37335a30450b67e34a66830d75da5e5aa7",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.fillna"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.fillna"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 144,
+          "entry": "preprocessing ="
+        },
+        {
+          "path": "docs/preprocessing-native.md",
+          "line": 4,
+          "entry": "median"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "本包训练折拟合；Onekey静态normalize/select在split前的顺序不作为实际泄漏定论，也不应照抄全表拟合。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "correlation_univariate",
+      "onekey_user_step": "相关和单因素筛选",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 36,
+          "cell_type": "code",
+          "cell_source_sha256": "147245261113448f3d104341bf526e68b3a1fdb21df776e423ecf059db328714",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.select_feature"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.select_feature"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 22,
+          "cell_type": "code",
+          "cell_source_sha256": "239ab2ee0dfc693f6d3cfe5f452571bfd7d1b17e74e759f90209a870e6cf3033",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.stats.clinic_stats"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.stats.clinic_stats"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_selection.py",
+          "line": 37,
+          "entry": "def configurations"
+        },
+        {
+          "path": "docs/preprocessing-native.md",
+          "line": 78,
+          "entry": "Pearson"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "Pearson冗余、task-aware检验/BH原生；Spearman/Kendall是旧Python路径，非任意相关方法原生。",
+      "priority": "P2",
+      "recommended_action": "分别标出方法和后端。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "mrmr",
+      "onekey_user_step": "额外筛选分支",
+      "onekey_evidence": [
+        {
+          "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step1. Radiomics.ipynb",
+          "cell_index": 36,
+          "cell_type": "code",
+          "cell_source_sha256": "d553a36274a0396fc16b60f55935ec3b8f8a6c85c3147918343741689355204e",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.select_feature_mrmr"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.select_feature_mrmr"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_selection.py",
+          "line": 37,
+          "entry": "def configurations"
+        }
+      ],
+      "status": "不可验证",
+      "gap_impact": "mRMR只有可见函数名，隐藏定义未审阅；本包没有且原计划未承诺mRMR。",
+      "priority": "P3",
+      "recommended_action": "不从名称推断算法，不扩大本轮范围。",
+      "native_completion_impact": "outside_declared_native_scope"
+    },
+    {
+      "id": "sparse_selection",
+      "onekey_user_step": "LASSO类筛选",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 48,
+          "cell_type": "code",
+          "cell_source_sha256": "a0203f539e012eecd52ef0732dfa34f325368045d6b67701fa40402117172327",
+          "visible_function_symbols": [
+            "sklearn.linear_model.Lasso"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务-多分类.ipynb",
+          "cell_index": 48,
+          "cell_type": "code",
+          "cell_source_sha256": "0d446a547ebd101ec09652bc56f218365853beecbbdbb1b829ced4dd94103101",
+          "visible_function_symbols": [
+            "sklearn.linear_model.Lasso"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_selection.py",
+          "line": 49,
+          "entry": "squared_lasso"
+        },
+        {
+          "path": "src/ov_radiomics/_native_selection.py",
+          "line": 49,
+          "entry": "ovr_l1_logistic"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "本包binary/reg平方LASSO、multiclass OvR L1并集明确定义，alpha选择位于患者组完整pipeline；不声称复制Onekey编码/默认。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "sparse_path_cv_plots",
+      "onekey_user_step": "稀疏系数路径与CV图",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 44,
+          "cell_type": "code",
+          "cell_source_sha256": "8c8401f6d7ebe8245c51213f8ed08a0b8f2b7fe2c6a1c40b49939bee412c5e43",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.lasso_cv_coefs"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 46,
+          "cell_type": "code",
+          "cell_source_sha256": "f383b67c7416dc51cee29483eef163d05174ebc8b7e32f37b9873433e1332464",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.lasso_cv_efficiency"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/plotting.py",
+          "line": 134,
+          "entry": "def plot_lasso_path"
+        },
+        {
+          "path": "src/ov_radiomics/plotting.py",
+          "line": 145,
+          "entry": "def plot_lasso_cv"
+        },
+        {
+          "path": "src/ov_radiomics/_native_selection.py",
+          "line": 88,
+          "entry": "def _adopt"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "native selector未暴露lasso_path_/lasso_cv_results_/lasso_model_，旧图依赖它们；原生筛选不等于完整筛选图兼容。",
+      "priority": "P1",
+      "recommended_action": "先标legacy-only；native图只能用已保存患者内候选/系数记录，不在绘图时另跑全表LassoCV。",
+      "native_completion_impact": "presentation_bridge_gap"
+    },
+    {
+      "id": "rad_score_formula",
+      "onekey_user_step": "系数/线性组合/研究评分",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 48,
+          "cell_type": "code",
+          "cell_source_sha256": "a0203f539e012eecd52ef0732dfa34f325368045d6b67701fa40402117172327",
+          "visible_function_symbols": [
+            "sklearn.linear_model.Lasso"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp6-可解释性/机器学习-特征重要性及公式.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "187cd8697830989a94c74a6d9f18bce68d0cae3cea9203c8cab5ae928463d258",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.plot_feature_importance"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_reference_selection.py",
+          "line": 144,
+          "entry": "def linear_score"
+        },
+        {
+          "path": "src/ov_radiomics/_native_selection.py",
+          "line": 88,
+          "entry": "def _adopt"
+        },
+        {
+          "path": "crates/radiomics-core/src/models/sparse.rs",
+          "line": 99,
+          "entry": "pub fn linear_scores"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "Rust SparseFit.linear_scores已有，native Python selector/model无统一公开Rad-score/coef便利视图；旧linear_score只属参考路径且不是概率。",
+      "priority": "P1",
+      "recommended_action": "若补入口应复用已拟合状态/缩放，明确LASSO score、Logit、probability三者。",
+      "native_completion_impact": "presentation_bridge_gap"
+    },
+    {
+      "id": "learning_curve",
+      "onekey_user_step": "学习曲线入口",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 61,
+          "cell_type": "code",
+          "cell_source_sha256": "85a33dfb3f8ba33968e4d68d9466434d34f6e46a55e7a3e4ce870f4375f9695c",
+          "visible_function_symbols": [],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.plot_learning_curve"
+          ],
+          "import_without_call": true
+        },
+        {
+          "path": "comp2-结构化数据/Comp2-结构化数据-二分类.ipynb",
+          "cell_index": 43,
+          "cell_type": "code",
+          "cell_source_sha256": "86c96869282c584209438115a1593f3af25c4e23094df7bffcb2c00ce13f4702",
+          "visible_function_symbols": [],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.plot_learning_curve"
+          ],
+          "import_without_call": true
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/plotting.py",
+          "line": 226,
+          "entry": "def plot_learning_curve"
+        }
+      ],
+      "status": "仅可选后端",
+      "gap_impact": "Onekey仅import该符号无调用，不能说实际画出；本包函数使用sklearn StratifiedKFold且无groups参数，非原生患者组学习曲线。",
+      "priority": "P2",
+      "recommended_action": "标legacy/external独立行范围；原生扩展需完整pipeline+groups，当前不冒称。",
+      "native_completion_impact": "optional_only"
+    },
+    {
+      "id": "group_cv",
+      "onekey_user_step": "固定划分与CV",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 42,
+          "cell_type": "code",
+          "cell_source_sha256": "30b30f015d3409f30133db7cd545f9573727e45b000f4062a25820897db8c1fd",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.split_dataset"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 59,
+          "cell_type": "code",
+          "cell_source_sha256": "e058f3875c14b9a626e7bb41e66139cd7f9d32ed6992b396919b89e55774dbc4",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.get_bst_split"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step0.生成数据划分.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "e749a23cd28700d1d8f6e5f72b078c735f6ea0b8a9194f2cb51babfaeb2c88ba",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp2.split_dataset4sol"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp2.split_dataset4sol"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/split.py",
+          "line": 49,
+          "entry": "class SplitPlan"
+        },
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 94,
+          "entry": "def train_models"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "本包真实患者集合/嵌套groupCV/固定holdout已实现；Onekey是否患者分组不能由符号证明；不复现挑最优split行为。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "native_models",
+      "onekey_user_step": "二分类/多分类/回归",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 57,
+          "cell_type": "code",
+          "cell_source_sha256": "c8c72df373e2ea52b705b3cce512d89a93f8ca9a0e5ab1cccd619cb5fa4c8759",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.create_clf_model"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务-多分类.ipynb",
+          "cell_index": 56,
+          "cell_type": "code",
+          "cell_source_sha256": "673a94cf47532b5deca0fc5840534e347b29d37c200679a529f6a29efb1692df",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.create_clf_model"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务-回归.ipynb",
+          "cell_index": 54,
+          "cell_type": "code",
+          "cell_source_sha256": "a71e3fa4754e65c704e835a58bf81a74a7feb20d2ad31c334f064810fa0f1448",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.create_reg_model"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 14,
+          "entry": "def _model_spec"
+        },
+        {
+          "path": "docs/models-native.md",
+          "line": 25,
+          "entry": "LR"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "本包声明的LR/softmax、OLS/Ridge、KNN、classification NB和RF有原生定义；不是同名opaque工厂数学等价声明。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "extra_models",
+      "onekey_user_step": "SVM/XGBoost/LightGBM等",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 61,
+          "cell_type": "code",
+          "cell_source_sha256": "85a33dfb3f8ba33968e4d68d9466434d34f6e46a55e7a3e4ce870f4375f9695c",
+          "visible_function_symbols": [
+            "xgboost.XGBClassifier"
+          ],
+          "visible_import_symbols": [
+            "xgboost.XGBClassifier"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 61,
+          "cell_type": "code",
+          "cell_source_sha256": "85a33dfb3f8ba33968e4d68d9466434d34f6e46a55e7a3e4ce870f4375f9695c",
+          "visible_function_symbols": [
+            "lightgbm.LGBMClassifier"
+          ],
+          "visible_import_symbols": [
+            "lightgbm.LGBMClassifier"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_reference_modeling.py",
+          "line": 35,
+          "entry": "def make_classifier"
+        },
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 25,
+          "entry": "has no supported native specification"
+        }
+      ],
+      "status": "仅可选后端",
+      "gap_impact": "额外模型仅显式Python可选路径；不计Rust完成度，不把RF改名为boosting。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "optional_only"
+    },
+    {
+      "id": "clinical_inference",
+      "onekey_user_step": "临床基线、单/多因素推断",
+      "onekey_evidence": [
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step2. 临床基线统计分析.ipynb",
+          "cell_index": 15,
+          "cell_type": "code",
+          "cell_source_sha256": "b951a2f4253511e31b43e51ad1b969c4da44ac7448cda5bffe037370d3da7add",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.stats.clinic_stats"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.stats.clinic_stats"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step2. 临床基线统计分析.ipynb",
+          "cell_index": 18,
+          "cell_type": "code",
+          "cell_source_sha256": "e2ed6439d37ea311a3a28feecdb8388e23f2addb854d6b5b4ae998c81f818f37",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.uni_multi_variable_analysis"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.uni_multi_variable_analysis"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp8-Modules/单_多因素回归.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "dc6bcd45cb4c91c7c28f0a36e0645af5da21be47a1b6d199442d8d861f65a838",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.variable_analysis"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.variable_analysis"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_clinical.py",
+          "line": 88,
+          "entry": "def baseline_table"
+        },
+        {
+          "path": "src/ov_radiomics/_native_clinical.py",
+          "line": 42,
+          "entry": "def multivariable_logistic"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "观察值基线/完整病例/无惩罚Logit OR/Wald与错误状态已有；不含自动stepwise，重复患者默认拒绝。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "clinical_model",
+      "onekey_user_step": "临床变量预测建模",
+      "onekey_evidence": [
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step3. Clinical.ipynb",
+          "cell_index": 17,
+          "cell_type": "code",
+          "cell_source_sha256": "78540889b4085705580646dc81947b9b5426530bd0ee44a1701c9b9bd0d861cb",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.create_clf_model"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step3. Clinical.ipynb",
+          "cell_index": 23,
+          "cell_type": "code",
+          "cell_source_sha256": "c5fbd77f90a34640f6169c6fa08a8694fb2cc653b8e02926383b135febcb4eaf",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.metrics.analysis_pred_binary"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.metrics.analysis_pred_binary"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 94,
+          "entry": "def train_models"
+        },
+        {
+          "path": "examples/native/02_image_clinical_binary.py",
+          "line": 22,
+          "entry": "split_plan=image.split_plan"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "临床和影像模型共享实际SplitPlan；有正则预测LR和无惩罚推断分开。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "early_fusion",
+      "onekey_user_step": "按键特征前融合",
+      "onekey_evidence": [
+        {
+          "path": "comp3-融合/Module2. 特征前融合.ipynb",
+          "cell_index": 1,
+          "cell_type": "code",
+          "cell_source_sha256": "b7a00a0fccd940e21e678fe1446baa82b9ebdcb7914c281160cbda1e925ae1b2",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.merge_results"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.merge_results"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/research.py",
+          "line": 20,
+          "entry": "def concat"
+        },
+        {
+          "path": "docs/research-native.md",
+          "line": 9,
+          "entry": "Strict feature concatenation"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "严格键/元数据冲突/来源前缀；影像配准为上游显式步骤。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "weighted_fusion",
+      "onekey_user_step": "显式加权概率融合",
+      "onekey_evidence": [
+        {
+          "path": "comp3-融合/废弃/Comp3-2组学(模态)融合 - Ensemble后融合.ipynb",
+          "cell_index": 30,
+          "cell_type": "code",
+          "cell_source_sha256": "fcd3bccb4937b7387e190cfc2c523337daf85310b0aa70cd9aa2e55b7e30e9fe",
+          "visible_function_symbols": [
+            "numpy.mean"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp3-融合/废弃/Comp3-2组学(模态)融合 - Ensemble后融合.ipynb",
+          "cell_index": 32,
+          "cell_type": "code",
+          "cell_source_sha256": "3139cd70d57d5c19c934faeab5fdb3b8046a928f26e31927ecdc13a5ca7d07b5",
+          "visible_function_symbols": [
+            "softmax"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 268,
+          "entry": "if method=='weighted'"
+        },
+        {
+          "path": "docs/learning-native.md",
+          "line": 76,
+          "entry": "explicit weighted"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "本包非负概率权重和共享plan不是任意score softmax；Onekey来源在废弃目录，不作当前默认。",
+      "priority": "P2",
+      "recommended_action": "注明输入是概率、权重定义与历史来源。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "oof_fusion",
+      "onekey_user_step": "影像/临床OOF融合",
+      "onekey_evidence": [
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step4. 指标汇总.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "fe2151c638c6bfcc5811b209187d57e90888a2be27f2819237d1e5475076bed8",
+          "visible_function_symbols": [
+            "sklearn.linear_model.LogisticRegression"
+          ],
+          "visible_import_symbols": [
+            "sklearn.linear_model.LogisticRegression"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step4. 指标汇总.ipynb",
+          "cell_index": 12,
+          "cell_type": "code",
+          "cell_source_sha256": "e09ad35681ac1fb3e16d490343191fa3508afb730c24527d8af0966c7f33b89f",
+          "visible_function_symbols": [
+            "sklearn.linear_model.LogisticRegression"
+          ],
+          "visible_import_symbols": [
+            "sklearn.linear_model.LogisticRegression"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp3-融合/废弃/Comp3-3组学(模态)融合 - Stacking后融合.ipynb",
+          "cell_index": 8,
+          "cell_type": "code",
+          "cell_source_sha256": "424447898f3948ba4eee789bd919403e300098aabebf5c57641d56efdd84b0d6",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.create_clf_model"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 250,
+          "entry": "def fusion_data"
+        },
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 254,
+          "entry": "def fit_fusion"
+        },
+        {
+          "path": "tests/test_native_learning_api.py",
+          "line": 69,
+          "entry": "def test_patient_plan_fusion_leakage"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "原生共享患者plan下的OOF Logistic/softmax和portable bundle已有；用于meta拟合的OOF不当独立验证。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "native_fusion_nomogram",
+      "onekey_user_step": "原生融合对象接列线图",
+      "onekey_evidence": [
+        {
+          "path": "comp6-可解释性/列线图-Nomogram.ipynb",
+          "cell_index": 5,
+          "cell_type": "code",
+          "cell_source_sha256": "c42169908abb06028462b73dc8d605d4175011600ae1d052ceefe9381d62a997",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.nomogram.nomogram"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp6-可解释性/列线图-Nomogram.ipynb",
+          "cell_index": 8,
+          "cell_type": "code",
+          "cell_source_sha256": "5f13405e596d6ca127dd6697df2c7b1946ca64494c6633dc932214315a8ae717",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.nomogram.risk_nomogram"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step4. 指标汇总.ipynb",
+          "cell_index": 19,
+          "cell_type": "code",
+          "cell_source_sha256": "51eba2cc06298a8bb7525d80407e4e2a9f21166d3121175ef432c7483d5f8f83",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.nomogram.risk_nomogram"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/plotting.py",
+          "line": 241,
+          "entry": "def plot_nomogram"
+        },
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 230,
+          "entry": "class NativeFusionResult"
+        },
+        {
+          "path": "src/ov_radiomics/_types.py",
+          "line": 224,
+          "entry": "class ModelBundle"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "基线图取fusion.model.coef_/intercept_，native ModelBundle无这些属性，融合数值完整不代表图可直接接入。",
+      "priority": "P1",
+      "recommended_action": "适配typed binary Logistic系数到原points算法，不fit；拒绝weighted/multiclass/pipeline，真实native概率与reload测试。",
+      "native_completion_impact": "presentation_bridge_gap"
+    },
+    {
+      "id": "model_metrics",
+      "onekey_user_step": "三任务评价和模型比较",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 63,
+          "cell_type": "code",
+          "cell_source_sha256": "c5fbd77f90a34640f6169c6fa08a8694fb2cc653b8e02926383b135febcb4eaf",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.metrics.analysis_pred_binary"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.metrics.analysis_pred_binary"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 67,
+          "cell_type": "code",
+          "cell_source_sha256": "b962bcd4c7b94936cc8ad876da0e12cf58ab063d0efa240a60db91fc5f922eaf",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.draw_roc"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 73,
+          "cell_type": "code",
+          "cell_source_sha256": "66408a893a605626a815da3608ab1ec0630de1ef2b8b22c94f536076f21a2d90",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.calc_confusion_matrix"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务-多分类.ipynb",
+          "cell_index": 66,
+          "cell_type": "code",
+          "cell_source_sha256": "cc8d6ed681f1646af306e40f326f0db428e8f225d0b553457613d8efb2582fa5",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.draw_roc_per_class"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务-回归.ipynb",
+          "cell_index": 60,
+          "cell_type": "code",
+          "cell_source_sha256": "f353cbf535ab98c92b3ab0f464d01096bcfd780021aae201877502f7849703ad",
+          "visible_function_symbols": [
+            "sklearn.metrics.mean_squared_error"
+          ],
+          "visible_import_symbols": [
+            "sklearn.metrics.mean_squared_error"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 314,
+          "entry": "def evaluate"
+        },
+        {
+          "path": "src/ov_radiomics/plotting.py",
+          "line": 29,
+          "entry": "def plot_roc"
+        },
+        {
+          "path": "docs/evaluation-native.md",
+          "line": 4,
+          "entry": "macro"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "原生三任务指标与患者评价已有；DeLong/DCA/H-L保持binary语义，队列与来源保留。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "cv_plot_multitask",
+      "onekey_user_step": "三任务CV表接通用比较图",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 59,
+          "cell_type": "code",
+          "cell_source_sha256": "e058f3875c14b9a626e7bb41e66139cd7f9d32ed6992b396919b89e55774dbc4",
+          "visible_function_symbols": [
+            "seaborn.boxplot"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务-回归.ipynb",
+          "cell_index": 56,
+          "cell_type": "code",
+          "cell_source_sha256": "4bb9e35ef3fca97ab178eb005d5b07b23c2d7015282d1f6dea2ce429268f4a54",
+          "visible_function_symbols": [
+            "seaborn.boxplot"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/plotting.py",
+          "line": 163,
+          "entry": "def plot_cv_results"
+        },
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 56,
+          "entry": "'macro_ovr_auc'"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "图硬编码auc列与0..1轴，native multi/reg为macro_ovr_auc/rmse；不能称三任务CV图完整。",
+      "priority": "P1",
+      "recommended_action": "小修可增加显式metric/task、轴和方向标签，保留binary默认；不改拟合。",
+      "native_completion_impact": "presentation_bridge_gap"
+    },
+    {
+      "id": "calibration",
+      "onekey_user_step": "校准曲线与拟合校准器",
+      "onekey_evidence": [
+        {
+          "path": "comp8-Modules/指标汇总.ipynb",
+          "cell_index": 1,
+          "cell_type": "code",
+          "cell_source_sha256": "b68afd792e733cbdfe12216e231091a72150ed3613de939008ac5ce7617583be",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.draw_calibration"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.draw_calibration"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol1. 传统组学-单中心-临床/Step4. 指标汇总.ipynb",
+          "cell_index": 8,
+          "cell_type": "code",
+          "cell_source_sha256": "ca8f768b059d1304ea114a83bce925fa9a2f6fe405d7e7d0a742f018daf299f4",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.draw_calibration"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.draw_calibration"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/plotting.py",
+          "line": 50,
+          "entry": "def plot_calibration"
+        },
+        {
+          "path": "docs/support-matrix.md",
+          "line": 16,
+          "entry": "Calibration curves do not claim fitted recalibration"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "原生分箱曲线已有，不等于拟合Platt/isotonic；原计划词语不自行扩成未冻结算法。",
+      "priority": "P2",
+      "recommended_action": "明确曲线与recalibrator；若需要后者先固定定义和grouped协议。",
+      "native_completion_impact": "requirement_semantics_clarification"
+    },
+    {
+      "id": "binary_secondary_metrics",
+      "onekey_user_step": "DeLong/DCA/H-L",
+      "onekey_evidence": [
+        {
+          "path": "comp8-Modules/指标汇总.ipynb",
+          "cell_index": 1,
+          "cell_type": "code",
+          "cell_source_sha256": "b68afd792e733cbdfe12216e231091a72150ed3613de939008ac5ce7617583be",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.delong.delong_roc_test"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.delong.delong_roc_test"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp8-Modules/指标汇总.ipynb",
+          "cell_index": 1,
+          "cell_type": "code",
+          "cell_source_sha256": "b68afd792e733cbdfe12216e231091a72150ed3613de939008ac5ce7617583be",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.stats.hosmer_lemeshow_test"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/metrics.py",
+          "line": 60,
+          "entry": "def delong_test"
+        },
+        {
+          "path": "src/ov_radiomics/metrics.py",
+          "line": 69,
+          "entry": "def decision_curve"
+        },
+        {
+          "path": "src/ov_radiomics/metrics.py",
+          "line": 90,
+          "entry": "def hosmer_lemeshow"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "原生二分类统计、CDF/分位数/bins/bootstrap已有；不包括NRI/IDI。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "nri_idi",
+      "onekey_user_step": "额外再分类指标",
+      "onekey_evidence": [
+        {
+          "path": "comp8-Modules/指标汇总.ipynb",
+          "cell_index": 1,
+          "cell_type": "code",
+          "cell_source_sha256": "b68afd792e733cbdfe12216e231091a72150ed3613de939008ac5ce7617583be",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.metrics.NRI"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.metrics.NRI"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp8-Modules/指标汇总.ipynb",
+          "cell_index": 1,
+          "cell_type": "code",
+          "cell_source_sha256": "b68afd792e733cbdfe12216e231091a72150ed3613de939008ac5ce7617583be",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.metrics.IDI"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.metrics.IDI"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "docs/support-matrix.md",
+          "line": 61,
+          "entry": "NRI/IDI"
+        }
+      ],
+      "status": "显式暂缓",
+      "gap_impact": "原用户明确暂缓；可见菜单不会扩大范围。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "explicitly_deferred"
+    },
+    {
+      "id": "external_center_validation",
+      "onekey_user_step": "中心留出/分中心/外部验证",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务-ICC以及多中心.ipynb",
+          "cell_index": 36,
+          "cell_type": "code",
+          "cell_source_sha256": "662a2552ed1d06b40b3a71525bbfb228d56025326da0311ab31007cc3a83640a",
+          "visible_function_symbols": [
+            "train_data.drop",
+            "train_data.reset_index"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step0.生成数据划分.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "e749a23cd28700d1d8f6e5f72b078c735f6ea0b8a9194f2cb51babfaeb2c88ba",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp2.split_dataset4sol"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp2.split_dataset4sol"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/split.py",
+          "line": 74,
+          "entry": "def center_holdout"
+        },
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 299,
+          "entry": "def _center_tables"
+        },
+        {
+          "path": "crates/radiomics-cli/src/workflow_commands/evaluate.rs",
+          "line": 39,
+          "entry": "by_center"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "本包patient-group centerholdout/per-center native metrics、多external无标签预测已有；不能拆已聚合跨中心patient分数。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "icc_numeric",
+      "onekey_user_step": "读者重复性ICC",
+      "onekey_evidence": [
+        {
+          "path": "comp8-Modules/ICC特征筛选.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "e62dcc601bfc7330c6c72a343e6d14ed43a2122d4167342563ccf5da9eadd102",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.icc_filter_features"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.icc_filter_features"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务-ICC以及多中心.ipynb",
+          "cell_index": 11,
+          "cell_type": "code",
+          "cell_source_sha256": "014e457b370cb675d6528da699ef836316ba2d313c6e41d7a5ae9a4cb7604c97",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.icc_filter_features"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.icc_filter_features"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_clinical.py",
+          "line": 125,
+          "entry": "def icc"
+        },
+        {
+          "path": "docs/reliability-native.md",
+          "line": 12,
+          "entry": "ICC(2,1)"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "原生明确ICC(2,1)/(3,1)+CI和平衡完整矩阵；Onekey类型/缺失定义不能由阈值函数名推断。",
+      "priority": "P2",
+      "recommended_action": "每次指明类型和subject×reader矩阵。",
+      "native_completion_impact": "existing_scope_met"
+    },
+    {
+      "id": "icc_table_workflow",
+      "onekey_user_step": "多reader表批量对齐、ICC筛列",
+      "onekey_evidence": [
+        {
+          "path": "comp8-Modules/ICC特征筛选.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "e62dcc601bfc7330c6c72a343e6d14ed43a2122d4167342563ccf5da9eadd102",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.icc_filter_features"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.icc_filter_features"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务-ICC以及多中心.ipynb",
+          "cell_index": 10,
+          "cell_type": "code",
+          "cell_source_sha256": "a5d8a2c2101c4bad617e55d01fcaf40baeaed536c8a576da312888b977f98b10",
+          "visible_function_symbols": [
+            "icc.append"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_clinical.py",
+          "line": 125,
+          "entry": "def icc"
+        },
+        {
+          "path": "docs/reliability-native.md",
+          "line": 3,
+          "entry": "complete"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "原生ICC算法有，但没有统一多reader FeatureTable→按特征ICC→筛选审计表便利接口。 docs/reliability-native声称adapter校验subject/reader ID，但Python入口只收matrix无ID，当前不能证明这些身份唯一。",
+      "priority": "P2",
+      "recommended_action": "若补只做ID/reader对齐+同一ICC调用+类型阈值记录，不重写数学。 修正adapter身份校验的文档措辞，明确调用者责任。",
+      "native_completion_impact": "workflow_convenience_gap"
+    },
+    {
+      "id": "batch_correction",
+      "onekey_user_step": "ComBat",
+      "onekey_evidence": [
+        {
+          "path": "comp8-Modules/Combat批次矫正.ipynb",
+          "cell_index": 2,
+          "cell_type": "code",
+          "cell_source_sha256": "f9dd2aef5912d3f6f5347ebf03340acd3c963225f84d5783747cfc94064ab2e1",
+          "visible_function_symbols": [
+            "neuroCombat.neuroCombat"
+          ],
+          "visible_import_symbols": [
+            "neuroCombat.neuroCombat"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "docs/support-matrix.md",
+          "line": 61,
+          "entry": "ComBat"
+        }
+      ],
+      "status": "显式暂缓",
+      "gap_impact": "中心holdout、分中心评价和batch并行不等于完成batch correction。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "explicitly_deferred"
+    },
+    {
+      "id": "embedding_exploration",
+      "onekey_user_step": "既有特征降维图",
+      "onekey_evidence": [
+        {
+          "path": "comp6-可解释性/生境、病理特征-降维可视化.ipynb",
+          "cell_index": 8,
+          "cell_type": "code",
+          "cell_source_sha256": "c652e0194e637ab9127afcebf623051642e3f0880eed3fe9aed1e32971f645f3",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.analysis_features"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.components.comp1.analysis_features"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/plotting.py",
+          "line": 206,
+          "entry": "def plot_embedding"
+        }
+      ],
+      "status": "仅可选后端",
+      "gap_impact": "plot_embedding内部sklearn；探索图非原生内核或验证指标。",
+      "priority": "P3",
+      "recommended_action": "标exploratory+optional，不在native-only依赖缺失时宣称可用。",
+      "native_completion_impact": "optional_only"
+    },
+    {
+      "id": "shap_importance",
+      "onekey_user_step": "权重/SHAP解释",
+      "onekey_evidence": [
+        {
+          "path": "comp6-可解释性/机器学习-特征重要性及公式.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "187cd8697830989a94c74a6d9f18bce68d0cae3cea9203c8cab5ae928463d258",
+          "visible_function_symbols": [
+            "onekey_algo.custom.components.comp1.plot_feature_importance"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp6-可解释性/机器学习-SHAP value.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "7ed6a14d4506d257ecef8e60e8e74192ac6d23bbbc0de774bc7ee3c230092de6",
+          "visible_function_symbols": [
+            "onekey_algo.custom.viz.shap_clf.get_shap_value"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.viz.shap_clf.get_shap_value"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp6-可解释性/机器学习-SHAP value.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "7ed6a14d4506d257ecef8e60e8e74192ac6d23bbbc0de774bc7ee3c230092de6",
+          "visible_function_symbols": [
+            "shap.plots.beeswarm"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/plotting.py",
+          "line": 155,
+          "entry": "def plot_feature_weights"
+        },
+        {
+          "path": "docs/support-matrix.md",
+          "line": 22,
+          "entry": "Optional external adapters"
+        }
+      ],
+      "status": "部分",
+      "gap_impact": "可画用户提供权重；缺通用native importance/SHAP适配，原计划未承诺SHAP。",
+      "priority": "P3",
+      "recommended_action": "区分外部SHAP和已拟合系数图；不自行增算法/依赖。",
+      "native_completion_impact": "outside_declared_native_scope"
+    },
+    {
+      "id": "survival",
+      "onekey_user_step": "Cox/KM/生存列线图",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1.Lasso-Cox生存分析-多中心.ipynb",
+          "cell_index": 32,
+          "cell_type": "code",
+          "cell_source_sha256": "99c66a589ecb69f1f916626f27fbab95bf5ac9643f99b1b4de2a051f41282ddc",
+          "visible_function_symbols": [
+            "lifelines.CoxPHFitter"
+          ],
+          "visible_import_symbols": [
+            "lifelines.CoxPHFitter"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1.Lasso-Cox生存分析-多中心.ipynb",
+          "cell_index": 36,
+          "cell_type": "code",
+          "cell_source_sha256": "a0e41b53a8328ba96460377c7243447062a7bd2f5c9b57c2d9df5a35fa694a49",
+          "visible_function_symbols": [
+            "lifelines.KaplanMeierFitter"
+          ],
+          "visible_import_symbols": [
+            "lifelines.KaplanMeierFitter"
+          ],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "docs/support-matrix.md",
+          "line": 61,
+          "entry": "complex survival"
+        }
+      ],
+      "status": "显式暂缓",
+      "gap_impact": "三任务不含生存；Logistic nomogram不替代生存模型。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "explicitly_deferred"
+    },
+    {
+      "id": "deep_mil",
+      "onekey_user_step": "Transformer/MIL深度融合",
+      "onekey_evidence": [
+        {
+          "path": "comp3-融合/Module1. Transformer融合.ipynb",
+          "cell_index": 1,
+          "cell_type": "code",
+          "cell_source_sha256": "a92df5b71885a168df614e02d1b72e85cadc61df9afa3dbe0167b37bc845076e",
+          "visible_function_symbols": [
+            "onekey_algo.fusion.MultiTransformer.run_model.train_categorical_model"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.fusion.MultiTransformer.run_model.train_categorical_model"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp3-融合/Module4. 多实例学习特征聚合.ipynb",
+          "cell_index": 3,
+          "cell_type": "code",
+          "cell_source_sha256": "2e4e20d7ce40888f1d04c669df86edc8ba82cda147476c661aaa82954c2b764a",
+          "visible_function_symbols": [
+            "onekey_algo.custom.utils.key2.key2histogram"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp3-融合/Module4. 多实例学习特征聚合.ipynb",
+          "cell_index": 5,
+          "cell_type": "code",
+          "cell_source_sha256": "734230e5847e7e57ec55f4a2c6c2ac24a9fbc6d9a3826051aaa5bdd00bcbaa23",
+          "visible_function_symbols": [
+            "onekey_algo.custom.utils.key2.key2tfidf"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "docs/support-matrix.md",
+          "line": 61,
+          "entry": "deep training"
+        },
+        {
+          "path": "docs/pathology-aggregate.md",
+          "line": 25,
+          "entry": "Two explicit aggregation stages"
+        }
+      ],
+      "status": "显式暂缓",
+      "gap_impact": "轻量tile→slide→patient聚合不等于MIL/Transformer，TFIDF/直方图也不是默认等价算法。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "explicitly_deferred"
+    },
+    {
+      "id": "persistence",
+      "onekey_user_step": "保存模型/预测与复用",
+      "onekey_evidence": [
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 61,
+          "cell_type": "code",
+          "cell_source_sha256": "85a33dfb3f8ba33968e4d68d9466434d34f6e46a55e7a3e4ce870f4375f9695c",
+          "visible_function_symbols": [
+            "joblib.dump"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        },
+        {
+          "path": "comp9-Solutions/sol2. 传统组学-多中心 -临床 -带模型调参/Step1. Radiomics.ipynb",
+          "cell_index": 60,
+          "cell_type": "code",
+          "cell_source_sha256": "98c598ad0901ff97719df0ab02f430fd9e08d0e4ea469664d8d881dbb758aa51",
+          "visible_function_symbols": [
+            "onekey_algo.custom.encrypt.security.dump_onekey"
+          ],
+          "visible_import_symbols": [
+            "onekey_algo.custom.encrypt.security.dump_onekey"
+          ],
+          "import_without_call": false
+        },
+        {
+          "path": "comp1-传统组学/Comp1传统组学任务.ipynb",
+          "cell_index": 77,
+          "cell_type": "code",
+          "cell_source_sha256": "f2a2347404344c19ebd78c4e0bec787e7eb1033861d7062e951895b8068515a1",
+          "visible_function_symbols": [
+            "result_test.to_csv",
+            "result_train.to_csv"
+          ],
+          "visible_import_symbols": [],
+          "import_without_call": false
+        }
+      ],
+      "current_package": [
+        {
+          "path": "src/ov_radiomics/_native_learning.py",
+          "line": 79,
+          "entry": "def save"
+        },
+        {
+          "path": "src/ov_radiomics/_types.py",
+          "line": 235,
+          "entry": "def load"
+        },
+        {
+          "path": "src/ov_radiomics/_types.py",
+          "line": 255,
+          "entry": "def predict_study"
+        }
+      ],
+      "status": "等效",
+      "gap_impact": "原生.rad独立加载；不兼容/解密Onekey加密模型或复制joblib内部状态。",
+      "priority": "none",
+      "recommended_action": "保持当前定义与边界。",
+      "native_completion_impact": "existing_scope_met"
+    }
+  ],
+  "follow_up_not_in_baseline": [
+    {
+      "id": "native_fusion_nomogram",
+      "status": "Root reports post-baseline typed binary Logistic nomogram bridge implemented; tests pending at audit cutoff. This audit has not accepted or executed it.",
+      "verification": "Attach Root commit/test evidence; never generalize this fix to other plots."
+    }
+  ]
+}
