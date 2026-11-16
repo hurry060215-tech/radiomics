@@ -544,9 +544,21 @@ fn entropy(probabilities: impl Iterator<Item = f64>) -> f64 {
         .map(|p| p * (p + f64::EPSILON).log2())
         .sum::<f64>()
 }
+// Keep a fixed reduction tree for the frozen compatibility profile. Pairwise
+// summation is not exact summation; see the separate mathematical audit.
+fn pairwise_sum(values: &[f64]) -> f64 {
+    match values {
+        [] => 0.,
+        [value] => *value,
+        _ => {
+            let middle = values.len() / 2;
+            pairwise_sum(&values[..middle]) + pairwise_sum(&values[middle..])
+        }
+    }
+}
 fn first_order(values: &[f64], discrete: &DiscretizedImage, shift: f64) -> BTreeMap<String, f64> {
     let n = values.len() as f64;
-    let mean = values.iter().sum::<f64>() / n;
+    let mean = pairwise_sum(values) / n;
     let moments = |p: i32| values.iter().map(|v| (v - mean).powi(p)).sum::<f64>() / n;
     let variance = moments(2);
     let energy = values.iter().map(|v| (v + shift).powi(2)).sum::<f64>();
