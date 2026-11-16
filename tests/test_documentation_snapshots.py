@@ -123,3 +123,31 @@ def test_a_moved_tag_cannot_replace_a_published_snapshot(repository, tmp_path):
     git(root, "tag", "--force", "v0.1.0")
     with pytest.raises(ValueError, match="moved tag"):
         snapshots.build(root, output=tmp_path / "replacement", published_ref="gh-pages")
+
+
+def test_archives_preserve_lf_blob_bytes_when_checkout_autocrlf_is_enabled(repository, tmp_path):
+    root, commit, calls = repository
+    commit("initial source")
+    git(root, "config", "core.autocrlf", "true")
+    original = {
+        "v0.1.0/index.html": b"<html>\nrelease\n</html>\n",
+        "v0.1.0/_static/site.css": b"body {\n  color: black;\n}\n",
+        "v0.1.0/_sources/guide.md.txt": b"# Guide\n\nOriginal LF bytes.\n",
+    }
+    for relative, data in original.items():
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+    (root / "publication.json").write_bytes(b'{"releases": {}}\n')
+    git(root, "-c", "core.autocrlf=false", "add", ".")
+    git(root, "commit", "--quiet", "-m", "Publish exact LF artifacts")
+    for relative, data in original.items():
+        stored = subprocess.check_output(["git", "show", "HEAD:" + relative], cwd=root)
+        assert stored == data
+    with snapshots.source_at(root, "HEAD") as archived_source:
+        for relative, data in original.items():
+            assert (archived_source / relative).read_bytes() == data
+    restored = tmp_path / "restored"
+    snapshots.restore_published(root, restored, "HEAD", restore_latest=False)
+    for relative, data in original.items():
+        assert (restored / relative).read_bytes() == data

@@ -63,7 +63,7 @@ def extract_files(data, destination, selected=lambda name: True):
 def source_at(root, ref):
     with tempfile.TemporaryDirectory(prefix="radiomics-doc-source-") as directory:
         source = Path(directory)
-        extract_files(git(root, "archive", ref), source)
+        extract_files(git(root, "-c", "core.autocrlf=false", "archive", ref), source)
         yield source
 
 
@@ -127,7 +127,9 @@ def restore_published(root, output, published_ref, restore_latest):
             restore_latest and metadata.get("latest_revision") and top == "latest"
         )
 
-    extract_files(git(root, "archive", published_ref), output, selected)
+    extract_files(
+        git(root, "-c", "core.autocrlf=false", "archive", published_ref), output, selected
+    )
     return metadata
 
 
