@@ -84,3 +84,20 @@ The accepted run's external reports have these SHA256 identities:
 The raw reports include platform, CPU, numerical dependency versions, native
 binary SHA256, implementation identity, frozen reference SHA256 and all rounds.
 They are diagnostic evidence, not a release or cross-platform support claim.
+
+## Clean-publication base update
+
+The branch was subsequently rebased onto the accepted public-tree cleanup
+`9e90b10`. The measured implementation above was preserved without changes to
+the performance code; the original measurements, source identities and report
+hashes were not rewritten. A fresh wheel was rebuilt so its README metadata
+also reflects the clean publication base. This is a rebuilt artifact, not the
+wheel used for the diagnostic, and no new performance result is inferred from it.
+
+The clean-base wheel SHA256 is
+`92505ef4b20f9babd77b1497255f1b3ce289b654b341c0cc9044bfb4a8e4a6cd`.
+Scanning every member, including binary payload and metadata, found no forbidden
+publication tokens. Installing it into the isolated environment and running the
+full test suite gave **256 passed, 5 skipped, 1 xfailed**; the two additional
+passed tests come from the publication cleanup. Existing assertion and fixture
+bytes remain unchanged by this buffer optimization.
