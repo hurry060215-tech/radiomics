@@ -8,4 +8,4 @@ version: 0.1.0
 repository-code: "https://github.com/hurry060215-tech/radiomics"
 url: "https://hurry060215-tech.github.io/radiomics/"
 license: MIT
-# date-released: Leave unset until the release date is confirmed.
+date-released: 2026-11-16
