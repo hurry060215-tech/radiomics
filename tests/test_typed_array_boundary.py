@@ -2,6 +2,8 @@
 import gc
 import json
 from pathlib import Path
+import subprocess
+import sys
 
 import numpy as np
 import pytest
@@ -119,3 +121,57 @@ def test_diagnostic_observes_owned_path_without_disabling_serializer_guard(monke
     assert types.ImageVolume.to_dict is original_serializer
     assert any(event['kind']=='native_owned_constructor' for event in events)
     assert any(event['kind']=='native_owned_extract' for event in events)
+
+
+def test_standalone_typed_entry_snapshots_before_releasing_gil():
+    # Exercise only the repaired owned path. The subprocess bounds any failure
+    # and restores its temporary GIL switch interval; no old unsafe race is run.
+    code = '''
+import json, sys, threading
+import numpy as np
+import ov_radiomics as rad
+from ov_radiomics._backend import resolve_backend
+native=resolve_backend('rust')
+config=dict(profile='python_golden_v1',discretization=dict(method='fixed_width',width=1),
+    aggregation='direction_mean',gldm_alpha=0,voxel_array_shift=0)
+geometry=rad.image.from_array(np.ones((1,1,1)),spatial_unit='mm').geometry
+def parameters(shape):
+    current={**geometry,'shape':list(reversed(shape))}
+    return json.dumps(dict(image_geometry=current,mask_geometry=current,
+        config=config,roi_label=1,families=['firstorder'],intensity_mask=None))
+native.array_features_typed(np.ones((1,1,1)),np.ones((1,1,1),dtype=np.uint32),parameters((1,1,1)))
+results=[]
+for _ in range(3):
+    image=np.ones((80,80,80),dtype=np.float64)
+    mask=np.ones(image.shape,dtype=np.uint32)
+    encoded=parameters(image.shape)
+    go,mutated=threading.Event(),threading.Event()
+    def change():
+        go.wait()
+        image.fill(9.)
+        mutated.set()
+    old_interval=sys.getswitchinterval()
+    sys.setswitchinterval(1000.)
+    writer=threading.Thread(target=change,daemon=True)
+    try:
+        writer.start()
+        # With the long Python switch interval, the waiting writer first runs
+        # when the native method detaches, after its owned snapshots exist.
+        go.set()
+        result=json.loads(native.array_features_typed(image,mask,encoded))
+        changed_during_native=mutated.is_set()
+    finally:
+        go.set()
+        writer.join(timeout=10)
+        sys.setswitchinterval(old_interval)
+    assert not writer.is_alive()
+    assert changed_during_native
+    assert np.all(image==9.)
+    assert result['original_firstorder_Mean']==1.,result
+    results.append(dict(changed_during_native=changed_during_native,mean=result['original_firstorder_Mean']))
+print(json.dumps(results))
+'''
+    result = subprocess.run([sys.executable, '-c', code], capture_output=True,
+        text=True, timeout=30)
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout) == [dict(changed_during_native=True, mean=1.)]*3
