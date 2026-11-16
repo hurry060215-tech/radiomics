@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import re
+import subprocess
 from urllib.parse import quote
 
 
@@ -30,8 +31,19 @@ PAGES = (
 LINK = re.compile(r'(?P<head>\!?\[[^\]\n]*\]\()(?P<target>[^)\s]+)(?P<tail>\))')
 
 
-def build(root=ROOT):
+def source_revision(root):
+    """Pin source links to this checkout, never an enclosing repository."""
+    if not (root / '.git').exists():
+        return 'main'
+    result = subprocess.run(['git','rev-parse','HEAD'], cwd=root,
+                            capture_output=True, text=True, check=False)
+    revision = result.stdout.strip()
+    return revision if result.returncode == 0 and re.fullmatch(r'[0-9a-f]{40,64}',revision) else 'main'
+
+
+def build(root=ROOT, source_ref=None):
     root = Path(root).resolve()
+    source_ref = source_revision(root) if source_ref is None else source_ref
     docs, website = root / 'docs', root / 'website'
     # Base sdists omit the executed public CT notebook's NC-derived image.
     # Recreate its code-only source, without executing/downloading anything.
@@ -67,7 +79,9 @@ def build(root=ROOT):
             elif resolved.is_relative_to(website):
                 href = Path(os.path.relpath(resolved, target.parent)).as_posix()
             elif resolved.is_relative_to(root):
-                href = 'https://github.com/hurry060215-tech/radiomics/blob/main/' + quote(resolved.relative_to(root).as_posix())
+                href = ('https://github.com/hurry060215-tech/radiomics/blob/'
+                        + quote(source_ref,safe='') + '/'
+                        + quote(resolved.relative_to(root).as_posix()))
             else:
                 raise ValueError('A relative documentation link escapes the repository: ' + str(source) + ': ' + href)
             return match['head'] + href + (marker + fragment if marker else '') + match['tail']
@@ -92,12 +106,13 @@ def build(root=ROOT):
             raise ValueError('Invalid managed source path: ' + name)
         if path.is_file():
             path.unlink()
-    manifest_path.write_bytes((json.dumps({'schema': 1, 'files': records}, indent=2) + '\n').encode())
+    manifest_path.write_bytes((json.dumps({'schema': 1, 'source_ref':source_ref,'files': records}, indent=2) + '\n').encode())
     return records
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=ROOT)
+    parser.add_argument('--source-ref', help='Optional explicit Git source ref for repository links.')
     args = parser.parse_args()
-    print('Prepared', len(build(args.root)), 'reference pages from maintained Markdown sources.')
+    print('Prepared', len(build(args.root,args.source_ref)), 'reference pages from maintained Markdown sources.')
