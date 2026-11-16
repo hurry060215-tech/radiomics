@@ -74,7 +74,8 @@ def test_sample_preserves_custom_volume_dictionary_protocol(override,monkeypatch
     original=rad.ImageVolume.to_dict
     def transformed(value):
         payload=original(value)
-        payload['values']=[2*x for x in payload['values']]
+        if 'values' in payload:  # MaskVolume inherits this class-level method.
+            payload['values']=[2*x for x in payload['values']]
         return payload
     if override=='subclass':
         class CustomImage(rad.ImageVolume):
