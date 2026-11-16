@@ -92,3 +92,9 @@ The accepted candidate passed the complete Python suite: **263 passed, 5 skipped
 compatibility test. Existing assertions, Golden and historical benchmark data
 were preserved. Scanning every candidate wheel member found no forbidden public
 publication tokens, including in its native binary and package metadata.
+
+The subsequent PR-7 strict-Clippy repair was merged after measurement. It only
+uses Rust's automatic Arc dereference for the same borrowed array slice. No
+parallel algorithm, arithmetic or measured evidence was changed. The wheel and
+report identities above remain the actual pre-lint-repair measured artifacts;
+strict workspace Clippy also passed on the final merged source.
