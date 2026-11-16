@@ -8,11 +8,11 @@
 - Replace machine-specific paths in maintained documentation with workspace
   placeholders, add citation and package metadata, and explain license ownership.
 
-## [0.1.0] - 2026-11-XX
+## [0.1.0] - 2026-11-16
 
-This section describes the existing candidate implementation. The release date
-and distribution checksums remain pending until release acceptance; this heading
-does not claim a registry release.
+This section describes the candidate for the `v0.1.0` source tag. Registry
+publication is separate; a source tag and CI artifacts do not claim a PyPI or
+crates.io release.
 
 - Share native computation between Rust core, Python bindings, and an independent
   CLI, with explicit optional Python reference backends.
@@ -34,3 +34,41 @@ does not claim a registry release.
 These entries are grounded in the existing completion audit and repository
 history. Later numerical or performance changes must identify their own source
 revision and acceptance evidence; historical results are not new measurements.
+
+### Distribution acceptance and candidate artifacts
+
+The first acceptance matrix is x86_64 Ubuntu (manylinux2014 wheels) and Windows,
+each with Python 3.9, 3.10, 3.11, and 3.12. macOS and ARM are not accepted targets.
+Each CI wheel artifact and the source artifact carry their own `SHA256SUMS`.
+
+The following local candidates were built from clean source
+`813d5b959040a16aacfded69370f7e831bef21dd`, before this summary/date-only update:
+
+| Candidate | Bytes | SHA256 |
+|---|---:|---|
+| `ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl` | 3724921 | `96b8fffb2ed7369aa9e126b45b9238c1c5f9ffd7eac277c2bb6e452bfb890ce3` |
+| `ov_radiomics-0.1.0.tar.gz` | 1897952 | `50ff87872139610417789f057bab9dfb79ff5e3653b994e2f6fd766f45d0e894` |
+
+The release wheel was compiled with `--release --locked` in a previously absent
+target directory and installed into a new virtual environment without system
+site packages. The backend reported `metrics_backend: rust`; the version,
+cancellation, extraction, and split-plan checks passed (13 tests). The complete
+installed-wheel suite passed 257 tests with 5 optional-dependency skips and no
+xfail. A final clean-source wheel rebuild passed the same 13 focused checks.
+
+The original source archive was unpacked outside Git and installed with
+`pip install .` in another new environment. The two acceptance modules were
+copied to a separate directory containing no package source and passed all
+10 tests against the installed native backend. Cargo naturally removed 16
+unused CLI-only lock nodes in that unpacked artifact; every retained dependency
+identity and checksum was verified unchanged, as was the repository lockfile.
+
+These hashes identify the exact accepted candidates above. A source archive
+containing this changelog has a different digest; its generated CI checksum
+manifest is the identity of that later artifact. No archive hash is represented
+as a checksum of an archive containing its own checksum.
+
+The compatibility repair returns Mean 0.0 for the cancellation regression;
+the independent mathematical mean remains 0.5. Historical benchmark v2 data
+remain unchanged and predate that repair. Buffer and parallel optimizations are
+separate PRs and are not included in this release-candidate acceptance.
