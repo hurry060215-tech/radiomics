@@ -35,6 +35,13 @@ python -c "import ov_radiomics as rad; print(rad.backend_info())"
 
 Source builds require Rust **1.85+** and a platform C/C++ linker. A prebuilt Windows/Linux wheel from a successful [Actions run](https://github.com/hurry060215-tech/radiomics/actions/workflows/tests.yml) can be installed directly without Rust. Base native workflows need NumPy, pandas and matplotlib; they do not require sklearn, SciPy, statsmodels, PyRadiomics, SimpleITK, ov, WSIData, Torch or a GPU. Read the [installation guide](website/installation.md) for platform details, wheel downloads and the separately built CLI.
 
+The maintained branch ships the binding README needed for a clean PEP 517
+source build. The immutable `v0.1.0` Git tag/source archive predates that metadata
+repair: run `python tools/package_native.py --output artifacts/tag-source-assets`
+before `python -m pip install .` when building that tag. Prepared installation
+sdists already contain those assets; a GitHub source archive is not that
+prepared sdist. See the installation guide's source-tag prerequisite.
+
 ## Start with an executed tutorial
 
 ```bash

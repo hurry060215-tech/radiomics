@@ -1,0 +1,15 @@
+exclude: >-
+  (?x)^(
+    src/ov_radiomics/_reference[^/]*\.py|
+    golden/.*|
+    benchmarks/(v2|results)/.*|
+    docs/.*-data(?:-redacted)?\.json|
+    website/.*execution.*\.json
+  )$
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.6
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
+        args: [--check]

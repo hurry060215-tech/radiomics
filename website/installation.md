@@ -50,6 +50,21 @@ python -c "import ov_radiomics as rad; print(rad.__version__); print(rad.backend
 python -m pip install '.[reference,image]'
 ```
 
+## 冻结源码 tag 的构建前置
+
+当前维护分支已提交 PEP 517 元数据所需的 binding README，可按上面的裸源码步骤
+安装。不可变的 `v0.1.0` Git tag／GitHub 源码归档早于这项修复；构建该 tag 时，
+先从其根目录运行自带的准备工具，再安装：
+
+```bash
+python tools/package_native.py --output artifacts/tag-source-assets
+python -m pip install .
+```
+
+准备命令只生成该源码版本的本地打包 assets，不修改 tag 或冻结参考。
+已准备好的安装 sdist 自带所需 assets；GitHub 的源码 zip／tar 归档不能当成该 sdist。
+这里保留历史 tag 的真实前置条件，不改写其文档快照或声称裸 tag 已修复。
+
 ## 独立 CLI
 
 Python wheel 不会自动安装名为 `radiomics` 的命令。下载独立 CLI 产物，或从源码构建：

@@ -1,6 +1,11 @@
 Prepare: python tools/build_website_sources.py
+API: python tools/build_api_sources.py
 Build: python -m sphinx -W --keep-going -b html website website/_build/html
 Preview: python -m http.server 8765 --directory website/_build/html
 GitHub Pages: https://hurry060215-tech.github.io/radiomics/
 PR: preview only. Main pushes or explicit maintainer workflow dispatches publish allowed branches.
 Tutorial execution is separate from HTML rendering.
+Snapshots: python tools/build_documentation_snapshots.py --output website/_build/publication
+The release snapshot is pending until its actual Git tag exists.
+Active flat page/resource/source URLs are copied from current latest; root index stays the version selector.
+Removed pages are not restored. publication.json records the flat compatibility inventory and hashes.
