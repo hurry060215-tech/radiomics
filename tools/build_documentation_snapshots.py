@@ -6,11 +6,13 @@ after publication. The output directory must be fresh to exclude stale pages.
 """
 
 import argparse
+import hashlib
 import html
 import io
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tarfile
@@ -140,6 +142,36 @@ def fetch_published(root, remote):
         git(root, "fetch", "--no-tags", remote, branch + ":refs/remotes/" + remote + "/gh-pages")
 
 
+def copy_flat_compatibility(output):
+    """Keep active flat URLs as byte-identical copies of the current latest tree."""
+    latest = output / "latest"
+    reserved = {"index.html", "publication.json", ".nojekyll"}
+    records = {}
+    for source in sorted(latest.rglob("*")):
+        if not source.is_file():
+            continue
+        relative = source.relative_to(latest)
+        name = relative.as_posix()
+        if name in reserved:
+            continue
+        if relative.parts[0] == "latest" or VERSION_DIRECTORY.fullmatch(relative.parts[0]):
+            raise ValueError("A flat compatibility file must not overwrite a version directory.")
+        target = output / relative
+        if target.exists():
+            raise FileExistsError("Flat compatibility requires a fresh root destination: " + name)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
+        records[name] = {
+            "sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+            "bytes": source.stat().st_size,
+        }
+    return {
+        "source_version": "latest",
+        "reserved_root_files": sorted(reserved),
+        "files": records,
+    }
+
+
 def build(
     root=ROOT,
     *,
@@ -190,6 +222,7 @@ def build(
         latest_revision=latest_revision,
         releases=releases,
         release_status=status,
+        flat_compatibility=copy_flat_compatibility(output),
     )
     (output / "publication.json").write_text(
         json.dumps(metadata, indent=2) + "\n", encoding="utf-8"
@@ -200,12 +233,21 @@ def build(
         if release_output.exists()
         else "<li>" + html.escape(release_tag) + ": " + status + "</li>"
     )
+    source_note = (
+        "<p>Building the frozen v0.1.0 Git source needs a packaging-asset "
+        'preparation step. See the <a href="latest/en/installation.html'
+        '#frozen-source-tag-builds">current installation notes</a>.</p>'
+        if release_tag == "v0.1.0" and release_output.exists()
+        else ""
+    )
     index = (
         '<!doctype html><html lang="en"><meta charset="utf-8">'
         "<title>Radiomics documentation</title>"
         '<h1>Radiomics documentation</h1><ul><li><a href="latest/">latest</a></li>'
         + release_link
-        + '</ul><p data-build-revision="'
+        + "</ul>"
+        + source_note
+        + '<p data-build-revision="'
         + html.escape(build_revision)
         + '">Build <code>'
         + html.escape(build_revision[:7])

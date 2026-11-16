@@ -1,6 +1,8 @@
 """Release documentation must preserve the actual tagged source and published bytes."""
 
+import hashlib
 import importlib.util
+import json
 import shutil
 import subprocess
 from pathlib import Path
@@ -151,3 +153,50 @@ def test_archives_preserve_lf_blob_bytes_when_checkout_autocrlf_is_enabled(repos
     snapshots.restore_published(root, restored, "HEAD", restore_latest=False)
     for relative, data in original.items():
         assert (restored / relative).read_bytes() == data
+
+
+def test_flat_compatibility_copies_active_latest_files_without_restoring_old_root(
+    repository, tmp_path, monkeypatch
+):
+    root, commit, calls = repository
+    commit("maintained source")
+    files = {
+        "index.html": b"latest landing page",
+        "installation.html": b"installation with latest canonical",
+        "reference.html": b"public reference",
+        "quickstart.html": b"quick start",
+        "_static/site.css": b"body { color: black; }",
+        "_sources/installation.md.txt": b"# Installation",
+        "publication.json": b"not the root publication metadata",
+        ".nojekyll": b"not the root marker",
+    }
+
+    def build_site(source, destination, version, source_revision, base_url):
+        for relative, data in files.items():
+            path = destination / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+
+    monkeypatch.setattr(snapshots, "build_site", build_site)
+    first = tmp_path / "first-flat"
+    snapshots.build(root, output=first, published_ref="gh-pages")
+    (first / "retired.html").write_bytes(b"obsolete published root")
+    (first / "_sources/retired.md.txt").write_bytes(b"obsolete source")
+    publish(root, first, tmp_path / "published-flat")
+    output = tmp_path / "current-flat"
+    metadata = snapshots.build(root, output=output, published_ref="gh-pages")
+    assert b'<a href="latest/">latest</a>' in (output / "index.html").read_bytes()
+    assert (output / "index.html").read_bytes() != files["index.html"]
+    assert json.loads((output / "publication.json").read_text()) == metadata
+    assert (output / ".nojekyll").read_bytes() == b""
+    copied = set(files) - {"index.html", "publication.json", ".nojekyll"}
+    assert set(metadata["flat_compatibility"]["files"]) == copied
+    for relative in copied:
+        data = (output / "latest" / relative).read_bytes()
+        assert (output / relative).read_bytes() == data == files[relative]
+        assert metadata["flat_compatibility"]["files"][relative] == {
+            "sha256": hashlib.sha256(data).hexdigest(),
+            "bytes": len(data),
+        }
+    assert not (output / "retired.html").exists()
+    assert not (output / "_sources/retired.md.txt").exists()

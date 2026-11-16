@@ -123,6 +123,12 @@ Published documentation uses `latest/` for maintained sources and preserves a
 exist, the release snapshot is pending. Read the Docs, conda-forge and Docker
 publication remain future work.
 
+Current flat documentation URLs remain available as byte-identical copies of
+the corresponding `latest/` files, including assets and source links. The root
+index remains the version selector. Compatibility copies are generated only
+from the current latest tree; removed pages and their sources are not restored.
+`publication.json` records the copied file inventory and SHA256 values.
+
 The GitHub Pages environment may restrict allowed deployment branches or tags.
 An actual tag build can therefore produce a preview while deployment still needs
 the maintainer's environment policy to allow that tag. The documentation workflow

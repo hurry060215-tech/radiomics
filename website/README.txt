@@ -7,3 +7,5 @@ PR: preview only. Main pushes or explicit maintainer workflow dispatches publish
 Tutorial execution is separate from HTML rendering.
 Snapshots: python tools/build_documentation_snapshots.py --output website/_build/publication
 The release snapshot is pending until its actual Git tag exists.
+Active flat page/resource/source URLs are copied from current latest; root index stays the version selector.
+Removed pages are not restored. publication.json records the flat compatibility inventory and hashes.
