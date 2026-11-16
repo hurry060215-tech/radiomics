@@ -239,13 +239,14 @@ Windows 不可变 wheel 的原生环境测试刻意不安装 sklearn、SciPy、s
 
 GitHub Actions 的实际已核实证据为 [run43602824324](https://github.com/hurry060215-tech/radiomics/actions/runs/43602824324)，commit`9732b3a4c9991343d9597bf27dcbe5f7be02b597` 的 **9 jobs success**。其中 Linux Ubuntu24 无 Python、无容器网络环境执行 extract/train/load/predict/evaluate；工作流另配置 Rust tests/Clippy、Windows/Linux wheel/native-only、Python参考和 image 检查。应将“已配置矩阵”与“这个 commit 的实际 job通过”分别理解。
 
-最终运行代码版本 `76808bb468f44a586ebf12db5a9be175b40b010d` 的
+该轮最终运行代码版本 `76808bb468f44a586ebf12db5a9be175b40b010d` 的
 [CI run 43615315617](https://github.com/hurry060215-tech/radiomics/actions/runs/43615315617)
 也已实核九个作业全部成功，覆盖单位元数据、TableReader、Python center
 holdout/apply cohorts/by-center evaluation、身份边界修复与 CLI 分中心评价。
-当前开发分支相对此提交的 `crates/`、`src/`、`pyproject.toml` 没有差异；
-不可变 v4 wheel 另通过71项已安装原生环境检查。后续报告与工具提交的最终 CI
-状态由 PR 检查记录单独给出。正式 PyPI/crates.io 发布、版本号变更和 ov 源码接入未自动执行。
+在该历史验收截点，开发分支相对此提交的 `crates/`、`src/`、`pyproject.toml` 没有差异；
+不可变 v4 wheel 当时通过71项已安装原生环境检查。后续构造器、绘图及诊断改动由
+[独立候选构建与对照](sample-constructor-optimization.md)和相应PR最新CI另行验证，
+不能把旧v4安装记录读成后续源码完全未变。正式 PyPI/crates.io 发布、版本号变更和 ov 源码接入未自动执行。
 
 ## 8. 限制与后续工作
 

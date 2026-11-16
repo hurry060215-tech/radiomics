@@ -6,7 +6,7 @@
 
 **An independent Rust engine for radiomics and lightweight pathology, with Python APIs and a Python-free CLI.**
 
-[中文介绍](README.zh-CN.md) · [Installation](website/installation.md) · [Tutorials](website/tutorials/index.md) · [Your own data](docs/user-guide/file-workflows.md) · [API](docs/api.md) · [Technical report](docs/technical-report.md)
+[Online documentation](https://hurry060215-tech.github.io/radiomics/) · [中文介绍](README.zh-CN.md) · [Installation](website/installation.md) · [Tutorials](website/tutorials/index.md) · [Your own data](docs/user-guide/file-workflows.md) · [API](docs/api.md) · [Technical report](docs/technical-report.md)
 
 ## What can I do with it?
 
@@ -107,4 +107,4 @@ python -m sphinx -W --keep-going -b html website website/_build/html
 python -m http.server 8000 --directory website/_build/html
 ```
 
-See [CONTRIBUTING](CONTRIBUTING.md) for checks and tutorial execution, [security/data handling](SECURITY.md) before reporting private data, and [GitHub issues](https://github.com/hurry060215-tech/radiomics/issues) for reproducible problems. HTML documentation and compiled development artifacts are uploaded by CI; no hosted website or formal registry release is assumed.
+See [CONTRIBUTING](CONTRIBUTING.md) for checks and tutorial execution, [security/data handling](SECURITY.md) before reporting private data, and [GitHub issues](https://github.com/hurry060215-tech/radiomics/issues) for reproducible problems. PRs build documentation previews; main pushes and explicit maintainer dispatches publish [GitHub Pages](https://hurry060215-tech.github.io/radiomics/). Compiled development artifacts remain available from CI; registry publication is a separate action.
