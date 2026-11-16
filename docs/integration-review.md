@@ -75,10 +75,11 @@ derivatives do not replace, rewrite or rerecord the archived originals.
 ## Reproduce a local review build
 
 Use a clean review checkout and a dedicated Python environment. The recorded
-local acceptance uses Python 3.9 and keeps its pinned dependency snapshot in the
-external validation receipt as `dependencies.txt`; use that snapshot when
-reproducing the recorded environment. Other platforms and Python versions need
-their own applicable checks. Rust and Cargo must already be on the path.
+local acceptance uses Windows x86_64 and Python 3.9. Its dependency snapshot is
+[available in this branch](integration-review-requirements-win-py39.txt); it is
+not a cross-platform lock and excludes this unpublished package itself. Other
+platforms can use the declared test/reference extras in the general recipe below,
+and must record their own applicable results. Rust and Cargo must already be on the path.
 Set the Cargo cache and target directory to external working directories rather
 than committing machine-specific paths.
 
@@ -89,12 +90,12 @@ git fetch origin
 git switch --detach origin/integration/review-nine-only
 git rev-parse HEAD
 git status --short
-<review-python> -m pip install -r "<validation-receipt>/dependencies.txt"
+<review-python> -m pip install "maturin>=1.9,<2"
 <review-python> tools/package_native.py --output "<external-validation>/package-assets"
 cargo fmt --all -- --check
 cargo clippy --workspace --all-targets --locked -- -D warnings
 <review-python> -m maturin build --release --locked --out "<external-validation>/wheels"
-<review-python> -m pip install --no-deps --force-reinstall "<built-local-wheel.whl>"
+<review-python> -m pip install --force-reinstall "<built-local-wheel.whl>[test,reference]"
 <review-python> -m pytest --import-mode=importlib -o pythonpath= --basetemp "<external-validation>/pytest-temp" -q
 ```
 
@@ -103,3 +104,20 @@ commits, the built wheel and native hashes, the complete test result, frozen Git
 object verification, and source/wheel publication-content scans. It is separate
 from the historical benchmark evidence. Installing this local review wheel does
 not publish it or establish a package-registry installation promise.
+
+## Published local acceptance record
+
+The [portable acceptance record](integration-review-evidence.json) publishes
+component/source/wheel/native identities, the **280 passed / 5 skipped / zero
+xfail** result, format/strict-Clippy results, and frozen-data checks without
+machine paths. The actual build/test source is `77d5303`; subsequent review
+status/evidence documentation does not change runtime code or test assertions.
+This is a recorded local acceptance, not a claim that an integrated remote CI
+workflow has run. The component PRs retain their separate CI results.
+
+For the recorded Windows/Python 3.9 environment, install the checked-in
+`docs/integration-review-requirements-win-py39.txt` before building, then install
+the locally built wheel with `--no-deps`. The package is intentionally absent
+from that requirements file: no command asks PyPI to resolve an unpublished
+`ov-radiomics`. The general recipe instead installs declared extras from the
+locally built wheel. Both recipes can be run from this public branch.
