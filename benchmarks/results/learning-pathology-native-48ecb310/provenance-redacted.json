@@ -10,15 +10,15 @@
     "cargo_lock_sha256": "ff310d5320801bf8d4a02308e560aa0876f7786521b8101f7334ce099dabc77d",
     "compiled_extensions": {
       "ov_radiomics._native": {
-        "path": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\_native.pyd",
+        "path": "$WORKDIR/radiomics\\src\\ov_radiomics\\_native.pyd",
         "sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c"
       },
       "radiomics._cmatrices": {
-        "path": "D:\\OnekeyPlatfrom50\\onekey_envs\\lib\\site-packages\\radiomics\\_cmatrices.cp39-win_amd64.pyd",
+        "path": "$WORKDIR/reference-env\\lib\\site-packages\\radiomics\\_cmatrices.cp39-win_amd64.pyd",
         "sha256": "d1bb355c67e92a3362fe5e95e69a10facd56c5185e7a0c182a16623e5bf67c29"
       },
       "radiomics._cshape": {
-        "path": "D:\\OnekeyPlatfrom50\\onekey_envs\\lib\\site-packages\\radiomics\\_cshape.cp39-win_amd64.pyd",
+        "path": "$WORKDIR/reference-env\\lib\\site-packages\\radiomics\\_cshape.cp39-win_amd64.pyd",
         "sha256": "8350e1cb3bbf47529ae052fc469ac302b6a2d981a9129da1b53a787fab57cdbe"
       }
     },
@@ -46,7 +46,7 @@
     "platform": "Windows-10-10.0.22631-SP0",
     "power_mode": "unrecorded",
     "python": "3.9.21",
-    "python_executable": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+    "python_executable": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
     "rust_flags": {
       "CARGO_BUILD_TARGET": null,
       "CARGO_ENCODED_RUSTFLAGS": null,

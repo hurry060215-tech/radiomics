@@ -1,7 +1,7 @@
 # Independent native development and acceptance ledger
 
 The milestone closure below is historical, version-scoped delivery evidence.
-The later [Onekey audit](onekey-workflow-gap-audit.md),
+The later [native capability boundaries](native-boundaries.md),
 [resource diagnosis](native-performance-diagnosis.md) and
 [scalar accuracy audit](scalar-accuracy-audit.md) supersede broader readings.
 The new high-dynamic-range numerical compatibility gap remains open; it is not

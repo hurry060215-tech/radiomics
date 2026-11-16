@@ -1,7 +1,7 @@
 # Independent M0–M5 completion audit
 
 This is historical version-scoped delivery evidence. Later
-[workflow](onekey-workflow-gap-audit.md), [resource](native-performance-diagnosis.md)
+[native boundaries](native-boundaries.md), [resource](native-performance-diagnosis.md)
 and [scalar accuracy](scalar-accuracy-audit.md) audits must be consulted for new
 findings. The new high-dynamic-range scalar counterexample is an open
 compatibility/stability limitation, not a passed item in this older audit.

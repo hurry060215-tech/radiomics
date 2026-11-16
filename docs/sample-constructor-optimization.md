@@ -51,7 +51,7 @@
 
 ## 原始记录与限制
 
-完整[原始数据](sample-constructor-optimization-data.json)保留每轮、warmup、worker PID、
+完整[路径脱敏数据](sample-constructor-optimization-data-redacted.json)保留每轮、warmup、worker PID、
 内存footer、输入/包/二进制摘要和前后身份复核。外置运行目录：
 `D:/radiomics-sample-constructor/comparison-v2/`。
 

@@ -1,7 +1,7 @@
 """Four-step synthetic demonstration, including real PyRadiomics extraction.
 
 Run: python examples/demo.py --output examples/output
-No patient data, downloaded data, or Onekey runtime are used.
+No patient data, downloaded data, or external wrapper runtimes are used.
 """
 import argparse
 import json

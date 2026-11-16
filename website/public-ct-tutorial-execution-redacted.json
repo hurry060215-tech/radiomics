@@ -10,7 +10,7 @@
     "revision": "d87fc4d4b29f959cfe26717e454bd3ab5bd50058",
     "status": "M .github/workflows/docs.yml\n M .github/workflows/tests.yml\n M .gitignore\n M README.md\n M docs/learning-native.md\n M pyproject.toml\n M website/README.txt\n M website/conf.py\n M website/index.md\n M website/installation.md\n M website/reference.md\n M website/requirements.txt\n M website/tutorial-execution.json\n M website/tutorials/01_extract.ipynb\n M website/tutorials/02_image_clinical_binary.ipynb\n M website/tutorials/03_multiclass_regression.ipynb\n M website/tutorials/04_regions_delta_habitat.ipynb\n M website/tutorials/05_patch_patient.ipynb\n M website/tutorials/06_embedding_overlay.ipynb\n M website/tutorials/index.md\n?? .github/ISSUE_TEMPLATE/\n?? CONTRIBUTING.md\n?? README.zh-CN.md\n?? SECURITY.md\n?? docs/legacy-python.md\n?? docs/tutorial-execution-v3-historical.json\n?? tools/build_public_ct_notebook.py\n?? tools/build_website_sources.py\n?? website/_static/\n?? website/contributing.md\n?? website/datasets.md\n?? website/quickstart.md\n?? website/tutorials/07_public_ct.ipynb"
   },
-  "python": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+  "python": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
   "runner_sha256": "b501d34ce754ced962d14af1d61c401122be60d07be7abaf2e01c1cfac297d8a",
   "shared_runner_sha256": "1388ec4ad978abf2393c10b498f98ce69969ef70969cf646049c87888f1dbf13",
   "support_sources_sha256": {
@@ -49,7 +49,7 @@
     {
       "notebook": "07_public_ct.ipynb",
       "status": "passed",
-      "input_path": "D:\\OnekeyPlatfrom50\\radiomics\\website\\tutorials\\07_public_ct.ipynb",
+      "input_path": "$WORKDIR/radiomics\\website\\tutorials\\07_public_ct.ipynb",
       "input_sha256": "6d5f2394c352ccc12f806388091e31542596717672206d5f3e8beffe7e57f343",
       "executed_path": "D:\\radiomics-tutorial-validation\\public-ct-execution-v1\\07_public_ct\\07_public_ct.ipynb",
       "executed_sha256": "cba875a9813ccfc881be6ac01f2bbcb051cf09bce777a1e8f691bca354575a13",
@@ -57,7 +57,7 @@
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
-        "TUTORIAL_REPO_ROOT = 'D:\\\\OnekeyPlatfrom50\\\\radiomics'",
+        "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
         "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\public-ct-execution-v1\\\\07_public_ct\\\\artifacts'",
         "TUTORIAL_DATA_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\public-ct-cache'"
       ],
@@ -180,7 +180,7 @@
           "rust_core_version": "0.1.0"
         },
         "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
-        "interpreter": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "interpreter": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "data_kind": "real-public-ct-no-clinical-outcome"
       }
     }

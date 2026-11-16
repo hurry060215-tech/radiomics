@@ -87,8 +87,7 @@ then measure speed, peak memory and numerical error separately. The
 [boundary diagnosis](docs/native-performance-diagnosis.md) identifies repeated
 JSON/object costs in the Python array path. The [scalar accuracy audit](docs/scalar-accuracy-audit.md)
 also records an extreme cancellation case that currently differs from Python;
-neither backend is universally more accurate. See the [Rust decision](docs/rust-backend-decision.md)
-and [Onekey workflow gap audit](docs/onekey-workflow-gap-audit.md) for limits and priorities.
+neither backend is universally more accurate.
 
 A [bounded constructor fix](docs/sample-constructor-optimization.md) removes
 temporary copies before unchanged native validation. A same-binary diagnostic

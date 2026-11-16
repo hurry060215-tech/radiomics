@@ -38,7 +38,7 @@ bundles, reading saved coefficients without fitting. `plot_cv_results` accepts
 binary AUC, multiclass macro OvR AUC and regression RMSE, with an explicit metric
 for generic score tables. These plots need no sklearn/seaborn. Other legacy
 selector-path/Rad-score and learning-curve views retain their stated limits; see
-the [workflow audit](onekey-workflow-gap-audit.md).
+the [native capability boundaries](native-boundaries.md).
 
 ## Legacy Python/reference API below
 

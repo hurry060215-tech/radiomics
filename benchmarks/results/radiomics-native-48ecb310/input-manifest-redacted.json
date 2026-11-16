@@ -331,7 +331,7 @@
       "id": "ibsi_digital_3d",
       "input_sha256": "0abc4d4021dbbdf9a191ffe66369d74b11cc06fbe726d1185a2a50dcd179d43e",
       "license": "CC-BY-4.0 Alex Zwanenburg; original source bytes retained; this performance series is not a new IBSI conformance claim",
-      "original_source": "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\radiomics-benchmark-v2\\golden\\ibsi_digital_v1",
+      "original_source": "$WORKDIR/radiomics-worktrees\\radiomics-benchmark-v2\\golden\\ibsi_digital_v1",
       "present_gray_values": [
         1.0,
         3.0,

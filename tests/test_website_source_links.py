@@ -1,5 +1,6 @@
 """Published PR documentation must link to files in its own source revision."""
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 
@@ -33,3 +34,38 @@ def test_unpacked_source_does_not_borrow_parent_git_identity(tmp_path,monkeypatc
         raise AssertionError('Do not consult a parent repository for archive identity.')
     monkeypatch.setattr(builder.subprocess,'run',unexpected)
     assert builder.source_revision(archive)=='main'
+
+
+FORBIDDEN = (
+    'Onekey', 'onekey', 'OnekeyPlatfrom50',
+    'D:/Onekey', 'D:\\Onekey', 'audit_onekey',
+)
+
+
+def test_public_tree_has_no_alignment_material():
+    root = Path(__file__).resolve().parents[1]
+    test_file = Path(__file__).resolve()
+    offenders = []
+    for path in root.rglob('*'):
+        if not path.is_file() or '.git' in path.parts or '_build' in path.parts:
+            continue
+        # This test necessarily names its forbidden tokens. Build-machine paths
+        # outside the commercial-platform directory are intentionally permitted.
+        if path.resolve() == test_file:
+            continue
+        if path.suffix not in {'.md', '.py', '.toml', '.json', '.txt', '.yml'}:
+            continue
+        text = path.read_text(encoding='utf-8', errors='ignore')
+        for token in FORBIDDEN:
+            if token in text:
+                offenders.append(f'{path.relative_to(root)}: {token}')
+    assert not offenders, offenders
+
+
+def test_public_evidence_manifest_matches_derived_bytes():
+    root = Path(__file__).resolve().parents[1]
+    manifest = json.loads((root / 'docs/public-evidence-manifest.json').read_text())
+    for record in manifest['files']:
+        data = (root / record['public_path']).read_bytes()
+        assert hashlib.sha256(data).hexdigest() == record['public_sha256']
+        assert len(data) == record['public_bytes']

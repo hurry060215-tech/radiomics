@@ -6,7 +6,7 @@
 
 只审Mean、总体Variance与Energy三项，不把结果扩展到全部影像特征、模型或临床效度。使用4个固定2×4小矩阵：普通值、正负大数取消、1e12偏置叠加实际可表示的微小变化、常量7。所有体素选入label1；无预处理、插值、滤波或ROI变化，Energy shift=0。两条路径显式binCount8，避免大正负值的固定bin width产生巨大灰度范围。
 
-原生路径是公开 `ImageSample.extract(..., families=['firstorder'])`，配置 `python_golden_v1`；它计算支持的一阶族，本审计只读取三项。Python路径是公开 `radiomics.firstorder.RadiomicsFirstOrder`，只启用三项，公开3.0.1固定环境，不调用Onekey。直接一阶class不执行高层自动裁剪/重采样；两个后端读取相同ROI和原始数值。
+原生路径是公开 `ImageSample.extract(..., families=['firstorder'])`，配置 `python_golden_v1`；它计算支持的一阶族，本审计只读取三项。Python路径是公开 `radiomics.firstorder.RadiomicsFirstOrder`，只启用三项，公开3.0.1固定环境，不调用外部封装库。直接一阶class不执行高层自动裁剪/重采样；两个后端读取相同ROI和原始数值。
 
 每个输入以 `float.hex()` 保存，worker在调用之前再次逐位核对。参考用 `Fraction.from_float` 精确还原已经输入的二进制浮点数：
 

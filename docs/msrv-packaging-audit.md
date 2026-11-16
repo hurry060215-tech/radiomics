@@ -1,5 +1,7 @@
 # Rust 1.85 and crate packaging audit
 
+<!-- PR-2: replace recorded machine paths with reproducible work-directory placeholders. -->
+
 Audit date: 2026-11-14. Source baseline:
 `cbdbdebbf418681f3e1d215a754e3251ef0083f6`, the independent `research-m3`
 worktree. The main worker owns subsequent shared-manifest and packaging changes;
@@ -30,9 +32,10 @@ claim that older Rust versions work or that a future unlocked graph will work.
 
 ## Toolchain and commands
 
-The isolated repository toolchain directory was
-`D:\OnekeyPlatfrom50\radiomics\.build-tools\rustup`; cache and build directories
-were task-owned locations on E:. Installed minimal toolchain:
+The repository toolchain was isolated; cache and build directories
+were task-owned locations on E:.
+<!-- PR-2: document the isolated toolchain location relative to the workspace. -->
+Installed minimal toolchain:
 
 ```text
 rustc 1.85.0 (4d91de4e4 2025-02-17)
@@ -49,7 +52,7 @@ directory. Actual subsequent `rustup toolchain list`, `cargo +1.85.0 -V`,
 remained `stable-x86_64-pc-windows-msvc` (Rust 1.100.0).
 
 ```powershell
-. D:/OnekeyPlatfrom50/radiomics/tools/windows-rust-env.ps1
+# PR-2: local toolchain setup path omitted pending workspace documentation.
 $env:CARGO_HOME='E:\radiomics-build\cargo'
 $env:CARGO_TARGET_DIR='E:\radiomics-build\target-msrv'
 $env:TEMP='E:\radiomics-build\tmp'

@@ -11,8 +11,8 @@
 /tools/profile_sample_constructor.py text eol=lf
 /tools/audit_scalar_accuracy.py text eol=lf
 /tools/audit_scalar_stable_prototype.py text eol=lf
-/tools/audit_onekey_notebook_symbols.py text eol=lf
 /crates/radiomics-core/examples/profile_native_boundary.rs text eol=lf
 /docs/*diagnosis-data.json text eol=lf
 /docs/sample-constructor-optimization-data.json text eol=lf
-/docs/onekey-workflow-gap-audit.json text eol=lf
+**/*-redacted.json text eol=lf
+/docs/public-evidence-manifest.json text eol=lf

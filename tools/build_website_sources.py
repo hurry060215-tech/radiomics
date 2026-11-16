@@ -24,7 +24,7 @@ PAGES = (
     'technical-report.md', 'radiomics-benchmark-v2-results.md',
     'learning-pathology-benchmark-v2-results.md', 'deployment-benchmark-v2-results.md',
     'python-native.md', 'delivery-index.md',
-    'onekey-workflow-gap-audit.md', 'native-performance-diagnosis.md',
+    'native-boundaries.md', 'public-evidence.md', 'native-performance-diagnosis.md',
     'rust-backend-decision.md', 'scalar-accuracy-audit.md',
     'sample-constructor-optimization.md',
 )

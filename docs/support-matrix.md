@@ -37,8 +37,8 @@ may enter the declared contracts. This does not implement the upstream processin
 
 ## Standards and performance
 
-The [Onekey workflow audit](onekey-workflow-gap-audit.md) separates corresponding
-user steps from hidden implementation claims. The [Rust decision](rust-backend-decision.md)
+The [native capability boundaries](native-boundaries.md) page states the native,
+optional-Python and deferred scope. The [Rust decision](rust-backend-decision.md)
 evaluates speed, peak memory and numerical error separately. A newly frozen
 [scalar audit](scalar-accuracy-audit.md) exposes a high-dynamic-range Mean
 counterexample to universal Python compatibility (Rust0.125/PyRadiomics0 versus

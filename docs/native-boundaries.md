@@ -1,0 +1,112 @@
+# Native capability boundaries
+
+This page describes the public native, optional-Python and deferred scope.
+It complements the [support matrix](support-matrix.md) and [API](api.md).
+Historical acceptance counts apply only to the inputs, versions and contracts
+recorded with those results; they do not establish untested object compatibility.
+
+## 1. Fusion and nomogram rendering
+
+Native `fusion_data` and `fit_fusion` share an identified patient SplitPlan.
+The supported paths include base out-of-fold probabilities, Logistic/softmax
+fusion, explicit probability weighting and portable saved model bundles.
+Clinical inputs can share the same training pipeline and split plan.
+
+`plot_nomogram` accepts typed native binary Logistic fusion results and loaded
+fusion bundles. It reads saved coefficients and intercepts without refitting.
+The existing point-to-probability conversion is retained.
+Weighted fusion, multiclass fusion and ordinary feature pipelines are rejected
+by that native plotting adapter; their successful training does not imply
+nomogram support. Optional Python estimators retain their documented interface.
+
+## 2. Sparse selection, linear scores and probabilities
+
+The Rust sparse-selection implementation and `SparseFit.linear_scores` exist.
+Native selection exposes selected features, univariate results and alpha.
+This does not provide the full legacy selector attribute interface:
+`linear_score()`, `coefficients_`, `lasso_path_` and `lasso_cv_results_`.
+
+Legacy `plot_lasso_path` and `plot_lasso_cv` depend on that legacy state.
+Passing a native selector directly does not establish compatibility.
+The optional Python linear score is a linear combination of selected, scaled
+features from its LASSO fit. It is neither a probability nor an arbitrary
+Logistic model's logit.
+
+Any future native convenience adapter must preserve the fitted scaling,
+feature order and training state. Rendering a path must not silently refit on
+all available data or rename whole-pipeline task scores as legacy MSE curves.
+
+## 3. Learning curves and selection curves
+
+`plot_learning_curve` uses the optional sklearn implementation and stratified
+folds for independent rows. Its current interface has no `groups` argument.
+It is not a native patient-grouped learning-curve implementation.
+
+Native nested cross-validation and a curve across training-set sizes are
+different operations. A grouped learning curve would require identified
+patient subsets, repeated fitting of every preprocessing/selection stage,
+explicit task metrics and a declared repetition scheme.
+That additional algorithm is not implied by existing nested-CV support.
+
+## 4. Task-specific metrics and plotting
+
+Native training reports binary `auc`, multiclass `macro_ovr_auc` or regression
+`rmse` according to the task. Evaluation also retains multiclass macro, micro
+and weighted summaries and regression MAE, RMSE and R-squared.
+
+`plot_cv_results` accepts those task-specific result fields.
+Generic score tables require an explicit metric; an RMSE column cannot be
+relabelled as AUC. Regression plots retain their actual numerical range.
+These rendering paths do not need sklearn or seaborn.
+
+`plot_metrics(metric=...)` similarly needs a metric that matches the supplied
+cohort and result fields. A plotting adapter reads existing results; it does
+not retrain, select a better split or change the saved decision threshold.
+
+## 5. Batch extraction, reliability and center validation
+
+Batch extraction supports its declared outer parallelism, errors and caching.
+Explicit center holdout and evaluation by center are separate supported tasks.
+They do not implement ComBat batch correction, which remains deferred.
+
+The native `icc` API accepts a complete balanced subject-by-reader matrix,
+`ICC(2,1)` or `ICC(3,1)`, and a confidence level, and returns an interval.
+The caller must first align that matrix using actual subject and reader IDs.
+The matrix-only Python entry point cannot verify identities that it never
+receives; complete dimensions do not prove unique subject/reader pairs.
+
+A unified long-table workflow that aligns multiple reader FeatureTables by
+identity, computes per-feature ICC and filters columns is not currently
+provided. Algorithm availability and that convenience workflow are distinct.
+See the [reliability contract](reliability-native.md) for the supported math.
+
+## 6. Image preparation and the declared feature subset
+
+Native image preparation reads full affines and offers explicit spacing or
+reference-grid resampling, nearest-only mask resampling, intensity operations
+and ROI operations under their documented definitions.
+These operations do not silently apply an external wrapper's hidden presets.
+
+Native extraction supports the declared 55 Original intensity/texture features
+and 11 basic-shape features. It does not implement every family exposed by an
+optional image backend. LoG, Wavelet, LBP, N4, registration and other complex
+image-processing additions remain outside the present native scope.
+
+Users can supply previously processed images, masks or feature tables, with
+their processing provenance. Reading such a table does not implement the
+filter or transformation that produced it.
+
+## Reading historical and optional interfaces
+
+The [initial scope](scope.md) records historical optional-Python functionality.
+The [legacy API](legacy-python.md) describes its own estimator objects and
+persistence rather than the native model-bundle contract.
+Native calibration curves and bins do not establish a fitted Platt or isotonic
+recalibrator. SHAP, exploratory dimensionality reduction and other optional
+helpers keep their stated backend and input limits.
+
+Numerical definitions, known limitations and performance are tracked separately
+in the [feature profiles](features-native.md), [scalar audit](scalar-accuracy-audit.md)
+and [benchmark results](radiomics-benchmark-v2-results.md).
+Successful historical tests cannot be transferred to newly supported inputs
+or object types without direct acceptance evidence.

@@ -14,7 +14,7 @@
     "native_python": "E:/radiomics-build/benchmark-v2/native-snapshot-v1/Scripts/python.exe",
     "native_wheel": "E:/radiomics-build/snapshot-native-v2/wheels/ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
     "output": "E:/radiomics-build/benchmark-v2/radiomics-full-v2-60case-2",
-    "plan": "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\radiomics-benchmark-v2\\benchmarks\\v2\\radiomics-plan.json",
+    "plan": "$WORKDIR/radiomics-worktrees\\radiomics-benchmark-v2\\benchmarks\\v2\\radiomics-plan.json",
     "prepare": false,
     "public_ct_directory": null,
     "reference_python": "E:/radiomics-build/golden/env-301/Scripts/python.exe",
@@ -29,10 +29,10 @@
       "environment": {
         "approved_public_revision": "c428a771c8cf682c462162b6babc836150d5d9d6",
         "dependency_binary_files_sha256": {
-          "D:\\OnekeyPlatfrom50\\onekey_envs\\Lib\\site-packages\\SimpleITK\\_SimpleITK.cp39-win_amd64.pyd": "07b6244d029496fbf3b3f2ce7ddf05d968d9b9676401da7a7b191dd8ce0867dc",
-          "D:\\OnekeyPlatfrom50\\onekey_envs\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-          "D:\\OnekeyPlatfrom50\\onekey_envs\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45",
-          "D:\\OnekeyPlatfrom50\\onekey_envs\\Lib\\site-packages\\scipy.libs\\libopenblas_v0.3.27--3aa239bc726cfb0bd8e5330d8d4c15c6.dll": "2ee0262b429173f6fa3569d7b242e696736996210b2152c73fbce0b5d61dcfc1"
+          "$WORKDIR/reference-env\\Lib\\site-packages\\SimpleITK\\_SimpleITK.cp39-win_amd64.pyd": "07b6244d029496fbf3b3f2ce7ddf05d968d9b9676401da7a7b191dd8ce0867dc",
+          "$WORKDIR/reference-env\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+          "$WORKDIR/reference-env\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45",
+          "$WORKDIR/reference-env\\Lib\\site-packages\\scipy.libs\\libopenblas_v0.3.27--3aa239bc726cfb0bd8e5330d8d4c15c6.dll": "2ee0262b429173f6fa3569d7b242e696736996210b2152c73fbce0b5d61dcfc1"
         },
         "effective_extractor_settings": {
           "additionalInfo": true,
@@ -133,7 +133,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "D:\\OnekeyPlatfrom50\\onekey_envs\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/reference-env\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -143,7 +143,7 @@
           },
           {
             "architecture": "Haswell",
-            "filepath": "D:\\OnekeyPlatfrom50\\onekey_envs\\Lib\\site-packages\\scipy.libs\\libopenblas_v0.3.27--3aa239bc726cfb0bd8e5330d8d4c15c6.dll",
+            "filepath": "$WORKDIR/reference-env\\Lib\\site-packages\\scipy.libs\\libopenblas_v0.3.27--3aa239bc726cfb0bd8e5330d8d4c15c6.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -339,15 +339,15 @@
   },
   "native_snapshot": {
     "benchmark_runner": {
-      "path": "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\radiomics-benchmark-v2\\tools\\benchmark_radiomics.py",
+      "path": "$WORKDIR/radiomics-worktrees\\radiomics-benchmark-v2\\tools\\benchmark_radiomics.py",
       "protocol_sha256": "d78392bc729c3754dc8482143a7da92c41f1a1082e3a28a96dbcd4d7d1d3bc39",
       "sha256": "74155e726aef124b2094afcfc5bfd604270ee23c0424aa25b605e633fbff4ac2"
     },
     "native_build": {
       "build_commands": [
         [
-          "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\package_native.py",
+          "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
+          "$WORKDIR/radiomics\\tools\\package_native.py",
           "--output",
           "E:\\radiomics-build\\snapshot-native-v2\\package-assets"
         ],
@@ -360,7 +360,7 @@
           "--locked"
         ],
         [
-          "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+          "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
           "-m",
           "maturin",
           "build",

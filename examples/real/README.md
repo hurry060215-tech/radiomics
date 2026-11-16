@@ -78,7 +78,7 @@ python examples/real/patch_features.py --manifest /your/source-image.csv --coord
 
 ## 本机实际文件验证
 
-[`validation.json`](validation.json) 记录运行命令、源 SHA、实际输出与适用边界；原数据/医学预览在外部目录，没有作为测试数据或源码资产提交。
+[`validation-redacted.json`](validation-redacted.json) 记录运行命令、源 SHA、实际输出与适用边界；原数据/医学预览在外部目录，没有作为测试数据或源码资产提交。
 
 - 冻结公开 PAT1：实际原始NIfTI204×201×60＋GTV-1，0失败，basic27列；ROI125256、mean−46.88272018905282、体素支持域体积358681.451871528mm³；真实最大ROI轴向z=23预览已检查。无结局/队列生成。
 - 本机现成 `scikit-image0.24.0` `data/ihc.png`：实际512×512 RGB8 IHC源图，0失败；真实组织QC比例0.6367225646972656，R均值177.25387954711914，MPP未知。上游说明为 CMMI IHC原图、**No known copyright restrictions**；不把该说明改写成未经确认的CC0，不提交原PNG，不把source组ID称为真实患者。见[上游文档](https://scikit-image.org/docs/0.24.x/api/skimage.data.html#skimage.data.immunohistochemistry)。

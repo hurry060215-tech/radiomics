@@ -17,7 +17,7 @@
       "exit_code": 0,
       "command": [
         "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_l2",
         "--fixtures",
@@ -129,7 +129,7 @@
       "exit_code": 0,
       "command": [
         "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_preencoded",
         "--fixtures",
@@ -216,7 +216,7 @@
       "launcher_pid": 11800,
       "exit_code": 0,
       "command": [
-        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
+        "$WORKDIR/radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
         "--memory-preloaded",
         "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
         "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\00-rust_core\\worker.json"
@@ -281,7 +281,7 @@
       "exit_code": 0,
       "command": [
         "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_preencoded",
         "--fixtures",
@@ -368,7 +368,7 @@
       "launcher_pid": 10912,
       "exit_code": 0,
       "command": [
-        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
+        "$WORKDIR/radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
         "--memory-preloaded",
         "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
         "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\01-rust_core\\worker.json"
@@ -433,7 +433,7 @@
       "exit_code": 0,
       "command": [
         "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_l2",
         "--fixtures",
@@ -544,7 +544,7 @@
       "launcher_pid": 30792,
       "exit_code": 0,
       "command": [
-        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
+        "$WORKDIR/radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
         "--memory-preloaded",
         "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
         "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\02-rust_core\\worker.json"
@@ -609,7 +609,7 @@
       "exit_code": 0,
       "command": [
         "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_l2",
         "--fixtures",
@@ -721,7 +721,7 @@
       "exit_code": 0,
       "command": [
         "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "D:\\OnekeyPlatfrom50\\radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
+        "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_preencoded",
         "--fixtures",

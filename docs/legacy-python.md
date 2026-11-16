@@ -82,7 +82,7 @@ No runtime registration, monkey patching, or changes to OmicVerse are required. 
 - ROC intervals and paired DeLong tests assume independent patients. Native evaluation aggregates predictions to patients before bootstrap by default; complex multicenter/repeated-measure inference is not implemented.
 - Calibration plots do not recalibrate the model. H–L returns its group table and fails when the requested grouping is undefined; a large p-value is not proof of calibration.
 - Binary/regression sparse selection uses squared-loss LASSO; multiclass uses OvR L1 Logistic and a union of selected features. Native alpha grids are tuned within patient-grouped whole pipelines. Legacy Python LASSO remains an explicit optional path. A squared-loss score is not a probability.
-- Native models use documented mean-loss regularization/objectives and convergence checks. External Python models use their named backend parameters. Neither path claims to reproduce Onekey's encrypted model factory.
+- Native models use documented mean-loss regularization/objectives and convergence checks. External Python models use their named backend parameters. Neither path claims to reproduce an external wrapper library's model factory.
 
 ## Reference and validation
 
@@ -98,5 +98,5 @@ python -m pytest -q
 The original implementation in this repository is MIT licensed. External adapters
 call separately licensed libraries. Native algorithms are independently written
 against frozen public specifications/references; they do not incorporate encrypted
-Onekey source. Third-party libraries and licensed reference data retain their own
+external wrapper-library source. Third-party libraries and licensed reference data retain their own
 licenses and attribution.
