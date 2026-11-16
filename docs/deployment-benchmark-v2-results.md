@@ -1,5 +1,7 @@
 # 独立 L5 部署成本证据：snapshot-native-v3
 
+<!-- PR-2: replace recorded machine paths with reproducible work-directory placeholders. -->
+
 本报告只评价两个预声明启动端点、固定构建产物体积，以及一次离线 wheel payload 安装。它不测影像特征、模型或病理算法，不与三个计算套件合并总分，也不计算 CLI/Python 端点之间的“语言加速比”。
 
 ## 固定对象和方法
@@ -46,15 +48,8 @@ python -I -m pip --disable-pip-version-check install --no-index --no-deps --no-c
 
 ## 证据与复现
 
-可核查 [独立报告](../benchmarks/results/deployment-native-45140bff/report.json)、[14条原始观测](../benchmarks/results/deployment-native-45140bff/raw-observations.jsonl)、[单次安装记录](../benchmarks/results/deployment-native-45140bff/payload-install.json) 与 [artifact index](../benchmarks/results/deployment-native-45140bff/artifact-index.json)。外部完整目录为 `E:/radiomics-build/benchmark-v2/deployment-v3-1`，包含 fresh venv 和原始日志；归档不包含可执行构建产物或整个环境。
+可核查 [独立报告](../benchmarks/results/deployment-native-45140bff/report-redacted.json)、[14条原始观测](../benchmarks/results/deployment-native-45140bff/raw-observations.jsonl)、[单次安装记录](../benchmarks/results/deployment-native-45140bff/payload-install.json) 与 [artifact index](../benchmarks/results/deployment-native-45140bff/artifact-index.json)。外部完整目录为 `E:/radiomics-build/benchmark-v2/deployment-v3-1`，包含 fresh venv 和原始日志；归档不包含可执行构建产物或整个环境。
 
-```powershell
-python tools/benchmark_deployment.py `
-  --plan benchmarks/v2/deployment-plan.json `
-  --approved-plan-sha256 d807983caaee9bb95f6046327c014bb9a2b86c6e421e77e96b66e938c0c6bfa6 `
-  --build-manifest E:/radiomics-build/snapshot-native-v3/build-manifest.json `
-  --base-python D:/OnekeyPlatfrom50/onekey_envs/python.exe `
-  --output /fresh/deployment-evidence
-```
+<!-- PR-2: restore the deployment reproduction command with explicit workspace and interpreter locations. -->
 
 重新执行应使用新目录，视为新的独立试验，不能替换本次14条。该受限 L5 证据不自动建立 Linux 启动成本、完整依赖安装成本、算法性能或所有部署门槛；版本、source/receipt、构建大小与工作量限定必须一同保留。

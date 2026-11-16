@@ -1,26 +1,27 @@
 {
-  "schema": "radiomics.independent-public-tabular-execution.v1",
-  "status": "passed",
+  "schema": "radiomics.public-tabular-acceptance.v1",
+  "freeze_commit": "da6ec6b7b8770d9ec8aea664b08c7f116a3b84bc",
   "data_kind": "real-public-tabular-no-clinical-validity",
+  "shared_runner_sha256": "08932ffda86482e6e0a934de99e4733162d7bf95d25cd95e6c2116ec67f68c43",
   "source_bindings": {
-    "tools/build_public_tabular_notebook.py": "43077a7196cb2cc9e170d92ced558f069c917eb31a4d066f1b22465bc048a247",
-    "examples/real/download_public_tabular.py": "9576d773325dca9f4e15c0e49dcedf21368788fd2add720656011c55e0afae82",
-    "examples/real/public_tabular_source.json": "69545c681774f77d07cd87610c07ba2944e63c470d99bda44505223ab3647f07"
+    "tools/build_public_tabular_notebook.py": "cc719f785b0be856f9b67046bccc021a354f943f44c1140ca63192b84e8dd993",
+    "examples/real/download_public_tabular.py": "0234d8ced6a65c955a9ee800cb2dc6603ec6214122e4c18a4c5f2a8f2251048d",
+    "examples/real/public_tabular_source.json": "6ff721aa306c83e306856ba4b0115b28f7897e1d5e12f180a052663c26cf4601"
   },
   "result": {
     "notebook": "08_public_tabular.ipynb",
     "status": "passed",
-    "input_path": "D:\\OnekeyPlatfrom50\\radiomics\\website\\tutorials\\08_public_tabular.ipynb",
-    "input_sha256": "fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40",
-    "executed_path": "D:\\radiomics-tutorial-validation\\public-tabular-root-v1\\08_public_tabular\\08_public_tabular.ipynb",
-    "executed_sha256": "24a95354dcae4ee5f59c40544d879a9226f509474e04a3bb274037e10f4a4939",
-    "seconds": 1.9435539,
+    "input_path": "E:\\radiomics-build\\public-tabular-v1\\notebooks\\08_public_tabular.ipynb",
+    "input_sha256": "8a9bbea94de56fc9ffd1369f3827ccf86c49065b7200f78a681f76831b604a3f",
+    "executed_path": "E:\\radiomics-build\\public-tabular-v1\\execution\\08_public_tabular\\08_public_tabular.ipynb",
+    "executed_sha256": "fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40",
+    "seconds": 1.9375315,
     "execution_error": null,
     "failures": [],
     "kernel_prelude": [
-      "TUTORIAL_REPO_ROOT = 'D:\\\\OnekeyPlatfrom50\\\\radiomics'",
-      "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\public-tabular-root-v1\\\\08_public_tabular\\\\artifacts'",
-      "TUTORIAL_DATA_ROOT = 'E:/radiomics-build/public-tabular-v1/source'"
+      "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics-worktrees\\\\tutorial-lessons'",
+      "TUTORIAL_RUN_ROOT = 'E:\\\\radiomics-build\\\\public-tabular-v1\\\\execution\\\\08_public_tabular\\\\artifacts'",
+      "TUTORIAL_DATA_ROOT = 'E:\\\\radiomics-build\\\\public-tabular-v1\\\\source'"
     ],
     "kernel_terminated": true,
     "cells": [
@@ -146,11 +147,11 @@
       },
       "receipt.json": {
         "bytes": 3553,
-        "sha256": "8832783a543b3f982bfac4920115310f4d5b740a3fa9553e7d908ad51a61270f"
+        "sha256": "c605f781b8062bdf3ed3cea8c9dbb21e5f380d8c32b057eebbf959d3e0cb910b"
       },
       "source-facts.json": {
-        "bytes": 3451,
-        "sha256": "69545c681774f77d07cd87610c07ba2944e63c470d99bda44505223ab3647f07"
+        "bytes": 3386,
+        "sha256": "6ff721aa306c83e306856ba4b0115b28f7897e1d5e12f180a052663c26cf4601"
       },
       "split-assignments.csv": {
         "bytes": 60375,
@@ -190,7 +191,7 @@
       },
       "tutorial-runtime.json": {
         "bytes": 495,
-        "sha256": "c301431ec16997cbb573af6eba15be548f61925eae79b0b081f2f3154d91ecb8"
+        "sha256": "9dc198126bc8bbf2ecfbe63d399f9642104b498e3e393531b10a40d64f94f1be"
       }
     },
     "runtime": {
@@ -200,9 +201,9 @@
         "rust_core_version": "0.1.0"
       },
       "python": "3.9.21 (main, Dec 11 2024, 16:35:24) [MSC v.1929 64 bit (AMD64)]",
-      "interpreter": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+      "interpreter": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
       "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
-      "source_facts_sha256": "69545c681774f77d07cd87610c07ba2944e63c470d99bda44505223ab3647f07"
+      "source_facts_sha256": "6ff721aa306c83e306856ba4b0115b28f7897e1d5e12f180a052663c26cf4601"
     }
   }
 }

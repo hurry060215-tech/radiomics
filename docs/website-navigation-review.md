@@ -1,5 +1,7 @@
 # 网站导航调整：来源、设计与验收
 
+<!-- PR-2: replace recorded machine paths with reproducible work-directory placeholders. -->
+
 本次只调整网站信息架构与展示，不修改算法、Golden、八篇已执行 Notebook 或执行收据。
 
 ## 上游实读范围
@@ -45,10 +47,7 @@ API
 
 在独立 worktree 执行以下命令，未修改构建工具：
 
-```powershell
-& D:/OnekeyPlatfrom50/radiomics-worktrees/tutorial-site/.docs-env/Scripts/python.exe tools/build_website_sources.py
-& D:/OnekeyPlatfrom50/radiomics-worktrees/tutorial-site/.docs-env/Scripts/python.exe -m sphinx -W --keep-going -b html website website/_build/html
-```
+<!-- PR-2: restore the source-generation and Sphinx commands with an explicit documentation interpreter. -->
 
 首次构建生成 33 份维护文档引用页，57 个 Sphinx 页面全部通过，退出码 0，无 warning。Notebook execution 保持 off，未重新执行、训练或下载数据。增补 API 索引与样式后再次用 `-a -W --keep-going` 完整写出页面，最终退出码 0，无 warning；日志保留在 `E:/radiomics-build/website-navigation-review/sphinx-final.log`。
 

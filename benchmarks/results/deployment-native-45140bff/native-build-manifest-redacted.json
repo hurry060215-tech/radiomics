@@ -1,8 +1,8 @@
 {
   "build_commands": [
     [
-      "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
-      "D:\\OnekeyPlatfrom50\\radiomics\\tools\\package_native.py",
+      "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
+      "$WORKDIR/radiomics\\tools\\package_native.py",
       "--output",
       "E:\\radiomics-build\\snapshot-native-v3\\package-assets"
     ],
@@ -15,7 +15,7 @@
       "--locked"
     ],
     [
-      "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+      "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
       "-m",
       "maturin",
       "build",

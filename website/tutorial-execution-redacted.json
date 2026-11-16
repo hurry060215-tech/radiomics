@@ -11,7 +11,7 @@
     "status": "M .github/workflows/docs.yml\n M .github/workflows/tests.yml\n M .gitignore\n M README.md\n M docs/learning-native.md\n M pyproject.toml\n M tests/test_tutorial_execution_tools.py\n M tools/build_tutorial_notebooks.py\n M tools/run_tutorials.py\n M website/README.txt\n M website/conf.py\n M website/index.md\n M website/installation.md\n M website/reference.md\n M website/requirements.txt\n M website/tutorial-execution.json\n M website/tutorials/01_extract.ipynb\n M website/tutorials/02_image_clinical_binary.ipynb\n M website/tutorials/03_multiclass_regression.ipynb\n M website/tutorials/04_regions_delta_habitat.ipynb\n M website/tutorials/05_patch_patient.ipynb\n M website/tutorials/06_embedding_overlay.ipynb\n M website/tutorials/index.md\n?? .github/ISSUE_TEMPLATE/\n?? CONTRIBUTING.md\n?? README.zh-CN.md\n?? SECURITY.md\n?? docs/legacy-python.md\n?? docs/tutorial-execution-v3-historical.json\n?? tools/build_public_ct_notebook.py\n?? tools/build_website_sources.py\n?? website/_static/\n?? website/contributing.md\n?? website/datasets.md\n?? website/quickstart.md\n?? website/tutorials/07_public_ct.ipynb"
   },
   "runner_sha256": "08932ffda86482e6e0a934de99e4733162d7bf95d25cd95e6c2116ec67f68c43",
-  "python": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+  "python": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
   "platform": "Windows-10-10.0.22631-SP0",
   "generation_tools": {
     "build_tutorial_notebooks.py": "7a8a3a076746862ef7046a8aae9e837140cd16efdc9aab1132c38db18dec7bd9",
@@ -27,7 +27,7 @@
     {
       "notebook": "01_extract.ipynb",
       "status": "passed",
-      "input_path": "D:\\OnekeyPlatfrom50\\radiomics\\.build-tools\\tutorial-inputs-final\\01_extract.ipynb",
+      "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\01_extract.ipynb",
       "input_sha256": "1f9e11c39639e1cda3d835e4b26779d040e8d97afeb42a691100d808df9a8a3a",
       "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\01_extract\\01_extract.ipynb",
       "executed_sha256": "24e06556a70aedddbf6517d5876a54b025d9b000cc33da60be3f94c1ddab9bd1",
@@ -35,7 +35,7 @@
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
-        "TUTORIAL_REPO_ROOT = 'D:\\\\OnekeyPlatfrom50\\\\radiomics'",
+        "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
         "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\01_extract\\\\artifacts'"
       ],
       "kernel_terminated": true,
@@ -184,9 +184,9 @@
         }
       },
       "runtime": {
-        "interpreter": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "interpreter": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "python": "3.9.21",
-        "package_source": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\__init__.py",
+        "package_source": "$WORKDIR/radiomics\\src\\ov_radiomics\\__init__.py",
         "backend": {
           "metrics_backend": "rust",
           "rust_core_version": "0.1.0"
@@ -198,7 +198,7 @@
           "matplotlib": "3.7.5",
           "ipykernel": "6.29.5"
         },
-        "native_path": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\_native.pyd",
+        "native_path": "$WORKDIR/radiomics\\src\\ov_radiomics\\_native.pyd",
         "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
         "package_python_sha256": {
           "__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
@@ -232,7 +232,7 @@
     {
       "notebook": "02_image_clinical_binary.ipynb",
       "status": "passed",
-      "input_path": "D:\\OnekeyPlatfrom50\\radiomics\\.build-tools\\tutorial-inputs-final\\02_image_clinical_binary.ipynb",
+      "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\02_image_clinical_binary.ipynb",
       "input_sha256": "b43bb2cdb333b82ada4cfd45058105d3ebfe7bc45283a17694e052c803f7787d",
       "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\02_image_clinical_binary\\02_image_clinical_binary.ipynb",
       "executed_sha256": "63023267154ab0a2e8fe1d2017fdd9eb0af999848e03ec66ae8773f41f00bae8",
@@ -240,7 +240,7 @@
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
-        "TUTORIAL_REPO_ROOT = 'D:\\\\OnekeyPlatfrom50\\\\radiomics'",
+        "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
         "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\02_image_clinical_binary\\\\artifacts'"
       ],
       "kernel_terminated": true,
@@ -1556,9 +1556,9 @@
         }
       },
       "runtime": {
-        "interpreter": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "interpreter": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "python": "3.9.21",
-        "package_source": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\__init__.py",
+        "package_source": "$WORKDIR/radiomics\\src\\ov_radiomics\\__init__.py",
         "backend": {
           "metrics_backend": "rust",
           "rust_core_version": "0.1.0"
@@ -1570,7 +1570,7 @@
           "matplotlib": "3.7.5",
           "ipykernel": "6.29.5"
         },
-        "native_path": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\_native.pyd",
+        "native_path": "$WORKDIR/radiomics\\src\\ov_radiomics\\_native.pyd",
         "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
         "package_python_sha256": {
           "__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
@@ -1604,7 +1604,7 @@
     {
       "notebook": "03_multiclass_regression.ipynb",
       "status": "passed",
-      "input_path": "D:\\OnekeyPlatfrom50\\radiomics\\.build-tools\\tutorial-inputs-final\\03_multiclass_regression.ipynb",
+      "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\03_multiclass_regression.ipynb",
       "input_sha256": "d4d0e9d7bf94b9f9bb3d3733d8c206f5543e8d8263f2c633c9edc1a13f444a3c",
       "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\03_multiclass_regression\\03_multiclass_regression.ipynb",
       "executed_sha256": "6214fd8845e69302d755b6131b858186378cfc1f434dd209ed39cbcfd1aa188d",
@@ -1612,7 +1612,7 @@
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
-        "TUTORIAL_REPO_ROOT = 'D:\\\\OnekeyPlatfrom50\\\\radiomics'",
+        "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
         "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\03_multiclass_regression\\\\artifacts'"
       ],
       "kernel_terminated": true,
@@ -1831,9 +1831,9 @@
         }
       },
       "runtime": {
-        "interpreter": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "interpreter": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "python": "3.9.21",
-        "package_source": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\__init__.py",
+        "package_source": "$WORKDIR/radiomics\\src\\ov_radiomics\\__init__.py",
         "backend": {
           "metrics_backend": "rust",
           "rust_core_version": "0.1.0"
@@ -1845,7 +1845,7 @@
           "matplotlib": "3.7.5",
           "ipykernel": "6.29.5"
         },
-        "native_path": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\_native.pyd",
+        "native_path": "$WORKDIR/radiomics\\src\\ov_radiomics\\_native.pyd",
         "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
         "package_python_sha256": {
           "__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
@@ -1879,7 +1879,7 @@
     {
       "notebook": "04_regions_delta_habitat.ipynb",
       "status": "passed",
-      "input_path": "D:\\OnekeyPlatfrom50\\radiomics\\.build-tools\\tutorial-inputs-final\\04_regions_delta_habitat.ipynb",
+      "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\04_regions_delta_habitat.ipynb",
       "input_sha256": "0c329b76afa5a5fd9315adac11c91eec330e939d66bf6c7be5a6e84617a892b6",
       "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\04_regions_delta_habitat\\04_regions_delta_habitat.ipynb",
       "executed_sha256": "dae9492574b73061bdca8460bfc3ab18d96f287cc1de4c4f5c677f7f0a0f60d3",
@@ -1887,7 +1887,7 @@
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
-        "TUTORIAL_REPO_ROOT = 'D:\\\\OnekeyPlatfrom50\\\\radiomics'",
+        "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
         "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\04_regions_delta_habitat\\\\artifacts'"
       ],
       "kernel_terminated": true,
@@ -2090,9 +2090,9 @@
         }
       },
       "runtime": {
-        "interpreter": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "interpreter": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "python": "3.9.21",
-        "package_source": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\__init__.py",
+        "package_source": "$WORKDIR/radiomics\\src\\ov_radiomics\\__init__.py",
         "backend": {
           "metrics_backend": "rust",
           "rust_core_version": "0.1.0"
@@ -2104,7 +2104,7 @@
           "matplotlib": "3.7.5",
           "ipykernel": "6.29.5"
         },
-        "native_path": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\_native.pyd",
+        "native_path": "$WORKDIR/radiomics\\src\\ov_radiomics\\_native.pyd",
         "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
         "package_python_sha256": {
           "__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
@@ -2138,7 +2138,7 @@
     {
       "notebook": "05_patch_patient.ipynb",
       "status": "passed",
-      "input_path": "D:\\OnekeyPlatfrom50\\radiomics\\.build-tools\\tutorial-inputs-final\\05_patch_patient.ipynb",
+      "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\05_patch_patient.ipynb",
       "input_sha256": "b373801bdfb075d164ab498f2996affa9ff5b4c76b500790dd099dc819ae2bd8",
       "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\05_patch_patient\\05_patch_patient.ipynb",
       "executed_sha256": "9ecd7e31386fafebe2aee760ab34e1112245bb6fc58fc21fce950eaf418d0cf5",
@@ -2146,7 +2146,7 @@
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
-        "TUTORIAL_REPO_ROOT = 'D:\\\\OnekeyPlatfrom50\\\\radiomics'",
+        "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
         "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\05_patch_patient\\\\artifacts'"
       ],
       "kernel_terminated": true,
@@ -2927,9 +2927,9 @@
         }
       },
       "runtime": {
-        "interpreter": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "interpreter": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "python": "3.9.21",
-        "package_source": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\__init__.py",
+        "package_source": "$WORKDIR/radiomics\\src\\ov_radiomics\\__init__.py",
         "backend": {
           "metrics_backend": "rust",
           "rust_core_version": "0.1.0"
@@ -2941,7 +2941,7 @@
           "matplotlib": "3.7.5",
           "ipykernel": "6.29.5"
         },
-        "native_path": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\_native.pyd",
+        "native_path": "$WORKDIR/radiomics\\src\\ov_radiomics\\_native.pyd",
         "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
         "package_python_sha256": {
           "__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
@@ -2975,7 +2975,7 @@
     {
       "notebook": "06_embedding_overlay.ipynb",
       "status": "passed",
-      "input_path": "D:\\OnekeyPlatfrom50\\radiomics\\.build-tools\\tutorial-inputs-final\\06_embedding_overlay.ipynb",
+      "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\06_embedding_overlay.ipynb",
       "input_sha256": "461fb9f7734d38674e14dba55b3be4d208b61a907cb43b4c2f19a8f16adcb6f9",
       "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\06_embedding_overlay\\06_embedding_overlay.ipynb",
       "executed_sha256": "09856f6cb5b2896c8ea0bf15a85005a302db057692c25811eb1dc3958bd8ef01",
@@ -2983,7 +2983,7 @@
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
-        "TUTORIAL_REPO_ROOT = 'D:\\\\OnekeyPlatfrom50\\\\radiomics'",
+        "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
         "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\06_embedding_overlay\\\\artifacts'"
       ],
       "kernel_terminated": true,
@@ -3287,9 +3287,9 @@
         }
       },
       "runtime": {
-        "interpreter": "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "interpreter": "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "python": "3.9.21",
-        "package_source": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\__init__.py",
+        "package_source": "$WORKDIR/radiomics\\src\\ov_radiomics\\__init__.py",
         "backend": {
           "metrics_backend": "rust",
           "rust_core_version": "0.1.0"
@@ -3301,7 +3301,7 @@
           "matplotlib": "3.7.5",
           "ipykernel": "6.29.5"
         },
-        "native_path": "D:\\OnekeyPlatfrom50\\radiomics\\src\\ov_radiomics\\_native.pyd",
+        "native_path": "$WORKDIR/radiomics\\src\\ov_radiomics\\_native.pyd",
         "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
         "package_python_sha256": {
           "__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",

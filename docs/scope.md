@@ -3,7 +3,7 @@
 **Historical optional-Python scope.** The table below records the first
 independent-row/binary implementation; it does not describe today's Rust
 capabilities. Use the [current support matrix](support-matrix.md),
-[Onekey workflow audit](onekey-workflow-gap-audit.md) and
+[native capability boundaries](native-boundaries.md) and
 [backend decision](rust-backend-decision.md) for present scope and known gaps.
 
 The functional requirements were derived by inspecting four user-supplied solution notebooks, their configuration, and example extraction settings. The implementation does not import, decrypt, or redistribute those notebooks or their runtime.
@@ -50,6 +50,6 @@ Multicenter harmonization, ICC, survival, DICOM conversion, automated segmentati
 
 - `correct_mask=False` is conservative; explicitly set `True` to request backend mask correction. Correction cannot make unrelated coordinate systems anatomically aligned.
 - `params=None` uses backend extraction defaults and records them. No copied CT/MR/PET/US preset is advertised as universally appropriate.
-- Model defaults are documented in `make_classifier`; encrypted Onekey defaults were not recovered or assumed.
+- Model defaults are documented in `make_classifier`; external wrapper defaults were not recovered or assumed.
 - `FeatureSelector` defaults to Mann–Whitney, p < 0.05, absolute Pearson correlation > 0.9, and squared-loss LASSO. A no-feature result is an error.
 - Baseline statistics use Mann–Whitney or Welch tests for continuous data, and Fisher/chi-square for categorical data; variables must be explicitly typed.

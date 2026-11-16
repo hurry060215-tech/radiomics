@@ -149,7 +149,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_sample_constructor.py",
+          "$WORKDIR/radiomics\\tools\\profile_sample_constructor.py",
           "--worker",
           "timing",
           "--stage",
@@ -297,7 +297,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_sample_constructor.py",
+          "$WORKDIR/radiomics\\tools\\profile_sample_constructor.py",
           "--worker",
           "timing",
           "--stage",
@@ -445,7 +445,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_sample_constructor.py",
+          "$WORKDIR/radiomics\\tools\\profile_sample_constructor.py",
           "--worker",
           "timing",
           "--stage",
@@ -593,7 +593,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_sample_constructor.py",
+          "$WORKDIR/radiomics\\tools\\profile_sample_constructor.py",
           "--worker",
           "timing",
           "--stage",
@@ -741,7 +741,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "$WORKDIR/radiomics\\tools\\profile_native_memory.py",
           "--worker",
           "python_l2",
           "--fixtures",
@@ -854,7 +854,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "$WORKDIR/radiomics\\tools\\profile_native_memory.py",
           "--worker",
           "python_l2",
           "--fixtures",
@@ -967,7 +967,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "$WORKDIR/radiomics\\tools\\profile_native_memory.py",
           "--worker",
           "python_l2",
           "--fixtures",
@@ -1080,7 +1080,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "$WORKDIR/radiomics\\tools\\profile_native_memory.py",
           "--worker",
           "python_l2",
           "--fixtures",
@@ -1193,7 +1193,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "$WORKDIR/radiomics\\tools\\profile_native_memory.py",
           "--worker",
           "python_l2",
           "--fixtures",
@@ -1306,7 +1306,7 @@
       "launch": {
         "command": [
           "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
-          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "$WORKDIR/radiomics\\tools\\profile_native_memory.py",
           "--worker",
           "python_l2",
           "--fixtures",

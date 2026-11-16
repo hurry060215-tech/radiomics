@@ -295,7 +295,7 @@ python examples/native/05_patch_patient.py --output /fresh/tutorial05
 python examples/native/06_embedding_overlay.py --output /fresh/tutorial06
 ```
 
-性能复现先按[运行器说明](benchmark-radiomics-runner.md)准备固定 corpus，再给出 exact approved base/CT/dimension SHA、两个独立解释器、固定 wheel/build manifest 运行一次完整网格。测量后审查 [artifact index](../benchmarks/results/radiomics-native-48ecb310/artifact-index.json)、[60-case JSON](../benchmarks/results/radiomics-native-48ecb310/report.json) 和无损 gzip raw；不能用内部 kernel 的计时替代公开 API 完整流程。
+性能复现先按[运行器说明](benchmark-radiomics-runner.md)准备固定 corpus，再给出 exact approved base/CT/dimension SHA、两个独立解释器、固定 wheel/build manifest 运行一次完整网格。测量后审查 [artifact index](../benchmarks/results/radiomics-native-48ecb310/artifact-index.json)、[60-case JSON](../benchmarks/results/radiomics-native-48ecb310/report-redacted.json) 和无损 gzip raw；不能用内部 kernel 的计时替代公开 API 完整流程。
 
 ## 参考文献与定义来源
 

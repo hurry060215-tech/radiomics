@@ -36,10 +36,10 @@ or a formal publication/release.
   zero-observation localized metadata-probe failure remain retained evidence.
 
 The [versioned artifact directory](../benchmarks/results/radiomics-native-48ecb310/)
-contains the full [machine/build/run provenance](../benchmarks/results/radiomics-native-48ecb310/provenance.json),
-[60-case report](../benchmarks/results/radiomics-native-48ecb310/report.json),
+contains the full [machine/build/run provenance](../benchmarks/results/radiomics-native-48ecb310/provenance-redacted.json),
+[60-case report](../benchmarks/results/radiomics-native-48ecb310/report-redacted.json),
 [human-readable all-case table](../benchmarks/results/radiomics-native-48ecb310/report.md),
-and losslessly compressed [all raw observations](../benchmarks/results/radiomics-native-48ecb310/raw-observations.jsonl.gz).
+and compressed [all observation records, with machine paths redacted](../benchmarks/results/radiomics-native-48ecb310/raw-observations-redacted.jsonl.gz).
 The [artifact index](../benchmarks/results/radiomics-native-48ecb310/artifact-index.json)
 records hashes, observed request/report timestamps and the external per-worker
 CSV/config/comparison/stdout/stderr location. No raw CT voxels or prepared arrays

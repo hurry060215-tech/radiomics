@@ -1,5 +1,7 @@
 # Actual optional AnnData/WSIData container acceptance
 
+<!-- PR-2: replace recorded machine paths with reproducible work-directory placeholders. -->
+
 Actual installed-container smoke validation passed on Windows, separately from
 the existing source audit and duck-typed fixtures. No native algorithm, public
 contract, package version, ov source, base dependency declaration or reference
@@ -9,9 +11,9 @@ nothing and refuses an existing evidence output directory.
 
 ## Environment and verified scope
 
-The dedicated environment is
-`D:\OnekeyPlatfrom50\radiomics\.build-tools\optional-interop-env`, created with
-an existing isolated CPython 3.11.15 interpreter. It does not inherit system site
+The dedicated environment was created with
+an existing isolated CPython 3.11.15 interpreter.
+<!-- PR-2: document the dedicated environment location relative to the workspace. --> It does not inherit system site
 packages. The relevant tested versions were:
 
 | Component | Actual version/source |
@@ -29,7 +31,7 @@ The validator checked installed WSIData's PEP 610 `direct_url.json` commit and
 all 25 native-package Python/PyO3 files against the immutable build manifest.
 Core implementation identity was
 `a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8`.
-The optional stack was installed only in this environment; Onekey, the base
+The optional stack was installed only in this environment; external wrapper libraries, the base
 native environment, public 3.0.1 reference and benchmark environments were not
 modified by the optional installation.
 
@@ -124,19 +126,10 @@ no expectation, algorithm or installed file was changed to hide the mismatch.
 
 Run with an already prepared optional environment and matching immutable wheel:
 
-```powershell
-D:/OnekeyPlatfrom50/radiomics/.build-tools/optional-interop-env/Scripts/python.exe `
-    tools/validate_optional_interop.py optional `
-    --build-manifest E:/radiomics-build/snapshot-native-v2/build-manifest.json `
-    --output artifacts/optional-interop-fresh
+<!-- PR-2: restore the optional-interoperability command with explicit workspace and interpreter locations. -->
 
-E:/radiomics-build/native-env/Scripts/python.exe tools/validate_optional_interop.py base `
-    --build-manifest E:/radiomics-build/snapshot-native-v2/build-manifest.json `
-    --output artifacts/base-interop-fresh
-```
-
-Raw evidence remains under
-`D:\OnekeyPlatfrom50\radiomics\.build-tools\optional-interop-evidence`:
+Raw evidence remains in the recorded local evidence directory:
+<!-- PR-2: document the evidence directory relative to the workspace. -->
 `install-stack.log`, `install-wsidata.log`, `requirements-optional.txt`,
 `optional-v1/acceptance.json`, `base-v1/acceptance.json` (identity rejection),
 `base-v2/acceptance.json`, and the actual H5AD round-trip files. The runtime

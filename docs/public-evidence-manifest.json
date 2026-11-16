@@ -1,0 +1,170 @@
+{
+  "schema": "radiomics.public-evidence-redaction.v1",
+  "source_revision": "20b7fc044b609822eed4c4c177aaae1b8803d9bd",
+  "scope": "Public derivatives of externally archived, byte-preserved historical evidence. This is redaction, not a new measurement or rerecording.",
+  "path_placeholder": "$WORKDIR denotes the original machine working directory; reference-env denotes an external reference environment.",
+  "original_indexes": "Unchanged historical artifact indexes describe the archived originals. The original-to-public SHA256 mapping below identifies their separately named derivatives.",
+  "files": [
+    {
+      "original_source_path": "benchmarks/results/deployment-native-45140bff/native-build-manifest.json",
+      "original_sha256": "a66bfb6244f9c18b046ca7083da65a056141b1e48339907012a05b27869c0cef",
+      "original_bytes": 5529,
+      "public_path": "benchmarks/results/deployment-native-45140bff/native-build-manifest-redacted.json",
+      "public_sha256": "c34975092b7a735bbd1b2e8daaf8e1dcbc16dc1c6427d6271459b57c085becf6",
+      "public_bytes": 5490,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "a66bfb6244f9c18b046ca7083da65a056141b1e48339907012a05b27869c0cef"
+    },
+    {
+      "original_source_path": "benchmarks/results/deployment-native-45140bff/report.json",
+      "original_sha256": "95960ebdfef7f12d9f7845bebb67281d510ddcdb1c3bef447d9f67c216725028",
+      "original_bytes": 29488,
+      "public_path": "benchmarks/results/deployment-native-45140bff/report-redacted.json",
+      "public_sha256": "a473452b589332c5d30ead9d6ada434c8c9a77ac5f0743f9bc1b10eb6365684c",
+      "public_bytes": 29438,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "95960ebdfef7f12d9f7845bebb67281d510ddcdb1c3bef447d9f67c216725028"
+    },
+    {
+      "original_source_path": "benchmarks/results/learning-pathology-native-48ecb310/binding.json",
+      "original_sha256": "13254953c839f4aa51687a7acd2dfdd6b2db91981577803444a23105b47801a2",
+      "original_bytes": 731828,
+      "public_path": "benchmarks/results/learning-pathology-native-48ecb310/binding-redacted.json",
+      "public_sha256": "0c5e9e684e52eafae1d007e2748957a754ad6e872d7004b70a15db3f8da5bdf0",
+      "public_bytes": 731789,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "13254953c839f4aa51687a7acd2dfdd6b2db91981577803444a23105b47801a2"
+    },
+    {
+      "original_source_path": "benchmarks/results/learning-pathology-native-48ecb310/provenance.json",
+      "original_sha256": "81dac8dc9240fc1f41b4bf6eb8338f006ecf0a774fbdfd74349475dd9b145568",
+      "original_bytes": 3149,
+      "public_path": "benchmarks/results/learning-pathology-native-48ecb310/provenance-redacted.json",
+      "public_sha256": "89a19c4106ae7b9d505f5eb4c8c47be4b755009d86bd1a6e2de04ada1a3655c8",
+      "public_bytes": 3101,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "81dac8dc9240fc1f41b4bf6eb8338f006ecf0a774fbdfd74349475dd9b145568"
+    },
+    {
+      "original_source_path": "benchmarks/results/radiomics-native-48ecb310/input-manifest.json",
+      "original_sha256": "4f0b5b555b97b34342095fd984cf92d1ba632baed18eea13ba21db2161138e9b",
+      "original_bytes": 35416,
+      "public_path": "benchmarks/results/radiomics-native-48ecb310/input-manifest-redacted.json",
+      "public_sha256": "eeed3f1d3a4c3ec4a6e2b8d1d40c813477ba37155f4cb48745455d54ab453bed",
+      "public_bytes": 35403,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "4f0b5b555b97b34342095fd984cf92d1ba632baed18eea13ba21db2161138e9b"
+    },
+    {
+      "original_source_path": "benchmarks/results/radiomics-native-48ecb310/provenance.json",
+      "original_sha256": "bc2a07ff6f2eb5b236dc23b0349ce42619d8d7ea8ab311c928154298fa53b4cc",
+      "original_bytes": 25241,
+      "public_path": "benchmarks/results/radiomics-native-48ecb310/provenance-redacted.json",
+      "public_sha256": "df7eed9b433956b5ab5710dd6ae0c4c3f4dd6cb5b77724a68ce351464cad77ab",
+      "public_bytes": 25110,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "bc2a07ff6f2eb5b236dc23b0349ce42619d8d7ea8ab311c928154298fa53b4cc"
+    },
+    {
+      "original_source_path": "benchmarks/results/radiomics-native-48ecb310/report.json",
+      "original_sha256": "04b8fe3d47e266c4bc3b6bafa49a8104e7b54b3793664ff450153db50e9ce14e",
+      "original_bytes": 459246,
+      "public_path": "benchmarks/results/radiomics-native-48ecb310/report-redacted.json",
+      "public_sha256": "e125523b1cc84d50a5ed9b3ab18d362ab3524a9bcb34613ac7289fdd6be8dbad",
+      "public_bytes": 459207,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "04b8fe3d47e266c4bc3b6bafa49a8104e7b54b3793664ff450153db50e9ce14e"
+    },
+    {
+      "original_source_path": "docs/native-memory-diagnosis-data.json",
+      "original_sha256": "4adb9c9d5f345be62e98e7ea9e13a8585e1527e224bbb6e81e5815a176718a46",
+      "original_bytes": 32339,
+      "public_path": "docs/native-memory-diagnosis-data-redacted.json",
+      "public_sha256": "b9d74c4ad165a75061899c06210308d79fae792ff26da6fec8cf336622d0b086",
+      "public_bytes": 32222,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "4adb9c9d5f345be62e98e7ea9e13a8585e1527e224bbb6e81e5815a176718a46"
+    },
+    {
+      "original_source_path": "docs/native-performance-diagnosis-data.json",
+      "original_sha256": "2f5fb5d42ea0b0d9c75aab3d6945a6ae4c9c0dcc4321fda8bc549f800d758bd3",
+      "original_bytes": 52730,
+      "public_path": "docs/native-performance-diagnosis-data-redacted.json",
+      "public_sha256": "2585ea1e1d375b16b513904d66df39ae2806c63936e882e284b9eb84b7944f07",
+      "public_bytes": 52691,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "2f5fb5d42ea0b0d9c75aab3d6945a6ae4c9c0dcc4321fda8bc549f800d758bd3"
+    },
+    {
+      "original_source_path": "docs/sample-constructor-optimization-data.json",
+      "original_sha256": "21b186bfea6aa316b3394b2cb4d032d90a0e77ae4828587f91e325d65942e958",
+      "original_bytes": 65058,
+      "public_path": "docs/sample-constructor-optimization-data-redacted.json",
+      "public_sha256": "75168cf7d610b5793bf819ce649e8d1fd537add36ad8648037a9a673119d4c32",
+      "public_bytes": 64928,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "21b186bfea6aa316b3394b2cb4d032d90a0e77ae4828587f91e325d65942e958"
+    },
+    {
+      "original_source_path": "examples/real/validation.json",
+      "original_sha256": "5cedde5e5c840f8b11217a2095e32132158c5917391c6ac02c4e9975e2ec2ec7",
+      "original_bytes": 3924,
+      "public_path": "examples/real/validation-redacted.json",
+      "public_sha256": "9a1f3ad127e105da6f9826d6e460e56c0011631edad8610dfff5e8713282027d",
+      "public_bytes": 3852,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "bbdf0a64a440aca8e109b937c806303f841b31d265a1bd0ce84e07649dc291a1"
+    },
+    {
+      "original_source_path": "website/public-ct-tutorial-execution.json",
+      "original_sha256": "29de7e7a9dc49c7c0104f14bbb739f2d82f37aa5e63d93023e69799d119a7300",
+      "original_bytes": 7635,
+      "public_path": "website/public-ct-tutorial-execution-redacted.json",
+      "public_sha256": "d44b9d0d2ba9707c36a39c468b2d5ce9180372ddbe3250a8fe0ecde15b549528",
+      "public_bytes": 7579,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "29de7e7a9dc49c7c0104f14bbb739f2d82f37aa5e63d93023e69799d119a7300"
+    },
+    {
+      "original_source_path": "website/public-tabular-independent-execution.json",
+      "original_sha256": "c32cfc73190666552ff0eaad6183173db64f8dc6f6aa2e8fa60da29da306ed11",
+      "original_bytes": 7257,
+      "public_path": "website/public-tabular-independent-execution-redacted.json",
+      "public_sha256": "dca1275b7f933393aa27e23256500f43f5042ffbf34c58dae8f715c52ed24b7d",
+      "public_bytes": 7214,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "c32cfc73190666552ff0eaad6183173db64f8dc6f6aa2e8fa60da29da306ed11"
+    },
+    {
+      "original_source_path": "website/public-tabular-tutorial-execution.json",
+      "original_sha256": "0bfedc27d14e03c015001ac211c958352c17c03a12b0b744fa6f6fc3a555bb6f",
+      "original_bytes": 7404,
+      "public_path": "website/public-tabular-tutorial-execution-redacted.json",
+      "public_sha256": "a664b97b73066d41cde52b2094decf68c3ed49791470c9f4cb4d9b241eed0504",
+      "public_bytes": 7374,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "0bfedc27d14e03c015001ac211c958352c17c03a12b0b744fa6f6fc3a555bb6f"
+    },
+    {
+      "original_source_path": "website/tutorial-execution.json",
+      "original_sha256": "0b7ed477ff00dde7d11f5621e11e3e509046834b63ae832e76a9cfb49db2bcd4",
+      "original_bytes": 139589,
+      "public_path": "website/tutorial-execution-redacted.json",
+      "public_sha256": "dcf9ec7000d9e241739c9d7d929e032d2d372c9a8a879e96d894032f9203bcb5",
+      "public_bytes": 139162,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "0b7ed477ff00dde7d11f5621e11e3e509046834b63ae832e76a9cfb49db2bcd4"
+    },
+    {
+      "original_source_path": "benchmarks/results/radiomics-native-48ecb310/raw-observations.jsonl.gz",
+      "original_sha256": "35c6ef15ecbf4f779d8542cff4c1d70f3beadd39c9c8e5e1f53ad33a8b6e544c",
+      "original_bytes": 117681,
+      "public_path": "benchmarks/results/radiomics-native-48ecb310/raw-observations-redacted.jsonl.gz",
+      "public_sha256": "a24f5f932d5106c4d547972e1e9636f6bbab1a319db80e4df27b198cbe9ad882",
+      "public_bytes": 115229,
+      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
+      "source_git_blob_sha256": "35c6ef15ecbf4f779d8542cff4c1d70f3beadd39c9c8e5e1f53ad33a8b6e544c"
+    }
+  ],
+  "archived_original_source": "Original working-tree bytes checked out from source_revision, preserved without content or newline rewriting. source_git_blob_sha256 separately identifies Git-normalized bytes."
+}
