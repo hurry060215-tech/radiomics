@@ -67,7 +67,7 @@ def test_sample_construction_matches_dict_inputs_and_detaches_source_buffers(non
     assert sample.to_dict()==expected
 
 
-@pytest.mark.parametrize('override',['subclass','instance','class'])
+@pytest.mark.parametrize('override',['subclass','instance','class','base'])
 def test_sample_preserves_custom_volume_dictionary_protocol(override,monkeypatch):
     image=rad.image.from_array([[1.,2.],[3.,4.]],spatial_unit='mm')
     mask=rad.mask.from_array(np.ones((2,2),dtype=np.uint32),geometry=image.geometry)
@@ -84,8 +84,11 @@ def test_sample_preserves_custom_volume_dictionary_protocol(override,monkeypatch
         image=CustomImage(image.to_dict())
     elif override=='instance':
         image.to_dict=lambda:transformed(image)
-    else:
+    elif override=='class':
         monkeypatch.setattr(rad.ImageVolume,'to_dict',transformed)
+    else:
+        from ov_radiomics._types import _NativeObject
+        monkeypatch.setattr(_NativeObject,'to_dict',transformed)
     sample=rad.ImageSample(dict(sample_id='custom',patient_id='synthetic'),image,mask)
     np.testing.assert_array_equal(sample.image.array,[[2.,4.],[6.,8.]])
 

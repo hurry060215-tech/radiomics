@@ -90,6 +90,12 @@ also records an extreme cancellation case that currently differs from Python;
 neither backend is universally more accurate. See the [Rust decision](docs/rust-backend-decision.md)
 and [Onekey workflow gap audit](docs/onekey-workflow-gap-audit.md) for limits and priorities.
 
+A [bounded constructor fix](docs/sample-constructor-optimization.md) removes
+temporary copies before unchanged native validation. A same-binary diagnostic
+reduced complete array-call median time by17.38%; measured peak RSS did not
+decrease. This is not a new PyRadiomics speedup claim or a resolution of the
+open scalar compatibility finding.
+
 ## Documentation and contributions
 
 The documentation follows the task-oriented organization of [OmicVerse](https://github.com/omicverse/omicverse) and its [tutorial repository](https://github.com/omicverse/omicverse-tutorials), with independently authored examples and evidence. Build a local searchable preview:

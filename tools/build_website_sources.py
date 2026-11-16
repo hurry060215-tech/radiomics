@@ -25,6 +25,7 @@ PAGES = (
     'python-native.md', 'delivery-index.md',
     'onekey-workflow-gap-audit.md', 'native-performance-diagnosis.md',
     'rust-backend-decision.md', 'scalar-accuracy-audit.md',
+    'sample-constructor-optimization.md',
 )
 LINK = re.compile(r'(?P<head>\!?\[[^\]\n]*\]\()(?P<target>[^)\s]+)(?P<tail>\))')
 
