@@ -101,3 +101,9 @@ publication tokens. Installing it into the isolated environment and running the
 full test suite gave **256 passed, 5 skipped, 1 xfailed**; the two additional
 passed tests come from the publication cleanup. Existing assertion and fixture
 bytes remain unchanged by this buffer optimization.
+
+A subsequent strict-Clippy repair replaces an explicit Arc dereference with
+Rust's automatic dereference at the array-view constructor. It preserves the
+same borrowed slice and ownership semantics. The wheel identities and timings
+above remain those of the actually measured and installed artifacts; they were
+not reassigned to this source-only lint repair or re-recorded.
