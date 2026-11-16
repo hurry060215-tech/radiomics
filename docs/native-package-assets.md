@@ -1,5 +1,7 @@
 # Reproducible native package assets and source builds
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 The canonical reference files remain under repository `golden/`. No maintained
 fixture copy was moved or duplicated. `tools/package_native.py` creates ignored
 crate-local `package-assets/` directories only for packaging, verifies source and
@@ -21,7 +23,7 @@ The `source-delivery-v1` archive was actually unpacked and all six native tutori
 scripts were run from that unpacked tree with the installed immutable-v3 wheel
 in the native-only environment. All six exited successfully, using the archive's
 own helper/fixtures and producing models, tables and overlay figures. Evidence is
-`E:/radiomics-build/source-delivery-v1/tutorial-evidence.json`, which records the
+`$WORKDIR/source-delivery-v1/tutorial-evidence.json`, which records the
 archive hash and individual output provenance. This checks packaged tutorial
 execution; the separate derived-lock source-build evidence remains distinct.
 
@@ -122,7 +124,7 @@ Keep Cargo's package extraction directory outside the original workspace when
 running standalone archive tests. An unpacked crate beneath the repository's
 `.build-tools/` can be mistaken for a member of the parent workspace even though
 its archive is valid. The final core archive was verified after extraction to
-`D:/radiomics-final-build/core-source-v1/`, where all 150 tests passed under
+`$WORKDIR/final-build/core-source-v1/`, where all 150 tests passed under
 Rust 1.85 with `--all-targets --locked`. The earlier parent-workspace error is
 retained in `final-core-crate-v2` logs; no source/expected value was changed.
 
@@ -182,11 +184,11 @@ or algorithm byte is changed by this derivation.
 
 Local receipts and artifacts:
 
-- `E:\radiomics-build\native-package-assets-v1`: actual package lists and no-fixture library check.
-- `E:\radiomics-build\native-crate-staged-core-v1`: core archive and standalone test logs.
-- `E:\radiomics-build\native-crate-staged-dependent-v1`: ordinary registry packaging failures.
-- `E:\radiomics-build\native-crate-local-patch-v2`: dependent archives and explicit override receipts/tests.
-- `E:\radiomics-build\native-sdist-derived-v1`: original/derived source archives, strict lock comparison and locked wheel build.
+- `$WORKDIR/native-package-assets-v1`: actual package lists and no-fixture library check.
+- `$WORKDIR/native-crate-staged-core-v1`: core archive and standalone test logs.
+- `$WORKDIR/native-crate-staged-dependent-v1`: ordinary registry packaging failures.
+- `$WORKDIR/native-crate-local-patch-v2`: dependent archives and explicit override receipts/tests.
+- `$WORKDIR/native-sdist-derived-v1`: original/derived source archives, strict lock comparison and locked wheel build.
 
 The observed original/derived lock SHA256 values are respectively
 `ff310d5320801bf8d4a02308e560aa0876f7786521b8101f7334ce099dabc77d`

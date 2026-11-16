@@ -1,6 +1,7 @@
 # Actual optional AnnData/WSIData container acceptance
 
-<!-- PR-2: replace recorded machine paths with reproducible work-directory placeholders. -->
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 
 Actual installed-container smoke validation passed on Windows, separately from
 the existing source audit and duck-typed fixtures. No native algorithm, public
@@ -13,7 +14,7 @@ nothing and refuses an existing evidence output directory.
 
 The dedicated environment was created with
 an existing isolated CPython 3.11.15 interpreter.
-<!-- PR-2: document the dedicated environment location relative to the workspace. --> It does not inherit system site
+The dedicated environment is represented by `$WORKDIR/optional-interop-env`. It does not inherit system site
 packages. The relevant tested versions were:
 
 | Component | Actual version/source |
@@ -111,7 +112,7 @@ numerical value; other reader metadata policies need separate evidence.
 
 ## Base operation without optional packages
 
-A separate process in `E:\radiomics-build\native-env` checked that AnnData,
+A separate process in `$WORKDIR/native-env` checked that AnnData,
 WSIData, SpatialData, GeoPandas and Shapely were absent. With imports of those
 packages blocked, ordinary external arrays still aligned and aggregated through
 Rust to the expected patient mean. Native snapshot v2 package-file identity
@@ -126,10 +127,17 @@ no expectation, algorithm or installed file was changed to hide the mismatch.
 
 Run with an already prepared optional environment and matching immutable wheel:
 
-<!-- PR-2: restore the optional-interoperability command with explicit workspace and interpreter locations. -->
+```powershell
+& "$WORKDIR/optional-interop-env/Scripts/python.exe" tools/validate_optional_interop.py optional `
+    --build-manifest "$WORKDIR/snapshot-native-v2/build-manifest.json" `
+    --output artifacts/optional-interop-fresh
+& "$WORKDIR/native-env/Scripts/python.exe" tools/validate_optional_interop.py base `
+    --build-manifest "$WORKDIR/snapshot-native-v2/build-manifest.json" `
+    --output artifacts/base-interop-fresh
+```
 
 Raw evidence remains in the recorded local evidence directory:
-<!-- PR-2: document the evidence directory relative to the workspace. -->
+`$WORKDIR/optional-interop-evidence` contains:
 `install-stack.log`, `install-wsidata.log`, `requirements-optional.txt`,
 `optional-v1/acceptance.json`, `base-v1/acceptance.json` (identity rejection),
 `base-v2/acceptance.json`, and the actual H5AD round-trip files. The runtime

@@ -1,5 +1,7 @@
 # Executable Radiomics Benchmark v2
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 The immutable case definition is
 [`benchmarks/v2/radiomics-plan.json`](../benchmarks/v2/radiomics-plan.json).
 It was reviewed by the main integrator before algorithm timing. The worker
@@ -16,7 +18,7 @@ extraction. Synthetic formulas, seed, image/ROI shapes and every case are fixed
 in the plan; every file gets a SHA256 manifest.
 
 ```powershell
-python tools/benchmark_radiomics.py --prepare --fixtures E:/radiomics-build/benchmark-v2/radiomics-inputs
+python tools/benchmark_radiomics.py --prepare --fixtures $WORKDIR/benchmark-v2/radiomics-inputs
 ```
 
 Measurement requires two separate interpreters. The reference interpreter must
@@ -38,12 +40,12 @@ error/pending state, not an assumed equivalent reference.
 ```powershell
 python tools/benchmark_radiomics.py --run `
   --approved-plan-sha256 ACTUAL_REVIEWED_FILE_SHA256 `
-  --fixtures E:/radiomics-build/benchmark-v2/radiomics-inputs `
-  --output E:/radiomics-build/benchmark-v2/fresh-measured-run `
-  --native-python E:/radiomics-build/benchmark-v2/native-snapshot/Scripts/python.exe `
-  --reference-python E:/radiomics-build/golden/env-301/Scripts/python.exe `
-  --native-wheel E:/radiomics-build/fixed-snapshot/ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl `
-  --native-build-manifest E:/radiomics-build/fixed-snapshot/build-info.json
+  --fixtures $WORKDIR/benchmark-v2/radiomics-inputs `
+  --output $WORKDIR/benchmark-v2/fresh-measured-run `
+  --native-python $WORKDIR/benchmark-v2/native-snapshot/Scripts/python.exe `
+  --reference-python $WORKDIR/golden/env-301/Scripts/python.exe `
+  --native-wheel $WORKDIR/fixed-snapshot/ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl `
+  --native-build-manifest $WORKDIR/fixed-snapshot/build-info.json
 ```
 
 The exact output path must be new. No favorable-run overwrite or repetition-count

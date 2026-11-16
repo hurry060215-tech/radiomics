@@ -1,5 +1,7 @@
 # 08：569条真实公开记录的原生二分类
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 这篇可逐步执行的Notebook补充单例公开CT教程：使用 UCI Breast Cancer Wisconsin (Diagnostic) 的真实诊断标签和既有数值表格，完成固定留出、原生训练、模型保存加载与不带标签的预测。数据来自细针穿刺细胞核图像测量，**不是本包提取的radiomics特征**。[官方数据与许可](https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic)；[DOI：10.24432/C5DW2B](https://doi.org/10.24432/C5DW2B)。
 
 数据按CC-BY-4.0使用，保留 Wolberg、Mangasarian、Street等的来源署名和改动说明；数据许可与软件MIT分开。原始 `wdbc.data`、`wdbc.names` 留在仓库外缓存，不放进Git或安装包。所用固定文件摘要、完整特征顺序、下载地址和运行协议在 `examples/real/public_tabular_source.json`，源文件若改变则拒绝，不更新预期迎合下载或模型结果。
@@ -15,7 +17,7 @@ python tools/build_public_tabular_notebook.py --output outside-lessons/08_public
 在完整源码和对应原生Python环境下打开它，从上到下逐个Shift+Enter。Notebook直接读取源文件、检查数据、声明划分并调用公开API，不用runpy包住训练脚本。首次运行从UCI官方下载约129KB，后续复用校验通过的缓存。也可以先下载：
 
 ```powershell
-python examples/real/download_public_tabular.py --output E:/my-radiomics-cache/uci-wdbc
+python examples/real/download_public_tabular.py --output $WORKDIR/my-radiomics-cache/uci-wdbc
 ```
 
 `--from-cache` 可指定已核验原始文件的目录，供离线复制。缓存必须在Git工作树之外。发现同名文件内容不同会报错，拒绝覆盖，不从镜像自动接受另一版本。
@@ -23,9 +25,9 @@ python examples/real/download_public_tabular.py --output E:/my-radiomics-cache/u
 交互运行会寻找仓库并创建新临时输出。批量执行者可在执行前注入：
 
 ```python
-TUTORIAL_REPO_ROOT = "D:/my-project/radiomics"
-TUTORIAL_DATA_ROOT = "E:/my-radiomics-cache/uci-wdbc"
-TUTORIAL_RUN_ROOT = "E:/my-radiomics-results/wdbc-run-01"  # 必须尚不存在
+TUTORIAL_REPO_ROOT = "$WORKDIR/my-project/radiomics"
+TUTORIAL_DATA_ROOT = "$WORKDIR/my-radiomics-cache/uci-wdbc"
+TUTORIAL_RUN_ROOT = "$WORKDIR/my-radiomics-results/wdbc-run-01"  # 必须尚不存在
 ```
 
 执行者需要安装Notebook内核环境及本包；计算始终显式 `backend="rust"`。不依赖sklearn下载器或Python模型。生成器只写指定Notebook，不修改网站或共享配置；发布到教程站由主流程集成。
@@ -71,7 +73,7 @@ Notebook输出完整 `split-assignments.csv`、`study.csv`、`training/split_pla
 
 数据中既有fractal_dimension等变量作为外部数值列输入；这不新增本包的分形/图像算法支持。训练表观AUC也保留在cohort-metrics中，但不能代替OOF或固定留出。
 
-本机实际产物位于 `E:/radiomics-build/public-tabular-v1/`，这是开发验收位置，使用者无需这个盘符：
+本机实际产物位于 `$WORKDIR/public-tabular-v1/`，这是开发验收位置，使用者无需这个盘符：
 
 - 执行前冻结信息：`preexecution.json`。
 - 执行页：`execution/08_public_tabular/08_public_tabular.ipynb`，SHA256 `fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40`。

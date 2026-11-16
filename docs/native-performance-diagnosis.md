@@ -1,5 +1,7 @@
 # 原生数组边界性能诊断：固定 PAT1 CT
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 本次诊断定位了 Python 数组入口的实质开销：在同一次完整数组调用的嵌套时钟中，**Python JSON 编码、解码与 Python `deepcopy` 合计份额的中位数为52.59%**。它们既不是特征算法，也不是必要的 NIfTI I/O。当前 `ImageSample` 从已经验证过的 image/mask 再构造一次，就需要约141 ms。优先优化大缓冲区跨边界的表示和对象构造，比删除微小的特征表验证更有依据。
 
 这不意味着全部开销都来自边界。相同预载 CT 在纯 Rust 中调用原 `extract_families`，仍需约104.7 ms，包含其原有验证、离散化、矩阵和标量计算。本诊断没有证明 Rust 必然快于成熟的 C 扩展，也没有单独测量 PyRadiomics 的等价纯 C 内核。
@@ -18,7 +20,7 @@
 - 每阶段1次预热、7次实际观测；每轮轮转阶段执行顺序。共98个Python观测、63个Rust观测、7条完整数组调用的实际request trace。预热也另存原始记录。
 - 诊断运行前Root协调其他任务停止Sphinx/浏览器/编译；正式v3全部完成后发出all-clear。没有删去慢样本。
 
-测量代码快照为 `719612f`。后续提交只添加证据、说明及独立执行器的错误输出保护，不改变本次已记录的观测。全部原始计时、嵌套trace、源文件及构建身份见[诊断数据](native-performance-diagnosis-data-redacted.json)。它不包含CT像素或大型请求payload。完整本地目录为 `D:/radiomics-native-boundary-diagnosis/baseline-v3/`。
+测量代码快照为 `719612f`。后续提交只添加证据、说明及独立执行器的错误输出保护，不改变本次已记录的观测。全部原始计时、嵌套trace、源文件及构建身份见[诊断数据](native-performance-diagnosis-data-redacted.json)。它不包含CT像素或大型请求payload。完整本地目录为 `$WORKDIR/native-boundary-diagnosis/baseline-v3/`。
 
 ## 真实调用链和重复工作
 
@@ -104,7 +106,7 @@ probe直接包含被审查的 `radiomics-python/src/gateway.rs`，并直接调�
 
 ## 小规模实际内存诊断
 
-时间诊断后另作一次固定内存诊断，没有重测或替换正式性能套件：三条路径各3个fresh process，共9条观测，约4.6秒一次完成。代码快照 `bc550cd`，全部66特征仍与原冻结参考匹配。完整原始绝对RSS、阶段快照、实际PID与构建身份见[内存诊断数据](native-memory-diagnosis-data-redacted.json)，外置目录为 `D:/radiomics-native-boundary-diagnosis/memory-v1/`。
+时间诊断后另作一次固定内存诊断，没有重测或替换正式性能套件：三条路径各3个fresh process，共9条观测，约4.6秒一次完成。代码快照 `bc550cd`，全部66特征仍与原冻结参考匹配。完整原始绝对RSS、阶段快照、实际PID与构建身份见[内存诊断数据](native-memory-diagnosis-data-redacted.json)，外置目录为 `$WORKDIR/native-boundary-diagnosis/memory-v1/`。
 
 Python worker直接读冻结cropped `.npy`，Rust worker直接读同一cropped typed JSON；协调者事先逐元素核对两种载体的values/labels、完整affine和bin配置。**所有worker都未先读完整NIfTI源卷**，避免全图解码setup峰值覆盖L2阶段。每个worker在自己的进程内调用Windows `GetProcessMemoryInfo`，报告当前WorkingSetSize和PeakWorkingSetSize，最后在写完输出后补footer。
 
@@ -130,12 +132,12 @@ PeakWorkingSetSize是截至末尾footer的生命周期HWM，不是可重置的�
 
 ```powershell
 python tools/profile_native_memory.py `
-  --fixtures E:/radiomics-build/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1 `
-  --request D:/radiomics-native-boundary-diagnosis/baseline-v3/array-request.json `
-  --build-manifest E:/radiomics-build/snapshot-native-v2/build-manifest.json `
+  --fixtures $WORKDIR/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1 `
+  --request $WORKDIR/native-boundary-diagnosis/baseline-v3/array-request.json `
+  --build-manifest $WORKDIR/snapshot-native-v2/build-manifest.json `
   --rust-probe target/release/examples/profile_native_boundary.exe `
-  --native-python E:/radiomics-build/ml-path-native-v2/Scripts/python.exe `
-  --output D:/fresh-memory-diagnostic-directory --repeats 3 --acknowledge-license
+  --native-python $WORKDIR/ml-path-native-v2/Scripts/python.exe `
+  --output $WORKDIR/fresh-memory-diagnostic-directory --repeats 3 --acknowledge-license
 ```
 
 ## 是否仍有必要保留Rust
@@ -165,11 +167,11 @@ python tools/profile_native_memory.py `
 
 ```powershell
 cargo build --release --locked -p ov-radiomics-core --example profile_native_boundary
-E:/radiomics-build/ml-path-native-v2/Scripts/python.exe tools/profile_native_boundary.py `
-  --fixtures E:/radiomics-build/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1 `
-  --build-manifest E:/radiomics-build/snapshot-native-v2/build-manifest.json `
+& "$WORKDIR/ml-path-native-v2/Scripts/python.exe" tools/profile_native_boundary.py `
+  --fixtures $WORKDIR/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1 `
+  --build-manifest $WORKDIR/snapshot-native-v2/build-manifest.json `
   --rust-probe target/release/examples/profile_native_boundary.exe `
-  --output D:/fresh-external-diagnostic-directory --acknowledge-license
+  --output $WORKDIR/fresh-external-diagnostic-directory --acknowledge-license
 ```
 
 若设置CARGO_TARGET_DIR，probe路径需要对应调整。输出必须是新目录；脚本不修改参考环境、Golden、正式raw或既有诊断结果。所有原始观测和失败保留；这仍是暖OS缓存、单线程、单个公开CT的诊断，未建立其他数据、机器、冷启动、并行扩展或最大内存的性能结论。

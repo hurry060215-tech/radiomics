@@ -1,5 +1,7 @@
 # 小型标量精度审计：先比较准确性，再决定实现归属
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 本审计不修改算法、Golden、默认定义、数值容差或依赖。它只检验同一实际float64输入、同一定义下，现有Rust与公开PyRadiomics3.0.1哪个更接近独立精确参考。**相互更接近不等于更准确，使用Rust也不自动更准确。** 速度、峰值内存、数学精度、可部署性需要分别量化，不能由语言名称推定。
 
 ## 首轮冻结范围
@@ -16,7 +18,7 @@
 
 分数的整数分子/分母是精确参考；Decimal80只作可读展示。不把打印的0.1当作理论精确1/10，不以显示小数位数或格式化round判断精度。
 
-manifest已经在任何Rust/PyRadiomics计算之前由工具的 `freeze` 命令写入：`D:/radiomics-numeric-accuracy-audit/manifest.json`，SHA256 **`a7ae74c4ab250f2532042041e96f15477baa0171e3202a4fc10d5ceb6bc9581a`**。它包含输入f64 hex、精确参考、正确舍入的f64参考、公式、配置和工具源码SHA。源码与本协议先提交，再运行两个worker，随后仅追加结果报告，不重录参考。
+manifest已经在任何Rust/PyRadiomics计算之前由工具的 `freeze` 命令写入：`$WORKDIR/numeric-accuracy-audit/manifest.json`，SHA256 **`a7ae74c4ab250f2532042041e96f15477baa0171e3202a4fc10d5ceb6bc9581a`**。它包含输入f64 hex、精确参考、正确舍入的f64参考、公式、配置和工具源码SHA。源码与本协议先提交，再运行两个worker，随后仅追加结果报告，不重录参考。
 
 ## 指标及边界
 
@@ -29,8 +31,8 @@ manifest已经在任何Rust/PyRadiomics计算之前由工具的 `freeze` 命令�
 ## 复查命令
 
 ```powershell
-python tools/audit_scalar_accuracy.py freeze --output D:/new-scalar-audit
-python tools/audit_scalar_accuracy.py run --manifest D:/new-scalar-audit/manifest.json --manifest-sha256 <freeze打印的摘要> --native-python <安装原生包的python> --python301 <已固定公开PyRadiomics3.0.1环境的python>
+python tools/audit_scalar_accuracy.py freeze --output $WORKDIR/new-scalar-audit
+python tools/audit_scalar_accuracy.py run --manifest $WORKDIR/new-scalar-audit/manifest.json --manifest-sha256 <freeze打印的摘要> --native-python <安装原生包的python> --python301 <已固定公开PyRadiomics3.0.1环境的python>
 ```
 
 输出目录和JSON使用独占创建；不覆盖已有参考/worker/report。每个worker记录解释器、NumPy、实际原生扩展或PyRadiomics源码SHA与版本。脚本只启动已有环境，不安装或修改它们。实际比较结果在冻结之后单独补充。
@@ -123,10 +125,10 @@ Mean变得更稳定可能改变依赖它的中心矩结果，但不代表这些�
 
 ## 原始结果、版本与不变性
 
-原报告：`D:/radiomics-numeric-accuracy-audit/report.json`，SHA256 **`79e90b6cfe086573f7c325d20a6e5e532da0ad6e341ca9d946840031dcbce17c`**。补充执行前后该SHA逐字节一致；原输入manifest也保持不变。
+原报告：`$WORKDIR/numeric-accuracy-audit/report.json`，SHA256 **`79e90b6cfe086573f7c325d20a6e5e532da0ad6e341ca9d946840031dcbce17c`**。补充执行前后该SHA逐字节一致；原输入manifest也保持不变。
 
-补充报告：`D:/radiomics-numeric-accuracy-audit/stable-prototype/report.json`，SHA256 **`a8c399aefb7f94fdbf961507360562463b34c475583c40b539933b8360379823`**。两份报告分开，不用原型结果替换原生或Python实测。
+补充报告：`$WORKDIR/numeric-accuracy-audit/stable-prototype/report.json`，SHA256 **`a8c399aefb7f94fdbf961507360562463b34c475583c40b539933b8360379823`**。两份报告分开，不用原型结果替换原生或Python实测。
 
-实际解释器均为Python3.9.21。原生安装环境NumPy2.0.2，仅承担数组转换；Rust计算的扩展SHA256为 `bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c`。公开参考环境为原有 `E:/radiomics-build/golden/env-301`，PyRadiomics **v3.0.1**、NumPy **1.23.0**、SimpleITK **2.4.1**；firstorder源码SHA256为 `80d01b13750c4180f4ae2f8dbefab0ae95856ab6836ccd97fa13dfa5cbee54d9`。没有安装或修改参考依赖。
+实际解释器均为Python3.9.21。原生安装环境NumPy2.0.2，仅承担数组转换；Rust计算的扩展SHA256为 `bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c`。公开参考环境为原有 `$WORKDIR/golden/env-301`，PyRadiomics **v3.0.1**、NumPy **1.23.0**、SimpleITK **2.4.1**；firstorder源码SHA256为 `80d01b13750c4180f4ae2f8dbefab0ae95856ab6836ccd97fa13dfa5cbee54d9`。没有安装或修改参考依赖。
 
 主审计工具实际源码SHA256为 `66aaaa6d7875cb6a1b1461b6e9839fff9942325b4217498a8a7dacbc117febe3`；每个worker JSON有其输出f64 hex、输入位核对、身份与源码摘要。审计范围没有延伸到RMS、Skewness、Kurtosis、纹理、模型、统计推断或实际医学队列；不据此泛化“Rust一定更准”或“所有Python实现都有同样问题”。

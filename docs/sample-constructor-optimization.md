@@ -1,5 +1,7 @@
 # 小范围优化：省去Sample验证前的临时深复制
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 本次只优化Python包装层，不改Rust数值算法、ABI、模型格式、ROI定义、Golden或容差。
 这是按已测热点作有限修改，不是重新宣称整个Rust引擎达到加速目标。
 
@@ -53,7 +55,7 @@
 
 完整[路径脱敏数据](sample-constructor-optimization-data-redacted.json)保留每轮、warmup、worker PID、
 内存footer、输入/包/二进制摘要和前后身份复核。外置运行目录：
-`D:/radiomics-sample-constructor/comparison-v2/`。
+`$WORKDIR/sample-constructor/comparison-v2/`。
 
 首次 `comparison-v1` 因原native-only环境没有threadpoolctl而各worker失败，未取得有效
 计时；失败报告和日志保留。协调器原先未用失败报告返回非零，已修正，并将依赖预检移到

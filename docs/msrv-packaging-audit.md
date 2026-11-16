@@ -1,6 +1,7 @@
 # Rust 1.85 and crate packaging audit
 
-<!-- PR-2: replace recorded machine paths with reproducible work-directory placeholders. -->
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 
 Audit date: 2026-11-14. Source baseline:
 `cbdbdebbf418681f3e1d215a754e3251ef0083f6`, the independent `research-m3`
@@ -33,8 +34,8 @@ claim that older Rust versions work or that a future unlocked graph will work.
 ## Toolchain and commands
 
 The repository toolchain was isolated; cache and build directories
-were task-owned locations on E:.
-<!-- PR-2: document the isolated toolchain location relative to the workspace. -->
+were task-owned locations outside the source checkout.
+The optional repository-local Rust setup is `.build-tools/rustup`; task-owned caches and build outputs are under `$WORKDIR`.
 Installed minimal toolchain:
 
 ```text
@@ -52,17 +53,17 @@ directory. Actual subsequent `rustup toolchain list`, `cargo +1.85.0 -V`,
 remained `stable-x86_64-pc-windows-msvc` (Rust 1.100.0).
 
 ```powershell
-# PR-2: local toolchain setup path omitted pending workspace documentation.
-$env:CARGO_HOME='E:\radiomics-build\cargo'
-$env:CARGO_TARGET_DIR='E:\radiomics-build\target-msrv'
-$env:TEMP='E:\radiomics-build\tmp'
+. ./tools/windows-rust-env.ps1
+$env:CARGO_HOME="$WORKDIR/cargo"
+$env:CARGO_TARGET_DIR="$WORKDIR/target-msrv"
+$env:TEMP="$WORKDIR/tmp"
 $env:TMP=$env:TEMP
 cargo +1.85.0 check --workspace --all-targets --locked
 cargo package --list -p ov-radiomics-core --locked
 cargo package --list -p ov-radiomics-cli --locked
 cargo package --list -p ov-radiomics-python --locked
 cargo +1.85.0 package -p ov-radiomics-core --locked --allow-dirty `
-    --target-dir E:/radiomics-build/target-package-verify
+    --target-dir $WORKDIR/target-package-verify
 ```
 
 `--allow-dirty` on the final development package acknowledges only temporary M3
@@ -169,20 +170,20 @@ dependency graph. No hashing policy was changed during this audit.
 Verified development core archive:
 
 ```text
-E:\radiomics-build\target-package-verify\package\ov-radiomics-core-0.1.0.crate
+$WORKDIR/target-package-verify/package/ov-radiomics-core-0.1.0.crate
 67 files; 235027 bytes
 SHA256 c2de4d6983323f71393e05f3b07568703e9ce676227dd1ab0b0302fdc11195da
 ```
 
 The first clean, unverified-package-command archive was
-`E:\radiomics-build\target-msrv\package\ov-radiomics-core-0.1.0.crate`
+`$WORKDIR/target-msrv/package/ov-radiomics-core-0.1.0.crate`
 (235347 bytes, SHA256
 `a9e122138f11f1868f87dc44b52dcb271e357c46dd458157a3c81d30cb468f99`).
 It was separately unpacked and its library checked successfully with Rust 1.85;
 the second archive additionally passed Cargo's actual package verification.
 
 Raw command logs and actual package lists are retained under
-`E:\radiomics-build\msrv-packaging-audit\`, including:
+`$WORKDIR/msrv-packaging-audit/`, including:
 
 - `msrv-check-1.85.0.txt`
 - `ov-radiomics-{core,cli,python}-package-list.txt`

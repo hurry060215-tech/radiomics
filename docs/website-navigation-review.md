@@ -1,6 +1,7 @@
 # 网站导航调整：来源、设计与验收
 
-<!-- PR-2: replace recorded machine paths with reproducible work-directory placeholders. -->
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 
 本次只调整网站信息架构与展示，不修改算法、Golden、八篇已执行 Notebook 或执行收据。
 
@@ -47,11 +48,16 @@ API
 
 在独立 worktree 执行以下命令，未修改构建工具：
 
-<!-- PR-2: restore the source-generation and Sphinx commands with an explicit documentation interpreter. -->
+Activate the documentation virtual environment, then run from the repository root:
 
-首次构建生成 33 份维护文档引用页，57 个 Sphinx 页面全部通过，退出码 0，无 warning。Notebook execution 保持 off，未重新执行、训练或下载数据。增补 API 索引与样式后再次用 `-a -W --keep-going` 完整写出页面，最终退出码 0，无 warning；日志保留在 `E:/radiomics-build/website-navigation-review/sphinx-final.log`。
+```powershell
+python tools/build_website_sources.py
+python -m sphinx -W --keep-going -b html website website/_build/html
+```
 
-实际 Chrome headless 截图保留在 `E:/radiomics-build/website-navigation-review/`：
+首次构建生成 33 份维护文档引用页，57 个 Sphinx 页面全部通过，退出码 0，无 warning。Notebook execution 保持 off，未重新执行、训练或下载数据。增补 API 索引与样式后再次用 `-a -W --keep-going` 完整写出页面，最终退出码 0，无 warning；日志保留在 `$WORKDIR/website-navigation-review/sphinx-final.log`。
+
+实际 Chrome headless 截图保留在 `$WORKDIR/website-navigation-review/`：
 
 | 文件 | 窗口尺寸 | 目视检查 |
 |---|---|---|
