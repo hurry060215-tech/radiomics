@@ -209,7 +209,7 @@ impl OwnedArraySample {
     fn image_array<'py>(this: Bound<'py, Self>) -> PyResult<Bound<'py, PyArray3<f64>>> {
         let owned = this.borrow();
         let shape = owned.geometry.shape;
-        let view = ArrayView3::from_shape((shape[2], shape[1], shape[0]), &*owned.values)
+        let view = ArrayView3::from_shape((shape[2], shape[1], shape[0]), &owned.values)
             .map_err(error)?;
         // SAFETY: the immutable Arc cannot reallocate or mutate, and NumPy keeps
         // `this` alive as its base. The returned array is made read-only before
