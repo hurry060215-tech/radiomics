@@ -19,7 +19,7 @@ For a downloaded candidate wheel, use a fresh virtual environment:
 python -m venv .venv
 # Linux: source .venv/bin/activate
 # Windows PowerShell: .\.venv\Scripts\Activate.ps1
-python -m pip install /path/to/ov_radiomics-0.1.0-<matching-tags>.whl
+python -m pip install "dist/ov_radiomics-0.1.0-<matching-tags>.whl"
 python -c "import ov_radiomics as r; print(r.__version__); print(r.backend_info())"
 ```
 

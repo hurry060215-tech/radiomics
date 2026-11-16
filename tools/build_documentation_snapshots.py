@@ -90,26 +90,29 @@ def build_site(source, destination, version, source_revision, base_url):
             env=environment,
             check=True,
         )
-    subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "sphinx",
-            "-W",
-            "--keep-going",
-            "-b",
-            "html",
-            "-D",
-            "html_baseurl=" + base_url.rstrip("/") + "/" + version + "/",
-            "-A",
-            "build_revision=" + source_revision,
-            str(source / "website"),
-            str(destination),
-        ],
-        cwd=source,
-        env=environment,
-        check=True,
-    )
+    with tempfile.TemporaryDirectory(prefix="radiomics-doctrees-") as doctrees:
+        subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "sphinx",
+                "-W",
+                "--keep-going",
+                "-b",
+                "html",
+                "-d",
+                doctrees,
+                "-D",
+                "html_baseurl=" + base_url.rstrip("/") + "/" + version + "/",
+                "-A",
+                "build_revision=" + source_revision,
+                str(source / "website"),
+                str(destination),
+            ],
+            cwd=source,
+            env=environment,
+            check=True,
+        )
 
 
 def restore_published(root, output, published_ref, restore_latest):
