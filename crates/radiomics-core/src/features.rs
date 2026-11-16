@@ -3,6 +3,8 @@
 //! `python_golden_v1` follows PyRadiomics 3.0.1, including non-contiguous
 //! discretized gray labels and the distinction between direction averaging and
 //! count-matrix merging. No Python code or external extraction engine is called.
+//! Mean uses stable compensated summation; high-dynamic-range cancellation can
+//! intentionally differ from the frozen Python mean (scalar-accuracy-audit.md).
 use crate::contracts::{
     Discretization, ExtractionConfig, ImageVolume, MaskVolume, SpatialUnit, TextureAggregation,
 };
@@ -544,21 +546,26 @@ fn entropy(probabilities: impl Iterator<Item = f64>) -> f64 {
         .map(|p| p * (p + f64::EPSILON).log2())
         .sum::<f64>()
 }
-// Keep a fixed reduction tree for the frozen compatibility profile. Pairwise
-// summation is not exact summation; see the separate mathematical audit.
-fn pairwise_sum(values: &[f64]) -> f64 {
-    match values {
-        [] => 0.,
-        [value] => *value,
-        _ => {
-            let middle = values.len() / 2;
-            pairwise_sum(&values[..middle]) + pairwise_sum(&values[middle..])
-        }
+// Neumaier compensation preserves low-order terms even when the next value is
+// larger than the running total. Standard Kahan alone does not fix the frozen
+// cancellation input; this is a documented mean-compatibility deviation.
+fn compensated_sum(values: &[f64]) -> f64 {
+    let mut total = 0.0_f64;
+    let mut correction = 0.0_f64;
+    for &value in values {
+        let next = total + value;
+        correction += if total.abs() >= value.abs() {
+            (total - next) + value
+        } else {
+            (value - next) + total
+        };
+        total = next;
     }
+    total + correction
 }
 fn first_order(values: &[f64], discrete: &DiscretizedImage, shift: f64) -> BTreeMap<String, f64> {
     let n = values.len() as f64;
-    let mean = pairwise_sum(values) / n;
+    let mean = compensated_sum(values) / n;
     let moments = |p: i32| values.iter().map(|v| (v - mean).powi(p)).sum::<f64>() / n;
     let variance = moments(2);
     let energy = values.iter().map(|v| (v + shift).powi(2)).sum::<f64>();
