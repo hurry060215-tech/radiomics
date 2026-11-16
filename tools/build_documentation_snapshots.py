@@ -234,7 +234,7 @@ def build(
         else "<li>" + html.escape(release_tag) + ": " + status + "</li>"
     )
     source_note = (
-        '<p>Building the frozen v0.1.0 Git source needs a packaging-asset '
+        "<p>Building the frozen v0.1.0 Git source needs a packaging-asset "
         'preparation step. See the <a href="latest/en/installation.html'
         '#frozen-source-tag-builds">current installation notes</a>.</p>'
         if release_tag == "v0.1.0" and release_output.exists()
