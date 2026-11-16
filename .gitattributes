@@ -1,3 +1,8 @@
+# Keep CI, local setup and site styling out of the primary-language summary.
+/tools/check_cli_no_python.sh -linguist-detectable
+/tools/windows-rust-env.ps1 -linguist-detectable
+/website/_static/custom.css -linguist-detectable
+
 # Cargo.lock participates in the native implementation identity. Keep the same
 # bytes on Windows and Linux checkouts without changing dependency selection.
 /Cargo.lock text eol=lf
