@@ -1,5 +1,7 @@
 # Independent public PAT1 CT native acceptance
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 The frozen public CT validation passed for immutable native snapshot
 `9732b3a4c9991343d9597bf27dcbe5f7be02b597`, core implementation SHA256
 `a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8`.
@@ -96,17 +98,17 @@ The standalone runner [public_ct_native_runner.py](../tests/public_ct_native_run
 never generates references and requires a fresh external output directory:
 
 ```powershell
-E:/radiomics-build/native-env/Scripts/python.exe tests/public_ct_native_runner.py `
-    --data-dir E:/radiomics-build/public-ct-v1/source `
-    --cli E:/radiomics-build/snapshot-native-v1/cli/radiomics.exe `
-    --build-manifest E:/radiomics-build/snapshot-native-v1/build-manifest.json `
-    --probe E:/radiomics-build/public-ct-v1/native-probe-v1.json `
-    --output E:/radiomics-build/public-ct-v1/fresh-native-acceptance
+& "$WORKDIR/native-env/Scripts/python.exe" tests/public_ct_native_runner.py `
+    --data-dir $WORKDIR/public-ct-v1/source `
+    --cli $WORKDIR/snapshot-native-v1/cli/radiomics.exe `
+    --build-manifest $WORKDIR/snapshot-native-v1/build-manifest.json `
+    --probe $WORKDIR/public-ct-v1/native-probe-v1.json `
+    --output $WORKDIR/public-ct-v1/fresh-native-acceptance
 ```
 
 Raw native extractions, CLI output/config/cohort tables and the complete receipt
-are retained under `E:\radiomics-build\public-ct-v1\native-acceptance-v1`.
-The probe output is `E:\radiomics-build\public-ct-v1\native-probe-v1.json`.
+are retained under `$WORKDIR/public-ct-v1/native-acceptance-v1`.
+The probe output is `$WORKDIR/public-ct-v1/native-probe-v1.json`.
 The checked-in [native acceptance report](../golden/public_ct_v1/native_acceptance_report.json)
 retains per-feature errors, units/geometry, exact-count results, immutable file
 identity, reference hashes and separate compatibility/IBSI fields. Basic voxel

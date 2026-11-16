@@ -4,6 +4,14 @@ Start with a reproducible issue or a narrowly scoped pull request. Keep the
 package independently installable. Do not add deferred capabilities as placeholder
 APIs or claim support from a third-party name appearing in a workflow.
 
+## 与 omicverse 的关系
+
+本包以 MIT 许可证独立发行；omicverse 使用 GPL-3.0。
+由 omicverse 仓库维护的 `omicverse/radiomics/` 可以引用本包：MIT 代码可以
+用于 GPL 项目，适配层按 omicverse 的许可证维护。
+不得将 omicverse 的 GPL 实现复制回本包后按 MIT 发布。贡献本包时，应保持
+独立实现和清晰的来源记录；适配层的修改提交到 omicverse 仓库。
+
 ## Development environment
 
 Python3.9+, Rust1.85+ and a platform linker are required. Use a virtual environment;

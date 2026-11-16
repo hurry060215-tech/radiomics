@@ -1,5 +1,7 @@
 # Independent Benchmark v2 audit, 2026-11-14
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 This audit starts from integration checkpoint
 `597c78feed96d9af27799d89b85cc34357f89f24`. It changes benchmark evidence
 handling and its tests, not numerical algorithms, Golden expected values,
@@ -108,7 +110,7 @@ No aggregate speedup across cases or suites is reported.
 Raw artifact location on the acceptance machine:
 
 ```text
-E:\radiomics-build\benchmark-v2\metrics-warm-acceptance-v2-20261114.json
+$WORKDIR/benchmark-v2/metrics-warm-acceptance-v2-20261114.json
 SHA256 e738b2673617b7fda7258b138ff85dfd7d9f393d43a195fe280fb2409e268242
 ```
 

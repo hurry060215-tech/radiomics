@@ -1,5 +1,7 @@
 # Independent native development and acceptance ledger
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 The milestone closure below is historical, version-scoped delivery evidence.
 The later [native capability boundaries](native-boundaries.md),
 [resource diagnosis](native-performance-diagnosis.md) and
@@ -197,7 +199,7 @@ The later immutable v3 snapshot (`45140bf`) was built with the same native
 core identity and explicitly recorded release flags. Its installed Windows wheel
 passed 71 native-only tests, including the added table/center APIs and identity
 boundaries. The receipt and wheel/CLI are at
-`E:/radiomics-build/snapshot-native-v3/`; this does not replace the immutable v2
+`$WORKDIR/snapshot-native-v3/`; this does not replace the immutable v2
 software used for performance measurement.
 
 Final runtime source `76808bb` passed all nine jobs in

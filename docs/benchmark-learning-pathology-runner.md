@@ -1,5 +1,7 @@
 # Learning / Pathology measurement runner
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 The main-reviewed plan is
 `33911b9585e934a43ec08e620bae37fcfd1061293799023b14243e49b80b874b`.
 The runner keeps eight declared workload rows, two separate cold/warm states,
@@ -42,7 +44,7 @@ broadcasting. Golden data, expected values and tolerances are not regenerated.
 Operations are intentionally staged:
 
 1. `--prepare-inputs`: deterministic bytes only, fresh output. Completed inputs
-   are under `E:/radiomics-build/benchmark-v2/learning-pathology-inputs-v1`.
+   are under `$WORKDIR/benchmark-v2/learning-pathology-inputs-v1`.
 2. `--freeze-environments`: validate immutable build receipt/wheel, actual package
    bytes/versions and numerical resources; produces a reviewable binding.
 3. `--freeze-derived`: one untimed independent pathology-spec pass generates

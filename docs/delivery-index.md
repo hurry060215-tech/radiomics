@@ -1,5 +1,7 @@
 # Development delivery index
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 Later audit update: the [scalar accuracy audit](scalar-accuracy-audit.md) found
 an unresolved high-dynamic-range compatibility counterexample. Historical
 delivery/test receipts below remain valid for their recorded scope, but they
@@ -38,13 +40,13 @@ versioned completion audit, subsequent audits and latest PR CI together.
 
 ## Local build artifacts
 
-`E:/radiomics-build/snapshot-native-v3/build-manifest.json` binds the Windows
+`$WORKDIR/snapshot-native-v3/build-manifest.json` binds the Windows
 wheel and CLI to source45140bff, compiler/target/release flags, implementation
 identity and every wheel member. The wheel is under `wheels/` and the executable
 under `cli/`. It was installed into the isolated native environment and passed
 71 native-only tests. Later CLI extensions require a newer final artifact.
 
-`E:/radiomics-build/source-delivery-v1/` contains the inspected source archive,
+`$WORKDIR/source-delivery-v1/` contains the inspected source archive,
 unpacked tree, six successful tutorial outputs and `tutorial-evidence.json`.
 That receipt verifies tutorial/assets execution with the installed v3 wheel;
 it does not substitute for the separate locked source-build validation.

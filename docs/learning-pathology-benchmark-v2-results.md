@@ -1,5 +1,7 @@
 # ML & Statistics and lightweight Pathology: measured results
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 All 224 predeclared observations completed with matching outputs: eight workload rows × cold/warm × seven alternating backend pairs. The two suites are reported separately. These are Windows synthetic-workload results, not a clinical-validation or universal-engine speed claim.
 
 Native source `48ecb310a2d9ccb5da821733ee1190ce1764f27a`, implementation `a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8`, wheel `f2c8e0cbf55bfdf56ee4efb7b4d664112028618cb6bf03e0761170730214c160`. Plan `33911b9585e934a43ec08e620bae37fcfd1061293799023b14243e49b80b874b`, source-text binding `0a0944f104703e3008a93ad36ec56e5e6d473828fe6890e950c602e1f7f97c9c`, environment/runner binding `13254953c839f4aa51687a7acd2dfdd6b2db91981577803444a23105b47801a2`.
@@ -70,6 +72,6 @@ This diagnostic contains PNG input through modeling; the two pathology-front-end
 
 ## Reproducible evidence
 
-[Archived report and per-backend distributions](../benchmarks/results/learning-pathology-native-48ecb310/report.json), [all224 raw observations](../benchmarks/results/learning-pathology-native-48ecb310/raw-observations.jsonl.gz), [artifact index](../benchmarks/results/learning-pathology-native-48ecb310/artifact-index.json). Full per-attempt CSV/JSON/stdout artifacts remain at `E:/radiomics-build/benchmark-v2/learning-pathology-full-v2-16case-1`. Uncompressed raw SHA256 `54a9892e92a65306dc8d6375718af9021a2c689491d15cdbda83d1898636449c`.
+[Archived report and per-backend distributions](../benchmarks/results/learning-pathology-native-48ecb310/report.json), [all224 raw observations](../benchmarks/results/learning-pathology-native-48ecb310/raw-observations.jsonl.gz), [artifact index](../benchmarks/results/learning-pathology-native-48ecb310/artifact-index.json). Full per-attempt CSV/JSON/stdout artifacts remain at `$WORKDIR/benchmark-v2/learning-pathology-full-v2-16case-1`. Uncompressed raw SHA256 `54a9892e92a65306dc8d6375718af9021a2c689491d15cdbda83d1898636449c`.
 
 Original untimed CSV-export adapter failures and their repaired preflight evidence remain available. No Golden expected output, published reference, numerical tolerance or native algorithm was changed to pass these measurements.

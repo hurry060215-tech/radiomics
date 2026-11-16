@@ -1,5 +1,7 @@
 # 文件驱动教程的实际验证
 
+以下路径为记录时的本机位置，复现时请替换为自己的工作目录。`$WORKDIR` 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。
+
 本页记录 `examples/real/train_table.py` 的软件验收范围。验证运行日期为2026-11-15；使用明确标注的CC0固定合成表格，不将其结果解释为真实临床预测性能。真实教程脚本本身不包含或生成这些合成标签。
 
 验证将已冻结 `golden/python_golden_v1/model_inputs.json` 的三任务记录转换为普通用户目录布局：基础数值特征CSV、按患者键的临床/结局CSV、训练/测试队列、单独无结局外部CSV和完整StudySpec。训练患者均有多个病灶；患者分组由同一公共原生API执行。
@@ -21,7 +23,7 @@
 
 独立Python3.9.21环境已实际确认没有 sklearn、statsmodels、SciPy、PyRadiomics或SimpleITK；加载的后端报告为Rust。Matplotlib用于渲染。该测试证明教程调用路径与文件角色、保存加载和原生后端工作正常；它不重新验证全部模型数学、所有Parquet逻辑类型、每个平台或临床有效性，这些范围分别由项目Golden/部署证据限定。
 
-本机可审查的输入、完整命令、输出图和receipt位于 `E:/radiomics-build/real-tutorial-validation-v1/`，`receipt.json` SHA256为 `f35e0c99101f4889b1b0bb19eff3824aada9834fdbc39997f758993d020ae344`。该盘符是本次开发验收的位置，不是使用教程所需的输入路径。你的实际文件应按[文件工作流](file-workflows.md)和[训练页面](training.md)中的相对StudySpec路径准备。
+本机可审查的输入、完整命令、输出图和receipt位于 `$WORKDIR/real-tutorial-validation-v1/`，`receipt.json` SHA256为 `f35e0c99101f4889b1b0bb19eff3824aada9834fdbc39997f758993d020ae344`。该盘符是本次开发验收的位置，不是使用教程所需的输入路径。你的实际文件应按[文件工作流](file-workflows.md)和[训练页面](training.md)中的相对StudySpec路径准备。
 
 随后两项限定补充验证的输出分别位于该目录的 `patient-unit/` 和 `embedding-doc-example/`，不重写先前receipt。embedding输入来自已冻结的 `pathology_aggregate_inputs.json`；患者层输入仅改变一行的层级布局，仍使用原固定结局。
 
