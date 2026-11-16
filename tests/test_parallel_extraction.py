@@ -1,6 +1,8 @@
 """Direction scheduling preserves exact output and an explicit local CPU budget."""
+import importlib.util
 import json
 import os
+from pathlib import Path
 import subprocess
 import sys
 
@@ -11,7 +13,12 @@ import pytest
 import ov_radiomics as rad
 from ov_radiomics._backend import try_native
 from ov_radiomics._native_common import array_features_typed_or_json
-from test_native_extraction import write_nifti
+
+_FIXTURE_PATH = Path(__file__).with_name('test_native_extraction.py')
+_FIXTURE_SPEC = importlib.util.spec_from_file_location('_parallel_nifti_fixture', _FIXTURE_PATH)
+_FIXTURE_MODULE = importlib.util.module_from_spec(_FIXTURE_SPEC)
+_FIXTURE_SPEC.loader.exec_module(_FIXTURE_MODULE)
+write_nifti = _FIXTURE_MODULE.write_nifti
 
 pytestmark = pytest.mark.skipif(try_native() is None, reason='Native extension not built.')
 THREADS = min(8, len(os.sched_getaffinity(0)) if hasattr(os, 'sched_getaffinity') else (os.cpu_count() or 1))
