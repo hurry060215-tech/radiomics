@@ -1,71 +1,242 @@
 {
-  "kind": "review_only_not_release_deployment_or_registry_publication",
-  "built_source_revision": "77d5303c24270ab7cc78d34840e24e89af4d6dfb",
-  "built_source_tree": "3c930ccdb72d2935a09836596d2110355b874978",
-  "component_heads": {
-    "1": {
-      "branch": "chore/remove-alignment-evidence",
-      "head": "626baf204561abcf27b2c8e035af03e5b44796da"
+  "schema": "radiomics.public-integration-review-evidence.v2",
+  "purpose": "Review/evidence documentation only; no release, deployment or registry-publication action.",
+  "historical_checkpoint": {
+    "kind": "review_only_not_release_deployment_or_registry_publication",
+    "built_source_revision": "77d5303c24270ab7cc78d34840e24e89af4d6dfb",
+    "built_source_tree": "3c930ccdb72d2935a09836596d2110355b874978",
+    "component_heads": {
+      "1": {
+        "branch": "chore/remove-alignment-evidence",
+        "head": "626baf204561abcf27b2c8e035af03e5b44796da"
+      },
+      "2": {
+        "branch": "chore/reproducibility-metadata",
+        "head": "ba873e6c87b22907dfafd9450c1d78286dcdea2e"
+      },
+      "3": {
+        "branch": "ci/consistent-documentation-publication",
+        "head": "ee7e80b968923b4795a3adaccac5a3390e5be2c8"
+      },
+      "4": {
+        "branch": "fix/pairwise-mean-compatibility",
+        "head": "95e3f3e4b7353b50fc34af31d323ab44cca87020"
+      },
+      "5": {
+        "branch": "ci/distribution-readiness",
+        "head": "89e723c6dfcb411a35837a34cf33327f8465b71d"
+      },
+      "7": {
+        "branch": "perf/typed-feature-buffers",
+        "head": "69b252fd8c3575d2a24975bf424d211aa172be5b"
+      },
+      "8": {
+        "branch": "perf/deterministic-feature-parallelism",
+        "head": "79bd90ff851db74f71baf41ae14ed8bb1d4fdf1f"
+      },
+      "9": {
+        "branch": "docs/engineering-and-versioned-guides",
+        "head": "1d5232992cea53511c679905071673a4a555d068"
+      }
     },
-    "2": {
-      "branch": "chore/reproducibility-metadata",
-      "head": "ba873e6c87b22907dfafd9450c1d78286dcdea2e"
+    "tag_target": "bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e",
+    "tag_excludes_pr7_pr8_pr9": true,
+    "wheel_sha256": "c8bbb3f9150a7ad2c582b06e1a6207b7b280ae7edfc3e5661c2cc54eb01bbb9c",
+    "native_sha256": "1c126bce2e967b365e6d0a79740f0c1b208db2d46cf6440e20d1f1abc9dcc1dc",
+    "implementation_sha256": "2bfb6ac2c20560ced773e773d8d458a767f2260273a06b5569e3c68d5a406b27",
+    "backend_info": {
+      "metrics_backend": "rust",
+      "rust_core_version": "0.1.0"
     },
-    "3": {
-      "branch": "ci/consistent-documentation-publication",
-      "head": "ee7e80b968923b4795a3adaccac5a3390e5be2c8"
+    "acceptance_scope": "Local Windows x86_64 Python 3.9 review run, not an integrated remote-CI claim or a release artifact",
+    "pytest": {
+      "passed": 280,
+      "skipped": 5,
+      "xfailed": 0,
+      "warnings": 25,
+      "seconds": 12.88
     },
-    "4": {
-      "branch": "fix/pairwise-mean-compatibility",
-      "head": "95e3f3e4b7353b50fc34af31d323ab44cca87020"
+    "checks": {
+      "cargo_fmt": 0,
+      "strict_workspace_clippy": 0,
+      "frozen_git_blobs_unchanged": 70,
+      "original_public_sha_mappings_passed": 16,
+      "source_forbidden_hits": 0,
+      "wheel_forbidden_hits": 0
     },
-    "5": {
-      "branch": "ci/distribution-readiness",
-      "head": "89e723c6dfcb411a35837a34cf33327f8465b71d"
-    },
-    "7": {
-      "branch": "perf/typed-feature-buffers",
-      "head": "69b252fd8c3575d2a24975bf424d211aa172be5b"
-    },
-    "8": {
-      "branch": "perf/deterministic-feature-parallelism",
-      "head": "79bd90ff851db74f71baf41ae14ed8bb1d4fdf1f"
-    },
-    "9": {
-      "branch": "docs/engineering-and-versioned-guides",
-      "head": "1d5232992cea53511c679905071673a4a555d068"
+    "post_validation_changes": "Main merge wrapper left the complete tree unchanged; final follow-ups only add review documentation and portable acceptance/dependency records. Runtime source, tests, tools and package metadata are unchanged.",
+    "separate_gpl_adapter": {
+      "url": "https://github.com/omicverse/omicverse/pull/1096",
+      "head": "c9f622b72928db0fe8a6e42d334d7dc34ca2d48d",
+      "local_tests_passed": 19,
+      "registry_extra_active": false
     }
   },
-  "tag_target": "bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e",
-  "tag_excludes_pr7_pr8_pr9": true,
-  "wheel_sha256": "c8bbb3f9150a7ad2c582b06e1a6207b7b280ae7edfc3e5661c2cc54eb01bbb9c",
-  "native_sha256": "1c126bce2e967b365e6d0a79740f0c1b208db2d46cf6440e20d1f1abc9dcc1dc",
-  "implementation_sha256": "2bfb6ac2c20560ced773e773d8d458a767f2260273a06b5569e3c68d5a406b27",
-  "backend_info": {
-    "metrics_backend": "rust",
-    "rust_core_version": "0.1.0"
+  "current_main_verified": {
+    "source_main": "f3ec58cac4ed883331f56b30155ac80998056b80",
+    "source_url": "https://github.com/hurry060215-tech/radiomics/commit/f3ec58cac4ed883331f56b30155ac80998056b80",
+    "component_heads": {
+      "1": {
+        "branch": "chore/remove-alignment-evidence",
+        "head": "626baf204561abcf27b2c8e035af03e5b44796da",
+        "status": "merged_into_main"
+      },
+      "2": {
+        "branch": "chore/reproducibility-metadata",
+        "head": "ba873e6c87b22907dfafd9450c1d78286dcdea2e",
+        "status": "merged_into_main"
+      },
+      "3": {
+        "branch": "ci/consistent-documentation-publication",
+        "head": "ee7e80b968923b4795a3adaccac5a3390e5be2c8",
+        "status": "merged_into_main"
+      },
+      "4": {
+        "branch": "fix/pairwise-mean-compatibility",
+        "head": "95e3f3e4b7353b50fc34af31d323ab44cca87020",
+        "status": "merged_into_main"
+      },
+      "5": {
+        "branch": "ci/distribution-readiness",
+        "head": "df6cbbd7e2e57244b36bbc3d6f8bd6e2c08843cb",
+        "status": "merged_into_main"
+      },
+      "7": {
+        "branch": "perf/typed-feature-buffers",
+        "head": "4fa695e99ee8aeb69dffa2d45124dfd393b4ecfd",
+        "status": "merged_into_main"
+      },
+      "8": {
+        "branch": "perf/deterministic-feature-parallelism",
+        "head": "154cf8bd558e486bc23682dc5f72cfbf79eafea8",
+        "status": "merged_into_main"
+      },
+      "9": {
+        "branch": "docs/engineering-and-versioned-guides",
+        "head": "0c57a1c7f3b77b23f7e14ac4c611ae5912e5bfed",
+        "status": "merged_into_main"
+      }
+    },
+    "ci": {
+      "run_id": 43884787523,
+      "url": "https://github.com/hurry060215-tech/radiomics/actions/runs/43884787523",
+      "passed_jobs": 16,
+      "conclusion": "success"
+    },
+    "fresh_environment_main_CI_wheel": {
+      "artifact_origin": "Actual merged-main GitHub Actions wheel",
+      "wheel_name": "ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+      "wheel_sha256": "624f5c0394388c2490f71e9ccba61c712c20fea4bbfdc631493587e36991cc1e",
+      "native_sha256": "bddd31a502173135ff41adbb002b08a586f58b708f415214be9fa44b48504fc6",
+      "implementation_sha256": "2bfb6ac2c20560ced773e773d8d458a767f2260273a06b5569e3c68d5a406b27",
+      "backend": {
+        "metrics_backend": "rust",
+        "rust_core_version": "0.1.0"
+      },
+      "platform": "Windows x86_64",
+      "python": "3.9.21",
+      "system_site_packages": false,
+      "versions": {
+        "ov-radiomics": "0.1.0",
+        "numpy": "2.0.2",
+        "pandas": "2.3.3",
+        "matplotlib": "3.9.4",
+        "pytest": "8.4.2",
+        "scipy": "1.13.1",
+        "scikit-learn": "1.6.1",
+        "statsmodels": "0.14.6",
+        "joblib": "1.5.3",
+        "seaborn": "0.13.2"
+      },
+      "pytest": {
+        "passed": 290,
+        "skipped": 5,
+        "xfailed": 0,
+        "warnings": 14,
+        "seconds": 17.96
+      }
+    },
+    "production_documentation": {
+      "source": "f3ec58cac4ed883331f56b30155ac80998056b80",
+      "workflows": [
+        {
+          "run_id": 43884787496,
+          "url": "https://github.com/hurry060215-tech/radiomics/actions/runs/43884787496",
+          "build": "success",
+          "deploy": "success",
+          "smoke": "success"
+        },
+        {
+          "run_id": 43885696683,
+          "url": "https://github.com/hurry060215-tech/radiomics/actions/runs/43885696683",
+          "build": "success",
+          "deploy": "success",
+          "smoke": "success"
+        }
+      ],
+      "live_http": {
+        "base_url": "https://hurry060215-tech.github.io/radiomics/",
+        "status": "passed",
+        "completed_at": "2026-11-16T14:36:47.748438+00:00",
+        "revision_markers": {
+          "build_revision": "f3ec58cac4ed883331f56b30155ac80998056b80",
+          "latest_revision": "f3ec58cac4ed883331f56b30155ac80998056b80",
+          "releases": {
+            "v0.1.0": "bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e"
+          }
+        },
+        "verified_checks": 78,
+        "generated_api_pages_verified": 50
+      },
+      "production_artifact_scan": {
+        "files_scanned": 785,
+        "forbidden_hits": [],
+        "flat_files_equal_latest_and_manifest": 292
+      },
+      "release_preservation": {
+        "source_tag": "v0.1.0",
+        "source_commit": "bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e",
+        "before_files": 181,
+        "after_files": 181,
+        "changed_paths_sha_or_bytes": [],
+        "all_release_bytes_preserved": true,
+        "production_inventory_sha256": "a3695b76f2103d33745755bdde72ebdff8723bb8a59827662ec9b4ef292d4dbd",
+        "comparison_basis": "Actual Linux/GitHub Pages production artifacts before and after rebuild; not a local Windows preview inventory."
+      }
+    }
   },
-  "acceptance_scope": "Local Windows x86_64 Python 3.9 review run, not an integrated remote-CI claim or a release artifact",
-  "pytest": {
-    "passed": 280,
-    "skipped": 5,
-    "xfailed": 0,
-    "warnings": 25,
-    "seconds": 12.88
-  },
-  "checks": {
-    "cargo_fmt": 0,
-    "strict_workspace_clippy": 0,
-    "frozen_git_blobs_unchanged": 70,
-    "original_public_sha_mappings_passed": 16,
-    "source_forbidden_hits": 0,
-    "wheel_forbidden_hits": 0
-  },
-  "post_validation_changes": "Main merge wrapper left the complete tree unchanged; final follow-ups only add review documentation and portable acceptance/dependency records. Runtime source, tests, tools and package metadata are unchanged.",
-  "separate_gpl_adapter": {
+  "separate_gpl_adapter_current": {
     "url": "https://github.com/omicverse/omicverse/pull/1096",
+    "repository": "omicverse/omicverse",
+    "license": "GPL-3.0",
     "head": "c9f622b72928db0fe8a6e42d334d7dc34ca2d48d",
-    "local_tests_passed": 19,
-    "registry_extra_active": false
+    "status": "Ready for upstream maintainer review; not merged",
+    "contributor_push_permission": false,
+    "merge_blocker": "The current contributor lacks upstream push/merge permission; an upstream maintainer must merge it.",
+    "code_copied_into_MIT_repository": false,
+    "registry_extra_active": false,
+    "separate_local_runtime_acceptance": {
+      "python": "3.9.21",
+      "passed": 19,
+      "skipped": 0,
+      "xfailed": 0,
+      "tested_backend_wheel_sha256": "160343c409c40e5f53dbbb9fee1003cc4fc0c8a823c16d5ca36d655fae87c065",
+      "backend_implementation_sha256": "2bfb6ac2c20560ced773e773d8d458a767f2260273a06b5569e3c68d5a406b27",
+      "cancellation_native": 0.5,
+      "cancellation_facade": 0.5,
+      "cancellation_math_fsum": 0.5,
+      "scope": "Independent GPL-adapter runtime tests; not part of the 290 MIT-package cases and not a substitute for other Python build checks."
+    }
+  },
+  "dependency_snapshots": {
+    "historical_checkpoint": "integration-review-requirements-win-py39.txt",
+    "current_main_verified": "integration-review-requirements-main-win-py39.txt",
+    "scope": "Separate recorded Windows x86_64/Python3.9 environments, not cross-platform locks. The package itself is excluded from registry resolution."
+  },
+  "governance": {
+    "source_tag_unchanged": "bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e",
+    "historical_benchmark_or_golden_rerecorded": false,
+    "old_checkpoint_source_wheel_components_counts_preserved": true,
+    "review_branch_is_not_release_or_deployment": true
   }
 }
