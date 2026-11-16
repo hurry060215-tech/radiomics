@@ -98,3 +98,8 @@ uses Rust's automatic Arc dereference for the same borrowed array slice. No
 parallel algorithm, arithmetic or measured evidence was changed. The wheel and
 report identities above remain the actual pre-lint-repair measured artifacts;
 strict workspace Clippy also passed on the final merged source.
+
+A later standalone typed-entry ownership repair snapshots caller-owned NumPy
+input before releasing the GIL. The measured public `ImageSample` and cohort
+extraction paths already own their buffers and do not call that separate private
+entry. Their reported measurements and artifact identities remain unchanged.
