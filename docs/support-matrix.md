@@ -39,12 +39,22 @@ may enter the declared contracts. This does not implement the upstream processin
 
 The [native capability boundaries](native-boundaries.md) page states the native,
 optional-Python and deferred scope. The [Rust decision](rust-backend-decision.md)
-evaluates speed, peak memory and numerical error separately. A newly frozen
-[scalar audit](scalar-accuracy-audit.md) exposes a high-dynamic-range Mean
-counterexample to universal Python compatibility (Rust0.125/PyRadiomics0 versus
-exact0.5); existing Golden passes do not close that known stability gap.
+evaluates speed, peak memory and numerical error separately. The
+[scalar audit](scalar-accuracy-audit.md) preserves the original cancellation
+observations and documents the user-approved Mean repair: current native Mean
+is **0.5**, equal to the independent mathematical reference, while the frozen
+public PyRadiomics 3.0.1 observation remains **0.0**. That intentional difference
+is not a claim of universal Python compatibility.
 
-`python_golden_v1` is a compatibility profile for public PyRadiomics 3.0.1.
+`python_golden_v1` identifies validation against the frozen public PyRadiomics
+3.0.1 fixtures and configurations at the original `atol=1e-10, rtol=1e-8`.
+It does not guarantee matching public 3.0.1 outputs for every possible input.
+Only Mean accumulation uses Neumaier compensation. Variance, Skewness and
+Kurtosis central-moment sums, other feature sums, and directional sum/count
+reductions retain their original naive accumulation. A more stable Mean can
+change dependent moments without making their accumulators, the whole
+first-order family, or directional aggregation mathematically exact.
+
 The independent IBSI digital checks are separately scoped: 54 selected features
 conform in the declared configurations; raw Kurtosis differs from excess kurtosis
 and remains explicitly nonconformant. Public CT numerical compatibility does not
