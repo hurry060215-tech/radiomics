@@ -177,22 +177,24 @@ mod _native {
     }
 
     #[pyfunction]
-    #[pyo3(signature=(samples, config, n_jobs=1, cache=None))]
+    #[pyo3(signature=(samples, config, n_jobs=1, cache=None, threads=1))]
     fn extract_images(
         py: Python<'_>,
         samples: String,
         config: String,
         n_jobs: usize,
         cache: Option<String>,
+        threads: usize,
     ) -> PyResult<String> {
         py.detach(|| {
             let samples: Vec<core::workflow::CohortSample> = serde_json::from_str(&samples)?;
             let config: core::workflow::ExtractConfig = serde_json::from_str(&config)?;
-            let batch = core::workflow::extract_batch(
+            let batch = core::workflow::extract_batch_with_threads(
                 &samples,
                 &config,
                 n_jobs,
                 cache.as_deref().map(std::path::Path::new),
+                threads,
             )?;
             Ok(serde_json::to_string(&batch)?)
         })

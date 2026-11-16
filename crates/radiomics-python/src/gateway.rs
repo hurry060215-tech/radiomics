@@ -314,7 +314,12 @@ enum Request {
         config: ExtractionConfig,
         #[serde(default)]
         families: Option<Vec<core::features::FeatureFamily>>,
+        #[serde(default = "one_thread")]
+        threads: usize,
     },
+}
+fn one_thread() -> usize {
+    1
 }
 fn encoded<T: Serialize>(value: &T) -> RadResult<String> {
     Ok(serde_json::to_string(value)?)
@@ -692,14 +697,16 @@ pub fn execute(payload: &str) -> RadResult<String> {
             roi_label,
             config,
             families,
+            threads,
         } => {
-            let output = core::features::extract_families(
+            let output = core::features::extract_families_with_threads(
                 &image,
                 &morphology_mask,
                 intensity_mask.as_ref(),
                 roi_label,
                 &config,
                 families.as_deref().unwrap_or(&core::features::ALL_FAMILIES),
+                threads,
             )?;
             let mapped: BTreeMap<_, _> = output
                 .into_iter()

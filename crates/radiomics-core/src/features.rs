@@ -10,6 +10,7 @@ use crate::contracts::{
     TextureAggregation,
 };
 use crate::errors::{ErrorCode, RadResult, RadiomicsError};
+use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -370,13 +371,14 @@ fn directions(shape: [usize; 3], full: bool) -> Vec<[i32; 3]> {
 /// Raw symmetric GLCM and run/zone/dependence counts. This diagnostic is also the
 /// exact matrix path used for extraction; it is not an independent implementation.
 pub fn texture_matrices(discrete: &DiscretizedImage, alpha: u32) -> RadResult<TextureMatrices> {
-    texture_matrices_selected(discrete, alpha, &ALL_FAMILIES.into_iter().collect())
+    texture_matrices_selected(discrete, alpha, &ALL_FAMILIES.into_iter().collect(), false)
 }
 
 fn texture_matrices_selected(
     discrete: &DiscretizedImage,
     alpha: u32,
     selected: &BTreeSet<FeatureFamily>,
+    parallel: bool,
 ) -> RadResult<TextureMatrices> {
     if discrete
         .shape
@@ -403,8 +405,6 @@ fn texture_matrices_selected(
     let shape = discrete.shape;
     let half = directions(shape, false);
     let full = directions(shape, true);
-    let gldm_enabled = selected.contains(&FeatureFamily::Gldm);
-    let ngtdm_enabled = selected.contains(&FeatureFamily::Ngtdm);
     // Resolve gray labels once. Repeated BTreeMap lookups inside every pair
     // would dominate the distance-one kernels on ordinary CT volumes.
     let ranks: Vec<usize> = discrete
@@ -416,9 +416,91 @@ fn texture_matrices_selected(
         .len()
         .checked_mul(actual.len())
         .ok_or_else(|| invalid("GLCM dimensions overflow usize; adjust binning."))?;
+    if !parallel {
+        return texture_counts(
+            discrete, alpha, selected, &actual, &ranks, &half, &full, pair_size,
+        );
+    }
+    // GLCM and GLRLM each have ordered independent half-direction tasks.
+    // The remaining texture families run as whole-family tasks. No voxel jobs.
+    let mut tasks = Vec::new();
+    for family in [FeatureFamily::Glcm, FeatureFamily::Glrlm] {
+        if selected.contains(&family) {
+            tasks.extend((0..half.len()).map(|index| (family, Some(index))));
+        }
+    }
+    for family in [
+        FeatureFamily::Glszm,
+        FeatureFamily::Gldm,
+        FeatureFamily::Ngtdm,
+    ] {
+        if selected.contains(&family) {
+            tasks.push((family, None));
+        }
+    }
+    // Indexed parallel collection writes results into the task's fixed slot.
+    // Floating directional reductions below still consume the original order.
+    let results: Vec<_> = tasks
+        .par_iter()
+        .map(|(family, index)| {
+            let directions = index.map_or(&[][..], |index| std::slice::from_ref(&half[index]));
+            texture_counts(
+                discrete,
+                alpha,
+                &BTreeSet::from([*family]),
+                &actual,
+                &ranks,
+                directions,
+                &full,
+                pair_size,
+            )
+        })
+        .collect();
+    let mut output = TextureMatrices {
+        glcm: Vec::new(),
+        glrlm: Vec::new(),
+        glszm: CountMatrix::from_entries(BTreeMap::new(), &actual),
+        gldm: CountMatrix::from_entries(BTreeMap::new(), &actual),
+        ngtdm: actual
+            .iter()
+            .map(|&gray_level| NgtdmRow {
+                gray_level,
+                count: 0,
+                difference_sum: 0.,
+            })
+            .collect(),
+    };
+    for ((family, _), result) in tasks.into_iter().zip(results) {
+        let result = result?;
+        match family {
+            FeatureFamily::Glcm => output.glcm.extend(result.glcm),
+            FeatureFamily::Glrlm => output.glrlm.extend(result.glrlm),
+            FeatureFamily::Glszm => output.glszm = result.glszm,
+            FeatureFamily::Gldm => output.gldm = result.gldm,
+            FeatureFamily::Ngtdm => output.ngtdm = result.ngtdm,
+            _ => unreachable!("Only texture families create matrix tasks."),
+        }
+    }
+    Ok(output)
+}
+
+#[allow(clippy::too_many_arguments)] // One shared validated context, no per-task voxel clones.
+fn texture_counts(
+    discrete: &DiscretizedImage,
+    alpha: u32,
+    selected: &BTreeSet<FeatureFamily>,
+    actual: &[u32],
+    ranks: &[usize],
+    half: &[[i32; 3]],
+    full: &[[i32; 3]],
+    pair_size: usize,
+) -> RadResult<TextureMatrices> {
+    let shape = discrete.shape;
+    let gldm_enabled = selected.contains(&FeatureFamily::Gldm);
+    let ngtdm_enabled = selected.contains(&FeatureFamily::Ngtdm);
     let mut glcm = Vec::new();
     let mut glrlm = Vec::new();
-    for &offset in &half {
+    for &offset in half {
         if selected.contains(&FeatureFamily::Glcm) {
             let mut counts = Vec::new();
             counts.try_reserve_exact(pair_size).map_err(|_| {
@@ -437,8 +519,8 @@ fn texture_matrices_selected(
             // GLCM keeps both actual gray-level axes, even if a direction has no
             // pairs for a particular gray. Empty directions are excluded downstream.
             let pair = CountMatrix {
-                row_values: actual.clone(),
-                column_values: actual.clone(),
+                row_values: actual.to_vec(),
+                column_values: actual.to_vec(),
                 counts,
             };
             glcm.push(DirectionalMatrix {
@@ -484,7 +566,7 @@ fn texture_matrices_selected(
             }
             glrlm.push(DirectionalMatrix {
                 offset,
-                matrix: CountMatrix::from_entries(entries, &actual),
+                matrix: CountMatrix::from_entries(entries, actual),
             });
         }
     }
@@ -502,7 +584,7 @@ fn texture_matrices_selected(
                 size = size
                     .checked_add(1)
                     .ok_or_else(|| invalid("A texture zone exceeds u32 size."))?;
-                for &offset in &full {
+                for &offset in full {
                     if let Some(j) = shifted(coordinates(i, shape), offset, shape) {
                         if !visited[j] && discrete.values[j] == gray {
                             visited[j] = true;
@@ -520,7 +602,7 @@ fn texture_matrices_selected(
     if gldm_enabled || ngtdm_enabled {
         for (i, &gray) in discrete.values.iter().enumerate().filter(|(_, v)| **v > 0) {
             let (mut dependence, mut count, mut sum) = (1u32, 0u32, 0.0);
-            for &offset in &full {
+            for &offset in full {
                 if let Some(j) = shifted(coordinates(i, shape), offset, shape) {
                     let other = discrete.values[j];
                     if other > 0 {
@@ -551,8 +633,8 @@ fn texture_matrices_selected(
     Ok(TextureMatrices {
         glcm,
         glrlm,
-        glszm: CountMatrix::from_entries(zones, &actual),
-        gldm: CountMatrix::from_entries(dependencies, &actual),
+        glszm: CountMatrix::from_entries(zones, actual),
+        gldm: CountMatrix::from_entries(dependencies, actual),
         ngtdm: differences
             .into_iter()
             .map(|(gray_level, (count, difference_sum))| NgtdmRow {
@@ -1064,6 +1146,115 @@ pub fn extract_families_view(
     config: &ExtractionConfig,
     families: &[FeatureFamily],
 ) -> RadResult<BTreeMap<String, f64>> {
+    extract_families_view_with_threads(
+        image,
+        morphology_mask,
+        intensity_mask,
+        roi_label,
+        config,
+        families,
+        1,
+    )
+}
+
+/// Validate the caller's explicit outer x inner budget; never resize global pools.
+pub fn validate_thread_budget(n_jobs: usize, threads: usize) -> RadResult<()> {
+    let available = std::thread::available_parallelism().map_or(1, usize::from);
+    validate_thread_budget_for(n_jobs, threads, available)
+}
+
+fn validate_thread_budget_for(n_jobs: usize, threads: usize, available: usize) -> RadResult<()> {
+    if n_jobs == 0 || threads == 0 {
+        return Err(invalid(
+            "n_jobs and threads must be positive worker counts.",
+        ));
+    }
+    // Preserve the existing outer-worker API when inner parallelism is off.
+    // Only the new opt-in inner pool introduces a multiplied worker budget.
+    if threads == 1 {
+        return Ok(());
+    }
+    if n_jobs
+        .checked_mul(threads)
+        .is_none_or(|budget| budget > available)
+    {
+        return Err(invalid(
+            "n_jobs * threads exceeds the available logical CPU budget.",
+        ));
+    }
+    Ok(())
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn extract_families_with_threads(
+    image: &ImageVolume,
+    morphology_mask: &MaskVolume,
+    intensity_mask: Option<&MaskVolume>,
+    roi_label: u32,
+    config: &ExtractionConfig,
+    families: &[FeatureFamily],
+    threads: usize,
+) -> RadResult<BTreeMap<String, f64>> {
+    extract_families_view_with_threads(
+        image.into(),
+        morphology_mask,
+        intensity_mask,
+        roi_label,
+        config,
+        families,
+        threads,
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+pub fn extract_families_view_with_threads(
+    image: ImageView<'_>,
+    morphology_mask: &MaskVolume,
+    intensity_mask: Option<&MaskVolume>,
+    roi_label: u32,
+    config: &ExtractionConfig,
+    families: &[FeatureFamily],
+    threads: usize,
+) -> RadResult<BTreeMap<String, f64>> {
+    validate_thread_budget(1, threads)?;
+    if threads == 1 {
+        return extract_families_view_impl(
+            image,
+            morphology_mask,
+            intensity_mask,
+            roi_label,
+            config,
+            families,
+            false,
+        );
+    }
+    let pool = rayon::ThreadPoolBuilder::new()
+        .num_threads(threads)
+        .build()
+        .map_err(|error| invalid(&error.to_string()))?;
+    pool.install(|| {
+        extract_families_view_impl(
+            image,
+            morphology_mask,
+            intensity_mask,
+            roi_label,
+            config,
+            families,
+            true,
+        )
+    })
+}
+
+#[allow(clippy::too_many_arguments)]
+fn extract_families_view_impl(
+    image: ImageView<'_>,
+    morphology_mask: &MaskVolume,
+    intensity_mask: Option<&MaskVolume>,
+    roi_label: u32,
+    config: &ExtractionConfig,
+    families: &[FeatureFamily],
+    parallel: bool,
+) -> RadResult<BTreeMap<String, f64>> {
     config.validate()?;
     validate_families(families)?;
     let selected: BTreeSet<_> = families.iter().copied().collect();
@@ -1106,7 +1297,7 @@ pub fn extract_families_view(
     }) {
         return Ok(output);
     }
-    let matrices = texture_matrices_selected(&discrete, config.gldm_alpha, &selected)?;
+    let matrices = texture_matrices_selected(&discrete, config.gldm_alpha, &selected, parallel)?;
     if selected.contains(&FeatureFamily::Glcm) {
         insert_directional(&mut output, "glcm", &matrices.glcm, config.aggregation, n);
     }
@@ -1137,6 +1328,16 @@ pub fn extract_families_view(
 mod tests {
     use super::*;
     use crate::contracts::{Geometry, SpatialUnit};
+
+    #[test]
+    fn thread_budget_preserves_legacy_outer_workers_and_bounds_opt_in() {
+        assert!(validate_thread_budget_for(3, 1, 2).is_ok());
+        assert!(validate_thread_budget_for(1, 2, 2).is_ok());
+        assert!(validate_thread_budget_for(3, 2, 2).is_err());
+        assert!(validate_thread_budget_for(0, 1, 2).is_err());
+        assert!(validate_thread_budget_for(1, 0, 2).is_err());
+        assert!(validate_thread_budget_for(usize::MAX, 2, 2).is_err());
+    }
     fn sample(
         shape: [usize; 3],
         values: Vec<f64>,

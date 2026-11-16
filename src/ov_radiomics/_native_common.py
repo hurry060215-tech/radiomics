@@ -57,7 +57,7 @@ def request(operation, **values):
 
 
 def array_features_typed_or_json(image_buffer, mask_buffer, *, image_geometry,
-        mask_geometry, config, roi_label=1, intensity_mask=None, families=None):
+        mask_geometry, config, roi_label=1, intensity_mask=None, families=None, threads=1):
     """Private typed dispatch with an explicit, fully timed legacy fallback.
 
     No dtype or layout repair is performed before the Rust rejection. Conversion
@@ -68,7 +68,7 @@ def array_features_typed_or_json(image_buffer, mask_buffer, *, image_geometry,
     """
     native = resolve_backend('rust')
     parameters = dict(config=config, roi_label=roi_label,
-        intensity_mask=intensity_mask, families=families)
+        intensity_mask=intensity_mask, families=families, threads=threads)
     if hasattr(native, 'array_features_typed'):
         try:
             return json.loads(native.array_features_typed(image_buffer, mask_buffer,
