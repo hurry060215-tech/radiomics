@@ -20,6 +20,12 @@ These are the actual component heads included when this review tree was refreshe
 Each is an ancestor of this branch; the review branch adds merge commits and this
 explanatory document rather than rewriting those PRs.
 
+At this review checkpoint, **PR-1 has merged into `main`**, through merge commit
+`8bf9d33400d9933662a08c152a678f15da3bb5e5`. The other seven radiomics PRs listed
+below remain Draft and unmerged; the separate OmicVerse adapter is also Draft.
+The corresponding main merge was included here as an ancestry-only wrapper:
+its merge left the already-validated review tree exactly unchanged.
+
 | Planned PR | Scope | Included source head |
 |---|---|---|
 | PR-1 | Public-content cleanup | `626baf204561abcf27b2c8e035af03e5b44796da` |
