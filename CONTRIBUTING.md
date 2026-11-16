@@ -66,6 +66,7 @@ are explicit; do not make them a side effect of an ordinary documentation build.
 ```bash
 python -m pip install -r website/requirements.txt
 python tools/build_website_sources.py
+python tools/build_api_sources.py
 python -m sphinx -W --keep-going -b html website website/_build/html
 ```
 
@@ -95,3 +96,34 @@ CPU/toolchain, threads, cache states and memory scope. Report suites separately.
 Disclose missed targets and unmeasured stages. Synthetic accuracy/speed is not
 clinical validation. See [SECURITY.md](SECURITY.md) before attaching data.
 A PR does not authorize a version bump, registry publication or ov source changes.
+
+## Scoped Python quality checks
+
+Install the development tools in a separate environment:
+
+```bash
+python -m pip install pre-commit ruff==0.14.6 mypy==1.18.2
+pre-commit install
+python -m mypy
+```
+
+The two pre-commit hooks check staged Python files with Ruff E/F/I rules and
+`ruff format --check`. They do not rewrite existing files or initiate a repository
+wide formatting pass. Frozen reference implementations, Golden assets and
+historical benchmark evidence are excluded.
+
+Mypy strict checking is limited to the package entry point, `_backend.py` and
+`interop.py`; other modules keep `ignore_errors = true` during gradual adoption.
+Unannotated imported implementation modules are treated as external boundaries.
+The three checked files retain explicit annotations for their dynamic external
+objects. The future OmicVerse adapter is checked in its own repository.
+
+Published documentation uses `latest/` for maintained sources and preserves a
+`v0.1.0/` snapshot built from the actual release tag. Until that tag and publication
+exist, the release snapshot is pending. Read the Docs, conda-forge and Docker
+publication remain future work.
+
+The GitHub Pages environment may restrict allowed deployment branches or tags.
+An actual tag build can therefore produce a preview while deployment still needs
+the maintainer's environment policy to allow that tag. The documentation workflow
+does not change repository environment protection settings.

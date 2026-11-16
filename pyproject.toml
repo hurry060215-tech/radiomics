@@ -59,3 +59,29 @@ include = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 100
+extend-exclude = ["src/ov_radiomics/_reference*.py", "golden", "benchmarks/v2", "benchmarks/results"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.mypy]
+python_version = "3.9"
+files = ["src/ov_radiomics/__init__.py", "src/ov_radiomics/_backend.py", "src/ov_radiomics/interop.py"]
+strict = true
+follow_imports = "skip"
+
+[[tool.mypy.overrides]]
+module = ["ov_radiomics.*"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ["ov_radiomics", "ov_radiomics._backend", "ov_radiomics.interop"]
+ignore_errors = false
+
+[[tool.mypy.overrides]]
+module = ["spatialdata.*", "numpy.*"]
+ignore_missing_imports = true

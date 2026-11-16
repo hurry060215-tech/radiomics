@@ -2,6 +2,7 @@ name: documentation
 "on":
   push:
     branches: [main]
+    tags: [v0.1.0]
   pull_request:
   workflow_dispatch:
 
@@ -9,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: documentation-${{ github.event.pull_request.number || github.ref }}
+  group: documentation-${{ github.event.pull_request.number || 'publication' }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -18,8 +19,12 @@ jobs:
     permissions:
       contents: read
       pages: read
+    outputs:
+      latest_revision: ${{ steps.snapshots.outputs.latest_revision }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -32,14 +37,25 @@ jobs:
           with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as environment:
               environment.write('RADIOMICS_BUILD_REVISION=' + source_revision(ROOT) + '\n')
           PY
-      - run: python tools/build_website_sources.py
       - name: Remove stale rendered documentation
         run: rm -rf website/_build
-      - run: python -m sphinx -W --keep-going -b html website website/_build/html
+      - name: Build latest and preserve release snapshots
+        id: snapshots
+        run: |
+          python tools/build_documentation_snapshots.py --output website/_build/publication --fetch-published
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          metadata = json.loads(Path('website/_build/publication/publication.json').read_text())
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+              output.write('latest_revision=' + metadata['latest_revision'] + '\n')
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: documentation-preview
-          path: website/_build/html
+          path: website/_build/publication
+          include-hidden-files: true
       - name: Configure Pages for an explicit publication
         if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v6
@@ -47,13 +63,14 @@ jobs:
         if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
         with:
-          path: website/_build/html
+          path: website/_build/publication
 
   deploy:
     if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     permissions:
+      contents: write
       pages: write
       id-token: write
     concurrency:
@@ -65,13 +82,37 @@ jobs:
     outputs:
       page_url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: documentation-preview
+          path: documentation-publication
+      - name: Maintain the gh-pages snapshot branch
+        run: |
+          if [ -n "$(git ls-remote --heads origin refs/heads/gh-pages)" ]; then
+            git fetch origin refs/heads/gh-pages
+            git worktree add --detach published-pages FETCH_HEAD
+          else
+            git worktree add --detach published-pages HEAD
+            git -C published-pages switch --orphan gh-pages
+          fi
+          rsync -a --delete --exclude=.git documentation-publication/ published-pages/
+          git -C published-pages config user.name 'github-actions[bot]'
+          git -C published-pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C published-pages add -A
+          if ! git -C published-pages diff --cached --quiet; then
+            git -C published-pages commit -m 'Update versioned documentation snapshots'
+            git -C published-pages push origin HEAD:refs/heads/gh-pages
+          fi
       - name: Deploy documentation
         id: deployment
         uses: actions/deploy-pages@v5
 
   smoke:
     if: github.event_name != 'pull_request'
-    needs: deploy
+    needs: [build, deploy]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -85,4 +126,12 @@ jobs:
           python tools/check_documentation_publication.py
           --base-url "${{ needs.deploy.outputs.page_url }}"
           --revision "${{ github.sha }}"
+          --attempts 6 --retry-seconds 5
+      - name: Verify the maintained documentation snapshot
+        env:
+          PUBLICATION_URL: ${{ needs.deploy.outputs.page_url }}
+        run: >-
+          python tools/check_documentation_publication.py
+          --base-url "${PUBLICATION_URL%/}/latest/"
+          --revision "${{ needs.build.outputs.latest_revision }}"
           --attempts 6 --retry-seconds 5
