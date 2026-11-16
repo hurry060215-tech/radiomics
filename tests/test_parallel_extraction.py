@@ -10,6 +10,7 @@ import pytest
 
 import ov_radiomics as rad
 from ov_radiomics._backend import try_native
+from ov_radiomics._native_common import array_features_typed_or_json
 from test_native_extraction import write_nifti
 
 pytestmark = pytest.mark.skipif(try_native() is None, reason='Native extension not built.')
@@ -55,6 +56,16 @@ print(json.dumps(sample.extract(config,threads=THREADS_PLACEHOLDER).features.dro
             env={**os.environ, 'RAYON_NUM_THREADS': count}, capture_output=True, text=True, check=True)
         outputs.append(np.asarray(json.loads(result.stdout)))
     assert np.array_equal(*outputs)
+
+
+def test_threads_cross_both_typed_and_json_fallback_gateways():
+    current = sample()
+    image, mask = current.image, current.mask
+    parameters = dict(image_geometry=image.geometry, mask_geometry=mask.geometry,
+        config=CONFIG, threads=THREADS)
+    typed = array_features_typed_or_json(image.array, mask.array, **parameters)
+    fallback = array_features_typed_or_json(image.array.astype(np.float32), mask.array, **parameters)
+    assert typed == fallback
 
 
 def test_public_file_extract_passes_threads_and_preserves_result(tmp_path):
