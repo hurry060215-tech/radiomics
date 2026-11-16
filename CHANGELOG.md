@@ -74,3 +74,11 @@ remains 0.0: this deliberately changes that high-dynamic-range compatibility
 target without rewriting any frozen observation. Historical benchmark v2 data
 remain unchanged and predate that repair. Buffer and parallel optimizations are
 separate PRs and are not included in this release-candidate acceptance.
+
+The published `v0.1.0` source tag remains fixed at `bb2d3fe`. It excludes the
+PR-7 typed/Arc buffer work, PR-8 Rayon parallelism and PR-9 documentation
+engineering, while retaining the earlier constructor temporary-copy repair.
+The formal 854-observation Radiomics Benchmark v2 belongs to native snapshot
+`48ecb310`, including its CT L2 0.400x result. That historical result is not a
+new measurement of the complete `bb2d3fe` tag. No formal whole-tag benchmark
+was rerun; later diagnostics keep their own source and wheel identities.
