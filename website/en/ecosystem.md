@@ -6,6 +6,13 @@ The independent package owns feature extraction and modeling through its Rust
 core. An optional OmicVerse adapter provides a convenient namespace while
 retaining separate installation and licensing boundaries.
 
+At this publication checkpoint, `ov.radiomics` is the candidate adapter in
+[upstream PR #1096](https://github.com/omicverse/omicverse/pull/1096), awaiting
+maintainer merge and a release. The public-registry extra remains an inactive
+commented placeholder. To evaluate it, install an accepted local wheel and use
+an importable OmicVerse checkout containing that PR; a released OmicVerse
+registry-install command is not yet promised.
+
 | Entry point | Responsibility | Dependency boundary |
 |---|---|---|
 | `ov.radiology` | DICOM geometry, measurements and image review | Imaging tools maintained by OmicVerse |

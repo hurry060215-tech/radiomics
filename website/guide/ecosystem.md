@@ -5,6 +5,11 @@
 独立包负责明确范围内的特征提取和建模。OmicVerse 的可选适配层提供命名空间入口，
 保留独立安装、计算核心和许可证边界。用户可以直接使用独立包或 CLI。
 
+本轮的 `ov.radiomics` 是[上游 PR #1096](https://github.com/omicverse/omicverse/pull/1096)
+中的候选适配器，仍待上游维护者合并和发行。公共 registry extra 目前保持注释占位；
+评估该接口时，应先安装已验收的本地 wheel，并使用包含该 PR 的可导入 OmicVerse
+工作树。它尚不构成已发行 OmicVerse 的一条命令安装承诺。
+
 | 入口 | 主要职责 | 维护与依赖边界 |
 |---|---|---|
 | `ov.radiology` | DICOM 几何、测量、阅片 | 由 OmicVerse 维护的影像工具 |
