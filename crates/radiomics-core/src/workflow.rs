@@ -406,6 +406,7 @@ fn extract_one(
     config: &ExtractConfig,
     cache: Option<&Path>,
     counters: &CacheCounters,
+    threads: usize,
 ) -> RadResult<ExtractedSample> {
     let effective = effective_extract_config(sample, config)?;
     let mut hashes = BTreeMap::from([
@@ -476,7 +477,7 @@ fn extract_one(
             sample_id: Some(sample.metadata.sample_id.clone()),
         });
     }
-    let output = features::extract_families(
+    let output = features::extract_families_with_threads(
         &prepared.image,
         &prepared.mask,
         intensity_mask.as_ref(),
@@ -486,6 +487,7 @@ fn extract_one(
             .families
             .as_deref()
             .unwrap_or(&features::ALL_FAMILIES),
+        threads,
     )?;
     let mut features = BTreeMap::new();
     for (name, value) in output {
@@ -549,11 +551,19 @@ pub fn extract_batch(
     n_jobs: usize,
     cache: Option<&Path>,
 ) -> RadResult<ExtractionBatch> {
+    extract_batch_with_threads(samples, config, n_jobs, cache, 1)
+}
+
+pub fn extract_batch_with_threads(
+    samples: &[CohortSample],
+    config: &ExtractConfig,
+    n_jobs: usize,
+    cache: Option<&Path>,
+    threads: usize,
+) -> RadResult<ExtractionBatch> {
     validate_cohort(samples)?;
     config.validate()?;
-    if n_jobs == 0 {
-        return Err(invalid("n_jobs must be a positive outer worker count."));
-    }
+    features::validate_thread_budget(n_jobs, threads)?;
     if let Some(dir) = cache {
         fs::create_dir_all(dir)?;
     }
@@ -565,7 +575,7 @@ pub fn extract_batch(
     let results: Vec<_> = pool.install(|| {
         samples
             .par_iter()
-            .map(|sample| extract_one(sample, config, cache, &counters))
+            .map(|sample| extract_one(sample, config, cache, &counters, threads))
             .collect()
     });
     let mut records = Vec::new();
