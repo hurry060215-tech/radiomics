@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Native keyed research transformations and basic habitats &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/research-native';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/v0.1.0/reference/research-native.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Native train-fitted table preprocessing" href="preprocessing-native.html" />
+    <link rel="prev" title="Native NIfTI extraction" href="native-extraction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">入口与数据</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python-native.html">Native Python workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="table-io-native.html">Native flat-table input and feature-table export</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">影像与特征</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="image-native.html">Native images and ROI preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features-native.html">Native Original feature subset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="native-extraction.html">Native NIfTI extraction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Native keyed research transformations and basic habitats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">建模与统计</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="preprocessing-native.html">Native train-fitted table preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning-native.html">Patient-grouped native learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models-native.html">Native models and sparse solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation-native.html">Native evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clinical-native.html">Native complete-case binary logistic inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="baseline-native.html">Native observed-data baseline tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reliability-native.html">Native single-rating intraclass correlation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">轻量病理与互操作</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pathology-pixels.html">Native lightweight pathology pixels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-aggregate.html">Native tile identity, hierarchy summaries and local overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interop.html">Explicit external embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">独立 CLI</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cli-workflows-native.html">Native learning CLI workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-cli-native.html">Native lightweight pathology CLI</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../reference.html" class="nav-link">API 与 CLI 参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Native keyed research transformations and basic habitats</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="native-keyed-research-transformations-and-basic-habitats">
+<h1>Native keyed research transformations and basic habitats<a class="headerlink" href="#native-keyed-research-transformations-and-basic-habitats" title="Link to this heading">#</a></h1>
+<p>These Rust modules use the existing contiguous numeric buffers, FeatureTable,
+metadata, errors, fitted preprocessing and recorded component RNG. No Python,
+registration optimizer, hidden batch correction, topology or spatial clustering
+is performed. Public namespace/CLI integration is managed by the main worker;
+this document describes the implemented core API and its acceptance scope.</p>
+<section id="strict-feature-concatenation">
+<h2>Strict feature concatenation<a class="headerlink" href="#strict-feature-concatenation" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">research::concat(&amp;[NamedFeatureTable],</span> <span class="pre">&amp;ConcatConfig)</span></code> returns a common
+<code class="docutils literal notranslate"><span class="pre">FeatureTable</span></code> plus row provenance. Each input has an explicit unique source
+prefix. Metadata keys are a nonempty unique list of <code class="docutils literal notranslate"><span class="pre">MetadataField</span></code> values, such
+as patient/lesion/timepoint. Each source must contain exactly the same unique key
+population; there is no silent inner join, positional matching, first-row choice
+or row-count-only identity check.</p>
+<p>Output rows follow the first source, columns follow source order and each source’s
+feature order, and names are <code class="docutils literal notranslate"><span class="pre">prefix::feature</span></code>. Feature definitions and units,
+all input effective parameters, source sample IDs and explicitly varying metadata
+are retained. Source quality records are relabeled to the output sample IDs.
+Only explicitly declared modality/region differences may vary; all other metadata
+must agree, including missing versus observed values. A varying field is missing
+in the output when its input values differ, with the actual source values retained
+in provenance. <code class="docutils literal notranslate"><span class="pre">already_registered=true</span></code> is a caller declaration that required
+registration was completed externally, never evidence that this module registered
+images or checked biological lesion correspondence.</p>
+</section>
+<section id="paired-delta">
+<h2>Paired Delta<a class="headerlink" href="#paired-delta" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">research::delta(&amp;FeatureTable,</span> <span class="pre">&amp;DeltaConfig)</span></code> pairs exactly by patient, lesion,
+modality and region for the selected baseline/followup timepoints. Output pair
+order is sorted lexicographically by those string keys; it does not depend on
+source row order. Each original feature yields, in order:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Output</p></th>
+<th class="head"><p>Formula</p></th>
+<th class="head"><p>Unit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>difference</p></td>
+<td><p>followup − baseline</p></td>
+<td><p>Original feature unit</p></td>
+</tr>
+<tr class="row-odd"><td><p>ratio</p></td>
+<td><p>followup / baseline</p></td>
+<td><p>Dimensionless</p></td>
+</tr>
+<tr class="row-even"><td><p>relative_change</p></td>
+<td><p>(followup − baseline) / baseline</p></td>
+<td><p>Dimensionless fraction, not percent</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Both timepoints must exist once per key. Additional timepoints, missing keys,
+duplicate pairs, center/slide conflicts, nonfinite observed inputs and arithmetic
+overflow are errors. Missing inputs propagate to all three outputs before zero
+denominators are tested. <code class="docutils literal notranslate"><span class="pre">ZeroDenominator::Error</span></code> is the default policy;
+<code class="docutils literal notranslate"><span class="pre">Missing</span></code> explicitly retains an observed difference and marks only the two ratios
+missing. Quality records describe both forms of missing output. The output uses
+unique canonical serialized pair IDs, and preserves source IDs, parameters,
+feature definitions, pairing keys and timepoint configuration outside the numeric
+matrix.</p>
+</section>
+<section id="basic-kmeans-habitat-state">
+<h2>Basic KMeans habitat state<a class="headerlink" href="#basic-kmeans-habitat-state" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">habitat::fit(&amp;NumericBuffer,</span> <span class="pre">ids,</span> <span class="pre">feature_names,</span> <span class="pre">&amp;HabitatConfig)</span></code> fits only the
+supplied training observations. Inputs are complete finite numerical matrices;
+missing values are rejected rather than imputed. Feature names and row IDs must
+be nonempty/unique and match the matrix. IDs canonically order fitting reductions
+and random choices, so an input-row permutation preserves fitted state.</p>
+<p>Scaling reuses <code class="docutils literal notranslate"><span class="pre">fit_preprocessor</span></code> and <code class="docutils literal notranslate"><span class="pre">FittedPreprocessor</span></code>; Standard is the
+default and its zero-variance behavior is the existing shared implementation.
+Explicit centers are in raw feature units and pass through that training-only
+fitted state. The alternative initialization is one deterministic KMeans++ run:
+the first observed point is uniformly selected, subsequent points have squared
+distance weights to their closest center, and random draws use
+<code class="docutils literal notranslate"><span class="pre">sha256-chacha8-rand0.8.5-rand_chacha0.3.1-v1</span></code> with the habitat component namespace.
+This does not promise sklearn’s same-seed initialization or multiple restarts.</p>
+<p>Assignments use squared Euclidean distance, with exact ties retaining the lowest
+cluster index. Centers use the common population-mean routine. Lloyd iterations
+use the declared relative center-shift threshold, converted with the mean training
+scaled-column variance. A successful fit additionally verifies that assignments
+under the new centers are unchanged and those centers are the corresponding
+member means. The report retains iterations, inertia, absolute shift tolerance,
+assignment fixed-point status and centroid residual. Empty clusters and an
+iteration-limit result without that fixed point raise explicit errors and produce
+no successful fitted model. There is no silent center relocation.</p>
+<p><code class="docutils literal notranslate"><span class="pre">FittedHabitat</span></code> is a typed, versioned serializable state holding the fitted shared
+scaler, centers, original feature order, initialization configuration, training
+IDs/content digest, RNG scheme and convergence report. Call <code class="docutils literal notranslate"><span class="pre">validate()</span></code> after
+deserialization and before persistence/use; unknown schema or nonconverged state
+is rejected. This unsupervised state does not invent a binary/multiclass task or
+reuse predictive class names. The main integration layer controls the external
+container/file/API policy.</p>
+<p><code class="docutils literal notranslate"><span class="pre">FittedHabitat::predict</span></code> reorders numerical columns by saved name and returns
+identified cluster labels plus direct Euclidean distances in scaled space.
+Prediction does not fit or alter preprocessing/centers, and <code class="docutils literal notranslate"><span class="pre">centers_raw()</span></code> uses
+the saved inverse scaling for reporting. A patient’s cluster index is local to
+that fit and cannot be interpreted as the same tissue type across patients.</p>
+</section>
+<section id="verification-and-limitations">
+<h2>Verification and limitations<a class="headerlink" href="#verification-and-limitations" title="Link to this heading">#</a></h2>
+<p>The independently reviewed pre-implementation reference is described in
+<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e/docs/research-golden.md">research-golden.md</a>. Six native tests compare exact keys,
+IDs, row/column order, missing states and assignments, deterministic numerical
+scaler/center/inertia/direct-distance values at <code class="docutils literal notranslate"><span class="pre">atol=1e-10,</span> <span class="pre">rtol=1e-8</span></code>, explicit
+failures, held-out prediction immutability, named-column reordering, serialization
+round trips and five KMeans++ seeds across one/four outer worker threads. The
+original sklearn expanded-norm transform distances remain diagnostic only; no
+reference values or tolerances were changed to accommodate implementation output.</p>
+<p>These are synthetic correctness checks, not clinical validation, performance
+measurements, image registration, batch correction or cross-patient tissue
+annotation. They do not complete the remaining M3–M5 workflow, packaging and
+performance acceptance.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="native-extraction.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Native NIfTI extraction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="preprocessing-native.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Native train-fitted table preprocessing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strict-feature-concatenation">Strict feature concatenation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paired-delta">Paired Delta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-kmeans-habitat-state">Basic KMeans habitat state</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verification-and-limitations">Verification and limitations</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/research-native.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e">
+  Build <code>bb2d3fe</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

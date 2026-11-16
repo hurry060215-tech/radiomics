@@ -1,0 +1,695 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>自有 patch、外部 embedding 与患者建模 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/user-guide/pathology';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/reference/user-guide/pathology.html" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="结果怎么读，错误怎么处理" href="results-and-errors.html" />
+    <link rel="prev" title="三任务原生训练、患者分组与无标签预测" href="training.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">按操作顺序阅读</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="input-contracts.html">输入契约与身份</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file-workflows.html">影像与临床文件工作流</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">三任务训练与外部预测</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">普通病理与外部 embedding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results-and-errors.html">结果解读与排错</a></li>
+<li class="toctree-l1"><a class="reference internal" href="public-tabular.html">真实公开表格说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">教程实际验证范围</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../user-guide/index.html" class="nav-link">用户指南：使用自己的研究文件</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">自有 patch、外部 embedding 与患者建模</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="patch-embedding">
+<h1>自有 patch、外部 embedding 与患者建模<a class="headerlink" href="#patch-embedding" title="Link to this heading">#</a></h1>
+<p>本轮处理普通图像/已解码数据和已有 mask/embedding。它不负责通用 WSI/KFB/厂商文件解码、不训练深度骨干、不自动分割，也不从文件名推断患者或切片坐标。</p>
+<section id="a-patch">
+<h2>路径 A：已经有 patch 文件及真实坐标<a class="headerlink" href="#a-patch" title="Link to this heading">#</a></h2>
+<p>准备 <code class="docutils literal notranslate"><span class="pre">my-pathology/patches.csv</span></code>，每行一个已经存在的 PNG/JPEG RGB8 patch；单页 TIFF 的部分像素类型另有原生支持。示例：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>path,patient_id,slide_id,tile_id,x0,y0,width0,height0,mpp_x_um,mpp_y_um
+patches/A_001.png,P001,SLIDE_A,A_001,1000,2000,512,512,0.5,0.5
+patches/A_002.png,P001,SLIDE_A,A_002,1256,2000,512,512,0.5,0.5
+patches/B_001.png,P001,SLIDE_B,B_001,0,0,512,512,0.5,0.5
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">path</span></code> 相对于 manifest 所在目录。patient→slide→tile 都是明确身份；slide_id/tile_id应在输入中保持唯一，不同患者不能共享同一slide_id。<code class="docutils literal notranslate"><span class="pre">x0/y0</span></code> 是 <strong>level-0 左上角像素边缘坐标</strong>，x向右、y向下；width0/height0 是在这个坐标系中的覆盖范围，可能不同于解码 patch 的宽高。不能从“第20个patch”推算任意位置，也不能把中心坐标直接填入左上角字段。</p>
+<p>MPP 可留空；没有可信采集尺度时只使用像素单位，不能由20x或DPI猜测。已经 padding 的输入可声明 <code class="docutils literal notranslate"><span class="pre">valid_x/valid_y/valid_width/valid_height</span></code>，这些是解码patch中的有效像素矩形；padding不进入有效覆盖率分母。若不清楚padding来源，先核实再填写。</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="p">/</span><span class="n">real</span><span class="p">/</span><span class="n">patch_features</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-manifest</span> <span class="n">my-pathology</span><span class="p">/</span><span class="n">patches</span><span class="p">.</span><span class="n">csv</span> <span class="p">-</span><span class="n">-output</span> <span class="n">my-pathology</span><span class="p">/</span><span class="n">features-run</span><span class="p">-</span><span class="n">01</span> <span class="p">-</span><span class="n">-overlay-feature</span> <span class="n">rgb_R_mean</span> <span class="p">-</span><span class="n">-overlay-pixel-size</span> <span class="n">4</span>
+</pre></div>
+</div>
+<p>脚本读取已有 patch，输出QC原始分数及排除原因、颜色特征、tile/slide/patient特征表、metadata与manifest、坐标覆盖图。它不会删除原patch。QC阈值可用 <code class="docutils literal notranslate"><span class="pre">--qc-config</span> <span class="pre">qc.json</span></code>，例如：</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"max_white_fraction"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"min_tissue_fraction"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>这两个数是显式示例阈值，需要在自己的染色/组织类型上检查，不是所有病理的推荐默认。颜色固定bin配置可由 <code class="docutils literal notranslate"><span class="pre">--color-config</span></code> 提供，定义见<a class="reference internal" href="../pathology-pixels.html"><span class="std std-doc">病理像素API</span></a>。组织颜色、模糊与黑边分数是QC信息，不是真实肿瘤结局。</p>
+<p>常用输出：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>文件</p></th>
+<th class="head"><p>层级与用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tiles.json</span></code></p></td>
+<td><p>带实际颜色特征、QC、身份和坐标的完整 TileTable</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tiles-geometry.json</span></code></p></td>
+<td><p>同一身份/坐标/QC但未附特征，给外部 embedding 接入，避免覆盖已有特征</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tile-features.csv</span></code></p></td>
+<td><p>每tile一行，sample_id=tile_id</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">slide-features.csv</span></code></p></td>
+<td><p>每slide一行，sample_id=slide_id</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">patient-features.csv</span></code></p></td>
+<td><p>每patient一行，sample_id=patient_id；默认tile→slide，再切片等权到患者</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">*-features-metadata.csv</span></code>、<code class="docutils literal notranslate"><span class="pre">*.manifest.json</span></code></p></td>
+<td><p>对应表的身份/来源/单位与摘要；如 <code class="docutils literal notranslate"><span class="pre">patient-features-metadata.csv</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>平均时先得到每切片统计，再对患者切片等权，避免patch更多的切片自动获得更大患者权重。没有显式面积权重，不把patch数当组织面积。所有patch都被QC排除的切片保留空状态，先审阅排除/聚合报告，不以全零患者向量继续建模。</p>
+</section>
+<section id="id1">
+<h2>从真实患者结局训练<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>建立真正每患者一行的 <code class="docutils literal notranslate"><span class="pre">clinical.csv</span></code>，含 <code class="docutils literal notranslate"><span class="pre">patient_id/cohort/response</span></code>，可再加真实临床变量。这里不将slide诊断从tile颜色临时生成。<code class="docutils literal notranslate"><span class="pre">patient-study.json</span></code> 完整例子：</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"schema_version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"table"</span><span class="p">:</span><span class="w"> </span><span class="s2">"features-run-01/patient-features.csv"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"feature_manifest"</span><span class="p">:</span><span class="w"> </span><span class="s2">"features-run-01/patient-features.csv.manifest.json"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="s2">"features-run-01/patient-features-metadata.csv"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"clinical"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clinical.csv"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"clinical_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"patient"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"join_policy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exact"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"id_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sample_id"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"patient_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"patient_id"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"cohort_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cohort"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"outcome_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"response"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"numeric_features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">"patient_mean(slide_tile_mean(rgb_R_mean))"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"patient_mean(slide_tile_mean(rgb_G_mean))"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"patient_mean(slide_tile_mean(rgb_B_mean))"</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"categorical_features"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">"optional_metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">"missing_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">""</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"nan_as_missing"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="p">/</span><span class="n">real</span><span class="p">/</span><span class="n">train_table</span><span class="p">.</span><span class="n">py</span> <span class="n">train</span> <span class="p">-</span><span class="n">-study</span> <span class="n">my-pathology</span><span class="p">/</span><span class="n">patient-study</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-task</span> <span class="n">binary</span> <span class="p">-</span><span class="n">-classes</span> <span class="n">no</span> <span class="n">yes</span> <span class="p">-</span><span class="n">-fit-unit</span> <span class="n">patient</span> <span class="p">-</span><span class="n">-scoring-unit</span> <span class="n">patient</span> <span class="p">-</span><span class="n">-plots</span> <span class="p">-</span><span class="n">-output</span> <span class="n">my-pathology</span><span class="p">/</span><span class="n">patient-model</span><span class="p">-</span><span class="n">01</span>
+</pre></div>
+</div>
+<p>这些三项颜色统计只是容易审查的起点，不代表经过临床验证的诊断模型。外部患者仍用 <code class="docutils literal notranslate"><span class="pre">outcome_column=null</span></code> 新StudySpec和<a class="reference internal" href="training.html"><span class="std std-doc">同一加载预测命令</span></a>。若使用slide/tile行训练，患者ID仍必须保留，不能随机切分同患者的patch。</p>
+</section>
+<section id="wsi">
+<h2>普通图片没有WSI全局坐标时<a class="headerlink" href="#wsi" title="Link to this heading">#</a></h2>
+<p>如果只有一张独立普通图片，其像素网格可作为该图片本身的坐标系。显式选择 <code class="docutils literal notranslate"><span class="pre">--coordinate-space</span> <span class="pre">image-local</span></code>，每slide只允许单文件。若也没有可证明的临床患者关联，使用 <code class="docutils literal notranslate"><span class="pre">--identity-scope</span> <span class="pre">source-image</span></code>，输出是 <code class="docutils literal notranslate"><span class="pre">group-features.csv</span></code> 和对应metadata，表示操作者定义的源图像组，不冒称临床患者，也不能据此进行患者级临床结论。</p>
+<p>对于需要从完整普通图像切块的使用者，公共API提供真实切块，无需伪造patch布局：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+<span class="n">patches</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">pathology</span><span class="o">.</span><span class="n">tile_image</span><span class="p">(</span>
+    <span class="s2">"ordinary-slide.png"</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="s2">"P001"</span><span class="p">,</span> <span class="n">slide_id</span><span class="o">=</span><span class="s2">"SLIDE_A"</span><span class="p">,</span>
+    <span class="n">patch_size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">stride</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span> <span class="n">edge</span><span class="o">=</span><span class="s2">"pad"</span><span class="p">,</span>
+    <span class="n">origin0</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">pixel_size0</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">mpp_x_um</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mpp_y_um</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+<span class="k">for</span> <span class="n">patch</span> <span class="ow">in</span> <span class="n">rad</span><span class="o">.</span><span class="n">pathology</span><span class="o">.</span><span class="n">qc_patches</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">"max_white_fraction"</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">}):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">patch</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s2">"tile_id"</span><span class="p">],</span> <span class="n">patch</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s2">"x0"</span><span class="p">],</span> <span class="n">patch</span><span class="o">.</span><span class="n">record</span><span class="p">[</span><span class="s2">"y0"</span><span class="p">],</span> <span class="n">patch</span><span class="o">.</span><span class="n">qc</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这里明确声明普通图片自己的网格；它不是读取金字塔WSI。上面的循环只示范流式处理和真实坐标，已有patch文件的完整导出路径用本页前面的manifest脚本。</p>
+</section>
+<section id="b-embedding">
+<h2>路径 B：你已有 embedding<a class="headerlink" href="#b-embedding" title="Link to this heading">#</a></h2>
+<p>外部数值矩阵需要明确行ID。准备：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>embedding-study/
+  embeddings.npy          # dense real tile×feature，allow_pickle=False可读
+  embedding-tile-ids.json  # 与矩阵行一一对应的字符串ID数组
+  embedding-names.json     # 与矩阵列对应的唯一特征名数组
+  tiles-geometry.json     # 上述明确的TileTable几何/QC，features为空
+</pre></div>
+</div>
+<p>行ID可以与几何顺序不同；ID集合必须准确相同，重复/缺失/多余都会拒绝。以下代码实际调用原生ID对齐和聚合，不依靠“行数相等”：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+
+<span class="n">base</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"embedding-study"</span><span class="p">)</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"tiles-geometry.json"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"embedding-tile-ids.json"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"embedding-names.json"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="s2">"embeddings.npy"</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">interop</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">tile_ids</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span> <span class="n">tiles</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span>
+                               <span class="n">feature_names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">"external/provided embeddings.npy"</span><span class="p">)</span>
+<span class="n">aggregated</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">pathology</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">patient_stats</span><span class="o">=</span><span class="p">[</span><span class="s2">"mean"</span><span class="p">])</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">base</span> <span class="o">/</span> <span class="s2">"aggregated-01"</span>
+<span class="n">out</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">aggregated</span><span class="o">.</span><span class="n">slide_features</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">out</span> <span class="o">/</span> <span class="s2">"slide-features.parquet"</span><span class="p">)</span>
+<span class="n">aggregated</span><span class="o">.</span><span class="n">patient_features</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">out</span> <span class="o">/</span> <span class="s2">"patient-features.csv"</span><span class="p">)</span>
+<span class="p">(</span><span class="n">out</span> <span class="o">/</span> <span class="s2">"aggregation-report.json"</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">aggregated</span><span class="o">.</span><span class="n">report</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>然后按上面的patient-study模式连接真实结局，显式填写实际embedding聚合列名。不要把embedding维数、行序或缓存文件存在当作ID/历史有效性证明。该接入声明为 external/provided，不声称本包验证了上游深度模型或生成历史。</p>
+<p>真实AnnData可用 <code class="docutils literal notranslate"><span class="pre">rad.interop.from_anndata(adata,</span> <span class="pre">tiles=geometry,</span> <span class="pre">tile_id_column=&quot;tile_id&quot;)</span></code>，保留真实obs ID/var顺序；大稀疏/backed矩阵需先自行评估是否适合明确dense分配。WSIData路径还要从 <code class="docutils literal notranslate"><span class="pre">wsi.shapes[tile_key]</span></code> 的真实矩形、<code class="docutils literal notranslate"><span class="pre">wsi.attrs[&quot;tile_spec&quot;][tile_key]</span></code> 与 <code class="docutils literal notranslate"><span class="pre">wsi.tables[feature_key].X</span></code>/行ID证明关联。生成前snapshot、历史记录与level0转换的完整约束见<a class="reference internal" href="../interop.html"><span class="std std-doc">interop</span></a>。现在才给旧cache创建snapshot不能追认生成时几何。</p>
+</section>
+<section id="id2">
+<h2>覆盖图必须接收真实局部分数<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>patch脚本默认覆盖的是实际tile颜色特征，如 <code class="docutils literal notranslate"><span class="pre">rgb_R_mean</span></code>，不是肿瘤概率。真实tile-level模型分数也可以按tile ID接入并栅格化。重叠区域平均并保存coverage count，未覆盖区域NaN/透明；大图按块输出。患者模型概率只能在患者表解释，不能复制到每个tile后称为局部预测图。</p>
+<p>已有instance/semantic mask统计可用 <code class="docutils literal notranslate"><span class="pre">rad.pathology.object_features</span></code>；semantic需要明确连通性后分组件。重叠patch中同一实例可能重复，没有全局实例ID就只报告patch-local计数。MPP缺失时不输出假定物理面积。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="training.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">三任务原生训练、患者分组与无标签预测</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="results-and-errors.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">结果怎么读，错误怎么处理</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-patch">路径 A：已经有 patch 文件及真实坐标</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">从真实患者结局训练</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wsi">普通图片没有WSI全局坐标时</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-embedding">路径 B：你已有 embedding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">覆盖图必须接收真实局部分数</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/reference/user-guide/pathology.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

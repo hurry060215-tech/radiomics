@@ -1,0 +1,6 @@
+﻿ov\_radiomics.decision\_curve
+=============================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: decision_curve

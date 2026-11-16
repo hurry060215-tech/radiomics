@@ -1,0 +1,135 @@
+---
+orphan: true
+---
+
+# Native flat-table input and feature-table export
+
+`table_io::read_study(&StudyTableSpec, task, spec_directory)` reads CSV or flat
+Parquet into the shared `learning::StudyData`. Paths in the specification are
+resolved against `spec_directory`, never by changing the process working
+directory. Bare paths and an empty supplied base directory use `.` correctly.
+The returned `LoadedStudy` contains the data, input/join report and an optional
+validated source `FeatureTableManifest`.
+
+Column roles, predictor order, join policies and missing-value choices come from
+the main `StudyTableSpec` contract. Explicit numeric/categorical names preserve
+their order. With `numeric_features=None`, only base-table columns remaining
+after declared ID/cohort/outcome/optional-metadata/category exclusions become
+numeric predictors. Unselected clinical auxiliary columns never automatically
+become predictors. Missing declared columns and incompatible types are errors.
+An omitted outcome role produces `Outcome::Unlabeled`; it does not create zero
+labels. Such data can enter prediction, while training rejects absent outcomes.
+
+## Identity and joins
+
+Every base row needs a unique, nonempty string sample ID. Leading zeroes such as
+`001` are preserved. Metadata joins use unique sample keys. Clinical joins are
+sample-keyed one-to-one by default; `ClinicalJoinKey::Patient` explicitly permits
+many feature rows to share one clinical patient record. The auxiliary patient
+key remains unique, even if duplicate rows would have identical values. Patient
+keys must be known from base/metadata/manifest before a patient-keyed clinical
+join can be attempted. Equal row counts are never an alignment proof.
+
+`Exact` requires equal key sets. Explicit `Left` keeps every base row and records
+all missing base sample IDs, missing keys and unused auxiliary keys. Required
+patient/cohort fields still need complete values after a left join. A known
+value can fill a missing value for the same key/field; conflicting nonmissing
+values are errors. No field is silently suffixed or overwritten. Output row
+order is the base feature order.
+
+Optional metadata roles default to the six shared fields and remain `None` when
+unavailable, with a report of unavailable roles. Source manifest sample metadata
+is joined by actual sample ID and can provide the same declared metadata fields.
+`default_cohort` applies only when no cohort field exists in any selected source;
+it cannot hide empty values in an existing cohort column. Multiple external
+cohort identities are retained.
+
+## Types and missing values
+
+CSV uses reusable byte records. Numeric fields are parsed directly into the
+final float64/missing buffers; the complete embedding is not converted into an
+intermediate string matrix. Missing tokens match the declared UTF8 fields
+exactly, with only the empty string in the default list. If a verified base
+feature manifest supplies `csv_null_value`, that source encoding replaces the
+base missing-token list rather than being unioned with the specification's
+defaults. This preserves real empty strings and `NA` when `\N` is the source's
+null token. Auxiliary CSV files continue using the specification's tokens.
+The report records the effective base encoding and its source.
+
+Parquet reads projected scalar columns in batches using definition levels,
+without Arrow dataframe objects in the public contract. Null and empty UTF8
+strings remain distinct; CSV missing tokens do not reinterpret Parquet strings.
+IDs must be UTF8 logical strings. Numeric predictors accept ordinary float32,
+float64 and integer columns. Int64/UInt64 conversion checks actual float64
+precision loss using a wider integer comparison, including the `i64::MAX`
+saturation corner case. It does not reject every integer above 2^53 when that
+particular integer is exactly representable.
+
+Explicit categorical/outcome roles additionally accept integer and boolean
+columns: integers become exact decimal strings and booleans become `0`/`1`.
+Source physical/logical dtype and conversion are recorded. A float category is
+not guessed to be an integer label; encode it as an explicit UTF8 string.
+An optional non-ID metadata field can share this declared categorical role.
+Numeric predictors cannot simultaneously use a same-named string metadata role;
+remap or explicitly remove that optional role. Dates, timestamps, decimals,
+binary blobs, nested/list/repeated data and other unsupported projected logical
+types are not silently interpreted as ordinary numeric features.
+
+Null numeric cells have canonical stored value zero and missing flag true.
+Unlisted parsed NaN values require `nan_as_missing=true`; infinity is an error.
+All rows and dimensions are validated through the shared data contracts. Every
+input report contains its resolved path, complete-file SHA256, source columns,
+projection, ignored columns, dtype/conversion details and row count. Inputs that
+change size/modification time during parsing/hashing are rejected.
+
+## Feature tables and manifests
+
+```rust
+let manifest = write_feature_table(&features, "features.parquet", false, "\\N")?;
+let restored = read_feature_table("features.parquet", None)?;
+```
+
+`write_feature_table` accepts a validated numerical `FeatureTable`, output path,
+explicit overwrite flag and CSV null token. It preserves sample metadata,
+feature definitions/order, effective parameters and quality records in the
+shared schema-one `radiomics.feature-table` manifest. CSV uses the sidecar
+`<table path>.manifest.json`. Parquet embeds the manifest under
+`radiomics.feature_table_manifest` with `table_sha256=None`, avoiding a circular
+hash. Both formats also have the external sidecar with the completed file SHA.
+Parquet output uses Snappy; input additionally supports uncompressed, GZIP and
+ZSTD files through the explicitly enabled mature codec libraries.
+
+`read_feature_table` uses its explicit manifest path or standard sidecar, and/or
+the embedded Parquet manifest. It validates schemas, ID sets, feature columns,
+complete-file hashes when provided and agreement between external/embedded
+metadata. Values are aligned by actual feature names and sample IDs; equal
+dimensions are insufficient. A CSV without the metadata needed to reconstruct
+the feature contract is rejected. A study CSV associates an external manifest
+through the explicit `feature_manifest` role; it does not guess an unrelated
+sidecar merely from a matching row count.
+
+Validation and destination/null-token collision checks happen before output
+files are opened. Existing outputs require explicit overwrite. Writing uses
+same-directory temporary files followed by rename. Numeric values are streamed
+per row/column batch, and metadata is not duplicated as numeric strings.
+Real values that collide with the chosen CSV null token are errors. A failed
+two-file publish is reported as an error; readers verify the table/manifest
+hash rather than accepting an inconsistent pair.
+
+## Validation and limits
+
+Rust tests reuse the fixed table/model inputs without updating Golden results.
+They verify CSV/Parquet exact values and missing flags, metadata/definition/quality
+preservation, all enabled codecs, multiple row groups/batches, signed zero,
+reordered joins, explicit patient broadcast, duplicate/conflicting keys,
+unmatched left joins, source-specific null encoding, type and precision errors,
+NaN/Inf policy, checksum corruption, bare paths and overwrite guards.
+
+The three fixed tasks are loaded from both CSV and independently constructed
+typed Parquet columns, compared as complete `StudyData`, passed through native
+grouped training, saved/loaded as `.rad` and predicted identically. Unlabeled
+loading predicts identically and cannot train. These are Rust executable tests;
+the reader/model path does not invoke Python or its analysis libraries.
+The Apache Parquet dependency declares Rust 1.85; local Windows tests use the
+installed toolchain. Actual MSRV and Linux installation results remain separate
+CI acceptance steps. No support for arbitrary nested Parquet data is claimed.

@@ -1,0 +1,35 @@
+﻿ov\_radiomics.ModelBundle
+=========================
+
+.. currentmodule:: ov_radiomics
+
+.. autoclass:: ModelBundle
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ModelBundle.__init__
+      ~ModelBundle.load
+      ~ModelBundle.predict
+      ~ModelBundle.predict_proba
+      ~ModelBundle.predict_study
+      ~ModelBundle.save
+      ~ModelBundle.to_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ModelBundle.classes_
+      ~ModelBundle.manifest
+   
+   

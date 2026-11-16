@@ -1,0 +1,706 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Native Python workflows &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/python-native';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/v0.1.0/reference/python-native.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Native flat-table input and feature-table export" href="table-io-native.html" />
+    <link rel="prev" title="API reference" href="api.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">入口与数据</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Native Python workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="table-io-native.html">Native flat-table input and feature-table export</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">影像与特征</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="image-native.html">Native images and ROI preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features-native.html">Native Original feature subset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="native-extraction.html">Native NIfTI extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="research-native.html">Native keyed research transformations and basic habitats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">建模与统计</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="preprocessing-native.html">Native train-fitted table preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning-native.html">Patient-grouped native learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models-native.html">Native models and sparse solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation-native.html">Native evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clinical-native.html">Native complete-case binary logistic inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="baseline-native.html">Native observed-data baseline tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reliability-native.html">Native single-rating intraclass correlation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">轻量病理与互操作</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pathology-pixels.html">Native lightweight pathology pixels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-aggregate.html">Native tile identity, hierarchy summaries and local overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interop.html">Explicit external embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">独立 CLI</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cli-workflows-native.html">Native learning CLI workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-cli-native.html">Native lightweight pathology CLI</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../reference.html" class="nav-link">API 与 CLI 参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Native Python workflows</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="native-python-workflows">
+<h1>Native Python workflows<a class="headerlink" href="#native-python-workflows" title="Link to this heading">#</a></h1>
+<p>Install a compiled development wheel, then <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">ov_radiomics</span> <span class="pre">as</span> <span class="pre">rad</span></code>.
+The core requires no sklearn, SciPy, statsmodels, PyRadiomics, SimpleITK, joblib,
+ov or WSIData. NumPy/pandas handle conversion; matplotlib draws the basic plots.
+Seaborn and external/reference packages are explicit extras. A native request
+does not call an external estimator. <code class="docutils literal notranslate"><span class="pre">auto</span></code> requires a verified native extension;
+an unbuilt source checkout must choose <code class="docutils literal notranslate"><span class="pre">backend='python'</span></code> explicitly for the
+optional reference path. <code class="docutils literal notranslate"><span class="pre">backend_info()</span></code> probes availability without running it.</p>
+<section id="start-with-the-user-tutorials">
+<h2>Start with the user tutorials<a class="headerlink" href="#start-with-the-user-tutorials" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="../tutorials/index.html"><span class="std std-doc">stepwise Notebook index</span></a> contains executed
+code and figures. The first six lessons below use fixed synthetic data; the
+<a class="reference internal" href="../tutorials/07_public_ct.html"><span class="std std-doc">separate public CT lesson</span></a> uses genuine
+licensed PAT1 NIfTI/ROI inputs without inventing clinical outcomes. For your own
+files use the <a class="reference internal" href="user-guide/input-contracts.html"><span class="std std-doc">input contracts</span></a>,
+<a class="reference internal" href="user-guide/file-workflows.html"><span class="std std-doc">file-driven workflow</span></a>,
+<a class="reference internal" href="user-guide/pathology.html"><span class="std std-doc">patch/embedding guide</span></a> and
+<a class="reference internal" href="user-guide/results-and-errors.html"><span class="std std-doc">result/error guide</span></a>.</p>
+</section>
+<section id="complete-executable-examples">
+<h2>Complete executable examples<a class="headerlink" href="#complete-executable-examples" title="Link to this heading">#</a></h2>
+<p>Each script requires a <strong>new</strong> output directory and uses original synthetic/CC0
+acceptance data. Scores are software demonstrations, not clinical evidence.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tutorial</p></th>
+<th class="head"><p>Run from the repository root</p></th>
+<th class="head"><p>Main outputs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NIfTI + ROI</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/native/01_extract.py</span> <span class="pre">--output</span> <span class="pre">artifacts/native-01</span></code></p></td>
+<td><p>Scalar 3D features, geometry/quality, optional CLI parity via <code class="docutils literal notranslate"><span class="pre">--cli</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Imaging + clinical binary</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/native/02_image_clinical_binary.py</span> <span class="pre">--output</span> <span class="pre">artifacts/native-02</span></code></p></td>
+<td><p>NIfTI pairs, extracted table, shared patient splits, two pipelines, OOF fusion, <code class="docutils literal notranslate"><span class="pre">.rad</span></code>, unlabeled predictions, patient ROC</p></td>
+</tr>
+<tr class="row-even"><td><p>Multiclass and regression</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/native/03_multiclass_regression.py</span> <span class="pre">--output</span> <span class="pre">artifacts/native-03</span></code></p></td>
+<td><p>Softmax/Ridge, patient bootstrap, separate external identities, saved models</p></td>
+</tr>
+<tr class="row-odd"><td><p>Regions, modalities, Delta, habitat</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/native/04_regions_delta_habitat.py</span> <span class="pre">--output</span> <span class="pre">artifacts/native-04</span></code></p></td>
+<td><p>Anisotropic mm ring, explicit key joins, paired Delta, existing labels, local fitted KMeans state</p></td>
+</tr>
+<tr class="row-even"><td><p>Patches to patients</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/native/05_patch_patient.py</span> <span class="pre">--output</span> <span class="pre">artifacts/native-05</span></code></p></td>
+<td><p>RGB8 PNG decoding, streamed QC/colors, hierarchy tables, empty-slide status, patient model, real tile-feature overlay</p></td>
+</tr>
+<tr class="row-odd"><td><p>External embeddings and maps</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/native/06_embedding_overlay.py</span> <span class="pre">--output</span> <span class="pre">artifacts/native-06</span></code></p></td>
+<td><p>Reversed-row ID alignment, slide/patient summaries, separate tile-unit model, real local probabilities, rejected patient broadcasting</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Tutorials 02/03/05/06 consume the versioned synthetic JSON fixtures in this
+repository, without importing their reference implementations. See
+<a class="reference internal" href="interop.html"><span class="std std-doc">strict WSIData adaptation</span></a> for optional existing containers. The
+external-array lesson does not execute WSIData; separate
+<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e/docs/optional-interop-acceptance.md">optional-container acceptance</a> records the
+limited real pinned-container checks.</p>
+</section>
+<section id="training-and-persistence">
+<h2>Training and persistence<a class="headerlink" href="#training-and-persistence" title="Link to this heading">#</a></h2>
+<p>CSV/Parquet study inputs can use the native loader without pandas/pyarrow file
+parsers. <code class="docutils literal notranslate"><span class="pre">study</span> <span class="pre">=</span> <span class="pre">rad.read_study('study.json',</span> <span class="pre">task='binary')</span></code> resolves the
+schema-one column-role/join specification relative to its file. Its
+<code class="docutils literal notranslate"><span class="pre">study.dataframe</span></code>, <code class="docutils literal notranslate"><span class="pre">study.features</span></code>, <code class="docutils literal notranslate"><span class="pre">study.categorical</span></code>, <code class="docutils literal notranslate"><span class="pre">study.target</span></code> and
+<code class="docutils literal notranslate"><span class="pre">study.report</span></code> expose conversion views and the actual load audit. Native feature
+tables round-trip with <code class="docutils literal notranslate"><span class="pre">rad.read_feature_table(path)</span></code> or <code class="docutils literal notranslate"><span class="pre">rad.FeatureTable.read(path)</span></code>.</p>
+<p>For explicit center holdout, create
+<code class="docutils literal notranslate"><span class="pre">plan</span> <span class="pre">=</span> <span class="pre">rad.SplitPlan.center_holdout(data,</span> <span class="pre">'outcome',</span> <span class="pre">held_out_centers=['B'])</span></code>,
+then apply <code class="docutils literal notranslate"><span class="pre">data</span> <span class="pre">=</span> <span class="pre">plan.apply_cohorts(data)</span></code> before fitting. Existing external
+cohorts remain external, and class inference reads training centers only.
+<code class="docutils literal notranslate"><span class="pre">rad.evaluate(result,</span> <span class="pre">by_center=True)</span></code> reports center/cohort strata with native
+metrics; an already aggregated prediction spanning multiple centers cannot be
+disaggregated. The CLI equivalent for training is <code class="docutils literal notranslate"><span class="pre">train</span> <span class="pre">--hold-out-center</span> <span class="pre">B</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">FeatureSelector</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s1">'multiclass'</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">,</span>
+    <span class="n">univariate</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span> <span class="n">sparse_method</span><span class="o">=</span><span class="s1">'ovr_l1_logistic'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">train_models</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">'outcome'</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s1">'multiclass'</span><span class="p">,</span>
+    <span class="n">patient_id</span><span class="o">=</span><span class="s1">'patient_id'</span><span class="p">,</span> <span class="n">split_plan</span><span class="o">=</span><span class="n">plan</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="n">selector</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">)</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">prediction_unit</span><span class="o">=</span><span class="s1">'patient'</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">'fresh-results'</span><span class="p">)</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">'fresh-results/model-000.rad'</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">external_without_outcome</span><span class="p">,</span> <span class="n">cohort</span><span class="o">=</span><span class="s1">'external_B'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The compatibility defaults for training/selection/clinical functions retain the
+legacy Python path; specify <code class="docutils literal notranslate"><span class="pre">backend='rust'</span></code>. Native supported models are LR
+(binary/softmax), Linear and Ridge (regression), KNN, GaussianNB (classification),
+and RandomForest. Parameters follow the documented native objectives; sklearn
+<code class="docutils literal notranslate"><span class="pre">C</span></code> is not silently reinterpreted as a mean-loss lambda. Unknown models and
+unsupported parameters fail. See <a class="reference internal" href="models-native.html"><span class="std std-doc">native model definitions</span></a>.</p>
+<p>An explicit binary class order defines negative then positive. Numeric labels
+are normalized without changing string IDs; an explicitly supplied positive label
+must agree with that order. Without an explicit order, the binary default positive
+label is 1. Sample and patient IDs stay outside the matrix. Repeated lesions are
+grouped through all inner/outer fits. Identified feature/target Series must have
+matching indices. New patients cannot be marked as original train/test patients;
+saved cohort identities cannot be relabeled for prediction.</p>
+<p>Fixed sparse alpha may be fitted directly on isolated training data. An alpha
+grid is evaluated inside whole patient-grouped native pipelines using the
+declared task metric; it is not a hidden standalone pooled LassoCV. All-missing
+columns default to errors, explicit deletion is available, and zero-feature
+results never trigger threshold relaxation.</p>
+<p><code class="docutils literal notranslate"><span class="pre">evaluate(result)</span></code> infers the engine from an already typed result; an explicit
+<code class="docutils literal notranslate"><span class="pre">auto</span></code> only accepts native results. Native evaluation defaults to patient means
+(tiles first within slide, then equal slides), uses the saved binary threshold,
+and labels apparent/OOF/holdout/external provenance. A standalone binary
+PredictionTable needs an explicit threshold. The DataFrame includes macro/micro/
+weighted summaries, with full confusion/per-class native reports in
+<code class="docutils literal notranslate"><span class="pre">metrics.attrs['native_reports']</span></code>. <code class="docutils literal notranslate"><span class="pre">PredictionTable.aggregate_patients()</span></code> retains
+OOF/training-source semantics and is idempotent for patient-unit predictions.</p>
+<p>Portable supervised models are typed <code class="docutils literal notranslate"><span class="pre">.rad</span></code> JSON containers, never pickle or
+joblib. Pipeline <code class="docutils literal notranslate"><span class="pre">bundle.predict(DataFrame)</span></code> accepts named reordered features
+without an outcome. Fusion bundles use <code class="docutils literal notranslate"><span class="pre">predict_study</span></code> with exact named component
+studies. Missing/unknown schemas, types, columns and nonconverged state fail.
+Default outputs refuse replacement; <code class="docutils literal notranslate"><span class="pre">overwrite=True</span></code> is explicit.</p>
+<p>For a fitted binary Logistic probability fusion, <code class="docutils literal notranslate"><span class="pre">rad.plot_nomogram(fusion)</span></code>
+also accepts the native result or its reloaded fusion <code class="docutils literal notranslate"><span class="pre">ModelBundle</span></code>. It reads
+the saved meta-model coefficients and converts the actual component probability
+axes into points without refitting. Weighted averages, multiclass fusion and
+ordinary feature pipelines are explicitly rejected by this binary plot. The
+same mapping remains available on <code class="docutils literal notranslate"><span class="pre">figure.nomogram_mapping</span></code> for verification.</p>
+<p><code class="docutils literal notranslate"><span class="pre">rad.plot_cv_results(result.cv_results)</span></code> accepts the native binary AUC,
+multiclass macro OvR AUC and regression RMSE tables, or an explicit <code class="docutils literal notranslate"><span class="pre">metric=</span></code>
+for generic score tables. It uses supplied fold scores only, preserves regression
+axis ranges and requires no seaborn/sklearn. This is a CV-score display, not the
+legacy learning-curve routine that creates and fits its own sklearn folds.</p>
+</section>
+<section id="image-research-and-pathology-objects">
+<h2>Image, research and pathology objects<a class="headerlink" href="#image-research-and-pathology-objects" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">rad.image.from_array</span></code> uses NumPy <code class="docutils literal notranslate"><span class="pre">(y,x)</span></code> or <code class="docutils literal notranslate"><span class="pre">(z,y,x)</span></code> axes and a full affine;
+unknown units never become assumed mm. <code class="docutils literal notranslate"><span class="pre">rad.mask</span></code> provides explicit label,
+connectivity and distance operations. <code class="docutils literal notranslate"><span class="pre">ImageSample.extract(config)</span></code> extracts
+already prepared arrays. Its optional <code class="docutils literal notranslate"><span class="pre">families</span></code> selects supported families and
+skips unselected matrix work, using the same frozen engine. Batch <code class="docutils literal notranslate"><span class="pre">rad.extract</span></code>
+uses a native ExtractConfig, with the same optional top-level <code class="docutils literal notranslate"><span class="pre">families</span></code> field.
+<code class="docutils literal notranslate"><span class="pre">ExtractionResult.config['cache_summary']</span></code> reports actual cache attempts/hits/
+misses/rejections/write failures separately from deterministic feature payloads.
+Failures before a cache lookup do not count as a hit or miss.</p>
+<p><code class="docutils literal notranslate"><span class="pre">rad.research.concat</span></code> requires exact explicit keys and declared allowed modality/
+region differences. <code class="docutils literal notranslate"><span class="pre">rad.research.delta</span></code> pairs patient/lesion/modality/region and
+explicit timepoints; zero denominators default to errors. <code class="docutils literal notranslate"><span class="pre">rad.habitat.fit</span></code>
+saves native scaling and local cluster centers in <code class="docutils literal notranslate"><span class="pre">radiomics.habitat.v1</span></code> JSON;
+it is an unsupervised state, not a three-task <code class="docutils literal notranslate"><span class="pre">.rad</span></code> classifier. Failed convergence
+and empty clusters are errors. Cluster labels do not identify shared tissue types.</p>
+<p><code class="docutils literal notranslate"><span class="pre">rad.pathology</span></code> reads ordinary RGB8 PNG/JPEG or supported single-page TIFF,
+streams patches, returns raw QC and reasons, uses fixed sRGB/D65 histograms and
+circular Hue statistics, and reuses native gray textures and mask components.
+No files are deleted by QC. Explicit tissue masks must match patch axes and
+contain finite Boolean/binary values. Padding never enters denominators. Instance
+statistics remain patch local even in overlapping tiles. Hierarchical aggregation
+retains all-excluded and zero-tile parents; it never emits fake all-zero features.
+Local overlays accept actual tile features/scores/PredictionTables and return
+owned blocks with NaN/transparent missing coverage and counts. Patient probabilities
+cannot be broadcast into local maps. The original global canvas is exported.</p>
+</section>
+<section id="clinical-units">
+<h2>Clinical units<a class="headerlink" href="#clinical-units" title="Link to this heading">#</a></h2>
+<p>Native <code class="docutils literal notranslate"><span class="pre">baseline_table</span></code>, <code class="docutils literal notranslate"><span class="pre">multivariable_logistic</span></code> and <code class="docutils literal notranslate"><span class="pre">univariate_logistic</span></code> require
+nonempty patient identities. Default patient inference rejects repeated patients;
+<code class="docutils literal notranslate"><span class="pre">analysis_unit='sample'</span></code> is an explicit row-level scope, not evidence of patient
+independence. Logistic uses complete cases and reports exclusions, unpenalized
+OR/Wald intervals, separation/rank/convergence diagnostics. Baselines summarize
+observed values without imputation and reject missing outcomes. <code class="docutils literal notranslate"><span class="pre">rad.icc(matrix,</span> <span class="pre">kind='ICC(2,1)')</span></code> or <code class="docutils literal notranslate"><span class="pre">ICC(3,1)</span></code> requires a complete balanced subject×reader matrix.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="api.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">API reference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="table-io-native.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Native flat-table input and feature-table export</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-with-the-user-tutorials">Start with the user tutorials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-executable-examples">Complete executable examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-persistence">Training and persistence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-research-and-pathology-objects">Image, research and pathology objects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clinical-units">Clinical units</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/python-native.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e">
+  Build <code>bb2d3fe</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

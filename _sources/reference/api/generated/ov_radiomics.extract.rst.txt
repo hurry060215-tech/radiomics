@@ -1,0 +1,6 @@
+﻿ov\_radiomics.extract
+=====================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: extract

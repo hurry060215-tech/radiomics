@@ -1,0 +1,12 @@
+TrainingResult
+==============
+
+.. py:class:: ov_radiomics.TrainingResult
+
+   This public name is a lazy alias supplied by the optional Python
+   reference backend. Its implementation is intentionally not imported
+   during documentation generation. Install ``ov-radiomics[reference]``
+   only when using that documented legacy path.
+
+   Native pipelines return their typed native result objects instead.
+   See :doc:`../learning-native` and :doc:`../models-native`.

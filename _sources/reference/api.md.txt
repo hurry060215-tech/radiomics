@@ -1,0 +1,71 @@
+---
+orphan: true
+---
+
+# API reference
+
+Import with `import ov_radiomics as rad`. The native APIs and optional legacy
+Python/reference APIs are distinct execution paths. The compatibility defaults
+for selection/training/clinical functions remain `backend='python'`; request
+`backend='rust'` (or native `auto`) for the independent core. No native request
+invokes a reference estimator or silently changes an unsupported algorithm.
+
+## Current native interfaces
+
+- [Image preparation and geometry](image-native.md), [feature subset and profiles](features-native.md),
+  [cohort extraction](native-extraction.md), [CSV/Parquet roles and joins](table-io-native.md).
+- [Grouped three-task learning and portable .rad files](learning-native.md),
+  [models/objectives](models-native.md), [screening](preprocessing-native.md),
+  [evaluation](evaluation-native.md), [clinical inference](clinical-native.md),
+  [baseline tables](baseline-native.md), [typed ICC](reliability-native.md).
+- [Thin external/WSIData adapters](interop.md), [native Python workflows](python-native.md)
+  and [CLI commands](cli-workflows-native.md).
+
+Native sample IDs are unique; patients may have multiple lesions/slides. Every
+fitted stage uses the actual patient sets in the shared SplitPlan, including
+inner tuning and fusion. External cohorts remain distinct. Models store ordered
+features/classes, preprocessing/selection/model state, threshold and training
+provenance. `rad.load_model(path).predict(dataframe)` supports outcome-free
+pipeline prediction, including feature-column reordering. Native `evaluate`
+defaults to patient aggregation and the saved model threshold; a standalone
+binary PredictionTable requires an explicit saved threshold. Macro/micro/weighted
+summaries are flattened and complete native reports remain in DataFrame
+`attrs['native_reports']`.
+
+Clinical native APIs default to `analysis_unit='patient'`, reject repeated patient
+rows and require identified inputs. Explicit `analysis_unit='sample'` records a
+row-level scope; it does not establish patient independence. CDF/quantiles,
+H–L grouping and legacy-compatible bootstrap indices now execute in Rust.
+
+`plot_nomogram` accepts native binary Logistic fusion results and reloaded fusion
+bundles, reading saved coefficients without fitting. `plot_cv_results` accepts
+binary AUC, multiclass macro OvR AUC and regression RMSE, with an explicit metric
+for generic score tables. These plots need no sklearn/seaborn. Other legacy
+selector-path/Rad-score and learning-curve views retain their stated limits; see
+the [native capability boundaries](native-boundaries.md).
+
+## Generated public API
+
+The callable and class reference is generated with Sphinx apidoc and autosummary
+from `ov_radiomics.__all__`. Documentation generation does not recursively
+inspect backend modules. The two lazy optional result aliases retain explicitly
+labeled static entries without importing their reference implementations.
+
+```{toctree}
+:maxdepth: 1
+
+api/ov_radiomics
+```
+
+Generate the maintained sources and public API before building the site:
+
+```bash
+python tools/build_website_sources.py
+python tools/build_api_sources.py
+python -m sphinx -W --keep-going -b html website website/_build/html
+```
+
+Native semantics, input roles, saved model contracts and known limitations remain
+in the linked native guides and [support matrix](support-matrix.md). The
+[legacy Python guide](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/legacy-python.md) describes optional estimator objects and
+its independent-row workflow; historical interfaces are not native promises.

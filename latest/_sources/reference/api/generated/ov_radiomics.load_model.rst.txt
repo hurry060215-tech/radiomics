@@ -1,0 +1,6 @@
+﻿ov\_radiomics.load\_model
+=========================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: load_model

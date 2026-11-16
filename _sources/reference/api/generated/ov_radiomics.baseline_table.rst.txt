@@ -1,0 +1,6 @@
+﻿ov\_radiomics.baseline\_table
+=============================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: baseline_table

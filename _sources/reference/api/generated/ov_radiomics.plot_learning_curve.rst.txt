@@ -1,0 +1,6 @@
+﻿ov\_radiomics.plot\_learning\_curve
+===================================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: plot_learning_curve

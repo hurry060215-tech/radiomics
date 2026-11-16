@@ -1,0 +1,210 @@
+---
+orphan: true
+---
+
+# Native lightweight pathology CLI
+
+`radiomics pathology` calls the same Rust pixel, texture, hierarchy and raster
+kernels as the Python API. It does not start Python, load ov/WSIData, decode a WSI,
+train a deep network or infer image registration. The executable has three
+subcommands: `patches`, `aggregate` and `overlay`.
+
+## Ordinary image → QC/features → patient modeling input
+
+```text
+radiomics pathology patches --cohort cohort.json --config patches.json --output new-patches
+```
+
+The cohort JSON is an array of explicitly identified slide/image records. Input
+paths are relative to the cohort file, not a changed global working directory.
+`source` is provenance supplied by the caller. Each slide belongs to one patient;
+slide IDs are globally unique. MPP is optional and never inferred from DPI or
+"20x". Geometry uses level-0 pixel edges, x right, y down.
+
+```json
+[
+  {
+    "image": "patches/slide-001.tif",
+    "texture_image": null,
+    "mask": null,
+    "metadata": {
+      "patient_id": "P001", "slide_id": "S001",
+      "source": "decoded ordinary single-page image",
+      "origin0": [0, 0], "pixel_size0": [1, 1],
+      "mpp_x_um": null, "mpp_y_um": null
+    }
+  }
+]
+```
+
+The example below selects fixed-bin color features. Provide all nine fixed edge
+sets even when only a subset of their outputs enters the numerical matrix. There
+is no automatic intensity discretization or stain separation. Both patch size
+and stride are `[width,height]` in decoded-image pixels; tile extents are stored
+separately in level-0 coordinates. `edge="drop"` or `"pad"` is explicit. Padding
+never contributes to QC, histogram, texture or object denominators.
+
+```json
+{
+  "schema_version": 1,
+  "tiling": {"patch_size": [256,256], "stride": [256,256], "edge": "pad", "pad_value": 0},
+  "qc": {
+    "white_threshold": 240, "low_saturation_threshold": 0.1,
+    "black_threshold": 15, "border_band_px": 1,
+    "tissue_s_min": 0.1, "tissue_v_min": 0.05, "tissue_v_max": 0.95,
+    "max_white_fraction": 0.8, "max_low_saturation_fraction": null,
+    "max_black_border_fraction": null, "min_tissue_fraction": null,
+    "min_laplacian_variance": null
+  },
+  "color": {"fixed_edges": {
+    "R": [0,64,128,192,256], "G": [0,64,128,192,256], "B": [0,64,128,192,256],
+    "S": [0,0.25,0.5,0.75,1], "V": [0,0.25,0.5,0.75,1],
+    "L": [0,25,50,75,100], "a": [-128,-64,0,64,128], "b": [-128,-64,0,64,128],
+    "H": [0,60,120,180,240,300,360]
+  }},
+  "texture": null, "tissue_only": false,
+  "features": [
+    {"kind": "color_statistic", "channel": "R", "statistic": "mean"},
+    {"kind": "color_statistic", "channel": "L", "statistic": "std"},
+    {"kind": "color_histogram", "channel": "H", "bin": 0},
+    {"kind": "hue_resultant_length"},
+    {"kind": "hue_circular_variance"},
+    {"kind": "qc", "score": "tissue_fraction"}
+  ],
+  "aggregation": {"tile_weight": "equal", "patient_weight": "equal", "patient_stats": ["mean","std","max","q25","q50","q75"]}
+}
+```
+
+Available linear channel statistics are `mean`, `std` (population), `minimum`,
+`maximum`, `q25`, `q50`, `q75`, for `R,G,B,S,V,L,a,b`. Histograms select an explicit
+zero-based bin for any of those channels or circular hue `H`. Hue mean degrees
+remain circular metadata in `patch-details.jsonl`; they cannot be selected as a
+linear scalar feature or silently averaged across patches. Undefined hue in an
+achromatic patch remains missing. QC scalar choices are the five native scores:
+white, low-saturation, black-border, tissue fractions, and Laplacian variance.
+
+For texture, set `texture` to an ordinary `python_golden_v1` extraction config and
+choose explicit supported names, for example
+`{"kind":"texture","name":"original_glcm_Contrast"}`. Gray8/Gray16 inputs keep
+their bit depth. A primary RGB image requires a supplied co-gridded Gray8/Gray16
+`texture_image` of the same decoded dimensions; the CLI performs no implicit RGB
+conversion. A caller asserting that companion grid remains responsible for its
+upstream conversion and alignment. `tissue_only=true` requires RGB QC and reuses
+its tissue mask. This does not create a second texture implementation.
+
+Outputs include `tiles.json`, raw `qc.jsonl`, `patch-details.jsonl`, slide
+statuses, input/config content hashes, effective parameters, implementation
+digest, and tile/slide/patient `FeatureTable` JSON, CSV and Parquet (with native
+manifests). Numerical outputs retain explicit missing flags. Feed the patient
+feature table to the ordinary native `train` command with an identified clinical
+table and patient-level SplitPlan. Tile→slide summaries precede slide→patient
+summaries; slides have equal patient-level weight by default.
+
+For an existing semantic/instance label mask, supply `mask` as an explicitly
+co-gridded single-page Gray8/Gray16 TIFF, and add an explicit config field:
+
+```json
+{"mask_analysis": {"kind":"semantic","connectivity":"four","classes":[0,1,2]}}
+```
+
+`kind` is `semantic` or `instance`; 2D connectivity is `four` or `eight`.
+Decoded mask dimensions must match the primary image, and each mask patch must
+have the same proven tile ID/geometry/valid rectangle. The CLI never resamples,
+infers alignment from equal row counts, or converts RGB values into labels.
+`patch-details.jsonl` records native object IDs/areas/centroids/bboxes/boundary
+flags, size distributions, annotation coverage and its nonpadding denominator.
+MPP comes from the original image TileRecord, with patch-pixel scale derived in
+the common core. Mask path/content SHA is retained with slide provenance.
+Optional scalar selectors are `{"kind":"patch_object_count"}`,
+`{"kind":"object_size_statistic","statistic":"mean"}` (pixel area; same seven
+statistics), and `{"kind":"annotation_fraction","label":2}`. All object counts
+remain **patch local**, including overlapping instance IDs; no whole-slide cell
+total is created. Hierarchical summaries of a patch count describe patch counts,
+not the number of unique cells in the slide. Missing or mismatched masks produce
+explicit failed-slide results. This reader supports 8/16-bit stored labels, not a
+new vendor mask decoder.
+
+Processing retains one decoded primary image and, when requested, decoded gray
+and mask companions. It yields and releases individual patch pixels, streaming QC and
+details to disk. Only tile metadata, selected scalar features and diagnostics are
+retained for aggregation. It does not write/delete patch image files. A missing
+image, all-QC-excluded slide, and zero-tile slide remain distinct results with
+their patient parent. A processing failure invalidates already produced features
+from that slide. `tiles.json`/slide status is the final acceptance record; raw QC
+JSONL records describe the measured stage. Partial/empty cohorts exit with code 2.
+
+## Already aligned embeddings → hierarchical summaries
+
+```text
+radiomics pathology aggregate --table geometry.json --embeddings embeddings.parquet --config aggregate.json --output new-aggregate
+```
+
+`--table` is a canonical `TileTable`. It may already carry features; alternatively
+`--embeddings` is a native CSV/Parquet `FeatureTable` whose `sample_id` values are
+the tile IDs, with its normal sidecar/embedded manifest. `--embedding-manifest`
+can explicitly locate an external manifest. The core checks the exact tile ID
+set and reorders by names/IDs; equal row counts alone never establish alignment.
+An existing table feature matrix cannot be overwritten by an implicit second
+embedding source. `aggregate.json` contains the native `AggregateConfig`:
+
+```json
+{"tile_weight":"equal", "patient_weight":"equal", "patient_stats":["mean","std","max","q25","q50","q75"]}
+```
+
+Explicit within-slide area weighting is `level0_area` or `physical_area`; patient
+area weighting requires `physical_area`, with supplied MPP for every applicable
+slide. Without MPP only pixel-area/equal modes are meaningful. Area weights are
+patch support weights, not a deduplicated estimate of whole-slide tissue area.
+
+## Real tile predictions/features → block overlay
+
+```text
+radiomics pathology overlay --table tiles.json --config overlay.json --output new-overlay
+```
+
+An explicit score example (one slide per direct score table):
+
+```json
+{
+  "schema_version": 1,
+  "canvas": {"width":1000,"height":800,"origin0":[0,0],"pixel_size0":[4,4]},
+  "block_size": [256,256], "clip": false,
+  "source": {"kind":"scores","tile_ids":["T001","T002"],"scores":[0.2,0.8],"prediction_unit":"tile"}
+}
+```
+
+Other sources are `{"kind":"feature","slide_id":"S001","feature":"name"}`
+or `{"kind":"predictions","path":"tile-predictions.json","slide_id":"S001","class":"positive"}`.
+Prediction paths are relative to the overlay config file. Classification selects
+an explicit class; regression uses `class:null`. A `PredictionTable` must contain
+actual tile-level predictions with matching patient/slide/tile identity. Patient
+or slide probabilities cannot be broadcast into a local prediction map.
+
+The raster kernel uses original global-index pixel centers, half-open valid
+rectangles, overlap means and exact coverage counts. Uncovered values are encoded
+as `"NaN"` with alpha 0. JSON blocks are written one at a time; `blocks.jsonl`
+indexes their location/shape. The final `manifest.json` retains the original full
+canvas origin, scale and dimensions, never reconstructing it from rounded block
+origins. This does not allocate a full raster or a list of all block filenames.
+
+All commands choose a new output directory by default. Existing output requires
+`--overwrite`; only known output names are replaced, unrelated files are retained,
+and command input files may not reside inside an overwritten output directory.
+No recursive deletion is used. Formal package publication is separate.
+
+## Validation scope
+
+`cargo test -p ov-radiomics-cli --test pathology_commands --locked` runs the real
+executable with an empty PATH. It checks hand-written ordinary TIFFs, padding,
+all-excluded/missing/zero-tile parents, explicit Gray16 texture, CSV/Parquet
+embedding ID alignment, semantic connectivity/patch-local units/valid mask
+denominators, and frozen independent overlap coverage. These are
+software fixtures, not clinical performance data or a throughput benchmark.
+A separate 32-patient synthetic test executes ordinary TIFF→patch QC/features→
+patient Parquet table→native grouped training→`.rad` save/load→unlabeled
+prediction→patient evaluation, all with empty PATH. Save/load predictions are
+exactly equal to the original typed prediction table.
+
+No speed/memory target, Linux installation or live WSIData container runtime is
+established by these local Windows CLI tests. Existing masks are required;
+segmentation and image registration are external input responsibilities.

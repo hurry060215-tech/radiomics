@@ -1,0 +1,785 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Native lightweight pathology pixels &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/pathology-pixels';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/reference/pathology-pixels.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Native tile identity, hierarchy summaries and local overlays" href="pathology-aggregate.html" />
+    <link rel="prev" title="Native single-rating intraclass correlation" href="reliability-native.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">入口与数据</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/ov_radiomics.html">Public Python API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.backend_info.html">ov_radiomics.backend_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.SplitPlan.html">ov_radiomics.SplitPlan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.match_images.html">ov_radiomics.match_images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.check_images.html">ov_radiomics.check_images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.extract.html">ov_radiomics.extract</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.read_cohort.html">ov_radiomics.read_cohort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.ExtractionResult.html">ov_radiomics.ExtractionResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.FeatureSelector.html">ov_radiomics.FeatureSelector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.read_study.html">ov_radiomics.read_study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.read_feature_table.html">ov_radiomics.read_feature_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.LoadedStudy.html">ov_radiomics.LoadedStudy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.baseline_table.html">ov_radiomics.baseline_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.univariate_logistic.html">ov_radiomics.univariate_logistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.multivariable_logistic.html">ov_radiomics.multivariable_logistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.icc.html">ov_radiomics.icc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.split_data.html">ov_radiomics.split_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.make_classifier.html">ov_radiomics.make_classifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.train_models.html">ov_radiomics.train_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.evaluate.html">ov_radiomics.evaluate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.fusion_data.html">ov_radiomics.fusion_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.fit_fusion.html">ov_radiomics.fit_fusion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.binary_metrics.html">ov_radiomics.binary_metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.delong_test.html">ov_radiomics.delong_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.decision_curve.html">ov_radiomics.decision_curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.hosmer_lemeshow.html">ov_radiomics.hosmer_lemeshow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.join_data.html">ov_radiomics.join_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.ImageSample.html">ov_radiomics.ImageSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.ImageVolume.html">ov_radiomics.ImageVolume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.MaskVolume.html">ov_radiomics.MaskVolume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.FeatureTable.html">ov_radiomics.FeatureTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.TileTable.html">ov_radiomics.TileTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.ModelBundle.html">ov_radiomics.ModelBundle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.PredictionTable.html">ov_radiomics.PredictionTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.load_model.html">ov_radiomics.load_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_roc.html">ov_radiomics.plot_roc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_calibration.html">ov_radiomics.plot_calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_dca.html">ov_radiomics.plot_dca</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_confusion_matrix.html">ov_radiomics.plot_confusion_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_prediction_scores.html">ov_radiomics.plot_prediction_scores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_correlation.html">ov_radiomics.plot_correlation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_lasso_path.html">ov_radiomics.plot_lasso_path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_lasso_cv.html">ov_radiomics.plot_lasso_cv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_feature_weights.html">ov_radiomics.plot_feature_weights</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_cv_results.html">ov_radiomics.plot_cv_results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_metrics.html">ov_radiomics.plot_metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_feature_summary.html">ov_radiomics.plot_feature_summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_feature_pvalues.html">ov_radiomics.plot_feature_pvalues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_embedding.html">ov_radiomics.plot_embedding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_learning_curve.html">ov_radiomics.plot_learning_curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_nomogram.html">ov_radiomics.plot_nomogram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ov_radiomics.TrainingResult.html">TrainingResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ov_radiomics.FusionResult.html">FusionResult</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="python-native.html">Native Python workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="table-io-native.html">Native flat-table input and feature-table export</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">影像与特征</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="image-native.html">Native images and ROI preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features-native.html">Native Original feature subset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="native-extraction.html">Native NIfTI extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="research-native.html">Native keyed research transformations and basic habitats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">建模与统计</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="preprocessing-native.html">Native train-fitted table preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning-native.html">Patient-grouped native learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models-native.html">Native models and sparse solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation-native.html">Native evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clinical-native.html">Native complete-case binary logistic inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="baseline-native.html">Native observed-data baseline tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reliability-native.html">Native single-rating intraclass correlation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">轻量病理与互操作</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Native lightweight pathology pixels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-aggregate.html">Native tile identity, hierarchy summaries and local overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interop.html">Explicit external embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">独立 CLI</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cli-workflows-native.html">Native learning CLI workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-cli-native.html">Native lightweight pathology CLI</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../reference.html" class="nav-link">API 与 CLI 参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Native lightweight pathology pixels</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="native-lightweight-pathology-pixels">
+<h1>Native lightweight pathology pixels<a class="headerlink" href="#native-lightweight-pathology-pixels" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">radiomics-core::pathology_pixels</span></code> processes ordinary decoded images and existing
+masks. It calls the shared image-component, radiomics-feature and scalar-statistics
+engines. It has no Python, OpenCV, GPU, WSIData or OmicVerse runtime dependency.
+CLI/Python availability is established separately by integration tests.</p>
+<section id="streaming-patches-and-coordinates">
+<h2>Streaming patches and coordinates<a class="headerlink" href="#streaming-patches-and-coordinates" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tile_image(&amp;RasterImage,</span> <span class="pre">&amp;TileSpec,</span> <span class="pre">&amp;SlideMetadata)</span></code> returns a <code class="docutils literal notranslate"><span class="pre">TileIterator</span></code>.
+Each iterator item contains the same shared <code class="docutils literal notranslate"><span class="pre">TileRecord</span></code> contract plus one owned
+<code class="docutils literal notranslate"><span class="pre">RasterImage</span></code>. The source image is borrowed; generated patches are not accumulated.
+Image decoding is a separate operation and is not a promise of streaming WSI decode.</p>
+<p><code class="docutils literal notranslate"><span class="pre">TileSpec</span></code> specifies <code class="docutils literal notranslate"><span class="pre">[width,height]</span></code> patch size, <code class="docutils literal notranslate"><span class="pre">[x,y]</span></code> stride, explicit <code class="docutils literal notranslate"><span class="pre">drop</span></code>
+or <code class="docutils literal notranslate"><span class="pre">pad</span></code> policy, and a scalar <code class="docutils literal notranslate"><span class="pre">pad_value</span></code>. RGB8 and Gray8 reject values greater
+than 255; Gray16 preserves the full <code class="docutils literal notranslate"><span class="pre">u16</span></code> range. Drop yields only complete patches;
+pad yields every positive-overlap patch starting at a stride multiple. Output is
+deterministically ordered by y, then x. Stride can exceed patch size; uncovered
+pixels then remain uncovered.</p>
+<p><code class="docutils literal notranslate"><span class="pre">SlideMetadata</span></code> retains patient ID, slide ID, source, level-0 origin and per-axis
+source-pixel scale. <code class="docutils literal notranslate"><span class="pre">pixel_size0=[2,3]</span></code> means one decoded source pixel spans two
+level-0 pixels horizontally and three vertically. Values are explicit, finite and
+positive. The source’s first pixel edge is <code class="docutils literal notranslate"><span class="pre">origin0</span></code>, with x right and y down.
+MPP, when present, means <strong>micrometers per level-0 pixel</strong> and is never inferred
+from DPI or a magnification string.</p>
+<p><code class="docutils literal notranslate"><span class="pre">x0/y0/width0/height0</span></code> are level-0 pixel-edge coordinates. Nominal width/height
+include any padding; <code class="docutils literal notranslate"><span class="pre">valid_pixels=[left,top,width,height]</span></code> identifies actual
+source pixels within the patch. All statistics exclude padding. Deterministic tile
+IDs use a versioned SHA256 of patient/slide/source identity, explicit origin/scale,
+local source position and patch dimensions, preventing collisions across decoded
+regions or scale variants. IDs are stable for identical inputs and configuration.</p>
+</section>
+<section id="qc-with-explicit-missing-scores">
+<h2>QC with explicit missing scores<a class="headerlink" href="#qc-with-explicit-missing-scores" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">qc_patch(image,</span> <span class="pre">valid_pixels,</span> <span class="pre">config)</span></code> requires sRGB RGB8. Gray8/Gray16 are not
+silently scaled or replicated into RGB. They remain usable through the raw-value
+traditional-feature adapter.</p>
+<p><code class="docutils literal notranslate"><span class="pre">QcConfig::default()</span></code> computes scores without excluding any patch. Applications
+may explicitly set maximum white, low-saturation or black-border fractions, minimum
+tissue fraction, or minimum Laplacian variance. The operation returns raw scores,
+denominators, tissue mask, ordered exclusion reasons and an <code class="docutils literal notranslate"><span class="pre">accepted</span></code> flag; it
+does not delete files. Equality at a requested limit is accepted.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Score</p></th>
+<th class="head"><p>Frozen definition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">white_fraction</span></code></p></td>
+<td><p>Fraction of valid pixels whose three RGB channels are all at least <code class="docutils literal notranslate"><span class="pre">white_threshold</span></code>, in 0..255 units.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">low_saturation_fraction</span></code></p></td>
+<td><p>Fraction whose HSV S is at most the requested 0..1 threshold.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">black_border_fraction</span></code></p></td>
+<td><p>Among the union of valid-rectangle boundary bands, fraction whose maximum RGB channel is at most <code class="docutils literal notranslate"><span class="pre">black_threshold</span></code>. Corners are counted once; the denominator is boundary pixels. Band width must be a positive integer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tissue_fraction</span></code></p></td>
+<td><p>Fraction satisfying inclusive <code class="docutils literal notranslate"><span class="pre">S&gt;=tissue_s_min</span></code> and <code class="docutils literal notranslate"><span class="pre">tissue_v_min&lt;=V&lt;=tissue_v_max</span></code>. This is a configurable pixel heuristic, not segmentation or tissue diagnosis.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">laplacian_variance</span></code></p></td>
+<td><p>Population variance of the cross-kernel Laplacian on floating BT.601 gray (<code class="docutils literal notranslate"><span class="pre">.299R+.587G+.114B</span></code>), using only centers with all four neighbors inside the valid rectangle.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The Laplacian kernel is <code class="docutils literal notranslate"><span class="pre">[0,1,0;</span> <span class="pre">1,-4,1;</span> <span class="pre">0,1,0]</span></code>. There is no synthetic border
+padding for this score. A valid region smaller than 3×3 has no eligible centers,
+so variance is <code class="docutils literal notranslate"><span class="pre">None</span></code>; it is not zero. An explicit minimum then yields
+<code class="docutils literal notranslate"><span class="pre">laplacian_variance_undefined</span></code>. <code class="docutils literal notranslate"><span class="pre">PatchQc</span></code> serializes this state as JSON null.
+<code class="docutils literal notranslate"><span class="pre">apply_to_record</span></code> projects only finite present scores into <code class="docutils literal notranslate"><span class="pre">TileRecord.qc</span></code> while
+retaining exclusion reasons. Export the complete <code class="docutils literal notranslate"><span class="pre">PatchQc</span></code> result as well to retain
+undefined states and denominators; the finite-score projection alone is incomplete.</p>
+</section>
+<section id="color-features-and-circular-hue">
+<h2>Color features and circular Hue<a class="headerlink" href="#color-features-and-circular-hue" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">color_features(image,</span> <span class="pre">valid_pixels,</span> <span class="pre">&amp;ColorConfig,</span> <span class="pre">optional_tissue_mask)</span></code> returns
+RGB, HSV S/V and CIELAB_D65 channel statistics plus circular Hue statistics.
+Each ordinary channel has mean, population standard deviation, min/max and linear
+q25/q50/q75 quantiles. <code class="docutils literal notranslate"><span class="pre">ColorConfig.fixed_edges</span></code> requires externally fixed,
+finite, strictly increasing histogram edges for exactly <code class="docutils literal notranslate"><span class="pre">R,G,B,S,V,H,L,a,b</span></code>.
+Bins are left-closed/right-open except the final right endpoint. A value outside
+the specified range is an error; edges are never fitted separately per patch.
+Outputs include exact counts, denominator and normalized histogram probabilities.</p>
+<p>RGB uses 0..255 units; HSV S/V uses 0..1 and Hue degrees in [0,360). Hue excludes
+achromatic pixels (<code class="docutils literal notranslate"><span class="pre">S=0</span></code>) and uses a circular mean, mean resultant length R and
+circular variance <code class="docutils literal notranslate"><span class="pre">1-R</span></code>. Hue has no arithmetic mean or quantiles. With no
+chromatic pixels all circular statistics are missing and histogram probabilities
+are missing; exact zero counts and the zero denominator remain. If <code class="docutils literal notranslate"><span class="pre">R&lt;=1e-12</span></code>,
+the mean direction is undefined while R/variance remain available. An empty
+selected tissue mask returns <code class="docutils literal notranslate"><span class="pre">status=&quot;empty_statistical_mask&quot;</span></code>, no channels and
+no Hue, rather than invented zero features.</p>
+<p>The color profile explicitly assumes sRGB, uses the published piecewise sRGB
+transfer function and exact rational sRGB-to-XYZ D65 matrix, then computes CIELAB
+relative to D65 <code class="docutils literal notranslate"><span class="pre">xy=(0.3127,0.3290)</span></code>. It does not perform D50 adaptation or ICC
+profile conversion. For an exactly neutral RGB triplet (<code class="docutils literal notranslate"><span class="pre">r=g=b</span></code>), a=b=0 is
+preserved exactly as a frozen mathematical identity at histogram boundaries.
+Other colors are not rounded to force agreement.</p>
+</section>
+<section id="existing-mask-statistics">
+<h2>Existing mask statistics<a class="headerlink" href="#existing-mask-statistics" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">annotation_coverage</span></code> accepts a row-major u32 semantic mask, valid rectangle and
+explicit class list, including background if requested. Counts/fractions use only
+valid pixels; absent requested classes have zero count with the real denominator.</p>
+<p><code class="docutils literal notranslate"><span class="pre">object_features</span></code> requires explicit <code class="docutils literal notranslate"><span class="pre">MaskKind::Instance</span></code> or <code class="docutils literal notranslate"><span class="pre">MaskKind::Semantic</span></code>
+and 4/8 connectivity. Instance mode interprets nonzero labels as existing IDs,
+even if their visible pixels are disconnected. Semantic mode calls the shared
+<code class="docutils literal notranslate"><span class="pre">imaging::connected_components</span></code> with separate source classes. Padding is ignored.
+Objects have source label, area in pixels, centroid, bbox and valid-boundary flag.
+Centroids average pixel centers <code class="docutils literal notranslate"><span class="pre">x+0.5,y+0.5</span></code> in the patch’s pixel-edge system.
+Bounding boxes use <code class="docutils literal notranslate"><span class="pre">[left,top,width,height]</span></code>; size distributions report the same
+ordinary statistics as color channels. Empty foreground has an explicit status
+and missing size distribution.</p>
+<p>Physical area is present only when both explicit per-axis <strong>patch-pixel</strong> MPP
+values are available. <code class="docutils literal notranslate"><span class="pre">patch_pixel_mpp(TileRecord)</span></code> derives them from level-0 MPP
+times <code class="docutils literal notranslate"><span class="pre">(width0/patch_width,height0/patch_height)</span></code>. <code class="docutils literal notranslate"><span class="pre">object_features_for_tile</span></code> uses
+this conversion. An absent axis leaves physical area unavailable; negative,
+nonfinite or overflowing scales are errors.</p>
+<p>All object counts have <code class="docutils literal notranslate"><span class="pre">count_scope=&quot;patch_local&quot;</span></code>. When tiles overlap, the
+output includes <code class="docutils literal notranslate"><span class="pre">patch_local_instance_counts_must_not_be_summed_across_overlapping_tiles</span></code>.
+These counts do not establish a deduplicated whole-slide cell count without global
+instance identities. This module also does not create local score maps by
+broadcasting patient-level model probabilities.</p>
+</section>
+<section id="traditional-grayscale-features">
+<h2>Traditional grayscale features<a class="headerlink" href="#traditional-grayscale-features" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">texture_features</span></code> accepts explicit Gray8 or Gray16, valid rectangle, optional
+tissue mask and the shared <code class="docutils literal notranslate"><span class="pre">ExtractionConfig</span></code>. It preserves raw gray values and
+calls the sole <code class="docutils literal notranslate"><span class="pre">features::extract</span></code> implementation for first-order/texture outputs.
+It does not reimplement discretization or texture matrices and excludes the
+separately named <code class="docutils literal notranslate"><span class="pre">shape_basic</span></code> outputs from this adapter. RGB conversion must be
+performed explicitly by the caller. Empty selected masks produce the shared
+extractor’s explicit error; no all-zero feature vector is generated.</p>
+</section>
+<section id="validation-and-support-boundary">
+<h2>Validation and support boundary<a class="headerlink" href="#validation-and-support-boundary" title="Link to this heading">#</a></h2>
+<p>The native tests consume independently frozen A fixtures directly:
+<code class="docutils literal notranslate"><span class="pre">pathology_inputs.json</span></code>, <code class="docutils literal notranslate"><span class="pre">pathology_reference.json</span></code> and the hand-check cases in
+<code class="docutils literal notranslate"><span class="pre">golden/python_golden_v1/</span></code>. They compare eight patches, three tilings and four
+masks, including Hue wrap/undefined behavior, exact fixed-bin histogram counts,
+padding, semantic diagonal connectivity, fragmented instance IDs, missing blur
+variance, empty tissue masks and anisotropic physical scales. Additional tests
+check invalid arguments, tile identity, preserved Gray16 values, shared texture
+results and JSON missing-score export. Numerical tolerances remain those in the
+Golden manifest; no expected results were generated from the Rust implementation.</p>
+<p>No WSI/vendor decoder, stain separation, segmentation, deep-model training, MIL,
+global overlapping-instance deduplication or inferred physical resolution is
+provided. Performance is reported under the separate Pathology suite specified
+in <code class="docutils literal notranslate"><span class="pre">docs/benchmark-v2.md</span></code>; passing numerical tests alone makes no speed claim.</p>
+<p>Primary formula sources:
+<a class="reference external" href="https://www.w3.org/TR/2026/CRD-css-color-4-20261112/#color-conversion-code">W3C sRGB/D65 color conversion</a>,
+<a class="reference external" href="https://docs.opencv.org/4.13.0/de/d25/imgproc_color_conversions.html">OpenCV published HSV/gray formulas</a>,
+and <a class="reference external" href="https://docs.opencv.org/4.13.0/d5/d0f/tutorial_py_gradients.html">OpenCV cross-kernel Laplacian</a>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="reliability-native.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Native single-rating intraclass correlation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pathology-aggregate.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Native tile identity, hierarchy summaries and local overlays</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streaming-patches-and-coordinates">Streaming patches and coordinates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qc-with-explicit-missing-scores">QC with explicit missing scores</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#color-features-and-circular-hue">Color features and circular Hue</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#existing-mask-statistics">Existing mask statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-grayscale-features">Traditional grayscale features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-and-support-boundary">Validation and support boundary</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/pathology-pixels.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

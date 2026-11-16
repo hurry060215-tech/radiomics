@@ -1,0 +1,6 @@
+﻿ov\_radiomics.evaluate
+======================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: evaluate

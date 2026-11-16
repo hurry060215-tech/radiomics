@@ -1,0 +1,6 @@
+﻿ov\_radiomics.hosmer\_lemeshow
+==============================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: hosmer_lemeshow

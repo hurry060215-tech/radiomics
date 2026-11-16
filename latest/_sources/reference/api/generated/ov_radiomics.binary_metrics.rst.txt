@@ -1,0 +1,6 @@
+﻿ov\_radiomics.binary\_metrics
+=============================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: binary_metrics

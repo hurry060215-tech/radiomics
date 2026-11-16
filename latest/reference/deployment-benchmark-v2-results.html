@@ -1,0 +1,669 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>独立 L5 部署成本证据：snapshot-native-v3 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/deployment-benchmark-v2-results';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/reference/deployment-benchmark-v2-results.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="原生数组边界性能诊断：固定 PAT1 CT" href="native-performance-diagnosis.html" />
+    <link rel="prev" title="ML &amp; Statistics and lightweight Pathology: measured results" href="learning-pathology-benchmark-v2-results.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">验证与适用范围</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support-matrix.html">原生支持矩阵</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../development/methods.html">方法与技术报告</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="technical-report.html">软件技术报告</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native-boundaries.html">原生能力边界</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rust-backend-decision.html">Rust范围与后端选择</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-accuracy-audit.html">独立标量精度审计</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../development/benchmarks.html">独立基准报告</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="radiomics-benchmark-v2-results.html">Radiomics 测量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="learning-pathology-benchmark-v2-results.html">Machine Learning / Statistics 与 Pathology 测量</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">L5 部署与启动成本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native-performance-diagnosis.html">Python/Rust数组边界诊断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample-constructor-optimization.html">Sample构造有限优化及未观察到的内存收益</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">开发与贡献</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../development/index.html" class="nav-link">验证与开发</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../development/benchmarks.html" class="nav-link">Benchmark v2：三套独立报告</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">独立 L5 部署成本证据：snapshot-native-v3</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="l5-snapshot-native-v3">
+<h1>独立 L5 部署成本证据：snapshot-native-v3<a class="headerlink" href="#l5-snapshot-native-v3" title="Link to this heading">#</a></h1>
+<p>以下路径为记录时的本机位置，复现时请替换为自己的工作目录。<code class="docutils literal notranslate"><span class="pre">$WORKDIR</span></code> 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。</p>
+<p>本报告只评价两个预声明启动端点、固定构建产物体积，以及一次离线 wheel payload 安装。它不测影像特征、模型或病理算法，不与三个计算套件合并总分，也不计算 CLI/Python 端点之间的“语言加速比”。</p>
+<section id="id1">
+<h2>固定对象和方法<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>源码 <code class="docutils literal notranslate"><span class="pre">45140bff46b3ef1ae7eff9a170acb3a1116308b1</span></code>，核心实现 <code class="docutils literal notranslate"><span class="pre">a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8</span></code>，包版本 <code class="docutils literal notranslate"><span class="pre">0.1.0</span></code>。</p></li>
+<li><p>不可变 wheel SHA256 <code class="docutils literal notranslate"><span class="pre">8767c22d3344d0009669de7c5297c0db58b5f9144c506be04722fe70ab4ea9b3</span></code>；CLI SHA256 <code class="docutils literal notranslate"><span class="pre">2197ea4af3cc3078f660a26f5a1401c8c9b185ace3d1d31984c7ba74fbb471f4</span></code>。</p></li>
+<li><p>先审阅并批准 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/v2/deployment-plan.json">deployment-plan.json</a> 精确 SHA <code class="docutils literal notranslate"><span class="pre">d807983caaee9bb95f6046327c014bb9a2b86c6e421e77e96b66e938c0c6bfa6</span></code>，之后只执行一次固定试验。</p></li>
+<li><p>Windows、CPython3.9.21；新建 <code class="docutils literal notranslate"><span class="pre">system-site-packages=false</span></code> venv。创建环境为不计时准备，不修改既有 Golden/测量环境或系统安装。</p></li>
+<li><p>CLI <code class="docutils literal notranslate"><span class="pre">--version</span></code> 和 Python <code class="docutils literal notranslate"><span class="pre">-I</span></code> import＋<code class="docutils literal notranslate"><span class="pre">backend_info()</span></code> 各运行7个独立进程，无预热；round0 CLI→Python，round1反向，固定交替，全部14次保留。时间为父进程启动到 stdout/stderr 传输与退出完成；字节核验、日志解码、文件计数和扫描在计时外。</p></li>
+<li><p>主 agent 和验收工作包确认短窗口没有重叠构建、安装、算法预检或其他套件计时。OS/user 后台进程和文件/bytecode cache 未独占控制。</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>结果<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>端点</p></th>
+<th class="head text-right"><p>n</p></th>
+<th class="head text-right"><p>Median ms</p></th>
+<th class="head text-right"><p>IQR ms</p></th>
+<th class="head text-right"><p>经验 p95 ms</p></th>
+<th class="head text-right"><p>Min–max ms</p></th>
+<th class="head"><p>输出核验</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CLI <code class="docutils literal notranslate"><span class="pre">radiomics</span> <span class="pre">--version</span></code></p></td>
+<td class="text-right"><p>7</p></td>
+<td class="text-right"><p>3.611</p></td>
+<td class="text-right"><p>0.567</p></td>
+<td class="text-right"><p>48.817</p></td>
+<td class="text-right"><p>3.132–67.938</p></td>
+<td><p>7/7 exit0、版本正确</p></td>
+</tr>
+<tr class="row-odd"><td><p>Python fresh interpreter import＋<code class="docutils literal notranslate"><span class="pre">backend_info</span></code></p></td>
+<td class="text-right"><p>7</p></td>
+<td class="text-right"><p>45.052</p></td>
+<td class="text-right"><p>3.447</p></td>
+<td class="text-right"><p>51.142</p></td>
+<td class="text-right"><p>44.125–52.270</p></td>
+<td><p>7/7 rust backend、版本和实现摘要正确</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>CLI 首个67.938ms慢样本完整保留；没有重跑或剔除。该样本的 OS 调度/文件缓存等具体原因未被定位，不能仅从结果指定成因。七次经验 p95 对尾部波动很粗，不能作为精确尾延迟保证。“cold”仅表示新进程，不表示清空磁盘/OS/bytecode cache。两个端点做的工作不同，因此不生成两者耗时比或语言优劣结论。</p>
+</section>
+<section id="id3">
+<h2>产物和安装文件体积<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>对象</p></th>
+<th class="head text-right"><p>实测</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>wheel 压缩文件</p></td>
+<td class="text-right"><p>3,723,631 bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>wheel ZIP regular files</p></td>
+<td class="text-right"><p>31</p></td>
+</tr>
+<tr class="row-even"><td><p>ZIP 未压缩文件总逻辑体积</p></td>
+<td class="text-right"><p>9,880,697 bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>独立 CLI 文件</p></td>
+<td class="text-right"><p>9,058,304 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>已安装项目 package＋dist-info</p></td>
+<td class="text-right"><p>59 regular files；10,074,196 logical bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>新 venv 安装前</p></td>
+<td class="text-right"><p>1,305 regular files；16,994,242 logical bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>payload 安装后与启动观测后</p></td>
+<td class="text-right"><p>1,364 regular files；27,068,438 logical bytes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>安装后25个 Python/native 源文件逐字节匹配固定 wheel。文件数包括安装器生成的 metadata/bytecode，和 ZIP entry 数不是同一口径。这里的磁盘指标为 regular-file <strong>逻辑字节之和</strong>，不是 NTFS cluster allocation、共享系统 DLL、base Python 或全部科学依赖的实际物理占用。</p>
+</section>
+<section id="payload">
+<h2>一次离线 payload 安装<a class="headerlink" href="#payload" title="Link to this heading">#</a></h2>
+<p>新环境中只执行一次：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>python -I -m pip --disable-pip-version-check install --no-index --no-deps --no-cache-dir FIXED_WHEEL
+</pre></div>
+</div>
+<p>记录耗时 <strong>0.762398s，n=1</strong>，日志完整保留，不报告 median/IQR 或重复选择最快值。该步骤只安装项目 wheel payload，没有解析/下载/安装 NumPy、Pandas、Matplotlib 或可选后端；venv/base Python 创建也不计入。惰性导入使 <code class="docutils literal notranslate"><span class="pre">import</span></code>/<code class="docutils literal notranslate"><span class="pre">backend_info</span></code> 能在这个受限环境中工作，但完整分析仍需要声明的基础依赖。此数字<strong>不能称作完整安装成本</strong>。</p>
+</section>
+<section id="id4">
+<h2>证据与复现<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>可核查 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/deployment-native-45140bff/report-redacted.json">独立报告</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/deployment-native-45140bff/raw-observations.jsonl">14条原始观测</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/deployment-native-45140bff/payload-install.json">单次安装记录</a> 与 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/deployment-native-45140bff/artifact-index.json">artifact index</a>。外部完整目录为 <code class="docutils literal notranslate"><span class="pre">$WORKDIR/benchmark-v2/deployment-v3-1</span></code>，包含 fresh venv 和原始日志；归档不包含可执行构建产物或整个环境。</p>
+<p>Set <code class="docutils literal notranslate"><span class="pre">$BASE_PYTHON</span></code> to the matching isolated base interpreter. Use a new output directory:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">tools</span><span class="p">/</span><span class="n">benchmark_deployment</span><span class="p">.</span><span class="n">py</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-plan</span> <span class="n">benchmarks</span><span class="p">/</span><span class="n">v2</span><span class="p">/</span><span class="n">deployment-plan</span><span class="p">.</span><span class="n">json</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-approved-plan-sha256</span> <span class="n">d807983caaee9bb95f6046327c014bb9a2b86c6e421e77e96b66e938c0c6bfa6</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-build-manifest</span> <span class="s2">"$WORKDIR/snapshot-native-v3/build-manifest.json"</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-base-python</span> <span class="s2">"$BASE_PYTHON"</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-output</span> <span class="s2">"$WORKDIR/fresh-deployment-evidence"</span>
+</pre></div>
+</div>
+<p>重新执行应使用新目录，视为新的独立试验，不能替换本次14条。该受限 L5 证据不自动建立 Linux 启动成本、完整依赖安装成本、算法性能或所有部署门槛；版本、source/receipt、构建大小与工作量限定必须一同保留。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="learning-pathology-benchmark-v2-results.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">ML &amp; Statistics and lightweight Pathology: measured results</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="native-performance-diagnosis.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">原生数组边界性能诊断：固定 PAT1 CT</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">固定对象和方法</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">产物和安装文件体积</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#payload">一次离线 payload 安装</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">证据与复现</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/deployment-benchmark-v2-results.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

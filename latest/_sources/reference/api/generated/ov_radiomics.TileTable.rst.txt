@@ -1,0 +1,35 @@
+﻿ov\_radiomics.TileTable
+=======================
+
+.. currentmodule:: ov_radiomics
+
+.. autoclass:: TileTable
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TileTable.__init__
+      ~TileTable.to_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~TileTable.feature_names
+      ~TileTable.features
+      ~TileTable.provenance
+      ~TileTable.slide_patients
+      ~TileTable.slide_status
+      ~TileTable.table
+      ~TileTable.tiles
+   
+   

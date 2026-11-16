@@ -1,0 +1,845 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Radiomics Benchmark v2: native snapshot 48ecb310 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/radiomics-benchmark-v2-results';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/reference/radiomics-benchmark-v2-results.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="ML &amp; Statistics and lightweight Pathology: measured results" href="learning-pathology-benchmark-v2-results.html" />
+    <link rel="prev" title="Benchmark v2：三套独立报告" href="../development/benchmarks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">验证与适用范围</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support-matrix.html">原生支持矩阵</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../development/methods.html">方法与技术报告</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="technical-report.html">软件技术报告</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native-boundaries.html">原生能力边界</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rust-backend-decision.html">Rust范围与后端选择</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-accuracy-audit.html">独立标量精度审计</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../development/benchmarks.html">独立基准报告</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Radiomics 测量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="learning-pathology-benchmark-v2-results.html">Machine Learning / Statistics 与 Pathology 测量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment-benchmark-v2-results.html">L5 部署与启动成本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native-performance-diagnosis.html">Python/Rust数组边界诊断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample-constructor-optimization.html">Sample构造有限优化及未观察到的内存收益</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">开发与贡献</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../development/index.html" class="nav-link">验证与开发</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../development/benchmarks.html" class="nav-link">Benchmark v2：三套独立报告</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Radiomics Benchmark v2: native snapshot 48ecb310</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="radiomics-benchmark-v2-native-snapshot-48ecb310">
+<h1>Radiomics Benchmark v2: native snapshot 48ecb310<a class="headerlink" href="#radiomics-benchmark-v2-native-snapshot-48ecb310" title="Link to this heading">#</a></h1>
+<p><strong>All 854 recorded observations completed within the fixed budget and passed
+their applicable numerical comparisons. Performance targets were mixed.</strong>
+The real CT prepared-array call was 2.50× slower than the reference, and its
+complete I/O workflow was 1.225× faster, below the 1.5× target. This is a correct
+but disclosed performance limitation of this snapshot; it is not evidence of an
+incorrect feature definition, nor permission to lower the target.</p>
+<p>This is the Radiomics suite only. It must not be pooled with Machine Learning &amp;
+Statistics or Pathology into a total acceleration score. It does not establish
+blanket project Release Gate completion, new IBSI conformance, clinical validity,
+or a formal publication/release.</p>
+<section id="reproducible-evidence">
+<h2>Reproducible evidence<a class="headerlink" href="#reproducible-evidence" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Native source: <code class="docutils literal notranslate"><span class="pre">48ecb310a2d9ccb5da821733ee1190ce1764f27a</span></code>, optimized release,
+Rust1.100.0/LLVM23.1.5, <code class="docutils literal notranslate"><span class="pre">lto=thin</span></code>, <code class="docutils literal notranslate"><span class="pre">codegen-units=1</span></code>, target
+<code class="docutils literal notranslate"><span class="pre">x86_64-pc-windows-msvc</span></code>; explicit Rust flag states/build commands are retained.</p></li>
+<li><p>Fixed wheel SHA256:
+<code class="docutils literal notranslate"><span class="pre">f2c8e0cbf55bfdf56ee4efb7b4d664112028618cb6bf03e0761170730214c160</span></code>;
+installed in a dedicated isolated interpreter, with package bytes and runtime
+implementation constant checked against the immutable build receipt.</p></li>
+<li><p>Actual public PyRadiomics3.0.1 source revision <code class="docutils literal notranslate"><span class="pre">c428a771...</span></code>, source/compiled
+hashes matched accepted Golden provenance; NumPy1.23.0/Pandas1.3.5 on both sides,
+SimpleITK2.4.1 reference. The reference environment was not modified or replaced
+by the locally available3.1.0.</p></li>
+<li><p>Intel Core Ultra9 285K, 24 physical/logical cores, 33,663,320,064 physical RAM
+bytes, Windows build22631, balanced power-scheme GUID
+<code class="docutils literal notranslate"><span class="pre">381b4222-f694-41f0-9685-ff5bb260df2e</span></code>. Actual BLAS/OpenMP/ITK inner limits1 were
+probed; only the declared outer workers1/4 changed.</p></li>
+<li><p>Original base-plan SHA <code class="docutils literal notranslate"><span class="pre">a37b0339...</span></code>, pre-measurement CT append <code class="docutils literal notranslate"><span class="pre">14192fe4...</span></code>,
+explicit true2D inactive-axis binding <code class="docutils literal notranslate"><span class="pre">36730dda...</span></code>. Source/prepared arrays,
+IDs, feature list, seed, cases, repeats, tolerances and thresholds stayed fixed
+throughout measurement. The earlier failed untimed2D configuration and the
+zero-observation localized metadata-probe failure remain retained evidence.</p></li>
+</ul>
+<p>The <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310">versioned artifact directory</a>
+contains the full <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/provenance-redacted.json">machine/build/run provenance</a>,
+<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/report-redacted.json">60-case report</a>,
+<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/report.md">human-readable all-case table</a>,
+and compressed <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/raw-observations-redacted.jsonl.gz">all observation records, with machine paths redacted</a>.
+The <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/artifact-index.json">artifact index</a>
+records hashes, observed request/report timestamps and the external per-worker
+CSV/config/comparison/stdout/stderr location. No raw CT voxels or prepared arrays
+were added to the repository/package. Public CT terms remain CC-BY-NC-3.0;
+IBSI digital phantom terms remain CC-BY-4.0 with their original attribution.</p>
+</section>
+<section id="correctness-and-observation-integrity">
+<h2>Correctness and observation integrity<a class="headerlink" href="#correctness-and-observation-integrity" title="Link to this heading">#</a></h2>
+<p>The fixed grid produced 60 primary cases ×7 alternating pairs ×2 backends =
+<strong>840 primary observations</strong>, plus <strong>14 native-only cache observations</strong>. No
+observation was dropped, replaced, re-seeded or selected as a favorable sample.
+Every warmup was a complete real call, not an implicit <code class="docutils literal notranslate"><span class="pre">timeit</span></code> best iteration.
+Warmup/timed values matched exactly within each worker. All primary pairs passed
+the existing exact-ID/order/count/bbox/nonfinite and scalar/geometry rules;
+both CT paths additionally matched the independently frozen66-column tight-crop
+reference. Cache population/hit state matched actual native counters. Global
+correctness and operation verdicts include that cache series.</p>
+</section>
+<section id="prepared-array-and-complete-workflow-results">
+<h2>Prepared-array and complete workflow results<a class="headerlink" href="#prepared-array-and-complete-workflow-results" title="Link to this heading">#</a></h2>
+<p>The following are <strong>per complete call</strong> medians, not per-ROI kernel times. L2
+processes16 ROIs/call for synthetic/phantom data and1 ROI/call for CT. L3 processes
+8 ROIs/call for synthetic/phantom data and1 ROI/call for CT. Both sides compute
+the explicit55 features plus the separately identified11 project <code class="docutils literal notranslate"><span class="pre">shape_basic</span></code>
+descriptors. Mesh/filter features are disabled. Seven observations per backend
+give coarse empirical p95 estimates; full q25/q75/IQR/min/max and paired data are
+retained in JSON/raw evidence.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Case</p></th>
+<th class="head text-right"><p>ROIs/call</p></th>
+<th class="head text-right"><p>Python median ms</p></th>
+<th class="head text-right"><p>Rust median ms</p></th>
+<th class="head text-right"><p>Rust IQR ms</p></th>
+<th class="head text-right"><p>Rust empirical p95 ms</p></th>
+<th class="head text-right"><p>Python/Rust speedup</p></th>
+<th class="head"><p>Engineering/target result</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>L2 2D32×24, gray8</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>47.754</p></td>
+<td class="text-right"><p>24.877</p></td>
+<td class="text-right"><p>0.236</p></td>
+<td class="text-right"><p>25.643</p></td>
+<td class="text-right"><p>1.920×</p></td>
+<td><p>Runtime≤1.10×; target≥1.5× met</p></td>
+</tr>
+<tr class="row-odd"><td><p>L2 2D48×40, gray32</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>67.714</p></td>
+<td class="text-right"><p>47.022</p></td>
+<td class="text-right"><p>0.451</p></td>
+<td class="text-right"><p>47.998</p></td>
+<td class="text-right"><p>1.440×</p></td>
+<td><p>Runtime passes; speed target missed</p></td>
+</tr>
+<tr class="row-even"><td><p>L2 3D16×14×12, gray8</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>58.811</p></td>
+<td class="text-right"><p>59.718</p></td>
+<td class="text-right"><p>0.154</p></td>
+<td class="text-right"><p>61.860</p></td>
+<td class="text-right"><p>0.985×</p></td>
+<td><p>Runtime passes; near parity, speed target missed</p></td>
+</tr>
+<tr class="row-odd"><td><p>L2 3D24×20×16, gray32</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>107.711</p></td>
+<td class="text-right"><p>166.168</p></td>
+<td class="text-right"><p>2.836</p></td>
+<td class="text-right"><p>170.146</p></td>
+<td class="text-right"><p>0.648×</p></td>
+<td><p>Runtime≈1.543×, regression and speed target missed</p></td>
+</tr>
+<tr class="row-even"><td><p>L2 IBSI digital phantom</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>42.366</p></td>
+<td class="text-right"><p>13.444</p></td>
+<td class="text-right"><p>0.191</p></td>
+<td class="text-right"><p>13.675</p></td>
+<td class="text-right"><p>3.151×</p></td>
+<td><p>Runtime and speed target met in this scope</p></td>
+</tr>
+<tr class="row-odd"><td><p>L2 public CT tight bbox100×99×26, ROI125256</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>157.666</p></td>
+<td class="text-right"><p>394.163</p></td>
+<td class="text-right"><p>3.494</p></td>
+<td class="text-right"><p>397.686</p></td>
+<td class="text-right"><p>0.400×</p></td>
+<td><p>Runtime≈2.500×, regression and speed target missed</p></td>
+</tr>
+<tr class="row-even"><td><p>L3 2D32×24 clip/crop/read/export</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>64.200</p></td>
+<td class="text-right"><p>8.315</p></td>
+<td class="text-right"><p>0.113</p></td>
+<td class="text-right"><p>8.652</p></td>
+<td class="text-right"><p>7.721×</p></td>
+<td><p>Target met for this small synthetic workflow</p></td>
+</tr>
+<tr class="row-odd"><td><p>L3 3D24×20×16 clip/crop/read/export</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>94.868</p></td>
+<td class="text-right"><p>29.617</p></td>
+<td class="text-right"><p>0.530</p></td>
+<td class="text-right"><p>30.605</p></td>
+<td class="text-right"><p>3.203×</p></td>
+<td><p>Target met for this synthetic workflow</p></td>
+</tr>
+<tr class="row-even"><td><p>L3 IBSI digital read/clip/crop/export</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>59.485</p></td>
+<td class="text-right"><p>7.893</p></td>
+<td class="text-right"><p>0.234</p></td>
+<td class="text-right"><p>8.059</p></td>
+<td class="text-right"><p>7.536×</p></td>
+<td><p>Target met in this phantom scope</p></td>
+</tr>
+<tr class="row-odd"><td><p>L3 public CT original NIfTI/crop0/export</p></td>
+<td class="text-right"><p>1</p></td>
+<td class="text-right"><p>225.082</p></td>
+<td class="text-right"><p>183.807</p></td>
+<td class="text-right"><p>0.700</p></td>
+<td class="text-right"><p>184.903</p></td>
+<td class="text-right"><p>1.225×</p></td>
+<td><p>Correct result;1.5× target missed</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The small synthetic/phantom L3 gains cannot be advertised as a universal
+radiomics or real-CT speedup. L2 and L3 also have different declared preparation
+for synthetic data, so their difference is not a measured decomposition into
+conversion, I/O and computation. CT L2/L3 preserve the same ROI/scalars/world
+geometry and illustrate the cost difference between the public array and NIfTI
+paths, but a stage profiler is still needed to assign that cost precisely.</p>
+</section>
+<section id="operators-scaling-memory-and-cache">
+<h2>Operators, scaling, memory and cache<a class="headerlink" href="#operators-scaling-memory-and-cache" title="Link to this heading">#</a></h2>
+<p>All35 L1 rows are actual selected-family public-array calls: other matrices and
+scalars are skipped in the shared Rust implementation. Many are slower than the
+C-backed Python reference, particularly at larger buffer sizes. Their timing
+includes each public buffer/image conversion and validation. They are not pure
+kernel measurements, and allocator count/bytes remain unmeasured. <code class="docutils literal notranslate"><span class="pre">shape_basic</span></code>
+is a separate native-versus-independent-spec row, never a relabeled IBSI mesh
+family. Small near-equality differences are not promoted as acceleration.</p>
+<p>The L4 synthetic workloads deliberately repeat a disclosed small image/ROI with
+distinct IDs, cache disabled. They are useful for scheduling/API throughput and
+cannot stand in for a large clinical cohort. For the1,000-ROI series:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Synthetic case</p></th>
+<th class="head text-right"><p>Rust1 worker ROI/s</p></th>
+<th class="head text-right"><p>Rust4 workers ROI/s</p></th>
+<th class="head text-right"><p>Native4/1 scaling</p></th>
+<th class="head text-right"><p>Python4 workers ROI/s</p></th>
+<th class="head text-right"><p>Native/reference4-worker ratio</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>8³, gray8</p></td>
+<td class="text-right"><p>1933.6</p></td>
+<td class="text-right"><p>2654.3</p></td>
+<td class="text-right"><p>1.373×</p></td>
+<td class="text-right"><p>213.5</p></td>
+<td class="text-right"><p>12.431×</p></td>
+</tr>
+<tr class="row-odd"><td><p>12³, gray32</p></td>
+<td class="text-right"><p>875.1</p></td>
+<td class="text-right"><p>1934.3</p></td>
+<td class="text-right"><p>2.210×</p></td>
+<td class="text-right"><p>134.6</p></td>
+<td class="text-right"><p>14.375×</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Neither native nor reference scaling is linear. These are maximum <strong>observed</strong>
+stable rates within the frozen count/worker grid and2GiB budget, not theoretical
+maximum engine throughput. The12 separate L4 cases retain all medians/spread,
+ROI/s and worker efficiencies; no overall averaging hides an unfavorable row.</p>
+<p>All60 median native/reference peak-RSS ratios were below the1.20 engineering
+threshold. The largest observed whole-worker peak was152.22MiB, below2GiB.
+For CT, median native/reference RSS was109.44/143.68MiB on L2 and
+107.87/147.14MiB on L3. Memory means complete process lifetime resident high-water
+mark, including imports, fixture buffers, warmup, call and numerical transport;
+worker kernel/footer peak and coordinator sampled high-water were combined by
+maximum. These values do not measure allocation count, Python-only memory,
+process-private bytes, or arbitrary large-image memory scaling.</p>
+<p>Seven independent native cache populations took median36.810ms (IQR8.107ms,
+empirical p9545.295ms) for the declared eight-ROI synthetic3D workflow. The seven
+verified hit observations took median6.789ms (IQR0.132ms, p956.896ms), with actual
+hits8/misses0/rejected0/write-failures0. Population cost remains recorded. No
+cached-Rust-versus-uncached-Python speed claim is made.</p>
+</section>
+<section id="optimization-tasks-and-remaining-evidence">
+<h2>Optimization tasks and remaining evidence<a class="headerlink" href="#optimization-tasks-and-remaining-evidence" title="Link to this heading">#</a></h2>
+<p>The two L2 engineering regressions and real-CT L3 target miss require explicit
+optimization work. Code inspection shows the public array path repeatedly
+serializes owned image/mask buffers and performs validation across JSON/PyO3
+requests. The size-dependent L1/L2 pattern and the CT array/NIfTI path contrast
+make boundary overhead a reasonable <strong>hypothesis</strong>, not a measured attribution.
+Do not claim the numerical kernel itself is slower/faster by that amount.</p>
+<ol class="arabic simple">
+<li><p>Profile conversion, buffer ownership/validation, binning, matrices/scalars and
+output on the same frozen cases before selecting an optimization.</p></li>
+<li><p>Investigate one shared validated contiguous-buffer/PyO3 path or a native owned
+image object to avoid repeated full-volume JSON round trips. Preserve the
+current contract, exact bin/matrix behavior, units, NaN positions and errors;
+do not create a second Python calculation engine.</p></li>
+<li><p>If software changes, produce a new immutable source/wheel receipt and rerun
+the <strong>same</strong> predeclared grid, retaining this report as the previous snapshot.
+Do not alter datasets, seeds, ROI sizes, active features, repetitions,
+tolerances or targets to improve the measured result.</p></li>
+</ol>
+<p>L5 CLI startup/install-cost measurements, allocator diagnostics, separately
+instrumented stages, exclusive control of unrelated host processes and disk
+cache, and detailed storage hardware remain separate missing evidence. The task
+team held builds/installs/other suite timing during this run, but unrelated OS
+load and file-cache state were not controlled. This snapshot’s numerical and
+operation checks pass within the measured scope; the disclosed performance
+misses remain performance work, and formal publication/version changes still
+require separate authorization.</p>
+<section id="subsequent-windows-process-supervision-finding">
+<h3>Subsequent Windows process-supervision finding<a class="headerlink" href="#subsequent-windows-process-supervision-finding" title="Link to this heading">#</a></h3>
+<p>Later inspection identified that this Windows venv’s <code class="docutils literal notranslate"><span class="pre">Scripts/python.exe</span></code> is
+a launcher with a separate base-Python worker. Coordinator polling of the
+initial Popen PID therefore does not by itself prove real-time supervision of
+the actual worker’s RSS or complete descendant cleanup on timeout. The recorded
+peak still incorporates the real worker’s own post-transport lifetime high-water
+footer, so the observed peak values and post-completion 2 GiB comparisons remain
+valid. They must not be presented as a tested guarantee of immediate termination
+at the budget boundary. A subsequent owned-process-tree watchdog repair is being
+validated separately; no original observation or frozen measurement is replaced.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../development/benchmarks.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Benchmark v2：三套独立报告</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="learning-pathology-benchmark-v2-results.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">ML &amp; Statistics and lightweight Pathology: measured results</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducible-evidence">Reproducible evidence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correctness-and-observation-integrity">Correctness and observation integrity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepared-array-and-complete-workflow-results">Prepared-array and complete workflow results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operators-scaling-memory-and-cache">Operators, scaling, memory and cache</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-tasks-and-remaining-evidence">Optimization tasks and remaining evidence</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subsequent-windows-process-supervision-finding">Subsequent Windows process-supervision finding</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/radiomics-benchmark-v2-results.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

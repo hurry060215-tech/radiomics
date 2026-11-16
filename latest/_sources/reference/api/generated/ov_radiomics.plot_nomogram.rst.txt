@@ -1,0 +1,6 @@
+﻿ov\_radiomics.plot\_nomogram
+============================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: plot_nomogram

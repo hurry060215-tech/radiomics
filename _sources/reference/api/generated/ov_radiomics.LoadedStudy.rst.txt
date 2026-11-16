@@ -1,0 +1,33 @@
+﻿ov\_radiomics.LoadedStudy
+=========================
+
+.. currentmodule:: ov_radiomics
+
+.. autoclass:: LoadedStudy
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LoadedStudy.__init__
+      ~LoadedStudy.to_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~LoadedStudy.categorical
+      ~LoadedStudy.dataframe
+      ~LoadedStudy.features
+      ~LoadedStudy.report
+      ~LoadedStudy.target
+   
+   

@@ -1,0 +1,33 @@
+﻿ov\_radiomics.ExtractionResult
+==============================
+
+.. currentmodule:: ov_radiomics
+
+.. autoclass:: ExtractionResult
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ExtractionResult.__init__
+      ~ExtractionResult.save
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ExtractionResult.cache_summary
+      ~ExtractionResult.feature_table
+      ~ExtractionResult.features
+      ~ExtractionResult.diagnostics
+      ~ExtractionResult.config
+   
+   

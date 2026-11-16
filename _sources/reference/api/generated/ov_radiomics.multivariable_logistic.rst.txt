@@ -1,0 +1,6 @@
+﻿ov\_radiomics.multivariable\_logistic
+=====================================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: multivariable_logistic

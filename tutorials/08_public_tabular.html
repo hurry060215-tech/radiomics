@@ -1,0 +1,1368 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>08 · 真实公开表格：固定留出、原生二分类与无标签预测 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/08_public_tabular';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/tutorials/08_public_tabular.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="教程数据与许可" href="../datasets.html" />
+    <link rel="prev" title="07 · 真实公开CT：从文件与ROI到特征表" href="07_public_ct.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="radiomics.html">影像组学</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_extract.html">NIfTI 与 ROI 基础提取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_regions_delta_habitat.html">多区域、Delta 与生境</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="modeling.html">建模与统计</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_clinical_binary.html">影像与临床二分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_multiclass_regression.html">多分类与连续值回归</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pathology.html">轻量病理</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="05_patch_patient.html">病理 patch 到患者建模</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_embedding_overlay.html">Embedding 对齐与局部覆盖图</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="real-data.html">真实数据路线</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="07_public_ct.html">07 · 真实公开CT：从文件与ROI到特征表</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">08 · 真实公开表格：固定留出、原生二分类与无标签预测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets.html">数据与许可</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">教程：按任务选择路线</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="real-data.html" class="nav-link">真实数据：CT 提取与表格建模</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">08 · 真实公开表格：固定留出、原生二分类与无标签预测</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>08 · 真实公开表格：固定留出、原生二分类与无标签预测<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>本页使用 UCI Breast Cancer Wisconsin (Diagnostic) 的真实 M/B 诊断与30项既有数值测量，DOI：<a class="reference external" href="https://doi.org/10.24432/C5DW2B">10.24432/C5DW2B</a>，<a class="reference external" href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">官方来源与CC-BY-4.0许可</a>。署名：Wolberg、Mangasarian、Street等，UCI，1993。</p>
+<p>这些测量来自乳腺细针穿刺细胞核图像，<strong>不是本包从NIfTI提取的radiomics，也不是现代多中心临床验证队列</strong>。本教程不生成诊断、不使用sklearn下载/训练/评价，也不声称外部泛化或诊断效能。原始数据外置缓存；每次完整运行使用新的结果目录。</p>
+<section id="id2">
+<h2>1. 明确环境、来源与本次输出目录<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Notebook从头到尾直接调用公开API；先看Rust后端和已冻结协议。环境支持 <code class="docutils literal notranslate"><span class="pre">TUTORIAL_REPO_ROOT</span></code>、<code class="docutils literal notranslate"><span class="pre">TUTORIAL_RUN_ROOT</span></code>、<code class="docutils literal notranslate"><span class="pre">TUTORIAL_DATA_ROOT</span></code> 三个可选注入变量；普通交互运行会自动寻找完整仓库并创建新的临时输出目录。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">tempfile</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+
+<span class="n">REPO</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_REPO_ROOT</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="k">if</span> <span class="s1">'TUTORIAL_REPO_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="nb">next</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span> <span class="o">*</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">]</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s1">'examples/real/public_tabular_source.json'</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">REPO</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'请下载完整源码，并在仓库内启动Notebook。'</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_RUN_ROOT</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'TUTORIAL_RUN_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="n">Path</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">'radiomics-public-tabular-'</span><span class="p">))</span>
+<span class="k">if</span> <span class="s1">'TUTORIAL_RUN_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">():</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">facts_path</span> <span class="o">=</span> <span class="n">REPO</span> <span class="o">/</span> <span class="s1">'examples/real/public_tabular_source.json'</span>
+<span class="n">facts_bytes</span> <span class="o">=</span> <span class="n">facts_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+<span class="n">facts</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">facts_bytes</span><span class="p">)</span>
+<span class="n">protocol</span> <span class="o">=</span> <span class="n">facts</span><span class="p">[</span><span class="s1">'protocol'</span><span class="p">]</span>
+<span class="k">assert</span> <span class="n">facts</span><span class="p">[</span><span class="s1">'data_kind'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'real-public-tabular-no-clinical-validity'</span>
+<span class="k">assert</span> <span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">()[</span><span class="s1">'metrics_backend'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'rust'</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ov_radiomics._backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_backend</span>
+<span class="n">native_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">resolve_backend</span><span class="p">(</span><span class="s1">'rust'</span><span class="p">)</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'data_kind'</span><span class="p">:</span> <span class="n">facts</span><span class="p">[</span><span class="s1">'data_kind'</span><span class="p">],</span> <span class="s1">'backend'</span><span class="p">:</span> <span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">(),</span>
+           <span class="s1">'python'</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="s1">'interpreter'</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span>
+           <span class="s1">'native_sha256'</span><span class="p">:</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">native_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span>
+           <span class="s1">'source_facts_sha256'</span><span class="p">:</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">facts_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()}</span>
+<span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'tutorial-runtime.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">runtime</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+<span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'source-facts.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">facts_bytes</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'新的输出目录:'</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'split_method': 'within each original diagnosis, sort by (SHA256(UTF8(namespace + source_id)), source_id); first floor(0.8*n_class) records train, rest test',
+ 'split_namespace': 'uci-wdbc-holdout-v1|',
+ 'training_fraction': 0.8,
+ 'group_identity': 'one source record ID per group, not independently verified clinical patient linkage',
+ 'task': 'binary',
+ 'classes': ['B', 'M'],
+ 'positive_label': 'M',
+ 'numeric_features': 'all 30 source measurements in declared order; no ID or diagnosis predictor',
+ 'categorical_features': [],
+ 'model': 'LR',
+ 'model_parameters': {'lambda': 0.1,
+  'tolerance': 1e-10,
+  'max_iterations': 5000},
+ 'scale': 'standard',
+ 'selection': None,
+ 'outer_cv': 3,
+ 'inner_cv': 2,
+ 'seed': 20261115,
+ 'n_jobs': 1,
+ 'fit_unit': 'sample',
+ 'scoring_unit': 'patient',
+ 'threshold': 0.5,
+ 'ci_method': None,
+ 'test_use': 'held-out evaluation only; never parameter/feature/threshold selection; remove diagnosis for saved-model prediction while retaining test cohort identity',
+ 'clinical_validity_claim': False}
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>新的输出目录: E:\radiomics-build\public-tabular-v1\execution\08_public_tabular\artifacts
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sha256">
+<h2>2. 下载/复用原始文件并核验SHA256<a class="headerlink" href="#sha256" title="Link to this heading">#</a></h2>
+<p>数据为CC-BY-4.0；保留数据署名、许可链接及改动说明，与软件MIT许可分开。官方URL的内容将来可能改变，因此每次读取都校验固定字节数和SHA；不同内容会报错，不改预期来绕过。</p>
+<p>这里只导入标准库下载辅助函数，不运行另一份训练脚本。原始 <code class="docutils literal notranslate"><span class="pre">wdbc.data</span></code> 没有header，第一列为source ID，第二列是真实B/M诊断，后面30列按官方names定义排列。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cache</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_DATA_ROOT</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'TUTORIAL_DATA_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">'radiomics-tutorial-data'</span> <span class="o">/</span> <span class="s1">'uci-wdbc'</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">REPO</span> <span class="o">/</span> <span class="s1">'examples/real'</span><span class="p">))</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">download_public_tabular</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch</span>
+<span class="n">fetch</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">specification</span> <span class="ow">in</span> <span class="n">facts</span><span class="p">[</span><span class="s1">'files'</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">cache</span> <span class="o">/</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span> <span class="o">==</span> <span class="n">specification</span><span class="p">[</span><span class="s1">'bytes'</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">((</span><span class="n">cache</span> <span class="o">/</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="o">==</span> <span class="n">specification</span><span class="p">[</span><span class="s1">'sha256'</span><span class="p">]</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">facts</span><span class="p">[</span><span class="s1">'input'</span><span class="p">][</span><span class="s1">'feature_names'</span><span class="p">]</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">cache</span> <span class="o">/</span> <span class="s1">'wdbc.data'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">'source_id'</span><span class="p">,</span> <span class="s1">'diagnosis'</span><span class="p">]</span> <span class="o">+</span> <span class="n">features</span><span class="p">,</span>
+                  <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s1">'source_id'</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s1">'diagnosis'</span><span class="p">:</span> <span class="nb">str</span><span class="p">})</span>
+<span class="k">assert</span> <span class="n">raw</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">569</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">raw</span><span class="o">.</span><span class="n">source_id</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">and</span> <span class="n">raw</span><span class="o">.</span><span class="n">source_id</span><span class="o">.</span><span class="n">is_unique</span>
+<span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">diagnosis</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="s1">'B'</span><span class="p">,</span> <span class="s1">'M'</span><span class="p">}</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">raw</span><span class="o">.</span><span class="n">diagnosis</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'source records'</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Source: https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic DOI: 10.24432/C5DW2B
+Dataset license: CC-BY-4.0 https://creativecommons.org/licenses/by/4.0/
+Attribution: Wolberg, W., Mangasarian, O., Street, N., and Street, W. (1993). Breast Cancer Wisconsin (Diagnostic). UCI Machine Learning Repository. https://doi.org/10.24432/C5DW2B
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>source_id</th>
+      <th>diagnosis</th>
+      <th>radius_mean</th>
+      <th>texture_mean</th>
+      <th>perimeter_mean</th>
+      <th>area_mean</th>
+      <th>smoothness_mean</th>
+      <th>compactness_mean</th>
+      <th>concavity_mean</th>
+      <th>concave_points_mean</th>
+      <th>...</th>
+      <th>radius_worst</th>
+      <th>texture_worst</th>
+      <th>perimeter_worst</th>
+      <th>area_worst</th>
+      <th>smoothness_worst</th>
+      <th>compactness_worst</th>
+      <th>concavity_worst</th>
+      <th>concave_points_worst</th>
+      <th>symmetry_worst</th>
+      <th>fractal_dimension_worst</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>842302</td>
+      <td>M</td>
+      <td>17.99</td>
+      <td>10.38</td>
+      <td>122.80</td>
+      <td>1001.0</td>
+      <td>0.11840</td>
+      <td>0.27760</td>
+      <td>0.3001</td>
+      <td>0.14710</td>
+      <td>...</td>
+      <td>25.38</td>
+      <td>17.33</td>
+      <td>184.60</td>
+      <td>2019.0</td>
+      <td>0.1622</td>
+      <td>0.6656</td>
+      <td>0.7119</td>
+      <td>0.2654</td>
+      <td>0.4601</td>
+      <td>0.11890</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>842517</td>
+      <td>M</td>
+      <td>20.57</td>
+      <td>17.77</td>
+      <td>132.90</td>
+      <td>1326.0</td>
+      <td>0.08474</td>
+      <td>0.07864</td>
+      <td>0.0869</td>
+      <td>0.07017</td>
+      <td>...</td>
+      <td>24.99</td>
+      <td>23.41</td>
+      <td>158.80</td>
+      <td>1956.0</td>
+      <td>0.1238</td>
+      <td>0.1866</td>
+      <td>0.2416</td>
+      <td>0.1860</td>
+      <td>0.2750</td>
+      <td>0.08902</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>84300903</td>
+      <td>M</td>
+      <td>19.69</td>
+      <td>21.25</td>
+      <td>130.00</td>
+      <td>1203.0</td>
+      <td>0.10960</td>
+      <td>0.15990</td>
+      <td>0.1974</td>
+      <td>0.12790</td>
+      <td>...</td>
+      <td>23.57</td>
+      <td>25.53</td>
+      <td>152.50</td>
+      <td>1709.0</td>
+      <td>0.1444</td>
+      <td>0.4245</td>
+      <td>0.4504</td>
+      <td>0.2430</td>
+      <td>0.3613</td>
+      <td>0.08758</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>84348301</td>
+      <td>M</td>
+      <td>11.42</td>
+      <td>20.38</td>
+      <td>77.58</td>
+      <td>386.1</td>
+      <td>0.14250</td>
+      <td>0.28390</td>
+      <td>0.2414</td>
+      <td>0.10520</td>
+      <td>...</td>
+      <td>14.91</td>
+      <td>26.50</td>
+      <td>98.87</td>
+      <td>567.7</td>
+      <td>0.2098</td>
+      <td>0.8663</td>
+      <td>0.6869</td>
+      <td>0.2575</td>
+      <td>0.6638</td>
+      <td>0.17300</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>84358402</td>
+      <td>M</td>
+      <td>20.29</td>
+      <td>14.34</td>
+      <td>135.10</td>
+      <td>1297.0</td>
+      <td>0.10030</td>
+      <td>0.13280</td>
+      <td>0.1980</td>
+      <td>0.10430</td>
+      <td>...</td>
+      <td>22.54</td>
+      <td>16.67</td>
+      <td>152.20</td>
+      <td>1575.0</td>
+      <td>0.1374</td>
+      <td>0.2050</td>
+      <td>0.4000</td>
+      <td>0.1625</td>
+      <td>0.2364</td>
+      <td>0.07678</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 32 columns</p>
+</div></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>B    357
+M    212
+Name: source records, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id80-20">
+<h2>3. 在训练之前固定按ID的每类80/20划分<a class="headerlink" href="#id80-20" title="Link to this heading">#</a></h2>
+<p>对每个真实诊断类，按 <code class="docutils literal notranslate"><span class="pre">SHA256('uci-wdbc-holdout-v1|'</span> <span class="pre">+</span> <span class="pre">source_id)</span></code> 再按source_id排序；前 <code class="docutils literal notranslate"><span class="pre">floor(0.8*n_class)</span></code> 进入train，其余test。整数取整使比例接近80/20。规则、模型和阈值在计算结果前声明，不为了AUC重挑seed或测试集。</p>
+<p>原资料提供唯一记录ID，没有可验证的重复随访/患者链接。本例一source record对应一个本地group ID，交给患者分组API，但这<strong>不证明569位独立患者或无隐藏受试者关联</strong>。自己的多病灶/多切片数据必须改用真实共享patient_id，不能照抄一行一组。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">'ID'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'wdbc:'</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">source_id</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">'patient_id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'ID'</span><span class="p">]</span>  <span class="c1"># source-record grouping only; not proven clinical linkage</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">'split_hash'</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">source_id</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">identity</span><span class="p">:</span>
+    <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">((</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'split_namespace'</span><span class="p">]</span> <span class="o">+</span> <span class="n">identity</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">())</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">'group'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'test'</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">protocol</span><span class="p">[</span><span class="s1">'classes'</span><span class="p">]:</span>
+    <span class="n">ranked</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">diagnosis</span> <span class="o">==</span> <span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">'split_hash'</span><span class="p">,</span> <span class="s1">'source_id'</span><span class="p">])</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'training_fraction'</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ranked</span><span class="p">)))</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ranked</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span><span class="n">count</span><span class="p">],</span> <span class="s1">'group'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'train'</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">'train'</span><span class="p">,</span> <span class="s1">'patient_id'</span><span class="p">])</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">'test'</span><span class="p">,</span> <span class="s1">'patient_id'</span><span class="p">])</span>
+<span class="n">split_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'source_id'</span><span class="p">,</span> <span class="s1">'ID'</span><span class="p">,</span> <span class="s1">'patient_id'</span><span class="p">,</span> <span class="s1">'diagnosis'</span><span class="p">,</span> <span class="s1">'split_hash'</span><span class="p">,</span> <span class="s1">'group'</span><span class="p">]</span>
+<span class="n">data</span><span class="p">[</span><span class="n">split_columns</span><span class="p">]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'split-assignments.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'study.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'group'</span><span class="p">,</span> <span class="s1">'diagnosis'</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Predictors:'</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="s1">'; target: diagnosis; source/group IDs excluded'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>diagnosis</th>
+      <th>B</th>
+      <th>M</th>
+    </tr>
+    <tr>
+      <th>group</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>test</th>
+      <td>72</td>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>train</th>
+      <td>285</td>
+      <td>169</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predictors: 30 ; target: diagnosis; source/group IDs excluded
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pipelinecv">
+<h2>4. 冻结原生Pipeline与患者组CV<a class="headerlink" href="#pipelinecv" title="Link to this heading">#</a></h2>
+<p>使用全部30项既有特征、Standard scaling、LR的L2正则lambda=0.1、固定阈值0.5。没有单因素/稀疏筛选、没有多模型或参数网格搜索。填补/缩放仍由Rust在训练折拟合；test特征/诊断均不参与训练统计。只有一个候选时内层计划保留，但不会伪造候选选择分数或执行无意义调参。</p>
+<p>外层3折、内层2折，固定seed。训练类顺序B/M，M为阳性。不要用测试标签选择特征或阈值。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plan</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">SplitPlan</span><span class="o">.</span><span class="n">from_data</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="s1">'diagnosis'</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s1">'binary'</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'classes'</span><span class="p">],</span>
+    <span class="n">id_col</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="s1">'patient_id'</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">'group'</span><span class="p">,</span>
+    <span class="n">outer_cv</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'outer_cv'</span><span class="p">],</span> <span class="n">inner_cv</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'inner_cv'</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'seed'</span><span class="p">])</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">train_models</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="s1">'diagnosis'</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s1">'binary'</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'classes'</span><span class="p">],</span>
+    <span class="n">positive_label</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'positive_label'</span><span class="p">],</span> <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'model'</span><span class="p">]],</span>
+    <span class="n">model_params</span><span class="o">=</span><span class="p">{</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'model'</span><span class="p">]:</span> <span class="n">protocol</span><span class="p">[</span><span class="s1">'model_parameters'</span><span class="p">]},</span>
+    <span class="n">scale</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'scale'</span><span class="p">],</span> <span class="n">selector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="p">[],</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">,</span>
+    <span class="n">split_plan</span><span class="o">=</span><span class="n">plan</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="s1">'patient_id'</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">'group'</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'outer_cv'</span><span class="p">],</span> <span class="n">inner_cv</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'inner_cv'</span><span class="p">],</span> <span class="n">random_state</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'seed'</span><span class="p">],</span>
+    <span class="n">fit_unit</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'fit_unit'</span><span class="p">],</span> <span class="n">scoring_unit</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'scoring_unit'</span><span class="p">],</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'threshold'</span><span class="p">],</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'n_jobs'</span><span class="p">])</span>
+<span class="n">result</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'training'</span><span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="s1">'LR'</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'model.rad'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">cv_results</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'SplitPlan SHA256:'</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">split_plan</span><span class="o">.</span><span class="n">fingerprint</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>fold</th>
+      <th>score</th>
+      <th>auc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LR</td>
+      <td>0</td>
+      <td>0.995014</td>
+      <td>0.995014</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LR</td>
+      <td>1</td>
+      <td>0.997368</td>
+      <td>0.997368</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>LR</td>
+      <td>2</td>
+      <td>0.994925</td>
+      <td>0.994925</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SplitPlan SHA256: 44d8616dd2d1657a24ef0a897310bef1a333b47e42b1daa2a115b18fd8b38cfc
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="oof">
+<h2>5. 分开查看OOF与固定留出结果<a class="headerlink" href="#oof" title="Link to this heading">#</a></h2>
+<p>train最终预测是表观值；OOF由排除该组的外层模型生成，test则来自最终模型并保持独立留出身份。这里CI=None；AUC只是此数据、此固定划分的区分能力，不能解释成真实部署诊断概率或多中心临床泛化。</p>
+<p>源ID分组一行一组，因此本页API中的patient评价单位等同源记录单位；真实患者级结论需要另外的链接证据。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">,</span> <span class="n">prediction_unit</span><span class="o">=</span><span class="s1">'patient'</span><span class="p">,</span> <span class="n">ci_method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">run</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s1">'models'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">oof</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">PredictionTable</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">'oof'</span><span class="p">])</span>
+<span class="n">oof_metrics</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">oof</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s1">'diagnosis'</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'threshold'</span><span class="p">],</span>
+                           <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">,</span> <span class="n">prediction_unit</span><span class="o">=</span><span class="s1">'patient'</span><span class="p">,</span> <span class="n">ci_method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">metrics</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'cohort-metrics.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">oof_metrics</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'oof-metrics.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">oof_metrics</span><span class="p">)</span>
+<span class="n">held</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">PredictionTable</span><span class="p">(</span><span class="n">run</span><span class="p">[</span><span class="s1">'predictions'</span><span class="p">])</span><span class="o">.</span><span class="n">aggregate_patients</span><span class="p">()</span><span class="o">.</span><span class="n">dataframe</span>
+<span class="n">held</span> <span class="o">=</span> <span class="n">held</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">held</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">'test'</span><span class="p">]</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">[[</span><span class="s1">'patient_id'</span><span class="p">,</span> <span class="s1">'diagnosis'</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s1">'patient_id'</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="s1">'one_to_one'</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">plot_roc</span><span class="p">((</span><span class="n">held</span><span class="o">.</span><span class="n">diagnosis</span> <span class="o">==</span> <span class="s1">'M'</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="p">{</span><span class="s1">'Fixed holdout'</span><span class="p">:</span> <span class="n">held</span><span class="o">.</span><span class="n">probability</span><span class="p">},</span>
+                  <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'WDBC fixed record-group holdout; not clinical validation'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'holdout-roc.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">'tight'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>group</th>
+      <th>task</th>
+      <th>prediction_unit</th>
+      <th>n</th>
+      <th>prediction_type</th>
+      <th>positive_n</th>
+      <th>threshold</th>
+      <th>accuracy</th>
+      <th>auc</th>
+      <th>...</th>
+      <th>precision</th>
+      <th>recall</th>
+      <th>f1</th>
+      <th>brier</th>
+      <th>log_loss_eps1e15</th>
+      <th>average_precision</th>
+      <th>pr_auc_trapezoidal</th>
+      <th>ci_low</th>
+      <th>ci_high</th>
+      <th>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LR</td>
+      <td>test</td>
+      <td>binary</td>
+      <td>patient</td>
+      <td>115</td>
+      <td>holdout</td>
+      <td>43</td>
+      <td>0.5</td>
+      <td>0.965217</td>
+      <td>0.988695</td>
+      <td>...</td>
+      <td>1.000000</td>
+      <td>0.906977</td>
+      <td>0.951220</td>
+      <td>0.033970</td>
+      <td>0.146972</td>
+      <td>0.989565</td>
+      <td>0.989497</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>evaluated</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LR</td>
+      <td>train</td>
+      <td>binary</td>
+      <td>patient</td>
+      <td>454</td>
+      <td>apparent</td>
+      <td>169</td>
+      <td>0.5</td>
+      <td>0.964758</td>
+      <td>0.996657</td>
+      <td>...</td>
+      <td>0.993548</td>
+      <td>0.911243</td>
+      <td>0.950617</td>
+      <td>0.032206</td>
+      <td>0.133822</td>
+      <td>0.995062</td>
+      <td>0.995049</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>evaluated</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 24 columns</p>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>group</th>
+      <th>task</th>
+      <th>prediction_unit</th>
+      <th>n</th>
+      <th>prediction_type</th>
+      <th>positive_n</th>
+      <th>threshold</th>
+      <th>accuracy</th>
+      <th>auc</th>
+      <th>...</th>
+      <th>precision</th>
+      <th>recall</th>
+      <th>f1</th>
+      <th>brier</th>
+      <th>log_loss_eps1e15</th>
+      <th>average_precision</th>
+      <th>pr_auc_trapezoidal</th>
+      <th>ci_low</th>
+      <th>ci_high</th>
+      <th>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Model</td>
+      <td>train</td>
+      <td>binary</td>
+      <td>patient</td>
+      <td>454</td>
+      <td>oof</td>
+      <td>169</td>
+      <td>0.5</td>
+      <td>0.962555</td>
+      <td>0.995931</td>
+      <td>...</td>
+      <td>0.993506</td>
+      <td>0.905325</td>
+      <td>0.947368</td>
+      <td>0.033673</td>
+      <td>0.136847</td>
+      <td>0.994079</td>
+      <td>0.994064</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>evaluated</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 24 columns</p>
+</div></div><img alt="../_images/1b60b71c86caa497c69ddd35e0abb6d56a8af7e5a4160fb691a82198e9cc31e5.png" src="../_images/1b60b71c86caa497c69ddd35e0abb6d56a8af7e5a4160fb691a82198e9cc31e5.png" />
+</div>
+</div>
+</section>
+<section id="rad">
+<h2>6. 移除真实标签，再从.rad加载预测<a class="headerlink" href="#rad" title="Link to this heading">#</a></h2>
+<p>这里用同一固定test数据演示无标签预测，<strong>不把它改称独立外部队列</strong>。删除diagnosis，保留原test和source/group身份。保存的填补/缩放/模型/阈值被复用，不对test重新拟合。若真正的新队列有不同样本/患者，准备显式external名称和相同特征定义。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unlabeled</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">'test'</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">'diagnosis'</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">unlabeled</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'holdout-unlabeled.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">restored</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'model.rad'</span><span class="p">)</span>
+<span class="n">before</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">unlabeled</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">'LR'</span><span class="p">)</span>
+<span class="n">after</span> <span class="o">=</span> <span class="n">restored</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">unlabeled</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="s1">'patient_id'</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">'group'</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">before</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="o">==</span> <span class="n">after</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="n">after</span><span class="o">.</span><span class="n">dataframe</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'holdout-loaded-predictions.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">after</span><span class="o">.</span><span class="n">dataframe</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'保存/加载后无标签预测逐结构一致:'</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">after</span><span class="o">.</span><span class="n">dataframe</span><span class="p">),</span> <span class="s1">'records'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>patient_id</th>
+      <th>slide_id</th>
+      <th>tile_id</th>
+      <th>model</th>
+      <th>group</th>
+      <th>fold</th>
+      <th>prediction_unit</th>
+      <th>prediction_type</th>
+      <th>training_source</th>
+      <th>probability::B</th>
+      <th>probability::M</th>
+      <th>probability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>wdbc:84300903</td>
+      <td>wdbc:84300903</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Model</td>
+      <td>test</td>
+      <td>None</td>
+      <td>sample</td>
+      <td>holdout</td>
+      <td>final:83a1f6b0556d9c7eb73f0e4cdca912b1de09f259...</td>
+      <td>0.005949</td>
+      <td>0.994051</td>
+      <td>0.994051</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>wdbc:84501001</td>
+      <td>wdbc:84501001</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Model</td>
+      <td>test</td>
+      <td>None</td>
+      <td>sample</td>
+      <td>holdout</td>
+      <td>final:83a1f6b0556d9c7eb73f0e4cdca912b1de09f259...</td>
+      <td>0.026347</td>
+      <td>0.973653</td>
+      <td>0.973653</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>wdbc:845636</td>
+      <td>wdbc:845636</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Model</td>
+      <td>test</td>
+      <td>None</td>
+      <td>sample</td>
+      <td>holdout</td>
+      <td>final:83a1f6b0556d9c7eb73f0e4cdca912b1de09f259...</td>
+      <td>0.472116</td>
+      <td>0.527884</td>
+      <td>0.527884</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>wdbc:846226</td>
+      <td>wdbc:846226</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Model</td>
+      <td>test</td>
+      <td>None</td>
+      <td>sample</td>
+      <td>holdout</td>
+      <td>final:83a1f6b0556d9c7eb73f0e4cdca912b1de09f259...</td>
+      <td>0.021341</td>
+      <td>0.978659</td>
+      <td>0.978659</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>wdbc:84667401</td>
+      <td>wdbc:84667401</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Model</td>
+      <td>test</td>
+      <td>None</td>
+      <td>sample</td>
+      <td>holdout</td>
+      <td>final:83a1f6b0556d9c7eb73f0e4cdca912b1de09f259...</td>
+      <td>0.113944</td>
+      <td>0.886056</td>
+      <td>0.886056</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>保存/加载后无标签预测逐结构一致: 115 records
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>7. 保存来源、改动和运行证据<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>保留原始数据署名、许可和每个源文件SHA；声明本教程只是列命名、按ID划分和原生模型使用示例。结果目录保留完整划分表、模型、OOF/队列预测和图，不仅是一张AUC截图。下面receipt是执行证据，不是新的Golden期望。</p>
+<p>换成自己的CSV/Parquet时使用<a class="reference internal" href="../reference/user-guide/file-workflows.html"><span class="std std-doc">明确列角色的文件工作流</span></a>和<a class="reference internal" href="../reference/user-guide/input-contracts.html"><span class="std std-doc">输入契约</span></a>。自己的真实结局、重复患者链接、中心与采集时间必须重新声明；不要从本例生成伪患者或标签。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'DATA_NOTICE.md'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">((</span><span class="n">cache</span> <span class="o">/</span> <span class="s1">'NOTICE.md'</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+<span class="n">receipt</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">schema</span><span class="o">=</span><span class="s1">'radiomics.public-tabular-tutorial.v1'</span><span class="p">,</span> <span class="n">data_kind</span><span class="o">=</span><span class="n">facts</span><span class="p">[</span><span class="s1">'data_kind'</span><span class="p">],</span>
+    <span class="n">status</span><span class="o">=</span><span class="s1">'passed'</span><span class="p">,</span> <span class="n">source_doi</span><span class="o">=</span><span class="n">facts</span><span class="p">[</span><span class="s1">'doi'</span><span class="p">],</span> <span class="n">license</span><span class="o">=</span><span class="n">facts</span><span class="p">[</span><span class="s1">'license'</span><span class="p">],</span>
+    <span class="n">source_facts_sha256</span><span class="o">=</span><span class="n">runtime</span><span class="p">[</span><span class="s1">'source_facts_sha256'</span><span class="p">],</span> <span class="n">protocol</span><span class="o">=</span><span class="n">protocol</span><span class="p">,</span>
+    <span class="n">input_sha256</span><span class="o">=</span><span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">((</span><span class="n">cache</span> <span class="o">/</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">facts</span><span class="p">[</span><span class="s1">'files'</span><span class="p">]},</span>
+    <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">,</span> <span class="n">records</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">predictors</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">),</span>
+    <span class="n">cohorts</span><span class="o">=</span><span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+    <span class="n">classes</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'classes'</span><span class="p">],</span> <span class="n">positive_label</span><span class="o">=</span><span class="n">protocol</span><span class="p">[</span><span class="s1">'positive_label'</span><span class="p">],</span>
+    <span class="n">split_plan_sha256</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">split_plan</span><span class="o">.</span><span class="n">fingerprint</span><span class="p">,</span>
+    <span class="n">split_table_sha256</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">((</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'split-assignments.csv'</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span>
+    <span class="n">save_load_predictions_exact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clinical_validity_claim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">table_adaptation</span><span class="o">=</span><span class="s1">'Only column names, preserved source IDs, explicit source-record group IDs, and declared fixed split; no invented diagnosis'</span><span class="p">,</span>
+    <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">((</span><span class="n">output</span> <span class="o">/</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span>
+             <span class="p">[</span><span class="s1">'model.rad'</span><span class="p">,</span> <span class="s1">'cohort-metrics.csv'</span><span class="p">,</span> <span class="s1">'oof-metrics.csv'</span><span class="p">,</span> <span class="s1">'holdout-roc.png'</span><span class="p">,</span> <span class="s1">'holdout-loaded-predictions.csv'</span><span class="p">]})</span>
+<span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'receipt.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">receipt</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'结果文件:'</span><span class="p">,</span> <span class="p">[</span><span class="n">path</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>结果文件: ['cohort-metrics.csv', 'DATA_NOTICE.md', 'holdout-loaded-predictions.csv', 'holdout-roc.png', 'holdout-unlabeled.csv', 'model.rad', 'oof-metrics.csv', 'receipt.json', 'source-facts.json', 'split-assignments.csv', 'study.csv', 'training', 'tutorial-runtime.json']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="07_public_ct.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">07 · 真实公开CT：从文件与ROI到特征表</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../datasets.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">教程数据与许可</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. 明确环境、来源与本次输出目录</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sha256">2. 下载/复用原始文件并核验SHA256</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id80-20">3. 在训练之前固定按ID的每类80/20划分</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipelinecv">4. 冻结原生Pipeline与患者组CV</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oof">5. 分开查看OOF与固定留出结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rad">6. 移除真实标签，再从.rad加载预测</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7. 保存来源、改动和运行证据</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/08_public_tabular.ipynb.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

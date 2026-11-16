@@ -1,0 +1,31 @@
+﻿ov\_radiomics.ImageVolume
+=========================
+
+.. currentmodule:: ov_radiomics
+
+.. autoclass:: ImageVolume
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ImageVolume.__init__
+      ~ImageVolume.to_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ImageVolume.affine
+      ~ImageVolume.array
+      ~ImageVolume.geometry
+   
+   

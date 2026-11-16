@@ -1,0 +1,37 @@
+﻿ov\_radiomics.SplitPlan
+=======================
+
+.. currentmodule:: ov_radiomics
+
+.. autoclass:: SplitPlan
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SplitPlan.__init__
+      ~SplitPlan.apply_cohorts
+      ~SplitPlan.assert_shared
+      ~SplitPlan.center_holdout
+      ~SplitPlan.final_inner_indices
+      ~SplitPlan.fold_indices
+      ~SplitPlan.from_data
+      ~SplitPlan.from_dict
+      ~SplitPlan.to_dict
+      ~SplitPlan.validate_data
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~SplitPlan.fingerprint
+   
+   

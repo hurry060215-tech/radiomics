@@ -1,0 +1,6 @@
+﻿ov\_radiomics.icc
+=================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: icc

@@ -1,0 +1,32 @@
+﻿ov\_radiomics.ImageSample
+=========================
+
+.. currentmodule:: ov_radiomics
+
+.. autoclass:: ImageSample
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ImageSample.__init__
+      ~ImageSample.extract
+      ~ImageSample.to_dict
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ImageSample.image
+      ~ImageSample.mask
+      ~ImageSample.metadata
+   
+   

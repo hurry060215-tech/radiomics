@@ -1,0 +1,1187 @@
+{
+  "schema": "radiomics.documentation.publication.v1",
+  "build_revision": "f3ec58cac4ed883331f56b30155ac80998056b80",
+  "latest_revision": "f3ec58cac4ed883331f56b30155ac80998056b80",
+  "releases": {
+    "v0.1.0": "bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e"
+  },
+  "release_status": "release snapshot available",
+  "flat_compatibility": {
+    "source_version": "latest",
+    "reserved_root_files": [
+      ".nojekyll",
+      "index.html",
+      "publication.json"
+    ],
+    "files": {
+      ".buildinfo": {
+        "sha256": "48d19fd708b77a1f19b8a8ae0e67c8327b61d0d5c1c757e31b9645ced989657b",
+        "bytes": 230
+      },
+      "_downloads/0c29e5de3257c17abceda3c965b9d4e5/03_multiclass_regression.ipynb": {
+        "sha256": "6214fd8845e69302d755b6131b858186378cfc1f434dd209ed39cbcfd1aa188d",
+        "bytes": 106677
+      },
+      "_downloads/1b15275b3f109a574a0d9e3a84396e30/07_public_ct.ipynb": {
+        "sha256": "cba875a9813ccfc881be6ac01f2bbcb051cf09bce777a1e8f691bca354575a13",
+        "bytes": 190605
+      },
+      "_downloads/2528c2dd6f2504536eb012e96639ab37/05_patch_patient.ipynb": {
+        "sha256": "9ecd7e31386fafebe2aee760ab34e1112245bb6fc58fc21fce950eaf418d0cf5",
+        "bytes": 92770
+      },
+      "_downloads/48300a9ef749e75be1b5f00256f7513c/08_public_tabular.ipynb": {
+        "sha256": "fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40",
+        "bytes": 88040
+      },
+      "_downloads/5a9b704c92210dcfd288e38b43d2a7a8/02_image_clinical_binary.ipynb": {
+        "sha256": "63023267154ab0a2e8fe1d2017fdd9eb0af999848e03ec66ae8773f41f00bae8",
+        "bytes": 83789
+      },
+      "_downloads/8d03d22d99d993f3a6b12774c8a0881d/01_extract.ipynb": {
+        "sha256": "24e06556a70aedddbf6517d5876a54b025d9b000cc33da60be3f94c1ddab9bd1",
+        "bytes": 56294
+      },
+      "_downloads/ab3e3948991c229ffcf45e195cd37c2d/acceptance-v2-report.md": {
+        "sha256": "b4ef8e55a93d5141bc1fc6f90a6e81dbfc24842df62155cb07054ab6dde7273c",
+        "bytes": 16300
+      },
+      "_downloads/c1baa132fddccd30046fba2594802657/04_regions_delta_habitat.ipynb": {
+        "sha256": "dae9492574b73061bdca8460bfc3ab18d96f287cc1de4c4f5c677f7f0a0f60d3",
+        "bytes": 76308
+      },
+      "_downloads/e77f5321921f6b8e9c4adc934a0ade56/benchmark-v2.md": {
+        "sha256": "25e9f1b81b58bde4b4330d5b29eef5faa12f8db0d1b36ced3b5ce57ee89021e2",
+        "bytes": 11410
+      },
+      "_downloads/eafc33ab98a227502e6561fe4831a553/06_embedding_overlay.ipynb": {
+        "sha256": "09856f6cb5b2896c8ea0bf15a85005a302db057692c25811eb1dc3958bd8ef01",
+        "bytes": 86416
+      },
+      "_downloads/f1d948739dfb6590f33785fed5373661/scope.md": {
+        "sha256": "cd7cb8edc7eda685844d78be4fb2a2e9001bb27b8ffd4ff6e588e59acdd88198",
+        "bytes": 4815
+      },
+      "_images/1b60b71c86caa497c69ddd35e0abb6d56a8af7e5a4160fb691a82198e9cc31e5.png": {
+        "sha256": "1b60b71c86caa497c69ddd35e0abb6d56a8af7e5a4160fb691a82198e9cc31e5",
+        "bytes": 32059
+      },
+      "_images/2ad0d46fc16da8b5857afed3730f4b534803dde49de496d0f8b6b90a0a058c1f.png": {
+        "sha256": "2ad0d46fc16da8b5857afed3730f4b534803dde49de496d0f8b6b90a0a058c1f",
+        "bytes": 57914
+      },
+      "_images/3cc22c7f7c42d699215d0bf460b1be1efeb31ce61c7ddae59a2927acc8f53554.png": {
+        "sha256": "3cc22c7f7c42d699215d0bf460b1be1efeb31ce61c7ddae59a2927acc8f53554",
+        "bytes": 123993
+      },
+      "_images/623023ec60ffa70568e6c7fa13f3ec0cca68aad2f0e167dbd112f22a34cbdd3a.png": {
+        "sha256": "623023ec60ffa70568e6c7fa13f3ec0cca68aad2f0e167dbd112f22a34cbdd3a",
+        "bytes": 31162
+      },
+      "_images/a40fd585e23b58098f7abfd1078414a87aa645b044e1a2817d266e5530645449.png": {
+        "sha256": "a40fd585e23b58098f7abfd1078414a87aa645b044e1a2817d266e5530645449",
+        "bytes": 37180
+      },
+      "_images/aafb4604b798664d1342d1a1522355ade7a0241ca34ef818db5d199a829d8d4c.png": {
+        "sha256": "aafb4604b798664d1342d1a1522355ade7a0241ca34ef818db5d199a829d8d4c",
+        "bytes": 42171
+      },
+      "_images/b804b22438686546be7bb64181fef62ee9e4162dbd1dcc1d94dbb5f948352b46.png": {
+        "sha256": "b804b22438686546be7bb64181fef62ee9e4162dbd1dcc1d94dbb5f948352b46",
+        "bytes": 35792
+      },
+      "_images/c7204ece8bde9d5d4230f461e285cb030d4ca23b199c225ad46d295e37771a39.png": {
+        "sha256": "c7204ece8bde9d5d4230f461e285cb030d4ca23b199c225ad46d295e37771a39",
+        "bytes": 31491
+      },
+      "_sources/contributing.md.txt": {
+        "sha256": "cef154ad36b08fd223d7bc019a381a72e6b57bad58eebe71d0797addf7f9c53d",
+        "bytes": 1401
+      },
+      "_sources/datasets.md.txt": {
+        "sha256": "5cbad5255bc2161ae98a216bc9deb6be1163689ba6c85bfc7762a0c7010ab1ca",
+        "bytes": 3287
+      },
+      "_sources/development/benchmarks.md.txt": {
+        "sha256": "e9cbfffe85dd371631bfe4afd4a723bf726483a1130f3a7a5cfbb7737dac23f2",
+        "bytes": 1094
+      },
+      "_sources/development/index.md.txt": {
+        "sha256": "babdbfd1d501fe9486baa666d61a0f404f28274c739f9b59835243c2bef35eed",
+        "bytes": 928
+      },
+      "_sources/development/methods.md.txt": {
+        "sha256": "83c2bee3acffbe6f345d8e66d6e2df4e75e6007be5ec8f571068f88dc61c3556",
+        "bytes": 1584
+      },
+      "_sources/en/ecosystem.md.txt": {
+        "sha256": "981cfb5052757543fb4f4578415b60028460e61c88e097fa60fd912d8261f7d7",
+        "bytes": 2668
+      },
+      "_sources/en/installation.md.txt": {
+        "sha256": "a64de97aa24d72546d51d83343410f637c7de6a8e28a2e6e3ce187aa52ed8fc4",
+        "bytes": 3752
+      },
+      "_sources/guide/ecosystem.md.txt": {
+        "sha256": "065b177319e26e30d79d6b3087c4f676e3f8eebd9eeefbfee7270ba23aa0d44e",
+        "bytes": 2703
+      },
+      "_sources/index.md.txt": {
+        "sha256": "800e83105a68689c82cde584787d82f372c5544581acaae028b39f29cc4df9ac",
+        "bytes": 3525
+      },
+      "_sources/installation.md.txt": {
+        "sha256": "b2b45a7625e013188d19e6892e93cca6d09f692b097a7018922fde2160bf5adf",
+        "bytes": 3801
+      },
+      "_sources/quickstart.md.txt": {
+        "sha256": "7518dda3fa8c8921153e3f58afb0b7342f057501e3d533671f2d8fcad9d0cf68",
+        "bytes": 2693
+      },
+      "_sources/reference/api/generated/ov_radiomics.ExtractionResult.rst.txt": {
+        "sha256": "4bc96cf3524ecd0b196dccc9745148320e3ba7752582fe93e6df1f0122bd2d8b",
+        "bytes": 530
+      },
+      "_sources/reference/api/generated/ov_radiomics.FeatureSelector.rst.txt": {
+        "sha256": "26e1fc58e194b9410012651da0a2bf936e3cc634fb56501f3f12da64aea7aa17",
+        "bytes": 266
+      },
+      "_sources/reference/api/generated/ov_radiomics.FeatureTable.rst.txt": {
+        "sha256": "799b3b450d8680e606715f5493c3bdfcc6df6806da88a1fa5097f3e6c853d62d",
+        "bytes": 518
+      },
+      "_sources/reference/api/generated/ov_radiomics.ImageSample.rst.txt": {
+        "sha256": "0a858f697937c11adfcd0f5793d941b6dcdb8f3d6dd1e8b9aa9650dd3fad342a",
+        "bytes": 436
+      },
+      "_sources/reference/api/generated/ov_radiomics.ImageVolume.rst.txt": {
+        "sha256": "c222bacf2241b46bf0b3c132ffe1b7e709dc7e974efcbd68db7cdfef5ddb68f4",
+        "bytes": 411
+      },
+      "_sources/reference/api/generated/ov_radiomics.LoadedStudy.rst.txt": {
+        "sha256": "d15418242bf6faf53910697ff57b23a8080a98e4ec3ef08d1d8a95a2f3985e77",
+        "bytes": 472
+      },
+      "_sources/reference/api/generated/ov_radiomics.MaskVolume.rst.txt": {
+        "sha256": "ec0c1e7320cade80b4e97845e7f1f050076a91b8a94df615decc90e5317b28ee",
+        "bytes": 403
+      },
+      "_sources/reference/api/generated/ov_radiomics.ModelBundle.rst.txt": {
+        "sha256": "083f1b57ab18bec969b24eb40fc495e8f84eacc4a3e0547fbd5a94c1738b1806",
+        "bytes": 529
+      },
+      "_sources/reference/api/generated/ov_radiomics.PredictionTable.rst.txt": {
+        "sha256": "d8c55d7c06b523fe21a94168d6a6ecd0f3610588a7994fd19f34d485f746e207",
+        "bytes": 466
+      },
+      "_sources/reference/api/generated/ov_radiomics.SplitPlan.rst.txt": {
+        "sha256": "86f3aab5bcdfddc17c4811e061469c87bfd08370523411528d01f7a96466ff50",
+        "bytes": 597
+      },
+      "_sources/reference/api/generated/ov_radiomics.TileTable.rst.txt": {
+        "sha256": "86b1b591cf401fa10734da5ed68ae8cd54c16eeeefd3ca7cd7e4793034ae19ff",
+        "bytes": 515
+      },
+      "_sources/reference/api/generated/ov_radiomics.backend_info.rst.txt": {
+        "sha256": "27807aab6a989f2e3db04c4a71840a7e835771de2a5b68b0c59d8b4a932a81db",
+        "bytes": 123
+      },
+      "_sources/reference/api/generated/ov_radiomics.baseline_table.rst.txt": {
+        "sha256": "21a45af8ab9a1a4b91907905ca7647f21f1d4ddae3ba2c9705242be3c9f71a22",
+        "bytes": 129
+      },
+      "_sources/reference/api/generated/ov_radiomics.binary_metrics.rst.txt": {
+        "sha256": "e6d0397bbe1331b55889ccc985ff76f74219004d4a0a48559bb1db9737503607",
+        "bytes": 129
+      },
+      "_sources/reference/api/generated/ov_radiomics.check_images.rst.txt": {
+        "sha256": "f665c345fd00b7efe1b390558804f9023930baa7bae49d2d6477070c30460311",
+        "bytes": 123
+      },
+      "_sources/reference/api/generated/ov_radiomics.decision_curve.rst.txt": {
+        "sha256": "acde7fd221585ddfabda0e1d340265c27585e6f04b4f90af595ba76432fb3c86",
+        "bytes": 129
+      },
+      "_sources/reference/api/generated/ov_radiomics.delong_test.rst.txt": {
+        "sha256": "f481b46d7a708e3156f9902c63a261075ba13be0f03bd875e8d11a71a137e6ae",
+        "bytes": 120
+      },
+      "_sources/reference/api/generated/ov_radiomics.evaluate.rst.txt": {
+        "sha256": "3172571e3ca32910e4a113240f54c3e9917869784402071bf8607ffc6c247dff",
+        "bytes": 109
+      },
+      "_sources/reference/api/generated/ov_radiomics.extract.rst.txt": {
+        "sha256": "f1876099252df6e809865b1c9082c3aca08ee95e33a951999d54e69a89459a8f",
+        "bytes": 106
+      },
+      "_sources/reference/api/generated/ov_radiomics.fit_fusion.rst.txt": {
+        "sha256": "f6bb77c7ebcae6ab9ba8730d4f1f42cee12590e979b0243123e605e991abcfdd",
+        "bytes": 117
+      },
+      "_sources/reference/api/generated/ov_radiomics.fusion_data.rst.txt": {
+        "sha256": "613329c84af22ad53c457e222413abe98deedf2425f4c8e102c30313e531f35a",
+        "bytes": 120
+      },
+      "_sources/reference/api/generated/ov_radiomics.hosmer_lemeshow.rst.txt": {
+        "sha256": "710e85416801aa3df74b5219afef7243d3612863560afd4484be42813b052e6c",
+        "bytes": 132
+      },
+      "_sources/reference/api/generated/ov_radiomics.icc.rst.txt": {
+        "sha256": "61d34265591102cb705458562fd1c95ef23180e9a29fd0d8c7220c8ed277e870",
+        "bytes": 94
+      },
+      "_sources/reference/api/generated/ov_radiomics.join_data.rst.txt": {
+        "sha256": "e619071fd4fc020648cc2d4a14552f52c4a1163c5032b1cf467f3396fe5ef04b",
+        "bytes": 114
+      },
+      "_sources/reference/api/generated/ov_radiomics.load_model.rst.txt": {
+        "sha256": "d9e6ffd81eb9d91ea265b79064a9262f4bcf3b0306011626aa9db99df9e7f55f",
+        "bytes": 117
+      },
+      "_sources/reference/api/generated/ov_radiomics.make_classifier.rst.txt": {
+        "sha256": "7b04768d319eceb0eac2b91513cdb3ffb1b9a9f6dec6923c62fbbe606bb23ca9",
+        "bytes": 132
+      },
+      "_sources/reference/api/generated/ov_radiomics.match_images.rst.txt": {
+        "sha256": "c71d2d24ee8495ac3e8d90a755ed9c509fdcff1f61122762876f6946ad59769f",
+        "bytes": 123
+      },
+      "_sources/reference/api/generated/ov_radiomics.multivariable_logistic.rst.txt": {
+        "sha256": "87630fe8365ced65664e70c341b9021c106f2443ec68e45ef82d15b9e5a1d0ce",
+        "bytes": 153
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_calibration.rst.txt": {
+        "sha256": "0f98f448104d1ef14931a2de912b627e61608cded1465a9b85d5328a034a2255",
+        "bytes": 135
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_confusion_matrix.rst.txt": {
+        "sha256": "1b67eebf035bdf9f67d1099443c5051d1512c2ac6362334103b61e0fe2a01543",
+        "bytes": 152
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_correlation.rst.txt": {
+        "sha256": "b2bacebdbf0b7cd321e667d49c0ef54f430952ad7c49540a6a191b4f299f93e4",
+        "bytes": 135
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_cv_results.rst.txt": {
+        "sha256": "7ebcd93e0096e0ebd6c4524efcd0fe66a0c95895c952a386ff418ad5a1dd7489",
+        "bytes": 134
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_dca.rst.txt": {
+        "sha256": "758ab11c2f6cdf54f5169a3e92438e63860f54a899c1270ffddcab4fb0eff7a8",
+        "bytes": 111
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_embedding.rst.txt": {
+        "sha256": "1c9235da8dfccc682b613196c2704e5adf7cbfcbbefec54f7e25ad177e810f85",
+        "bytes": 129
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_feature_pvalues.rst.txt": {
+        "sha256": "07562a7a0734ed0ae510dfc3a9512f9d26c75c5c3167001af4c65642a70d9bfa",
+        "bytes": 149
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_feature_summary.rst.txt": {
+        "sha256": "fc220187d5ac19a229f09b856c0349d841affb30c7da0519cc25ebef56f48f0b",
+        "bytes": 149
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_feature_weights.rst.txt": {
+        "sha256": "7259a864fe10e51f43c55ae0e416fb96550c325e1470ac0245a9748494d8f407",
+        "bytes": 149
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_lasso_cv.rst.txt": {
+        "sha256": "5978aeab6bddab62d52ab526b60d57f64c811a1cd8975b709afbd44c137f4116",
+        "bytes": 128
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_lasso_path.rst.txt": {
+        "sha256": "04e0897753c6ff053331bf4307090b83e133e45706088d3ea732a77365e7a0dd",
+        "bytes": 134
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_learning_curve.rst.txt": {
+        "sha256": "c6f20b91aca3ab29bbf2c54cf697a576922c624fb73452470ada652ae2d04d9f",
+        "bytes": 146
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_metrics.rst.txt": {
+        "sha256": "6ecb5025eaf04930084d6a73ba82a7036f321d0ba98684a75936c4ff173fde38",
+        "bytes": 123
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_nomogram.rst.txt": {
+        "sha256": "17d8351c4eb92e2f6256ee0e001bffe1f0c0ff924c520c8682ffa0f763870c98",
+        "bytes": 126
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_prediction_scores.rst.txt": {
+        "sha256": "9a10cc9f40e8d4ce12da1195a7d999f5448709578f37b0fd9357f9e00d0d6bcf",
+        "bytes": 155
+      },
+      "_sources/reference/api/generated/ov_radiomics.plot_roc.rst.txt": {
+        "sha256": "0d2092e1f8e66427be3a9125639b6e156b935dd6704a54fb3512bfbd84ae5566",
+        "bytes": 111
+      },
+      "_sources/reference/api/generated/ov_radiomics.read_cohort.rst.txt": {
+        "sha256": "85acfc035fa671dd512d3f49c000e0a6feff57fc7017400c29e9208bb06b28b2",
+        "bytes": 120
+      },
+      "_sources/reference/api/generated/ov_radiomics.read_feature_table.rst.txt": {
+        "sha256": "ac572313d1ca522270f1f5113cd19963225bd66a830aab814ed1fd9b68f88b1f",
+        "bytes": 143
+      },
+      "_sources/reference/api/generated/ov_radiomics.read_study.rst.txt": {
+        "sha256": "ffa85d66e503d6fc666377f266112274d63b1985cc2027519370dae21d6d3c0d",
+        "bytes": 117
+      },
+      "_sources/reference/api/generated/ov_radiomics.split_data.rst.txt": {
+        "sha256": "306428bbed6dcd571b96aafe6139b4cc27dbe00d445c772313b9e263a5041b4f",
+        "bytes": 117
+      },
+      "_sources/reference/api/generated/ov_radiomics.train_models.rst.txt": {
+        "sha256": "f172b8b0b1c8fbb02a51c9d5558eae5f67babca5ba3d65527778dd2904905840",
+        "bytes": 123
+      },
+      "_sources/reference/api/generated/ov_radiomics.univariate_logistic.rst.txt": {
+        "sha256": "5d27ecd5718c3e452745031a4601f92ffe7502501ba0e2f4b7c74fd3331652cd",
+        "bytes": 144
+      },
+      "_sources/reference/api/ov_radiomics.FusionResult.rst.txt": {
+        "sha256": "108bb921224ae0f980edd3ad44c6dfc19822c6c09041e44866e1b562dd8fe892",
+        "bytes": 460
+      },
+      "_sources/reference/api/ov_radiomics.TrainingResult.rst.txt": {
+        "sha256": "3c6fc27adf19235cce973cd014e1eb49146fb1dda3507cae8ac7f06667729d44",
+        "bytes": 466
+      },
+      "_sources/reference/api/ov_radiomics.rst.txt": {
+        "sha256": "e0ce101f3777f2739dbe5b7a20661465ebfaac9647ca7ed5712868160592f57a",
+        "bytes": 1268
+      },
+      "_sources/reference/api.md.txt": {
+        "sha256": "3fdcfc3b51698c2352edd19f15aeff5cd5ce1e679e564af420b99c4e70206308",
+        "bytes": 3635
+      },
+      "_sources/reference/baseline-native.md.txt": {
+        "sha256": "386a6309971ebacbb942d2e5c1612c6884dfed7c8e69d4e89eb0f40e650e3e90",
+        "bytes": 4164
+      },
+      "_sources/reference/cli-workflows-native.md.txt": {
+        "sha256": "d23e6d04700c82cb103ede6c7fd38bcf70e3afdccb8ad34d8929d6da7098e727",
+        "bytes": 6536
+      },
+      "_sources/reference/clinical-native.md.txt": {
+        "sha256": "5c708b64223496f6676b754971d666a93b7d564ba4b98626f54565855e63a824",
+        "bytes": 7031
+      },
+      "_sources/reference/delivery-index.md.txt": {
+        "sha256": "5b40af876de71a39fc558c306028e8523887cd2453a405a29a4c6c19f73a5545",
+        "bytes": 4139
+      },
+      "_sources/reference/deployment-benchmark-v2-results.md.txt": {
+        "sha256": "0b2ca674b56bc65d5b400a8871b69558d9ece3907ddaf7faf01dad77b532c084",
+        "bytes": 5738
+      },
+      "_sources/reference/evaluation-native.md.txt": {
+        "sha256": "1518cede260d8b66a4e9ff8ba9e6f836e650531a123b5c0e881be185de25a552",
+        "bytes": 7901
+      },
+      "_sources/reference/features-native.md.txt": {
+        "sha256": "e4c00256490bb178e91d3265c6e9a1536c7bb9ffcae858d1a4a41f22c9e2d918",
+        "bytes": 8127
+      },
+      "_sources/reference/image-native.md.txt": {
+        "sha256": "d3353b654d2c7b91564706be95031aeccde79a8ab339dc7ff472424288e792b6",
+        "bytes": 8986
+      },
+      "_sources/reference/interop.md.txt": {
+        "sha256": "1c50ec3161eaa6a85b445b5041d6d33bfcf37e3a0dc78f139988e7e9f6c3faa1",
+        "bytes": 11689
+      },
+      "_sources/reference/learning-native.md.txt": {
+        "sha256": "46b1640485f38d6298060adb060bab96adfde34c2b9ac4ccaf8f88145ac79e02",
+        "bytes": 6367
+      },
+      "_sources/reference/learning-pathology-benchmark-v2-results.md.txt": {
+        "sha256": "f0fc94537ebbb2bba124d2a9b95d57e876d4d75202f2ca9f4703775ad4435027",
+        "bytes": 9088
+      },
+      "_sources/reference/models-native.md.txt": {
+        "sha256": "90a57bee0c85aa7d1e8fe571f551cf27eed3c5e4a155d5e3b1798fd47500b462",
+        "bytes": 9374
+      },
+      "_sources/reference/native-boundaries.md.txt": {
+        "sha256": "0e919bebb49bf56bb006b91592f8fb29cecdb7efcb1650212c2ec325a72d5b2d",
+        "bytes": 6240
+      },
+      "_sources/reference/native-extraction.md.txt": {
+        "sha256": "7a2dce87b48aabe2d9658521403dd355b5a654e8f2615817bac3af79e8cfd9c6",
+        "bytes": 4680
+      },
+      "_sources/reference/native-performance-diagnosis.md.txt": {
+        "sha256": "a615a18a342a4b72b810ea0f23941733d28dc4c7e9712d3bd66a20f7b549e69a",
+        "bytes": 19533
+      },
+      "_sources/reference/pathology-aggregate.md.txt": {
+        "sha256": "5fccd0c78e37fb0a765c4231ea6cc8acfc82c364f313be9f03cf3ce746ad2efe",
+        "bytes": 9706
+      },
+      "_sources/reference/pathology-cli-native.md.txt": {
+        "sha256": "b11b34b0c2544415b0119a8b445d330e31a95b5dc161b73f7add6aecedf7dcf4",
+        "bytes": 10728
+      },
+      "_sources/reference/pathology-pixels.md.txt": {
+        "sha256": "1bf1180ff2c3f4f0c998b6ba29e83065d65bc794cc486ca5a8efe2b3e49a9e27",
+        "bytes": 9572
+      },
+      "_sources/reference/preprocessing-native.md.txt": {
+        "sha256": "12e6bcceb5094aef2d35cb7a70d22a1d63ea01dc220445f7b17596af6c591adc",
+        "bytes": 7553
+      },
+      "_sources/reference/public-evidence.md.txt": {
+        "sha256": "fca3d6043a529e8acf09a028cc3f2af16d62e705ba52f2d88d245e31c81129c4",
+        "bytes": 2738
+      },
+      "_sources/reference/python-native.md.txt": {
+        "sha256": "309a702f5f7ec2aeab63be7dbb63fc249e6a685b4cf50892b0ca8fcd25461f07",
+        "bytes": 10599
+      },
+      "_sources/reference/radiomics-benchmark-v2-results.md.txt": {
+        "sha256": "4fbed4c7ef87e362c179bca5531475cab7bde7a7d29ec5474f5002d65e8749f9",
+        "bytes": 11974
+      },
+      "_sources/reference/reliability-native.md.txt": {
+        "sha256": "ec37d4a98dad677f13e2ea2eb5a919a2612b99560abe287518c436c9212e1090",
+        "bytes": 2821
+      },
+      "_sources/reference/research-native.md.txt": {
+        "sha256": "de7ded7e88fcc16fde5f8afdd45c03451adcbec5e24be2aa04ab43ddcc60a7f8",
+        "bytes": 6588
+      },
+      "_sources/reference/rust-backend-decision.md.txt": {
+        "sha256": "3dd709f274d05c18a6c9b58b33fa7c6548221b2274b7e5be7d6b7c568019687a",
+        "bytes": 7359
+      },
+      "_sources/reference/sample-constructor-optimization.md.txt": {
+        "sha256": "ed96e61c1748791ca57924c4353c6093521114be66a9b416cf7455366f8e1a56",
+        "bytes": 4749
+      },
+      "_sources/reference/scalar-accuracy-audit.md.txt": {
+        "sha256": "c588618980e460f40eb5693d1e5638fd1ec50616c50720f5786999c7f8d3e6a1",
+        "bytes": 12263
+      },
+      "_sources/reference/support-matrix.md.txt": {
+        "sha256": "45e0ae9bf04f8ba0f9c5065d8c1b2551973dc89aca4f1f333b2251ad30accab0",
+        "bytes": 7644
+      },
+      "_sources/reference/table-io-native.md.txt": {
+        "sha256": "b5b41e14cc5a602fc80e261701dbd8a62dc3ff58ac1e5d87299e361e9ea709b1",
+        "bytes": 8068
+      },
+      "_sources/reference/technical-report.md.txt": {
+        "sha256": "eaa540750f5622e2e8afe2633dabbc22d1506e3f22dbd452c743bdfb281de12b",
+        "bytes": 35974
+      },
+      "_sources/reference/user-guide/file-workflows.md.txt": {
+        "sha256": "852c3877108f9163af9f9539f78c24953d5cd4d764eede8cf6d818c0365ca049",
+        "bytes": 5834
+      },
+      "_sources/reference/user-guide/index.md.txt": {
+        "sha256": "4c69309a0ce2f8a69ea28d68fa8d0cdea28c15757f3d3bd6020efa161593186b",
+        "bytes": 3261
+      },
+      "_sources/reference/user-guide/input-contracts.md.txt": {
+        "sha256": "a77e9e0fa87a1e2caa6744ea5241a6300bf5ee71542d132d67dc58d020cfe55e",
+        "bytes": 5381
+      },
+      "_sources/reference/user-guide/pathology.md.txt": {
+        "sha256": "da08a4e69be9a49a86d0670ddbfc5e62f769635e927d491828abe59d984a810b",
+        "bytes": 8973
+      },
+      "_sources/reference/user-guide/public-tabular.md.txt": {
+        "sha256": "e3eb87a603ea79517cdcee0254c46670b42f133ae01ab77686dfa176e1d5afaa",
+        "bytes": 7285
+      },
+      "_sources/reference/user-guide/results-and-errors.md.txt": {
+        "sha256": "e90111cce395d24bc869c4f54b0a7e9ca2374d35c43febc5b4e85402958580b2",
+        "bytes": 6592
+      },
+      "_sources/reference/user-guide/training.md.txt": {
+        "sha256": "82e42f4629cebedc5f5ed3b7915c3660768f2148ddd16a51a5b3376c475edcbf",
+        "bytes": 7733
+      },
+      "_sources/reference/user-guide/validation.md.txt": {
+        "sha256": "ed7e2850ac7e7754a8fd775ee2210d072a9afb2b04c71206b905e991d4cd14c1",
+        "bytes": 3925
+      },
+      "_sources/reference.md.txt": {
+        "sha256": "d36c7e536799d1ec5df6cb51ed8c466c76df4f37ff5450190a739713b8818e56",
+        "bytes": 1451
+      },
+      "_sources/tutorials/01_extract.ipynb.txt": {
+        "sha256": "24e06556a70aedddbf6517d5876a54b025d9b000cc33da60be3f94c1ddab9bd1",
+        "bytes": 56294
+      },
+      "_sources/tutorials/02_image_clinical_binary.ipynb.txt": {
+        "sha256": "63023267154ab0a2e8fe1d2017fdd9eb0af999848e03ec66ae8773f41f00bae8",
+        "bytes": 83789
+      },
+      "_sources/tutorials/03_multiclass_regression.ipynb.txt": {
+        "sha256": "6214fd8845e69302d755b6131b858186378cfc1f434dd209ed39cbcfd1aa188d",
+        "bytes": 106677
+      },
+      "_sources/tutorials/04_regions_delta_habitat.ipynb.txt": {
+        "sha256": "dae9492574b73061bdca8460bfc3ab18d96f287cc1de4c4f5c677f7f0a0f60d3",
+        "bytes": 76308
+      },
+      "_sources/tutorials/05_patch_patient.ipynb.txt": {
+        "sha256": "9ecd7e31386fafebe2aee760ab34e1112245bb6fc58fc21fce950eaf418d0cf5",
+        "bytes": 92770
+      },
+      "_sources/tutorials/06_embedding_overlay.ipynb.txt": {
+        "sha256": "09856f6cb5b2896c8ea0bf15a85005a302db057692c25811eb1dc3958bd8ef01",
+        "bytes": 86416
+      },
+      "_sources/tutorials/07_public_ct.ipynb.txt": {
+        "sha256": "cba875a9813ccfc881be6ac01f2bbcb051cf09bce777a1e8f691bca354575a13",
+        "bytes": 190605
+      },
+      "_sources/tutorials/08_public_tabular.ipynb.txt": {
+        "sha256": "fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40",
+        "bytes": 88040
+      },
+      "_sources/tutorials/index.md.txt": {
+        "sha256": "b9d7357b2737dd9d2fed3a61112657a933635b9f923c6ae0924ee627cf71bff8",
+        "bytes": 3989
+      },
+      "_sources/tutorials/modeling.md.txt": {
+        "sha256": "cc0b85ab020435a29c87700d4643fe932240ea9b0312b7fdcf26ff689fb5d92c",
+        "bytes": 1374
+      },
+      "_sources/tutorials/pathology.md.txt": {
+        "sha256": "738a68323182e5c547e51c6efe7626edeec14a144df8d9860ba486cb95f28495",
+        "bytes": 1391
+      },
+      "_sources/tutorials/radiomics.md.txt": {
+        "sha256": "d6b0418fe0b1191cc20b9ea4955843fc639c26d333e9ad9cece372734f9e6bf1",
+        "bytes": 1269
+      },
+      "_sources/tutorials/real-data.md.txt": {
+        "sha256": "1a55565ce9fa0aad98b6ae9e2996d2723aa1d32d03016fccc855c7620ce4588e",
+        "bytes": 1674
+      },
+      "_sources/user-guide/index.md.txt": {
+        "sha256": "5e45a9f35ef733108a79091694feac710886fb6dd25e3d5a33fd4142ef55f5a3",
+        "bytes": 1621
+      },
+      "_sources/validation.md.txt": {
+        "sha256": "78b37d887b9e4b1f27192630c77ef497687f61118d4693487813fef0f0bea3dc",
+        "bytes": 1612
+      },
+      "_static/basic.css": {
+        "sha256": "80b2240539b36d344e7c9aa5090995a773ffae1dd90f21cc043e6057d9543c3d",
+        "bytes": 15094
+      },
+      "_static/custom.css": {
+        "sha256": "e03fde35006abd2c980d79030094efa9d3e6c5d9aa9b1e910d545f0a261fd328",
+        "bytes": 2359
+      },
+      "_static/doctools.js": {
+        "sha256": "81cb2da3c284e429a1a63ab28a20b7e30bceb8eb1556a154c8cbac0b4ce7795b",
+        "bytes": 4472
+      },
+      "_static/documentation_options.js": {
+        "sha256": "9dd09c1dc05cb2a1eb4d3505da97734cdb0cc7c3e6ad9961eb0d3d360d1e8c0a",
+        "bytes": 326
+      },
+      "_static/file.png": {
+        "sha256": "5c4bc9a16aebf38c4b950f59b8e501ca36495328cb9eb622218bce9064a35e3e",
+        "bytes": 286
+      },
+      "_static/language_data.js": {
+        "sha256": "dba8b1d8dce11dadb39bd24d2babdb617a57f8f27e04c614269c937b785df00a",
+        "bytes": 4758
+      },
+      "_static/minus.png": {
+        "sha256": "47e7fc50db3699f1ca41ce9a2ffa202c00c5d1d5180c55f62ba859b1bd6cc008",
+        "bytes": 90
+      },
+      "_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css": {
+        "sha256": "11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e",
+        "bytes": 43269
+      },
+      "_static/plus.png": {
+        "sha256": "54115199b96a130cba02147c47c0deb43dcc9b9f08b5162bba8642b34980ac63",
+        "bytes": 90
+      },
+      "_static/pygments.css": {
+        "sha256": "66f472fe9022ecdf197c5abc2b437f123c349c85f8741219a42963c77eb14920",
+        "bytes": 12755
+      },
+      "_static/scripts/bootstrap.js": {
+        "sha256": "f4b2b6f5d4bf7ebd727eec8f512a3b419ba97dfa5a361f8a419e8ab087f77352",
+        "bytes": 81704
+      },
+      "_static/scripts/bootstrap.js.LICENSE.txt": {
+        "sha256": "01968560a6c92babbff91a176a5d4d930ca1ea2e3fde3ff20d191ddd939e654d",
+        "bytes": 237
+      },
+      "_static/scripts/bootstrap.js.map": {
+        "sha256": "1816ca9abaf83bad5289350f00405a589bef22be026e250c9c2aa0e299f871a7",
+        "bytes": 333375
+      },
+      "_static/scripts/fontawesome.js": {
+        "sha256": "3255175d1c4cfe78e9f5e8fab69afc6a7002e6e793c2c669c12bb9cacad33b9a",
+        "bytes": 1489666
+      },
+      "_static/scripts/fontawesome.js.LICENSE.txt": {
+        "sha256": "f13b6c29ac990422b6e41880b0728db6658e9e2e131d699f4789714bbe74e34c",
+        "bytes": 219
+      },
+      "_static/scripts/fontawesome.js.map": {
+        "sha256": "a3656b85df50bbbe9e54a09c6496b2bc2f039e786a907271d9896786cf544668",
+        "bytes": 1668522
+      },
+      "_static/scripts/pydata-sphinx-theme.js": {
+        "sha256": "f264bd85cd58f330ce33afffc7839c247a93498680ab7968d7d2d1ddecf955fe",
+        "bytes": 11170
+      },
+      "_static/scripts/pydata-sphinx-theme.js.map": {
+        "sha256": "06f677cde513f5cd1a9394a53d8068cc54e3495c10a2e937ceecac818a9d159c",
+        "bytes": 52325
+      },
+      "_static/searchtools.js": {
+        "sha256": "8abac35df3630c203fad510e66f2f9e0725a79080b8be96111e238a071500805",
+        "bytes": 20842
+      },
+      "_static/sphinx_highlight.js": {
+        "sha256": "096231e9c87df80ec3273da9c5b71bc81503206726a07a4dd4de44c256ff859c",
+        "bytes": 5123
+      },
+      "_static/styles/pydata-sphinx-theme.css": {
+        "sha256": "218db1720af3aa73ee8b997003ae097f87cb997cec296426ef2885d01a1eaa02",
+        "bytes": 391311
+      },
+      "_static/styles/pydata-sphinx-theme.css.map": {
+        "sha256": "9833bcfb9c021a065a4fde8505d54492d141b3316073f34afd722c73c00efbab",
+        "bytes": 1309203
+      },
+      "_static/styles/theme.css": {
+        "sha256": "c5ad46e4d126fbddecf0ece57fc8345279fac39110306ac7e643f0d4505423f7",
+        "bytes": 106
+      },
+      "_static/translations.js": {
+        "sha256": "32ce2a39c88ddacc55f319880452ac5ce4047dc5dff867e143a907b1b9073d5b",
+        "bytes": 4318
+      },
+      "_static/vendor/fontawesome/webfonts/fa-brands-400.ttf": {
+        "sha256": "e28096fa75a96ac77020155ea3a6dd7312983e84115366d4cf49a0c312ec6d51",
+        "bytes": 209128
+      },
+      "_static/vendor/fontawesome/webfonts/fa-brands-400.woff2": {
+        "sha256": "232c6f6a7678304f9efaa26f30b1610debc2ba9f4cd636b5e6751c8d73761b92",
+        "bytes": 117852
+      },
+      "_static/vendor/fontawesome/webfonts/fa-regular-400.ttf": {
+        "sha256": "9174757efc83e072436e873c22be1663d3c103b0a16d7fb73569af4918d4d351",
+        "bytes": 67860
+      },
+      "_static/vendor/fontawesome/webfonts/fa-regular-400.woff2": {
+        "sha256": "c27da6f833431da5aa295c44540bfac0fd8270ba6a3c4346427006d8a7b34b76",
+        "bytes": 25392
+      },
+      "_static/vendor/fontawesome/webfonts/fa-solid-900.ttf": {
+        "sha256": "b4990d0d0c5f5d38d62e936eea120674e584c7eea8dcee38a975c0cf9a37539b",
+        "bytes": 420332
+      },
+      "_static/vendor/fontawesome/webfonts/fa-solid-900.woff2": {
+        "sha256": "ae17c16afbea216707b2203ea1cf9bdb45b9bfe47d0f4ae3258ddbc6294dd02f",
+        "bytes": 156400
+      },
+      "_static/webpack-macros.html": {
+        "sha256": "cb9fcc2bb1868f7ef4c346f5e56d76d42a3b4788ae78c438bff6e3bd2af4b1d5",
+        "bytes": 1257
+      },
+      "contributing.html": {
+        "sha256": "fb3f7b35135669f9dbd1f6e385d0debd4c2a732fad6df5a0a14d6e5371d1d528",
+        "bytes": 19920
+      },
+      "datasets.html": {
+        "sha256": "cb47fe01b805d9c0e3d64a12270c5a1a916d26f99ae190b6d3e5106df5c7e794",
+        "bytes": 23570
+      },
+      "development/benchmarks.html": {
+        "sha256": "f137c3f435c29e2b73b138eb153cb54763e30d3e8dae4981d9376f66f7c2dde8",
+        "bytes": 19432
+      },
+      "development/index.html": {
+        "sha256": "f4174a910fb18dce7851e69c50bd672b70250d9bc89f91af3e4152e22967c916",
+        "bytes": 21988
+      },
+      "development/methods.html": {
+        "sha256": "6c5d7d21a890b749428a672e471b71e1f609ccc2e8a9a663679058eeee68c850",
+        "bytes": 21503
+      },
+      "en/ecosystem.html": {
+        "sha256": "d54c8cfbb025393db76bd3fa25d78147e75b109072d8166524da724cfb41d54d",
+        "bytes": 31219
+      },
+      "en/installation.html": {
+        "sha256": "ef0978c28ec6c54630faea401ba349ce2702ac380c1bd2b91a964dc9b182df70",
+        "bytes": 23381
+      },
+      "genindex.html": {
+        "sha256": "236f3afffe7aee34c4ba629ee6126117349182995e1e843d0798339aba4cb5a8",
+        "bytes": 38777
+      },
+      "guide/ecosystem.html": {
+        "sha256": "827651622cd1fe3ab1cc7799b2421e3f30a7f2cba96e62bdbba84b7c69cb5c95",
+        "bytes": 31798
+      },
+      "installation.html": {
+        "sha256": "b6b8a5653d61644e8488c08eb92eafb9cd33f0d4117d4eed7f242a4eaaba1b21",
+        "bytes": 24309
+      },
+      "objects.inv": {
+        "sha256": "2ca8d67addf94886c15840ab74e225b43c497a922644c1b9c7416967cdbac853",
+        "bytes": 4095
+      },
+      "quickstart.html": {
+        "sha256": "a4d1aa628352177d3f86bbe394dcc3257458c4fc0b37f5b8bb85e961af28c891",
+        "bytes": 21818
+      },
+      "reference/api/generated/ov_radiomics.ExtractionResult.html": {
+        "sha256": "c5aa197d467ef324483eb14120c32fcdc0ed2dd5359cf6a5c64df5638fcb54d0",
+        "bytes": 31399
+      },
+      "reference/api/generated/ov_radiomics.FeatureSelector.html": {
+        "sha256": "4695bc4b4a47c403fabeaa917ad6cb0b052e5e84eb363494549234e2b85c3004",
+        "bytes": 29115
+      },
+      "reference/api/generated/ov_radiomics.FeatureTable.html": {
+        "sha256": "f554331549f8378b825ea7d2ba6d0ec8884c9f55f3804da493b127cc07af29ac",
+        "bytes": 29930
+      },
+      "reference/api/generated/ov_radiomics.ImageSample.html": {
+        "sha256": "c7bb1640e1b3190c77e9915d5fe875fda588759d6b4518a4ea4c8d66a3b229b8",
+        "bytes": 30364
+      },
+      "reference/api/generated/ov_radiomics.ImageVolume.html": {
+        "sha256": "8e4b88a3dfd3fe641d07a86bc7b40ded67436380e1ed75e8e49d03587589d401",
+        "bytes": 29383
+      },
+      "reference/api/generated/ov_radiomics.LoadedStudy.html": {
+        "sha256": "dcb753e8ed26f4ecd4217664421937f7e19fccd74c101abfe0c8f70dacf41470",
+        "bytes": 29761
+      },
+      "reference/api/generated/ov_radiomics.MaskVolume.html": {
+        "sha256": "644b21e6bae11eceba11647584b8cb9e8b5efa335c17fad1e2cf2781fd565c6d",
+        "bytes": 29296
+      },
+      "reference/api/generated/ov_radiomics.ModelBundle.html": {
+        "sha256": "dd1aa7ed77da66a86d18fd4c271922cf49cc6d6a8dc0d241c377713515760f45",
+        "bytes": 30276
+      },
+      "reference/api/generated/ov_radiomics.PredictionTable.html": {
+        "sha256": "451d1fe7f7e83660739c8e13d5111f411b4867beba9bcbb1484761664398ee76",
+        "bytes": 29481
+      },
+      "reference/api/generated/ov_radiomics.SplitPlan.html": {
+        "sha256": "824c8d958ebce405fa43eecefd6e1ab810c7fa8b4b5860759c1170b9ee95afb1",
+        "bytes": 31620
+      },
+      "reference/api/generated/ov_radiomics.TileTable.html": {
+        "sha256": "a42f05da8b4eb26adfd6d9929a1dd3ed1bfa9a0473e325a85c4f2f6c230bcb3c",
+        "bytes": 30423
+      },
+      "reference/api/generated/ov_radiomics.backend_info.html": {
+        "sha256": "2b71aa4ce267fec0bff07b20bd0ea70cbe6a05e256a73f14ce2882ecf046d74a",
+        "bytes": 27422
+      },
+      "reference/api/generated/ov_radiomics.baseline_table.html": {
+        "sha256": "587add92661abc21c59f9279db3ae07c48fc98e0a50f220eeed00b26cb1ece47",
+        "bytes": 27730
+      },
+      "reference/api/generated/ov_radiomics.binary_metrics.html": {
+        "sha256": "495aa1070044f6ceaa5053969371f4689cbbd510df63c8489e78acb98276c80b",
+        "bytes": 28798
+      },
+      "reference/api/generated/ov_radiomics.check_images.html": {
+        "sha256": "f22758ee243c7826ece46592367884c46363753bc17e2481be2b7094ed708b95",
+        "bytes": 27778
+      },
+      "reference/api/generated/ov_radiomics.decision_curve.html": {
+        "sha256": "46fc9b67f419cbf9231eff8091b1b359a5d2c1ffa6fcf5f649836cbc753009f5",
+        "bytes": 28016
+      },
+      "reference/api/generated/ov_radiomics.delong_test.html": {
+        "sha256": "3d181b8a308d4e8c4e1b3fe4636a9c9769f4c58328215fee03bb56cebfec07bb",
+        "bytes": 27873
+      },
+      "reference/api/generated/ov_radiomics.evaluate.html": {
+        "sha256": "cba278b93c9763abaa5802275d30da4eb08aa434d35e6c4bc553ac25f50b2898",
+        "bytes": 27714
+      },
+      "reference/api/generated/ov_radiomics.extract.html": {
+        "sha256": "7d604d3d20f329afa52faaefd14c085cb9a592a30664aacdb3452254a71e9082",
+        "bytes": 29871
+      },
+      "reference/api/generated/ov_radiomics.fit_fusion.html": {
+        "sha256": "0ac9405f185e10e33ae1a5f5bf0da68f725212cc900250ff5104d3dad8590b6f",
+        "bytes": 27741
+      },
+      "reference/api/generated/ov_radiomics.fusion_data.html": {
+        "sha256": "07e2137bc84044d55b41dfe962eaf1d450396957e08bc55eb4b56e3d66438305",
+        "bytes": 27726
+      },
+      "reference/api/generated/ov_radiomics.hosmer_lemeshow.html": {
+        "sha256": "0a034ccb166ee701ab601f25b4ef14b90df3e640fa858f0c8643ab05fb3ce379",
+        "bytes": 28011
+      },
+      "reference/api/generated/ov_radiomics.icc.html": {
+        "sha256": "9e94cee924e45fae2b85b5a56af75b8e8113c98ea306e768dd688153476b4196",
+        "bytes": 27604
+      },
+      "reference/api/generated/ov_radiomics.join_data.html": {
+        "sha256": "cb12a0667bf7db3df5bd300fcc9f4a22c6a1e1196a0d2e37aeca567c6ff13b04",
+        "bytes": 27630
+      },
+      "reference/api/generated/ov_radiomics.load_model.html": {
+        "sha256": "a93e90faba6c306fde6f3bf6ab435b74d8407dadbb41fd635175ec0c9e5e6313",
+        "bytes": 27271
+      },
+      "reference/api/generated/ov_radiomics.make_classifier.html": {
+        "sha256": "3f298c1ba2c1271a9910a5e66ef185a771968b45e4897e10d67ace4873d3f264",
+        "bytes": 27785
+      },
+      "reference/api/generated/ov_radiomics.match_images.html": {
+        "sha256": "dcac367825146389264f51782fee0beabc744ed57f20c8c9a1fd06048feba9c7",
+        "bytes": 27766
+      },
+      "reference/api/generated/ov_radiomics.multivariable_logistic.html": {
+        "sha256": "c8985263fe3ce9d6ff0cf779e60d8ed3b538b2eb10b4ca718db6c543548bbd90",
+        "bytes": 27794
+      },
+      "reference/api/generated/ov_radiomics.plot_calibration.html": {
+        "sha256": "6c2cbe94eac08cfffdd3ef06e61c116ed0f29eb67279cc3e49ea3a4c9d6ab3f5",
+        "bytes": 28617
+      },
+      "reference/api/generated/ov_radiomics.plot_confusion_matrix.html": {
+        "sha256": "7b27ffe84c02859cfcf01f20917f13f005d28e9422f04d3a0d2be1324c7fc98c",
+        "bytes": 29207
+      },
+      "reference/api/generated/ov_radiomics.plot_correlation.html": {
+        "sha256": "30a4b98b3a85b2ba700e0a9beed68fd1b9fb201318754bc815aa8ad494b41d58",
+        "bytes": 28649
+      },
+      "reference/api/generated/ov_radiomics.plot_cv_results.html": {
+        "sha256": "495be7cd9c1bda0c1437aaa5f2f481a441c2b38c44560fd153de6b998edf6f42",
+        "bytes": 28413
+      },
+      "reference/api/generated/ov_radiomics.plot_dca.html": {
+        "sha256": "b2dc464abf88fa93700f94a1717b2bafc85cc688ec527c2588a00d033a34243c",
+        "bytes": 28146
+      },
+      "reference/api/generated/ov_radiomics.plot_embedding.html": {
+        "sha256": "e462d4615a41fd84e1e1d6240e82a8e72acc23929cce80f15b1c9dbb036a1c5a",
+        "bytes": 28587
+      },
+      "reference/api/generated/ov_radiomics.plot_feature_pvalues.html": {
+        "sha256": "8205648f9c1b4d57d321b6606f47bcbc73a3407710b6b5282aac3f15267351f9",
+        "bytes": 28122
+      },
+      "reference/api/generated/ov_radiomics.plot_feature_summary.html": {
+        "sha256": "13efed538bd0d95c64626da68973ecaa978d7b385a95b85abe972bca939b8048",
+        "bytes": 28311
+      },
+      "reference/api/generated/ov_radiomics.plot_feature_weights.html": {
+        "sha256": "4960ed86f0fc388306c3c4db6304427605e113b4d9d7c8741e21100126074742",
+        "bytes": 28063
+      },
+      "reference/api/generated/ov_radiomics.plot_lasso_cv.html": {
+        "sha256": "f64c52e79c60d31516d0d3d505f31b64861f80303a1504670bbf5b6fd01848c3",
+        "bytes": 28032
+      },
+      "reference/api/generated/ov_radiomics.plot_lasso_path.html": {
+        "sha256": "edd1a1db2466bdaf491d8e83f80435a0e3f438d9d4793d6c8f039359faab5483",
+        "bytes": 28040
+      },
+      "reference/api/generated/ov_radiomics.plot_learning_curve.html": {
+        "sha256": "c0bf20afa3a2fbfd117a15bf123f815d13faf08613fdf0aeca963148ceeb7ef5",
+        "bytes": 28848
+      },
+      "reference/api/generated/ov_radiomics.plot_metrics.html": {
+        "sha256": "ef9216ba4d1c87331f8fb92978aa1d7d79cdf207b8e98f488d692da80535b82b",
+        "bytes": 28349
+      },
+      "reference/api/generated/ov_radiomics.plot_nomogram.html": {
+        "sha256": "1685a902875073ae3996ed6cc722a8d39fe1d3c2f1d1ce6591d3d9c90441e300",
+        "bytes": 28248
+      },
+      "reference/api/generated/ov_radiomics.plot_prediction_scores.html": {
+        "sha256": "fefefde1d41ef0a302e269a4340dd6f13b09d2969763da3994a723b5c43e026b",
+        "bytes": 28409
+      },
+      "reference/api/generated/ov_radiomics.plot_roc.html": {
+        "sha256": "08fa62fe550a8de52bbcdf9e58eb3e171a133fcb120ea6140bac1c8454d34c3f",
+        "bytes": 28352
+      },
+      "reference/api/generated/ov_radiomics.read_cohort.html": {
+        "sha256": "970c020f298161dcce858dd7832cf9891d6c94fd1cd7ea1ed670c1b9349cdac1",
+        "bytes": 27520
+      },
+      "reference/api/generated/ov_radiomics.read_feature_table.html": {
+        "sha256": "8c7214e2323c21772a6f6b6b5ca50badc85e86a09e7beb3c96aa44621f43faf5",
+        "bytes": 27635
+      },
+      "reference/api/generated/ov_radiomics.read_study.html": {
+        "sha256": "5d5110bfce78b81df0ec5685437db605a5dc0495d045ab909ca03f63c7e91e4a",
+        "bytes": 28025
+      },
+      "reference/api/generated/ov_radiomics.split_data.html": {
+        "sha256": "81cca264df40654a23cd89ff9c7ef1442c14a49e7d44e85e78677ee6c2b67bc0",
+        "bytes": 27708
+      },
+      "reference/api/generated/ov_radiomics.train_models.html": {
+        "sha256": "b8f84dd6ed0ef2542c11f39c4fb05d9de4ff391ee4d5f4f0dc5f01ca6411b137",
+        "bytes": 27891
+      },
+      "reference/api/generated/ov_radiomics.univariate_logistic.html": {
+        "sha256": "e5e45a30d011b12d7c7cb426281a11f8e3735d03e14eb2a4bfadc3e4f8a57c5b",
+        "bytes": 27814
+      },
+      "reference/api/ov_radiomics.FusionResult.html": {
+        "sha256": "75dcc535f7f18fe01675efa144f09ca78c92e93f13fe7df4011a1d0c21377fde",
+        "bytes": 28080
+      },
+      "reference/api/ov_radiomics.TrainingResult.html": {
+        "sha256": "516b8fd6293bec426070d7963968bad591337d2ebe79d2af56cb5114a3e44af9",
+        "bytes": 28142
+      },
+      "reference/api/ov_radiomics.html": {
+        "sha256": "ac32a5ee2daeb5521f5c20f32e4295b9dde202b6c0abaccf2e4da417e6ebc813",
+        "bytes": 44355
+      },
+      "reference/api.html": {
+        "sha256": "21801bbca9f6ef543dd255329618d7cb4c91ef419f843ec28518c4540661f5f9",
+        "bytes": 33291
+      },
+      "reference/baseline-native.html": {
+        "sha256": "0b289bde5398c908c2a5ca286e3159641dd03323b405bffe2a07181ec38a6722",
+        "bytes": 31174
+      },
+      "reference/cli-workflows-native.html": {
+        "sha256": "cf64b13d97d5cc1daff9b91fd457d931bd9816d5bb3c0f05f7d015eb4df13554",
+        "bytes": 37702
+      },
+      "reference/clinical-native.html": {
+        "sha256": "9045073c44809b35ae79a0ba2cc7baaff1874b5a85e27ec686804ad1d89cae1f",
+        "bytes": 38952
+      },
+      "reference/delivery-index.html": {
+        "sha256": "e4970720cd9617078e89910c70dd12217daff5b0ccefd54870feba3dea9d2a27",
+        "bytes": 21003
+      },
+      "reference/deployment-benchmark-v2-results.html": {
+        "sha256": "2c88f98141e49f107f23e3e04ac4c938d2545e4478fe6929c8f9a47804ba8b22",
+        "bytes": 29086
+      },
+      "reference/evaluation-native.html": {
+        "sha256": "3afe783f43de09127654449be0a2e9c37e1430e608a3efb7ad9f3084bd6dd7e0",
+        "bytes": 37631
+      },
+      "reference/features-native.html": {
+        "sha256": "c33a27aaedda23dd877551486e594a37e9c9cf9e0f4f349c5d7cf8dfbe5173d7",
+        "bytes": 39819
+      },
+      "reference/image-native.html": {
+        "sha256": "0d3da3ae0132fc39aefb816a0078091c21f8b1435298e8147597bcf00f5a6a88",
+        "bytes": 43741
+      },
+      "reference/interop.html": {
+        "sha256": "5d74ab7112d4bbf965d5a483c2dfcf6b4fbbc0fb47d77e4dfd988e5161cd7d9a",
+        "bytes": 47149
+      },
+      "reference/learning-native.html": {
+        "sha256": "c8402a5a4206d5f6101095eab7152dece53e260ba075a86d93ec4ece0042c1e6",
+        "bytes": 34080
+      },
+      "reference/learning-pathology-benchmark-v2-results.html": {
+        "sha256": "fee3acf1c47a9f709f3fcbca0f8296ed737fa3f327c269c1ad7c3a56c00dead0",
+        "bytes": 36084
+      },
+      "reference/models-native.html": {
+        "sha256": "648ae6b1f23a3a838995c532b4ae53efe40186b7a352d5fdb74a041a4978baad",
+        "bytes": 45308
+      },
+      "reference/native-boundaries.html": {
+        "sha256": "437d3440ca5ed689540bcb55171e2950ba1d88d3b2fdc02373acb809400f8236",
+        "bytes": 28968
+      },
+      "reference/native-extraction.html": {
+        "sha256": "d15c726179a2f89507d0d52cb823d8c9a4bb0c2114930b4b6bbf09437028bc02",
+        "bytes": 36008
+      },
+      "reference/native-performance-diagnosis.html": {
+        "sha256": "9d0afa789985b65818f24554da96a383828649ff072921b997dad67944a006ba",
+        "bytes": 53675
+      },
+      "reference/pathology-aggregate.html": {
+        "sha256": "6268e8552513258ad869d48ba48a1570770f5226258ba6bebd1df3ec5a9ccac3",
+        "bytes": 42355
+      },
+      "reference/pathology-cli-native.html": {
+        "sha256": "02ecbdd5bdffdb39dd6d97528e5e1a40dbe035349d97cf257f59f4f9914f5521",
+        "bytes": 58491
+      },
+      "reference/pathology-pixels.html": {
+        "sha256": "e11bb5ca3945cdd6bc73baca02562b661235e8e43aed3feb924f945b6fa64680",
+        "bytes": 43902
+      },
+      "reference/preprocessing-native.html": {
+        "sha256": "1a15c3d4da979984919749d5f9aa98ee1a09f6cbc3851d7e234e782c1bee28fa",
+        "bytes": 39707
+      },
+      "reference/public-evidence.html": {
+        "sha256": "9ed037e2a77a12147b1948b6dd80cb813cc5c982f65250e340d80303c5a6e3f8",
+        "bytes": 18492
+      },
+      "reference/python-native.html": {
+        "sha256": "dfc93b0ea0d632171ac495601aeb74c96710f9768715e7c36263fd6c4ea0af6d",
+        "bytes": 47589
+      },
+      "reference/radiomics-benchmark-v2-results.html": {
+        "sha256": "b0b614419f5717327a6b9cc4a96178f71d1775022be36849df7ee6d61ace80fe",
+        "bytes": 37445
+      },
+      "reference/reliability-native.html": {
+        "sha256": "d308c47a3128dee1ed5c11e443fc1936a99946cb5a1704d42dc687f55d30c48e",
+        "bytes": 29885
+      },
+      "reference/research-native.html": {
+        "sha256": "8f3828bf722d1d14bcdbeea227c7ccb026a7a97f5f7e54203a89e71aa07c7d18",
+        "bytes": 36328
+      },
+      "reference/rust-backend-decision.html": {
+        "sha256": "c8c6dda124411b0a00873b0ae627f50ef412b241684200540840cbefbb5765b3",
+        "bytes": 29116
+      },
+      "reference/sample-constructor-optimization.html": {
+        "sha256": "1fd695b7bc94af460d0a5a3152f672e613776f53dcca6c6c63a5cfae59ab14ab",
+        "bytes": 25594
+      },
+      "reference/scalar-accuracy-audit.html": {
+        "sha256": "cdcdfb24e317d30358a024438b9062ef8833cbcb0e26a9097980f9c67a7cc71d",
+        "bytes": 39592
+      },
+      "reference/support-matrix.html": {
+        "sha256": "483332c77b005f8dbdfb9e4da6f966ea21ebfe5de334b2b2314f55dd1653425f",
+        "bytes": 28760
+      },
+      "reference/table-io-native.html": {
+        "sha256": "7f5562ebd53f1799d4b1a5e743d7a30174f5d5ac0c83c4beff4bc0fd1451d52f",
+        "bytes": 39296
+      },
+      "reference/technical-report.html": {
+        "sha256": "a23238522b78cf320c12549f16d575923ce31f7f74bf2e56a3233ba0c820582d",
+        "bytes": 88155
+      },
+      "reference/user-guide/file-workflows.html": {
+        "sha256": "82638399120e15fc4fdacf52384d53e87932e6110b0bc7c7873cc3bfce9d76a0",
+        "bytes": 31950
+      },
+      "reference/user-guide/index.html": {
+        "sha256": "9810d33412347ba005a9b590e4229baa90c92a260cd9cb1c2b60a8060488f393",
+        "bytes": 20092
+      },
+      "reference/user-guide/input-contracts.html": {
+        "sha256": "7bb400f977fc6947f60bd56e08329e99e2a57e86ae99182cfbea5cd67d958744",
+        "bytes": 30006
+      },
+      "reference/user-guide/pathology.html": {
+        "sha256": "2dc1bbd5230a4e73553900d7d682050cb883b10e12cabbdfca969fe4cd8a7a3b",
+        "bytes": 41990
+      },
+      "reference/user-guide/public-tabular.html": {
+        "sha256": "102374338ebd319eff6f36afc3ec81daf0f5677ed4296845604c1ffe227de1fd",
+        "bytes": 29866
+      },
+      "reference/user-guide/results-and-errors.html": {
+        "sha256": "70f746a374eb189162eb82a8ace34c008bcb10f9087c3ab17cb0833e431fd08b",
+        "bytes": 28000
+      },
+      "reference/user-guide/training.html": {
+        "sha256": "ea3bcc2df02c1156544bf6486233af15672b0aaade7079270579ab5e3ea1f751",
+        "bytes": 42438
+      },
+      "reference/user-guide/validation.html": {
+        "sha256": "b744069a6b414d635d51672cb691c8a6c8926d6ce4959c3383dc5c3b15af6ec9",
+        "bytes": 22336
+      },
+      "reference.html": {
+        "sha256": "a8f3189eb7e7faa0b842bd418da32796b2e3ccb7eb76c4272613f6f7e4d9ef34",
+        "bytes": 30897
+      },
+      "search.html": {
+        "sha256": "0aff10c01f004305fd61981a5c0f32fe4e82a3fb5343a5a765c7ae4e9926b8a8",
+        "bytes": 25316
+      },
+      "searchindex.js": {
+        "sha256": "cfd425d1336112db9167de28b46469ffd6dfdc86e0b0871bc5d636e255e5bf80",
+        "bytes": 181932
+      },
+      "tutorials/01_extract.html": {
+        "sha256": "502688f8ddd6b02fe0ff1bae3fc343bfaa4cda44b8570183e66a9f5a81663e1c",
+        "bytes": 57267
+      },
+      "tutorials/02_image_clinical_binary.html": {
+        "sha256": "e8c5f19644cf9d39e66a3f1bd0dc2f606f5d4722551737f9780a13658fcda74c",
+        "bytes": 62113
+      },
+      "tutorials/03_multiclass_regression.html": {
+        "sha256": "c64fa83f433a754a77226024927293aa70284ed6aa3f2d1bc55d06690b86a95d",
+        "bytes": 69468
+      },
+      "tutorials/04_regions_delta_habitat.html": {
+        "sha256": "2605540856382fd4b5e5a0751d7146295e023ee92dd997927100d08d031f749b",
+        "bytes": 71537
+      },
+      "tutorials/05_patch_patient.html": {
+        "sha256": "0382494f87ebe6e26f1227e8f21e9fca20bbee28de2384e59517c9da9bfffa27",
+        "bytes": 77209
+      },
+      "tutorials/06_embedding_overlay.html": {
+        "sha256": "48f334983f52162b2a7094d9dd5fc16006d3daa0be48a26850aef94bf3f6126e",
+        "bytes": 73676
+      },
+      "tutorials/07_public_ct.html": {
+        "sha256": "faa357bf8821298e53298034ae23a7d9288b36c4e1654bfc39f2796e71c6ee44",
+        "bytes": 58286
+      },
+      "tutorials/08_public_tabular.html": {
+        "sha256": "9267383024813246b1b0d2c5132194c19a605eee3147ea5a9463511fd54c5e26",
+        "bytes": 83858
+      },
+      "tutorials/index.html": {
+        "sha256": "def78994dae57cc64e09d5ee9cd486271aa3b342798291d7215f5e7091522506",
+        "bytes": 25538
+      },
+      "tutorials/modeling.html": {
+        "sha256": "3a1502b5347a926174fc9db39ffbd3316fd6d6bab10929e53d118627a030ab11",
+        "bytes": 20067
+      },
+      "tutorials/pathology.html": {
+        "sha256": "9c42a8a1f8a79adcaf0522b14d306d7c4b35fcc364ebbe824dba2c8b23dcb249",
+        "bytes": 19875
+      },
+      "tutorials/radiomics.html": {
+        "sha256": "c8cc544eee3157439d4fee7cc8894859631b0918ba7e00d0f4b241f27b434d6c",
+        "bytes": 19907
+      },
+      "tutorials/real-data.html": {
+        "sha256": "c90b6005805a5de6325328e78ff579dae23b6ac5c85cc848fea85ac70a96f1ed",
+        "bytes": 21029
+      },
+      "user-guide/index.html": {
+        "sha256": "715864210143a189ecca81a2546db856b529a161d1152c4e2bf471d337225d96",
+        "bytes": 19853
+      },
+      "validation.html": {
+        "sha256": "e34a5ec78f2d6f6050e9b0164d62254413b57ad1d11174485a8a7cedf847dfca",
+        "bytes": 20843
+      }
+    }
+  }
+}

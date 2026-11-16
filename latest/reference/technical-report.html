@@ -1,0 +1,1541 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>独立 Rust 影像组学与轻量病理分析引擎：架构、数值验证与性能技术报告 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/technical-report';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/reference/technical-report.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Native capability boundaries" href="native-boundaries.html" />
+    <link rel="prev" title="方法、契约与技术报告" href="../development/methods.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">验证与适用范围</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support-matrix.html">原生支持矩阵</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../development/methods.html">方法与技术报告</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">软件技术报告</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native-boundaries.html">原生能力边界</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rust-backend-decision.html">Rust范围与后端选择</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-accuracy-audit.html">独立标量精度审计</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../development/benchmarks.html">独立基准报告</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="radiomics-benchmark-v2-results.html">Radiomics 测量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="learning-pathology-benchmark-v2-results.html">Machine Learning / Statistics 与 Pathology 测量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment-benchmark-v2-results.html">L5 部署与启动成本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native-performance-diagnosis.html">Python/Rust数组边界诊断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample-constructor-optimization.html">Sample构造有限优化及未观察到的内存收益</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">开发与贡献</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../development/index.html" class="nav-link">验证与开发</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../development/methods.html" class="nav-link">方法、契约与技术报告</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">独立 Rust 影像组学与轻量病理分析引擎：架构、数值验证与性能技术报告</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="rust">
+<h1>独立 Rust 影像组学与轻量病理分析引擎：架构、数值验证与性能技术报告<a class="headerlink" href="#rust" title="Link to this heading">#</a></h1>
+<p>以下路径为记录时的本机位置，复现时请替换为自己的工作目录。<code class="docutils literal notranslate"><span class="pre">$WORKDIR</span></code> 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。</p>
+<p><strong>文档状态：实测技术报告，按所列源码快照、数据集及验证范围解释。</strong></p>
+<p><strong>后续审计更新：</strong> <a class="reference internal" href="scalar-accuracy-audit.html"><span class="std std-doc">标量精度审计</span></a>新增了高动态范围Mean的
+Python兼容性反例，当前尚未修复。本文记录的数据与Golden通过保持原事实，不能据此
+宣称这个新数值缺口或全部数值发布门槛已关闭。后端取舍见<a class="reference internal" href="rust-backend-decision.html"><span class="std std-doc">独立决策</span></a>。</p>
+<p>项目：<a class="reference external" href="https://github.com/hurry060215-tech/radiomics">hurry060215-tech/radiomics</a>；Python 包/导入名保留 <code class="docutils literal notranslate"><span class="pre">ov-radiomics</span></code> / <code class="docutils literal notranslate"><span class="pre">ov_radiomics</span></code>，版本保留 <code class="docutils literal notranslate"><span class="pre">0.1.0</span></code>。</p>
+<p>Radiomics 性能对象：不可变源码快照 <code class="docutils literal notranslate"><span class="pre">48ecb310a2d9ccb5da821733ee1190ce1764f27a</span></code>；核心实现摘要 <code class="docutils literal notranslate"><span class="pre">a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8</span></code>。后续接口变更与持续集成结果应单独标识，不能自动继承该快照的测量结论。</p>
+<section id="id1">
+<h2>摘要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>本项目实现一个可独立安装、通过 Rust CLI 或 Python API 使用的研究软件引擎，覆盖两条工作流：NIfTI/ROI/临床表到特征、患者分组建模、评价与外部预测；普通病理 patch 或外部 embedding 到质控、特征、切片/患者聚合与坐标覆盖图。主要工程贡献为共享 Rust 计算核心、显式数据契约、可移植模型容器，以及区分兼容性、标准定义和性能的可审计验证流程。</p>
+<p>影像首批范围为 Original 的 <strong>55 项明确列出的统计/纹理特征</strong>，另含单独命名的 <strong>11 项 <code class="docutils literal notranslate"><span class="pre">shape_basic</span></code> 体素支持域描述符</strong>。PyRadiomics 兼容轨道固定公开 3.0.1；IBSI 轨道独立核对声明的配置与参考值。患者级 <code class="docutils literal notranslate"><span class="pre">SplitPlan</span></code> 将实际训练/验证患者集合传入嵌套筛选、有限参数搜索和 OOF 融合，模型以版本化 <code class="docutils literal notranslate"><span class="pre">.rad</span></code> JSON/类型化状态保存。</p>
+<p>Radiomics Benchmark v2 在固定 Windows 机器上完成 <strong>60 个 case、840 个双后端主观测及 14 个原生缓存观测</strong>，全部执行与适用数值比较通过，无观测丢弃或 2 GiB 预算超限。性能结果随入口与工作量显著变化：真实公开 CT 的 prepared-array 路径为参考速度的 <strong>0.400×</strong>，即 Rust 慢 <strong>2.50×</strong>；CT 的 NIfTI→裁剪→完整导出路径为 <strong>1.225×</strong>，未达到 1.5× 目标。小型合成/phantom 流程中的较高加速比仅代表其固定场景。该结果支持统一原生内核和独立部署的工程价值，同时暴露数组边界转换与完整流程性能的优化需求。</p>
+<p>机器学习/统计与病理另完成224条固定观测，执行及输出匹配全部通过，逐行耗时与RSS工程目标通过；回归热运行0.981倍属于近似同速而非加速。病理结果仅对冻结的小型Python规格与声明合成工作量成立。本报告评价研究软件行为，不提供临床有效性、诊断性能或论文录用结论。</p>
+</section>
+<section id="id2">
+<h2>1. 动机与研究问题<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>影像组学研究通常需要衔接图像读取、空间几何、离散化、纹理矩阵、表格预处理、模型选择和统计评价。PyRadiomics 提供成熟的开放实现与公开计算路径；IBSI 强调特征定义、处理配置和标准化参考值。[1–3] 本项目的目标是将上述研究链路的核心计算汇入可独立运行的 Rust 引擎，并保留 Python 的表格接口与绘图便利性。</p>
+<p>工程验证围绕三个问题展开：</p>
+<ol class="arabic simple">
+<li><p>在明确支持的配置内，Rust 是否复现冻结 Python 行为，并保留几何、离散灰度、计数矩阵、退化输入和非有限状态的语义？</p></li>
+<li><p>共享患者划分、训练状态和模型容器能否使 CLI、Python、外部队列及不同预测层级保持可核验的一致性？</p></li>
+<li><p>算子、数组入口、端到端流程和批量调度分别具有怎样的速度、波动和内存表现，哪些性能目标尚未达到？</p></li>
+</ol>
+<p>项目保持个人仓库和独立安装边界；ov 可通过普通 import 或显式数据适配使用本包。计算定义来自可重建的公开参考、公式和自建规格，不依据加密后端、工具名称或界面说明推断算法。</p>
+</section>
+<section id="id3">
+<h2>2. 系统架构与数据契约<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h3>2.1 一个核心、两类入口<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>仓库采用三个 crate：<code class="docutils literal notranslate"><span class="pre">ov-radiomics-core</span></code> 对应计算层 <code class="docutils literal notranslate"><span class="pre">radiomics-core</span></code>，<code class="docutils literal notranslate"><span class="pre">ov-radiomics-python</span></code> 提供 PyO3 绑定，<code class="docutils literal notranslate"><span class="pre">ov-radiomics-cli</span></code> 提供无 Python 的命令行工作流。Python 层负责数组/表格转换和绘图；原生模式不调用 PyRadiomics、sklearn 或 statsmodels。文件格式、线性代数、分布函数和序列化复用 Rust 库，避免重复实现通用基础设施。</p>
+<pre  class="mermaid">
+        flowchart LR
+  A[NIfTI / ROI / CSV / Parquet] --&gt; C[共享 Rust core]
+  B[普通 patch / mask / embedding] --&gt; C
+  P[Python API: 数组与表格转换] --&gt; C
+  T[Rust CLI: check / extract / train / predict / evaluate / pathology] --&gt; C
+  C --&gt; F[FeatureTable / TileTable]
+  C --&gt; S[患者级 SplitPlan 与拟合 pipeline]
+  S --&gt; M[版本化 .rad ModelBundle]
+  M --&gt; R[PredictionTable / 统计评价]
+  R --&gt; V[Python 图形 / CSV / 分块覆盖图]
+    </pre><p>对外数值对象使用连续缓冲区、维度、顺序与缺失标记，不暴露第三方矩阵类型。缺失数值使用有限存储值与显式 missing flag；未定义结果保持 missing/NaN/Inf 状态，不作为合法零值进入分析。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>对象</p></th>
+<th class="head"><p>关键内容</p></th>
+<th class="head"><p>约束与用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ImageSample</span></code></p></td>
+<td><p>sample/patient 元数据、标量图像、mask、完整 affine 与单位</p></td>
+<td><p>sample ID 唯一；patient ID 可重复；2D/3D 明确区分</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">FeatureTable</span></code></p></td>
+<td><p>行主序数值、样本元数据、特征定义/顺序、有效参数和质量记录</p></td>
+<td><p>ID、结局和队列不进入特征矩阵；CSV/Parquet 保留 manifest</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TileTable</span></code></p></td>
+<td><p>patient→slide→tile、level-0 坐标、尺度、有效像素矩形、QC 和可选特征</p></td>
+<td><p>坐标范围与实际 patch 像素尺寸分开；空切片仍保留患者父层级</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SplitPlan</span></code></p></td>
+<td><p>队列、类别映射、中心、内外折实际患者集合、种子和方法版本</p></td>
+<td><p>验证真实集合；相同 fold 数字不代表相同训练来源</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ModelBundle</span></code></p></td>
+<td><p>拟合的填补/编码/缩放/筛选/模型、类别/特征顺序、阈值和配置</p></td>
+<td><p>schema1 <code class="docutils literal notranslate"><span class="pre">.rad</span></code> 类型化 JSON 容器；未知 schema、缺列或不收敛状态报错</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PredictionTable</span></code></p></td>
+<td><p>样本/患者/切片/tile ID、预测单位、概率/回归值、队列/折/训练来源</p></td>
+<td><p>概率与类别顺序一致；层级/队列身份验证；禁止患者分数冒充 tile 分数</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id5">
+<h3>2.2 图像几何与独立运行边界<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>NIfTI 输入保留世界坐标、sform/qform 诊断、spacing、方向、原点和单位。图像/mask 对齐检查包含体素外角点；裁剪更新 affine。毫米参数与体素参数分开，未知单位不推测毫米值。首版正交距离运算拒绝 shear，要求显式重采样。图像重采样支持线性/最近邻，mask 仅最近邻；通用目标网格定义与 PyRadiomics 的 ROI 网格定义分别冻结。</p>
+<p>影像批处理由最外层控制 <code class="docutils literal notranslate"><span class="pre">n_jobs</span></code>，输出确定排序，失败样本保留。缓存键包括输入内容摘要、有效参数、元数据与实现版本，成功命中也验证 payload；新增命中/缺失/拒绝/写入失败摘要与特征数据分离。输出默认新目录，覆盖须显式声明。</p>
+<p><code class="docutils literal notranslate"><span class="pre">.rad</span></code> 不使用 pickle/joblib 执行式序列化。加载后验证类型化拟合状态，输入列可按名称重排；预测不重新拟合训练统计量。历史 Python 参考/额外模型通过显式可选后端保留，原生入口不静默切换算法。</p>
+</section>
+</section>
+<section id="id6">
+<h2>3. 算法范围与数值语义<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h3>3.1 明确的影像特征子集<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>族</p></th>
+<th class="head text-right"><p>数量</p></th>
+<th class="head"><p>本轮特征</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>First-order</p></td>
+<td class="text-right"><p>16</p></td>
+<td><p>Mean、Median、Minimum、Maximum、10Percentile、90Percentile、Range、InterquartileRange、Variance、MeanAbsoluteDeviation、Skewness、Kurtosis、Energy、RootMeanSquared、Entropy、Uniformity</p></td>
+</tr>
+<tr class="row-odd"><td><p>GLCM</p></td>
+<td class="text-right"><p>10</p></td>
+<td><p>JointAverage、JointEnergy、JointEntropy、MaximumProbability、Contrast、Correlation、DifferenceAverage、Id、Idm、SumSquares</p></td>
+</tr>
+<tr class="row-even"><td><p>GLRLM</p></td>
+<td class="text-right"><p>8</p></td>
+<td><p>ShortRunEmphasis、LongRunEmphasis、GrayLevelNonUniformity 及 normalized、RunLengthNonUniformity 及 normalized、RunPercentage、RunEntropy</p></td>
+</tr>
+<tr class="row-odd"><td><p>GLSZM</p></td>
+<td class="text-right"><p>8</p></td>
+<td><p>SmallAreaEmphasis、LargeAreaEmphasis、GrayLevelNonUniformity 及 normalized、SizeZoneNonUniformity 及 normalized、ZonePercentage、ZoneEntropy</p></td>
+</tr>
+<tr class="row-even"><td><p>GLDM</p></td>
+<td class="text-right"><p>8</p></td>
+<td><p>SmallDependenceEmphasis、LargeDependenceEmphasis、GrayLevelNonUniformity、DependenceNonUniformity 及 normalized、GrayLevelVariance、DependenceVariance、DependenceEntropy</p></td>
+</tr>
+<tr class="row-odd"><td><p>NGTDM</p></td>
+<td class="text-right"><p>5</p></td>
+<td><p>Coarseness、Contrast、Busyness、Complexity、Strength</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shape_basic</span></code></p></td>
+<td class="text-right"><p>11，另列</p></td>
+<td><p>voxel/pixel count、XYZ bbox min/size、XYZ 世界坐标质心、体素支持域体积或像素支持域面积；不包含网格表面积/球形度</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">python_golden_v1</span></code> 固定 Original、距离1、对称 GLCM、无距离加权；GLCM/GLRLM 默认逐方向计算后平均，矩阵合并是另一个显式选项。离散化必须声明固定 width 或 count；2D 与 3D 分开验证，不添加 2.5D。峰度保留冻结的 raw population kurtosis，与 IBSI excess kurtosis 的差异单独记录。[2,3]</p>
+<p>ROI 工具覆盖标签选择/重编码、显式连通性、最大连通域、体素扩张、各向异性毫米瘤周环和器官交集。形态 ROI 与强度重分割 ROI 分离。裁剪、截断、Z-score/MinMax 的统计范围须显式指定。</p>
+</section>
+<section id="id8">
+<h3>3.2 三任务预处理、稀疏筛选和模型<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>填补、类别编码、缩放和筛选保存训练拟合状态。数值中位数、类别众数、one-hot、Standard/MinMax/Robust scaling、常量/低方差、绝对相关性、任务特定单因素/BH 和稀疏选择共用 Rust 实现。全缺失列默认报错，可显式删除；零特征不自动放宽阈值；相关重复特征按原始顺序保留。</p>
+<p>默认单因素分别为二分类 Mann–Whitney、多分类 Kruskal–Wallis、回归 Pearson 目标相关检验。二分类和回归的平方损失 LASSO 采用</p>
+<p>[
+\min_{\beta,b};\frac{1}{2n}\lVert y-X\beta-b\rVert_2^2+\alpha\lVert\beta\rVert_1.
+]</p>
+<p>多分类稀疏选择使用各类别 OvR L1 Logistic，最终取选中特征并集，避免把类别编号当作连续目标；类别重命名/一致置换须保持选中特征集合。参数网格进入完整患者分组 pipeline，不能先用全数据完成筛选。</p>
+<p>原生预测模型包括二分类 Logistic、多分类 softmax、OLS/Ridge、KNN、GaussianNB 与 CART RandomForest。Logistic/softmax 的目标为平均负对数似然加 L2 惩罚：</p>
+<p>[
+\mathcal L(W,b)=-\frac1n\sum_i\log p(y_i\mid x_i;W,b)+\frac\lambda2\lVert W\rVert_F^2,
+]</p>
+<p>截距不惩罚，预测 LR 要求正 L2 参数。Ridge 使用平均平方损失的一半加同型 L2 项；OLS 通过稳定 SVD 求解并报告秩不足。KNN 明确 Euclidean 与 uniform/distance 权重，GaussianNB 明确先验和平滑，森林明确 Gini/平方误差、bootstrap、并列切分和每树派生种子。森林与 sklearn 同数值 seed 不承诺生成相同树，其验收使用手算树、原生复现性和逐数据集预测质量界限。</p>
+<p>优化器返回收敛报告。确定性模型同时核对预测、目标函数和梯度/KKT；不收敛不得保存为成功模型。单/多因素临床 Logistic 复用同一求解器的无惩罚路径，并额外执行完整病例、秩、完全/准分离 LP、score 和 observed-information 检查，输出 OR/Wald CI 与剔除数量。无惩罚推断不能由一个很小的优化梯度单独证明有效。</p>
+</section>
+<section id="id9">
+<h3>3.3 评价、研究组合和轻量病理<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>原生评价覆盖 ROC/PR、AP/梯形 PR area、概率校准曲线、混淆矩阵、分类 macro/micro/weighted 汇总、Brier/log loss、MAE/RMSE/R²、患者级 bootstrap 及二分类 DeLong/DCA/H–L。分布 CDF/分位数、H–L 分箱和抽样均在 Rust；旧 bootstrap 通过冻结索引兼容，新增组件保存版本化随机方案。ICC 限定完整平衡 subject×reader，显式区分 <code class="docutils literal notranslate"><span class="pre">ICC(2,1)</span></code>、<code class="docutils literal notranslate"><span class="pre">ICC(3,1)</span></code> 并返回 CI。NaN/Inf、单观察值或常量目标等退化结果保留已冻结语义。</p>
+<p>研究组合包括按键特征拼接、多区域/模态、Delta 和基础 KMeans。Delta 按患者、病灶、模态、区域和时间点严格配对，提供差值、比值、相对变化；零分母默认报错。KMeans 复用训练缩放状态，以平方欧氏距离/Lloyd 更新最小化簇内平方和，保存中心、初始化、种子和收敛状态；局部 cluster ID 不自动代表跨患者同一种组织。必要配准与批次校正在输入上游完成。</p>
+<p>病理支持普通 PNG/JPEG RGB8、单页 TIFF Gray8/16/RGB8，流式切块、padding 有效区、原始 QC 分数/原因、RGB/HSV/Lab D65 统计、固定直方图、Hue 圆周统计和共用灰度纹理引擎。已有 semantic mask 按指定连通性组件化，instance mask 保留标签含义；面积、质心、bbox、边界标记和尺寸分布均为 patch-local。重叠 patch 的实例数不能相加为全片细胞总数。</p>
+<p>embedding 必须按 tile ID 对齐；默认先 tile→slide，再切片等权 slide→patient，支持显式面积权重。覆盖图接收真实 tile 特征或 tile-level 预测，重叠平均、coverage count、未覆盖 NaN/透明并分块输出。患者模型概率不能广播成“局部病理预测”。level-0 左上角像素坐标与 patch 尺寸分开，MPP 缺失时不从 DPI 或放大倍数猜测。</p>
+</section>
+</section>
+<section id="id10">
+<h2>4. 双轨正确性与泄漏控制<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<section id="compatibility-conformance">
+<h3>4.1 Compatibility 与 Conformance 独立<a class="headerlink" href="#compatibility-conformance" title="Link to this heading">#</a></h3>
+<p><strong>PyRadiomics Compatibility</strong> 使用公开3.0.1、固定源码 revision、依赖锁、输入 SHA256、参数、输出与异常行为。<strong>IBSI Conformance</strong> 使用独立数据和所声明标准/配置的参考值。每个特征/config 分别记录 <code class="docutils literal notranslate"><span class="pre">pyradiomics_compatible</span></code>、<code class="docutils literal notranslate"><span class="pre">ibsi_conformant</span></code> 和 <code class="docutils literal notranslate"><span class="pre">deviation_reason</span></code>，不通过放宽容差将定义差异混为一体。[2,3]</p>
+<p>IBSI digital phantom 的限定验收包含3D、FBS1、无重采样、对称 GLCM/distance1、GLDM alpha0，逐方向平均与显式合并分别检查。计数矩阵与 count 精确比较，NGTDM 差异和遵守发布精度，完整精度一阶另有独立推导。raw Kurtosis 与 excess 定义相差3，保留明确 nonconformance；这不能扩展为“整个引擎符合所有 IBSI 配置”。<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/golden-ibsi-digital-report.json">本仓库 IBSI 实际报告</a></p>
+<p>公开 PAT1 CT/ROI 另冻结原图、强度重分割与 tight-bbox 准确性参考；在不可变核心实现下，API/CLI 的396项 scalar/basic-shape 比较及独立几何/纹理矩阵核验通过。CT 来源为 IBSI 数据集固定 revision，原始 CancerData DOI 可追溯。原图和准备数组保留在外部 artifact，遵守 CC-BY-NC-3.0；该兼容性配置不自动成为 IBSI 其他协议的符合性证明。<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/public-ct-native-acceptance.md">CT 验收</a></p>
+<p>统一比较规则为</p>
+<p>[
+|a-r|\le\mathrm{atol}+\mathrm{rtol}|r|.
+]</p>
+<p>ID、类别/列顺序、mask、离散灰度、纹理计数和实际划分集合精确一致；几何世界坐标上限1e−6mm；确定性统计/纹理默认 atol1e−10、rtol1e−8；浮点重采样/颜色为1e−6/1e−5；确定性线性/Logistic 预测为1e−6/1e−5并检查目标/梯度/KKT/收敛。非有限位置和状态必须一致，不能只比较有限子集。</p>
+</section>
+<section id="id11">
+<h3>4.2 患者与预测来源<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>同一患者可以有多病灶、多切片或多个时间点，但不得跨训练、测试或不同外部队列。每个内层 fit 只使用其训练患者拟合填补、类别编码、缩放、单因素/相关/稀疏选择和模型。共享 <code class="docutils literal notranslate"><span class="pre">SplitPlan</span></code> 保存内外层、最终内层和患者/中心身份，融合验证完整集合与训练摘要。</p>
+<p>OOF Logistic 融合在 base OOF 上拟合，融合训练输出标为 apparent meta training；固定权重平均的 OOF 另列，不能把用于 meta 拟合的 OOF 再标为无偏验证。无标签外部预测保留队列和训练来源。测试特征/标签扰动后，拟合状态、选中特征、阈值和 OOF 不变的泄漏检查是适用硬门槛。患者聚合后的 truth 必须一致，不能通过重复病灶人为增加独立样本量。</p>
+<p>WSIData 的关联验证同时使用 authoritative polygon 几何、<code class="docutils literal notranslate"><span class="pre">tile_spec</span></code>、表格 region/instance linkage、显式 tile ID 和生成 embedding 时保存的历史快照。相同 tile 数或当前坐标不能证明旧缓存有效；缺历史证据时拒绝，不能在接入时补盖“历史已验证”。</p>
+</section>
+</section>
+<section id="benchmark-v2">
+<h2>5. Benchmark v2 方法<a class="headerlink" href="#benchmark-v2" title="Link to this heading">#</a></h2>
+<section id="id12">
+<h3>5.1 三套独立性能套件<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>套件</p></th>
+<th class="head"><p>参考</p></th>
+<th class="head"><p>核心问题</p></th>
+<th class="head"><p>本稿状态</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Radiomics</p></td>
+<td><p>公开 PyRadiomics3.0.1；独立 shape_basic 规格；IBSI/公开 CT</p></td>
+<td><p>一致性、数组/算子/完整流程时间、RSS、吞吐和扩展</p></td>
+<td><p>完整840+14观测已归档，含明确性能 miss</p></td>
+</tr>
+<tr class="row-odd"><td><p>Machine Learning &amp; Statistics</p></td>
+<td><p>冻结 sklearn/SciPy/statsmodels/目标函数</p></td>
+<td><p>数值与收敛、预测质量、泄漏、训练/评价时间和内存</p></td>
+<td><p><strong>完整观测已完成，逐行结果见6.2</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Pathology</p></td>
+<td><p>冻结可审查 Python 规格与手算输入</p></td>
+<td><p>QC、颜色/对象、ID 对齐、聚合、覆盖图与吞吐</p></td>
+<td><p><strong>完整观测已完成，逐行结果见6.2</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>正确性/API/稳定性/独立运行/跨平台安装为 Release Gate；速度、内存效率和并行扩展为 Performance Target。L2 native/reference runtime≤1.10 和 RSS≤1.20 是本项目工程回归线；L2/L3≥1.5× 为目标。性能未达标应披露、分析和建立优化任务，不自动否定数值正确性；崩溃或超过绝对内存预算仍是操作性失败。</p>
+</section>
+<section id="id13">
+<h3>5.2 固定工作量、资源和统计<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p>Radiomics L1 分六大族与 shape_basic，只有被选择的 Rust family 执行矩阵/标量工作，计时包括真实公开数组边界转换。L2 使用固定 prepared buffers；合成/phantom 每 call16 ROI，CT 每 call1 ROI。L3 包含 cohort/NIfTI 读取、显式处理、提取、表格转换和 CSV/config 导出；合成/phantom 每 call8 ROI，CT 每 call1 ROI。L4 固定100/500/1000 ROI、两种小型3D/灰度配置和 outer workers1/4。重复合成输入明确披露，uncached throughput 不复用特征缓存。</p>
+<p>固定机器为 Intel Core Ultra9 285K、24物理/逻辑核、33,663,320,064 RAM bytes、Windows build22631。每观测使用独立后端进程，warm 状态真实预热一次再调用一次；每 case7对，偶数 Python→Rust、奇数反向。内层 BLAS/OpenMP/ITK 限制并实际核验为1；参考外层同进程线程池，避免漏计子进程内存。全过程固定2GiB预算。</p>
+<p>报告保留每次原始时间、执行顺序、median、q25/q75、IQR、经验线性插值 p95、min/max、ROI/s、输出摘要、源/编译/扩展/依赖版本和实际缓存计数。内存为完整进程生命周期 resident HWM，包含 import、fixture、warmup、call 和数值结果传输；worker 协议末尾内核峰值与父进程采样 HWM 取最大值。cold 表示新进程，不表示清空 OS 文件缓存；外部 source/input/file-hash 审计在 cold 计时外。七次 p95 是粗经验分位数，不提供精确尾延迟保证。</p>
+<p>三个冻结文件 SHA 分别为 base <code class="docutils literal notranslate"><span class="pre">a37b0339…</span></code>、CT append <code class="docutils literal notranslate"><span class="pre">14192fe4…</span></code>、显式2D inactive-axis binding <code class="docutils literal notranslate"><span class="pre">36730dda…</span></code>。后者在未计时正确性预检发现接口维数不匹配后，只把两条 true2D L3 的无效 z 槽设0，保留面内 margin1、原计划字节和原失败记录；其他 case/data/bin/次数/门槛保持不变。它不替换任何失败性能观测。</p>
+</section>
+</section>
+<section id="id14">
+<h2>6. 实测结果与解释<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<section id="radiomics">
+<h3>6.1 Radiomics 完整观测<a class="headerlink" href="#radiomics" title="Link to this heading">#</a></h3>
+<p>正式 run 完成 <strong>60×7×2=840 主观测与14缓存观测</strong>，全部执行/适用比较通过、无丢弃，无2GiB超限。所有 median native/reference RSS 比低于1.20，最大完整 worker peak 为152.22MiB。数据和完整60-case表见<a class="reference internal" href="radiomics-benchmark-v2-results.html"><span class="std std-doc">结果分析</span></a>与<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/artifact-index.json">可核查归档</a>。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>案例</p></th>
+<th class="head text-right"><p>ROI/call</p></th>
+<th class="head text-right"><p>Python median ms</p></th>
+<th class="head text-right"><p>Rust median ms</p></th>
+<th class="head text-right"><p>Rust IQR ms</p></th>
+<th class="head text-right"><p>Rust经验p95 ms</p></th>
+<th class="head text-right"><p>Python/Rust</p></th>
+<th class="head"><p>判定</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>L2 合成2D32×24/gray8</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>47.754</p></td>
+<td class="text-right"><p>24.877</p></td>
+<td class="text-right"><p>0.236</p></td>
+<td class="text-right"><p>25.643</p></td>
+<td class="text-right"><p>1.920×</p></td>
+<td><p>工程线及1.5×目标通过</p></td>
+</tr>
+<tr class="row-odd"><td><p>L2 合成2D48×40/gray32</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>67.714</p></td>
+<td class="text-right"><p>47.022</p></td>
+<td class="text-right"><p>0.451</p></td>
+<td class="text-right"><p>47.998</p></td>
+<td class="text-right"><p>1.440×</p></td>
+<td><p>工程线通过；目标未达</p></td>
+</tr>
+<tr class="row-even"><td><p>L2 合成3D16×14×12/gray8</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>58.811</p></td>
+<td class="text-right"><p>59.718</p></td>
+<td class="text-right"><p>0.154</p></td>
+<td class="text-right"><p>61.860</p></td>
+<td class="text-right"><p>0.985×</p></td>
+<td><p>近似持平；工程线通过，目标未达</p></td>
+</tr>
+<tr class="row-odd"><td><p>L2 合成3D24×20×16/gray32</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>107.711</p></td>
+<td class="text-right"><p>166.168</p></td>
+<td class="text-right"><p>2.836</p></td>
+<td class="text-right"><p>170.146</p></td>
+<td class="text-right"><p>0.648×</p></td>
+<td><p>runtime≈1.543×，工程线/目标未达</p></td>
+</tr>
+<tr class="row-even"><td><p>L2 IBSI digital phantom</p></td>
+<td class="text-right"><p>16</p></td>
+<td class="text-right"><p>42.366</p></td>
+<td class="text-right"><p>13.444</p></td>
+<td class="text-right"><p>0.191</p></td>
+<td class="text-right"><p>13.675</p></td>
+<td class="text-right"><p>3.151×</p></td>
+<td><p>限定范围目标通过</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>L2 公开 CT，tight bbox100×99×26</strong></p></td>
+<td class="text-right"><p><strong>1</strong></p></td>
+<td class="text-right"><p><strong>157.666</strong></p></td>
+<td class="text-right"><p><strong>394.163</strong></p></td>
+<td class="text-right"><p><strong>3.494</strong></p></td>
+<td class="text-right"><p><strong>397.686</strong></p></td>
+<td class="text-right"><p><strong>0.400×</strong></p></td>
+<td><p><strong>Rust慢2.50×，工程线/目标未达</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>L3 合成2D读取/clip/crop/导出</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>64.200</p></td>
+<td class="text-right"><p>8.315</p></td>
+<td class="text-right"><p>0.113</p></td>
+<td class="text-right"><p>8.652</p></td>
+<td class="text-right"><p>7.721×</p></td>
+<td><p>仅该小型工作流目标通过</p></td>
+</tr>
+<tr class="row-odd"><td><p>L3 合成3D读取/clip/crop/导出</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>94.868</p></td>
+<td class="text-right"><p>29.617</p></td>
+<td class="text-right"><p>0.530</p></td>
+<td class="text-right"><p>30.605</p></td>
+<td class="text-right"><p>3.203×</p></td>
+<td><p>仅该工作流目标通过</p></td>
+</tr>
+<tr class="row-even"><td><p>L3 phantom读取/clip/crop/导出</p></td>
+<td class="text-right"><p>8</p></td>
+<td class="text-right"><p>59.485</p></td>
+<td class="text-right"><p>7.893</p></td>
+<td class="text-right"><p>0.234</p></td>
+<td class="text-right"><p>8.059</p></td>
+<td class="text-right"><p>7.536×</p></td>
+<td><p>限定范围目标通过</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>L3 公开 CT 原NIfTI→crop0→导出</strong></p></td>
+<td class="text-right"><p><strong>1</strong></p></td>
+<td class="text-right"><p><strong>225.082</strong></p></td>
+<td class="text-right"><p><strong>183.807</strong></p></td>
+<td class="text-right"><p><strong>0.700</strong></p></td>
+<td class="text-right"><p><strong>184.903</strong></p></td>
+<td class="text-right"><p><strong>1.225×</strong></p></td>
+<td><p><strong>数值正确；1.5×目标未达</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>公开 CT 使用原始整数值 HU 的无损 f64 表示、FBS25、无 clip/normalize/resegment/resample，形态与强度 ROI 同为125256 voxel；crop 更新 affine，bbox min 在裁剪后为0，世界坐标/体积含义保持。CT 数字不能被 toy7.7× 掩盖。合成 L2/L3 的声明处理不同，不宜把两者差异直接分解为“转换开销占比”。</p>
+<p>L1 多项 public-array family 调用慢于参考；它们包含边界转换/验证，不等于内部数值内核的独占算子时间。L4 小型重复输入的1000 ROI/4 workers 最大观测原生速率约为2654 ROI/s（8³/gray8）和1934 ROI/s（12³/gray32）；该速率不代表真实 CT 队列。相应 native4/1 扩展为1.373×、2.210×，并非线性扩展。缓存 hit 单独7次 median6.789ms、每次真实 hits8/misses0；population median36.810ms保留，不与 uncached Python 混作加速比。</p>
+</section>
+<section id="id15">
+<h3>6.2 机器学习、统计与病理实测<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<p>另两套预声明工作流共224/224条观测完成并输出匹配，16个case/state均有双方七次
+记录。最大原生/参考耗时比为1.019362（回归热运行），最大RSS比为1.059970，
+分别满足1.10与1.20工程目标；回归热运行按近似同速解释。最高真实worker峰值
+为201.94 MiB。完整方法、原始记录、阶段表和绑定见
+<a class="reference internal" href="learning-pathology-benchmark-v2-results.html"><span class="std std-doc">独立ML/Pathology报告</span></a>。</p>
+<p>这组模型性能测量设置 <code class="docutils literal notranslate"><span class="pre">CI=None</span></code>，不包含预测 bootstrap/DeLong 置信区间；
+临床次级工作量包含96条样本记录，基线有效95条、完整病例推断92条，不能
+当成96名独立患者。病理合成输入含12名研究患者及一个全排除空结果哨兵，
+共25张切片、600个tile。病理前端行测量QC、颜色、对齐聚合、真实tile覆盖图
+与导出；患者模型训练归入独立ML行，完整场景另作诊断，避免混淆计时范围。</p>
+</section>
+<section id="machine-learning-statistics">
+<h3>Machine Learning &amp; Statistics<a class="headerlink" href="#machine-learning-statistics" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Workload</p></th>
+<th class="head"><p>State</p></th>
+<th class="head text-right"><p>Python median / IQR / p95 ms</p></th>
+<th class="head text-right"><p>Native median / IQR / p95 ms</p></th>
+<th class="head text-right"><p>Python/native</p></th>
+<th class="head text-right"><p>RSS Python / Native MiB</p></th>
+<th class="head text-right"><p>Native/reference RSS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Binary LR</p></td>
+<td><p>warm</p></td>
+<td class="text-right"><p>70.595 / 9.590 / 79.662</p></td>
+<td class="text-right"><p>43.261 / 11.171 / 56.348</p></td>
+<td class="text-right"><p>1.632×</p></td>
+<td class="text-right"><p>110.31 / 63.71</p></td>
+<td class="text-right"><p>0.578×</p></td>
+</tr>
+<tr class="row-odd"><td><p>Binary LR</p></td>
+<td><p>cold process</p></td>
+<td class="text-right"><p>867.617 / 64.551 / 982.627</p></td>
+<td class="text-right"><p>439.036 / 14.463 / 465.355</p></td>
+<td class="text-right"><p>1.976×</p></td>
+<td class="text-right"><p>109.35 / 63.07</p></td>
+<td class="text-right"><p>0.577×</p></td>
+</tr>
+<tr class="row-even"><td><p>Multiclass softmax</p></td>
+<td><p>warm</p></td>
+<td class="text-right"><p>97.713 / 4.052 / 106.427</p></td>
+<td class="text-right"><p>46.795 / 2.035 / 52.148</p></td>
+<td class="text-right"><p>2.088×</p></td>
+<td class="text-right"><p>110.61 / 64.21</p></td>
+<td class="text-right"><p>0.581×</p></td>
+</tr>
+<tr class="row-odd"><td><p>Multiclass softmax</p></td>
+<td><p>cold process</p></td>
+<td class="text-right"><p>904.804 / 45.048 / 960.578</p></td>
+<td class="text-right"><p>436.395 / 6.557 / 459.113</p></td>
+<td class="text-right"><p>2.073×</p></td>
+<td class="text-right"><p>109.61 / 63.27</p></td>
+<td class="text-right"><p>0.577×</p></td>
+</tr>
+<tr class="row-even"><td><p>Ridge regression</p></td>
+<td><p>warm</p></td>
+<td class="text-right"><p>38.245 / 1.483 / 39.190</p></td>
+<td class="text-right"><p>38.985 / 2.555 / 43.612</p></td>
+<td class="text-right"><p>0.981×</p></td>
+<td class="text-right"><p>110.05 / 63.84</p></td>
+<td class="text-right"><p>0.580×</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ridge regression</p></td>
+<td><p>cold process</p></td>
+<td class="text-right"><p>856.173 / 50.394 / 896.802</p></td>
+<td class="text-right"><p>438.519 / 29.557 / 468.126</p></td>
+<td class="text-right"><p>1.952×</p></td>
+<td class="text-right"><p>109.29 / 62.66</p></td>
+<td class="text-right"><p>0.573×</p></td>
+</tr>
+<tr class="row-even"><td><p>Clinical secondary</p></td>
+<td><p>warm</p></td>
+<td class="text-right"><p>21.723 / 0.757 / 23.261</p></td>
+<td class="text-right"><p>10.145 / 0.309 / 10.734</p></td>
+<td class="text-right"><p>2.141×</p></td>
+<td class="text-right"><p>121.36 / 58.47</p></td>
+<td class="text-right"><p>0.482×</p></td>
+</tr>
+<tr class="row-odd"><td><p>Clinical secondary</p></td>
+<td><p>cold process</p></td>
+<td class="text-right"><p>1035.110 / 29.436 / 1081.472</p></td>
+<td class="text-right"><p>414.289 / 29.459 / 442.562</p></td>
+<td class="text-right"><p>2.499×</p></td>
+<td class="text-right"><p>121.11 / 58.30</p></td>
+<td class="text-right"><p>0.481×</p></td>
+</tr>
+<tr class="row-even"><td><p>Pathology patient LR</p></td>
+<td><p>warm</p></td>
+<td class="text-right"><p>42.202 / 0.785 / 42.616</p></td>
+<td class="text-right"><p>21.190 / 0.805 / 21.503</p></td>
+<td class="text-right"><p>1.992×</p></td>
+<td class="text-right"><p>108.54 / 61.08</p></td>
+<td class="text-right"><p>0.563×</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pathology patient LR</p></td>
+<td><p>cold process</p></td>
+<td class="text-right"><p>872.388 / 30.888 / 946.202</p></td>
+<td class="text-right"><p>418.875 / 23.255 / 441.688</p></td>
+<td class="text-right"><p>2.083×</p></td>
+<td class="text-right"><p>108.48 / 60.67</p></td>
+<td class="text-right"><p>0.559×</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="pathology">
+<h3>Pathology<a class="headerlink" href="#pathology" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Workload</p></th>
+<th class="head"><p>State</p></th>
+<th class="head text-right"><p>Python median / IQR / p95 ms</p></th>
+<th class="head text-right"><p>Native median / IQR / p95 ms</p></th>
+<th class="head text-right"><p>Python/native</p></th>
+<th class="head text-right"><p>RSS Python / Native MiB</p></th>
+<th class="head text-right"><p>Native/reference RSS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Decoded pathology front end</p></td>
+<td><p>warm</p></td>
+<td class="text-right"><p>10514.620 / 1121.177 / 10636.501</p></td>
+<td class="text-right"><p>2327.506 / 35.157 / 2356.541</p></td>
+<td class="text-right"><p>4.518×</p></td>
+<td class="text-right"><p>147.71 / 155.14</p></td>
+<td class="text-right"><p>1.050×</p></td>
+</tr>
+<tr class="row-odd"><td><p>Decoded pathology front end</p></td>
+<td><p>cold process</p></td>
+<td class="text-right"><p>9158.672 / 106.327 / 9245.997</p></td>
+<td class="text-right"><p>3175.587 / 27.828 / 3207.222</p></td>
+<td class="text-right"><p>2.884×</p></td>
+<td class="text-right"><p>103.83 / 110.05</p></td>
+<td class="text-right"><p>1.060×</p></td>
+</tr>
+<tr class="row-even"><td><p>PNG pathology front end</p></td>
+<td><p>warm</p></td>
+<td class="text-right"><p>8392.431 / 1173.131 / 10638.696</p></td>
+<td class="text-right"><p>2233.910 / 17.215 / 2254.160</p></td>
+<td class="text-right"><p>3.757×</p></td>
+<td class="text-right"><p>149.89 / 155.06</p></td>
+<td class="text-right"><p>1.035×</p></td>
+</tr>
+<tr class="row-odd"><td><p>PNG pathology front end</p></td>
+<td><p>cold process</p></td>
+<td class="text-right"><p>9300.275 / 147.515 / 9514.168</p></td>
+<td class="text-right"><p>3073.899 / 37.426 / 3143.689</p></td>
+<td class="text-right"><p>3.026×</p></td>
+<td class="text-right"><p>106.18 / 110.35</p></td>
+<td class="text-right"><p>1.039×</p></td>
+</tr>
+<tr class="row-even"><td><p>Full-scene diagnostic</p></td>
+<td><p>warm</p></td>
+<td class="text-right"><p>8446.231 / 120.408 / 9116.358</p></td>
+<td class="text-right"><p>2286.582 / 39.256 / 2604.623</p></td>
+<td class="text-right"><p>3.694×</p></td>
+<td class="text-right"><p>201.55 / 157.62</p></td>
+<td class="text-right"><p>0.782×</p></td>
+</tr>
+<tr class="row-odd"><td><p>Full-scene diagnostic</p></td>
+<td><p>cold process</p></td>
+<td class="text-right"><p>9650.902 / 85.121 / 9805.082</p></td>
+<td class="text-right"><p>3081.062 / 26.673 / 3110.159</p></td>
+<td class="text-right"><p>3.132×</p></td>
+<td class="text-right"><p>157.68 / 113.12</p></td>
+<td class="text-right"><p>0.717×</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="ci">
+<h2>7. 部署、互操作与 CI 证据<a class="headerlink" href="#ci" title="Link to this heading">#</a></h2>
+<p>Windows 不可变 wheel 的原生环境测试刻意不安装 sklearn、SciPy、statsmodels、PyRadiomics、SimpleITK、joblib、ov/WSIData；用于性能测量的旧v2快照通过64项 installed-native-only 检查，最终运行代码的v4快照通过71项，基础教程 CLI/Python一致性检查通过。CLI 子进程测试在空 executable search path 运行；<code class="docutils literal notranslate"><span class="pre">.rad</span></code> 跨进程加载在相同 f64 输入上预测一致。这些证据不意味着所有平台/依赖版本都已验证。</p>
+<p>实际 optional 容器验证在独立 Windows CPython3.11.15、AnnData0.12.6、SpatialData0.7.3、WSIData0.12.0 pinned revision<code class="docutils literal notranslate"><span class="pre">0f93c4d8...</span></code> 上通过有限 smoke：真实 container、已解码 Image2DReader metadata、H5AD 往返、显式 IDs、历史快照和未知 MPP 行为。该环境未安装 Torch/vendor reader；真实测试不建立通用 WSI 解码、全部 WSIData 依赖、backed/lazy/sparse embedding 的支持结论。<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/optional-interop-acceptance.md">具体环境与范围</a></p>
+<p>GitHub Actions 的实际已核实证据为 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/actions/runs/43602824324">run43602824324</a>，commit<code class="docutils literal notranslate"><span class="pre">9732b3a4c9991343d9597bf27dcbe5f7be02b597</span></code> 的 <strong>9 jobs success</strong>。其中 Linux Ubuntu24 无 Python、无容器网络环境执行 extract/train/load/predict/evaluate；工作流另配置 Rust tests/Clippy、Windows/Linux wheel/native-only、Python参考和 image 检查。应将“已配置矩阵”与“这个 commit 的实际 job通过”分别理解。</p>
+<p>该轮最终运行代码版本 <code class="docutils literal notranslate"><span class="pre">76808bb468f44a586ebf12db5a9be175b40b010d</span></code> 的
+<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/actions/runs/43615315617">CI run 43615315617</a>
+也已实核九个作业全部成功，覆盖单位元数据、TableReader、Python center
+holdout/apply cohorts/by-center evaluation、身份边界修复与 CLI 分中心评价。
+在该历史验收截点，开发分支相对此提交的 <code class="docutils literal notranslate"><span class="pre">crates/</span></code>、<code class="docutils literal notranslate"><span class="pre">src/</span></code>、<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> 没有差异；
+不可变 v4 wheel 当时通过71项已安装原生环境检查。后续构造器、绘图及诊断改动由
+<a class="reference internal" href="sample-constructor-optimization.html"><span class="std std-doc">独立候选构建与对照</span></a>和相应PR最新CI另行验证，
+不能把旧v4安装记录读成后续源码完全未变。正式 PyPI/crates.io 发布、版本号变更和 ov 源码接入未自动执行。</p>
+</section>
+<section id="id16">
+<h2>8. 限制与后续工作<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<section id="id17">
+<h3>独立部署端点测量补充<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
+<p>L5 在不可变 v3 构建上单独测量两个新进程端点，每个固定七次、无预热，
+没有计算不同工作量之间的速度比。CLI <code class="docutils literal notranslate"><span class="pre">--version</span></code> 的 median 为 3.611 ms、
+IQR 为 0.567 ms、经验 p95 为 48.817 ms；首个 67.938 ms 慢样本被保留。
+Python 隔离模式导入并查询 <code class="docutils literal notranslate"><span class="pre">backend_info</span></code> 的 median 为 45.052 ms、IQR 为
+3.447 ms、经验 p95 为 51.142 ms。这是端点启动证据，不是图像或模型计算耗时。</p>
+<p>固定 wheel 为 3,723,631 压缩字节，CLI 为 9,058,304 字节。一个全新环境中的
+单次离线 <code class="docutils literal notranslate"><span class="pre">--no-deps</span></code> wheel 包体安装耗时 0.762398 s（n=1）；它不包含基础
+Python、NumPy/Pandas/Matplotlib、依赖解析、下载或环境创建成本。启动后项目
+自身 59 个普通文件合计 10,074,196 逻辑字节，不能解释为磁盘簇占用或全部依赖
+体积。原始记录保存在 <code class="docutils literal notranslate"><span class="pre">$WORKDIR/benchmark-v2/deployment-v3-1/</span></code>。
+这补充部署成本的有限证据，不改变三套算法/工作流性能的独立评价。</p>
+<p>主要性能限制是 prepared-array 入口，尤其公开 CT2.50×慢与高灰度合成3D的 runtime 回归；CT完整流程1.225×也低于目标。代码可见数组/图像/mask 在多个 JSON/PyO3 请求中重复转换与验证；它是应优先 profiling 的开销假设，尚无独立 stage/allocator 数据能量化归因。下一步应在同一固定案例上分解转换、验证、分箱、矩阵/标量和输出，再考虑共用连续缓冲区或原生 owned image 对象。改变软件后以新不可变快照重跑相同网格，保留本次结果，不改 seed/数据/次数/容差/目标。</p>
+<p>当前不覆盖 DICOM/RTSTRUCT、配准优化器、N4、通用 WSI/KFB、复杂染色分离、mesh表面积/球形度、LoG/Wavelet/LBP、2.5D、局部纹理图、SLIC/GPU生境、非标准拓扑/分形/ITH、ComBat、复杂生存分析、NRI/IDI、深度训练、自动分割、MIL、GUI 和论文自动生成。外部已处理结果可以显式输入，但不因此成为本包原生算法。</p>
+<p>验证数据以手算、小矩阵、公开 phantom/一例公开 CT及自建表格/patch为主；不代表多疾病、多设备、多中心临床泛化。森林行为检查是三个任务各一个固定数据集/五个种子，不能写成每任务多种外部数据均验证。七次重复、未独占控制的 OS 后台负载/文件缓存、缺乏 allocator/独占 stage 数据，以及尚未测量的完整依赖安装成本，均限制更广泛性能声明。L5 已测范围限于上文两个启动端点和一次包体安装，详见<a class="reference internal" href="deployment-benchmark-v2-results.html"><span class="std std-doc">独立部署报告</span></a>。</p>
+</section>
+</section>
+<section id="id18">
+<h2>9. 复现与审查入口<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<p>以下命令使用新输出目录；具体平台构建产物以不可变 build receipt 为准，参考重建只生成候选，不能覆盖已冻结 Golden。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 源码与原生回归</span>
+cargo<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-p<span class="w"> </span>ov-radiomics-core<span class="w"> </span>-p<span class="w"> </span>ov-radiomics-cli<span class="w"> </span>--locked
+cargo<span class="w"> </span>clippy<span class="w"> </span>--workspace<span class="w"> </span>--all-targets<span class="w"> </span>--locked<span class="w"> </span>--<span class="w"> </span>-D<span class="w"> </span>warnings
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>-q
+
+<span class="c1"># 构建原生 CLI/wheel，不含正式发布动作</span>
+python<span class="w"> </span>tools/package_native.py<span class="w"> </span>--output<span class="w"> </span>/fresh/package-assets-receipt
+cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>-p<span class="w"> </span>ov-radiomics-cli<span class="w"> </span>--locked
+python<span class="w"> </span>-m<span class="w"> </span>maturin<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--locked<span class="w"> </span>--out<span class="w"> </span>/fresh/wheels
+
+<span class="c1"># 六类教程（按当前主仓库文件名）</span>
+python<span class="w"> </span>examples/native/01_extract.py<span class="w"> </span>--output<span class="w"> </span>/fresh/tutorial01
+python<span class="w"> </span>examples/native/02_image_clinical_binary.py<span class="w"> </span>--output<span class="w"> </span>/fresh/tutorial02
+python<span class="w"> </span>examples/native/03_multiclass_regression.py<span class="w"> </span>--output<span class="w"> </span>/fresh/tutorial03
+python<span class="w"> </span>examples/native/04_regions_delta_habitat.py<span class="w"> </span>--output<span class="w"> </span>/fresh/tutorial04
+python<span class="w"> </span>examples/native/05_patch_patient.py<span class="w"> </span>--output<span class="w"> </span>/fresh/tutorial05
+python<span class="w"> </span>examples/native/06_embedding_overlay.py<span class="w"> </span>--output<span class="w"> </span>/fresh/tutorial06
+</pre></div>
+</div>
+<p>性能复现先按<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/benchmark-radiomics-runner.md">运行器说明</a>准备固定 corpus，再给出 exact approved base/CT/dimension SHA、两个独立解释器、固定 wheel/build manifest 运行一次完整网格。测量后审查 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/artifact-index.json">artifact index</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/report-redacted.json">60-case JSON</a> 和无损 gzip raw；不能用内部 kernel 的计时替代公开 API 完整流程。</p>
+</section>
+<section id="id19">
+<h2>参考文献与定义来源<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>van Griethuysen JJM, Fedorov A, Parmar C, et al. Computational Radiomics System to Decode the Radiographic Phenotype. <em>Cancer Research</em>. 2017;77(21):e104–e107. <a class="reference external" href="https://doi.org/10.1158/0008-5472.CAN-17-0339">原始论文</a>；<a class="reference external" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5672828/">作者开放全文</a>。</p></li>
+<li><p>Zwanenburg A, Vallières M, Abdalah MA, et al. The Image Biomarker Standardization Initiative: Standardized Quantitative Radiomics for High-Throughput Image-based Phenotyping. <em>Radiology</em>. 2020;295(2):328–338. <a class="reference external" href="https://doi.org/10.1148/radiol.2020191145">原始论文</a>；<a class="reference external" href="https://ibsi.readthedocs.io/en/master/05_Reference_data_sets.html">IBSI参考数据文档</a>。</p></li>
+<li><p>PyRadiomics. <a class="reference external" href="https://github.com/AIM-Harvard/pyradiomics/tree/v3.0.1">公开3.0.1源码</a>；<a class="reference external" href="https://pyradiomics.readthedocs.io/en/stable/faq.html">与IBSI的已记录差异</a>。本项目实际版本/源码/编译文件由冻结 manifest验证，链接的stable文档仅解释差异背景。</p></li>
+<li><p>Pedregosa F, Varoquaux G, Gramfort A, et al. Scikit-learn: Machine Learning in Python. <em>Journal of Machine Learning Research</em>. 2011;12:2825–2830. <a class="reference external" href="https://www.jmlr.org/papers/v12/pedregosa11a.html">原始论文</a>。本项目数值参考固定实际1.0.2，而非自动使用最新版默认值。</p></li>
+<li><p>Virtanen P, Gommers R, Oliphant TE, et al. SciPy1.0: fundamental algorithms for scientific computing in Python. <em>Nature Methods</em>. 2020;17:261–272. <a class="reference external" href="https://doi.org/10.1038/s41592-019-0686-2">原始论文</a>。统计 Golden 固定实际依赖与有效参数。</p></li>
+<li><p><a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/golden/python_golden_v1/manifest.json">项目Golden manifest</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/golden-ibsi-digital-report.json">双轨IBSI实际报告</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/public-ct-native-acceptance.md">公开CT协议与验收</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/benchmark-v2.md">Benchmark v2规范</a>。这些可执行/机器可读证据限定本文的本项目结果，不能由一般方法论文替代。</p></li>
+</ol>
+<p>已归档全部Radiomics854条与ML/Pathology224条观测，保留各自源码、环境及批准计划。
+Windows启动器下原父PID的即时内存监督覆盖不足；真实worker自报的post-transport
+HWM仍有效，已观测样本均通过预算检查，但不由此推断即时预算终止已经验证。
+<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/owned-process-tree-monitoring.md">后续进程树helper</a>单独测试，未接入或替换原测量。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../development/methods.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">方法、契约与技术报告</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="native-boundaries.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Native capability boundaries</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">摘要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1. 动机与研究问题</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2. 系统架构与数据契约</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.1 一个核心、两类入口</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.2 图像几何与独立运行边界</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3. 算法范围与数值语义</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.1 明确的影像特征子集</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.2 三任务预处理、稀疏筛选和模型</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.3 评价、研究组合和轻量病理</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">4. 双轨正确性与泄漏控制</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility-conformance">4.1 Compatibility 与 Conformance 独立</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.2 患者与预测来源</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-v2">5. Benchmark v2 方法</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">5.1 三套独立性能套件</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5.2 固定工作量、资源和统计</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">6. 实测结果与解释</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#radiomics">6.1 Radiomics 完整观测</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">6.2 机器学习、统计与病理实测</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-statistics">Machine Learning &amp; Statistics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pathology">Pathology</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci">7. 部署、互操作与 CI 证据</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">8. 限制与后续工作</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">独立部署端点测量补充</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">9. 复现与审查入口</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">参考文献与定义来源</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/technical-report.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

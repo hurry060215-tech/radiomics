@@ -1,0 +1,6 @@
+﻿ov\_radiomics.train\_models
+===========================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: train_models

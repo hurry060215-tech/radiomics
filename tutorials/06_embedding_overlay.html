@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Embedding 对齐与局部覆盖图 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/06_embedding_overlay';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/tutorials/06_embedding_overlay.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="真实数据：CT 提取与表格建模" href="real-data.html" />
+    <link rel="prev" title="病理 patch 到患者建模" href="05_patch_patient.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="radiomics.html">影像组学</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_extract.html">NIfTI 与 ROI 基础提取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_regions_delta_habitat.html">多区域、Delta 与生境</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="modeling.html">建模与统计</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_clinical_binary.html">影像与临床二分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_multiclass_regression.html">多分类与连续值回归</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pathology.html">轻量病理</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="05_patch_patient.html">病理 patch 到患者建模</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Embedding 对齐与局部覆盖图</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="real-data.html">真实数据路线</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="07_public_ct.html">07 · 真实公开CT：从文件与ROI到特征表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_public_tabular.html">08 · 真实公开表格：固定留出、原生二分类与无标签预测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets.html">数据与许可</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">教程：按任务选择路线</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="pathology.html" class="nav-link">轻量病理：Patch、聚合与坐标图</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Embedding 对齐与局部覆盖图</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="embedding">
+<h1>Embedding 对齐与局部覆盖图<a class="headerlink" href="#embedding" title="Link to this heading">#</a></h1>
+<p>按 <strong>Shift+Enter</strong> 从上到下逐单元运行。变量保留在当前内核中；如果修改上游参数，请重新运行其后的单元。</p>
+<p>本教程使用固定合成数据，演示软件流程，不提供临床效能结论。需要完整仓库和对应原生安装包；实际源码版本和原生扩展身份请查看本次执行收据。</p>
+<section id="id1">
+<h2>1. 环境与独立输出目录<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>确认后端为 Rust。后续每步都可以检查中间对象；示例数据生成辅助函数只负责小型输入构造。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span>
+<span class="c1"># 从 Notebook 所在目录或仓库根目录启动均可。</span>
+<span class="n">REPO</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_REPO_ROOT</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="k">if</span> <span class="s1">'TUTORIAL_REPO_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="nb">next</span><span class="p">((</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span> <span class="o">*</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="s1">'examples/native/_shared.py'</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">REPO</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'请先下载完整仓库，并在仓库内启动 Jupyter。'</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">REPO</span><span class="o">/</span><span class="s1">'examples/native'</span><span class="p">))</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">())</span>
+<span class="c1"># 每次完整运行使用新目录，避免覆盖已有结果。</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_RUN_ROOT</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'TUTORIAL_RUN_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="n">Path</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">'radiomics-06_embedding_overlay-'</span><span class="p">))</span>
+<span class="k">if</span> <span class="s1">'TUTORIAL_RUN_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">():</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">output</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'输出目录:'</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span><span class="o">,</span><span class="w"> </span><span class="nn">importlib.metadata</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">platform</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'interpreter'</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s1">'python'</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">(),</span>
+           <span class="s1">'package_source'</span><span class="p">:</span> <span class="n">rad</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="s1">'backend'</span><span class="p">:</span> <span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">(),</span>
+           <span class="s1">'packages'</span><span class="p">:</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span>
+                        <span class="p">(</span><span class="s1">'ov-radiomics'</span><span class="p">,</span> <span class="s1">'numpy'</span><span class="p">,</span> <span class="s1">'pandas'</span><span class="p">,</span> <span class="s1">'matplotlib'</span><span class="p">,</span> <span class="s1">'ipykernel'</span><span class="p">)}}</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ov_radiomics._backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">try_native</span>
+<span class="n">extension</span> <span class="o">=</span> <span class="n">try_native</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">extension</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'本教程需要真实 Rust 原生扩展。'</span><span class="p">)</span>
+<span class="n">runtime</span><span class="p">[</span><span class="s1">'native_path'</span><span class="p">]</span> <span class="o">=</span> <span class="n">extension</span><span class="o">.</span><span class="vm">__file__</span>
+<span class="n">runtime</span><span class="p">[</span><span class="s1">'native_sha256'</span><span class="p">]</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">extension</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="n">runtime</span><span class="p">[</span><span class="s1">'package_python_sha256'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span><span class="o">.</span><span class="n">as_posix</span><span class="p">():</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+                                  <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s1">'*.py'</span><span class="p">))}</span>
+<span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="s1">'tutorial-runtime.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">runtime</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+ 
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">_shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">output_arguments</span><span class="p">,</span> <span class="n">task_data</span><span class="p">,</span> <span class="n">write_json</span><span class="p">,</span> <span class="n">provenance</span><span class="p">,</span> <span class="n">plot_small_overlay</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'metrics_backend': 'rust', 'rust_core_version': '0.1.0'}
+输出目录: D:\radiomics-tutorial-validation\six-notebooks-final\06_embedding_overlay\artifacts
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>2. 准备数据与保存中间结果<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">classes</span><span class="p">)</span> <span class="o">=</span> <span class="n">task_data</span><span class="p">(</span><span class="s1">'binary'</span><span class="p">)</span>
+<span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">parents</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">status</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>3. 准备数据与保存中间结果<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">slide</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">'ID'</span><span class="p">]</span> <span class="o">+</span> <span class="s1">'-slide'</span>
+    <span class="n">parents</span><span class="p">[</span><span class="n">slide</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">patient_id</span>
+    <span class="n">status</span><span class="p">[</span><span class="n">slide</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'provided'</span>
+    <span class="k">for</span> <span class="n">position</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">tile</span> <span class="o">=</span> <span class="n">slide</span> <span class="o">+</span> <span class="s1">'-tile'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">patient_id</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">patient_id</span><span class="p">,</span> <span class="n">slide_id</span><span class="o">=</span><span class="n">slide</span><span class="p">,</span> <span class="n">tile_id</span><span class="o">=</span><span class="n">tile</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">position</span> <span class="o">*</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">width0</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">height0</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">patch_width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">patch_height</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">valid_pixels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">mpp_x_um</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mpp_y_um</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">'synthetic external embedding; source images already decoded elsewhere'</span><span class="p">,</span> <span class="n">qc</span><span class="o">=</span><span class="p">{},</span> <span class="n">exclusion_reasons</span><span class="o">=</span><span class="p">[]))</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">+</span> <span class="n">position</span> <span class="o">*</span> <span class="mf">0.01</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">features</span><span class="p">])</span>
+        <span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">tile</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">patient_id</span><span class="p">,</span> <span class="n">slide_id</span><span class="o">=</span><span class="n">slide</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">target</span><span class="p">))</span>
+<span class="n">permutation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">records</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">'tile_id'</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">permutation</span><span class="p">]</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">)[</span><span class="n">permutation</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h2>4. 准备数据与保存中间结果<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'embeddings.npy'</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span>
+<span class="n">write_json</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'embedding-tile-ids.json'</span><span class="p">,</span> <span class="n">ids</span><span class="p">)</span>
+<span class="n">bare</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">tiles</span><span class="o">=</span><span class="n">records</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[],</span> <span class="n">slide_patients</span><span class="o">=</span><span class="n">parents</span><span class="p">,</span> <span class="n">slide_status</span><span class="o">=</span><span class="n">status</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tile-id">
+<h2>5. 按 tile ID 绑定特征<a class="headerlink" href="#tile-id" title="Link to this heading">#</a></h2>
+<p>输入必须明确 tile ID、患者/切片层级及坐标。行数相同不能证明 embedding 对齐。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">interop</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">tile_ids</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span> <span class="n">tiles</span><span class="o">=</span><span class="n">bare</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">features</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+<span class="n">write_json</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'tiles.json'</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+<span class="n">write_json</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'adapter-provenance.json'</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">provenance</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tile">
+<h2>6. 从 tile 聚合到患者<a class="headerlink" href="#tile" title="Link to this heading">#</a></h2>
+<p>默认先 tile→slide，再切片等权→patient。查看患者层特征名和身份信息。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aggregate</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">pathology</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">patient_stats</span><span class="o">=</span><span class="p">[</span><span class="s1">'mean'</span><span class="p">])</span>
+<span class="n">aggregate</span><span class="o">.</span><span class="n">patient_features</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'patient-features.parquet'</span><span class="p">)</span>
+<span class="n">aggregate</span><span class="o">.</span><span class="n">slide_features</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'slide-features.csv'</span><span class="p">)</span>
+<span class="n">write_json</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'aggregation.json'</span><span class="p">,</span> <span class="n">aggregate</span><span class="o">.</span><span class="n">report</span><span class="p">)</span>
+<span class="n">outcomes</span> <span class="o">=</span> <span class="n">source</span><span class="p">[[</span><span class="s1">'patient_id'</span><span class="p">,</span> <span class="s1">'group'</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">'patient_id'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h2>7. 准备患者级建模表<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>用患者 ID 做一对一结局连接；明确处理无结局或空结果，不静默补零。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">patients</span> <span class="o">=</span> <span class="n">aggregate</span><span class="o">.</span><span class="n">patient_features</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">outcomes</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'patient_id'</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="s1">'one_to_one'</span><span class="p">)</span>
+<span class="n">patient_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'patient_mean(slide_tile_mean('</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">'))'</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">features</span><span class="p">]</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">patients</span><span class="p">,</span> <span class="s1">'head'</span><span class="p">):</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">patients</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>patient_mean(slide_tile_mean(signal_a))</th>
+      <th>patient_mean(slide_tile_std(signal_a))</th>
+      <th>patient_mean(slide_tile_max(signal_a))</th>
+      <th>patient_mean(slide_tile_q25(signal_a))</th>
+      <th>patient_mean(slide_tile_q50(signal_a))</th>
+      <th>patient_mean(slide_tile_q75(signal_a))</th>
+      <th>patient_mean(slide_tile_mean(signal_b))</th>
+      <th>patient_mean(slide_tile_std(signal_b))</th>
+      <th>patient_mean(slide_tile_max(signal_b))</th>
+      <th>...</th>
+      <th>patient_mean(slide_tile_q75(noise_a))</th>
+      <th>patient_mean(slide_tile_mean(noise_b))</th>
+      <th>patient_mean(slide_tile_std(noise_b))</th>
+      <th>patient_mean(slide_tile_max(noise_b))</th>
+      <th>patient_mean(slide_tile_q25(noise_b))</th>
+      <th>patient_mean(slide_tile_q50(noise_b))</th>
+      <th>patient_mean(slide_tile_q75(noise_b))</th>
+      <th>patient_id</th>
+      <th>group</th>
+      <th>target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>binary-P000</td>
+      <td>1.104270</td>
+      <td>0.005</td>
+      <td>1.109270</td>
+      <td>1.101770</td>
+      <td>1.104270</td>
+      <td>1.106770</td>
+      <td>0.405416</td>
+      <td>0.005</td>
+      <td>0.410416</td>
+      <td>...</td>
+      <td>1.077444</td>
+      <td>0.657304</td>
+      <td>0.005</td>
+      <td>0.662304</td>
+      <td>0.654804</td>
+      <td>0.657304</td>
+      <td>0.659804</td>
+      <td>binary-P000</td>
+      <td>train</td>
+      <td>negative</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>binary-P001</td>
+      <td>0.477658</td>
+      <td>0.005</td>
+      <td>0.482658</td>
+      <td>0.475158</td>
+      <td>0.477658</td>
+      <td>0.480158</td>
+      <td>0.148210</td>
+      <td>0.005</td>
+      <td>0.153210</td>
+      <td>...</td>
+      <td>-0.813034</td>
+      <td>0.368028</td>
+      <td>0.005</td>
+      <td>0.373028</td>
+      <td>0.365528</td>
+      <td>0.368028</td>
+      <td>0.370528</td>
+      <td>binary-P001</td>
+      <td>train</td>
+      <td>positive</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>binary-P002</td>
+      <td>-1.426737</td>
+      <td>0.005</td>
+      <td>-1.421737</td>
+      <td>-1.429237</td>
+      <td>-1.426737</td>
+      <td>-1.424237</td>
+      <td>0.539176</td>
+      <td>0.005</td>
+      <td>0.544176</td>
+      <td>...</td>
+      <td>-0.464453</td>
+      <td>1.756900</td>
+      <td>0.005</td>
+      <td>1.761900</td>
+      <td>1.754400</td>
+      <td>1.756900</td>
+      <td>1.759400</td>
+      <td>binary-P002</td>
+      <td>train</td>
+      <td>negative</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>binary-P003</td>
+      <td>1.282425</td>
+      <td>0.005</td>
+      <td>1.287425</td>
+      <td>1.279925</td>
+      <td>1.282425</td>
+      <td>1.284925</td>
+      <td>1.838162</td>
+      <td>0.005</td>
+      <td>1.843162</td>
+      <td>...</td>
+      <td>2.203987</td>
+      <td>2.057831</td>
+      <td>0.005</td>
+      <td>2.062831</td>
+      <td>2.055331</td>
+      <td>2.057831</td>
+      <td>2.060331</td>
+      <td>binary-P003</td>
+      <td>train</td>
+      <td>positive</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>binary-P004</td>
+      <td>0.003730</td>
+      <td>0.005</td>
+      <td>0.008730</td>
+      <td>0.001230</td>
+      <td>0.003730</td>
+      <td>0.006230</td>
+      <td>-0.035190</td>
+      <td>0.005</td>
+      <td>-0.030190</td>
+      <td>...</td>
+      <td>-0.950572</td>
+      <td>2.442377</td>
+      <td>0.005</td>
+      <td>2.447377</td>
+      <td>2.439877</td>
+      <td>2.442377</td>
+      <td>2.444877</td>
+      <td>binary-P004</td>
+      <td>train</td>
+      <td>negative</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 28 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="id6">
+<h2>8. 训练患者级模型<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>患者级模型输出只代表患者，不能广播到局部病理图。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">patient</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">train_models</span><span class="p">(</span><span class="n">patients</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">,</span> <span class="n">patient_features</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span> <span class="n">positive_label</span><span class="o">=</span><span class="n">classes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">fit_unit</span><span class="o">=</span><span class="s1">'patient'</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">'standard'</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">inner_cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">patient</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'patient-model'</span><span class="p">)</span>
+<span class="n">rad</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">patient</span><span class="p">,</span> <span class="n">ci_method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'patient-metrics.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h2>9. 准备真实 tile 级模型<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>tile 模型保留每个 tile 的样本身份，但 CV 仍按患者分组。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tiles</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
+    <span class="n">tiles</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">features</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">tiles</span><span class="p">,</span> <span class="s1">'head'</span><span class="p">):</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">tiles</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>patient_id</th>
+      <th>slide_id</th>
+      <th>group</th>
+      <th>target</th>
+      <th>signal_a</th>
+      <th>signal_b</th>
+      <th>noise_a</th>
+      <th>noise_b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>binary-P000-L0-slide-tile0</td>
+      <td>binary-P000</td>
+      <td>binary-P000-L0-slide</td>
+      <td>train</td>
+      <td>negative</td>
+      <td>1.189762</td>
+      <td>0.427544</td>
+      <td>1.036511</td>
+      <td>0.684472</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>binary-P000-L0-slide-tile1</td>
+      <td>binary-P000</td>
+      <td>binary-P000-L0-slide</td>
+      <td>train</td>
+      <td>negative</td>
+      <td>1.199762</td>
+      <td>0.437544</td>
+      <td>1.046511</td>
+      <td>0.694472</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>binary-P000-L1-slide-tile0</td>
+      <td>binary-P000</td>
+      <td>binary-P000-L1-slide</td>
+      <td>train</td>
+      <td>negative</td>
+      <td>1.008778</td>
+      <td>0.373288</td>
+      <td>1.103377</td>
+      <td>0.620137</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>binary-P000-L1-slide-tile1</td>
+      <td>binary-P000</td>
+      <td>binary-P000-L1-slide</td>
+      <td>train</td>
+      <td>negative</td>
+      <td>1.018778</td>
+      <td>0.383288</td>
+      <td>1.113377</td>
+      <td>0.630137</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>binary-P001-L0-slide-tile0</td>
+      <td>binary-P001</td>
+      <td>binary-P001-L0-slide</td>
+      <td>train</td>
+      <td>positive</td>
+      <td>0.331840</td>
+      <td>0.193706</td>
+      <td>-0.945580</td>
+      <td>0.412253</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="id8">
+<h2>10. 拟合 tile 模型<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>局部概率图来自实际 tile 级预测；患者内多个 tile 不得跨训练/验证集合。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tile</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">train_models</span><span class="p">(</span><span class="n">tiles</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span> <span class="n">positive_label</span><span class="o">=</span><span class="n">classes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">fit_unit</span><span class="o">=</span><span class="s1">'tile'</span><span class="p">,</span> <span class="n">scoring_unit</span><span class="o">=</span><span class="s1">'patient'</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s1">'standard'</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">inner_cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">tile</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'tile-model'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id9">
+<h2>11. 无标签外部预测<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<p>移除结局后进行预测，确认保存的填补、缩放、特征与类别顺序被复用。禁止重新拟合外部数据。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">external</span> <span class="o">=</span> <span class="n">tiles</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tiles</span><span class="o">.</span><span class="n">group</span> <span class="o">!=</span> <span class="s1">'train'</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">'target'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id10">
+<h2>12. 生成局部分数<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>保留 tile、slide、patient 层级及预测来源；随后按真实坐标回填。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">local</span> <span class="o">=</span> <span class="n">tile</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">external</span><span class="p">)</span>
+<span class="n">write_json</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'actual-tile-predictions.json'</span><span class="p">,</span> <span class="n">local</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">external</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">external</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">'test'</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id11">
+<h2>13. 定义覆盖图坐标<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>画布使用 level-0 像素边界，x 向右、y 向下。覆盖计数为零的位置透明；重叠部分取平均。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">canvas</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">origin0</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="n">pixel_size0</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">pathology</span><span class="o">.</span><span class="n">rasterize_predictions</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">local</span><span class="p">,</span> <span class="n">slide_id</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">slide_id</span><span class="p">,</span> <span class="n">class_name</span><span class="o">=</span><span class="n">classes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">canvas</span><span class="o">=</span><span class="n">canvas</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">stream</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'actual-tile-score-overlay'</span><span class="p">)</span>
+<span class="n">plot_small_overlay</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'actual-tile-score-overlay'</span><span class="p">,</span> <span class="n">output</span> <span class="o">/</span> <span class="s1">'actual-tile-score-overlay.png'</span><span class="p">,</span> <span class="n">value_label</span><span class="o">=</span><span class="s1">'Positive-class probability'</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">rad</span><span class="o">.</span><span class="n">pathology</span><span class="o">.</span><span class="n">rasterize_predictions</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">patient</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">patients</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">patients</span><span class="o">.</span><span class="n">group</span> <span class="o">!=</span> <span class="s1">'train'</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">'target'</span><span class="p">)),</span> <span class="n">slide_id</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">slide_id</span><span class="p">,</span> <span class="n">class_name</span><span class="o">=</span><span class="n">classes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">canvas</span><span class="o">=</span><span class="n">canvas</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+    <span class="n">write_json</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'patient-broadcast-rejected.json'</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">'Patient probabilities must not be broadcast into local tile maps.'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id12">
+<h2>14. 准备数据与保存中间结果<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<p>运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">provenance</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s1">'06_embedding_overlay'</span><span class="p">,</span> <span class="n">embedding_rows</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">),</span> <span class="n">patients</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">patients</span><span class="p">),</span> <span class="n">alignment</span><span class="o">=</span><span class="s1">'complete tile ID equality, deliberately reversed embedding rows'</span><span class="p">,</span> <span class="n">coordinates</span><span class="o">=</span><span class="s1">'level-0 pixel edges; mpp unknown, no physical units inferred'</span><span class="p">,</span> <span class="n">patient_aggregation</span><span class="o">=</span><span class="s1">'tile→slide then equal-slide patient mean'</span><span class="p">,</span> <span class="n">overlay</span><span class="o">=</span><span class="s1">'actual predictions from a separately fitted tile-unit model; grouped patient CV'</span><span class="p">,</span> <span class="n">optional_wsidata</span><span class="o">=</span><span class="s1">'See docs/interop.md; generation-time geometry snapshot and TableModel tile-ID linkage required. This external-array tutorial does not claim live WSIData runtime validation.'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">tile</span><span class="p">,</span> <span class="n">ci_method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Outputs:'</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model      group   task prediction_unit  n prediction_type          status  positive_n  threshold  accuracy      auc  sensitivity  specificity      ppv      npv  precision   recall       f1    brier  log_loss_eps1e15  average_precision  pr_auc_trapezoidal  ci_low  ci_high
+   LR external_A binary         patient  6        external prediction_only         NaN        NaN       NaN      NaN          NaN          NaN      NaN      NaN        NaN      NaN      NaN      NaN               NaN                NaN                 NaN     NaN      NaN
+   LR       test binary         patient 12         holdout       evaluated         6.0        0.5  0.583333 0.805556     0.333333     0.833333 0.666667 0.555556   0.666667 0.333333 0.444444 0.210341          0.606019           0.786111            0.754861     NaN      NaN
+   LR      train binary         patient 48        apparent       evaluated        24.0        0.5  0.645833 0.723958     0.583333     0.708333 0.666667 0.629630   0.666667 0.583333 0.622222 0.211065          0.609390           0.781872            0.777724     NaN      NaN
+Outputs: D:\radiomics-tutorial-validation\six-notebooks-final\06_embedding_overlay\artifacts
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id13">
+<h2>查看导出的图与文件<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<p>查看图表的坐标、单位和预测层级。输出目录保留完整结果；这里显示前两幅图。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">figure</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*.png'</span><span class="p">))[:</span><span class="mi">2</span><span class="p">]:</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">figure</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'结果文件:'</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b804b22438686546be7bb64181fef62ee9e4162dbd1dcc1d94dbb5f948352b46.png" src="../_images/b804b22438686546be7bb64181fef62ee9e4162dbd1dcc1d94dbb5f948352b46.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>结果文件: ['actual-tile-predictions.json', 'actual-tile-score-overlay', 'actual-tile-score-overlay.png', 'adapter-provenance.json', 'aggregation.json', 'embedding-tile-ids.json', 'embeddings.npy', 'patient-broadcast-rejected.json', 'patient-features.parquet', 'patient-features.parquet.manifest.json', 'patient-metrics.csv', 'patient-model', 'provenance.json', 'slide-features.csv', 'slide-features.csv.manifest.json', 'tile-model', 'tiles.json', 'tutorial-runtime.json']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id14">
+<h2>换成自己的数据<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<p>保持示例的 ID、患者/切片层级与列角色约定，先替换数据读取步骤，再重新运行下游单元。先确认几何、单位、缺失状态和队列重叠；不要用测试集决定阈值或筛选参数。</p>
+<p>重新运行全部单元会新建结果目录；只重跑保存单元可能因为文件已存在而报错，这是显式防覆盖行为。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="05_patch_patient.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">病理 patch 到患者建模</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="real-data.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">真实数据：CT 提取与表格建模</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. 环境与独立输出目录</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2. 准备数据与保存中间结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3. 准备数据与保存中间结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4. 准备数据与保存中间结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tile-id">5. 按 tile ID 绑定特征</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tile">6. 从 tile 聚合到患者</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">7. 准备患者级建模表</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">8. 训练患者级模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">9. 准备真实 tile 级模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">10. 拟合 tile 模型</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">11. 无标签外部预测</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">12. 生成局部分数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">13. 定义覆盖图坐标</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">14. 准备数据与保存中间结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">查看导出的图与文件</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">换成自己的数据</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/06_embedding_overlay.ipynb.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

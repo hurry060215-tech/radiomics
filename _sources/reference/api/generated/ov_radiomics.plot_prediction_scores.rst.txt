@@ -1,0 +1,6 @@
+﻿ov\_radiomics.plot\_prediction\_scores
+======================================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: plot_prediction_scores

@@ -1,0 +1,6 @@
+﻿ov\_radiomics.make\_classifier
+==============================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: make_classifier

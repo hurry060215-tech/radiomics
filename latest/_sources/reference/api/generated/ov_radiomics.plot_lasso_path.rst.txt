@@ -1,0 +1,6 @@
+﻿ov\_radiomics.plot\_lasso\_path
+===============================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: plot_lasso_path

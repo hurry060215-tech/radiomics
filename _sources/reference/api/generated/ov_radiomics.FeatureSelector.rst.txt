@@ -1,0 +1,22 @@
+﻿ov\_radiomics.FeatureSelector
+=============================
+
+.. currentmodule:: ov_radiomics
+
+.. autoclass:: FeatureSelector
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FeatureSelector.__init__
+   
+   
+
+   
+   
+   

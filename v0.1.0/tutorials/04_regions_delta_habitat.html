@@ -1,0 +1,991 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>多区域、Delta 与生境 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/04_regions_delta_habitat';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/v0.1.0/tutorials/04_regions_delta_habitat.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="建模与统计：训练、评价与预测" href="modeling.html" />
+    <link rel="prev" title="NIfTI 与 ROI 基础提取" href="01_extract.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="radiomics.html">影像组学</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_extract.html">NIfTI 与 ROI 基础提取</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">多区域、Delta 与生境</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="modeling.html">建模与统计</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_clinical_binary.html">影像与临床二分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_multiclass_regression.html">多分类与连续值回归</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pathology.html">轻量病理</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="05_patch_patient.html">病理 patch 到患者建模</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_embedding_overlay.html">Embedding 对齐与局部覆盖图</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="real-data.html">真实数据路线</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="07_public_ct.html">07 · 真实公开CT：从文件与ROI到特征表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_public_tabular.html">08 · 真实公开表格：固定留出、原生二分类与无标签预测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets.html">数据与许可</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">教程：按任务选择路线</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="radiomics.html" class="nav-link">影像组学：从 NIfTI 到特征表</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">多区域、Delta 与生境</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="delta">
+<h1>多区域、Delta 与生境<a class="headerlink" href="#delta" title="Link to this heading">#</a></h1>
+<p>按 <strong>Shift+Enter</strong> 从上到下逐单元运行。变量保留在当前内核中；如果修改上游参数，请重新运行其后的单元。</p>
+<p>本教程使用固定合成数据，演示软件流程，不提供临床效能结论。需要完整仓库和对应原生安装包；实际源码版本和原生扩展身份请查看本次执行收据。</p>
+<section id="id1">
+<h2>1. 环境与独立输出目录<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>确认后端为 Rust。后续每步都可以检查中间对象；示例数据生成辅助函数只负责小型输入构造。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span>
+<span class="c1"># 从 Notebook 所在目录或仓库根目录启动均可。</span>
+<span class="n">REPO</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_REPO_ROOT</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="k">if</span> <span class="s1">'TUTORIAL_REPO_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="nb">next</span><span class="p">((</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span> <span class="o">*</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">]</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="s1">'examples/native/_shared.py'</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">REPO</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'请先下载完整仓库，并在仓库内启动 Jupyter。'</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">REPO</span><span class="o">/</span><span class="s1">'examples/native'</span><span class="p">))</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">())</span>
+<span class="c1"># 每次完整运行使用新目录，避免覆盖已有结果。</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_RUN_ROOT</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'TUTORIAL_RUN_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="n">Path</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">'radiomics-04_regions_delta_habitat-'</span><span class="p">))</span>
+<span class="k">if</span> <span class="s1">'TUTORIAL_RUN_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">():</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">output</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'输出目录:'</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span><span class="o">,</span><span class="w"> </span><span class="nn">importlib.metadata</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">platform</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'interpreter'</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s1">'python'</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">(),</span>
+           <span class="s1">'package_source'</span><span class="p">:</span> <span class="n">rad</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="s1">'backend'</span><span class="p">:</span> <span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">(),</span>
+           <span class="s1">'packages'</span><span class="p">:</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span>
+                        <span class="p">(</span><span class="s1">'ov-radiomics'</span><span class="p">,</span> <span class="s1">'numpy'</span><span class="p">,</span> <span class="s1">'pandas'</span><span class="p">,</span> <span class="s1">'matplotlib'</span><span class="p">,</span> <span class="s1">'ipykernel'</span><span class="p">)}}</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ov_radiomics._backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">try_native</span>
+<span class="n">extension</span> <span class="o">=</span> <span class="n">try_native</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">extension</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'本教程需要真实 Rust 原生扩展。'</span><span class="p">)</span>
+<span class="n">runtime</span><span class="p">[</span><span class="s1">'native_path'</span><span class="p">]</span> <span class="o">=</span> <span class="n">extension</span><span class="o">.</span><span class="vm">__file__</span>
+<span class="n">runtime</span><span class="p">[</span><span class="s1">'native_sha256'</span><span class="p">]</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">extension</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="n">runtime</span><span class="p">[</span><span class="s1">'package_python_sha256'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span><span class="o">.</span><span class="n">as_posix</span><span class="p">():</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+                                  <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s1">'*.py'</span><span class="p">))}</span>
+<span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="s1">'tutorial-runtime.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">runtime</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+ 
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">_shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">output_arguments</span><span class="p">,</span> <span class="n">extraction_config</span><span class="p">,</span> <span class="n">stack_example_tables</span><span class="p">,</span> <span class="n">write_json</span><span class="p">,</span> <span class="n">provenance</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'metrics_backend': 'rust', 'rust_core_version': '0.1.0'}
+输出目录: D:\radiomics-tutorial-validation\six-notebooks-final\04_regions_delta_habitat\artifacts
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>2. 准备数据与保存中间结果<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">xx</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="n">affine</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>3. 显式提取参数<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>Original 特征，固定分箱参数和方向聚合方式。示例参数不代表所有 CT/MR/PET 的通用推荐。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">extraction_config</span><span class="p">()[</span><span class="s1">'extraction'</span><span class="p">]</span>
+<span class="n">sources</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'CT_tumor'</span><span class="p">,</span> <span class="s1">'CT_ring'</span><span class="p">,</span> <span class="s1">'MR_tumor'</span><span class="p">,</span> <span class="s1">'MR_ring'</span><span class="p">)}</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">timepoint</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">'T0'</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="s1">'T1'</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)]:</span>
+    <span class="k">for</span> <span class="n">modality</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'CT'</span><span class="p">,</span> <span class="s1">'MR'</span><span class="p">):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">+</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">yy</span> <span class="o">+</span> <span class="n">change</span> <span class="o">+</span> <span class="p">(</span><span class="n">xx</span> <span class="o">*</span> <span class="n">yy</span> <span class="o">*</span> <span class="mf">0.01</span> <span class="k">if</span> <span class="n">modality</span> <span class="o">==</span> <span class="s1">'MR'</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">affine</span><span class="o">=</span><span class="n">affine</span><span class="p">,</span> <span class="n">spatial_unit</span><span class="o">=</span><span class="s1">'mm'</span><span class="p">)</span>
+        <span class="n">tumor</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">from_array</span><span class="p">(((</span><span class="n">xx</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">xx</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">yy</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">yy</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span> <span class="n">geometry</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="n">organ</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span> <span class="n">geometry</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="n">ring</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">peritumoral_ring</span><span class="p">(</span><span class="n">tumor</span><span class="p">,</span> <span class="n">inner_mm</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">outer_mm</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">organ_mask</span><span class="o">=</span><span class="n">organ</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">tumor</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">ring</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">))</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">'tumor'</span><span class="p">,</span> <span class="n">tumor</span><span class="p">),</span> <span class="p">(</span><span class="s1">'ring'</span><span class="p">,</span> <span class="n">ring</span><span class="p">)]:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">ImageSample</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">sample_id</span><span class="o">=</span><span class="n">modality</span> <span class="o">+</span> <span class="s1">'-'</span> <span class="o">+</span> <span class="n">region</span> <span class="o">+</span> <span class="s1">'-'</span> <span class="o">+</span> <span class="n">timepoint</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="s1">'P1'</span><span class="p">,</span> <span class="n">lesion_id</span><span class="o">=</span><span class="s1">'L1'</span><span class="p">,</span> <span class="n">modality</span><span class="o">=</span><span class="n">modality</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span> <span class="n">timepoint</span><span class="o">=</span><span class="n">timepoint</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="s1">'A'</span><span class="p">),</span> <span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+            <span class="n">sources</span><span class="p">[</span><span class="n">modality</span> <span class="o">+</span> <span class="s1">'_'</span> <span class="o">+</span> <span class="n">region</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">config</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">modality</span> <span class="o">==</span> <span class="s1">'CT'</span> <span class="ow">and</span> <span class="n">timepoint</span> <span class="o">==</span> <span class="s1">'T0'</span><span class="p">:</span>
+            <span class="n">given</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tumor</span><span class="o">.</span><span class="n">array</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">xx</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+            <span class="n">habitat_mask</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">given</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'provided-habitat-mask.npy'</span><span class="p">,</span> <span class="n">given</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="n">roi</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">select_labels</span><span class="p">(</span><span class="n">habitat_mask</span><span class="p">,</span> <span class="p">[</span><span class="n">label</span><span class="p">])</span>
+                <span class="n">rad</span><span class="o">.</span><span class="n">ImageSample</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">sample_id</span><span class="o">=</span><span class="s1">'provided-habitat-'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">label</span><span class="p">),</span> <span class="n">patient_id</span><span class="o">=</span><span class="s1">'P1'</span><span class="p">),</span> <span class="n">image</span><span class="p">,</span> <span class="n">roi</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="p">(</span><span class="s1">'provided-habitat-'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'.csv'</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h2>4. 严格对齐区域和模态<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>按患者、病灶、时间点对齐；模态与区域是显式可变化的字段。输入影像已经对齐，本包没有执行配准。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tables</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">stack_example_tables</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span> <span class="ow">in</span> <span class="n">sources</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h2>5. 拼接多区域特征<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>保留来源前缀和配对证据，检查结果中的 ID、列名与参数。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">merged</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">research</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">tables</span><span class="p">,</span> <span class="n">key_fields</span><span class="o">=</span><span class="p">[</span><span class="s1">'patient_id'</span><span class="p">,</span> <span class="s1">'lesion_id'</span><span class="p">,</span> <span class="s1">'timepoint'</span><span class="p">],</span> <span class="n">varying_fields</span><span class="o">=</span><span class="p">[</span><span class="s1">'modality'</span><span class="p">,</span> <span class="s1">'region'</span><span class="p">],</span> <span class="n">already_registered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">merged</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'multimodal-multiregion.parquet'</span><span class="p">)</span>
+<span class="n">write_json</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'concat-provenance.json'</span><span class="p">,</span> <span class="n">merged</span><span class="o">.</span><span class="n">provenance</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">merged</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>CT_tumor::original_firstorder_10Percentile</th>
+      <th>CT_tumor::original_firstorder_90Percentile</th>
+      <th>CT_tumor::original_firstorder_Energy</th>
+      <th>CT_tumor::original_firstorder_Entropy</th>
+      <th>CT_tumor::original_firstorder_InterquartileRange</th>
+      <th>CT_tumor::original_firstorder_Kurtosis</th>
+      <th>CT_tumor::original_firstorder_Maximum</th>
+      <th>CT_tumor::original_firstorder_Mean</th>
+      <th>CT_tumor::original_firstorder_MeanAbsoluteDeviation</th>
+      <th>...</th>
+      <th>MR_ring::original_shape_basic_BoundingBoxMinX_index</th>
+      <th>MR_ring::original_shape_basic_BoundingBoxMinY_index</th>
+      <th>MR_ring::original_shape_basic_BoundingBoxMinZ_index</th>
+      <th>MR_ring::original_shape_basic_BoundingBoxSizeX_voxels</th>
+      <th>MR_ring::original_shape_basic_BoundingBoxSizeY_voxels</th>
+      <th>MR_ring::original_shape_basic_BoundingBoxSizeZ_voxels</th>
+      <th>MR_ring::original_shape_basic_CentroidX_mm</th>
+      <th>MR_ring::original_shape_basic_CentroidY_mm</th>
+      <th>MR_ring::original_shape_basic_CentroidZ_mm</th>
+      <th>MR_ring::original_shape_basic_VoxelCount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>CT-tumor-T0</td>
+      <td>14.80</td>
+      <td>21.20</td>
+      <td>2976.0000</td>
+      <td>3.169925</td>
+      <td>4.0</td>
+      <td>1.77</td>
+      <td>22.00</td>
+      <td>18.00</td>
+      <td>2.222222</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>9.0</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>14.0</td>
+      <td>-12.0</td>
+      <td>3.0</td>
+      <td>32.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CT-tumor-T1</td>
+      <td>15.55</td>
+      <td>21.95</td>
+      <td>3224.0625</td>
+      <td>3.169925</td>
+      <td>4.0</td>
+      <td>1.77</td>
+      <td>22.75</td>
+      <td>18.75</td>
+      <td>2.222222</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>9.0</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>14.0</td>
+      <td>-12.0</td>
+      <td>3.0</td>
+      <td>32.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 265 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="id6">
+<h2>6. 计算纵向变化<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>显式指定基线与随访。相对变化是比例；零分母示例使用缺失策略，不伪造零变化。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">change</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">research</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">tables</span><span class="p">[</span><span class="s1">'CT_tumor'</span><span class="p">],</span> <span class="n">baseline</span><span class="o">=</span><span class="s1">'T0'</span><span class="p">,</span> <span class="n">followup</span><span class="o">=</span><span class="s1">'T1'</span><span class="p">,</span> <span class="n">zero_denominator</span><span class="o">=</span><span class="s1">'missing'</span><span class="p">)</span>
+<span class="n">change</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'delta.csv'</span><span class="p">)</span>
+<span class="n">write_json</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'delta-pairing.json'</span><span class="p">,</span> <span class="n">change</span><span class="o">.</span><span class="n">provenance</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">change</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>original_firstorder_10Percentile::difference</th>
+      <th>original_firstorder_10Percentile::ratio</th>
+      <th>original_firstorder_10Percentile::relative_change</th>
+      <th>original_firstorder_90Percentile::difference</th>
+      <th>original_firstorder_90Percentile::ratio</th>
+      <th>original_firstorder_90Percentile::relative_change</th>
+      <th>original_firstorder_Energy::difference</th>
+      <th>original_firstorder_Energy::ratio</th>
+      <th>original_firstorder_Energy::relative_change</th>
+      <th>...</th>
+      <th>original_shape_basic_CentroidX_mm::relative_change</th>
+      <th>original_shape_basic_CentroidY_mm::difference</th>
+      <th>original_shape_basic_CentroidY_mm::ratio</th>
+      <th>original_shape_basic_CentroidY_mm::relative_change</th>
+      <th>original_shape_basic_CentroidZ_mm::difference</th>
+      <th>original_shape_basic_CentroidZ_mm::ratio</th>
+      <th>original_shape_basic_CentroidZ_mm::relative_change</th>
+      <th>original_shape_basic_VoxelCount::difference</th>
+      <th>original_shape_basic_VoxelCount::ratio</th>
+      <th>original_shape_basic_VoxelCount::relative_change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>["delta",["P1","L1","CT","tumor"],"T0","T1"]</td>
+      <td>0.75</td>
+      <td>1.050676</td>
+      <td>0.050676</td>
+      <td>0.75</td>
+      <td>1.035377</td>
+      <td>0.035377</td>
+      <td>248.0625</td>
+      <td>1.083354</td>
+      <td>0.083354</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>-0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 199 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="id7">
+<h2>7. 已有矩阵上的局部生境<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>输入是已有强度/特征矩阵。聚类标签仅对本次拟合有意义，不能解释成跨患者一致的组织类别。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">training</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'intensity_a'</span><span class="p">,</span> <span class="s1">'intensity_b'</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">'voxel-'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)])</span>
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">training</span><span class="p">,</span> <span class="s1">'head'</span><span class="p">):</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">training</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>intensity_a</th>
+      <th>intensity_b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>voxel-0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>voxel-1</th>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>voxel-2</th>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>voxel-3</th>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>voxel-4</th>
+      <td>8.0</td>
+      <td>8.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="id8">
+<h2>8. 拟合与保存聚类<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>保存缩放参数和中心；预测时复用这些状态，并检查模型加载后结果一致。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">habitat</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">habitat</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training</span><span class="p">,</span> <span class="n">clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">initial_centers</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">]])</span>
+<span class="n">habitat</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'local-habitat.json'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id9">
+<h2>9. 保存与重新加载<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<p>使用类型化 .rad 模型，检查加载后预测一致。重新运行保存单元前请改用新的输出目录。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">restored</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">habitat</span><span class="o">.</span><span class="n">HabitatModel</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'local-habitat.json'</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_frame_equal</span><span class="p">(</span><span class="n">habitat</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">training</span><span class="p">),</span> <span class="n">restored</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">training</span><span class="p">))</span>
+<span class="n">habitat</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">training</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'local-habitat-labels.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">habitat</span><span class="o">.</span><span class="n">centers_</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'local-habitat-centers.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">provenance</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s1">'04_regions_delta_habitat'</span><span class="p">,</span> <span class="n">registration</span><span class="o">=</span><span class="s1">'caller-declared synthetic common grid; none performed'</span><span class="p">,</span> <span class="n">ring</span><span class="o">=</span><span class="s1">'Euclidean mm distance with x=1mm/y=2mm anisotropy and organ intersection'</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="s1">'explicit paired patient/lesion/modality/region; relative change is a fraction; zero denominator policy=missing'</span><span class="p">,</span> <span class="n">habitat</span><span class="o">=</span><span class="s1">'single local fit; cluster numbers do not imply shared histologic tissue types'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id10">
+<h2>10. 准备数据与保存中间结果<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'Outputs:'</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Outputs: D:\radiomics-tutorial-validation\six-notebooks-final\04_regions_delta_habitat\artifacts
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id11">
+<h2>用实际结果绘图<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>仅展示本次合成数据计算结果；请核对患者层级、坐标与单位。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">habitat</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">training</span><span class="p">)[</span><span class="s1">'cluster'</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">labels</span><span class="p">)):</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">training</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">labels</span><span class="o">==</span><span class="n">cluster</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="s1">'intensity_a'</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="s1">'intensity_b'</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Local cluster '</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">cluster</span><span class="p">))</span>
+<span class="n">centers</span> <span class="o">=</span> <span class="n">habitat</span><span class="o">.</span><span class="n">centers_</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">centers</span><span class="p">[</span><span class="s1">'intensity_a'</span><span class="p">],</span> <span class="n">centers</span><span class="p">[</span><span class="s1">'intensity_b'</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'black'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Saved centers'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Synthetic intensity a'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Synthetic intensity b'</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'One local habitat fit'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="s1">'local-habitat.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id12">
+<h2>查看导出的图与文件<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<p>查看图表的坐标、单位和预测层级。输出目录保留完整结果；这里显示前两幅图。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">figure</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*.png'</span><span class="p">))[:</span><span class="mi">2</span><span class="p">]:</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">figure</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'结果文件:'</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c7204ece8bde9d5d4230f461e285cb030d4ca23b199c225ad46d295e37771a39.png" src="../_images/c7204ece8bde9d5d4230f461e285cb030d4ca23b199c225ad46d295e37771a39.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>结果文件: ['concat-provenance.json', 'delta-pairing.json', 'delta.csv', 'delta.csv.manifest.json', 'local-habitat-centers.csv', 'local-habitat-labels.csv', 'local-habitat.json', 'local-habitat.png', 'multimodal-multiregion.parquet', 'multimodal-multiregion.parquet.manifest.json', 'provenance.json', 'provided-habitat-1.csv', 'provided-habitat-1.csv.manifest.json', 'provided-habitat-2.csv', 'provided-habitat-2.csv.manifest.json', 'provided-habitat-mask.npy', 'tutorial-runtime.json']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id13">
+<h2>换成自己的数据<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<p>保持示例的 ID、患者/切片层级与列角色约定，先替换数据读取步骤，再重新运行下游单元。先确认几何、单位、缺失状态和队列重叠；不要用测试集决定阈值或筛选参数。</p>
+<p>重新运行全部单元会新建结果目录；只重跑保存单元可能因为文件已存在而报错，这是显式防覆盖行为。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_extract.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">NIfTI 与 ROI 基础提取</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="modeling.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">建模与统计：训练、评价与预测</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. 环境与独立输出目录</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2. 准备数据与保存中间结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3. 显式提取参数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4. 严格对齐区域和模态</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5. 拼接多区域特征</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6. 计算纵向变化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7. 已有矩阵上的局部生境</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8. 拟合与保存聚类</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">9. 保存与重新加载</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">10. 准备数据与保存中间结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">用实际结果绘图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">查看导出的图与文件</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">换成自己的数据</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/04_regions_delta_habitat.ipynb.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e">
+  Build <code>bb2d3fe</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

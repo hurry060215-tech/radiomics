@@ -1,0 +1,6 @@
+﻿ov\_radiomics.plot\_metrics
+===========================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: plot_metrics

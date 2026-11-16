@@ -1,0 +1,644 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>结果怎么读，错误怎么处理 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/user-guide/results-and-errors';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/v0.1.0/reference/user-guide/results-and-errors.html" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="08：569条真实公开记录的原生二分类" href="public-tabular.html" />
+    <link rel="prev" title="自有 patch、外部 embedding 与患者建模" href="pathology.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">按操作顺序阅读</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="input-contracts.html">输入契约与身份</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file-workflows.html">影像与临床文件工作流</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">三任务训练与外部预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology.html">普通病理与外部 embedding</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">结果解读与排错</a></li>
+<li class="toctree-l1"><a class="reference internal" href="public-tabular.html">真实公开表格说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">教程实际验证范围</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../user-guide/index.html" class="nav-link">用户指南：使用自己的研究文件</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">结果怎么读，错误怎么处理</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>结果怎么读，错误怎么处理<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2>训练目录里的文件<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>文件</p></th>
+<th class="head"><p>实际含义</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">input-report.json</span></code></p></td>
+<td><p>原始文件内容 SHA、投影/忽略列、dtype转换、连接匹配/缺失/多余键；先审阅它再解释模型</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">run.json</span></code></p></td>
+<td><p>任务、显式类别、参数、后端、最佳模型、SplitPlan摘要；结局来源声明</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">best-model.rad</span></code></p></td>
+<td><p>通过训练 CV 比较选择的可移植模型；不包含可执行 Python pickle</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">training/model-*.rad</span></code></p></td>
+<td><p>每个模型的类型化拟合状态；文件编号与 <code class="docutils literal notranslate"><span class="pre">training/training.json</span></code>、CV结果联合查看</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">training/split_plan.json</span></code></p></td>
+<td><p>实际患者队列/内外层折和种子；审计是否患者泄漏</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">training/cv_results.csv</span></code></p></td>
+<td><p>外层每模型/每折比较分数，不等同独立外部验证</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">training/oof_predictions.csv</span></code></p></td>
+<td><p>每个训练患者被排除于该次拟合后形成的 OOF 预测，保留 fold 与 training_source</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">training/predictions.csv</span></code></p></td>
+<td><p>最终模型的 train/test/external 预测；看 prediction_type/cohort，不只看分数</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">oof-metrics.csv</span></code></p></td>
+<td><p>单独对 OOF 预测评价；cohort 仍为真实 <code class="docutils literal notranslate"><span class="pre">train</span></code>，OOF 身份由 prediction_type/training_source保留</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cohort-metrics.csv</span></code></p></td>
+<td><p>按原队列分别评价；纯无标签队列为 prediction_only，不产生伪指标</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">holdout-*-*.png</span></code>、<code class="docutils literal notranslate"><span class="pre">plot-cohorts.json</span></code></p></td>
+<td><p>有标签的 test/external 患者图，数字文件名与真实队列映射；train 不画成留出图</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">external-predictions*.csv/json</span></code></p></td>
+<td><p>仅在传入 <code class="docutils literal notranslate"><span class="pre">--predict-study</span></code> 时生成；保存加载后一致性已经检查</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>脚本的指标 <code class="docutils literal notranslate"><span class="pre">CI=None</span></code>，因此没有偷偷用几十次 bootstrap 声称稳定置信区间。研究需要 CI 时在设计中预先固定方法/复制数，用 <code class="docutils literal notranslate"><span class="pre">rad.evaluate(...,</span> <span class="pre">prediction_unit=&quot;patient&quot;,</span> <span class="pre">ci_method=&quot;bootstrap&quot;,</span> <span class="pre">n_bootstrap=2000,</span> <span class="pre">random_state=...)</span></code>。二分类 DeLong 保持二分类语义；小样本中 AUC、校准和 CI 都可能不稳定。</p>
+</section>
+<section id="id3">
+<h2>从三个角度解读图<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>二分类 ROC 描述不同阈值下排序区分能力，不决定临床阈值；校准图描述预测概率与实际比例是否相符，少量患者的每个分箱很不稳定；混淆矩阵依赖保存的预设阈值和明确的阳性类别。高 AUC 不自动意味着概率可靠或临床有效。</p>
+<p>多分类图是各类别 OvR 曲线，报告同时区分 macro/micro/weighted 汇总。类不平衡时应查每类表现，不能只读一个总准确率。回归散点偏离对角线表示误差；应结合真实目标单位、MAE/RMSE/R²和残差分布解释，不能把 R² 当作分类准确率。</p>
+<p><code class="docutils literal notranslate"><span class="pre">train</span></code> 表观结果通常更好；模型比较、候选选择或融合训练使用过的 OOF 结果仍有选择不确定性。最终结论需要固定且身份清楚的测试/外部队列。模型用于临床前的适用性、偏倚和部署评估不由软件单例演示完成。</p>
+</section>
+<section id="id4">
+<h2>常见错误与修复位置<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>现象/报错含义</p></th>
+<th class="head"><p>应检查什么</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>样本 ID 重复</p></td>
+<td><p>一行是否真的对应唯一ROI/tile；为多病灶建立不同sample_id，同时保留相同patient_id</p></td>
+</tr>
+<tr class="row-odd"><td><p>clinical duplicate key / exact key sets differ</p></td>
+<td><p>patient-key临床表必须每患者唯一；移除当前研究之外的患者应在输入准备时显式完成，不按行数截断</p></td>
+</tr>
+<tr class="row-even"><td><p>conflicting metadata</p></td>
+<td><p>features、metadata、clinical中的已知ID/cohort/center矛盾；修改源表，不依赖自动后缀或覆盖</p></td>
+</tr>
+<tr class="row-odd"><td><p>patient occurs in multiple cohorts / overlap</p></td>
+<td><p>同一患者被拆到train/test/external；统一真实患者键并重做预先划分</p></td>
+</tr>
+<tr class="row-even"><td><p>fold missing class / insufficient grouped patients</p></td>
+<td><p>每类训练患者不足，或患者组约束无法满足折数；重审研究设计，显式调整cv，不能改成随机行划分</p></td>
+</tr>
+<tr class="row-odd"><td><p>unknown category</p></td>
+<td><p>外部类别训练未见；核查拼写/编码与预定义临床字典，不能在外部重新fit one-hot</p></td>
+</tr>
+<tr class="row-even"><td><p>all-missing column / zero features</p></td>
+<td><p>列是否选错、真实变量是否全缺；不要自动填0或降低筛选阈值直到通过</p></td>
+</tr>
+<tr class="row-odd"><td><p>incompatible numeric / infinity / complex</p></td>
+<td><p>声明类别角色；明确缺失token；去除数据导出中的Inf/非法编码；不能丢弃复数虚部</p></td>
+</tr>
+<tr class="row-even"><td><p>missing feature / feature type mismatch</p></td>
+<td><p>外部必须提供训练所需名字与类型；只允许按名称重排，不能以同列数替代定义一致性</p></td>
+</tr>
+<tr class="row-odd"><td><p>nonconvergence / rank deficient / separation</p></td>
+<td><p>优化/统计模型有效性失败；核查共线性、样本量和完全分离，不将失败模型保存为成功</p></td>
+</tr>
+<tr class="row-even"><td><p>native extension predates API</p></td>
+<td><p>当前Python代码与安装的旧扩展不匹配；安装匹配的完整构建，不回退外部Python算法假装原生</p></td>
+</tr>
+<tr class="row-odd"><td><p>FileExistsError</p></td>
+<td><p>选新输出目录；本教程不覆盖已有模型/结果</p></td>
+</tr>
+<tr class="row-even"><td><p>checksum / sidecar mismatch</p></td>
+<td><p>特征表曾被编辑或配错manifest；重新从明确来源导出，保留旧版本，不篡改SHA使其通过</p></td>
+</tr>
+<tr class="row-odd"><td><p>patient plot outcomes disagree</p></td>
+<td><p>同患者有不同样本结局；确认目标层级，必要时采用显式sample评价并省略患者图</p></td>
+</tr>
+<tr class="row-even"><td><p>no labeled outcomes / prediction_only</p></td>
+<td><p>新队列没有真实结局是正常预测状态；不能据预测值生成AUC或回归评价</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id5">
+<h2>病理特有的边界<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>所有 patch 被 QC 排除的切片返回空结果状态，不能用一行全零代替它。记录哪些父级因无有效特征不能进入模型；若要排除，需要在研究表中明确记录原因，并使 features/clinical exact键集合对应。</p>
+<p>重叠 patch 的实例数不能直接加成全切片细胞总数；没有全局实例 ID 时仅解释 patch-local 统计。图中的实际 tile 特征或真正 tile 模型分数可以覆盖到坐标上；<strong>患者概率不能广播成局部病理概率图</strong>。没有已知 MPP 时只读像素尺度，不从20x/DPI猜μm。</p>
+</section>
+<section id="id6">
+<h2>换成自己数据时的检查顺序<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>写下研究对象、预测时间点、真实结局定义和单位、患者键、预定训练/测试/外部队列。</p></li>
+<li><p>先检查一两例图像/patch与mask/坐标，再冻结提取参数和特征定义。</p></li>
+<li><p>在JSON中明确特征/类别/结局/ID角色；先查看input-report和连接质量。</p></li>
+<li><p>跑保守少量特征/单模型，检查SplitPlan、OOF、cohort身份和保存加载。</p></li>
+<li><p>将筛选/参数网格加入完整患者分组pipeline；以新输出目录保留新分析方案和结果。</p></li>
+<li><p>单独报告固定测试和每个外部队列，记录缺失/QC排除、限制和所有性能目标未达项。</p></li>
+</ol>
+<p>可执行软件通过不意味着医学研究设计自动成立。上述顺序是让每一步可审查，而不是提供临床标签或替你决定研究终点。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pathology.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">自有 patch、外部 embedding 与患者建模</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="public-tabular.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">08：569条真实公开记录的原生二分类</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">训练目录里的文件</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">从三个角度解读图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">常见错误与修复位置</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">病理特有的边界</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">换成自己数据时的检查顺序</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/reference/user-guide/results-and-errors.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e">
+  Build <code>bb2d3fe</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

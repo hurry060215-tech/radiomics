@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>三任务原生训练、患者分组与无标签预测 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/user-guide/training';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/v0.1.0/reference/user-guide/training.html" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="自有 patch、外部 embedding 与患者建模" href="pathology.html" />
+    <link rel="prev" title="自己的 NIfTI＋ROI＋真实临床数据" href="file-workflows.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">按操作顺序阅读</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="input-contracts.html">输入契约与身份</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file-workflows.html">影像与临床文件工作流</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">三任务训练与外部预测</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology.html">普通病理与外部 embedding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results-and-errors.html">结果解读与排错</a></li>
+<li class="toctree-l1"><a class="reference internal" href="public-tabular.html">真实公开表格说明</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validation.html">教程实际验证范围</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../user-guide/index.html" class="nav-link">用户指南：使用自己的研究文件</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">三任务原生训练、患者分组与无标签预测</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>三任务原生训练、患者分组与无标签预测<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section id="csv-parquet">
+<h2>从任意自有 CSV/Parquet 特征开始<a class="headerlink" href="#csv-parquet" title="Link to this heading">#</a></h2>
+<p>特征不必来自本包。已有 radiomics、数值临床变量、聚合的病理或外部 embedding 都可以进入同一训练入口。特征定义、单位和来源需要一致，不能因为列名相同就认定不同软件的特征等价。</p>
+<p>假设已准备 <code class="docutils literal notranslate"><span class="pre">features.parquet</span></code>，每行有 <code class="docutils literal notranslate"><span class="pre">sample_id/patient_id/cohort</span></code>；<code class="docutils literal notranslate"><span class="pre">clinical.csv</span></code> 每患者一行，有真实 <code class="docutils literal notranslate"><span class="pre">outcome</span></code>、年龄和性别。以下 <code class="docutils literal notranslate"><span class="pre">study.json</span></code> 是可直接解析的完整配置；把特征名和结局名换成你的真实列：</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"schema_version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"table"</span><span class="p">:</span><span class="w"> </span><span class="s2">"features.parquet"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"clinical"</span><span class="p">:</span><span class="w"> </span><span class="s2">"clinical.csv"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"clinical_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"patient"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"join_policy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exact"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"id_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sample_id"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"patient_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"patient_id"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"cohort_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cohort"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"outcome_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"outcome"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"numeric_features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"feature_a"</span><span class="p">,</span><span class="w"> </span><span class="s2">"feature_b"</span><span class="p">,</span><span class="w"> </span><span class="s2">"age_years"</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"categorical_features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sex"</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"optional_metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">"missing_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">""</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"nan_as_missing"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>全在一张表时省略 <code class="docutils literal notranslate"><span class="pre">clinical/clinical_key</span></code>；基础特征表没有患者/队列时，用<a class="reference internal" href="input-contracts.html"><span class="std std-doc">输入契约</span></a>里的 metadata/clinical 连接。<code class="docutils literal notranslate"><span class="pre">numeric_features</span></code> 始终显式列出，不使用“除结局外全部列”作为真实研究默认。</p>
+</section>
+<section id="id2">
+<h2>二分类<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>例如真实结局列中恰好使用 <code class="docutils literal notranslate"><span class="pre">stable/progressed</span></code>：</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="p">/</span><span class="n">real</span><span class="p">/</span><span class="n">train_table</span><span class="p">.</span><span class="n">py</span> <span class="n">train</span> <span class="p">-</span><span class="n">-study</span> <span class="n">data</span><span class="p">/</span><span class="n">study</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-task</span> <span class="n">binary</span> <span class="p">-</span><span class="n">-classes</span> <span class="n">stable</span> <span class="n">progressed</span> <span class="p">-</span><span class="n">-models</span> <span class="n">LR</span> <span class="p">-</span><span class="n">-cv</span> <span class="n">3</span> <span class="p">-</span><span class="n">-inner-cv</span> <span class="n">2</span> <span class="p">-</span><span class="n">-seed</span> <span class="n">20261115</span> <span class="p">-</span><span class="n">-threshold</span> <span class="n">0</span><span class="p">.</span><span class="n">5</span> <span class="p">-</span><span class="n">-plots</span> <span class="p">-</span><span class="n">-output</span> <span class="n">results</span><span class="p">/</span><span class="n">binary</span><span class="p">-</span><span class="n">01</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">probability</span></code> 是第二类 <code class="docutils literal notranslate"><span class="pre">progressed</span></code> 的概率。阈值0.5在本例预先指定；脚本不在测试队列搜索最优阈值。若实际类别是字符串 <code class="docutils literal notranslate"><span class="pre">0/1</span></code>，用 <code class="docutils literal notranslate"><span class="pre">--classes</span> <span class="pre">0</span> <span class="pre">1</span></code>；若是 <code class="docutils literal notranslate"><span class="pre">negative/positive</span></code>，必须写实际文本。不可用某个特征阈值临时生成“真实标签”。</p>
+<p>默认模型 LR 为带 L2 的 Logistic，默认 Standard scaling；类别众数填补和 one-hot、数值中位数填补均在训练折内拟合。默认不启用筛选。你可以用 <code class="docutils literal notranslate"><span class="pre">--models</span> <span class="pre">LR</span> <span class="pre">KNN</span> <span class="pre">GaussianNB</span> <span class="pre">RandomForest</span></code> 作有限模型比较；这会增加训练量，默认比较指标为患者级 AUC。没有参数网格时单候选不会伪造调参结果。模型的精确定义和正则化目标见<a class="reference internal" href="../models-native.html"><span class="std std-doc">原生模型</span></a>。</p>
+</section>
+<section id="id3">
+<h2>多分类<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="p">/</span><span class="n">real</span><span class="p">/</span><span class="n">train_table</span><span class="p">.</span><span class="n">py</span> <span class="n">train</span> <span class="p">-</span><span class="n">-study</span> <span class="n">data</span><span class="p">/</span><span class="n">subtype-study</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-task</span> <span class="n">multiclass</span> <span class="p">-</span><span class="n">-classes</span> <span class="n">subtype_A</span> <span class="n">subtype_B</span> <span class="n">subtype_C</span> <span class="p">-</span><span class="n">-models</span> <span class="n">LR</span> <span class="p">-</span><span class="n">-cv</span> <span class="n">3</span> <span class="p">-</span><span class="n">-inner-cv</span> <span class="n">2</span> <span class="p">-</span><span class="n">-plots</span> <span class="p">-</span><span class="n">-output</span> <span class="n">results</span><span class="p">/</span><span class="n">multiclass</span><span class="p">-</span><span class="n">01</span>
+</pre></div>
+</div>
+<p>此处 LR 为多项 softmax。三个编码是类别，不会当成连续的0/1/2做平方损失回归。保存每类概率和固定类别顺序；默认比较 macro OvR AUC，评价另给 macro/micro/weighted 汇总。图中的每条曲线是该类对其余类别的 OvR ROC，不能把所有曲线当作一个二分类总体。DeLong、DCA、H–L 的整体语义仍限二分类。</p>
+</section>
+<section id="id4">
+<h2>回归<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="p">/</span><span class="n">real</span><span class="p">/</span><span class="n">train_table</span><span class="p">.</span><span class="n">py</span> <span class="n">train</span> <span class="p">-</span><span class="n">-study</span> <span class="n">data</span><span class="p">/</span><span class="n">continuous-study</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-task</span> <span class="n">regression</span> <span class="p">-</span><span class="n">-models</span> <span class="n">Ridge</span> <span class="p">-</span><span class="n">-cv</span> <span class="n">3</span> <span class="p">-</span><span class="n">-inner-cv</span> <span class="n">2</span> <span class="p">-</span><span class="n">-plots</span> <span class="p">-</span><span class="n">-output</span> <span class="n">results</span><span class="p">/</span><span class="n">regression</span><span class="p">-</span><span class="n">01</span>
+</pre></div>
+</div>
+<p>回归 <code class="docutils literal notranslate"><span class="pre">outcome_column</span></code> 必须指向实际连续量，不传 <code class="docutils literal notranslate"><span class="pre">--classes</span></code>。默认 Ridge、比较 RMSE，同时导出 MAE/RMSE/R²；图为患者真实值对预测值。预测单位与结局单位相同，软件不猜“天/月/分”等物理或临床含义。可以选择原生 Linear、KNN、RandomForest；秩不足 OLS、数值不收敛等将报错。</p>
+</section>
+<section id="id5">
+<h2>患者分组到底发生在哪里<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">patient_id</span></code> 可以重复；每次外层和内层划分均以患者作为不可拆分组。填补、编码、缩放、筛选、参数选择只在对应训练患者拟合。固定 <code class="docutils literal notranslate"><span class="pre">test/external_*</span></code> 不参加这些拟合。保存的 <code class="docutils literal notranslate"><span class="pre">training/split_plan.json</span></code> 包括实际患者集合、类别顺序和种子，不能仅靠“第1折”判断两次训练共享划分。</p>
+<p>默认 <code class="docutils literal notranslate"><span class="pre">--fit-unit</span> <span class="pre">sample</span> <span class="pre">--scoring-unit</span> <span class="pre">patient</span></code>：用每病灶一行训练，同时评价前按患者汇总；同患者结局必须一致。病理已经聚合到每患者一行时用 <code class="docutils literal notranslate"><span class="pre">--fit-unit</span> <span class="pre">patient</span></code>。真正病灶级研究可显式 <code class="docutils literal notranslate"><span class="pre">--scoring-unit</span> <span class="pre">sample</span></code>，此时脚本不提供患者图，省略 <code class="docutils literal notranslate"><span class="pre">--plots</span></code>；划分仍保留患者组。</p>
+<p>当训练每类患者太少、折内缺类别、外部队列患者重叠、同患者跨 train/test、所有特征被筛空时，程序会报错。它不自动减少折数、合并类别、放宽阈值或改为随机按行划分。需要先修改研究方案和输入，再作为新的运行保存。</p>
+</section>
+<section id="id6">
+<h2>需要筛选或参数网格时<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>脚本的保守起点没有隐藏筛选。要使用筛选，可在自己的 Python 脚本调用同一公共 API，将 selector 传入完整训练 pipeline：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+
+<span class="n">loaded</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">read_study</span><span class="p">(</span><span class="s2">"data/study.json"</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">"binary"</span><span class="p">)</span>
+<span class="n">selector</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">FeatureSelector</span><span class="p">(</span>
+    <span class="n">task</span><span class="o">=</span><span class="s2">"binary"</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">"rust"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s2">"standard"</span><span class="p">,</span>
+    <span class="n">univariate</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">,</span> <span class="n">p_threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">p_adjust</span><span class="o">=</span><span class="s2">"bh"</span><span class="p">,</span>
+    <span class="n">corr_threshold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">sparse_method</span><span class="o">=</span><span class="s2">"squared_lasso"</span><span class="p">,</span>
+    <span class="n">alphas</span><span class="o">=</span><span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">train_models</span><span class="p">(</span>
+    <span class="n">loaded</span><span class="o">.</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">loaded</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">loaded</span><span class="o">.</span><span class="n">features</span><span class="p">,</span>
+    <span class="n">categorical</span><span class="o">=</span><span class="n">loaded</span><span class="o">.</span><span class="n">categorical</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s2">"rust"</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">"binary"</span><span class="p">,</span>
+    <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">"stable"</span><span class="p">,</span> <span class="s2">"progressed"</span><span class="p">],</span> <span class="n">positive_label</span><span class="o">=</span><span class="s2">"progressed"</span><span class="p">,</span>
+    <span class="n">selector</span><span class="o">=</span><span class="n">selector</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="s2">"patient_id"</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">inner_cv</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">model_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"LR"</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"lambda"</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">},</span> <span class="p">{</span><span class="s2">"lambda"</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}]}</span>
+<span class="p">)</span>
+<span class="n">result</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"results/selected-binary-01"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这不是建议为每个小队列使用高维筛选和大量候选；它说明选择步骤必须进入患者分组 pipeline。多分类需要 task 对应的 OvR L1 Logistic 特征并集，不能照抄 squared_lasso。单因素默认二分类 Mann–Whitney、多分类 Kruskal–Wallis、回归 Pearson；零特征结果应解释，而不是反复降低阈值直到出现期望结果。</p>
+</section>
+<section id="id7">
+<h2>保存、加载和无标签外部预测<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>每次训练输出 <code class="docutils literal notranslate"><span class="pre">best-model.rad</span></code> 和每模型的 <code class="docutils literal notranslate"><span class="pre">training/model-*.rad</span></code>。<code class="docutils literal notranslate"><span class="pre">.rad</span></code> 是版本化类型状态，保存训练填补/编码/缩放/筛选、模型、类别/特征顺序、阈值和训练来源；无需 pickle/joblib。</p>
+<p>外部数据准备完整 <code class="docutils literal notranslate"><span class="pre">external-study.json</span></code>：</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"schema_version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"table"</span><span class="p">:</span><span class="w"> </span><span class="s2">"external-features.parquet"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"clinical"</span><span class="p">:</span><span class="w"> </span><span class="s2">"external-clinical.csv"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"clinical_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"patient"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"join_policy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exact"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"id_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sample_id"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"patient_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"patient_id"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"cohort_column"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cohort"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"outcome_column"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"default_cohort"</span><span class="p">:</span><span class="w"> </span><span class="s2">"external_B"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"numeric_features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"feature_a"</span><span class="p">,</span><span class="w"> </span><span class="s2">"feature_b"</span><span class="p">,</span><span class="w"> </span><span class="s2">"age_years"</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"categorical_features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sex"</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"optional_metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">"missing_values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">""</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"nan_as_missing"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="p">/</span><span class="n">real</span><span class="p">/</span><span class="n">train_table</span><span class="p">.</span><span class="n">py</span> <span class="n">predict</span> <span class="p">-</span><span class="n">-model</span> <span class="n">results</span><span class="p">/</span><span class="n">binary</span><span class="p">-</span><span class="n">01</span><span class="p">/</span><span class="n">best-model</span><span class="p">.</span><span class="n">rad</span> <span class="p">-</span><span class="n">-study</span> <span class="n">data</span><span class="p">/</span><span class="n">external-study</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-output</span> <span class="n">results</span><span class="p">/</span><span class="n">external-B</span><span class="p">-</span><span class="n">01</span>
+</pre></div>
+</div>
+<p>也可以在训练命令加 <code class="docutils literal notranslate"><span class="pre">--predict-study</span> <span class="pre">data/external-study.json</span></code>；脚本保存后重新加载 <code class="docutils literal notranslate"><span class="pre">.rad</span></code>，实际验证加载前后外部预测完全一致。预测模式不接收训练命令的任务/类别覆盖参数，以保存 manifest 为准。</p>
+<p>已有 DataFrame 时可直接：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">"results/binary-01/best-model.rad"</span><span class="p">)</span>
+<span class="n">external</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">read_study</span><span class="p">(</span><span class="s2">"data/external-study.json"</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">bundle</span><span class="o">.</span><span class="n">manifest</span><span class="p">[</span><span class="s2">"task"</span><span class="p">])</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">predict_study</span><span class="p">(</span><span class="n">external</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s2">"data"</span><span class="p">])</span>
+<span class="n">predictions</span><span class="o">.</span><span class="n">dataframe</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">"results/external-predictions.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>未知 schema、缺少特征、类型不匹配或训练患者与外部重叠明确报错。不因列顺序变化重新拟合，也不因为有相同行数就接受缺失或错误 ID。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="file-workflows.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">自己的 NIfTI＋ROI＋真实临床数据</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pathology.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">自有 patch、外部 embedding 与患者建模</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-parquet">从任意自有 CSV/Parquet 特征开始</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">二分类</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">多分类</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">回归</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">患者分组到底发生在哪里</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">需要筛选或参数网格时</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">保存、加载和无标签外部预测</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/reference/user-guide/training.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e">
+  Build <code>bb2d3fe</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

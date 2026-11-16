@@ -1,0 +1,6 @@
+﻿ov\_radiomics.split\_data
+=========================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: split_data

@@ -1,0 +1,962 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>07 · 真实公开CT：从文件与ROI到特征表 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/07_public_ct';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/tutorials/07_public_ct.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="08 · 真实公开表格：固定留出、原生二分类与无标签预测" href="08_public_tabular.html" />
+    <link rel="prev" title="真实数据：CT 提取与表格建模" href="real-data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="radiomics.html">影像组学</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_extract.html">NIfTI 与 ROI 基础提取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_regions_delta_habitat.html">多区域、Delta 与生境</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="modeling.html">建模与统计</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_clinical_binary.html">影像与临床二分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_multiclass_regression.html">多分类与连续值回归</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pathology.html">轻量病理</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="05_patch_patient.html">病理 patch 到患者建模</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_embedding_overlay.html">Embedding 对齐与局部覆盖图</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="real-data.html">真实数据路线</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">07 · 真实公开CT：从文件与ROI到特征表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_public_tabular.html">08 · 真实公开表格：固定留出、原生二分类与无标签预测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets.html">数据与许可</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">教程：按任务选择路线</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="real-data.html" class="nav-link">真实数据：CT 提取与表格建模</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">07 · 真实公开CT：从文件与ROI到特征表</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="ct-roi">
+<h1>07 · 真实公开CT：从文件与ROI到特征表<a class="headerlink" href="#ct-roi" title="Link to this heading">#</a></h1>
+<p>这是一例IBSI PAT1 CT与GTV-1的真实公开影像，不是合成NIfTI。目标是检查来源、几何、ROI覆盖与提取结果；没有临床结局，不做分类训练。原始来源 DOI：<a class="reference external" href="https://doi.org/10.17195/candat.2016.08.1">10.17195/candat.2016.08.1</a>，镜像固定到IBSI数据仓库提交 <code class="docutils literal notranslate"><span class="pre">6da96021bc91faf4c0cb7fd7fa56a4225d2064a8</span></code>。</p>
+<p><strong>原始文件为CC-BY-NC-3.0，具有署名和非商业限制。</strong> 阅读<a class="reference internal" href="../datasets.html"><span class="std std-doc">数据许可说明</span></a>后再运行下载单元。MIT只适用于本项目软件。所有原始文件放在Git工作树之外；输出使用新目录。</p>
+<section id="id1">
+<h2>1. 核对原生环境<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>在完整仓库内启动Jupyter。Python数组用于检查和绘图，NIfTI读取与特征计算使用Rust。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">tempfile</span><span class="o">,</span><span class="w"> </span><span class="nn">subprocess</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="kn">import</span> <span class="n">image</span> <span class="k">as</span> <span class="n">rad_image</span><span class="p">,</span> <span class="n">mask</span> <span class="k">as</span> <span class="n">rad_mask</span>
+
+<span class="n">REPO</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_REPO_ROOT</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="k">if</span> <span class="s1">'TUTORIAL_REPO_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="nb">next</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span> <span class="o">*</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">]</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s1">'examples/real/download_public_ct.py'</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">REPO</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'请下载完整仓库，并在仓库内启动Jupyter。'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">())</span>
+<span class="k">assert</span> <span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">()[</span><span class="s1">'metrics_backend'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'rust'</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_RUN_ROOT</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'TUTORIAL_RUN_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="n">Path</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s1">'radiomics-public-ct-'</span><span class="p">))</span>
+<span class="k">if</span> <span class="s1">'TUTORIAL_RUN_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">():</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ov_radiomics._backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_backend</span>
+<span class="n">native_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">resolve_backend</span><span class="p">(</span><span class="s1">'rust'</span><span class="p">)</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'tutorial-runtime.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+    <span class="s1">'backend'</span><span class="p">:</span> <span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">(),</span> <span class="s1">'native_sha256'</span><span class="p">:</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">native_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span>
+    <span class="s1">'interpreter'</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s1">'data_kind'</span><span class="p">:</span> <span class="s1">'real-public-ct-no-clinical-outcome'</span>
+<span class="p">},</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'新的结果目录:'</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'metrics_backend': 'rust', 'rust_core_version': '0.1.0'}
+新的结果目录: D:\radiomics-tutorial-validation\public-ct-execution-v1\07_public_ct\artifacts
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>2. 获取或复用已核验的真实文件<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>下列命令的 <code class="docutils literal notranslate"><span class="pre">--acknowledge-license</span></code> 是显式确认已阅读CC-BY-NC-3.0。首次运行约下载4MB；第二次复用同一缓存并重新校验SHA256。可以修改 <code class="docutils literal notranslate"><span class="pre">cache</span></code>，但不得放在Git工作树内。下载失败应修复网络或文件问题，不跳过哈希检查。</p>
+<p>此CSV只有影像、mask和来源身份，没有人为生成的结局。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cache</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_DATA_ROOT</span><span class="p">)</span> <span class="k">if</span> <span class="s1">'TUTORIAL_DATA_ROOT'</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="k">else</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">'radiomics-tutorial-data'</span> <span class="o">/</span> <span class="s1">'ibsi-pat1'</span>
+<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">REPO</span> <span class="o">/</span> <span class="s1">'examples/real/download_public_ct.py'</span><span class="p">),</span>
+                <span class="s1">'--output'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">cache</span><span class="p">),</span> <span class="s1">'--acknowledge-license'</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">read_cohort</span><span class="p">(</span><span class="n">cache</span> <span class="o">/</span> <span class="s1">'cohort.csv'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">samples</span><span class="p">[[</span><span class="s1">'ID'</span><span class="p">,</span> <span class="s1">'patient_id'</span><span class="p">,</span> <span class="s1">'image'</span><span class="p">,</span> <span class="s1">'mask'</span><span class="p">]])</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>patient_id</th>
+      <th>image</th>
+      <th>mask</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PAT1-GTV1</td>
+      <td>PAT1</td>
+      <td>\\?\D:\radiomics-tutorial-validation\public-ct...</td>
+      <td>\\?\D:\radiomics-tutorial-validation\public-ct...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="id3">
+<h2>3. 检查完整几何和标签<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">array</span></code> 的轴序为 <code class="docutils literal notranslate"><span class="pre">[z,</span> <span class="pre">y,</span> <span class="pre">x]</span></code>，几何的shape为 <code class="docutils literal notranslate"><span class="pre">[x,</span> <span class="pre">y,</span> <span class="pre">z]</span></code>。affine保留NIfTI的RAS世界坐标，不靠数组shape猜方向。这里没有自动重采样、配准或N4。真实数据若不对齐，应先显式处理并记录；不能仅调整绘图让它看起来匹配。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">rad_image</span><span class="o">.</span><span class="n">read_nifti</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'image'</span><span class="p">])</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">rad_mask</span><span class="o">.</span><span class="n">read_nifti</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'mask'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'影像几何:'</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'mask几何:'</span><span class="p">,</span> <span class="n">mask</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'affine:</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">affine</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="s1">'shape'</span><span class="p">]</span> <span class="o">==</span> <span class="n">mask</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="s1">'shape'</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">mask</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">volume</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">mask</span><span class="o">.</span><span class="n">array</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'数组shape(z,y,x):'</span><span class="p">,</span> <span class="n">volume</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s1">'mask标签:'</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+<span class="n">roi</span> <span class="o">=</span> <span class="n">labels</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="k">assert</span> <span class="n">roi</span><span class="o">.</span><span class="n">any</span><span class="p">(),</span> <span class="s1">'指定label=1的ROI为空'</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>影像几何: {'shape': [204, 201, 60], 'ndim': 3, 'affine': [[-0.9769999980926514, 0.0, 0.0, 174.39450073242188], [0.0, -0.9769999980926514, 0.0, 79.62550354003906], [0.0, 0.0, 3.0, -100.4000015258789], [0.0, 0.0, 0.0, 1.0]], 'unit': 'millimeter', 'diagnostics': [{'code': 'nifti_transforms', 'message': '{"coordinate_system":"RAS","qform":[[-0.9769999980926514,0.0,0.0,174.39450073242188],[0.0,-0.9769999980926514,0.0,79.62550354003906],[0.0,0.0,3.0,-100.4000015258789],[0.0,0.0,0.0,1.0]],"qform_code":2,"sform":[[-0.9769999980926514,0.0,0.0,174.39450073242188],[0.0,-0.9769999980926514,0.0,79.62550354003906],[0.0,0.0,3.0,-100.4000015258789],[0.0,0.0,0.0,1.0]],"sform_code":1}', 'severity': 'info', 'sample_id': None}]}
+mask几何: {'shape': [204, 201, 60], 'ndim': 3, 'affine': [[-0.9769999980926514, 0.0, 0.0, 174.39450073242188], [0.0, -0.9769999980926514, 0.0, 79.62550354003906], [0.0, 0.0, 3.0, -100.4000015258789], [0.0, 0.0, 0.0, 1.0]], 'unit': 'millimeter', 'diagnostics': [{'code': 'nifti_transforms', 'message': '{"coordinate_system":"RAS","qform":[[-0.9769999980926514,0.0,0.0,174.39450073242188],[0.0,-0.9769999980926514,0.0,79.62550354003906],[0.0,0.0,3.0,-100.4000015258789],[0.0,0.0,0.0,1.0]],"qform_code":2,"sform":[[-0.9769999980926514,0.0,0.0,174.39450073242188],[0.0,-0.9769999980926514,0.0,79.62550354003906],[0.0,0.0,3.0,-100.4000015258789],[0.0,0.0,0.0,1.0]],"sform_code":1}', 'severity': 'info', 'sample_id': None}]}
+affine:
+ [[  -0.977         0.            0.          174.39450073]
+ [   0.           -0.977         0.           79.62550354]
+ [   0.            0.            3.         -100.40000153]
+ [   0.            0.            0.            1.        ]]
+数组shape(z,y,x): (60, 201, 204) mask标签: [0 1]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="roi">
+<h2>4. 最大ROI截面与强度检查<a class="headerlink" href="#roi" title="Link to this heading">#</a></h2>
+<p>这是数组索引视图，不是自动校正后的放射学方向图。预览用ROI最大的z截面，叠加真实mask边界；不根据影像强度重新分割。窗宽仅影响显示，不改变提取输入。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">argmax</span><span class="p">())</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">volume</span><span class="p">[</span><span class="n">z</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1000</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">roi</span><span class="p">[</span><span class="n">z</span><span class="p">],</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">'#ef6c44'</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">'array[z=</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1">, y, x] · GTV label 1'</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">'x index'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'y index'</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">volume</span><span class="p">[</span><span class="n">roi</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#386c8e'</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">'ROI input intensities'</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">'NIfTI scaled intensity'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Voxel count'</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'ct-roi-and-intensity.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3cc22c7f7c42d699215d0bf460b1be1efeb31ce61c7ddae59a2927acc8f53554.png" src="../_images/3cc22c7f7c42d699215d0bf460b1be1efeb31ce61c7ddae59a2927acc8f53554.png" />
+</div>
+</div>
+</section>
+<section id="id4">
+<h2>5. 显式配置并调用共享提取器<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>先选择16项一阶＋11项基础形态，便于逐项阅读。bin width=25是本例演示配置，不是所有CT/MR/PET的通用建议。没有裁剪或重分割。完整55项统计/纹理加11项基础形态可把 <code class="docutils literal notranslate"><span class="pre">families</span></code> 改为 <code class="docutils literal notranslate"><span class="pre">None</span></code> 后在新目录重跑；不同配置不能混用验收结论。</p>
+<p>PyRadiomics兼容配置是 <code class="docutils literal notranslate"><span class="pre">python_golden_v1</span></code>，不把它自动称作IBSI CT A–E标准配置。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'extraction'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'profile'</span><span class="p">:</span> <span class="s1">'python_golden_v1'</span><span class="p">,</span>
+        <span class="s1">'discretization'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'method'</span><span class="p">:</span> <span class="s1">'fixed_width'</span><span class="p">,</span> <span class="s1">'width'</span><span class="p">:</span> <span class="mf">25.0</span><span class="p">},</span>
+        <span class="s1">'aggregation'</span><span class="p">:</span> <span class="s1">'direction_mean'</span><span class="p">,</span> <span class="s1">'gldm_alpha'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'voxel_array_shift'</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
+    <span class="s1">'families'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'firstorder'</span><span class="p">,</span> <span class="s1">'shape_basic'</span><span class="p">],</span>
+    <span class="s1">'labels'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">'preparation'</span><span class="p">:</span> <span class="p">[],</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">,</span>
+                     <span class="n">profile</span><span class="o">=</span><span class="s1">'python_golden_v1'</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">'value'</span><span class="p">}))</span>
+<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">[</span><span class="s1">'ok'</span><span class="p">]</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">27</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ID</th>
+      <th>patient_id</th>
+      <th>ok</th>
+      <th>error</th>
+      <th>cache_key</th>
+      <th>quality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PAT1-GTV1</td>
+      <td>PAT1</td>
+      <td>True</td>
+      <td></td>
+      <td>f02713f4f5db39aa9baf902c38f4a699b668e004614166...</td>
+      <td>[{"code": "nifti_transforms", "message": "{\"c...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ID</th>
+      <td>PAT1-GTV1</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_10Percentile</th>
+      <td>-434.0</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_90Percentile</th>
+      <td>93.0</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Energy</th>
+      <td>6963080832.0</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Entropy</th>
+      <td>3.83534</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_InterquartileRange</th>
+      <td>69.0</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Kurtosis</th>
+      <td>6.644312</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Maximum</th>
+      <td>723.0</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Mean</th>
+      <td>-46.88272</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_MeanAbsoluteDeviation</th>
+      <td>160.104375</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Median</th>
+      <td>41.0</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Minimum</th>
+      <td>-1000.0</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Range</th>
+      <td>1723.0</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_RootMeanSquared</th>
+      <td>235.777006</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Skewness</th>
+      <td>-2.161037</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Uniformity</th>
+      <td>0.126324</td>
+    </tr>
+    <tr>
+      <th>original_firstorder_Variance</th>
+      <td>53392.807252</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_BoundingBoxMinX_index</th>
+      <td>51.0</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_BoundingBoxMinY_index</th>
+      <td>51.0</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_BoundingBoxMinZ_index</th>
+      <td>17.0</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_BoundingBoxSizeX_voxels</th>
+      <td>100.0</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_BoundingBoxSizeY_voxels</th>
+      <td>99.0</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_BoundingBoxSizeZ_voxels</th>
+      <td>26.0</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_CentroidX_mm</th>
+      <td>74.484512</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_CentroidY_mm</th>
+      <td>-16.332758</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_CentroidZ_mm</th>
+      <td>-18.7425</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_Volume_mm3</th>
+      <td>358681.451872</td>
+    </tr>
+    <tr>
+      <th>original_shape_basic_VoxelCount</th>
+      <td>125256.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="id5">
+<h2>6. 保存文件、定义和可追溯参数<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>一个数值CSV不够说明研究流程。一起保存样本身份、特征定义、有效参数、质量记录与来源。公开CT输入保留在外置缓存，结果目录只包含本次导出。undefined特征的缺失标记要阅读质量记录，不能任意补成零。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'extraction'</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">feature_table</span>
+<span class="n">table</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'features.csv'</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'metadata.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">provenance</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'dataset'</span><span class="p">:</span> <span class="s1">'IBSI PAT1 CT/GTV-1'</span><span class="p">,</span> <span class="s1">'license'</span><span class="p">:</span> <span class="s1">'CC-BY-NC-3.0'</span><span class="p">,</span>
+    <span class="s1">'source_revision'</span><span class="p">:</span> <span class="s1">'6da96021bc91faf4c0cb7fd7fa56a4225d2064a8'</span><span class="p">,</span>
+    <span class="s1">'input_sha256'</span><span class="p">:</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">((</span><span class="n">cache</span><span class="o">/</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+                     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'image.nii.gz'</span><span class="p">,</span> <span class="s1">'mask.nii.gz'</span><span class="p">]},</span>
+    <span class="s1">'backend'</span><span class="p">:</span> <span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">(),</span> <span class="s1">'effective_config'</span><span class="p">:</span> <span class="n">config</span><span class="p">,</span>
+    <span class="s1">'clinical_outcome_available'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'provenance.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">provenance</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+<span class="n">restored</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">FeatureTable</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'features.csv'</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_frame_equal</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">restored</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">check_exact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'结果文件:'</span><span class="p">,</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>结果文件: ['ct-roi-and-intensity.png', 'extraction', 'features.csv', 'features.csv.manifest.json', 'metadata.csv', 'provenance.json', 'tutorial-runtime.json']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id6">
+<h2>7. 怎么解读，如何换成自己的数据<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>先核对ROI边界、单位、VoxelCount、Volume和强度范围，再看具体特征。这里仅一例，任何“分类AUC”“外部验证”或“预后概率”都是不成立的。对自己的影像创建队列CSV，按<a class="reference internal" href="../reference/user-guide/file-workflows.html"><span class="std std-doc">文件工作流</span></a>提取，再用真实患者结局和患者级划分建模。</p>
+<p>自己的CT/ROI可直接运行：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/real/nifti_extract.py<span class="w"> </span>--cohort<span class="w"> </span>my-cohort.csv<span class="w"> </span>--bin-width<span class="w"> </span><span class="m">25</span><span class="w"> </span>--features<span class="w"> </span>basic<span class="w"> </span>--output<span class="w"> </span>results/my-extraction
+</pre></div>
+</div>
+<p>重跑全部单元会生成新结果目录。只重跑保存单元可能触发防覆盖错误；请重建输出目录变量，勿删除已有研究结果来绕过错误。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="real-data.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">真实数据：CT 提取与表格建模</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="08_public_tabular.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">08 · 真实公开表格：固定留出、原生二分类与无标签预测</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. 核对原生环境</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2. 获取或复用已核验的真实文件</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3. 检查完整几何和标签</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#roi">4. 最大ROI截面与强度检查</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5. 显式配置并调用共享提取器</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6. 保存文件、定义和可追溯参数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7. 怎么解读，如何换成自己的数据</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/07_public_ct.ipynb.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

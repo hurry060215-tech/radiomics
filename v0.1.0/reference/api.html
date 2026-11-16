@@ -1,0 +1,965 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API reference &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/api';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/v0.1.0/reference/api.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Native Python workflows" href="python-native.html" />
+    <link rel="prev" title="API 与 CLI 参考" href="../reference.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">入口与数据</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python-native.html">Native Python workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="table-io-native.html">Native flat-table input and feature-table export</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">影像与特征</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="image-native.html">Native images and ROI preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features-native.html">Native Original feature subset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="native-extraction.html">Native NIfTI extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="research-native.html">Native keyed research transformations and basic habitats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">建模与统计</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="preprocessing-native.html">Native train-fitted table preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning-native.html">Patient-grouped native learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models-native.html">Native models and sparse solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation-native.html">Native evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clinical-native.html">Native complete-case binary logistic inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="baseline-native.html">Native observed-data baseline tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reliability-native.html">Native single-rating intraclass correlation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">轻量病理与互操作</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pathology-pixels.html">Native lightweight pathology pixels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-aggregate.html">Native tile identity, hierarchy summaries and local overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interop.html">Explicit external embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">独立 CLI</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cli-workflows-native.html">Native learning CLI workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-cli-native.html">Native lightweight pathology CLI</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../reference.html" class="nav-link">API 与 CLI 参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">API reference</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="api-reference">
+<h1>API reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
+<p>Import with <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">ov_radiomics</span> <span class="pre">as</span> <span class="pre">rad</span></code>. The native APIs and optional legacy
+Python/reference APIs are distinct execution paths. The compatibility defaults
+for selection/training/clinical functions remain <code class="docutils literal notranslate"><span class="pre">backend='python'</span></code>; request
+<code class="docutils literal notranslate"><span class="pre">backend='rust'</span></code> (or native <code class="docutils literal notranslate"><span class="pre">auto</span></code>) for the independent core. No native request
+invokes a reference estimator or silently changes an unsupported algorithm.</p>
+<section id="current-native-interfaces">
+<h2>Current native interfaces<a class="headerlink" href="#current-native-interfaces" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="image-native.html"><span class="std std-doc">Image preparation and geometry</span></a>, <a class="reference internal" href="features-native.html"><span class="std std-doc">feature subset and profiles</span></a>,
+<a class="reference internal" href="native-extraction.html"><span class="std std-doc">cohort extraction</span></a>, <a class="reference internal" href="table-io-native.html"><span class="std std-doc">CSV/Parquet roles and joins</span></a>.</p></li>
+<li><p><a class="reference internal" href="learning-native.html"><span class="std std-doc">Grouped three-task learning and portable .rad files</span></a>,
+<a class="reference internal" href="models-native.html"><span class="std std-doc">models/objectives</span></a>, <a class="reference internal" href="preprocessing-native.html"><span class="std std-doc">screening</span></a>,
+<a class="reference internal" href="evaluation-native.html"><span class="std std-doc">evaluation</span></a>, <a class="reference internal" href="clinical-native.html"><span class="std std-doc">clinical inference</span></a>,
+<a class="reference internal" href="baseline-native.html"><span class="std std-doc">baseline tables</span></a>, <a class="reference internal" href="reliability-native.html"><span class="std std-doc">typed ICC</span></a>.</p></li>
+<li><p><a class="reference internal" href="interop.html"><span class="std std-doc">Thin external/WSIData adapters</span></a>, <a class="reference internal" href="python-native.html"><span class="std std-doc">native Python workflows</span></a>
+and <a class="reference internal" href="cli-workflows-native.html"><span class="std std-doc">CLI commands</span></a>.</p></li>
+</ul>
+<p>Native sample IDs are unique; patients may have multiple lesions/slides. Every
+fitted stage uses the actual patient sets in the shared SplitPlan, including
+inner tuning and fusion. External cohorts remain distinct. Models store ordered
+features/classes, preprocessing/selection/model state, threshold and training
+provenance. <code class="docutils literal notranslate"><span class="pre">rad.load_model(path).predict(dataframe)</span></code> supports outcome-free
+pipeline prediction, including feature-column reordering. Native <code class="docutils literal notranslate"><span class="pre">evaluate</span></code>
+defaults to patient aggregation and the saved model threshold; a standalone
+binary PredictionTable requires an explicit saved threshold. Macro/micro/weighted
+summaries are flattened and complete native reports remain in DataFrame
+<code class="docutils literal notranslate"><span class="pre">attrs['native_reports']</span></code>.</p>
+<p>Clinical native APIs default to <code class="docutils literal notranslate"><span class="pre">analysis_unit='patient'</span></code>, reject repeated patient
+rows and require identified inputs. Explicit <code class="docutils literal notranslate"><span class="pre">analysis_unit='sample'</span></code> records a
+row-level scope; it does not establish patient independence. CDF/quantiles,
+H–L grouping and legacy-compatible bootstrap indices now execute in Rust.</p>
+<p><code class="docutils literal notranslate"><span class="pre">plot_nomogram</span></code> accepts native binary Logistic fusion results and reloaded fusion
+bundles, reading saved coefficients without fitting. <code class="docutils literal notranslate"><span class="pre">plot_cv_results</span></code> accepts
+binary AUC, multiclass macro OvR AUC and regression RMSE, with an explicit metric
+for generic score tables. These plots need no sklearn/seaborn. Other legacy
+selector-path/Rad-score and learning-curve views retain their stated limits; see
+the <a class="reference internal" href="native-boundaries.html"><span class="std std-doc">native capability boundaries</span></a>.</p>
+</section>
+<section id="legacy-python-reference-api-below">
+<h2>Legacy Python/reference API below<a class="headerlink" href="#legacy-python-reference-api-below" title="Link to this heading">#</a></h2>
+<p>The remaining reference tables describe the original optional Python workflow,
+including its independent-row/binary limits, sklearn objects and joblib format.
+They do not describe native capabilities or native persistence. Some old metric
+implementation notes are retained as migration history; current native numerical
+ownership is specified above and in <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e/docs/rust.md">Rust architecture</a>.</p>
+</section>
+<section id="input-and-result-contracts">
+<h2>Input and result contracts<a class="headerlink" href="#input-and-result-contracts" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">samples</span></code>: a DataFrame with unique, nonmissing <code class="docutils literal notranslate"><span class="pre">ID</span></code>, <code class="docutils literal notranslate"><span class="pre">image</span></code>, <code class="docutils literal notranslate"><span class="pre">mask</span></code>; optional per-row <code class="docutils literal notranslate"><span class="pre">roi_label</span></code>.</p></li>
+<li><p>Paths in <code class="docutils literal notranslate"><span class="pre">samples</span></code> are used as provided; <code class="docutils literal notranslate"><span class="pre">match_images</span></code> returns absolute paths. <code class="docutils literal notranslate"><span class="pre">ID</span></code> retains the exact filename, including <code class="docutils literal notranslate"><span class="pre">.nii.gz</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extract(params=...)</span></code>: PyRadiomics YAML path or dictionary with <code class="docutils literal notranslate"><span class="pre">imageType</span></code>, <code class="docutils literal notranslate"><span class="pre">featureClass</span></code>, <code class="docutils literal notranslate"><span class="pre">setting</span></code>. <code class="docutils literal notranslate"><span class="pre">roi_label</span></code> and <code class="docutils literal notranslate"><span class="pre">correct_mask</span></code> are explicit call-time controls. <code class="docutils literal notranslate"><span class="pre">params=None</span></code> uses and records backend defaults. It does not silently read a local YAML.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ExtractionResult.features</span></code>: ID + numeric feature columns. Diagnostics are stored separately. With <code class="docutils literal notranslate"><span class="pre">on_error=&quot;record&quot;</span></code>, failed IDs remain in the result and carry missing feature values. Review <code class="docutils literal notranslate"><span class="pre">.diagnostics</span></code> before modeling.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: one row per independent patient. The initial workflow accepts exactly <code class="docutils literal notranslate"><span class="pre">train</span></code> and <code class="docutils literal notranslate"><span class="pre">test</span></code> in the split column. Labels default to binary 0/1; <code class="docutils literal notranslate"><span class="pre">train_models(positive_label=...)</span></code> supports another positive label and stores predictions as 0/1.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">features</span></code>: explicitly selected column names, excluding ID, outcome, and split. No automatic target guessing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FeatureSelector.fit(X_train,y_train)</span></code> returns the fitted selector; <code class="docutils literal notranslate"><span class="pre">transform(X)</span></code> applies stored training parameters. <code class="docutils literal notranslate"><span class="pre">get_feature_names_out()</span></code> exposes retained names. <code class="docutils literal notranslate"><span class="pre">linear_score()</span></code> is a squared-loss LASSO score, not probability.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FeatureSelector(missing=&quot;drop&quot;)</span></code> drops columns with training missingness; missing values later appearing in retained columns raise an error. <code class="docutils literal notranslate"><span class="pre">missing=&quot;median&quot;</span></code> learns and reuses training medians. Infinite feature values are treated as missing by the selector; the high-level training function rejects infinity at input.</p></li>
+<li><p>Correlation filtering uses <code class="docutils literal notranslate"><span class="pre">abs(correlation)&gt;corr_threshold</span></code>. Ties are resolved by stable input-column order, not outcome-based ranking. Set <code class="docutils literal notranslate"><span class="pre">corr_threshold=None</span></code> to disable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">univariate=None</span></code> disables p-value screening; otherwise choose <code class="docutils literal notranslate"><span class="pre">mannwhitney</span></code> or <code class="docutils literal notranslate"><span class="pre">welch</span></code>. <code class="docutils literal notranslate"><span class="pre">p_adjust=None</span></code> means unadjusted screening; e.g. <code class="docutils literal notranslate"><span class="pre">p_adjust=&quot;fdr_bh&quot;</span></code> requests a statsmodels-supported correction. These screening tests are not confirmatory findings.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alpha=&quot;cv&quot;</span></code> tunes the full filtering+LASSO pipeline using an explicit grid (default 16 log-spaced values from 1e-4 to about 0.316). <code class="docutils literal notranslate"><span class="pre">alphas=</span></code> replaces the grid. Numeric <code class="docutils literal notranslate"><span class="pre">alpha</span></code> fixes it. Empty selections raise errors rather than silently changing criteria.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">baseline_table</span></code>: observed-data summaries, numeric <code class="docutils literal notranslate"><span class="pre">p_value</span></code>, test name, counts/missingness. <code class="docutils literal notranslate"><span class="pre">split=</span></code> stratifies tables; it does not compare cohorts to one another.</p></li>
+<li><p>Logistic inference: complete cases, binary target 0/1, explicit reference categories, Wald OR confidence intervals. The fitted statsmodels result is available through <code class="docutils literal notranslate"><span class="pre">.model</span></code>. No automatic imputation, stepwise selection or multiplicity correction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TrainingResult</span></code>: <code class="docutils literal notranslate"><span class="pre">.models</span></code> (full pipelines), <code class="docutils literal notranslate"><span class="pre">.cv_results</span></code>, <code class="docutils literal notranslate"><span class="pre">.oof_predictions</span></code>, <code class="docutils literal notranslate"><span class="pre">.predictions</span></code>, <code class="docutils literal notranslate"><span class="pre">.features</span></code>, <code class="docutils literal notranslate"><span class="pre">.config</span></code>. <code class="docutils literal notranslate"><span class="pre">.predict_proba(data,</span> <span class="pre">model=...)</span></code> uses original feature columns. <code class="docutils literal notranslate"><span class="pre">.save(directory)</span></code> persists the whole result with joblib and tabular outputs. Only load trusted joblib files.</p></li>
+<li><p>Training predictions use long columns <code class="docutils literal notranslate"><span class="pre">ID,</span> <span class="pre">y_true,</span> <span class="pre">model,</span> <span class="pre">probability,</span> <span class="pre">group,</span> <span class="pre">prediction_type</span></code>. OOF rows instead include <code class="docutils literal notranslate"><span class="pre">fold</span></code>. CV AUC is a fraction in [0,1]. Models are not automatically ranked or selected by test results.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fusion_data</span></code> strictly aligns patients, outcomes and OOF fold IDs. It currently requires <code class="docutils literal notranslate"><span class="pre">ID</span></code> as the ID column. Use the same CV seed, folds and row order for both components.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fit_fusion</span></code> accepts marked OOF predictions and trains LR on those score columns. The caller is responsible for truthful provenance when supplying custom tables. <code class="docutils literal notranslate"><span class="pre">.predict_proba()</span></code> needs only the named probability columns.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary_metrics</span></code>: one 1D positive-class probability vector. Threshold is explicit and never optimized on the supplied outcomes. CI methods: <code class="docutils literal notranslate"><span class="pre">delong</span></code>, stratified <code class="docutils literal notranslate"><span class="pre">bootstrap</span></code>, or <code class="docutils literal notranslate"><span class="pre">None</span></code>. Bootstrap is patient-level only under this workflow’s independent-row assumption.</p></li>
+<li><p>Metric functions accept <code class="docutils literal notranslate"><span class="pre">backend=&quot;auto&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;rust&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;python&quot;</span></code>. Auto requires the native extension; absent/broken modules never trigger reference fallback. <code class="docutils literal notranslate"><span class="pre">backend_info()</span></code> is read-only. Native distributions, grouping and bootstrap execute in Rust; the explicit Python reference retains its frozen behavior. <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> without a backend infers the engine from an existing typed result; explicit auto only accepts native results.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delong_test</span></code> returns ordinary two-sided <code class="docutils literal notranslate"><span class="pre">p_value</span></code> and <code class="docutils literal notranslate"><span class="pre">z</span></code>. Identical scores return p=1; a nonzero difference with zero estimated variance returns p=0. DeLong needs at least two observations per class.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">decision_curve</span></code>: thresholds strictly inside (0,1); includes treat-all and treat-none baselines. No prevalence correction for case-control sampling is performed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hosmer_lemeshow</span></code>: quantile groups with duplicate boundaries removed, df = actual groups - 2. Undefined groups raise errors.</p></li>
+<li><p>Plotting returns an Axes, except clustered correlation (seaborn ClusterGrid) and nomogram (Figure). No automatic output directory or global styling side effects. Save with <code class="docutils literal notranslate"><span class="pre">ax.figure.savefig(...)</span></code> / <code class="docutils literal notranslate"><span class="pre">figure.savefig(...)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_nomogram</span></code>: probability predictors range over [0,1]. Default risk ticks use the model’s attainable range; explicit out-of-range ticks are omitted.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_embedding</span></code>: exploratory PCA/SVD/t-SNE/Isomap/MDS/LLE/spectral/random projection. It fits on supplied X; never interpret this display as test performance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_learning_curve</span></code>: supply training data and an unfitted full pipeline. It clones and fits it in CV. SMOTE needs its optional dependency and is only allowed on numeric input.</p></li>
+</ul>
+</section>
+<section id="classifier-adapters">
+<h2>Classifier adapters<a class="headerlink" href="#classifier-adapters" title="Link to this heading">#</a></h2>
+<p>All model parameters can be overridden using <code class="docutils literal notranslate"><span class="pre">make_classifier(...,</span> <span class="pre">**model_params)</span></code> or per-model <code class="docutils literal notranslate"><span class="pre">train_models(model_params={...})</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Explicit adapter defaults beyond backend defaults</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>LR</p></td>
+<td><p>max_iter=2000, random_state</p></td>
+</tr>
+<tr class="row-odd"><td><p>SVM</p></td>
+<td><p>probability=True, random_state</p></td>
+</tr>
+<tr class="row-even"><td><p>KNN</p></td>
+<td><p>sklearn defaults</p></td>
+</tr>
+<tr class="row-odd"><td><p>RandomForest</p></td>
+<td><p>n_estimators=200, n_jobs=1, random_state</p></td>
+</tr>
+<tr class="row-even"><td><p>ExtraTrees</p></td>
+<td><p>n_estimators=200, n_jobs=1, random_state</p></td>
+</tr>
+<tr class="row-odd"><td><p>MLP</p></td>
+<td><p>hidden_layer_sizes=(32,), max_iter=2000, random_state</p></td>
+</tr>
+<tr class="row-even"><td><p>XGBoost</p></td>
+<td><p>n_estimators=100, max_depth=3, eval_metric=logloss, n_jobs=1, random_state</p></td>
+</tr>
+<tr class="row-odd"><td><p>LightGBM</p></td>
+<td><p>n_estimators=100, verbosity=-1, n_jobs=1, random_state</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="image-input-and-extraction">
+<h2>Image input and extraction<a class="headerlink" href="#image-input-and-extraction" title="Link to this heading">#</a></h2>
+<section id="match-images">
+<h3><code class="docutils literal notranslate"><span class="pre">match_images</span></code><a class="headerlink" href="#match-images" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">match_images</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">image_dir</span><span class="o">=</span><span class="s1">'images'</span><span class="p">,</span> <span class="n">mask_dir</span><span class="o">=</span><span class="s1">'masks'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pair .nii/.nii.gz files by exact filename. IDs retain the filename.</p>
+</section>
+<section id="check-images">
+<h3><code class="docutils literal notranslate"><span class="pre">check_images</span></code><a class="headerlink" href="#check-images" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">check_images</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">roi_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">geometry_tolerance</span><span class="o">=</span><span class="mf">1e-06</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Read each pair and report geometry mismatch and absent ROI without modifying files.</p>
+</section>
+<section id="extract">
+<h3><code class="docutils literal notranslate"><span class="pre">extract</span></code><a class="headerlink" href="#extract" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extract</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">roi_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">correct_mask</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="s1">'raise'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Extract ROI features. params is a PyRadiomics YAML path or parameter dictionary.</p>
+<p>Explicit correct_mask overrides the backend setting. No implicit disk cache.
+on_error=’record’ keeps failed IDs in diagnostics and features (NaN values).</p>
+</section>
+<section id="join-data">
+<h3><code class="docutils literal notranslate"><span class="pre">join_data</span></code><a class="headerlink" href="#join-data" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">join_data</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Strict one-to-one join; never silently discard subjects or duplicate columns.</p>
+</section>
+</section>
+<section id="feature-processing">
+<h2>Feature processing<a class="headerlink" href="#feature-processing" title="Link to this heading">#</a></h2>
+<section id="featureselector">
+<h3><code class="docutils literal notranslate"><span class="pre">FeatureSelector</span></code><a class="headerlink" href="#featureselector" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">FeatureSelector</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="s1">'standard'</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="s1">'drop'</span><span class="p">,</span> <span class="n">univariate</span><span class="o">=</span><span class="s1">'mannwhitney'</span><span class="p">,</span> <span class="n">p_threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">p_adjust</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">corr_method</span><span class="o">=</span><span class="s1">'pearson'</span><span class="p">,</span> <span class="n">corr_threshold</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">lasso</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="s1">'cv'</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">coef_threshold</span><span class="o">=</span><span class="mf">1e-06</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alphas</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Univariate -&gt; absolute correlation -&gt; optional squared-loss LASSO.</p>
+<p>alpha=’cv’ tunes the ENTIRE preprocessing/LASSO pipeline inside training data.
+Outer model CV clones this selector, preventing held-out feature-selection leakage.
+The LASSO linear score is not a probability or a logistic model.</p>
+</section>
+</section>
+<section id="clinical-statistics">
+<h2>Clinical statistics<a class="headerlink" href="#clinical-statistics" title="Link to this heading">#</a></h2>
+<section id="baseline-table">
+<h3><code class="docutils literal notranslate"><span class="pre">baseline_table</span></code><a class="headerlink" href="#baseline-table" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">baseline_table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">continuous</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">continuous_test</span><span class="o">=</span><span class="s1">'mannwhitney'</span><span class="p">,</span> <span class="n">categorical_test</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Compare outcome classes within each split. No imputation, encoding, or selection.</p>
+<p>Continuous summaries: n, mean, SD, median, Q1, Q3. Categorical summaries:
+counts and proportions among nonmissing observations, with missing counts separate.</p>
+</section>
+<section id="univariate-logistic">
+<h3><code class="docutils literal notranslate"><span class="pre">univariate_logistic</span></code><a class="headerlink" href="#univariate-logistic" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">univariate_logistic</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="multivariable-logistic">
+<h3><code class="docutils literal notranslate"><span class="pre">multivariable_logistic</span></code><a class="headerlink" href="#multivariable-logistic" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">multivariable_logistic</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Complete-case unpenalized Logit with explicit reference categories and Wald CIs.</p>
+<p>No implicit stepwise selection. Perfect separation / rank deficiency are errors.</p>
+</section>
+</section>
+<section id="training-and-probability-fusion">
+<h2>Training and probability fusion<a class="headerlink" href="#training-and-probability-fusion" title="Link to this heading">#</a></h2>
+<section id="split-data">
+<h3><code class="docutils literal notranslate"><span class="pre">split_data</span></code><a class="headerlink" href="#split-data" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">split_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">'group'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>One row per independent patient. Retain a supplied split instead of calling this.</p>
+</section>
+<section id="make-classifier">
+<h3><code class="docutils literal notranslate"><span class="pre">make_classifier</span></code><a class="headerlink" href="#make-classifier" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">make_classifier</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'LR'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">model_params</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create an estimator. XGBoost and LightGBM import only when requested.</p>
+</section>
+<section id="train-models">
+<h3><code class="docutils literal notranslate"><span class="pre">train_models</span></code><a class="headerlink" href="#train-models" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_models</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">'group'</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="p">(</span><span class="s1">'LR'</span><span class="p">,),</span> <span class="n">selector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">continuous</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">'roc_auc'</span><span class="p">,</span> <span class="n">model_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">id_col</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">,</span> <span class="n">positive_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">smote</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Fit cloneable pipelines using only train rows; test rows are prediction-only.</p>
+<p>Initial scope: one sample per independent patient. Repeated patients are rejected.
+OOF predictions refit preprocessing, feature selection and the estimator in each fold.</p>
+</section>
+<section id="fusion-data">
+<h3><code class="docutils literal notranslate"><span class="pre">fusion_data</span></code><a class="headerlink" href="#fusion-data" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fusion_data</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">'LR'</span><span class="p">,</span> <span class="n">cohort</span><span class="o">=</span><span class="s1">'oof'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Strictly align named TrainingResults into fusion input, e.g. {‘Rad’: rad, ‘Clinical’: clinic}.</p>
+</section>
+<section id="fit-fusion">
+<h3><code class="docutils literal notranslate"><span class="pre">fit_fusion</span></code><a class="headerlink" href="#fit-fusion" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fit_fusion</span><span class="p">(</span><span class="n">oof_predictions</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s1">'y_true'</span><span class="p">,</span> <span class="n">score_columns</span><span class="o">=</span><span class="p">(</span><span class="s1">'Rad'</span><span class="p">,</span> <span class="s1">'Clinical'</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="s1">'LR'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Fit logistic probability fusion from OOF base predictions, never holdout labels.</p>
+</section>
+<section id="evaluate">
+<h3><code class="docutils literal notranslate"><span class="pre">evaluate</span></code><a class="headerlink" href="#evaluate" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">evaluate</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ci_method</span><span class="o">=</span><span class="s1">'delong'</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Summarize standardized long predictions by model and cohort.</p>
+</section>
+</section>
+<section id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading">#</a></h2>
+<section id="backend-info">
+<h3><code class="docutils literal notranslate"><span class="pre">backend_info</span></code><a class="headerlink" href="#backend-info" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">backend_info</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Report the actual default metric backend; does not change process-wide settings.</p>
+</section>
+<section id="binary-metrics">
+<h3><code class="docutils literal notranslate"><span class="pre">binary_metrics</span></code><a class="headerlink" href="#binary-metrics" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">binary_metrics</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">positive_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ci_method</span><span class="o">=</span><span class="s1">'delong'</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">n_bootstrap</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Return the existing metric Series; backend is auto, rust, or python.</p>
+<p>Bootstrap draws retain the NumPy RandomState sequence for cross-backend parity.
+Normal quantiles remain SciPy calculations; Rust supplies numerical kernels.</p>
+</section>
+<section id="delong-test">
+<h3><code class="docutils literal notranslate"><span class="pre">delong_test</span></code><a class="headerlink" href="#delong-test" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">delong_test</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">score_a</span><span class="p">,</span> <span class="n">score_b</span><span class="p">,</span> <span class="n">positive_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Two-sided paired test; rows must refer to the same independent subjects.</p>
+</section>
+<section id="decision-curve">
+<h3><code class="docutils literal notranslate"><span class="pre">decision_curve</span></code><a class="headerlink" href="#decision-curve" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">decision_curve</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">thresholds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">positive_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="hosmer-lemeshow">
+<h3><code class="docutils literal notranslate"><span class="pre">hosmer_lemeshow</span></code><a class="headerlink" href="#hosmer-lemeshow" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hosmer_lemeshow</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">positive_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="figures">
+<h2>Figures<a class="headerlink" href="#figures" title="Link to this heading">#</a></h2>
+<section id="plot-roc">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_roc</span></code><a class="headerlink" href="#plot-roc" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_roc</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'ROC'</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-calibration">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_calibration</span></code><a class="headerlink" href="#plot-calibration" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_calibration</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">'quantile'</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Calibration'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-dca">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_dca</span></code><a class="headerlink" href="#plot-dca" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_dca</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Decision curve'</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-confusion-matrix">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_confusion_matrix</span></code><a class="headerlink" href="#plot-confusion-matrix" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="p">(</span><span class="s1">'Negative'</span><span class="p">,</span> <span class="s1">'Positive'</span><span class="p">),</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Confusion matrix'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'Blues'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-prediction-scores">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_prediction_scores</span></code><a class="headerlink" href="#plot-prediction-scores" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_prediction_scores</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Sample probabilities'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-correlation">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_correlation</span></code><a class="headerlink" href="#plot-correlation" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_correlation</span><span class="p">(</span><span class="n">correlation</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'vlag'</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Feature correlation'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-lasso-path">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_lasso_path</span></code><a class="headerlink" href="#plot-lasso-path" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_lasso_path</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'LASSO coefficient path'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-lasso-cv">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_lasso_cv</span></code><a class="headerlink" href="#plot-lasso-cv" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_lasso_cv</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'LASSO CV error'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-feature-weights">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_feature_weights</span></code><a class="headerlink" href="#plot-feature-weights" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_feature_weights</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Feature weights'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-cv-results">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_cv_results</span></code><a class="headerlink" href="#plot-cv-results" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_cv_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Cross-validation AUC'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-metrics">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_metrics</span></code><a class="headerlink" href="#plot-metrics" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_metrics</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">'auc'</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">'bar'</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-feature-summary">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_feature_summary</span></code><a class="headerlink" href="#plot-feature-summary" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_feature_summary</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">'bar'</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Radiomics feature families'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-feature-pvalues">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_feature_pvalues</span></code><a class="headerlink" href="#plot-feature-pvalues" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_feature_pvalues</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Univariate feature p-values'</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plot-embedding">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_embedding</span></code><a class="headerlink" href="#plot-embedding" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_embedding</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'pca'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Exploratory embedding only; never a model validation statistic.</p>
+</section>
+<section id="plot-learning-curve">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_learning_curve</span></code><a class="headerlink" href="#plot-learning-curve" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_learning_curve</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">train_sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">'roc_auc'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Use training data and an unfitted full pipeline, including feature selection.</p>
+</section>
+<section id="plot-nomogram">
+<h3><code class="docutils literal notranslate"><span class="pre">plot_nomogram</span></code><a class="headerlink" href="#plot-nomogram" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_nomogram</span><span class="p">(</span><span class="n">fusion</span><span class="p">,</span> <span class="n">risk_ticks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Additive point nomogram for a fitted LR fusion of probabilities in [0,1].</p>
+<p>Each predictor contributes nonnegative points; their sum maps exactly to the
+fitted logistic probability. No fitting occurs here.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../reference.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">API 与 CLI 参考</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="python-native.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Native Python workflows</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#current-native-interfaces">Current native interfaces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#legacy-python-reference-api-below">Legacy Python/reference API below</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input-and-result-contracts">Input and result contracts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classifier-adapters">Classifier adapters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-input-and-extraction">Image input and extraction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#match-images"><code class="docutils literal notranslate"><span class="pre">match_images</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-images"><code class="docutils literal notranslate"><span class="pre">check_images</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extract"><code class="docutils literal notranslate"><span class="pre">extract</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#join-data"><code class="docutils literal notranslate"><span class="pre">join_data</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-processing">Feature processing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#featureselector"><code class="docutils literal notranslate"><span class="pre">FeatureSelector</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clinical-statistics">Clinical statistics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-table"><code class="docutils literal notranslate"><span class="pre">baseline_table</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#univariate-logistic"><code class="docutils literal notranslate"><span class="pre">univariate_logistic</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariable-logistic"><code class="docutils literal notranslate"><span class="pre">multivariable_logistic</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-probability-fusion">Training and probability fusion</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#split-data"><code class="docutils literal notranslate"><span class="pre">split_data</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#make-classifier"><code class="docutils literal notranslate"><span class="pre">make_classifier</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-models"><code class="docutils literal notranslate"><span class="pre">train_models</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fusion-data"><code class="docutils literal notranslate"><span class="pre">fusion_data</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-fusion"><code class="docutils literal notranslate"><span class="pre">fit_fusion</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">Evaluation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-info"><code class="docutils literal notranslate"><span class="pre">backend_info</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-metrics"><code class="docutils literal notranslate"><span class="pre">binary_metrics</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delong-test"><code class="docutils literal notranslate"><span class="pre">delong_test</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-curve"><code class="docutils literal notranslate"><span class="pre">decision_curve</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hosmer-lemeshow"><code class="docutils literal notranslate"><span class="pre">hosmer_lemeshow</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#figures">Figures</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-roc"><code class="docutils literal notranslate"><span class="pre">plot_roc</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-calibration"><code class="docutils literal notranslate"><span class="pre">plot_calibration</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-dca"><code class="docutils literal notranslate"><span class="pre">plot_dca</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-confusion-matrix"><code class="docutils literal notranslate"><span class="pre">plot_confusion_matrix</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-prediction-scores"><code class="docutils literal notranslate"><span class="pre">plot_prediction_scores</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-correlation"><code class="docutils literal notranslate"><span class="pre">plot_correlation</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-lasso-path"><code class="docutils literal notranslate"><span class="pre">plot_lasso_path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-lasso-cv"><code class="docutils literal notranslate"><span class="pre">plot_lasso_cv</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-feature-weights"><code class="docutils literal notranslate"><span class="pre">plot_feature_weights</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-cv-results"><code class="docutils literal notranslate"><span class="pre">plot_cv_results</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-metrics"><code class="docutils literal notranslate"><span class="pre">plot_metrics</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-feature-summary"><code class="docutils literal notranslate"><span class="pre">plot_feature_summary</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-feature-pvalues"><code class="docutils literal notranslate"><span class="pre">plot_feature_pvalues</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-embedding"><code class="docutils literal notranslate"><span class="pre">plot_embedding</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-learning-curve"><code class="docutils literal notranslate"><span class="pre">plot_learning_curve</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-nomogram"><code class="docutils literal notranslate"><span class="pre">plot_nomogram</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/api.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e">
+  Build <code>bb2d3fe</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

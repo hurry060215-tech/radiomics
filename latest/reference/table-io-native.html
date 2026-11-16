@@ -1,0 +1,750 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Native flat-table input and feature-table export &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/table-io-native';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/reference/table-io-native.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Native images and ROI preparation" href="image-native.html" />
+    <link rel="prev" title="Native Python workflows" href="python-native.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">入口与数据</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/ov_radiomics.html">Public Python API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.backend_info.html">ov_radiomics.backend_info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.SplitPlan.html">ov_radiomics.SplitPlan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.match_images.html">ov_radiomics.match_images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.check_images.html">ov_radiomics.check_images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.extract.html">ov_radiomics.extract</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.read_cohort.html">ov_radiomics.read_cohort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.ExtractionResult.html">ov_radiomics.ExtractionResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.FeatureSelector.html">ov_radiomics.FeatureSelector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.read_study.html">ov_radiomics.read_study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.read_feature_table.html">ov_radiomics.read_feature_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.LoadedStudy.html">ov_radiomics.LoadedStudy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.baseline_table.html">ov_radiomics.baseline_table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.univariate_logistic.html">ov_radiomics.univariate_logistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.multivariable_logistic.html">ov_radiomics.multivariable_logistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.icc.html">ov_radiomics.icc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.split_data.html">ov_radiomics.split_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.make_classifier.html">ov_radiomics.make_classifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.train_models.html">ov_radiomics.train_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.evaluate.html">ov_radiomics.evaluate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.fusion_data.html">ov_radiomics.fusion_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.fit_fusion.html">ov_radiomics.fit_fusion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.binary_metrics.html">ov_radiomics.binary_metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.delong_test.html">ov_radiomics.delong_test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.decision_curve.html">ov_radiomics.decision_curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.hosmer_lemeshow.html">ov_radiomics.hosmer_lemeshow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.join_data.html">ov_radiomics.join_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.ImageSample.html">ov_radiomics.ImageSample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.ImageVolume.html">ov_radiomics.ImageVolume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.MaskVolume.html">ov_radiomics.MaskVolume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.FeatureTable.html">ov_radiomics.FeatureTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.TileTable.html">ov_radiomics.TileTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.ModelBundle.html">ov_radiomics.ModelBundle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.PredictionTable.html">ov_radiomics.PredictionTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.load_model.html">ov_radiomics.load_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_roc.html">ov_radiomics.plot_roc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_calibration.html">ov_radiomics.plot_calibration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_dca.html">ov_radiomics.plot_dca</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_confusion_matrix.html">ov_radiomics.plot_confusion_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_prediction_scores.html">ov_radiomics.plot_prediction_scores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_correlation.html">ov_radiomics.plot_correlation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_lasso_path.html">ov_radiomics.plot_lasso_path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_lasso_cv.html">ov_radiomics.plot_lasso_cv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_feature_weights.html">ov_radiomics.plot_feature_weights</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_cv_results.html">ov_radiomics.plot_cv_results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_metrics.html">ov_radiomics.plot_metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_feature_summary.html">ov_radiomics.plot_feature_summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_feature_pvalues.html">ov_radiomics.plot_feature_pvalues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_embedding.html">ov_radiomics.plot_embedding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_learning_curve.html">ov_radiomics.plot_learning_curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/ov_radiomics.plot_nomogram.html">ov_radiomics.plot_nomogram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ov_radiomics.TrainingResult.html">TrainingResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/ov_radiomics.FusionResult.html">FusionResult</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="python-native.html">Native Python workflows</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Native flat-table input and feature-table export</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">影像与特征</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="image-native.html">Native images and ROI preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features-native.html">Native Original feature subset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="native-extraction.html">Native NIfTI extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="research-native.html">Native keyed research transformations and basic habitats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">建模与统计</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="preprocessing-native.html">Native train-fitted table preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learning-native.html">Patient-grouped native learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models-native.html">Native models and sparse solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation-native.html">Native evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clinical-native.html">Native complete-case binary logistic inference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="baseline-native.html">Native observed-data baseline tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reliability-native.html">Native single-rating intraclass correlation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">轻量病理与互操作</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="pathology-pixels.html">Native lightweight pathology pixels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-aggregate.html">Native tile identity, hierarchy summaries and local overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interop.html">Explicit external embeddings</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">独立 CLI</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cli-workflows-native.html">Native learning CLI workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathology-cli-native.html">Native lightweight pathology CLI</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../reference.html" class="nav-link">API 与 CLI 参考</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Native flat-table input and feature-table export</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="native-flat-table-input-and-feature-table-export">
+<h1>Native flat-table input and feature-table export<a class="headerlink" href="#native-flat-table-input-and-feature-table-export" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">table_io::read_study(&amp;StudyTableSpec,</span> <span class="pre">task,</span> <span class="pre">spec_directory)</span></code> reads CSV or flat
+Parquet into the shared <code class="docutils literal notranslate"><span class="pre">learning::StudyData</span></code>. Paths in the specification are
+resolved against <code class="docutils literal notranslate"><span class="pre">spec_directory</span></code>, never by changing the process working
+directory. Bare paths and an empty supplied base directory use <code class="docutils literal notranslate"><span class="pre">.</span></code> correctly.
+The returned <code class="docutils literal notranslate"><span class="pre">LoadedStudy</span></code> contains the data, input/join report and an optional
+validated source <code class="docutils literal notranslate"><span class="pre">FeatureTableManifest</span></code>.</p>
+<p>Column roles, predictor order, join policies and missing-value choices come from
+the main <code class="docutils literal notranslate"><span class="pre">StudyTableSpec</span></code> contract. Explicit numeric/categorical names preserve
+their order. With <code class="docutils literal notranslate"><span class="pre">numeric_features=None</span></code>, only base-table columns remaining
+after declared ID/cohort/outcome/optional-metadata/category exclusions become
+numeric predictors. Unselected clinical auxiliary columns never automatically
+become predictors. Missing declared columns and incompatible types are errors.
+An omitted outcome role produces <code class="docutils literal notranslate"><span class="pre">Outcome::Unlabeled</span></code>; it does not create zero
+labels. Such data can enter prediction, while training rejects absent outcomes.</p>
+<section id="identity-and-joins">
+<h2>Identity and joins<a class="headerlink" href="#identity-and-joins" title="Link to this heading">#</a></h2>
+<p>Every base row needs a unique, nonempty string sample ID. Leading zeroes such as
+<code class="docutils literal notranslate"><span class="pre">001</span></code> are preserved. Metadata joins use unique sample keys. Clinical joins are
+sample-keyed one-to-one by default; <code class="docutils literal notranslate"><span class="pre">ClinicalJoinKey::Patient</span></code> explicitly permits
+many feature rows to share one clinical patient record. The auxiliary patient
+key remains unique, even if duplicate rows would have identical values. Patient
+keys must be known from base/metadata/manifest before a patient-keyed clinical
+join can be attempted. Equal row counts are never an alignment proof.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Exact</span></code> requires equal key sets. Explicit <code class="docutils literal notranslate"><span class="pre">Left</span></code> keeps every base row and records
+all missing base sample IDs, missing keys and unused auxiliary keys. Required
+patient/cohort fields still need complete values after a left join. A known
+value can fill a missing value for the same key/field; conflicting nonmissing
+values are errors. No field is silently suffixed or overwritten. Output row
+order is the base feature order.</p>
+<p>Optional metadata roles default to the six shared fields and remain <code class="docutils literal notranslate"><span class="pre">None</span></code> when
+unavailable, with a report of unavailable roles. Source manifest sample metadata
+is joined by actual sample ID and can provide the same declared metadata fields.
+<code class="docutils literal notranslate"><span class="pre">default_cohort</span></code> applies only when no cohort field exists in any selected source;
+it cannot hide empty values in an existing cohort column. Multiple external
+cohort identities are retained.</p>
+</section>
+<section id="types-and-missing-values">
+<h2>Types and missing values<a class="headerlink" href="#types-and-missing-values" title="Link to this heading">#</a></h2>
+<p>CSV uses reusable byte records. Numeric fields are parsed directly into the
+final float64/missing buffers; the complete embedding is not converted into an
+intermediate string matrix. Missing tokens match the declared UTF8 fields
+exactly, with only the empty string in the default list. If a verified base
+feature manifest supplies <code class="docutils literal notranslate"><span class="pre">csv_null_value</span></code>, that source encoding replaces the
+base missing-token list rather than being unioned with the specification’s
+defaults. This preserves real empty strings and <code class="docutils literal notranslate"><span class="pre">NA</span></code> when <code class="docutils literal notranslate"><span class="pre">\N</span></code> is the source’s
+null token. Auxiliary CSV files continue using the specification’s tokens.
+The report records the effective base encoding and its source.</p>
+<p>Parquet reads projected scalar columns in batches using definition levels,
+without Arrow dataframe objects in the public contract. Null and empty UTF8
+strings remain distinct; CSV missing tokens do not reinterpret Parquet strings.
+IDs must be UTF8 logical strings. Numeric predictors accept ordinary float32,
+float64 and integer columns. Int64/UInt64 conversion checks actual float64
+precision loss using a wider integer comparison, including the <code class="docutils literal notranslate"><span class="pre">i64::MAX</span></code>
+saturation corner case. It does not reject every integer above 2^53 when that
+particular integer is exactly representable.</p>
+<p>Explicit categorical/outcome roles additionally accept integer and boolean
+columns: integers become exact decimal strings and booleans become <code class="docutils literal notranslate"><span class="pre">0</span></code>/<code class="docutils literal notranslate"><span class="pre">1</span></code>.
+Source physical/logical dtype and conversion are recorded. A float category is
+not guessed to be an integer label; encode it as an explicit UTF8 string.
+An optional non-ID metadata field can share this declared categorical role.
+Numeric predictors cannot simultaneously use a same-named string metadata role;
+remap or explicitly remove that optional role. Dates, timestamps, decimals,
+binary blobs, nested/list/repeated data and other unsupported projected logical
+types are not silently interpreted as ordinary numeric features.</p>
+<p>Null numeric cells have canonical stored value zero and missing flag true.
+Unlisted parsed NaN values require <code class="docutils literal notranslate"><span class="pre">nan_as_missing=true</span></code>; infinity is an error.
+All rows and dimensions are validated through the shared data contracts. Every
+input report contains its resolved path, complete-file SHA256, source columns,
+projection, ignored columns, dtype/conversion details and row count. Inputs that
+change size/modification time during parsing/hashing are rejected.</p>
+</section>
+<section id="feature-tables-and-manifests">
+<h2>Feature tables and manifests<a class="headerlink" href="#feature-tables-and-manifests" title="Link to this heading">#</a></h2>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">manifest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">write_feature_table</span><span class="p">(</span><span class="o">&amp;</span><span class="n">features</span><span class="p">,</span><span class="w"> </span><span class="s">"features.parquet"</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="s">"</span><span class="se">\\</span><span class="s">N"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">restored</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_feature_table</span><span class="p">(</span><span class="s">"features.parquet"</span><span class="p">,</span><span class="w"> </span><span class="nb">None</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">write_feature_table</span></code> accepts a validated numerical <code class="docutils literal notranslate"><span class="pre">FeatureTable</span></code>, output path,
+explicit overwrite flag and CSV null token. It preserves sample metadata,
+feature definitions/order, effective parameters and quality records in the
+shared schema-one <code class="docutils literal notranslate"><span class="pre">radiomics.feature-table</span></code> manifest. CSV uses the sidecar
+<code class="docutils literal notranslate"><span class="pre">&lt;table</span> <span class="pre">path&gt;.manifest.json</span></code>. Parquet embeds the manifest under
+<code class="docutils literal notranslate"><span class="pre">radiomics.feature_table_manifest</span></code> with <code class="docutils literal notranslate"><span class="pre">table_sha256=None</span></code>, avoiding a circular
+hash. Both formats also have the external sidecar with the completed file SHA.
+Parquet output uses Snappy; input additionally supports uncompressed, GZIP and
+ZSTD files through the explicitly enabled mature codec libraries.</p>
+<p><code class="docutils literal notranslate"><span class="pre">read_feature_table</span></code> uses its explicit manifest path or standard sidecar, and/or
+the embedded Parquet manifest. It validates schemas, ID sets, feature columns,
+complete-file hashes when provided and agreement between external/embedded
+metadata. Values are aligned by actual feature names and sample IDs; equal
+dimensions are insufficient. A CSV without the metadata needed to reconstruct
+the feature contract is rejected. A study CSV associates an external manifest
+through the explicit <code class="docutils literal notranslate"><span class="pre">feature_manifest</span></code> role; it does not guess an unrelated
+sidecar merely from a matching row count.</p>
+<p>Validation and destination/null-token collision checks happen before output
+files are opened. Existing outputs require explicit overwrite. Writing uses
+same-directory temporary files followed by rename. Numeric values are streamed
+per row/column batch, and metadata is not duplicated as numeric strings.
+Real values that collide with the chosen CSV null token are errors. A failed
+two-file publish is reported as an error; readers verify the table/manifest
+hash rather than accepting an inconsistent pair.</p>
+</section>
+<section id="validation-and-limits">
+<h2>Validation and limits<a class="headerlink" href="#validation-and-limits" title="Link to this heading">#</a></h2>
+<p>Rust tests reuse the fixed table/model inputs without updating Golden results.
+They verify CSV/Parquet exact values and missing flags, metadata/definition/quality
+preservation, all enabled codecs, multiple row groups/batches, signed zero,
+reordered joins, explicit patient broadcast, duplicate/conflicting keys,
+unmatched left joins, source-specific null encoding, type and precision errors,
+NaN/Inf policy, checksum corruption, bare paths and overwrite guards.</p>
+<p>The three fixed tasks are loaded from both CSV and independently constructed
+typed Parquet columns, compared as complete <code class="docutils literal notranslate"><span class="pre">StudyData</span></code>, passed through native
+grouped training, saved/loaded as <code class="docutils literal notranslate"><span class="pre">.rad</span></code> and predicted identically. Unlabeled
+loading predicts identically and cannot train. These are Rust executable tests;
+the reader/model path does not invoke Python or its analysis libraries.
+The Apache Parquet dependency declares Rust 1.85; local Windows tests use the
+installed toolchain. Actual MSRV and Linux installation results remain separate
+CI acceptance steps. No support for arbitrary nested Parquet data is claimed.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="python-native.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Native Python workflows</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="image-native.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Native images and ROI preparation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#identity-and-joins">Identity and joins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-and-missing-values">Types and missing values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-tables-and-manifests">Feature tables and manifests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-and-limits">Validation and limits</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/table-io-native.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

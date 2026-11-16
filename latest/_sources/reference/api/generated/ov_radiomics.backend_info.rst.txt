@@ -1,0 +1,6 @@
+﻿ov\_radiomics.backend\_info
+===========================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: backend_info

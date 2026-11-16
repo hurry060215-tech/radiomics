@@ -1,0 +1,6 @@
+﻿ov\_radiomics.univariate\_logistic
+==================================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: univariate_logistic

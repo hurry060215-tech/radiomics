@@ -1,0 +1,6 @@
+﻿ov\_radiomics.plot\_confusion\_matrix
+=====================================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: plot_confusion_matrix

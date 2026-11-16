@@ -1,0 +1,6 @@
+﻿ov\_radiomics.plot\_roc
+=======================
+
+.. currentmodule:: ov_radiomics
+
+.. autofunction:: plot_roc

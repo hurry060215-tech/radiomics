@@ -1,0 +1,142 @@
+---
+orphan: true
+---
+
+# Native images and ROI preparation
+
+The Rust `imaging` module operates on the shared `ImageVolume`, `MaskVolume`,
+`Geometry`, and `RasterImage` contracts. It does not execute Python or use
+SimpleITK at runtime. Python bindings and the CLI call these same operations.
+This document describes the Rust operations; availability through public Python
+and CLI entry points is tracked separately by their integration tests.
+
+## Input and coordinate contract
+
+- `read_nifti` accepts real scalar NIfTI-1 `.nii` and `.nii.gz` inputs explicitly
+  declared as 2D or 3D. A three-dimensional image with `z=1` remains 3D. Unsplit
+  four-dimensional, RGB, and complex NIfTI inputs are rejected.
+- Buffer order is `x + nx * (y + ny * z)`. The reader applies the file's numerical
+  slope/intercept through the NIfTI decoder and retains the voxel-center-to-world
+  affine in NIfTI RAS coordinates. It does not apply an LPS conversion.
+- The spatial-unit field remains `meter`, `millimeter`, `micron`, or `unknown`.
+  Methods requiring millimeters reject unknown units. Unknown units never become
+  assumed millimeters.
+- A nonzero sform takes precedence over qform. Both original matrices and their
+  codes are retained in the `nifti_transforms` diagnostic. Disagreement over the
+  voxel-center grid produces a warning. When both forms are unset, the fallback
+  is a positive pixdim diagonal and zero origin, with a warning that anatomical
+  orientation is unknown. The reader does not use a library-generated centered
+  fallback affine.
+- Sheared affines can be read and resampled onto an explicitly supplied reference
+  grid. Millimeter margins, spacing-grid construction, and Euclidean distance
+  operations require orthogonal axes. They report an error requiring explicit
+  resampling instead of approximating the shear as axis spacings.
+- `read_mask` requires scaled values to be nonnegative integers representable as
+  `u32`. Fractional, nonfinite, or out-of-range labels are errors.
+- `read_raster` accepts PNG/JPEG decoded as RGB8 and single-page TIFF Gray8,
+  Gray16, or RGB8. RGBA, RGB16, palette/CMYK TIFF, multiple IFD pages, pyramid
+  sub-IFDs, and non-top-left TIFF orientation are rejected. TIFF pixels retain
+  their 8/16-bit values. No MPP is inferred from DPI or magnification labels.
+
+NIfTI-2, paired Analyze files, DICOM, WSI/vendor decoding, image registration,
+N4, and file-format conversion are outside this module's supported scope.
+
+## Explicit geometric operations
+
+| Rust operation | Definition |
+|---|---|
+| `select_labels(mask, labels)` | Select a nonempty, unique list of present, nonzero labels into a binary mask. A missing requested label is an error. |
+| `recode_labels(mask, mapping)` | Replace mapped labels and retain unmapped labels, including background unless explicitly mapped. |
+| `bounding_box(mask)` | Nonzero ROI bounds with inclusive `start` and exclusive `end`; empty ROI is an error. |
+| `roi_bounds_margin_voxels(mask, margin)` | Expand bounds by an explicit per-axis count, clipped to the available image. |
+| `roi_bounds_margin_mm(mask, margin_mm)` | Expand by `ceil(margin_mm / spacing_mm)` voxels per axis, with orthogonality and unit checks. |
+| `crop_image`, `crop_mask` | Copy the requested nonempty bounds and update the affine translation to the old affine evaluated at the crop start. Dimensionality is preserved. |
+| `maximum_roi_section(mask, axis)` | Choose the first section with the largest nonzero-voxel count and return a one-voxel-thick ROI bounding box. Axis must be active. |
+| `resample_like(image, grid, interpolation, outside)` | Map each target voxel center through world coordinates into the source affine; image interpolation is explicitly `nearest` or `linear`. |
+| `resample_mask_like(mask, grid, outside_label)` | Nearest-neighbor interpolation only; integer mask labels are retained. |
+| `spacing_grid`, `resample_spacing` | The generic outer-edge-preserving grid described below; explicit positive millimeter spacing. |
+
+The generic `spacing_grid` convention is frozen as
+`generic_outer_edge_preserved_v1`: preserve direction, set
+`n_new = ceil(n_old * spacing_old / spacing_new)`, and move the first voxel
+center by `direction @ ((spacing_new - spacing_old) / 2)`. In 2D, inactive z
+spacing is unchanged. This convention is **not** the PyRadiomics ROI-dependent
+resampling grid. Extraction's golden profile defaults to no resampling.
+
+The interpolation domain is `[-0.5, n-0.5)` per axis. Nearest neighbors use
+`floor(index + 0.5)`, including upward half-index ties. Linear interpolation
+clamps to the edge voxel centers inside that domain; points outside receive the
+explicit `outside` value. Source/target dimensionality must agree. Known spatial
+units can be converted; unknown units can only match the same unknown-unit grid.
+
+## Intensities and separate masks
+
+`clip_range` uses inclusive finite bounds. `clip_percentile` fits percentiles to
+an explicitly supplied statistical mask or the entire image. Percentiles use
+NumPy-style linear quantile interpolation. The clipping operation then applies to
+the complete image, so nonfinite input outside the statistical mask is also an
+error.
+
+`fit_intensity_transform` saves an offset, scale, and statistical voxel count.
+Z-score uses population standard deviation (`ddof=0`); MinMax uses the observed
+minimum and range. This Z-score definition is explicitly distinct from
+SimpleITK's `Normalize` filter. An empty statistical range, nonfinite value,
+constant range, or overflowing statistics produces an error. `apply` reuses the
+saved transform without refitting.
+
+`resegment` returns a distinct intensity mask using an inclusive absolute
+intensity range. It retains original selected labels and does not mutate the
+input morphology mask. An empty intensity ROI is an explicit error.
+
+## Connectivity and physical rings
+
+`connected_components` takes explicit 4/8 connectivity for 2D or 6/18/26 for 3D.
+The `separate_labels` argument determines whether different nonzero source labels
+can belong to one component. Component IDs follow x-fast scan order, and output
+includes voxel count, bounding box, source label when applicable, and whether
+the component touches the image boundary. `largest_component` returns a binary
+mask; equal-sized components retain the first component in scan order.
+
+`dilate_voxels(mask, iterations, connectivity)` performs iterated topological
+binary dilation. One iteration means one step in the chosen voxel-neighbor
+graph; it is not a physical-distance radius. The operation is bounded by the
+image and rejects an empty input ROI.
+
+`peritumoral_ring(mask, inner_mm, outer_mm, organ_mask)` uses exact anisotropic
+Euclidean distances between sampled voxel centers. A separable squared-distance
+transform avoids an all-pairs voxel search. The signed-distance convention is
+`inner_mm < d <= outer_mm`, with negative distances inside the ROI. Thus
+`inner_mm=0, outer_mm=3` selects only outside centers within 3 mm. Negative inner
+radii can also include an internal band. For internal distance, image-exterior
+voxel centers are background. The result is clipped to the available image and,
+when supplied, intersected with the aligned nonzero organ mask. The distances
+are to sampled centers, not a reconstructed mesh surface. An empty ring is
+returned as an explicit all-background mask and will fail any subsequent
+nonempty-ROI extraction check; an empty source ROI is an error.
+
+## Validation evidence and limits
+
+`imaging_tests.rs` independently compares 2D flipped and 3D rotated geometries
+against A's frozen SimpleITK 2.4.1 reference in
+`golden/python_golden_v1/geometry.json`. It checks world landmarks and cropped
+affines within `1e-6 mm`, exact cropped arrays and nearest-neighbor mask arrays,
+and linear image resampling within `atol=1e-6, rtol=1e-5`. Ten independently frozen
+boundary probes check half-voxel boundaries and nearest-neighbor ties.
+
+Additional tests construct NIfTI headers with scaling, direction flips, unknown
+units, qform/sform conflicts, invalid dimensionality, and complex/RGB data;
+verify anisotropic margins, masks, connectivity, ring/organ intersections, and
+degenerate intensity behavior; compare the exact distance transform with a
+brute-force three-dimensional calculation; and exercise RGB PNG and Gray16 TIFF
+I/O plus rejected alpha and multipage images.
+
+This module does not itself implement batch extraction, caching, feature
+definitions, model fitting, or a Python API. Those require the corresponding
+workflow integrations and their own acceptance checks. No extraction-speed or
+peak-memory claim follows from these unit tests.
+
+Primary specifications used during implementation:
+[NIfTI coordinates and qform/sform](https://nifti.nimh.nih.gov/nifti-1/documentation/faq/index.html),
+[NIfTI reader 0.17](https://docs.rs/nifti/0.17.0/nifti/),
+[image 0.25.6](https://docs.rs/image/0.25.6/image/), and
+[TIFF decoder 0.9.1](https://docs.rs/tiff/0.9.1/tiff/decoder/struct.Decoder.html).

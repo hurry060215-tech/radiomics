@@ -1,0 +1,849 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>原生数组边界性能诊断：固定 PAT1 CT &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/native-performance-diagnosis';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/v0.1.0/reference/native-performance-diagnosis.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="小范围优化：省去Sample验证前的临时深复制" href="sample-constructor-optimization.html" />
+    <link rel="prev" title="独立 L5 部署成本证据：snapshot-native-v3" href="deployment-benchmark-v2-results.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">验证与适用范围</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support-matrix.html">原生支持矩阵</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../development/methods.html">方法与技术报告</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="technical-report.html">软件技术报告</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native-boundaries.html">原生能力边界</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rust-backend-decision.html">Rust范围与后端选择</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-accuracy-audit.html">独立标量精度审计</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../development/benchmarks.html">独立基准报告</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="radiomics-benchmark-v2-results.html">Radiomics 测量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="learning-pathology-benchmark-v2-results.html">Machine Learning / Statistics 与 Pathology 测量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment-benchmark-v2-results.html">L5 部署与启动成本</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Python/Rust数组边界诊断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample-constructor-optimization.html">Sample构造有限优化及未观察到的内存收益</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">开发与贡献</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../development/index.html" class="nav-link">验证与开发</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../development/benchmarks.html" class="nav-link">Benchmark v2：三套独立报告</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">原生数组边界性能诊断：固定 PAT1 CT</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pat1-ct">
+<h1>原生数组边界性能诊断：固定 PAT1 CT<a class="headerlink" href="#pat1-ct" title="Link to this heading">#</a></h1>
+<p>以下路径为记录时的本机位置，复现时请替换为自己的工作目录。<code class="docutils literal notranslate"><span class="pre">$WORKDIR</span></code> 表示仓库外的构建、缓存和证据目录；源码相对路径以仓库根目录为基准。这里只替换维护文档的路径，不改写历史测量文件。</p>
+<p>本次诊断定位了 Python 数组入口的实质开销：在同一次完整数组调用的嵌套时钟中，<strong>Python JSON 编码、解码与 Python <code class="docutils literal notranslate"><span class="pre">deepcopy</span></code> 合计份额的中位数为52.59%</strong>。它们既不是特征算法，也不是必要的 NIfTI I/O。当前 <code class="docutils literal notranslate"><span class="pre">ImageSample</span></code> 从已经验证过的 image/mask 再构造一次，就需要约141 ms。优先优化大缓冲区跨边界的表示和对象构造，比删除微小的特征表验证更有依据。</p>
+<p>这不意味着全部开销都来自边界。相同预载 CT 在纯 Rust 中调用原 <code class="docutils literal notranslate"><span class="pre">extract_families</span></code>，仍需约104.7 ms，包含其原有验证、离散化、矩阵和标量计算。本诊断没有证明 Rust 必然快于成熟的 C 扩展，也没有单独测量 PyRadiomics 的等价纯 C 内核。</p>
+<p>本页是独立诊断，<strong>不替换、重录或重新解释原854条正式 Radiomics Benchmark v2 观测</strong>。正式结果仍为 CT L2 原生394.163 ms、公开PyRadiomics3.0.1参考157.666 ms，速度比0.400×；L3原生183.807 ms、参考225.082 ms，速度比1.225×。L2/L3输入与处理边界不同，不得相减后声称得到了某个算法或I/O阶段。</p>
+<section id="id1">
+<h2>输入、构建与执行范围<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>原始 CT/ROI：固定 IBSI PAT1，原始文件SHA分别为 <code class="docutils literal notranslate"><span class="pre">909129fd...d7bbcb</span></code>、<code class="docutils literal notranslate"><span class="pre">0e9243e4...94ae78</span></code>，许可CC-BY-NC-3.0。原始文件、大数组和约2 MB的请求JSON只保留在Git之外。</p></li>
+<li><p>预载输入：与正式CT L2完全相同的tight bbox，shape <code class="docutils literal notranslate"><span class="pre">[100,99,26]</span></code>、125256个ROI体素，完整更新后的RAS affine；原始整数值HU的无损f64表示。</p></li>
+<li><p>参数：<code class="docutils literal notranslate"><span class="pre">python_golden_v1</span></code>、fixed width25、distance1、direction_mean、GLDM alpha0、voxel shift0；没有clip、normalize、resample或resegment；全部55项统计/纹理＋11项shape_basic。</p></li>
+<li><p>每个数值输出路径都用原冻结 <code class="docutils literal notranslate"><span class="pre">bbox_crop_reference.json</span></code> 的 <code class="docutils literal notranslate"><span class="pre">features</span></code> 和 <code class="docutils literal notranslate"><span class="pre">basic_shape</span></code> 两节检查66项，仍用原 <code class="docutils literal notranslate"><span class="pre">atol=1e-10,rtol=1e-8</span></code>。没有修改参考或容差。</p></li>
+<li><p>Python：不可变 <code class="docutils literal notranslate"><span class="pre">snapshot-native-v2</span></code> 对应环境，CPython3.9.21，扩展SHA <code class="docutils literal notranslate"><span class="pre">7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878</span></code>，构建来源 <code class="docutils literal notranslate"><span class="pre">48ecb310</span></code>。</p></li>
+<li><p>Rust：原核心和原gateway源码，Rust1.100.0/LLVM23.1.5、MSVC x86_64、release opt3/thin LTO/codegen-units1。依赖锁原始字节与v2精确一致；运行时implementation SHA严格为 <code class="docutils literal notranslate"><span class="pre">a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8</span></code>。</p></li>
+<li><p>主机：Windows build22631、Intel Core Ultra9 285K、24逻辑CPU、33,663,320,064 RAM bytes。NumPy实际线程库限制为1，OMP/MKL/OpenBLAS/NumExpr/Rayon声明为1；没有改变或安装公开301参考环境。</p></li>
+<li><p>每阶段1次预热、7次实际观测；每轮轮转阶段执行顺序。共98个Python观测、63个Rust观测、7条完整数组调用的实际request trace。预热也另存原始记录。</p></li>
+<li><p>诊断运行前Root协调其他任务停止Sphinx/浏览器/编译；正式v3全部完成后发出all-clear。没有删去慢样本。</p></li>
+</ul>
+<p>测量代码快照为 <code class="docutils literal notranslate"><span class="pre">719612f</span></code>。后续提交只添加证据、说明及独立执行器的错误输出保护，不改变本次已记录的观测。全部原始计时、嵌套trace、源文件及构建身份见<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e/docs/native-performance-diagnosis-data-redacted.json">诊断数据</a>。它不包含CT像素或大型请求payload。完整本地目录为 <code class="docutils literal notranslate"><span class="pre">$WORKDIR/native-boundary-diagnosis/baseline-v3/</span></code>。</p>
+</section>
+<section id="id2">
+<h2>真实调用链和重复工作<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>原正式L2的一个ROI依次执行：</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rad.image.from_array</span></code>：NumPy转Python list，<code class="docutils literal notranslate"><span class="pre">validate_image</span></code>发送整个image JSON，Rust验证后把整个image序列化回Python。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rad.mask.from_array</span></code>：检查有限整数标签、转uint32 list，<code class="docutils literal notranslate"><span class="pre">validate_mask</span></code>发送整个mask JSON，Rust把整个mask返回。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ImageSample(...)</span></code>：先对两个payload执行Python深复制，再通过 <code class="docutils literal notranslate"><span class="pre">validate_image_sample</span></code>重发和回传整个image/mask。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sample.extract</span></code>：<code class="docutils literal notranslate"><span class="pre">array_features</span></code>再次发送同一大缓冲区，Rust反序列化、调用原特征引擎，返回66个值。</p></li>
+<li><p>小型 <code class="docutils literal notranslate"><span class="pre">validate_feature_table</span></code> 和DataFrame导出。</p></li>
+</ol>
+<p>所以每个image/mask缓冲区在同一调用中各被JSON发送3次、回传2次。五个请求的UTF-8请求与响应合计 <strong>10,201,863 bytes</strong>；单独的 <code class="docutils literal notranslate"><span class="pre">array_features</span></code> 请求为2,035,442 bytes，66值响应仅3362 bytes。</p>
+<p><code class="docutils literal notranslate"><span class="pre">encode_json</span></code> 已有有限值快路径。本次有限CT没有以递归 <code class="docutils literal notranslate"><span class="pre">clean_json</span></code> 作为常规编码路径，不能把它虚构成主因。PyO3使用拥有的String并在native计算期间释放GIL；本诊断中的预编码调用仍包含字符串转换、Rust JSON反序列化、核心计算及响应编码，不能把它叫成“纯内核”。</p>
+</section>
+<section id="id3">
+<h2>同一次完整调用内的实际时钟<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>下表来自7次<strong>嵌套跟踪</strong>，毫秒值分别报告各项中位数。每行是实际操作，不能把各项中位数相加当作某一次精确总和。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>gateway操作</p></th>
+<th class="head text-right"><p>Python编码ms</p></th>
+<th class="head text-right"><p>native调用ms</p></th>
+<th class="head text-right"><p>Python解码ms</p></th>
+<th class="head text-right"><p>请求总ms</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>validate_image</p></td>
+<td class="text-right"><p>22.536</p></td>
+<td class="text-right"><p>14.333</p></td>
+<td class="text-right"><p>16.329</p></td>
+<td class="text-right"><p>53.108</p></td>
+</tr>
+<tr class="row-odd"><td><p>validate_mask</p></td>
+<td class="text-right"><p>6.420</p></td>
+<td class="text-right"><p>8.448</p></td>
+<td class="text-right"><p>8.164</p></td>
+<td class="text-right"><p>22.931</p></td>
+</tr>
+<tr class="row-even"><td><p>validate_image_sample</p></td>
+<td class="text-right"><p>24.775</p></td>
+<td class="text-right"><p>23.418</p></td>
+<td class="text-right"><p>24.370</p></td>
+<td class="text-right"><p>72.756</p></td>
+</tr>
+<tr class="row-odd"><td><p>array_features</p></td>
+<td class="text-right"><p>32.106</p></td>
+<td class="text-right"><p>121.730</p></td>
+<td class="text-right"><p>0.064</p></td>
+<td class="text-right"><p>154.018</p></td>
+</tr>
+<tr class="row-even"><td><p>validate_feature_table</p></td>
+<td class="text-right"><p>0.122</p></td>
+<td class="text-right"><p>0.080</p></td>
+<td class="text-right"><p>0.043</p></td>
+<td class="text-right"><p>0.242</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>按每次调用自己的完整wall时间计算占比、再取七次占比的中位数：JSON编码22.43%、JSON解码12.70%、Python深复制17.23%，三者<strong>合计占比的中位数52.59%</strong>。合计份额使用同一次调用内的测量，未通过“两个不同路径耗时相减”产生。</p>
+<p>全部native请求合计占比中位数43.69%，其中既有特征计算，也有大型请求的JSON解析、构造验证和大对象响应序列化，不能都归到特征矩阵。其余约3.8%包含NumPy/list转换、分派、对象/表格组织和跟踪开销。instrumented L2中位数385.036 ms，未跟踪的L2中位数381.585 ms；跟踪本身的扰动没有被视为零。</p>
+</section>
+<section id="python">
+<h2>独立Python阶段诊断<a class="headerlink" href="#python" title="Link to this heading">#</a></h2>
+<p>下表的各行是<strong>独立调用</strong>，会重叠，禁止相加或相减来构造阶段成本。p95采用明确记录的线性插值经验分位数；n=7不足以给出稳定尾部性能保证。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>阶段</p></th>
+<th class="head text-right"><p>median ms</p></th>
+<th class="head text-right"><p>IQR ms</p></th>
+<th class="head text-right"><p>p95 ms</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>仅编码完整array请求</p></td>
+<td class="text-right"><p>25.549</p></td>
+<td class="text-right"><p>0.334</p></td>
+<td class="text-right"><p>28.165</p></td>
+</tr>
+<tr class="row-odd"><td><p>预编码请求调用PyO3 gateway</p></td>
+<td class="text-right"><p>121.709</p></td>
+<td class="text-right"><p>0.935</p></td>
+<td class="text-right"><p>122.942</p></td>
+</tr>
+<tr class="row-even"><td><p>解码66值响应</p></td>
+<td class="text-right"><p>0.021</p></td>
+<td class="text-right"><p>0.001</p></td>
+<td class="text-right"><p>0.042</p></td>
+</tr>
+<tr class="row-odd"><td><p>解码完整image响应</p></td>
+<td class="text-right"><p>16.083</p></td>
+<td class="text-right"><p>0.654</p></td>
+<td class="text-right"><p>16.788</p></td>
+</tr>
+<tr class="row-even"><td><p>NumPy image转list</p></td>
+<td class="text-right"><p>1.838</p></td>
+<td class="text-right"><p>0.732</p></td>
+<td class="text-right"><p>2.303</p></td>
+</tr>
+<tr class="row-odd"><td><p>NumPy mask转uint32/list</p></td>
+<td class="text-right"><p>1.047</p></td>
+<td class="text-right"><p>0.029</p></td>
+<td class="text-right"><p>1.115</p></td>
+</tr>
+<tr class="row-even"><td><p>Python深复制image＋mask</p></td>
+<td class="text-right"><p>67.035</p></td>
+<td class="text-right"><p>0.705</p></td>
+<td class="text-right"><p>68.309</p></td>
+</tr>
+<tr class="row-odd"><td><p>完整image.from_array</p></td>
+<td class="text-right"><p>55.850</p></td>
+<td class="text-right"><p>1.630</p></td>
+<td class="text-right"><p>58.209</p></td>
+</tr>
+<tr class="row-even"><td><p>完整mask.from_array</p></td>
+<td class="text-right"><p>26.789</p></td>
+<td class="text-right"><p>0.512</p></td>
+<td class="text-right"><p>28.149</p></td>
+</tr>
+<tr class="row-odd"><td><p>已验证volume再构造ImageSample</p></td>
+<td class="text-right"><p>140.970</p></td>
+<td class="text-right"><p>4.038</p></td>
+<td class="text-right"><p>147.526</p></td>
+</tr>
+<tr class="row-even"><td><p>已构造Sample再extract</p></td>
+<td class="text-right"><p>146.729</p></td>
+<td class="text-right"><p>1.759</p></td>
+<td class="text-right"><p>150.560</p></td>
+</tr>
+<tr class="row-odd"><td><p>完整未跟踪L2公共调用</p></td>
+<td class="text-right"><p>381.585</p></td>
+<td class="text-right"><p>4.745</p></td>
+<td class="text-right"><p>391.147</p></td>
+</tr>
+<tr class="row-even"><td><p>完整跟踪L2公共调用</p></td>
+<td class="text-right"><p>385.036</p></td>
+<td class="text-right"><p>1.493</p></td>
+<td class="text-right"><p>389.124</p></td>
+</tr>
+<tr class="row-odd"><td><p>完整L3读取/裁剪/提取/保存</p></td>
+<td class="text-right"><p>184.281</p></td>
+<td class="text-right"><p>0.732</p></td>
+<td class="text-right"><p>184.971</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>最后一行L3内部另有同一次调用的明确Python阶段时钟：读取cohort中位数0.483 ms、<code class="docutils literal notranslate"><span class="pre">rad.extract</span></code>182.161 ms、保存1.607 ms。<code class="docutils literal notranslate"><span class="pre">extract</span></code>内的内容摘要、NIfTI读取、准备、质量记录、计算和边界响应尚未在不可变库内部逐项打点，不能把它进一步凭空拆分。</p>
+</section>
+<section id="rustprobe">
+<h2>纯Rust同输入probe<a class="headerlink" href="#rustprobe" title="Link to this heading">#</a></h2>
+<p>probe直接包含被审查的 <code class="docutils literal notranslate"><span class="pre">radiomics-python/src/gateway.rs</span></code>，并直接调用同一 <code class="docutils literal notranslate"><span class="pre">features::extract_families</span></code>。它先把完整NIfTI读出、用原ROI bbox裁剪，断言裁剪后的<strong>values、labels、shape、完整affine</strong>与Python预载请求精确一致。它不是另一个小矩阵或不同特征集合。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>阶段</p></th>
+<th class="head text-right"><p>median ms</p></th>
+<th class="head text-right"><p>IQR ms</p></th>
+<th class="head text-right"><p>p95 ms</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>typed JSON反序列化</p></td>
+<td class="text-right"><p>5.583</p></td>
+<td class="text-right"><p>0.210</p></td>
+<td class="text-right"><p>5.717</p></td>
+</tr>
+<tr class="row-odd"><td><p>image/mask Vec克隆</p></td>
+<td class="text-right"><p>0.682</p></td>
+<td class="text-right"><p>0.047</p></td>
+<td class="text-right"><p>0.712</p></td>
+</tr>
+<tr class="row-even"><td><p>image/mask JSON序列化</p></td>
+<td class="text-right"><p>5.609</p></td>
+<td class="text-right"><p>0.046</p></td>
+<td class="text-right"><p>5.670</p></td>
+</tr>
+<tr class="row-odd"><td><p>同一预载buffer核心提取</p></td>
+<td class="text-right"><p>104.707</p></td>
+<td class="text-right"><p>0.468</p></td>
+<td class="text-right"><p>105.492</p></td>
+</tr>
+<tr class="row-even"><td><p>原gateway处理预编码请求</p></td>
+<td class="text-right"><p>121.179</p></td>
+<td class="text-right"><p>0.522</p></td>
+<td class="text-right"><p>122.623</p></td>
+</tr>
+<tr class="row-odd"><td><p>原始NIfTI image/mask读取</p></td>
+<td class="text-right"><p>49.632</p></td>
+<td class="text-right"><p>0.293</p></td>
+<td class="text-right"><p>49.911</p></td>
+</tr>
+<tr class="row-even"><td><p>已读原始图像对裁剪</p></td>
+<td class="text-right"><p>0.904</p></td>
+<td class="text-right"><p>0.024</p></td>
+<td class="text-right"><p>0.922</p></td>
+</tr>
+<tr class="row-odd"><td><p>同一次读NIfTI→bbox裁剪→原核心</p></td>
+<td class="text-right"><p>156.715</p></td>
+<td class="text-right"><p>0.560</p></td>
+<td class="text-right"><p>157.597</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>另保存了 <code class="docutils literal notranslate"><span class="pre">image_mask_validate_geometry</span></code> 微测，但不将其近零值解释为全部验证成本：它只覆盖公开geometry/length检查，没有私有 <code class="docutils literal notranslate"><span class="pre">features::validate_pair</span></code> 的ROI存在/有限值扫描；不变输入循环也可能被编译器优化。那三个完整扫描仍包含在104.7 ms核心调用内，尚未独立测出。</p>
+<p>预编码PyO3调用121.709 ms与纯Rust gateway121.179 ms在此工作量上接近。这支持优先减少重复的Python对象/JSON往返；它不等价于严格测出了PyO3开销为两者差值。纯Rust的临时结果销毁在其时钟内，Python外层时钟不含最后一个临时返回对象的销毁，也是两类微测不能直接作精确差值的原因。</p>
+</section>
+<section id="id4">
+<h2>有限修复方案与需要保留的语义<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>第一优先级是一个<strong>内部数值缓冲区入口</strong>：以 <code class="docutils literal notranslate"><span class="pre">Vec&lt;f64&gt;</span></code>/<code class="docutils literal notranslate"><span class="pre">Vec&lt;u32&gt;</span></code>传入图像和mask，小型geometry/config/family继续使用既有类型化定义，仍调用原 <code class="docutils literal notranslate"><span class="pre">extract_families</span></code>。可以保留abi3-py39而不引入NumPy Rust crate；这仍会分配/复制，不能称作zero-copy。</p>
+<p>只替换 <code class="docutils literal notranslate"><span class="pre">array_features</span></code> 的大JSON请求，尚不能解决前面三次构造验证往返和约66 ms的Python深复制。因此候选应分开验收：先验证单次特征调用，再检查从 <code class="docutils literal notranslate"><span class="pre">from_array→mask→ImageSample→extract→DataFrame</span></code> 的完整原L2入口。内部可以使用拥有的连续buffer、小型验证返回或只读状态复用，避免验证后再把全部体素编码回Python。不要仅隐藏到未计时的预处理阶段来展示加速。</p>
+<p>必须保留未知单位、完整affine、mask整数/范围、空ROI、非有限强度状态、独立形态/强度mask、family选择、定义/特征顺序和错误语义。Python对象的所有权和别名行为不能因省深复制而改变。候选应通过原固定2D/3D矩阵/几何/计数/Golden和此CT66；没有理由降低容差或删掉输入校验。微小的FeatureTable验证不是本次优先优化对象。</p>
+<p>第二优先级才是对剩余约105 ms核心进行真实内部profiling，区分离散化、GLCM/GLRLM/GLSZM/GLDM/NGTDM矩阵和标量，再决定数据结构与重复扫描优化。当前没有CPU采样、allocator计数或精确矩阵阶段数据，不能断言是哪一个纹理内核主导，也不应立即大规模重写。</p>
+</section>
+<section id="id5">
+<h2>小规模实际内存诊断<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>时间诊断后另作一次固定内存诊断，没有重测或替换正式性能套件：三条路径各3个fresh process，共9条观测，约4.6秒一次完成。代码快照 <code class="docutils literal notranslate"><span class="pre">bc550cd</span></code>，全部66特征仍与原冻结参考匹配。完整原始绝对RSS、阶段快照、实际PID与构建身份见<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e/docs/native-memory-diagnosis-data-redacted.json">内存诊断数据</a>，外置目录为 <code class="docutils literal notranslate"><span class="pre">$WORKDIR/native-boundary-diagnosis/memory-v1/</span></code>。</p>
+<p>Python worker直接读冻结cropped <code class="docutils literal notranslate"><span class="pre">.npy</span></code>，Rust worker直接读同一cropped typed JSON；协调者事先逐元素核对两种载体的values/labels、完整affine和bin配置。<strong>所有worker都未先读完整NIfTI源卷</strong>，避免全图解码setup峰值覆盖L2阶段。每个worker在自己的进程内调用Windows <code class="docutils literal notranslate"><span class="pre">GetProcessMemoryInfo</span></code>，报告当前WorkingSetSize和PeakWorkingSetSize，最后在写完输出后补footer。</p>
+<p>六个Python worker的venv launcher PID均与实际worker PID不同；工具分别记录两者。实际RSS始终来自worker自身API，其阶段PID和footer PID一致，未把Popen返回的launcher当成算法worker。三个Rust worker的launcher/worker PID相同。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>路径</p></th>
+<th class="head"><p>3次绝对峰值MiB（全部保留）</p></th>
+<th class="head text-right"><p>峰值中位数MiB</p></th>
+<th class="head text-right"><p>预载后当前RSS中位数MiB</p></th>
+<th class="head text-right"><p>预载结束时已达HWM中位数MiB</p></th>
+<th class="head text-right"><p>随后新HWM增量中位数MiB</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>immutable完整L2公共数组调用</p></td>
+<td><p>103.5625 / 103.2227 / 103.7070</p></td>
+<td class="text-right"><p>103.5625</p></td>
+<td class="text-right"><p>55.5820</p></td>
+<td class="text-right"><p>55.5820</p></td>
+<td class="text-right"><p>47.9805</p></td>
+</tr>
+<tr class="row-odd"><td><p>同Python启动环境的预编码gateway低层调用</p></td>
+<td><p>77.6484 / 78.5195 / 78.9062</p></td>
+<td class="text-right"><p>78.5195</p></td>
+<td class="text-right"><p>57.6914</p></td>
+<td class="text-right"><p>59.6328</p></td>
+<td class="text-right"><p>18.8984</p></td>
+</tr>
+<tr class="row-even"><td><p>独立Rust typed buffer预载后核心</p></td>
+<td><p>11.8047 / 11.9023 / 11.7930</p></td>
+<td class="text-right"><p>11.8047</p></td>
+<td class="text-right"><p>6.5586</p></td>
+<td class="text-right"><p>8.9922</p></td>
+<td class="text-right"><p>2.8125</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>第一、二行都有相同Python/NumPy/pandas/原生包导入和cropped数组启动成本，导入后的当前RSS中位数分别53.121、53.195 MiB；第二行另外保留约2 MB请求文本，因此它的预载setup稍大。第二行仍调用同一Rust特征核心，省略完整公共volume/sample/FeatureTable构造，<strong>不是Python参考算法</strong>，也不是已经交付的等价快速公共API。</p>
+<p>完整L2的实际阶段当前RSS中位数为：预载55.582 MiB、image构造66.828、mask构造69.516、sample构造81.582、最后对象保留81.723 MiB；累计峰值分别升至79.840、79.840、95.969、103.562 MiB。它说明当前常驻对象与临时往返都有可观察开销。四个各257400元素的独立Python list，仅浅容器大小就共9,249,888 bytes（8.821 MiB），未包含盒装标量、临时JSON、allocator和核心缓冲区；这是实际保留下界，未用逐元素相加重复计算共享小整数。</p>
+<p>第三行的独立Rust启动当前RSS约3.355 MiB，typed JSON解析时当前RSS8.500 MiB/HWM8.992 MiB，释放输入文本后的预载RSS6.559 MiB，核心返回后当前RSS8.125 MiB/HWM11.805 MiB。输入的Rust数值buffer为f64/u32，而Python <code class="docutils literal notranslate"><span class="pre">.npy</span></code>为f64/u8，载体大小也已单列记录。不能把不同启动环境的11.8/103.6之比宣传成Python-facing公共API节省了相同倍数。</p>
+<p>这些数据支持“重复对象/表示有具体内存成本、纯Rust独立核心可以在较小进程中运行”的有限结论。<strong>它们没有建立Rust相对PyRadiomics同公共入口的内存优势</strong>：本轮未运行后者内存对照。对用户选择高层后端，仍需保持结果一致并取得等价接口的速度或内存收益证据。</p>
+<p>PeakWorkingSetSize是截至末尾footer的生命周期HWM，不是可重置的特征阶段峰值；预载解析setup仍计入其中。正的新HWM只证明后续阶段超过此前峰值；<code class="docutils literal notranslate"><span class="pre">peak-loaded</span> <span class="pre">RSS</span></code>和<code class="docutils literal notranslate"><span class="pre">peak-prior</span> <span class="pre">HWM</span></code>都不是精确分配量。未作Linux实际运行、allocator测量、OS cache purge、预算强制或大数据最大内存声明。Root协调短quiet窗口；另worker报告边界处有上一条0.2257秒stdlib标量检查，无原生worker/大扫描；本节不作延迟结论，九条观测全部保留。</p>
+<p>复现使用新目录，不会改动原854条结果：</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">tools</span><span class="p">/</span><span class="n">profile_native_memory</span><span class="p">.</span><span class="n">py</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-fixtures</span> <span class="nv">$WORKDIR</span><span class="p">/</span><span class="n">benchmark-v2</span><span class="p">/</span><span class="n">radiomics-inputs-a37-ct-v1</span><span class="p">/</span><span class="n">public_ct_pat1</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-request</span> <span class="nv">$WORKDIR</span><span class="p">/</span><span class="n">native-boundary-diagnosis</span><span class="p">/</span><span class="n">baseline-v3</span><span class="p">/</span><span class="n">array-request</span><span class="p">.</span><span class="n">json</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-build-manifest</span> <span class="nv">$WORKDIR</span><span class="p">/</span><span class="n">snapshot-native-v2</span><span class="p">/</span><span class="n">build-manifest</span><span class="p">.</span><span class="n">json</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-rust-probe</span> <span class="n">target</span><span class="p">/</span><span class="n">release</span><span class="p">/</span><span class="n">examples</span><span class="p">/</span><span class="n">profile_native_boundary</span><span class="p">.</span><span class="n">exe</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-native-python</span> <span class="nv">$WORKDIR</span><span class="p">/</span><span class="n">ml-path-native-v2</span><span class="p">/</span><span class="n">Scripts</span><span class="p">/</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-output</span> <span class="nv">$WORKDIR</span><span class="p">/</span><span class="n">fresh-memory-diagnostic-directory</span> <span class="p">-</span><span class="n">-repeats</span> <span class="n">3</span> <span class="p">-</span><span class="n">-acknowledge-license</span>
+</pre></div>
+</div>
+</section>
+<section id="rust">
+<h2>是否仍有必要保留Rust<a class="headerlink" href="#rust" title="Link to this heading">#</a></h2>
+<p>本基线诊断之后，已实现并单独检查了<a class="reference internal" href="sample-constructor-optimization.html"><span class="std std-doc">Sample构造临时深复制优化</span></a>。
+同二进制对照中完整公共L2中位耗时下降约17.38%，实际进程峰值内存没有下降。
+这只关闭了临时复制的一小部分速度问题；下文的更大缓冲区边界方案、正式性能目标、
+相对Python的内存收益和已知标量数值反例仍不能据此宣布解决。</p>
+<p>按“仅在速度、峰值内存或精度有明确收益时采用Rust，优先结果一致”的选择标准，本轮还不能证明应该把所有高层流程都换成Rust。独立CLI、统一实现和保存加载是工程能力，不能单独替代用户要求的数值或资源收益。当前数组入口的重复数据表示是具体可修复问题，也不等价于证明修复后的Rust一定胜出。</p>
+<p>不能用“Rust”名称代替速度证据。PyRadiomics关键纹理由成熟C扩展执行；要声称语言或内核优势，还需要同输入、同计算边界、同资源的对应内核测量。104.7 ms纯Rust调用不能直接与157.7 ms的Python公共API相比后宣称内核加速。本轮定位了本包内部时间/内存开销，但未建立相对PyRadiomics等价公共API的内存或更高精度收益，也未将原1.5×目标宣布通过。可以逐模块显式混用已经验证的高层后端，维持严格auto规则和特征定义/列顺序/数值一致；无需为了语言统一把更合适的路径强行替换。</p>
+<p>候选修复若有收益，应先在新的不可变构建上保留所有原病例/原次数重新验证，再更新正式性能报告；本次854条观测始终保留。没有对应证据的阶段继续标为未证明，不宣传语言速度、内存或精度的普遍优势。</p>
+</section>
+<section id="id6">
+<h2>尝试、失败与字节身份<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">baseline-v1</span></code>在计时前严格拒绝了诊断适配器的55/66列不一致：正确做法是合并冻结参考已有的55项 <code class="docutils literal notranslate"><span class="pre">features</span></code> 和11项 <code class="docutils literal notranslate"><span class="pre">basic_shape</span></code>，没有修改预期。</p>
+<p><code class="docutils literal notranslate"><span class="pre">baseline-v2</span></code>保存了全部阶段原始计时，但最终核心身份检查失败，且后来获知可能与文档/浏览器活动重叠，因此<strong>不作主结果</strong>。原因是新worktree把Cargo.lock检出为CRLF：40,291 bytes、SHA <code class="docutils literal notranslate"><span class="pre">ff310d53...c77d</span></code>；严格CRLF→LF得到Git blob的38,771 bytes、SHA <code class="docutils literal notranslate"><span class="pre">de33d6df...552bb</span></code>，与原v2锁文件逐字节相同，依赖版本及核心源码均未变化。build.rs对Rust源码规范化换行，但对Cargo.lock直接纳入摘要，因此换行即可令implementation ID变成 <code class="docutils literal notranslate"><span class="pre">dddda1cc...452c</span></code>。</p>
+<p>仅将独立worktree的锁文件工作区恢复为原LF字节并重建后，probe严格恢复为原 <code class="docutils literal notranslate"><span class="pre">a39c66ee...c2a8</span></code>。锁文件没有索引/依赖内容变更，没有改Root，更没有通过接受错误ID让测量通过。新runner在开始计时前就检查原锁字节。完整修复前后摘要、轮次和失败目录均保存在诊断数据中。</p>
+</section>
+<section id="id7">
+<h2>复现<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>需要完整仓库、已冻结的外置prepared CT目录、固定v2 wheel环境和匹配工具链。先检查Cargo.lock工作区原始SHA是否与构建manifest相同；若只因CRLF不同，恢复原Git blob LF，确认Git diff仍为空。不要改依赖版本。</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">cargo</span> <span class="n">build</span> <span class="p">-</span><span class="n">-release</span> <span class="p">-</span><span class="n">-locked</span> <span class="n">-p</span> <span class="n">ov-radiomics-core</span> <span class="p">-</span><span class="n">-example</span> <span class="n">profile_native_boundary</span>
+<span class="p">&amp;</span> <span class="s2">"$WORKDIR/ml-path-native-v2/Scripts/python.exe"</span> <span class="n">tools</span><span class="p">/</span><span class="n">profile_native_boundary</span><span class="p">.</span><span class="n">py</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-fixtures</span> <span class="nv">$WORKDIR</span><span class="p">/</span><span class="n">benchmark-v2</span><span class="p">/</span><span class="n">radiomics-inputs-a37-ct-v1</span><span class="p">/</span><span class="n">public_ct_pat1</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-build-manifest</span> <span class="nv">$WORKDIR</span><span class="p">/</span><span class="n">snapshot-native-v2</span><span class="p">/</span><span class="n">build-manifest</span><span class="p">.</span><span class="n">json</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-rust-probe</span> <span class="n">target</span><span class="p">/</span><span class="n">release</span><span class="p">/</span><span class="n">examples</span><span class="p">/</span><span class="n">profile_native_boundary</span><span class="p">.</span><span class="n">exe</span> <span class="p">`</span>
+  <span class="p">-</span><span class="n">-output</span> <span class="nv">$WORKDIR</span><span class="p">/</span><span class="n">fresh-external-diagnostic-directory</span> <span class="p">-</span><span class="n">-acknowledge-license</span>
+</pre></div>
+</div>
+<p>若设置CARGO_TARGET_DIR，probe路径需要对应调整。输出必须是新目录；脚本不修改参考环境、Golden、正式raw或既有诊断结果。所有原始观测和失败保留；这仍是暖OS缓存、单线程、单个公开CT的诊断，未建立其他数据、机器、冷启动、并行扩展或最大内存的性能结论。</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="deployment-benchmark-v2-results.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">独立 L5 部署成本证据：snapshot-native-v3</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sample-constructor-optimization.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">小范围优化：省去Sample验证前的临时深复制</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">输入、构建与执行范围</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">真实调用链和重复工作</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">同一次完整调用内的实际时钟</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python">独立Python阶段诊断</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rustprobe">纯Rust同输入probe</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">有限修复方案与需要保留的语义</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">小规模实际内存诊断</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rust">是否仍有必要保留Rust</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">尝试、失败与字节身份</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">复现</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/native-performance-diagnosis.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e">
+  Build <code>bb2d3fe</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,683 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Current support and acceptance boundaries &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/support-matrix';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/reference/support-matrix.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="方法、契约与技术报告" href="../development/methods.html" />
+    <link rel="prev" title="验证与适用范围" href="../validation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorials/index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../validation.html">验证与适用范围</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">原生支持矩阵</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../development/methods.html">方法与技术报告</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="technical-report.html">软件技术报告</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native-boundaries.html">原生能力边界</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rust-backend-decision.html">Rust范围与后端选择</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-accuracy-audit.html">独立标量精度审计</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../development/benchmarks.html">独立基准报告</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="radiomics-benchmark-v2-results.html">Radiomics 测量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="learning-pathology-benchmark-v2-results.html">Machine Learning / Statistics 与 Pathology 测量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment-benchmark-v2-results.html">L5 部署与启动成本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="native-performance-diagnosis.html">Python/Rust数组边界诊断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sample-constructor-optimization.html">Sample构造有限优化及未观察到的内存收益</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">开发与贡献</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../development/index.html" class="nav-link">验证与开发</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Current support and acceptance boundaries</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="current-support-and-acceptance-boundaries">
+<h1>Current support and acceptance boundaries<a class="headerlink" href="#current-support-and-acceptance-boundaries" title="Link to this heading">#</a></h1>
+<p>This matrix describes the implemented research-software scope. Evidence remains
+version scoped; neither a development build nor a performance result is a
+clinical validation or permission to publish a new package version.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Area</p></th>
+<th class="head"><p>Native support</p></th>
+<th class="head"><p>Evidence / boundary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Image input</p></td>
+<td><p>Scalar 2D/3D NIfTI, <code class="docutils literal notranslate"><span class="pre">.nii/.nii.gz</span></code>, full affine and units</p></td>
+<td><p>Geometry/round-trip/invalid-input tests; public CT compatibility. Unsliced 4D, complex and multichannel NIfTI are errors.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Preparation / ROI</p></td>
+<td><p>Explicit crop, spacing/reference resampling, clipping/scaling, label/components/dilation, anisotropic mm rings</p></td>
+<td><p>Shared Rust operations; mask nearest-neighbor only; physical distance rejects unknown units/shear.</p></td>
+</tr>
+<tr class="row-even"><td><p>Image features</p></td>
+<td><p>Original 55 named first-order/texture descriptors plus 11 <code class="docutils literal notranslate"><span class="pre">shape_basic</span></code> descriptors</p></td>
+<td><p><a class="reference internal" href="features-native.html"><span class="std std-doc">Exact feature list</span></a>; no claim that every member of a feature family is supported.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Table I/O</p></td>
+<td><p>CSV/Parquet with explicit ID/outcome/feature roles, strict joins, missing markers and manifests</p></td>
+<td><p>Rust parser; Python <code class="docutils literal notranslate"><span class="pre">read_study</span></code> / <code class="docutils literal notranslate"><span class="pre">FeatureTable.read</span></code> views do not require pyarrow.</p></td>
+</tr>
+<tr class="row-even"><td><p>Preprocessing / selection</p></td>
+<td><p>Median/mode, one-hot, Standard/MinMax/Robust, variance, Pearson redundancy, task-specific univariate/BH/sparse selection</p></td>
+<td><p>Train-only fitted state; all-missing/unknown category/zero-feature errors.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Models</p></td>
+<td><p>Binary/multinomial LR, OLS/Ridge regression, KNN, classification GaussianNB, CART RandomForest</p></td>
+<td><p>Three-task frozen predictions/objectives/convergence; forest exact small trees and separate behavioral thresholds.</p></td>
+</tr>
+<tr class="row-even"><td><p>Validation / fusion</p></td>
+<td><p>Patient-level plans, nested finite grids, weighted probabilities, verified OOF Logistic/softmax fusion</p></td>
+<td><p>Actual patient sets and classes checked; held-out perturbations cannot alter fits/OOF; external cohort identities retained.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Clinical / evaluation</p></td>
+<td><p>Observed baseline, t/Welch/MW/KW/chi-square/Fisher, complete-case Logit OR/Wald CI, typed ICC, three-task metrics and patient bootstrap</p></td>
+<td><p>Native CDF/quantile/random-index paths; separation/rank/convergence errors; DeLong/DCA/H–L remain binary. Calibration curves do not claim fitted recalibration.</p></td>
+</tr>
+<tr class="row-even"><td><p>Research combinations</p></td>
+<td><p>Strict keyed multi-region/modality concat, paired Delta, typed KMeans habitat, explicit center holdout</p></td>
+<td><p>No registration or batch correction inferred. Cluster indices are local labels. Python and CLI per-center evaluation passed focused E2E and code-bearing CI.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pathology pixels</p></td>
+<td><p>RGB8 PNG/JPEG, supported single-page TIFF, streamed patches, raw QC, fixed color histograms/circular Hue, gray textures, provided-mask objects</p></td>
+<td><p>No implicit RGB/bit-depth conversion; padding excluded; instance counts remain patch local.</p></td>
+</tr>
+<tr class="row-even"><td><p>Pathology hierarchy/maps</p></td>
+<td><p>Tile-ID alignment, tile→slide→patient summaries, explicit weights, real tile scores, overlap means/counts and block outputs</p></td>
+<td><p>Empty/excluded parents preserved; patient probabilities cannot be broadcast into local maps.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Native interfaces</p></td>
+<td><p>Shared Rust core, PyO3 conversion boundary and Python-free CLI</p></td>
+<td><p>Explicit Rust/auto never fall back to reference algorithms. Portable supervised <code class="docutils literal notranslate"><span class="pre">.rad</span></code> models; typed habitat JSON.</p></td>
+</tr>
+<tr class="row-even"><td><p>Research result plots</p></td>
+<td><p>Binary native Logistic-fusion nomogram, including loaded bundles; supplied three-task CV-score tables</p></td>
+<td><p>No refitting; CV metric/axis follows the recorded score. Native selector path/Rad-score views and patient-grouped learning curves are not implicitly provided.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="optional-external-adapters">
+<h2>Optional external adapters<a class="headerlink" href="#optional-external-adapters" title="Link to this heading">#</a></h2>
+<p>The legacy Python reference/extra-model path remains explicitly optional, with
+lazy sklearn/SciPy/statsmodels/PyRadiomics/joblib imports. Their availability does
+not count as native implementation. Base native tests omit these packages.</p>
+<p>Actual pinned AnnData/WSIData dense, in-memory metadata/H5AD adaptation was
+tested with real containers, geometry, table IDs, historical snapshots and MPP.
+See <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/optional-interop-acceptance.md">the precise environment and limitations</a>.
+This is not complete WSIData dependency, backed/sparse, decoder or training
+coverage. Ordinary arrays and the basic pathology path work without these packages.</p>
+<p>Externally prepared masks, registered images, filtered features and embeddings
+may enter the declared contracts. This does not implement the upstream processing.</p>
+</section>
+<section id="standards-and-performance">
+<h2>Standards and performance<a class="headerlink" href="#standards-and-performance" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="native-boundaries.html"><span class="std std-doc">native capability boundaries</span></a> page states the native,
+optional-Python and deferred scope. The <a class="reference internal" href="rust-backend-decision.html"><span class="std std-doc">Rust decision</span></a>
+evaluates speed, peak memory and numerical error separately. The
+<a class="reference internal" href="scalar-accuracy-audit.html"><span class="std std-doc">scalar audit</span></a> preserves the original cancellation
+observations and documents the user-approved Mean repair: current native Mean
+is <strong>0.5</strong>, equal to the independent mathematical reference, while the frozen
+public PyRadiomics 3.0.1 observation remains <strong>0.0</strong>. That intentional difference
+is not a claim of universal Python compatibility.</p>
+<p><code class="docutils literal notranslate"><span class="pre">python_golden_v1</span></code> identifies validation against the frozen public PyRadiomics
+3.0.1 fixtures and configurations at the original <code class="docutils literal notranslate"><span class="pre">atol=1e-10,</span> <span class="pre">rtol=1e-8</span></code>.
+It does not guarantee matching public 3.0.1 outputs for every possible input.
+Only Mean accumulation uses Neumaier compensation. Variance, Skewness and
+Kurtosis central-moment sums, other feature sums, and directional sum/count
+reductions retain their original naive accumulation. A more stable Mean can
+change dependent moments without making their accumulators, the whole
+first-order family, or directional aggregation mathematically exact.</p>
+<p>The independent IBSI digital checks are separately scoped: 54 selected features
+conform in the declared configurations; raw Kurtosis differs from excess kurtosis
+and remains explicitly nonconformant. Public CT numerical compatibility does not
+claim IBSI CT configuration conformance. There is no blanket IBSI certification.</p>
+<p>The complete <a class="reference internal" href="radiomics-benchmark-v2-results.html"><span class="std std-doc">Radiomics benchmark</span></a> preserves
+854 observations and explicit CT/prepared-array performance misses. The separate
+<a class="reference internal" href="deployment-benchmark-v2-results.html"><span class="std std-doc">L5 report</span></a> measures only its declared startup
+endpoints, one offline payload install and logical footprint. Complete dependency
+installation cost and allocator counts remain unmeasured. The separate
+<a class="reference internal" href="learning-pathology-benchmark-v2-results.html"><span class="std std-doc">ML/Statistics and Pathology report</span></a>
+retains all224 observations and per-row distributions. Its declared workloads
+passed the1.10 runtime/1.20 RSS engineering targets; near-equal regression warm
+runtime is not advertised as acceleration. Windows launcher supervision limits
+are explicit in the reports and do not imply strict process containment.</p>
+</section>
+<section id="deferred-without-placeholder-implementations">
+<h2>Deferred, without placeholder implementations<a class="headerlink" href="#deferred-without-placeholder-implementations" title="Link to this heading">#</a></h2>
+<p>DICOM/RTSTRUCT; registration optimizers/N4; general WSI/KFB/vendor decoding;
+complex stain separation; mesh surface/sphericity; LoG/Wavelet/LBP and local
+sliding textures; 2.5D; SLIC/GPU habitats; nonstandard topology/fractal/ITH;
+ComBat; complex survival/NRI/IDI; deep training/automatic segmentation/MIL;
+GUI and automatic paper generation remain outside this round.</p>
+<p>Formal PyPI/crates.io publication, version changes and ov source integration
+require separate authorization. The six executable tutorials are documented in
+<a class="reference internal" href="python-native.html"><span class="std std-doc">native Python workflows</span></a>; the <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/completion-audit.md">completion audit</a>
+tracks remaining delivery gates rather than redefining completion around this matrix.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../validation.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">验证与适用范围</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../development/methods.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">方法、契约与技术报告</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-external-adapters">Optional external adapters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standards-and-performance">Standards and performance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deferred-without-placeholder-implementations">Deferred, without placeholder implementations</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/support-matrix.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
+  Build <code>f3ec58c</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
