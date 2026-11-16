@@ -41,7 +41,13 @@ The first acceptance matrix is x86_64 Ubuntu (manylinux2014 wheels) and Windows,
 each with Python 3.9, 3.10, 3.11, and 3.12. macOS and ARM are not accepted targets.
 Each CI wheel artifact and the source artifact carry their own `SHA256SUMS`.
 
-Final stable-target candidate identities are recorded after a clean rebuild.
+The following final stable-target candidates were built from clean source
+`75c6738f82e550f397c90c278fb032ca0c28b719`, before this checksum-summary update:
+
+| Candidate | Bytes | SHA256 |
+|---|---:|---|
+| `ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl` | 3725488 | `0ff8767ed854447cfcd0e300ef70b7e9bdacec827c604e4a65f073d0a6086cb3` |
+| `ov_radiomics-0.1.0.tar.gz` | 1899118 | `7a591131f8c95fbe765fe3647b7bdd0792718190945b562fd842f382086ef613` |
 
 The release wheel was compiled with `--release --locked` in a previously absent
 target directory and installed into a new virtual environment without system
