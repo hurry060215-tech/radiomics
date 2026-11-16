@@ -86,6 +86,9 @@ class _NativeObject:
         return instance
 
 
+_CANONICAL_VOLUME_TO_DICT = _NativeObject.to_dict
+
+
 class ImageVolume(_NativeObject):
     """Scalar 2D/3D x-fastest buffer with complete native-unit RAS geometry."""
     _operation, _argument = 'validate_image', 'image'
@@ -118,6 +121,16 @@ class MaskVolume(ImageVolume):
         return np.asarray(self._payload['labels'], dtype=np.uint32).reshape(shape)
 
 
+def _sample_volume_payload(value, volume_type):
+    # This is a synchronous input borrow only. The unchanged native validation
+    # request serializes the input and returns a newly decoded owned payload.
+    # Preserve explicit serializers on instances, subclasses and patched classes.
+    if (type(value) is volume_type and 'to_dict' not in vars(value)
+            and volume_type.to_dict is _CANONICAL_VOLUME_TO_DICT):
+        return value._payload
+    return value.to_dict() if hasattr(value, 'to_dict') else value
+
+
 class ImageSample(_NativeObject):
     _operation, _argument = 'validate_image_sample', 'sample'
 
@@ -126,8 +139,8 @@ class ImageSample(_NativeObject):
             payload = metadata
         else:
             payload = dict(metadata=metadata,
-                image=image.to_dict() if hasattr(image, 'to_dict') else image,
-                mask=mask.to_dict() if hasattr(mask, 'to_dict') else mask)
+                image=_sample_volume_payload(image, ImageVolume),
+                mask=_sample_volume_payload(mask, MaskVolume))
         super().__init__(payload)
 
     @property
