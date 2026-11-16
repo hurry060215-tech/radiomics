@@ -233,12 +233,21 @@ def build(
         if release_output.exists()
         else "<li>" + html.escape(release_tag) + ": " + status + "</li>"
     )
+    source_note = (
+        '<p>Building the frozen v0.1.0 Git source needs a packaging-asset '
+        'preparation step. See the <a href="latest/en/installation.html'
+        '#frozen-source-tag-builds">current installation notes</a>.</p>'
+        if release_tag == "v0.1.0" and release_output.exists()
+        else ""
+    )
     index = (
         '<!doctype html><html lang="en"><meta charset="utf-8">'
         "<title>Radiomics documentation</title>"
         '<h1>Radiomics documentation</h1><ul><li><a href="latest/">latest</a></li>'
         + release_link
-        + '</ul><p data-build-revision="'
+        + "</ul>"
+        + source_note
+        + '<p data-build-revision="'
         + html.escape(build_revision)
         + '">Build <code>'
         + html.escape(build_revision[:7])

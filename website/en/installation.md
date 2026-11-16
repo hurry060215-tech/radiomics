@@ -44,6 +44,23 @@ python examples/native/01_extract.py --output artifacts/first-extraction
 Use a new output directory for each execution. If the native extension cannot
 load, check the interpreter and wheel tags before rerunning the example.
 
+## Frozen source-tag builds
+
+The maintained branch includes the binding README required by PEP 517 metadata,
+so its clean source checkout follows the ordinary installation steps above.
+The immutable `v0.1.0` Git tag/GitHub source archive predates this repair. From
+that tag's root, prepare its existing local packaging assets before installation:
+
+```bash
+python tools/package_native.py --output artifacts/tag-source-assets
+python -m pip install .
+```
+
+Prepared installation sdists already carry these assets. A GitHub source zip or
+tar archive is not the prepared sdist. The preparation step leaves the tag and
+frozen references unchanged; the historical source tag is not being rewritten
+or advertised as a repaired bare checkout.
+
 ## Optional backends and the CLI
 
 Only install optional backends for workflows that explicitly request them:
