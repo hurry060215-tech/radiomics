@@ -216,7 +216,7 @@ class ImageSample(_NativeObject):
             return _SharedSampleMask(self._owned_arrays, is_mask=True)
         return MaskVolume(self._json_payload['mask'])
 
-    def extract(self, config, *, roi_label=1, intensity_mask=None, families=None):
+    def extract(self, config, *, roi_label=1, intensity_mask=None, families=None, threads=1):
         """Extract an explicitly prepared array sample using the shared native engine."""
         import numpy as np
         from ._native_common import request
@@ -224,11 +224,12 @@ class ImageSample(_NativeObject):
         if self._owned_arrays is not None:
             from ._native_common import encode_json
             output = json.loads(self._owned_arrays.extract(encode_json(dict(
-                config=config, roi_label=roi_label, families=families, intensity_mask=intensity))))
+                config=config, roi_label=roi_label, families=families,
+                intensity_mask=intensity, threads=threads))))
         else:
             output = request('array_features', image=self._json_payload['image'],
                 morphology_mask=self._json_payload['mask'], intensity_mask=intensity,
-                roi_label=roi_label, config=config, families=families)
+                roi_label=roi_label, config=config, families=families, threads=threads)
         names = list(output)
         values = np.asarray([output[name] for name in names], dtype=float)
         missing = ~np.isfinite(values)

@@ -112,7 +112,7 @@ class ExtractionResult:
 
 
 def extract(samples, params=None, roi_label=1, correct_mask=False, n_jobs=1, on_error="raise",
-            backend='python', profile=None, bin_width=None, bin_count=None, cache=None):
+            backend='python', profile=None, bin_width=None, bin_count=None, cache=None, threads=1):
     """Extract ROI features. params is a PyRadiomics YAML path or parameter dictionary.
 
     Explicit correct_mask overrides the backend setting. No implicit disk cache.
@@ -120,9 +120,11 @@ def extract(samples, params=None, roi_label=1, correct_mask=False, n_jobs=1, on_
     """
     if backend in ('rust', 'auto'):
         return _extract_native(samples, params, roi_label, correct_mask, n_jobs, on_error,
-                               profile, bin_width, bin_count, cache)
+                               profile, bin_width, bin_count, cache, threads)
     if backend != 'python':
         raise ValueError('backend must be python, rust, or auto.')
+    if threads != 1:
+        raise ValueError('threads is a native option; use backend="rust".')
     if profile is not None or bin_width is not None or bin_count is not None or cache is not None:
         raise ValueError('profile/bin_width/bin_count/cache are native options; use backend="rust" or configure the explicit Python params.')
     from joblib import Parallel, delayed
@@ -186,7 +188,7 @@ def read_cohort(path):
 
 
 def _extract_native(samples, params, roi_label, correct_mask, n_jobs, on_error,
-                    profile, bin_width, bin_count, cache):
+                    profile, bin_width, bin_count, cache, threads):
     from ._backend import resolve_backend
     import copy
     unique_ids(samples)
@@ -227,7 +229,8 @@ def _extract_native(samples, params, roi_label, correct_mask, n_jobs, on_error,
             mask=str(Path(row['mask']).resolve()), organ_mask=optional('organ_mask'), roi_label=label))
     native = resolve_backend('rust')
     batch = json.loads(native.extract_images(json.dumps(rows, allow_nan=False),
-        json.dumps(config, allow_nan=False), n_jobs, str(Path(cache).resolve()) if cache is not None else None))
+        json.dumps(config, allow_nan=False), n_jobs,
+        str(Path(cache).resolve()) if cache is not None else None, threads))
     if batch['failures'] and on_error == 'raise':
         failures = '; '.join(f"{f['metadata']['sample_id']}: {f['error']['message']}" for f in batch['failures'])
         raise RuntimeError('Native extraction failed: ' + failures)

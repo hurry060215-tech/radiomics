@@ -29,6 +29,12 @@ struct Parameters {
     families: Option<Vec<FeatureFamily>>,
     #[serde(default)]
     intensity_mask: Option<MaskVolume>,
+    #[serde(default = "one_thread")]
+    threads: usize,
+}
+
+fn one_thread() -> usize {
+    1
 }
 
 #[derive(Deserialize)]
@@ -62,13 +68,14 @@ fn encoded_features(
     mask: &MaskVolume,
     parameters: Parameters,
 ) -> PyResult<String> {
-    let result = core::features::extract_families_view(
+    let result = core::features::extract_families_view_with_threads(
         image,
         mask,
         parameters.intensity_mask.as_ref(),
         parameters.roi_label,
         &parameters.config,
         parameters.families.as_deref().unwrap_or(&ALL_FAMILIES),
+        parameters.threads,
     )
     .map_err(error)?;
     let result: BTreeMap<_, _> = result
