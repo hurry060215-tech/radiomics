@@ -8,6 +8,7 @@
 Radiomics 测量 <../reference/radiomics-benchmark-v2-results>
 Machine Learning / Statistics 与 Pathology 测量 <../reference/learning-pathology-benchmark-v2-results>
 L5 部署与启动成本 <../reference/deployment-benchmark-v2-results>
+Python/Rust数组边界诊断 <../reference/native-performance-diagnosis>
 ```
 
 Radiomics 按算子、提取、端到端和吞吐分别评估；L5 单列冷进程、产物与安装 payload 成本。模型收敛、预测一致性、ID/坐标正确性与泄漏控制在各自套件验收。报告保留未达目标和监控边界，不以单一最快结果代替完整数据。

@@ -160,12 +160,44 @@ def plot_feature_weights(weights, ax=None, figsize=(7, 5), title='Feature weight
     return ax
 
 
-def plot_cv_results(results, ax=None, figsize=(8, 5), title='Cross-validation AUC'):
-    import seaborn as sns
-    ax = _axis(ax, figsize, title)
-    sns.boxplot(data=results, x='model', y='auc', ax=ax)
-    sns.stripplot(data=results, x='model', y='auc', color='black', ax=ax)
-    ax.set_ylim(0, 1)
+def plot_cv_results(results, ax=None, figsize=(8, 5), title=None, metric=None):
+    """Plot supplied fold scores, without fitting or changing patient partitions.
+
+    Native CV tables contain auc, macro_ovr_auc or rmse alongside score. Legacy
+    auc tables remain valid; generic score tables need an explicit metric.
+    """
+    frame = pd.DataFrame(results)
+    if frame.empty or 'model' not in frame or frame['model'].isna().any():
+        raise ValueError('CV results require nonempty identified model rows.')
+    candidates = [name for name in ('auc', 'macro_ovr_auc', 'rmse', 'mae', 'r2') if name in frame]
+    if metric is None:
+        if len(candidates) != 1:
+            raise ValueError('Declare metric explicitly when the CV table is ambiguous or contains only score.')
+        metric = candidates[0]
+    elif metric not in frame and candidates:
+        raise ValueError('Requested metric does not match the recorded CV metric columns.')
+    column = metric if metric in frame else 'score'
+    if column not in frame:
+        raise ValueError('The requested CV metric or score column is absent.')
+    labels = {'auc':'AUC', 'macro_ovr_auc':'Macro OvR AUC', 'rmse':'RMSE', 'mae':'MAE', 'r2':'R²'}
+    label = labels.get(metric, str(metric))
+    values = pd.to_numeric(frame[column], errors='raise').to_numpy(dtype=float)
+    if not np.isfinite(values).all():
+        raise ValueError('CV scores must be finite; missing folds cannot be silently dropped.')
+    if metric in ('auc', 'macro_ovr_auc') and ((values<0) | (values>1)).any():
+        raise ValueError('AUC fold scores must lie in [0, 1].')
+    names = list(pd.unique(frame['model']))
+    groups = [values[(frame['model']==name).to_numpy()] for name in names]
+    ax = _axis(ax, figsize, title or 'Cross-validation '+label)
+    positions = np.arange(len(names))
+    ax.boxplot(groups, positions=positions, widths=.55)
+    for position, group in zip(positions, groups):
+        offset = np.linspace(-.08, .08, len(group)) if len(group)>1 else np.zeros(1)
+        ax.scatter(position+offset, group, color='black', s=18, zorder=3)
+    ax.set_xticks(positions, labels=[str(name) for name in names])
+    ax.set(xlabel='Model', ylabel=label)
+    if metric in ('auc', 'macro_ovr_auc'):
+        ax.set_ylim(0, 1)
     return ax
 
 
@@ -239,16 +271,39 @@ def plot_learning_curve(estimator, X, y, cv=5, train_sizes=None, scoring='roc_au
 
 
 def plot_nomogram(fusion, risk_ticks=None, figsize=(10, 6), dpi=100):
-    """Additive point nomogram for a fitted LR fusion of probabilities in [0,1].
+    """Additive points for binary Logistic probability fusion, native or legacy.
 
-    Each predictor contributes nonnegative points; their sum maps exactly to the
-    fitted logistic probability. No fitting occurs here.
+    Accept a native FusionResult, a loaded fusion ModelBundle, or the legacy
+    Python result. Weighted/multiclass fusion and feature pipelines are outside
+    this binary probability-axis definition. No fitting occurs here.
     """
-    coefficients = np.asarray(fusion.model.coef_).reshape(-1)
-    if len(coefficients) != len(fusion.score_columns) or not np.any(coefficients):
+    from ._types import ModelBundle
+    model = fusion if isinstance(fusion, ModelBundle) else fusion.model
+    if isinstance(model, ModelBundle):
+        payload = model.to_dict()
+        manifest, fitted = payload['manifest'], payload['fitted']
+        meta = fitted.get('meta_model')
+        if (manifest['task'] != 'binary'
+                or manifest['training_configuration'].get('model_kind') != 'fusion'
+                or not isinstance(meta, dict)
+                or meta.get('state', {}).get('kind') != 'logistic'):
+            raise ValueError('Nomogram requires binary Logistic probability fusion; weighted/multiclass fusion and feature pipelines are unsupported.')
+        state = meta['state']
+        coefficients = np.asarray(state['coefficients']['values'], dtype=float)
+        intercepts = state['intercepts']
+        if len(intercepts) != 1 or state['coefficients']['rows'] != 1:
+            raise ValueError('Expected one binary fusion logit.')
+        intercept = float(intercepts[0])
+        score_columns = fitted['meta_feature_names']
+    else:
+        coefficients = np.asarray(model.coef_).reshape(-1)
+        intercept = float(model.intercept_[0])
+        score_columns = fusion.score_columns
+    if (len(coefficients) != len(score_columns) or not np.any(coefficients)
+            or not np.isfinite(coefficients).all() or not np.isfinite(intercept)):
         raise ValueError('Expected a nonconstant binary logistic fusion model.')
     unit = max(abs(coefficients))/100
-    baseline = float(fusion.model.intercept_[0] + np.minimum(coefficients, 0).sum())
+    baseline = float(intercept + np.minimum(coefficients, 0).sum())
     maximum = float(abs(coefficients).sum()/unit)
     if risk_ticks is None:
         risk_ticks = expit(np.linspace(baseline, baseline+maximum*unit, 5))
@@ -259,7 +314,7 @@ def plot_nomogram(fusion, risk_ticks=None, figsize=(10, 6), dpi=100):
     axes[0].plot([0, 100], [0, 0], color='black')
     axes[0].set_xticks(np.linspace(0,100,6))
     axes[0].set(xlim=(0, maximum), yticks=[], ylabel='Points')
-    for ax, name, beta in zip(axes[1:-2], fusion.score_columns, coefficients):
+    for ax, name, beta in zip(axes[1:-2], score_columns, coefficients):
         values = np.linspace(0, 1, 6)
         points = (beta*values-min(beta, 0))/unit
         ax.plot([points.min(), points.max()], [0, 0], color='black')

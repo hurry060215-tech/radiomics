@@ -96,3 +96,21 @@ python tools/audit_onekey_notebook_symbols.py --source-root D:/OnekeyPlatfrom50/
 外置完整符号清单：`E:/radiomics-build/onekey-gap-audit-v1/static-symbols-v3.json`，SHA256 `c194ef26cc3e2175296bea47b152129f9cf6b80b4eb3c6274a49d3c97d919cbf`。结构化报告保留48个来源文件摘要和所引用单元符号，无第三方正文或已有患者输出。README内容只记录SHA和规范topic标签。
 
 本包源码引用固定于基线；主agent后续修复应以新增提交/验收记录附注，而不是改写基线为“当时已经支持”。
+
+## 基线后的本轮修复与验证
+
+以下是新增工作，不重写上述36项的基线状态：
+
+- 原生二分类Logistic融合及重载`.rad`现在可直接传入`plot_nomogram`。测试用实际
+  绘图刻度插值后的概率对照原生holdout预测，验证不重拟合、保存加载一致、模型状态不变；
+  加权融合、多分类融合和普通特征pipeline明确拒绝。
+- `plot_cv_results`读取真实的AUC、macro OvR AUC或RMSE字段，保留回归纵轴范围；
+  generic score表要求显式metric，不允许把已有RMSE重标成AUC，也不再依赖seaborn。
+- ICC说明已更正为：现有Python入口验证矩阵与类型，调用者先按真实subject/reader ID
+  对齐完整平衡矩阵；它没有声称已实现不存在的长表身份适配。
+- 初始`scope.md`增加历史/可选Python标记。native Rad-score、LASSO路径/CV图便利视图、
+  患者分组学习曲线和多reader长表对齐入口仍未补齐，不把本轮绘图桥接扩写为它们已支持。
+
+针对性验证运行 `tests/test_native_learning_api.py` 与 `tests/test_workflow.py`：
+**28项通过**，包括旧Python行为回归及三任务原生输入，保留14条旧绘图库弃用warning。
+后续全量与安装CI以对应提交记录为准。

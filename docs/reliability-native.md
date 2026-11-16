@@ -4,8 +4,10 @@
 balanced subject-by-reader matrix: one subject per row, one reader per column.
 At least two subjects and two readers are required. Missing values, invalid
 buffer dimensions and invalid confidence are explicit errors; there is no
-automatic omission or imputation. The public adapter separately validates
-subject/reader identity and unique subject-reader pairs.
+automatic omission or imputation. The current Python adapter accepts the matrix,
+not subject/reader ID columns. The caller must first align the complete data by
+explicit subject and reader IDs and verify unique subject-reader pairs. Matrix
+shape validation alone cannot prove identity or pairing.
 
 Choose the type explicitly:
 

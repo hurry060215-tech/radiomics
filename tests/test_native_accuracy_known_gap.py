@@ -1,0 +1,26 @@
+"""Visible unresolved compatibility finding; never counted as a passed gate."""
+import numpy as np
+import pytest
+import ov_radiomics as rad
+from ov_radiomics._backend import try_native
+
+
+@pytest.mark.skipif(try_native() is None, reason='Native extension not built.')
+@pytest.mark.xfail(
+    strict=True, raises=AssertionError,
+    reason='Open high-dynamic-range Mean compatibility gap; see scalar-accuracy-audit.md. Fix/profile review required.',
+)
+def test_python_golden_mean_cancellation_matches_frozen_public_reference():
+    # Input and PyRadiomics3.0.1 observation were frozen by the independent
+    # scalar audit before this test: manifest a7ae74c4...9581a, report79e90b6c...
+    # Exact input mean is0.5, public PyRadiomics gives0, native currently0.125.
+    # This test concerns declared Python compatibility, not a claim that0 is
+    # mathematically accurate. Unexpected success requires reviewing the gap.
+    values=np.asarray([1e16,1.,-1e16,1.,1e16,1.,-1e16,1.],dtype=np.float64).reshape(2,4)
+    image=rad.image.from_array(values,affine=np.eye(4),spatial_unit='millimeter')
+    mask=rad.mask.from_array(np.ones_like(values,dtype=np.uint32),geometry=image.geometry)
+    sample=rad.ImageSample(dict(sample_id='scalar-cancellation',patient_id='synthetic-scalar'),image,mask)
+    config=dict(profile='python_golden_v1',discretization=dict(method='fixed_count',count=8),
+                aggregation='direction_mean',gldm_alpha=0,voxel_array_shift=0.)
+    result=sample.extract(config,families=['firstorder'])
+    assert result.features.loc[0,'original_firstorder_Mean']==pytest.approx(0.,abs=1e-10,rel=1e-8)

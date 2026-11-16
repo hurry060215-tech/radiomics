@@ -64,6 +64,14 @@ print(json.dumps(bundle.predict_study(converted).to_dict(),sort_keys=True))
     if task=='multiclass':
         assert {'macro_f1','micro_f1','weighted_f1'} <= set(report)
         assert 'confusion' in report.attrs['native_reports'][0]['report']
+    import matplotlib.pyplot as plt
+    axis=rad.plot_cv_results(result.cv_results)
+    assert axis.get_ylabel()=={'binary':'AUC','multiclass':'Macro OvR AUC','regression':'RMSE'}[task]
+    if task=='regression':
+        assert axis.get_ylim()[1]>=result.cv_results.rmse.max()
+    else:
+        assert axis.get_ylim()==(0,1)
+    plt.close(axis.figure)
 
 
 def test_patient_plan_fusion_leakage_and_test_perturbation():
@@ -87,6 +95,63 @@ def test_patient_plan_fusion_leakage_and_test_perturbation():
     pd.testing.assert_frame_equal(first.oof_predictions,another.oof_predictions)
 
 
+def test_native_fusion_nomogram_matches_actual_predictions_after_reload(tmp_path):
+    import matplotlib.pyplot as plt
+    from ov_radiomics.plotting import expit
+    frame,features,classes=dataset('binary')
+    config=dict(backend='rust',classes=classes,positive_label=classes[-1],cv=3,inner_cv=2,scale='standard')
+    first=rad.train_models(frame,'target',features[:2],**config)
+    second=rad.train_models(frame,'target',features[2:],split_plan=first.split_plan,**config)
+    parts={'Rad':first,'Clinical':second}
+    fused=rad.fit_fusion(rad.fusion_data(parts),backend='rust')
+    held=rad.fusion_data(parts,cohort='test')
+    expected=fused.predict_proba(held).to_numpy()
+    before=fused.model.to_dict()
+    fused.save(tmp_path/'fusion.rad')
+    for value in (fused,rad.load_model(tmp_path/'fusion.rad')):
+        fig=rad.plot_nomogram(value)
+        mapping=fig.nomogram_mapping
+        # Read the actual plotted probability-axis tick coordinates. The linear
+        # points interpolation must reproduce native held-out probabilities.
+        points=np.zeros(len(held))
+        for name,axis in zip(fused.score_columns,fig.axes[1:-2]):
+            coordinates=axis.get_xticks()
+            points+=coordinates[0]+held[name].to_numpy()*(coordinates[-1]-coordinates[0])
+        actual=expit(mapping['baseline_logit']+points*mapping['logit_per_point'])
+        np.testing.assert_allclose(actual,expected,atol=1e-12,rtol=1e-10)
+        fig.savefig(tmp_path/('restored.png' if isinstance(value,rad.ModelBundle) else 'fitted.png'))
+        plt.close(fig)
+    assert fused.model.to_dict()==before
+    weighted=rad.fit_fusion(rad.fusion_data(parts),backend='rust',method='weighted',weights=[.4,.6])
+    for unsupported in (weighted,first.models['LR']):
+        with pytest.raises(ValueError,match='binary Logistic probability fusion'):
+            rad.plot_nomogram(unsupported)
+
+
+def test_native_multiclass_fusion_is_not_a_binary_nomogram():
+    frame,features,classes=dataset('multiclass')
+    config=dict(backend='rust',task='multiclass',classes=classes,cv=3,inner_cv=2)
+    first=rad.train_models(frame,'target',features[:2],**config)
+    second=rad.train_models(frame,'target',features[2:],split_plan=first.split_plan,**config)
+    fused=rad.fit_fusion(rad.fusion_data({'A':first,'B':second}),backend='rust')
+    with pytest.raises(ValueError,match='binary Logistic probability fusion'):
+        rad.plot_nomogram(fused)
+
+
+def test_cv_plot_retains_regression_range_and_rejects_metric_relabeling():
+    import matplotlib.pyplot as plt
+    frame=pd.DataFrame({'model':['Ridge']*3,'score':[2.5,3.,4.],'rmse':[2.5,3.,4.]})
+    axis=rad.plot_cv_results(frame)
+    assert axis.get_ylabel()=='RMSE' and axis.get_ylim()[1]>4
+    plt.close(axis.figure)
+    with pytest.raises(ValueError,match='does not match'):
+        rad.plot_cv_results(frame,metric='auc')
+    with pytest.raises(ValueError,match='Declare metric'):
+        rad.plot_cv_results(frame.drop(columns='rmse'))
+    axis=rad.plot_cv_results(frame.drop(columns='rmse'),metric='rmse')
+    plt.close(axis.figure)
+
+
 def test_native_import_and_training_never_load_optional_reference_packages():
     code="""
 import importlib.abc,sys
@@ -102,6 +167,7 @@ frame,features,classes=namespace['dataset']('binary')
 result=rad.train_models(frame,'target',features,backend='rust',classes=classes,positive_label=classes[-1],cv=3,inner_cv=2)
 rad.evaluate(result,backend='rust',ci_method=None)
 rad.plot_roc([0,0,1,1],[.1,.4,.35,.8])
+rad.plot_cv_results(result.cv_results)
 rad.plot_calibration([0,0,1,1],[.1,.4,.35,.8],n_bins=2)
 rad.plot_confusion_matrix([0,0,1,1],[.1,.4,.35,.8])
 print('native_only_passed')

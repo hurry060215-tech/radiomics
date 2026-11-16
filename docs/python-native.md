@@ -104,6 +104,19 @@ without an outcome. Fusion bundles use `predict_study` with exact named componen
 studies. Missing/unknown schemas, types, columns and nonconverged state fail.
 Default outputs refuse replacement; `overwrite=True` is explicit.
 
+For a fitted binary Logistic probability fusion, `rad.plot_nomogram(fusion)`
+also accepts the native result or its reloaded fusion `ModelBundle`. It reads
+the saved meta-model coefficients and converts the actual component probability
+axes into points without refitting. Weighted averages, multiclass fusion and
+ordinary feature pipelines are explicitly rejected by this binary plot. The
+same mapping remains available on `figure.nomogram_mapping` for verification.
+
+`rad.plot_cv_results(result.cv_results)` accepts the native binary AUC,
+multiclass macro OvR AUC and regression RMSE tables, or an explicit `metric=`
+for generic score tables. It uses supplied fold scores only, preserves regression
+axis ranges and requires no seaborn/sklearn. This is a CV-score display, not the
+legacy learning-curve routine that creates and fits its own sklearn folds.
+
 ## Image, research and pathology objects
 
 `rad.image.from_array` uses NumPy `(y,x)` or `(z,y,x)` axes and a full affine;

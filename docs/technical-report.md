@@ -2,6 +2,10 @@
 
 **文档状态：实测技术报告，按所列源码快照、数据集及验证范围解释。**
 
+**后续审计更新：** [标量精度审计](scalar-accuracy-audit.md)新增了高动态范围Mean的
+Python兼容性反例，当前尚未修复。本文记录的数据与Golden通过保持原事实，不能据此
+宣称这个新数值缺口或全部数值发布门槛已关闭。后端取舍见[独立决策](rust-backend-decision.md)。
+
 项目：[hurry060215-tech/radiomics](https://github.com/hurry060215-tech/radiomics)；Python 包/导入名保留 `ov-radiomics` / `ov_radiomics`，版本保留 `0.1.0`。
 
 Radiomics 性能对象：不可变源码快照 `48ecb310a2d9ccb5da821733ee1190ce1764f27a`；核心实现摘要 `a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8`。后续接口变更与持续集成结果应单独标识，不能自动继承该快照的测量结论。

@@ -82,6 +82,14 @@ Python compatibility freezes public PyRadiomics3.0.1; IBSI is an independent def
 - **IBSI digital track:** 54/55 scoped definitions conformant, with raw Kurtosis explicitly nonconformant. This is not blanket IBSI certification or clinical validation.
 - **Deployment:** Windows/Linux native-only wheel checks and a no-Python/no-network CLI container. [Evidence index](docs/delivery-index.md) keeps each result tied to its tested revision.
 
+Backend choice is component-specific: prioritize the declared result contract,
+then measure speed, peak memory and numerical error separately. The
+[boundary diagnosis](docs/native-performance-diagnosis.md) identifies repeated
+JSON/object costs in the Python array path. The [scalar accuracy audit](docs/scalar-accuracy-audit.md)
+also records an extreme cancellation case that currently differs from Python;
+neither backend is universally more accurate. See the [Rust decision](docs/rust-backend-decision.md)
+and [Onekey workflow gap audit](docs/onekey-workflow-gap-audit.md) for limits and priorities.
+
 ## Documentation and contributions
 
 The documentation follows the task-oriented organization of [OmicVerse](https://github.com/omicverse/omicverse) and its [tutorial repository](https://github.com/omicverse/omicverse-tutorials), with independently authored examples and evidence. Build a local searchable preview:

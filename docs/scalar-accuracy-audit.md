@@ -67,6 +67,10 @@ python tools/audit_scalar_accuracy.py run --manifest D:/new-scalar-audit/manifes
 
 ### 已知兼容性缺口也必须单列
 
+仓库另用严格xfail回归项 `test_native_accuracy_known_gap.py` 公开保留此缺口：
+它不是通过项，只允许预期的数值断言失败；其他异常仍失败，意外通过也要求复查并关闭记录。
+普通CI退出成功不能被解释为这个数值门槛已通过。
+
 这组新的取消输入上，原生 `python_golden_v1` Mean与公开3.0.1结果相差 **0.125**。若应用既有确定性标量规则 `atol=1e−10, rtol=1e−8`，Python参考为0，差值显然不能通过。**这是新发现的高动态范围兼容/数值稳定性缺口，不能宣称默认profile在所有输入上完全相等。** 其他既有Golden通过不抹除此反例；本次没有改原Golden、重录预期、放宽容差或将它伪装成已通过的回归测试。
 
 “更接近精确数学”和“保持Python兼容”在此确实是两条不同轴。未来即使数值算法更稳定，也应明确profile、误差/退化行为和迁移方式，不能在兼容profile内静默改变定义或承诺。

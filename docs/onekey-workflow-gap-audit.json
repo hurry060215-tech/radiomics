@@ -2201,8 +2201,23 @@
   "follow_up_not_in_baseline": [
     {
       "id": "native_fusion_nomogram",
-      "status": "Root reports post-baseline typed binary Logistic nomogram bridge implemented; tests pending at audit cutoff. This audit has not accepted or executed it.",
-      "verification": "Attach Root commit/test evidence; never generalize this fix to other plots."
+      "status": "Implemented and verified after baseline; native binary Logistic fusion and reloaded bundle only.",
+      "verification": "28 focused native-learning/legacy workflow tests passed; actual drawn axis coordinates reproduce native holdout probabilities; weighted, multiclass and feature pipelines rejected; no refit or state mutation."
+    },
+    {
+      "id": "native_cv_score_plot",
+      "status": "Implemented and verified after baseline; task-aware AUC/macro_ovr_auc/RMSE and explicit generic score metric.",
+      "verification": "Actual three-task result tables, regression scores above1, mismatched metric relabel rejection and no-seaborn native import guard."
+    },
+    {
+      "id": "icc_identity_documentation",
+      "status": "Corrected documentation after baseline. Matrix API does not validate subject/reader IDs; caller aligns and verifies unique pairs.",
+      "verification": "No new identity adapter or ICC algorithm is claimed."
+    },
+    {
+      "id": "remaining_view_gaps",
+      "status": "Still partial: native Rad-score/legacy selector paths and CV views, patient-grouped learning curves, ICC long-table convenience.",
+      "verification": "Baseline mappings retained; no expanded native support claim."
     }
   ]
 }

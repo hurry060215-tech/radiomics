@@ -6,6 +6,9 @@
 :maxdepth: 1
 
 软件技术报告 <../reference/technical-report>
+Onekey工作流缺口核对 <../reference/onekey-workflow-gap-audit>
+Rust范围与后端选择 <../reference/rust-backend-decision>
+独立标量精度审计 <../reference/scalar-accuracy-audit>
 ```
 
 ## 按问题查定义

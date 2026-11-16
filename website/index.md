@@ -2,7 +2,7 @@
 
 <div class="portal-intro">
 <p class="portal-kicker">RADIOMICS · 独立研究软件</p>
-<p class="portal-lead">Rust 负责计算，Python 负责交互与绘图，独立 CLI 支持无 Python 的运行环境。围绕明确的输入、患者划分、参数与输出，完成影像组学和轻量病理分析。</p>
+<p class="portal-lead">Python 提供交互与绘图，原生核心支撑无 Python 的 CLI。明确选择每一步的后端，围绕输入、患者划分、参数与输出，完成影像组学和轻量病理分析；速度、峰值内存和数值误差分别验证。</p>
 <div class="portal-actions"><a class="portal-primary" href="installation.html">安装与首次运行</a><a href="tutorials/index.html">选择学习路线 →</a><a href="user-guide/index.html">使用自己的数据 →</a></div>
 </div>
 

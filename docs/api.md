@@ -33,6 +33,13 @@ rows and require identified inputs. Explicit `analysis_unit='sample'` records a
 row-level scope; it does not establish patient independence. CDF/quantiles,
 H–L grouping and legacy-compatible bootstrap indices now execute in Rust.
 
+`plot_nomogram` accepts native binary Logistic fusion results and reloaded fusion
+bundles, reading saved coefficients without fitting. `plot_cv_results` accepts
+binary AUC, multiclass macro OvR AUC and regression RMSE, with an explicit metric
+for generic score tables. These plots need no sklearn/seaborn. Other legacy
+selector-path/Rad-score and learning-curve views retain their stated limits; see
+the [workflow audit](onekey-workflow-gap-audit.md).
+
 ## Legacy Python/reference API below
 
 The remaining reference tables describe the original optional Python workflow,
