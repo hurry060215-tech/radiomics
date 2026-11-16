@@ -117,6 +117,9 @@ def extract(samples, params=None, roi_label=1, correct_mask=False, n_jobs=1, on_
 
     Explicit correct_mask overrides the backend setting. No implicit disk cache.
     on_error='record' keeps failed IDs in diagnostics and features (NaN values).
+    Native threads controls a local per-sample feature pool. When threads > 1,
+    n_jobs * threads must fit the available logical CPU budget. The default
+    threads=1 preserves the existing outer n_jobs behavior.
     """
     if backend in ('rust', 'auto'):
         return _extract_native(samples, params, roi_label, correct_mask, n_jobs, on_error,

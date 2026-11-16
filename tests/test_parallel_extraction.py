@@ -66,8 +66,9 @@ def test_public_file_extract_passes_threads_and_preserves_result(tmp_path):
     serial = rad.extract(samples, backend='rust', bin_width=1, threads=1)
     parallel = rad.extract(samples, backend='rust', bin_width=1, threads=THREADS)
     assert np.array_equal(serial.features.to_numpy(), parallel.features.to_numpy())
-    with pytest.raises(ValueError, match='budget'):
-        rad.extract(samples, backend='rust', bin_width=1, n_jobs=10**6, threads=THREADS)
+    if THREADS > 1:
+        with pytest.raises(ValueError, match='budget'):
+            rad.extract(samples, backend='rust', bin_width=1, n_jobs=10**6, threads=THREADS)
 
 
 @pytest.mark.parametrize('threads', [0, 10**6])

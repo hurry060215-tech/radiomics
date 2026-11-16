@@ -1141,10 +1141,19 @@ pub fn extract_families_view(
 /// Validate the caller's explicit outer x inner budget; never resize global pools.
 pub fn validate_thread_budget(n_jobs: usize, threads: usize) -> RadResult<()> {
     let available = std::thread::available_parallelism().map_or(1, usize::from);
+    validate_thread_budget_for(n_jobs, threads, available)
+}
+
+fn validate_thread_budget_for(n_jobs: usize, threads: usize, available: usize) -> RadResult<()> {
     if n_jobs == 0 || threads == 0 {
         return Err(invalid(
             "n_jobs and threads must be positive worker counts.",
         ));
+    }
+    // Preserve the existing outer-worker API when inner parallelism is off.
+    // Only the new opt-in inner pool introduces a multiplied worker budget.
+    if threads == 1 {
+        return Ok(());
     }
     if n_jobs
         .checked_mul(threads)
@@ -1300,6 +1309,16 @@ fn extract_families_view_impl(
 mod tests {
     use super::*;
     use crate::contracts::{Geometry, SpatialUnit};
+
+    #[test]
+    fn thread_budget_preserves_legacy_outer_workers_and_bounds_opt_in() {
+        assert!(validate_thread_budget_for(3, 1, 2).is_ok());
+        assert!(validate_thread_budget_for(1, 2, 2).is_ok());
+        assert!(validate_thread_budget_for(3, 2, 2).is_err());
+        assert!(validate_thread_budget_for(0, 1, 2).is_err());
+        assert!(validate_thread_budget_for(1, 0, 2).is_err());
+        assert!(validate_thread_budget_for(usize::MAX, 2, 2).is_err());
+    }
     fn sample(
         shape: [usize; 3],
         values: Vec<f64>,

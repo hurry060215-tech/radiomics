@@ -217,7 +217,7 @@ class ImageSample(_NativeObject):
         return MaskVolume(self._json_payload['mask'])
 
     def extract(self, config, *, roi_label=1, intensity_mask=None, families=None, threads=1):
-        """Extract an explicitly prepared array sample using the shared native engine."""
+        """Extract a prepared sample; threads selects a bounded local native pool."""
         import numpy as np
         from ._native_common import request
         intensity = None if intensity_mask is None else intensity_mask.to_dict()
