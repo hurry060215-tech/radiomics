@@ -4,6 +4,7 @@ use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
 mod gateway;
 mod pathology;
+mod typed_arrays;
 
 fn input_error(error: core::InputError) -> PyErr {
     PyValueError::new_err(error.to_string())
@@ -12,6 +13,9 @@ fn input_error(error: core::InputError) -> PyErr {
 #[pymodule]
 mod _native {
     use super::*;
+
+    #[pymodule_export]
+    use crate::typed_arrays::{array_features_typed, OwnedArraySample};
 
     #[pyfunction]
     fn request_json(py: Python<'_>, payload: String) -> PyResult<String> {
