@@ -135,39 +135,106 @@ class ImageSample(_NativeObject):
     _operation, _argument = 'validate_image_sample', 'sample'
 
     def __init__(self, metadata, image=None, mask=None):
+        canonical_wrappers = (
+            type(image) is ImageVolume and type(mask) is MaskVolume
+            and 'to_dict' not in vars(image) and 'to_dict' not in vars(mask)
+            and ImageVolume.to_dict is _CANONICAL_VOLUME_TO_DICT
+            and MaskVolume.to_dict is _CANONICAL_VOLUME_TO_DICT)
         if image is None and mask is None:
             payload = metadata
         else:
             payload = dict(metadata=metadata,
                 image=_sample_volume_payload(image, ImageVolume),
                 mask=_sample_volume_payload(mask, MaskVolume))
-        super().__init__(payload)
+        self._owned_arrays = None
+        native = resolve_backend('rust')
+        # Canonicalize once at construction. The Rust owner detaches both
+        # buffers; subsequent extraction borrows the immutable Arc storage.
+        if (canonical_wrappers and hasattr(native, 'OwnedArraySample') and isinstance(payload, dict)
+                and set(payload) == {'metadata', 'image', 'mask'}
+                and set(payload['image']) == {'geometry', 'values'}
+                and set(payload['mask']) == {'geometry', 'labels'}):
+            image_payload, mask_payload = payload['image'], payload['mask']
+            import numpy as np
+            raw_labels = np.asarray(mask_payload['labels'])
+            if (raw_labels.dtype.kind not in 'ui' or np.any(raw_labels < 0)
+                    or np.any(raw_labels > np.iinfo(np.uint32).max)):
+                from ._native_common import request
+                self._json_payload = request(self._operation, **{self._argument: payload})
+                self._normalize_owned(native, self._json_payload)
+                return
+            self._normalize_owned(native, payload)
+        else:
+            from ._native_common import request
+            self._json_payload = request(self._operation, **{self._argument: payload})
+            if hasattr(native, 'OwnedArraySample'):
+                self._normalize_owned(native, self._json_payload)
+
+    def _normalize_owned(self, native, payload):
+        import numpy as np
+        from ._native_common import encode_json
+        image_payload, mask_payload = payload['image'], payload['mask']
+        image_shape = tuple(reversed(image_payload['geometry']['shape']))
+        mask_shape = tuple(reversed(mask_payload['geometry']['shape']))
+        # Explicit, timed ownership normalization copies. Neither dtype/layout
+        # repair nor conversion is hidden outside the construction clock.
+        values = np.asarray(image_payload['values'], dtype=np.float64).reshape(image_shape)
+        labels = np.asarray(mask_payload['labels'], dtype=np.uint32).reshape(mask_shape)
+        header = dict(metadata=payload['metadata'],
+            image_geometry=image_payload['geometry'], mask_geometry=mask_payload['geometry'])
+        self._owned_arrays = native.OwnedArraySample(values, labels, encode_json(header))
+        self.__dict__.pop('_json_payload', None)
+
+    @property
+    def _payload(self):
+        # Compatibility for explicit dictionary consumers; normal access and
+        # extraction below retain the shared owner instead of materializing it.
+        return self.to_dict() if self._owned_arrays is not None else self._json_payload
+
+    def to_dict(self):
+        if self._owned_arrays is None:
+            return deepcopy(self._json_payload)
+        return dict(metadata=self.metadata,
+            image=json.loads(self._owned_arrays.image_json()),
+            mask=json.loads(self._owned_arrays.mask_json()))
 
     @property
     def metadata(self):
-        return deepcopy(self._payload['metadata'])
+        if self._owned_arrays is not None:
+            return json.loads(self._owned_arrays.metadata_json())
+        return deepcopy(self._json_payload['metadata'])
 
     @property
     def image(self):
-        return ImageVolume(self._payload['image'])
+        if self._owned_arrays is not None:
+            return _SharedSampleVolume(self._owned_arrays, is_mask=False)
+        return ImageVolume(self._json_payload['image'])
 
     @property
     def mask(self):
-        return MaskVolume(self._payload['mask'])
+        if self._owned_arrays is not None:
+            return _SharedSampleMask(self._owned_arrays, is_mask=True)
+        return MaskVolume(self._json_payload['mask'])
 
-    def extract(self, config, *, roi_label=1, intensity_mask=None, families=None):
-        """Extract an explicitly prepared array sample using the shared native engine."""
+    def extract(self, config, *, roi_label=1, intensity_mask=None, families=None, threads=1):
+        """Extract a prepared sample; threads selects a bounded local native pool."""
         import numpy as np
         from ._native_common import request
-        output = request('array_features', image=self._payload['image'],
-            morphology_mask=self._payload['mask'],
-            intensity_mask=None if intensity_mask is None else intensity_mask.to_dict(),
-            roi_label=roi_label, config=config, families=families)
+        intensity = None if intensity_mask is None else intensity_mask.to_dict()
+        if self._owned_arrays is not None:
+            from ._native_common import encode_json
+            output = json.loads(self._owned_arrays.extract(encode_json(dict(
+                config=config, roi_label=roi_label, families=families,
+                intensity_mask=intensity, threads=threads))))
+        else:
+            output = request('array_features', image=self._json_payload['image'],
+                morphology_mask=self._json_payload['mask'], intensity_mask=intensity,
+                roi_label=roi_label, config=config, families=families, threads=threads)
         names = list(output)
         values = np.asarray([output[name] for name in names], dtype=float)
         missing = ~np.isfinite(values)
         quality = [dict(code='undefined_feature', message=f'{name}: {output[name]}',
-            severity='warning', sample_id=self._payload['metadata']['sample_id'])
+            severity='warning', sample_id=self.metadata['sample_id'])
             for name, invalid in zip(names, missing) if invalid]
         table = dict(data=dict(rows=1, cols=len(names), values=np.where(missing, 0., values).tolist(),
             missing=missing.tolist()), samples=[self.metadata],
@@ -176,6 +243,38 @@ class ImageSample(_NativeObject):
                     ('mm','mm2','mm3','native','native2','native3','index','voxels') else None) for name in names],
             effective_parameters=dict(extraction=config, roi_label=roi_label, families=families), quality=quality)
         return FeatureTable(table)
+
+
+class _SharedSampleVolume(ImageVolume):
+    """Read-only volume view retaining its native sample's immutable buffers."""
+    def __init__(self, owner, *, is_mask):
+        self._owner = owner
+        self._is_mask = is_mask
+
+    @property
+    def _payload(self):
+        return self.to_dict()
+
+    def to_dict(self):
+        return json.loads(self._owner.mask_json() if self._is_mask else self._owner.image_json())
+
+    @property
+    def geometry(self):
+        return json.loads(self._owner.mask_geometry_json() if self._is_mask else self._owner.image_geometry_json())
+
+    @property
+    def array(self):
+        array = self._owner.mask_array() if self._is_mask else self._owner.image_array()
+        return array if self.geometry['ndim'] == 3 else array[0]
+
+    @property
+    def affine(self):
+        import numpy as np
+        return np.asarray(self.geometry['affine'], dtype=float)
+
+
+class _SharedSampleMask(_SharedSampleVolume, MaskVolume):
+    pass
 
 
 class FeatureTable(_NativeObject):
