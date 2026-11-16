@@ -62,6 +62,9 @@ def array_features_typed_or_json(image_buffer, mask_buffer, *, image_geometry,
 
     No dtype or layout repair is performed before the Rust rejection. Conversion
     to the JSON contract happens only inside the fallback and is part of its cost.
+    Only rust-numpy's exact dtype-extraction errors and the native entry's exact
+    C-layout rejection permit fallback. Shape, geometry, configuration and core
+    extraction failures propagate instead of being retried as flat JSON buffers.
     """
     native = resolve_backend('rust')
     parameters = dict(config=config, roi_label=roi_label,
@@ -71,8 +74,32 @@ def array_features_typed_or_json(image_buffer, mask_buffer, *, image_geometry,
             return json.loads(native.array_features_typed(image_buffer, mask_buffer,
                 encode_json(dict(image_geometry=image_geometry,
                     mask_geometry=mask_geometry, **parameters))))
-        except (TypeError, ValueError):
-            pass
+        except TypeError as error:
+            # rust-numpy 0.30 distinguishes dtype from dimensionality errors.
+            # Also verify the corresponding input: a compute/JSON TypeError,
+            # invalid object or wrong number of dimensions must not fall back.
+            dtype_errors = [
+                f'type mismatch:\n from={buffer.dtype}, to={expected}'
+                for buffer, expected in (
+                    (image_buffer, np.dtype('float64')),
+                    (mask_buffer, np.dtype('uint32')),
+                )
+                if isinstance(buffer, np.ndarray) and buffer.ndim == 3
+                and buffer.dtype != expected
+            ]
+            if str(error) not in dtype_errors:
+                raise
+        except ValueError as error:
+            # This is the private Rust entry's layout-only rejection contract;
+            # other ValueError messages contain real validation/core failures.
+            if str(error) != 'Typed arrays require C-contiguous layout.':
+                raise
+    # A dtype/layout rejection can happen before the native shape check. Keep
+    # that check when flattening for JSON, which has no ndarray-axis metadata.
+    for buffer, geometry in (
+            (image_buffer, image_geometry), (mask_buffer, mask_geometry)):
+        if tuple(buffer.shape) != tuple(reversed(geometry['shape'])):
+            raise ValueError('Typed array shape differs from the declared geometry.')
     return request('array_features',
         image=dict(geometry=image_geometry,
             values=image_buffer.ravel(order='C').tolist()),

@@ -175,3 +175,90 @@ print(json.dumps(results))
         text=True, timeout=30)
     assert result.returncode == 0, result.stderr
     assert json.loads(result.stdout) == [dict(changed_during_native=True, mean=1.)]*3
+
+
+@pytest.mark.parametrize('failure', ['shape', 'geometry', 'config', 'roi'])
+def test_validation_errors_do_not_fall_back_to_flat_json(failure, monkeypatch):
+    import ov_radiomics._native_common as common
+
+    values, labels, geometry = arrays()
+    parameters = dict(image_geometry=geometry, mask_geometry=geometry,
+        config=CONFIG, roi_label=1, families=['firstorder'], intensity_mask=None)
+    if failure == 'shape':
+        # Same voxel count: flattening would silently accept this wrong shape.
+        wrong = {**geometry, 'shape': [3, 4, 2]}
+        parameters.update(image_geometry=wrong, mask_geometry=wrong)
+        expected = 'shape differs'
+    elif failure == 'geometry':
+        other = json.loads(json.dumps(geometry))
+        other['affine'][0][3] += 10.
+        parameters['mask_geometry'] = other
+        expected = 'world-coordinate grids differ'
+    elif failure == 'config':
+        parameters['config'] = {**CONFIG, 'profile': 'unsupported-profile'}
+        expected = 'Unknown extraction profile'
+    else:
+        parameters['roi_label'] = 99
+        expected = 'ROI is empty or absent'
+
+    def unexpected(*args, **kwargs):
+        raise AssertionError('Validation errors must not retry the JSON path.')
+
+    monkeypatch.setattr(common, 'request', unexpected)
+    with pytest.raises(ValueError, match=expected):
+        common.array_features_typed_or_json(values, labels, **parameters)
+
+
+def test_dimensionality_rejection_does_not_fall_back(monkeypatch):
+    import ov_radiomics._native_common as common
+
+    values, labels, geometry = arrays()
+
+    def unexpected(*args, **kwargs):
+        raise AssertionError('Dimensionality errors must not retry the JSON path.')
+
+    monkeypatch.setattr(common, 'request', unexpected)
+    with pytest.raises(TypeError, match='dimensionality mismatch'):
+        common.array_features_typed_or_json(values[0], labels[0],
+            image_geometry=geometry, mask_geometry=geometry, config=CONFIG)
+
+
+def test_non_entry_type_error_does_not_fall_back(monkeypatch):
+    import ov_radiomics._native_common as common
+
+    values, labels, geometry = arrays()
+    native = resolve_backend('rust')
+
+    def compute_error(*args, **kwargs):
+        raise TypeError('Unexpected native computation type failure.')
+
+    def unexpected(*args, **kwargs):
+        raise AssertionError('A compute TypeError must not retry the JSON path.')
+
+    monkeypatch.setattr(native, 'array_features_typed', compute_error)
+    monkeypatch.setattr(common, 'request', unexpected)
+    with pytest.raises(TypeError, match='native computation type failure'):
+        common.array_features_typed_or_json(values, labels,
+            image_geometry=geometry, mask_geometry=geometry, config=CONFIG)
+
+
+@pytest.mark.parametrize('input_kind', ['float32', 'strided'])
+def test_wrong_shape_stays_rejected_after_dtype_or_layout_refusal(input_kind, monkeypatch):
+    import ov_radiomics._native_common as common
+
+    values, labels, geometry = arrays()
+    if input_kind == 'float32':
+        values = values.astype(np.float32)
+    else:
+        larger = np.zeros((2, 3, 8), dtype=np.float64)
+        larger[..., ::2] = values
+        values = larger[..., ::2]
+    wrong = {**geometry, 'shape': [3, 4, 2]}
+
+    def unexpected(*args, **kwargs):
+        raise AssertionError('Dtype/layout fallback must preserve the shape check.')
+
+    monkeypatch.setattr(common, 'request', unexpected)
+    with pytest.raises(ValueError, match='shape differs'):
+        common.array_features_typed_or_json(values, labels,
+            image_geometry=wrong, mask_geometry=wrong, config=CONFIG)
