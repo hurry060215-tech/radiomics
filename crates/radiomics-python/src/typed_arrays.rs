@@ -104,16 +104,20 @@ pub fn array_features_typed(
     let request: TypedRequest = serde_json::from_str(&config_json).map_err(error)?;
     check_shape(image_buffer.shape(), &request.image_geometry)?;
     check_shape(mask_buffer.shape(), &request.mask_geometry)?;
-    let values = image_buffer.as_slice().map_err(error)?;
+    // Python can mutate its ndarray after we release the GIL. Take the explicit
+    // owned snapshot while holding it, as the public sample constructor does.
+    let values: Arc<[f64]> = Arc::from(image_buffer.as_slice().map_err(error)?);
     let mask = MaskVolume {
         geometry: request.mask_geometry,
         labels: mask_buffer.as_slice().map_err(error)?.to_vec(),
     };
+    drop(image_buffer);
+    drop(mask_buffer);
     py.detach(|| {
         encoded_features(
             ImageView {
                 geometry: &request.image_geometry,
-                values,
+                values: &values,
             },
             &mask,
             request.parameters,

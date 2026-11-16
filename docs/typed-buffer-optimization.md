@@ -107,3 +107,11 @@ Rust's automatic dereference at the array-view constructor. It preserves the
 same borrowed slice and ownership semantics. The wheel identities and timings
 above remain those of the actually measured and installed artifacts; they were
 not reassigned to this source-only lint repair or re-recorded.
+
+The standalone private typed entry subsequently received an ownership repair:
+it snapshots the image into an Arc while holding the GIL, as it already does
+for the mask, before detaching. A concurrent Python writer therefore cannot
+change the image being read by Rust. The public `ImageSample` path already
+owned its Arc and is unchanged. The timing results above exercised that public
+owned-sample path, not the separate standalone private entry. Its additional
+snapshot is explicit boundary work; the historical timings were not re-recorded.
