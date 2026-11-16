@@ -89,6 +89,14 @@ python tools/audit_scalar_accuracy.py run --manifest $WORKDIR/new-scalar-audit/m
 的Mean也参与现有中心矩计算，因此相关一阶结果可能随之变化；
 没有修改其他特征的公式或宣称所有浮点输入都获得精确数学值。
 
+`python_golden_v1`只表示对已冻结的公开3.0.1 fixtures、配置和原始
+容差的验证，不承诺所有可能输入均与公开3.0.1完全一致。本次只将
+**Mean累加**改为Neumaier；Variance、Skewness、Kurtosis的中心矩
+残差求和仍为原有朴素累加，Energy、MeanAbsoluteDeviation等其他
+特征求和及方向聚合的sum/count归约也没有改为补偿或精确求和。
+Mean变得更稳定可能改变依赖它的中心矩结果，但不代表这些累加器、
+整个一阶族或方向聚合已经获得数学精确性保证。
+
 指定的strict xfail已移除，现有反例只按新授权调整目标及名称说明；
 `atol=1e-10, rtol=1e-8`保持不变。独立数学对照测试仍为0.5；
 已有Golden和所有历史benchmarkJSON均不修改。上方历史表中的原生

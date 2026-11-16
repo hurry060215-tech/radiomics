@@ -75,7 +75,9 @@ Training, selection and clinical APIs retain optional legacy defaults: request *
 
 ## Validation and measured limits
 
-Python compatibility freezes public PyRadiomics3.0.1; IBSI is an independent definition/reference track. Correctness and deployment gates are separate from performance targets. The [technical report](docs/technical-report.md) links numerical fixtures, raw runs, environment identities and limitations.
+`python_golden_v1` identifies validation against frozen public PyRadiomics3.0.1 fixtures with the original `atol=1e-10, rtol=1e-8`; it does not promise matching results for every input. IBSI is an independent definition/reference track. Correctness and deployment gates are separate from performance targets. The [technical report](docs/technical-report.md) links numerical fixtures, raw runs, environment identities and limitations.
+
+Only the Mean accumulator uses Neumaier compensation. For the documented high-dynamic-range cancellation input, the user-approved native Mean is **0.5**, matching independent `math.fsum`, while the unchanged frozen PyRadiomics observation is **0.0**. Variance, Skewness and Kurtosis central-moment sums retain their existing naive accumulation, as do directional sum/count reductions. This Mean repair does not make the whole first-order family or directional aggregation mathematically exact; see the [scalar accuracy audit](docs/scalar-accuracy-audit.md).
 
 - **Radiomics:** 854 archived observations. Five speed targets missed; real-CT feature extraction measured approximately **0.400×** reference speed, while complete CT input→CSV measured **1.225×**. Small synthetic speedups are not generalized to clinical workloads.
 - **ML/Statistics and Pathology:** 224 separate archived observations with matching outputs; results are limited to their declared workloads and frozen references.
@@ -86,14 +88,15 @@ Backend choice is component-specific: prioritize the declared result contract,
 then measure speed, peak memory and numerical error separately. The
 [boundary diagnosis](docs/native-performance-diagnosis.md) identifies repeated
 JSON/object costs in the Python array path. The [scalar accuracy audit](docs/scalar-accuracy-audit.md)
-also records an extreme cancellation case that currently differs from Python;
-neither backend is universally more accurate.
+records this intentional Mean compatibility difference and the remaining
+accumulator limits; neither backend is universally more accurate.
 
 A [bounded constructor fix](docs/sample-constructor-optimization.md) removes
 temporary copies before unchanged native validation. A same-binary diagnostic
 reduced complete array-call median time by17.38%; measured peak RSS did not
-decrease. This is not a new PyRadiomics speedup claim or a resolution of the
-open scalar compatibility finding.
+decrease. This is not a new PyRadiomics speedup claim. The separate Mean repair
+and its documented compatibility boundary do not change this historical
+constructor measurement.
 
 ## Documentation and contributions
 
