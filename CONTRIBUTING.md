@@ -62,8 +62,11 @@ python -m sphinx -W --keep-going -b html website website/_build/html
 ```
 
 `docs/` is maintained source. `website/reference/` is generated, ignored by Git
-and rebuilt in CI. Edit the source rather than both copies. HTML preview artifacts
-do not automatically publish a hosted website.
+and rebuilt in CI. Edit the source rather than both copies. PRs upload HTML
+previews only. Main pushes and explicit maintainer dispatches publish GitHub
+Pages from allowed branches; manual publication does not merge a PR or release
+a package version. Tests run once for each PR head and for main pushes, rather
+than duplicating feature-branch push and PR runs.
 
 ## Numerical and provenance review
 

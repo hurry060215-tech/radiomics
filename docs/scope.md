@@ -1,5 +1,11 @@
 # Initial scope: single-center radiomics plus clinical modeling
 
+**Historical optional-Python scope.** The table below records the first
+independent-row/binary implementation; it does not describe today's Rust
+capabilities. Use the [current support matrix](support-matrix.md),
+[Onekey workflow audit](onekey-workflow-gap-audit.md) and
+[backend decision](rust-backend-decision.md) for present scope and known gaps.
+
 The functional requirements were derived by inspecting four user-supplied solution notebooks, their configuration, and example extraction settings. The implementation does not import, decrypt, or redistribute those notebooks or their runtime.
 
 | Source workflow | Implemented API |

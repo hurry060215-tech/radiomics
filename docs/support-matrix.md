@@ -18,6 +18,7 @@ clinical validation or permission to publish a new package version.
 | Pathology pixels | RGB8 PNG/JPEG, supported single-page TIFF, streamed patches, raw QC, fixed color histograms/circular Hue, gray textures, provided-mask objects | No implicit RGB/bit-depth conversion; padding excluded; instance counts remain patch local. |
 | Pathology hierarchy/maps | Tile-ID alignment, tile→slide→patient summaries, explicit weights, real tile scores, overlap means/counts and block outputs | Empty/excluded parents preserved; patient probabilities cannot be broadcast into local maps. |
 | Native interfaces | Shared Rust core, PyO3 conversion boundary and Python-free CLI | Explicit Rust/auto never fall back to reference algorithms. Portable supervised `.rad` models; typed habitat JSON. |
+| Research result plots | Binary native Logistic-fusion nomogram, including loaded bundles; supplied three-task CV-score tables | No refitting; CV metric/axis follows the recorded score. Native selector path/Rad-score views and patient-grouped learning curves are not implicitly provided. |
 
 ## Optional external adapters
 
@@ -35,6 +36,13 @@ Externally prepared masks, registered images, filtered features and embeddings
 may enter the declared contracts. This does not implement the upstream processing.
 
 ## Standards and performance
+
+The [Onekey workflow audit](onekey-workflow-gap-audit.md) separates corresponding
+user steps from hidden implementation claims. The [Rust decision](rust-backend-decision.md)
+evaluates speed, peak memory and numerical error separately. A newly frozen
+[scalar audit](scalar-accuracy-audit.md) exposes a high-dynamic-range Mean
+counterexample to universal Python compatibility (Rust0.125/PyRadiomics0 versus
+exact0.5); existing Golden passes do not close that known stability gap.
 
 `python_golden_v1` is a compatibility profile for public PyRadiomics 3.0.1.
 The independent IBSI digital checks are separately scoped: 54 selected features

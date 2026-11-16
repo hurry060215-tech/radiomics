@@ -3,6 +3,8 @@
 独立 Rust 影像组学与轻量病理分析项目。Python提供API、表格和绘图，独立CLI调用同一
 计算核心。发行包为 `ov-radiomics`，导入为 `ov_radiomics`，版本保持0.1.0。
 
+[在线文档与教程](https://hurry060215-tech.github.io/radiomics/)
+
 | 从哪里开始 | 入口 |
 |---|---|
 | 安装、平台要求和预编译产物 | [安装指南](website/installation.md) |

@@ -1,0 +1,1903 @@
+{
+  "schema": "radiomics.native-boundary-diagnosis.v1",
+  "kind": "diagnostic_not_formal_benchmark",
+  "host": {
+    "platform": "Windows-10-10.0.22631-SP0",
+    "machine": "AMD64",
+    "logical_cpus": 24,
+    "cpu": "Intel(R) Core(TM) Ultra 9 285K",
+    "ram_bytes": 33663320064
+  },
+  "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+  "python_version": "3.9.21",
+  "package_source": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\__init__.py",
+  "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+  "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
+  "native_build_manifest_sha256": "8828d0e7338ec5927f8a0505fed71e78b476d0cfd5e0ac23cec7195b8527ee92",
+  "native_build": {
+    "schema": "radiomics.native-build.v1",
+    "source_revision": "48ecb310a2d9ccb5da821733ee1190ce1764f27a",
+    "source_tree": "948ddbb791d0a1ed542d9df4f1878904e7dac7c0",
+    "source_tree_clean": true,
+    "cargo_lock_sha256": "de33d6dfd0542add75ca1ba0076b9d373a4e8f8af0aa93eb4c49fa35b6d552bb",
+    "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+    "rustc_verbose": "rustc 1.100.0 (0ef1bc386 2026-11-09)\nbinary: rustc\ncommit-hash: 0ef1bc386059596dada8fb65b50425aab2ea637a\ncommit-date: 2026-11-09\nhost: x86_64-pc-windows-msvc\nrelease: 1.100.0\nLLVM version: 23.1.5",
+    "rust_target": "x86_64-pc-windows-msvc",
+    "profile": {
+      "name": "release",
+      "opt_level": 3,
+      "lto": "thin",
+      "codegen_units": 1
+    },
+    "rust_flags": {
+      "RUSTFLAGS": null,
+      "CARGO_ENCODED_RUSTFLAGS": null
+    },
+    "profile_environment": {
+      "CARGO_PROFILE_RELEASE_OPT_LEVEL": "3",
+      "CARGO_PROFILE_RELEASE_LTO": "thin",
+      "CARGO_PROFILE_RELEASE_CODEGEN_UNITS": "1"
+    },
+    "build_commands": [
+      [
+        "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "D:\\OnekeyPlatfrom50\\radiomics\\tools\\package_native.py",
+        "--output",
+        "E:\\radiomics-build\\snapshot-native-v2\\package-assets"
+      ],
+      [
+        "cargo",
+        "build",
+        "--release",
+        "-p",
+        "ov-radiomics-cli",
+        "--locked"
+      ],
+      [
+        "D:\\OnekeyPlatfrom50\\radiomics\\.venv\\Scripts\\python.exe",
+        "-m",
+        "maturin",
+        "build",
+        "--release",
+        "--locked",
+        "--out",
+        "E:\\radiomics-build\\snapshot-native-v2\\wheels"
+      ]
+    ],
+    "python_version": "3.9.21",
+    "maturin_version": "1.16.0",
+    "wheel": {
+      "path": "E:\\radiomics-build\\snapshot-native-v2\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+      "sha256": "f2c8e0cbf55bfdf56ee4efb7b4d664112028618cb6bf03e0761170730214c160"
+    },
+    "cli": {
+      "path": "E:\\radiomics-build\\snapshot-native-v2\\cli\\radiomics.exe",
+      "sha256": "616342692392c95f92b1ecdb22cae5a3c071d095e74c2ec23e2fa49c08be010b"
+    },
+    "wheel_files_sha256": {
+      "ov_radiomics/__init__.py": "5a4d14091bedc25b64d9e54a2794a64ef5a378d8415d7573aed41f8038436f27",
+      "ov_radiomics/_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+      "ov_radiomics/_native.pyd": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
+      "ov_radiomics/_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+      "ov_radiomics/_native_common.py": "601d24923b0fbbd6a86dba26bdabd09e8975bab6bca4a661d682909a024edede",
+      "ov_radiomics/_native_learning.py": "f7db1c806dc0f66f729548421e9c294012ded6a8b756f23a96982fb6f2536c5c",
+      "ov_radiomics/_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+      "ov_radiomics/_reference_clinical.py": "8d0aa05a2985d36d53bb9ebb79ecf2416ab043cb343faac73d93f0a69a94f909",
+      "ov_radiomics/_reference_metrics.py": "2b1b44b6d01c2d1acb5cdac4fb06954c65856ce41e2b9daf4303e47a8259615b",
+      "ov_radiomics/_reference_modeling.py": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566",
+      "ov_radiomics/_reference_selection.py": "5adc9c43e299496936690ff9e013e5c1d1170c63e84b21c501f7fb64ee788ed6",
+      "ov_radiomics/_types.py": "911851fcad1d3a7e793cfa5867aebb6e304b2d5fc618607ace144e8b1b754d99",
+      "ov_radiomics/_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+      "ov_radiomics/clinical.py": "310a22c42492bbfd7eae36669cdee723acbfbdb6820f0e663bc1e39c1fa29750",
+      "ov_radiomics/habitat.py": "e5223172202766bc84790bf1d555a3b3e8c69e9f04d929682ec41e8f97bf5689",
+      "ov_radiomics/image.py": "5e03c7b76cc1a7170da19bd41f5a82ba22df28d523d0b6b27cf53e1bc792e75f",
+      "ov_radiomics/interop.py": "42952bb3d9c908b6ce7c70c7a54b37720f1e78bfb2dc47ff85a1b0528976e2ca",
+      "ov_radiomics/mask.py": "fa80bb714d2842f86e6eb2820f45c61b091c1d70dae0ef473eb127649ea6a47c",
+      "ov_radiomics/metrics.py": "50640ec90e85a8e46d9f19bf6a7854ff0a3755481d717a38b0b9ad394311bde9",
+      "ov_radiomics/modeling.py": "3aec1408c390ad522369069cae4caa25b87bd08ab7cffed58fc4b077dbeee722",
+      "ov_radiomics/pathology.py": "29cc475ea1a6ea722a7606ff1842feb39e72c2161aa4191409b4dfe3219391f4",
+      "ov_radiomics/plotting.py": "b5733fe2818a871c7a3519959bf378f793d4a38d78db154681f89184695cf06f",
+      "ov_radiomics/research.py": "0d0b32954c4e2c231ea3ef950fb2c816617a0412ce4923e893547fa39943c606",
+      "ov_radiomics/selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
+      "ov_radiomics/split.py": "f0090ab15a820ccc6e0009b0c9b39e013fc44203b07d2f9cac3684860475c249",
+      "ov_radiomics-0.1.0.dist-info/METADATA": "83267cc4fd51cd135c2f6ca8237e29c7c14d930162aea2420143fcb6dd3976b4",
+      "ov_radiomics-0.1.0.dist-info/WHEEL": "c70f05f7105650e826e729b64bdb62863fdb2c939bef6ddb8e103491d00da362",
+      "ov_radiomics-0.1.0.dist-info/licenses/LICENSE": "bb3ee466242ddec58bdd536aca9386cb9bd7b517d0c15f16215c102a52c99c86",
+      "ov_radiomics-0.1.0.dist-info/sboms/ov-radiomics-python.cyclonedx.json": "ce46b6eb3e68e92105f722a1e260fcc703dc8481b951819b4788d55a8cc5b07c",
+      "ov_radiomics-0.1.0.dist-info/RECORD": "22bd377b205d3cfcdf531238c7a46ce2ffc649f78595bb4d5f6eb7598d4a77a6"
+    },
+    "published": false,
+    "version_changed": false,
+    "evidence_scope": "Build identity only; correctness, installed-wheel, standards and performance gates require separate reports."
+  },
+  "probe_binary_sha256": "d4d954251f9d6895c359a94eec251a938d845259a1a5b2df819cec3f75a048d4",
+  "cargo_lock_sha256": "de33d6dfd0542add75ca1ba0076b9d373a4e8f8af0aa93eb4c49fa35b6d552bb",
+  "probe_rustc_verbose": "rustc 1.100.0 (0ef1bc386 2026-11-09)\nbinary: rustc\ncommit-hash: 0ef1bc386059596dada8fb65b50425aab2ea637a\ncommit-date: 2026-11-09\nhost: x86_64-pc-windows-msvc\nrelease: 1.100.0\nLLVM version: 23.1.5",
+  "probe_build_command": "cargo build --release --locked -p ov-radiomics-core --example profile_native_boundary",
+  "probe_release_profile": {
+    "opt_level": 3,
+    "lto": "thin",
+    "codegen_units": 1
+  },
+  "probe_build_environment": {
+    "RUSTFLAGS": null,
+    "CARGO_ENCODED_RUSTFLAGS": null,
+    "CARGO_PROFILE_RELEASE_OPT_LEVEL": null,
+    "CARGO_PROFILE_RELEASE_LTO": null,
+    "CARGO_PROFILE_RELEASE_CODEGEN_UNITS": null
+  },
+  "source_revision": "719612ff044207fe8afb2c567e231e07830091ae",
+  "support_sources": {
+    "tools/profile_native_boundary.py": "06e7a412cfa8dba661daa0971970170a815e663c2c109645e25aa671a293c706",
+    "crates/radiomics-core/examples/profile_native_boundary.rs": "13a73f3b45d2c7099a8daf68cd8bcacf1d5498d244ae8ecf5dc5c2631980429a",
+    "crates/radiomics-python/src/gateway.rs": "a69810e851a441bc1c82b4632eaf96d1a68527e621b045f2721f8f9ed438caf2",
+    "crates/radiomics-core/src/features.rs": "ed96bc9c4db806cc38faa220add1f7e129b7d2b2bc7ec631392f211830c8af62"
+  },
+  "repeats": 7,
+  "warmups_per_stage": 1,
+  "threadpools": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libopenblas",
+      "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+      "version": "0.3.20",
+      "threading_layer": "pthreads",
+      "architecture": "Prescott"
+    }
+  ],
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "RAYON_NUM_THREADS": "1"
+  },
+  "frozen_fixture_files_sha256": {
+    "values.npy": "3d9fec950fc5f9503ad01a6e8079ae13599061298735ca6debcf42cb198a3b39",
+    "mask.npy": "25b35e05d560b6769f6df1a9f929e33aeb7b3ac58b1ab37cc2182025ce1756e2",
+    "image.nii.gz": "909129fdf99d5f5fd17bc568b1834d31edce8663ea6746c6020720bfc1d7bbcb",
+    "mask.nii.gz": "0e9243e473b1255c60e6460df465d0b07b65436d6e0c691fe3d17bca0594ae78",
+    "bbox_crop_reference.json": "8f08962ebc4a0eac4b283597960d0336ffed1157bdc928d2b9b3c3d14e8ee442"
+  },
+  "prepared_shape_xyz": [
+    100,
+    99,
+    26
+  ],
+  "roi_voxels": 125256,
+  "prepared_affine_ras_mm": [
+    [
+      -0.9769999980926514,
+      0,
+      0,
+      124.56750082969666
+    ],
+    [
+      0,
+      -0.9769999980926514,
+      0,
+      29.798503637313843
+    ],
+    [
+      0,
+      0,
+      3,
+      -49.400001525878906
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "feature_count": 66,
+  "extraction_config": {
+    "profile": "python_golden_v1",
+    "discretization": {
+      "method": "fixed_width",
+      "width": 25.0
+    },
+    "aggregation": "direction_mean",
+    "gldm_alpha": 0,
+    "voxel_array_shift": 0.0
+  },
+  "request_bytes": 2035442,
+  "response_bytes": 3362,
+  "raw": [
+    {
+      "round": 0,
+      "stage": "pyo3_preencoded_array_call",
+      "nanoseconds": 123110900,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "python_decode_66_features",
+      "nanoseconds": 21300,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "python_decode_full_image_response",
+      "nanoseconds": 16868300,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "numpy_image_to_list",
+      "nanoseconds": 2372600,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "numpy_mask_to_list",
+      "nanoseconds": 1127500,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "python_deepcopy_image_mask",
+      "nanoseconds": 67945000,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "public_image_from_array",
+      "nanoseconds": 58903500,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "public_mask_from_array",
+      "nanoseconds": 28514000,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "public_sample_from_validated_volumes",
+      "nanoseconds": 148586700,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "public_extract_from_validated_sample",
+      "nanoseconds": 151326000,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "public_l2_complete",
+      "nanoseconds": 392140700,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "instrumented_l2_complete",
+      "nanoseconds": 390031700,
+      "phases": null
+    },
+    {
+      "round": 0,
+      "stage": "public_l3_complete",
+      "nanoseconds": 184107600,
+      "phases": {
+        "read_cohort_ns": 482800,
+        "extract_api_ns": 182001500,
+        "save_ns": 1608800
+      }
+    },
+    {
+      "round": 0,
+      "stage": "python_encode_array_envelope",
+      "nanoseconds": 29200400,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "python_decode_66_features",
+      "nanoseconds": 50400,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "python_decode_full_image_response",
+      "nanoseconds": 16396600,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "numpy_image_to_list",
+      "nanoseconds": 2141500,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "numpy_mask_to_list",
+      "nanoseconds": 1045800,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "python_deepcopy_image_mask",
+      "nanoseconds": 68465000,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "public_image_from_array",
+      "nanoseconds": 56590000,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "public_mask_from_array",
+      "nanoseconds": 27243800,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "public_sample_from_validated_volumes",
+      "nanoseconds": 142522900,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "public_extract_from_validated_sample",
+      "nanoseconds": 147519800,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "public_l2_complete",
+      "nanoseconds": 388828700,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "instrumented_l2_complete",
+      "nanoseconds": 387006000,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "public_l3_complete",
+      "nanoseconds": 184438300,
+      "phases": {
+        "read_cohort_ns": 478000,
+        "extract_api_ns": 182399600,
+        "save_ns": 1546400
+      }
+    },
+    {
+      "round": 1,
+      "stage": "python_encode_array_envelope",
+      "nanoseconds": 25528300,
+      "phases": null
+    },
+    {
+      "round": 1,
+      "stage": "pyo3_preencoded_array_call",
+      "nanoseconds": 122547200,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "python_decode_full_image_response",
+      "nanoseconds": 16600400,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "numpy_image_to_list",
+      "nanoseconds": 1837900,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "numpy_mask_to_list",
+      "nanoseconds": 816900,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "python_deepcopy_image_mask",
+      "nanoseconds": 67072900,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "public_image_from_array",
+      "nanoseconds": 55850400,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "public_mask_from_array",
+      "nanoseconds": 27297900,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "public_sample_from_validated_volumes",
+      "nanoseconds": 145051900,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "public_extract_from_validated_sample",
+      "nanoseconds": 146729300,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "public_l2_complete",
+      "nanoseconds": 381441800,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "instrumented_l2_complete",
+      "nanoseconds": 385036100,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "public_l3_complete",
+      "nanoseconds": 183343400,
+      "phases": {
+        "read_cohort_ns": 498500,
+        "extract_api_ns": 181176600,
+        "save_ns": 1654200
+      }
+    },
+    {
+      "round": 2,
+      "stage": "python_encode_array_envelope",
+      "nanoseconds": 25216700,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "pyo3_preencoded_array_call",
+      "nanoseconds": 121214600,
+      "phases": null
+    },
+    {
+      "round": 2,
+      "stage": "python_decode_66_features",
+      "nanoseconds": 20200,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "numpy_image_to_list",
+      "nanoseconds": 1926400,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "numpy_mask_to_list",
+      "nanoseconds": 1084800,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "python_deepcopy_image_mask",
+      "nanoseconds": 66366400,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "public_image_from_array",
+      "nanoseconds": 53984900,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "public_mask_from_array",
+      "nanoseconds": 26255800,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "public_sample_from_validated_volumes",
+      "nanoseconds": 140080900,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "public_extract_from_validated_sample",
+      "nanoseconds": 145928700,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "public_l2_complete",
+      "nanoseconds": 379709800,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "instrumented_l2_complete",
+      "nanoseconds": 385026600,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "public_l3_complete",
+      "nanoseconds": 185183100,
+      "phases": {
+        "read_cohort_ns": 464100,
+        "extract_api_ns": 183128900,
+        "save_ns": 1577500
+      }
+    },
+    {
+      "round": 3,
+      "stage": "python_encode_array_envelope",
+      "nanoseconds": 25702300,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "pyo3_preencoded_array_call",
+      "nanoseconds": 121187300,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "python_decode_66_features",
+      "nanoseconds": 19500,
+      "phases": null
+    },
+    {
+      "round": 3,
+      "stage": "python_decode_full_image_response",
+      "nanoseconds": 15811500,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "numpy_mask_to_list",
+      "nanoseconds": 1061800,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "python_deepcopy_image_mask",
+      "nanoseconds": 66671000,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "public_image_from_array",
+      "nanoseconds": 54149500,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "public_mask_from_array",
+      "nanoseconds": 26788500,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "public_sample_from_validated_volumes",
+      "nanoseconds": 139417300,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "public_extract_from_validated_sample",
+      "nanoseconds": 146195400,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "public_l2_complete",
+      "nanoseconds": 380001900,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "instrumented_l2_complete",
+      "nanoseconds": 383262600,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "public_l3_complete",
+      "nanoseconds": 184280900,
+      "phases": {
+        "read_cohort_ns": 499300,
+        "extract_api_ns": 182161300,
+        "save_ns": 1607400
+      }
+    },
+    {
+      "round": 4,
+      "stage": "python_encode_array_envelope",
+      "nanoseconds": 25253900,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "pyo3_preencoded_array_call",
+      "nanoseconds": 121563900,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "python_decode_66_features",
+      "nanoseconds": 21600,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "python_decode_full_image_response",
+      "nanoseconds": 16083300,
+      "phases": null
+    },
+    {
+      "round": 4,
+      "stage": "numpy_image_to_list",
+      "nanoseconds": 1277500,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "python_deepcopy_image_mask",
+      "nanoseconds": 67035400,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "public_image_from_array",
+      "nanoseconds": 55536100,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "public_mask_from_array",
+      "nanoseconds": 26777000,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "public_sample_from_validated_volumes",
+      "nanoseconds": 138842100,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "public_extract_from_validated_sample",
+      "nanoseconds": 148771800,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "public_l2_complete",
+      "nanoseconds": 382105100,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "instrumented_l2_complete",
+      "nanoseconds": 385503800,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "public_l3_complete",
+      "nanoseconds": 182506800,
+      "phases": {
+        "read_cohort_ns": 462000,
+        "extract_api_ns": 180468400,
+        "save_ns": 1562600
+      }
+    },
+    {
+      "round": 5,
+      "stage": "python_encode_array_envelope",
+      "nanoseconds": 25748200,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "pyo3_preencoded_array_call",
+      "nanoseconds": 121709100,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "python_decode_66_features",
+      "nanoseconds": 20500,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "python_decode_full_image_response",
+      "nanoseconds": 15878200,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "numpy_image_to_list",
+      "nanoseconds": 1164300,
+      "phases": null
+    },
+    {
+      "round": 5,
+      "stage": "numpy_mask_to_list",
+      "nanoseconds": 1047500,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "public_image_from_array",
+      "nanoseconds": 56354800,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "public_mask_from_array",
+      "nanoseconds": 26740100,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "public_sample_from_validated_volumes",
+      "nanoseconds": 140969700,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "public_extract_from_validated_sample",
+      "nanoseconds": 146577600,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "public_l2_complete",
+      "nanoseconds": 381584500,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "instrumented_l2_complete",
+      "nanoseconds": 384496500,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "public_l3_complete",
+      "nanoseconds": 184475800,
+      "phases": {
+        "read_cohort_ns": 508700,
+        "extract_api_ns": 182316300,
+        "save_ns": 1637300
+      }
+    },
+    {
+      "round": 6,
+      "stage": "python_encode_array_envelope",
+      "nanoseconds": 25549400,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "pyo3_preencoded_array_call",
+      "nanoseconds": 122101100,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "python_decode_66_features",
+      "nanoseconds": 20200,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "python_decode_full_image_response",
+      "nanoseconds": 15447300,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "numpy_image_to_list",
+      "nanoseconds": 1326600,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "numpy_mask_to_list",
+      "nanoseconds": 1042800,
+      "phases": null
+    },
+    {
+      "round": 6,
+      "stage": "python_deepcopy_image_mask",
+      "nanoseconds": 66937800,
+      "phases": null
+    }
+  ],
+  "instrumented_calls": [
+    {
+      "round": 0,
+      "requests": [
+        {
+          "operation": "validate_image",
+          "encode_ns": 22009200,
+          "native_call_ns": 14557500,
+          "decode_ns": 16314100,
+          "request_total_ns": 52881700,
+          "request_bytes": 1520154,
+          "response_bytes": 1520084
+        },
+        {
+          "operation": "validate_mask",
+          "encode_ns": 7920700,
+          "native_call_ns": 8959100,
+          "decode_ns": 8195500,
+          "request_total_ns": 25076100,
+          "request_bytes": 515120,
+          "response_bytes": 515052
+        },
+        {
+          "operation": "validate_image_sample",
+          "encode_ns": 28905100,
+          "native_call_ns": 23199000,
+          "decode_ns": 25216500,
+          "request_total_ns": 77321500,
+          "request_bytes": 2035301,
+          "response_bytes": 2035317
+        },
+        {
+          "operation": "array_features",
+          "encode_ns": 32105600,
+          "native_call_ns": 121250400,
+          "decode_ns": 68400,
+          "request_total_ns": 153426500,
+          "request_bytes": 2035442,
+          "response_bytes": 3362
+        },
+        {
+          "operation": "validate_feature_table",
+          "encode_ns": 106000,
+          "native_call_ns": 80300,
+          "decode_ns": 39300,
+          "request_total_ns": 226600,
+          "request_bytes": 11054,
+          "response_bytes": 10977
+        }
+      ],
+      "deepcopies": [
+        {
+          "type": "ImageVolume",
+          "nanoseconds": 33387900
+        },
+        {
+          "type": "MaskVolume",
+          "nanoseconds": 32724500
+        }
+      ]
+    },
+    {
+      "round": 1,
+      "requests": [
+        {
+          "operation": "validate_image",
+          "encode_ns": 22159400,
+          "native_call_ns": 13932200,
+          "decode_ns": 16228100,
+          "request_total_ns": 52320700,
+          "request_bytes": 1520154,
+          "response_bytes": 1520084
+        },
+        {
+          "operation": "validate_mask",
+          "encode_ns": 6092700,
+          "native_call_ns": 8447700,
+          "decode_ns": 8442300,
+          "request_total_ns": 22983600,
+          "request_bytes": 515120,
+          "response_bytes": 515052
+        },
+        {
+          "operation": "validate_image_sample",
+          "encode_ns": 25906300,
+          "native_call_ns": 23309700,
+          "decode_ns": 24369800,
+          "request_total_ns": 73586800,
+          "request_bytes": 2035301,
+          "response_bytes": 2035317
+        },
+        {
+          "operation": "array_features",
+          "encode_ns": 33229500,
+          "native_call_ns": 121729700,
+          "decode_ns": 65300,
+          "request_total_ns": 155027000,
+          "request_bytes": 2035442,
+          "response_bytes": 3362
+        },
+        {
+          "operation": "validate_feature_table",
+          "encode_ns": 135500,
+          "native_call_ns": 79100,
+          "decode_ns": 44800,
+          "request_total_ns": 260200,
+          "request_bytes": 11054,
+          "response_bytes": 10977
+        }
+      ],
+      "deepcopies": [
+        {
+          "type": "ImageVolume",
+          "nanoseconds": 34254100
+        },
+        {
+          "type": "MaskVolume",
+          "nanoseconds": 33309100
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "requests": [
+        {
+          "operation": "validate_image",
+          "encode_ns": 22762600,
+          "native_call_ns": 14806000,
+          "decode_ns": 16528100,
+          "request_total_ns": 54097500,
+          "request_bytes": 1520154,
+          "response_bytes": 1520084
+        },
+        {
+          "operation": "validate_mask",
+          "encode_ns": 6364000,
+          "native_call_ns": 8827400,
+          "decode_ns": 8775600,
+          "request_total_ns": 23967900,
+          "request_bytes": 515120,
+          "response_bytes": 515052
+        },
+        {
+          "operation": "validate_image_sample",
+          "encode_ns": 24550600,
+          "native_call_ns": 23444800,
+          "decode_ns": 24595100,
+          "request_total_ns": 72591500,
+          "request_bytes": 2035301,
+          "response_bytes": 2035317
+        },
+        {
+          "operation": "array_features",
+          "encode_ns": 31779800,
+          "native_call_ns": 121155900,
+          "decode_ns": 63200,
+          "request_total_ns": 153000600,
+          "request_bytes": 2035442,
+          "response_bytes": 3362
+        },
+        {
+          "operation": "validate_feature_table",
+          "encode_ns": 128700,
+          "native_call_ns": 82400,
+          "decode_ns": 43000,
+          "request_total_ns": 255000,
+          "request_bytes": 11054,
+          "response_bytes": 10977
+        }
+      ],
+      "deepcopies": [
+        {
+          "type": "ImageVolume",
+          "nanoseconds": 33592300
+        },
+        {
+          "type": "MaskVolume",
+          "nanoseconds": 32765000
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "requests": [
+        {
+          "operation": "validate_image",
+          "encode_ns": 22061800,
+          "native_call_ns": 14529800,
+          "decode_ns": 16325700,
+          "request_total_ns": 52918100,
+          "request_bytes": 1520154,
+          "response_bytes": 1520084
+        },
+        {
+          "operation": "validate_mask",
+          "encode_ns": 6463800,
+          "native_call_ns": 8839400,
+          "decode_ns": 7627200,
+          "request_total_ns": 22931300,
+          "request_bytes": 515120,
+          "response_bytes": 515052
+        },
+        {
+          "operation": "validate_image_sample",
+          "encode_ns": 24558600,
+          "native_call_ns": 23674100,
+          "decode_ns": 24177500,
+          "request_total_ns": 72411000,
+          "request_bytes": 2035301,
+          "response_bytes": 2035317
+        },
+        {
+          "operation": "array_features",
+          "encode_ns": 32858100,
+          "native_call_ns": 121111600,
+          "decode_ns": 46100,
+          "request_total_ns": 154017600,
+          "request_bytes": 2035442,
+          "response_bytes": 3362
+        },
+        {
+          "operation": "validate_feature_table",
+          "encode_ns": 121500,
+          "native_call_ns": 79900,
+          "decode_ns": 40200,
+          "request_total_ns": 242400,
+          "request_bytes": 11054,
+          "response_bytes": 10977
+        }
+      ],
+      "deepcopies": [
+        {
+          "type": "ImageVolume",
+          "nanoseconds": 35422100
+        },
+        {
+          "type": "MaskVolume",
+          "nanoseconds": 32780100
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "requests": [
+        {
+          "operation": "validate_image",
+          "encode_ns": 22602100,
+          "native_call_ns": 14176300,
+          "decode_ns": 16329100,
+          "request_total_ns": 53108200,
+          "request_bytes": 1520154,
+          "response_bytes": 1520084
+        },
+        {
+          "operation": "validate_mask",
+          "encode_ns": 6783900,
+          "native_call_ns": 8256600,
+          "decode_ns": 7786700,
+          "request_total_ns": 22828300,
+          "request_bytes": 515120,
+          "response_bytes": 515052
+        },
+        {
+          "operation": "validate_image_sample",
+          "encode_ns": 24775200,
+          "native_call_ns": 23555300,
+          "decode_ns": 23992400,
+          "request_total_ns": 72324000,
+          "request_bytes": 2035301,
+          "response_bytes": 2035317
+        },
+        {
+          "operation": "array_features",
+          "encode_ns": 30988600,
+          "native_call_ns": 123226700,
+          "decode_ns": 82500,
+          "request_total_ns": 154300000,
+          "request_bytes": 2035442,
+          "response_bytes": 3362
+        },
+        {
+          "operation": "validate_feature_table",
+          "encode_ns": 110100,
+          "native_call_ns": 81900,
+          "decode_ns": 43600,
+          "request_total_ns": 236400,
+          "request_bytes": 11054,
+          "response_bytes": 10977
+        }
+      ],
+      "deepcopies": [
+        {
+          "type": "ImageVolume",
+          "nanoseconds": 33485700
+        },
+        {
+          "type": "MaskVolume",
+          "nanoseconds": 32417000
+        }
+      ]
+    },
+    {
+      "round": 5,
+      "requests": [
+        {
+          "operation": "validate_image",
+          "encode_ns": 23235800,
+          "native_call_ns": 14132000,
+          "decode_ns": 16531600,
+          "request_total_ns": 53900300,
+          "request_bytes": 1520154,
+          "response_bytes": 1520084
+        },
+        {
+          "operation": "validate_mask",
+          "encode_ns": 6180700,
+          "native_call_ns": 8351000,
+          "decode_ns": 8164300,
+          "request_total_ns": 22697000,
+          "request_bytes": 515120,
+          "response_bytes": 515052
+        },
+        {
+          "operation": "validate_image_sample",
+          "encode_ns": 24730400,
+          "native_call_ns": 23409500,
+          "decode_ns": 25347900,
+          "request_total_ns": 73488800,
+          "request_bytes": 2035301,
+          "response_bytes": 2035317
+        },
+        {
+          "operation": "array_features",
+          "encode_ns": 32545700,
+          "native_call_ns": 121931200,
+          "decode_ns": 64200,
+          "request_total_ns": 154543400,
+          "request_bytes": 2035442,
+          "response_bytes": 3362
+        },
+        {
+          "operation": "validate_feature_table",
+          "encode_ns": 124600,
+          "native_call_ns": 76100,
+          "decode_ns": 43100,
+          "request_total_ns": 244800,
+          "request_bytes": 11054,
+          "response_bytes": 10977
+        }
+      ],
+      "deepcopies": [
+        {
+          "type": "ImageVolume",
+          "nanoseconds": 33204600
+        },
+        {
+          "type": "MaskVolume",
+          "nanoseconds": 32901700
+        }
+      ]
+    },
+    {
+      "round": 6,
+      "requests": [
+        {
+          "operation": "validate_image",
+          "encode_ns": 22536000,
+          "native_call_ns": 14332900,
+          "decode_ns": 16339900,
+          "request_total_ns": 53209800,
+          "request_bytes": 1520154,
+          "response_bytes": 1520084
+        },
+        {
+          "operation": "validate_mask",
+          "encode_ns": 6420100,
+          "native_call_ns": 8398300,
+          "decode_ns": 8104200,
+          "request_total_ns": 22923500,
+          "request_bytes": 515120,
+          "response_bytes": 515052
+        },
+        {
+          "operation": "validate_image_sample",
+          "encode_ns": 25460400,
+          "native_call_ns": 23417800,
+          "decode_ns": 23877200,
+          "request_total_ns": 72756400,
+          "request_bytes": 2035301,
+          "response_bytes": 2035317
+        },
+        {
+          "operation": "array_features",
+          "encode_ns": 31712400,
+          "native_call_ns": 122033700,
+          "decode_ns": 57900,
+          "request_total_ns": 153806100,
+          "request_bytes": 2035442,
+          "response_bytes": 3362
+        },
+        {
+          "operation": "validate_feature_table",
+          "encode_ns": 113500,
+          "native_call_ns": 78500,
+          "decode_ns": 40700,
+          "request_total_ns": 233700,
+          "request_bytes": 11054,
+          "response_bytes": 10977
+        }
+      ],
+      "deepcopies": [
+        {
+          "type": "ImageVolume",
+          "nanoseconds": 34253000
+        },
+        {
+          "type": "MaskVolume",
+          "nanoseconds": 32948500
+        }
+      ]
+    }
+  ],
+  "python_summaries": {
+    "python_encode_array_envelope": {
+      "n": 7,
+      "median_ms": 25.5494,
+      "iqr_ms": 0.33415,
+      "p95_ms": 28.164739999999995
+    },
+    "pyo3_preencoded_array_call": {
+      "n": 7,
+      "median_ms": 121.7091,
+      "iqr_ms": 0.9349,
+      "p95_ms": 122.94179
+    },
+    "python_decode_66_features": {
+      "n": 7,
+      "median_ms": 0.0205,
+      "iqr_ms": 0.00125,
+      "p95_ms": 0.04175999999999998
+    },
+    "python_decode_full_image_response": {
+      "n": 7,
+      "median_ms": 16.0833,
+      "iqr_ms": 0.65365,
+      "p95_ms": 16.78793
+    },
+    "numpy_image_to_list": {
+      "n": 7,
+      "median_ms": 1.8379,
+      "iqr_ms": 0.7319,
+      "p95_ms": 2.30327
+    },
+    "numpy_mask_to_list": {
+      "n": 7,
+      "median_ms": 1.0475,
+      "iqr_ms": 0.029,
+      "p95_ms": 1.11469
+    },
+    "python_deepcopy_image_mask": {
+      "n": 7,
+      "median_ms": 67.0354,
+      "iqr_ms": 0.70455,
+      "p95_ms": 68.309
+    },
+    "public_image_from_array": {
+      "n": 7,
+      "median_ms": 55.8504,
+      "iqr_ms": 1.6296,
+      "p95_ms": 58.20945
+    },
+    "public_mask_from_array": {
+      "n": 7,
+      "median_ms": 26.7885,
+      "iqr_ms": 0.5123,
+      "p95_ms": 28.14917
+    },
+    "public_sample_from_validated_volumes": {
+      "n": 7,
+      "median_ms": 140.9697,
+      "iqr_ms": 4.0383,
+      "p95_ms": 147.52626
+    },
+    "public_extract_from_validated_sample": {
+      "n": 7,
+      "median_ms": 146.7293,
+      "iqr_ms": 1.7593,
+      "p95_ms": 150.55974
+    },
+    "public_l2_complete": {
+      "n": 7,
+      "median_ms": 381.5845,
+      "iqr_ms": 4.74505,
+      "p95_ms": 391.1471
+    },
+    "instrumented_l2_complete": {
+      "n": 7,
+      "median_ms": 385.0361,
+      "iqr_ms": 1.49335,
+      "p95_ms": 389.12399
+    },
+    "public_l3_complete": {
+      "n": 7,
+      "median_ms": 184.2809,
+      "iqr_ms": 0.73155,
+      "p95_ms": 184.97091
+    }
+  },
+  "rust_summaries": {
+    "core_extract_preloaded": {
+      "n": 7,
+      "median_ms": 104.7074,
+      "iqr_ms": 0.4682,
+      "p95_ms": 105.49208
+    },
+    "crop_preloaded_source_pair": {
+      "n": 7,
+      "median_ms": 0.9036,
+      "iqr_ms": 0.02385,
+      "p95_ms": 0.92187
+    },
+    "image_mask_clone": {
+      "n": 7,
+      "median_ms": 0.68181,
+      "iqr_ms": 0.047425,
+      "p95_ms": 0.711995
+    },
+    "image_mask_serialize": {
+      "n": 7,
+      "median_ms": 5.6094,
+      "iqr_ms": 0.0457,
+      "p95_ms": 5.66982
+    },
+    "image_mask_validate_geometry": {
+      "n": 7,
+      "median_ms": 4.9e-05,
+      "iqr_ms": 2.5e-06,
+      "p95_ms": 5.5599999999999996e-05
+    },
+    "nifti_read_crop_core": {
+      "n": 7,
+      "median_ms": 156.7147,
+      "iqr_ms": 0.55995,
+      "p95_ms": 157.59728
+    },
+    "nifti_read_pair": {
+      "n": 7,
+      "median_ms": 49.632,
+      "iqr_ms": 0.29325,
+      "p95_ms": 49.91135
+    },
+    "original_gateway_preencoded": {
+      "n": 7,
+      "median_ms": 121.1785,
+      "iqr_ms": 0.5224,
+      "p95_ms": 122.62335
+    },
+    "typed_serde_parse": {
+      "n": 7,
+      "median_ms": 5.5827,
+      "iqr_ms": 0.20995,
+      "p95_ms": 5.7171
+    }
+  },
+  "all_66_features_match_frozen_ct": true,
+  "limitations": [
+    "Independent diagnostic stages overlap; do not add/subtract their medians or subtract official L2 and L3.",
+    "Only instrumented request clocks and L3 same-call phases are nested stage observations; instrumentation has bookkeeping overhead.",
+    "Pure Rust probe and immutable native-v2 wheel require identical Cargo.lock bytes and core implementation SHA; no alternate dependency/algorithm baseline is substituted.",
+    "Python outer timings exclude final temporary-result destruction; Rust probes include temporary drops.",
+    "Single process warm OS-cache diagnostics, no new PyRadiomics speed comparison, allocator or per-instruction profile; no universal language claim."
+  ],
+  "rust_raw": [
+    {
+      "iterations": 100,
+      "nanoseconds_per_call": 58.0,
+      "round": 0,
+      "stage": "image_mask_validate_geometry",
+      "total_nanoseconds": 5800
+    },
+    {
+      "iterations": 10,
+      "nanoseconds_per_call": 615530.0,
+      "round": 0,
+      "stage": "image_mask_clone",
+      "total_nanoseconds": 6155300
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5689800.0,
+      "round": 0,
+      "stage": "image_mask_serialize",
+      "total_nanoseconds": 5689800
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 105664400.0,
+      "round": 0,
+      "stage": "core_extract_preloaded",
+      "total_nanoseconds": 105664400
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 121178500.0,
+      "round": 0,
+      "stage": "original_gateway_preencoded",
+      "total_nanoseconds": 121178500
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 49746500.0,
+      "round": 0,
+      "stage": "nifti_read_pair",
+      "total_nanoseconds": 49746500
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 912300.0,
+      "round": 0,
+      "stage": "crop_preloaded_source_pair",
+      "total_nanoseconds": 912300
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 156313800.0,
+      "round": 0,
+      "stage": "nifti_read_crop_core",
+      "total_nanoseconds": 156313800
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5684200.0,
+      "round": 0,
+      "stage": "typed_serde_parse",
+      "total_nanoseconds": 5684200
+    },
+    {
+      "iterations": 10,
+      "nanoseconds_per_call": 620290.0,
+      "round": 1,
+      "stage": "image_mask_clone",
+      "total_nanoseconds": 6202900
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5623200.0,
+      "round": 1,
+      "stage": "image_mask_serialize",
+      "total_nanoseconds": 5623200
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 104169000.0,
+      "round": 1,
+      "stage": "core_extract_preloaded",
+      "total_nanoseconds": 104169000
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 121063000.0,
+      "round": 1,
+      "stage": "original_gateway_preencoded",
+      "total_nanoseconds": 121063000
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 49270900.0,
+      "round": 1,
+      "stage": "nifti_read_pair",
+      "total_nanoseconds": 49270900
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 885400.0,
+      "round": 1,
+      "stage": "crop_preloaded_source_pair",
+      "total_nanoseconds": 885400
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 156549000.0,
+      "round": 1,
+      "stage": "nifti_read_crop_core",
+      "total_nanoseconds": 156549000
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5624100.0,
+      "round": 1,
+      "stage": "typed_serde_parse",
+      "total_nanoseconds": 5624100
+    },
+    {
+      "iterations": 100,
+      "nanoseconds_per_call": 46.0,
+      "round": 1,
+      "stage": "image_mask_validate_geometry",
+      "total_nanoseconds": 4600
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5609400.0,
+      "round": 2,
+      "stage": "image_mask_serialize",
+      "total_nanoseconds": 5609400
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 104707400.0,
+      "round": 2,
+      "stage": "core_extract_preloaded",
+      "total_nanoseconds": 104707400
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 120860900.0,
+      "round": 2,
+      "stage": "original_gateway_preencoded",
+      "total_nanoseconds": 120860900
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 49059600.0,
+      "round": 2,
+      "stage": "nifti_read_pair",
+      "total_nanoseconds": 49059600
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 919000.0,
+      "round": 2,
+      "stage": "crop_preloaded_source_pair",
+      "total_nanoseconds": 919000
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 156990500.0,
+      "round": 2,
+      "stage": "nifti_read_crop_core",
+      "total_nanoseconds": 156990500
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5731200.0,
+      "round": 2,
+      "stage": "typed_serde_parse",
+      "total_nanoseconds": 5731200
+    },
+    {
+      "iterations": 100,
+      "nanoseconds_per_call": 49.0,
+      "round": 2,
+      "stage": "image_mask_validate_geometry",
+      "total_nanoseconds": 4900
+    },
+    {
+      "iterations": 10,
+      "nanoseconds_per_call": 694950.0,
+      "round": 2,
+      "stage": "image_mask_clone",
+      "total_nanoseconds": 6949500
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 105090000.0,
+      "round": 3,
+      "stage": "core_extract_preloaded",
+      "total_nanoseconds": 105090000
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 121598200.0,
+      "round": 3,
+      "stage": "original_gateway_preencoded",
+      "total_nanoseconds": 121598200
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 49632000.0,
+      "round": 3,
+      "stage": "nifti_read_pair",
+      "total_nanoseconds": 49632000
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 898200.0,
+      "round": 3,
+      "stage": "crop_preloaded_source_pair",
+      "total_nanoseconds": 898200
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 156714700.0,
+      "round": 3,
+      "stage": "nifti_read_crop_core",
+      "total_nanoseconds": 156714700
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5501200.0,
+      "round": 3,
+      "stage": "typed_serde_parse",
+      "total_nanoseconds": 5501200
+    },
+    {
+      "iterations": 100,
+      "nanoseconds_per_call": 50.0,
+      "round": 3,
+      "stage": "image_mask_validate_geometry",
+      "total_nanoseconds": 5000
+    },
+    {
+      "iterations": 10,
+      "nanoseconds_per_call": 718850.0,
+      "round": 3,
+      "stage": "image_mask_clone",
+      "total_nanoseconds": 7188500
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5611700.0,
+      "round": 3,
+      "stage": "image_mask_serialize",
+      "total_nanoseconds": 5611700
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 123062700.0,
+      "round": 4,
+      "stage": "original_gateway_preencoded",
+      "total_nanoseconds": 123062700
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 49982000.0,
+      "round": 4,
+      "stage": "nifti_read_pair",
+      "total_nanoseconds": 49982000
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 923100.0,
+      "round": 4,
+      "stage": "crop_preloaded_source_pair",
+      "total_nanoseconds": 923100
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 157856600.0,
+      "round": 4,
+      "stage": "nifti_read_crop_core",
+      "total_nanoseconds": 157856600
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5276100.0,
+      "round": 4,
+      "stage": "typed_serde_parse",
+      "total_nanoseconds": 5276100
+    },
+    {
+      "iterations": 100,
+      "nanoseconds_per_call": 50.0,
+      "round": 4,
+      "stage": "image_mask_validate_geometry",
+      "total_nanoseconds": 5000
+    },
+    {
+      "iterations": 10,
+      "nanoseconds_per_call": 681810.0,
+      "round": 4,
+      "stage": "image_mask_clone",
+      "total_nanoseconds": 6818100
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5513800.0,
+      "round": 4,
+      "stage": "image_mask_serialize",
+      "total_nanoseconds": 5513800
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 104374600.0,
+      "round": 4,
+      "stage": "core_extract_preloaded",
+      "total_nanoseconds": 104374600
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 49578700.0,
+      "round": 5,
+      "stage": "nifti_read_pair",
+      "total_nanoseconds": 49578700
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 903600.0,
+      "round": 5,
+      "stage": "crop_preloaded_source_pair",
+      "total_nanoseconds": 903600
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 156992200.0,
+      "round": 5,
+      "stage": "nifti_read_crop_core",
+      "total_nanoseconds": 156992200
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5387200.0,
+      "round": 5,
+      "stage": "typed_serde_parse",
+      "total_nanoseconds": 5387200
+    },
+    {
+      "iterations": 100,
+      "nanoseconds_per_call": 48.0,
+      "round": 5,
+      "stage": "image_mask_validate_geometry",
+      "total_nanoseconds": 4800
+    },
+    {
+      "iterations": 10,
+      "nanoseconds_per_call": 696000.0,
+      "round": 5,
+      "stage": "image_mask_clone",
+      "total_nanoseconds": 6960000
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5586900.0,
+      "round": 5,
+      "stage": "image_mask_serialize",
+      "total_nanoseconds": 5586900
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 104503500.0,
+      "round": 5,
+      "stage": "core_extract_preloaded",
+      "total_nanoseconds": 104503500
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 121012600.0,
+      "round": 5,
+      "stage": "original_gateway_preencoded",
+      "total_nanoseconds": 121012600
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 714100.0,
+      "round": 6,
+      "stage": "crop_preloaded_source_pair",
+      "total_nanoseconds": 714100
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 156245200.0,
+      "round": 6,
+      "stage": "nifti_read_crop_core",
+      "total_nanoseconds": 156245200
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5582700.0,
+      "round": 6,
+      "stage": "typed_serde_parse",
+      "total_nanoseconds": 5582700
+    },
+    {
+      "iterations": 100,
+      "nanoseconds_per_call": 47.0,
+      "round": 6,
+      "stage": "image_mask_validate_geometry",
+      "total_nanoseconds": 4700
+    },
+    {
+      "iterations": 10,
+      "nanoseconds_per_call": 675810.0,
+      "round": 6,
+      "stage": "image_mask_clone",
+      "total_nanoseconds": 6758100
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 5556600.0,
+      "round": 6,
+      "stage": "image_mask_serialize",
+      "total_nanoseconds": 5556600
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 104724500.0,
+      "round": 6,
+      "stage": "core_extract_preloaded",
+      "total_nanoseconds": 104724500
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 121522200.0,
+      "round": 6,
+      "stage": "original_gateway_preencoded",
+      "total_nanoseconds": 121522200
+    },
+    {
+      "iterations": 1,
+      "nanoseconds_per_call": 49689600.0,
+      "round": 6,
+      "stage": "nifti_read_pair",
+      "total_nanoseconds": 49689600
+    }
+  ],
+  "rust_probe_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+  "rust_probe_same_nifti_crop_values_labels_affine_exact": true,
+  "evidence_files": {
+    "report.json": {
+      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\report.json",
+      "sha256": "3eb4ded0320ed71dc9ad4388e1822a9acebb44f497fd7a72142e610d7a1ca12e"
+    },
+    "rust-probe.json": {
+      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\rust-probe.json",
+      "sha256": "d86f36ec4c18a3898dd0b98a1d8e0d87f711d176d55918bbdcfe91f2edd3756c"
+    },
+    "raw-python.jsonl": {
+      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\raw-python.jsonl",
+      "sha256": "583c9047cd3b56db02c7e802094d2e2c86c8e5d74fb952310e16a13ada037108"
+    },
+    "request-traces.jsonl": {
+      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\request-traces.jsonl",
+      "sha256": "6dac6fed9059cb5f430e8e5a69d7c97856908103a35feb69797e3f95fed91f5d"
+    },
+    "rust-probe.raw.jsonl": {
+      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\rust-probe.raw.jsonl",
+      "sha256": "e9dd9a9d59a2a53d4ad15cf4b41c5b50f2e7c03e9e9d1a80e630ad286610813e"
+    }
+  },
+  "attempts": [
+    {
+      "directory": "D:/radiomics-native-boundary-diagnosis/baseline-v1",
+      "status": "preflight_failure",
+      "measured_observations": 0,
+      "reason": "Diagnostic adapter initially compared55 statistical/texture fields without the separately frozen11 basic_shape fields; fixed by merging the two existing reference sections, without modifying any reference."
+    },
+    {
+      "directory": "D:/radiomics-native-boundary-diagnosis/baseline-v2",
+      "status": "rejected_identity_and_possible_host_interference",
+      "python_observations": 98,
+      "rust_observations": 63,
+      "reason": "CRLF Cargo.lock changed implementation digest; exact LF normalization equals the frozen dependency lock. Concurrent documentation/browser activity was subsequently reported. Original raw files retained and not used for the primary conclusion."
+    },
+    {
+      "directory": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3",
+      "status": "accepted_diagnostic_not_official_benchmark",
+      "python_observations": 98,
+      "rust_observations": 63,
+      "request_traces": 7,
+      "reason": "One complete quiet-host run after full lock-byte and implementation identity checks. No measured observations discarded."
+    }
+  ],
+  "lock_byte_audit": {
+    "worktree_before_raw_sha256": "ff310d5320801bf8d4a02308e560aa0876f7786521b8101f7334ce099dabc77d",
+    "worktree_before_bytes": 40291,
+    "git_blob_and_restored_raw_sha256": "de33d6dfd0542add75ca1ba0076b9d373a4e8f8af0aa93eb4c49fa35b6d552bb",
+    "git_blob_and_restored_bytes": 38771,
+    "crlf_pairs": 1520,
+    "bare_cr_bytes": 0,
+    "strict_crlf_to_lf_equals_git_blob_and_snapshot_lock": true,
+    "core_algorithm_diff_vs_48ecb310": "none in core src/Cargo.toml/build.rs; Cargo.lock dependency content unchanged",
+    "rejected_core_digest": "dddda1cc357fdc3948879310578b20e50a4b46195a7b297656ec1b6bc229452c",
+    "accepted_core_digest": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8"
+  },
+  "data_license": "CC-BY-NC-3.0 for PAT1 source/derived numerical data; no raw image, mask, numeric image arrays or large request envelope in this repository archive.",
+  "validation_microprobe_caveat": "image_mask_validate_geometry measures only public geometry/length checks, not private feature validate_pair ROI scans. Its invariant loop may be optimized; do not treat the tiny value as a full validation cost measurement."
+}

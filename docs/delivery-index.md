@@ -1,10 +1,17 @@
 # Development delivery index
 
+Later audit update: the [scalar accuracy audit](scalar-accuracy-audit.md) found
+an unresolved high-dynamic-range compatibility counterexample. Historical
+delivery/test receipts below remain valid for their recorded scope, but they
+do not establish that this new finding or all numerical release gates are
+closed. The [backend decision](rust-backend-decision.md) separates consistency,
+speed, peak memory and numerical error.
+
 The package remains version 0.1.0. These are development artifacts and evidence,
-not a PyPI/crates.io publication. The agreed development scope is complete with
-the numerical, installation and artifact evidence below. Performance target
-misses and measurement limits remain disclosed. The versioned completion audit
-and latest PR CI must be consulted together.
+not a PyPI/crates.io publication. Earlier functional/installation delivery is
+documented by the scoped receipts below. Performance misses, measurement limits
+and the later unresolved numerical finding remain disclosed. Consult the
+versioned completion audit, subsequent audits and latest PR CI together.
 
 ## Read and reproduce
 

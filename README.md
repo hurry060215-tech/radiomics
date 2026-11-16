@@ -6,7 +6,7 @@
 
 **An independent Rust engine for radiomics and lightweight pathology, with Python APIs and a Python-free CLI.**
 
-[中文介绍](README.zh-CN.md) · [Installation](website/installation.md) · [Tutorials](website/tutorials/index.md) · [Your own data](docs/user-guide/file-workflows.md) · [API](docs/api.md) · [Technical report](docs/technical-report.md)
+[Online documentation](https://hurry060215-tech.github.io/radiomics/) · [中文介绍](README.zh-CN.md) · [Installation](website/installation.md) · [Tutorials](website/tutorials/index.md) · [Your own data](docs/user-guide/file-workflows.md) · [API](docs/api.md) · [Technical report](docs/technical-report.md)
 
 ## What can I do with it?
 
@@ -82,6 +82,20 @@ Python compatibility freezes public PyRadiomics3.0.1; IBSI is an independent def
 - **IBSI digital track:** 54/55 scoped definitions conformant, with raw Kurtosis explicitly nonconformant. This is not blanket IBSI certification or clinical validation.
 - **Deployment:** Windows/Linux native-only wheel checks and a no-Python/no-network CLI container. [Evidence index](docs/delivery-index.md) keeps each result tied to its tested revision.
 
+Backend choice is component-specific: prioritize the declared result contract,
+then measure speed, peak memory and numerical error separately. The
+[boundary diagnosis](docs/native-performance-diagnosis.md) identifies repeated
+JSON/object costs in the Python array path. The [scalar accuracy audit](docs/scalar-accuracy-audit.md)
+also records an extreme cancellation case that currently differs from Python;
+neither backend is universally more accurate. See the [Rust decision](docs/rust-backend-decision.md)
+and [Onekey workflow gap audit](docs/onekey-workflow-gap-audit.md) for limits and priorities.
+
+A [bounded constructor fix](docs/sample-constructor-optimization.md) removes
+temporary copies before unchanged native validation. A same-binary diagnostic
+reduced complete array-call median time by17.38%; measured peak RSS did not
+decrease. This is not a new PyRadiomics speedup claim or a resolution of the
+open scalar compatibility finding.
+
 ## Documentation and contributions
 
 The documentation follows the task-oriented organization of [OmicVerse](https://github.com/omicverse/omicverse) and its [tutorial repository](https://github.com/omicverse/omicverse-tutorials), with independently authored examples and evidence. Build a local searchable preview:
@@ -93,4 +107,4 @@ python -m sphinx -W --keep-going -b html website website/_build/html
 python -m http.server 8000 --directory website/_build/html
 ```
 
-See [CONTRIBUTING](CONTRIBUTING.md) for checks and tutorial execution, [security/data handling](SECURITY.md) before reporting private data, and [GitHub issues](https://github.com/hurry060215-tech/radiomics/issues) for reproducible problems. HTML documentation and compiled development artifacts are uploaded by CI; no hosted website or formal registry release is assumed.
+See [CONTRIBUTING](CONTRIBUTING.md) for checks and tutorial execution, [security/data handling](SECURITY.md) before reporting private data, and [GitHub issues](https://github.com/hurry060215-tech/radiomics/issues) for reproducible problems. PRs build documentation previews; main pushes and explicit maintainer dispatches publish [GitHub Pages](https://hurry060215-tech.github.io/radiomics/). Compiled development artifacts remain available from CI; registry publication is a separate action.

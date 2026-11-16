@@ -1,5 +1,12 @@
 # Independent native development and acceptance ledger
 
+The milestone closure below is historical, version-scoped delivery evidence.
+The later [Onekey audit](onekey-workflow-gap-audit.md),
+[resource diagnosis](native-performance-diagnosis.md) and
+[scalar accuracy audit](scalar-accuracy-audit.md) supersede broader readings.
+The new high-dynamic-range numerical compatibility gap remains open; it is not
+closed by the older Golden/test counts or by a documentation build.
+
 This work continues the personal repository `hurry060215-tech/radiomics` from
 `2512e16979a544207f84c943e619ef33e02d3dc7`. The distribution/import/crate names and
 version 0.1.0 are retained. No PyPI/crates.io release, upstream ov modification,

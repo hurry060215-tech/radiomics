@@ -1,0 +1,1424 @@
+{
+  "schema": "radiomics.sample-constructor-diagnostic.v1",
+  "status": "passed",
+  "kind": "diagnostic_not_formal_benchmark",
+  "plan": {
+    "schema": "radiomics.constructor-diagnostic-plan.v1",
+    "cpu_warmups": 1,
+    "cpu_repeats": 7,
+    "rss_repeats": 3,
+    "cpu_stages": [
+      "full_l2",
+      "sample_constructor"
+    ],
+    "native_threads": 1,
+    "frozen_features": 66,
+    "fixed_width": 25,
+    "roi_label": 1,
+    "profile": "python_golden_v1",
+    "instrumented": false,
+    "description": "Original public constructors/extract/DataFrame; no to_dict/request tracing or monkeypatching."
+  },
+  "host": {
+    "platform": "Windows-10-10.0.22631-SP0",
+    "machine": "AMD64",
+    "logical_cpus": 24,
+    "cpu": "Intel(R) Core(TM) Ultra 9 285K",
+    "ram_bytes": 33663320064
+  },
+  "identities": {
+    "baseline": {
+      "python": "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+      "pid": 19828,
+      "package_path": "D:\\radiomics-sample-constructor\\baseline-env\\Lib\\site-packages\\ov_radiomics",
+      "wheel": "E:\\radiomics-build\\snapshot-native-v4\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+      "wheel_sha256": "5a0b0b305e525fb91e4b736039ffde7012848267047555f7a3bb5b16c9b0b42e",
+      "installed_payload_sha256": {
+        "ov_radiomics/__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
+        "ov_radiomics/_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+        "ov_radiomics/_native.pyd": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+        "ov_radiomics/_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+        "ov_radiomics/_native_common.py": "601d24923b0fbbd6a86dba26bdabd09e8975bab6bca4a661d682909a024edede",
+        "ov_radiomics/_native_learning.py": "657ae5c7aa3c2a4ea8dcd87542d6cac44e6c1ae8187014a8a472a69ca59e62ca",
+        "ov_radiomics/_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+        "ov_radiomics/_reference_clinical.py": "8d0aa05a2985d36d53bb9ebb79ecf2416ab043cb343faac73d93f0a69a94f909",
+        "ov_radiomics/_reference_metrics.py": "2b1b44b6d01c2d1acb5cdac4fb06954c65856ce41e2b9daf4303e47a8259615b",
+        "ov_radiomics/_reference_modeling.py": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566",
+        "ov_radiomics/_reference_selection.py": "5adc9c43e299496936690ff9e013e5c1d1170c63e84b21c501f7fb64ee788ed6",
+        "ov_radiomics/_types.py": "61c9e0c1e4377ae3da868051972ea5ac875eeca3475949999d8a1db46dbc4622",
+        "ov_radiomics/_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+        "ov_radiomics/clinical.py": "310a22c42492bbfd7eae36669cdee723acbfbdb6820f0e663bc1e39c1fa29750",
+        "ov_radiomics/habitat.py": "e5223172202766bc84790bf1d555a3b3e8c69e9f04d929682ec41e8f97bf5689",
+        "ov_radiomics/image.py": "5e03c7b76cc1a7170da19bd41f5a82ba22df28d523d0b6b27cf53e1bc792e75f",
+        "ov_radiomics/interop.py": "42952bb3d9c908b6ce7c70c7a54b37720f1e78bfb2dc47ff85a1b0528976e2ca",
+        "ov_radiomics/mask.py": "fa80bb714d2842f86e6eb2820f45c61b091c1d70dae0ef473eb127649ea6a47c",
+        "ov_radiomics/metrics.py": "d7bff475e63144f5e8efcffc914c1ebaac8e57257600fe94ad47998cb9948a00",
+        "ov_radiomics/modeling.py": "3aec1408c390ad522369069cae4caa25b87bd08ab7cffed58fc4b077dbeee722",
+        "ov_radiomics/pathology.py": "29cc475ea1a6ea722a7606ff1842feb39e72c2161aa4191409b4dfe3219391f4",
+        "ov_radiomics/plotting.py": "b5733fe2818a871c7a3519959bf378f793d4a38d78db154681f89184695cf06f",
+        "ov_radiomics/research.py": "0d0b32954c4e2c231ea3ef950fb2c816617a0412ce4923e893547fa39943c606",
+        "ov_radiomics/selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
+        "ov_radiomics/split.py": "e1ad5d7ca6b10d5f756735c9971d42f38bae40dd7d5fccfc969793d78a9d36a0",
+        "ov_radiomics/table.py": "1fb6ba46a5b2eb36dd60d2f077c51bd1bc1888de704463ac84bbeff1212f5dab"
+      },
+      "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+      "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+      "dependencies": {
+        "numpy": {
+          "version": "2.0.2",
+          "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy\\__init__.py",
+          "sha256": "c8c1007668326afd3cf3b1d183e8bc1581430514af161672b4225c57487dd976"
+        },
+        "pandas": {
+          "version": "2.3.3",
+          "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\pandas\\__init__.py",
+          "sha256": "233a5ddc5d83d00055350d5b7a493a71fccb57442d47892a914140e6391a0511"
+        },
+        "threadpoolctl": {
+          "version": "3.6.0",
+          "path": "D:\\radiomics-sample-constructor\\baseline-env\\lib\\site-packages\\threadpoolctl.py",
+          "sha256": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
+        }
+      }
+    },
+    "candidate": {
+      "python": "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+      "pid": 20992,
+      "package_path": "D:\\radiomics-sample-constructor\\candidate-env\\Lib\\site-packages\\ov_radiomics",
+      "wheel": "D:\\radiomics-sample-constructor\\candidate-build-v1\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+      "wheel_sha256": "578bc5319181322c660c6de396163b2ca44d2ad10133928f7c201f53613cc98b",
+      "installed_payload_sha256": {
+        "ov_radiomics/__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
+        "ov_radiomics/_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+        "ov_radiomics/_native.pyd": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+        "ov_radiomics/_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+        "ov_radiomics/_native_common.py": "601d24923b0fbbd6a86dba26bdabd09e8975bab6bca4a661d682909a024edede",
+        "ov_radiomics/_native_learning.py": "657ae5c7aa3c2a4ea8dcd87542d6cac44e6c1ae8187014a8a472a69ca59e62ca",
+        "ov_radiomics/_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+        "ov_radiomics/_reference_clinical.py": "8d0aa05a2985d36d53bb9ebb79ecf2416ab043cb343faac73d93f0a69a94f909",
+        "ov_radiomics/_reference_metrics.py": "2b1b44b6d01c2d1acb5cdac4fb06954c65856ce41e2b9daf4303e47a8259615b",
+        "ov_radiomics/_reference_modeling.py": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566",
+        "ov_radiomics/_reference_selection.py": "5adc9c43e299496936690ff9e013e5c1d1170c63e84b21c501f7fb64ee788ed6",
+        "ov_radiomics/_types.py": "687326b0feed2e3a111ede1324f2426e383629427dd2da28b495e0909044d458",
+        "ov_radiomics/_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+        "ov_radiomics/clinical.py": "310a22c42492bbfd7eae36669cdee723acbfbdb6820f0e663bc1e39c1fa29750",
+        "ov_radiomics/habitat.py": "e5223172202766bc84790bf1d555a3b3e8c69e9f04d929682ec41e8f97bf5689",
+        "ov_radiomics/image.py": "5e03c7b76cc1a7170da19bd41f5a82ba22df28d523d0b6b27cf53e1bc792e75f",
+        "ov_radiomics/interop.py": "42952bb3d9c908b6ce7c70c7a54b37720f1e78bfb2dc47ff85a1b0528976e2ca",
+        "ov_radiomics/mask.py": "fa80bb714d2842f86e6eb2820f45c61b091c1d70dae0ef473eb127649ea6a47c",
+        "ov_radiomics/metrics.py": "d7bff475e63144f5e8efcffc914c1ebaac8e57257600fe94ad47998cb9948a00",
+        "ov_radiomics/modeling.py": "3aec1408c390ad522369069cae4caa25b87bd08ab7cffed58fc4b077dbeee722",
+        "ov_radiomics/pathology.py": "29cc475ea1a6ea722a7606ff1842feb39e72c2161aa4191409b4dfe3219391f4",
+        "ov_radiomics/plotting.py": "ce73bfa57d2179599ed5abb416d88d4202bc0ae694c0b8e8c62049d2132f9443",
+        "ov_radiomics/research.py": "0d0b32954c4e2c231ea3ef950fb2c816617a0412ce4923e893547fa39943c606",
+        "ov_radiomics/selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
+        "ov_radiomics/split.py": "e1ad5d7ca6b10d5f756735c9971d42f38bae40dd7d5fccfc969793d78a9d36a0",
+        "ov_radiomics/table.py": "1fb6ba46a5b2eb36dd60d2f077c51bd1bc1888de704463ac84bbeff1212f5dab"
+      },
+      "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+      "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+      "dependencies": {
+        "numpy": {
+          "version": "2.0.2",
+          "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy\\__init__.py",
+          "sha256": "c8c1007668326afd3cf3b1d183e8bc1581430514af161672b4225c57487dd976"
+        },
+        "pandas": {
+          "version": "2.3.3",
+          "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\pandas\\__init__.py",
+          "sha256": "233a5ddc5d83d00055350d5b7a493a71fccb57442d47892a914140e6391a0511"
+        },
+        "threadpoolctl": {
+          "version": "3.6.0",
+          "path": "D:\\radiomics-sample-constructor\\candidate-env\\lib\\site-packages\\threadpoolctl.py",
+          "sha256": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
+        }
+      }
+    }
+  },
+  "script_sha256": "908dc8d5f8e5b0bfee8a396629c47f652bd9ee9e767b5cf1db569ca3dd937918",
+  "helper_sha256": {
+    "profile_native_boundary.py": "19498c3a7aebc6bee98c10779eb1ffe9d2d95f3badd6604e8f73012560a3de9f",
+    "profile_native_memory.py": "78c0818e06422e583621c02a03fedfca1731711c7fe7bdf969e7bf850b327715"
+  },
+  "raw": [
+    {
+      "environment": "baseline",
+      "kind": "timing",
+      "stage": "full_l2",
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_sample_constructor.py",
+          "--worker",
+          "timing",
+          "--stage",
+          "full_l2",
+          "--wheel",
+          "E:\\radiomics-build\\snapshot-native-v4\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\baseline-full_l2\\worker.json",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json"
+        ],
+        "launcher_pid": 23480,
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "identity": {
+          "python": "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+          "pid": 4204,
+          "package_path": "D:\\radiomics-sample-constructor\\baseline-env\\Lib\\site-packages\\ov_radiomics",
+          "wheel": "E:\\radiomics-build\\snapshot-native-v4\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+          "wheel_sha256": "5a0b0b305e525fb91e4b736039ffde7012848267047555f7a3bb5b16c9b0b42e",
+          "installed_payload_sha256": {
+            "ov_radiomics/__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
+            "ov_radiomics/_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+            "ov_radiomics/_native.pyd": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+            "ov_radiomics/_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+            "ov_radiomics/_native_common.py": "601d24923b0fbbd6a86dba26bdabd09e8975bab6bca4a661d682909a024edede",
+            "ov_radiomics/_native_learning.py": "657ae5c7aa3c2a4ea8dcd87542d6cac44e6c1ae8187014a8a472a69ca59e62ca",
+            "ov_radiomics/_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+            "ov_radiomics/_reference_clinical.py": "8d0aa05a2985d36d53bb9ebb79ecf2416ab043cb343faac73d93f0a69a94f909",
+            "ov_radiomics/_reference_metrics.py": "2b1b44b6d01c2d1acb5cdac4fb06954c65856ce41e2b9daf4303e47a8259615b",
+            "ov_radiomics/_reference_modeling.py": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566",
+            "ov_radiomics/_reference_selection.py": "5adc9c43e299496936690ff9e013e5c1d1170c63e84b21c501f7fb64ee788ed6",
+            "ov_radiomics/_types.py": "61c9e0c1e4377ae3da868051972ea5ac875eeca3475949999d8a1db46dbc4622",
+            "ov_radiomics/_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+            "ov_radiomics/clinical.py": "310a22c42492bbfd7eae36669cdee723acbfbdb6820f0e663bc1e39c1fa29750",
+            "ov_radiomics/habitat.py": "e5223172202766bc84790bf1d555a3b3e8c69e9f04d929682ec41e8f97bf5689",
+            "ov_radiomics/image.py": "5e03c7b76cc1a7170da19bd41f5a82ba22df28d523d0b6b27cf53e1bc792e75f",
+            "ov_radiomics/interop.py": "42952bb3d9c908b6ce7c70c7a54b37720f1e78bfb2dc47ff85a1b0528976e2ca",
+            "ov_radiomics/mask.py": "fa80bb714d2842f86e6eb2820f45c61b091c1d70dae0ef473eb127649ea6a47c",
+            "ov_radiomics/metrics.py": "d7bff475e63144f5e8efcffc914c1ebaac8e57257600fe94ad47998cb9948a00",
+            "ov_radiomics/modeling.py": "3aec1408c390ad522369069cae4caa25b87bd08ab7cffed58fc4b077dbeee722",
+            "ov_radiomics/pathology.py": "29cc475ea1a6ea722a7606ff1842feb39e72c2161aa4191409b4dfe3219391f4",
+            "ov_radiomics/plotting.py": "b5733fe2818a871c7a3519959bf378f793d4a38d78db154681f89184695cf06f",
+            "ov_radiomics/research.py": "0d0b32954c4e2c231ea3ef950fb2c816617a0412ce4923e893547fa39943c606",
+            "ov_radiomics/selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
+            "ov_radiomics/split.py": "e1ad5d7ca6b10d5f756735c9971d42f38bae40dd7d5fccfc969793d78a9d36a0",
+            "ov_radiomics/table.py": "1fb6ba46a5b2eb36dd60d2f077c51bd1bc1888de704463ac84bbeff1212f5dab"
+          },
+          "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+          "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+          "dependencies": {
+            "numpy": {
+              "version": "2.0.2",
+              "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy\\__init__.py",
+              "sha256": "c8c1007668326afd3cf3b1d183e8bc1581430514af161672b4225c57487dd976"
+            },
+            "pandas": {
+              "version": "2.3.3",
+              "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\pandas\\__init__.py",
+              "sha256": "233a5ddc5d83d00055350d5b7a493a71fccb57442d47892a914140e6391a0511"
+            },
+            "threadpoolctl": {
+              "version": "3.6.0",
+              "path": "D:\\radiomics-sample-constructor\\baseline-env\\lib\\site-packages\\threadpoolctl.py",
+              "sha256": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
+            }
+          }
+        },
+        "stage": "full_l2",
+        "raw": [
+          {
+            "repetition": 0,
+            "warmup": false,
+            "nanoseconds": 380917300,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 1,
+            "warmup": false,
+            "nanoseconds": 374691300,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 2,
+            "warmup": false,
+            "nanoseconds": 371059100,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 3,
+            "warmup": false,
+            "nanoseconds": 371046000,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 4,
+            "warmup": false,
+            "nanoseconds": 370688700,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 5,
+            "warmup": false,
+            "nanoseconds": 370283200,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 6,
+            "warmup": false,
+            "nanoseconds": 371712300,
+            "stage": "full_l2"
+          }
+        ],
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "summary": {
+          "n": 7,
+          "median_ms": 371.0591,
+          "iqr_ms": 2.33445,
+          "p95_ms": 379.0495
+        },
+        "all_66_features_match_frozen_ct": true
+      }
+    },
+    {
+      "environment": "candidate",
+      "kind": "timing",
+      "stage": "full_l2",
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_sample_constructor.py",
+          "--worker",
+          "timing",
+          "--stage",
+          "full_l2",
+          "--wheel",
+          "D:\\radiomics-sample-constructor\\candidate-build-v1\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\candidate-full_l2\\worker.json",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json"
+        ],
+        "launcher_pid": 5248,
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "identity": {
+          "python": "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+          "pid": 21568,
+          "package_path": "D:\\radiomics-sample-constructor\\candidate-env\\Lib\\site-packages\\ov_radiomics",
+          "wheel": "D:\\radiomics-sample-constructor\\candidate-build-v1\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+          "wheel_sha256": "578bc5319181322c660c6de396163b2ca44d2ad10133928f7c201f53613cc98b",
+          "installed_payload_sha256": {
+            "ov_radiomics/__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
+            "ov_radiomics/_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+            "ov_radiomics/_native.pyd": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+            "ov_radiomics/_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+            "ov_radiomics/_native_common.py": "601d24923b0fbbd6a86dba26bdabd09e8975bab6bca4a661d682909a024edede",
+            "ov_radiomics/_native_learning.py": "657ae5c7aa3c2a4ea8dcd87542d6cac44e6c1ae8187014a8a472a69ca59e62ca",
+            "ov_radiomics/_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+            "ov_radiomics/_reference_clinical.py": "8d0aa05a2985d36d53bb9ebb79ecf2416ab043cb343faac73d93f0a69a94f909",
+            "ov_radiomics/_reference_metrics.py": "2b1b44b6d01c2d1acb5cdac4fb06954c65856ce41e2b9daf4303e47a8259615b",
+            "ov_radiomics/_reference_modeling.py": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566",
+            "ov_radiomics/_reference_selection.py": "5adc9c43e299496936690ff9e013e5c1d1170c63e84b21c501f7fb64ee788ed6",
+            "ov_radiomics/_types.py": "687326b0feed2e3a111ede1324f2426e383629427dd2da28b495e0909044d458",
+            "ov_radiomics/_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+            "ov_radiomics/clinical.py": "310a22c42492bbfd7eae36669cdee723acbfbdb6820f0e663bc1e39c1fa29750",
+            "ov_radiomics/habitat.py": "e5223172202766bc84790bf1d555a3b3e8c69e9f04d929682ec41e8f97bf5689",
+            "ov_radiomics/image.py": "5e03c7b76cc1a7170da19bd41f5a82ba22df28d523d0b6b27cf53e1bc792e75f",
+            "ov_radiomics/interop.py": "42952bb3d9c908b6ce7c70c7a54b37720f1e78bfb2dc47ff85a1b0528976e2ca",
+            "ov_radiomics/mask.py": "fa80bb714d2842f86e6eb2820f45c61b091c1d70dae0ef473eb127649ea6a47c",
+            "ov_radiomics/metrics.py": "d7bff475e63144f5e8efcffc914c1ebaac8e57257600fe94ad47998cb9948a00",
+            "ov_radiomics/modeling.py": "3aec1408c390ad522369069cae4caa25b87bd08ab7cffed58fc4b077dbeee722",
+            "ov_radiomics/pathology.py": "29cc475ea1a6ea722a7606ff1842feb39e72c2161aa4191409b4dfe3219391f4",
+            "ov_radiomics/plotting.py": "ce73bfa57d2179599ed5abb416d88d4202bc0ae694c0b8e8c62049d2132f9443",
+            "ov_radiomics/research.py": "0d0b32954c4e2c231ea3ef950fb2c816617a0412ce4923e893547fa39943c606",
+            "ov_radiomics/selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
+            "ov_radiomics/split.py": "e1ad5d7ca6b10d5f756735c9971d42f38bae40dd7d5fccfc969793d78a9d36a0",
+            "ov_radiomics/table.py": "1fb6ba46a5b2eb36dd60d2f077c51bd1bc1888de704463ac84bbeff1212f5dab"
+          },
+          "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+          "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+          "dependencies": {
+            "numpy": {
+              "version": "2.0.2",
+              "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy\\__init__.py",
+              "sha256": "c8c1007668326afd3cf3b1d183e8bc1581430514af161672b4225c57487dd976"
+            },
+            "pandas": {
+              "version": "2.3.3",
+              "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\pandas\\__init__.py",
+              "sha256": "233a5ddc5d83d00055350d5b7a493a71fccb57442d47892a914140e6391a0511"
+            },
+            "threadpoolctl": {
+              "version": "3.6.0",
+              "path": "D:\\radiomics-sample-constructor\\candidate-env\\lib\\site-packages\\threadpoolctl.py",
+              "sha256": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
+            }
+          }
+        },
+        "stage": "full_l2",
+        "raw": [
+          {
+            "repetition": 0,
+            "warmup": false,
+            "nanoseconds": 311558300,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 1,
+            "warmup": false,
+            "nanoseconds": 308674900,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 2,
+            "warmup": false,
+            "nanoseconds": 306007800,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 3,
+            "warmup": false,
+            "nanoseconds": 306558700,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 4,
+            "warmup": false,
+            "nanoseconds": 304419100,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 5,
+            "warmup": false,
+            "nanoseconds": 303588100,
+            "stage": "full_l2"
+          },
+          {
+            "repetition": 6,
+            "warmup": false,
+            "nanoseconds": 310927700,
+            "stage": "full_l2"
+          }
+        ],
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "summary": {
+          "n": 7,
+          "median_ms": 306.5587,
+          "iqr_ms": 4.58785,
+          "p95_ms": 311.36912
+        },
+        "all_66_features_match_frozen_ct": true
+      }
+    },
+    {
+      "environment": "candidate",
+      "kind": "timing",
+      "stage": "sample_constructor",
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_sample_constructor.py",
+          "--worker",
+          "timing",
+          "--stage",
+          "sample_constructor",
+          "--wheel",
+          "D:\\radiomics-sample-constructor\\candidate-build-v1\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\candidate-sample_constructor\\worker.json",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json"
+        ],
+        "launcher_pid": 11708,
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "identity": {
+          "python": "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+          "pid": 22864,
+          "package_path": "D:\\radiomics-sample-constructor\\candidate-env\\Lib\\site-packages\\ov_radiomics",
+          "wheel": "D:\\radiomics-sample-constructor\\candidate-build-v1\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+          "wheel_sha256": "578bc5319181322c660c6de396163b2ca44d2ad10133928f7c201f53613cc98b",
+          "installed_payload_sha256": {
+            "ov_radiomics/__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
+            "ov_radiomics/_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+            "ov_radiomics/_native.pyd": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+            "ov_radiomics/_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+            "ov_radiomics/_native_common.py": "601d24923b0fbbd6a86dba26bdabd09e8975bab6bca4a661d682909a024edede",
+            "ov_radiomics/_native_learning.py": "657ae5c7aa3c2a4ea8dcd87542d6cac44e6c1ae8187014a8a472a69ca59e62ca",
+            "ov_radiomics/_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+            "ov_radiomics/_reference_clinical.py": "8d0aa05a2985d36d53bb9ebb79ecf2416ab043cb343faac73d93f0a69a94f909",
+            "ov_radiomics/_reference_metrics.py": "2b1b44b6d01c2d1acb5cdac4fb06954c65856ce41e2b9daf4303e47a8259615b",
+            "ov_radiomics/_reference_modeling.py": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566",
+            "ov_radiomics/_reference_selection.py": "5adc9c43e299496936690ff9e013e5c1d1170c63e84b21c501f7fb64ee788ed6",
+            "ov_radiomics/_types.py": "687326b0feed2e3a111ede1324f2426e383629427dd2da28b495e0909044d458",
+            "ov_radiomics/_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+            "ov_radiomics/clinical.py": "310a22c42492bbfd7eae36669cdee723acbfbdb6820f0e663bc1e39c1fa29750",
+            "ov_radiomics/habitat.py": "e5223172202766bc84790bf1d555a3b3e8c69e9f04d929682ec41e8f97bf5689",
+            "ov_radiomics/image.py": "5e03c7b76cc1a7170da19bd41f5a82ba22df28d523d0b6b27cf53e1bc792e75f",
+            "ov_radiomics/interop.py": "42952bb3d9c908b6ce7c70c7a54b37720f1e78bfb2dc47ff85a1b0528976e2ca",
+            "ov_radiomics/mask.py": "fa80bb714d2842f86e6eb2820f45c61b091c1d70dae0ef473eb127649ea6a47c",
+            "ov_radiomics/metrics.py": "d7bff475e63144f5e8efcffc914c1ebaac8e57257600fe94ad47998cb9948a00",
+            "ov_radiomics/modeling.py": "3aec1408c390ad522369069cae4caa25b87bd08ab7cffed58fc4b077dbeee722",
+            "ov_radiomics/pathology.py": "29cc475ea1a6ea722a7606ff1842feb39e72c2161aa4191409b4dfe3219391f4",
+            "ov_radiomics/plotting.py": "ce73bfa57d2179599ed5abb416d88d4202bc0ae694c0b8e8c62049d2132f9443",
+            "ov_radiomics/research.py": "0d0b32954c4e2c231ea3ef950fb2c816617a0412ce4923e893547fa39943c606",
+            "ov_radiomics/selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
+            "ov_radiomics/split.py": "e1ad5d7ca6b10d5f756735c9971d42f38bae40dd7d5fccfc969793d78a9d36a0",
+            "ov_radiomics/table.py": "1fb6ba46a5b2eb36dd60d2f077c51bd1bc1888de704463ac84bbeff1212f5dab"
+          },
+          "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+          "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+          "dependencies": {
+            "numpy": {
+              "version": "2.0.2",
+              "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy\\__init__.py",
+              "sha256": "c8c1007668326afd3cf3b1d183e8bc1581430514af161672b4225c57487dd976"
+            },
+            "pandas": {
+              "version": "2.3.3",
+              "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\pandas\\__init__.py",
+              "sha256": "233a5ddc5d83d00055350d5b7a493a71fccb57442d47892a914140e6391a0511"
+            },
+            "threadpoolctl": {
+              "version": "3.6.0",
+              "path": "D:\\radiomics-sample-constructor\\candidate-env\\lib\\site-packages\\threadpoolctl.py",
+              "sha256": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
+            }
+          }
+        },
+        "stage": "sample_constructor",
+        "raw": [
+          {
+            "repetition": 0,
+            "warmup": false,
+            "nanoseconds": 78432300,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 1,
+            "warmup": false,
+            "nanoseconds": 76514600,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 2,
+            "warmup": false,
+            "nanoseconds": 73241100,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 3,
+            "warmup": false,
+            "nanoseconds": 72138000,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 4,
+            "warmup": false,
+            "nanoseconds": 71271700,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 5,
+            "warmup": false,
+            "nanoseconds": 71769300,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 6,
+            "warmup": false,
+            "nanoseconds": 72651700,
+            "stage": "sample_constructor"
+          }
+        ],
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "summary": {
+          "n": 7,
+          "median_ms": 72.6517,
+          "iqr_ms": 2.9242,
+          "p95_ms": 77.85699
+        },
+        "all_66_features_match_frozen_ct": true
+      }
+    },
+    {
+      "environment": "baseline",
+      "kind": "timing",
+      "stage": "sample_constructor",
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_sample_constructor.py",
+          "--worker",
+          "timing",
+          "--stage",
+          "sample_constructor",
+          "--wheel",
+          "E:\\radiomics-build\\snapshot-native-v4\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\baseline-sample_constructor\\worker.json",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json"
+        ],
+        "launcher_pid": 18192,
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "identity": {
+          "python": "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+          "pid": 22376,
+          "package_path": "D:\\radiomics-sample-constructor\\baseline-env\\Lib\\site-packages\\ov_radiomics",
+          "wheel": "E:\\radiomics-build\\snapshot-native-v4\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+          "wheel_sha256": "5a0b0b305e525fb91e4b736039ffde7012848267047555f7a3bb5b16c9b0b42e",
+          "installed_payload_sha256": {
+            "ov_radiomics/__init__.py": "cb21b17bf8c0cd01f6d3379946fb5925085d5e0decf2cf0fb65453f93b247817",
+            "ov_radiomics/_backend.py": "1de353d7e9205257fc66fb1130b60e3f0d4bf27a49472d7a8ec7e73f3a8db058",
+            "ov_radiomics/_native.pyd": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+            "ov_radiomics/_native_clinical.py": "9d02ea5c3ff68bb960c9cba6938a556b0d69b66c5f8a519ec545033c7955ecd9",
+            "ov_radiomics/_native_common.py": "601d24923b0fbbd6a86dba26bdabd09e8975bab6bca4a661d682909a024edede",
+            "ov_radiomics/_native_learning.py": "657ae5c7aa3c2a4ea8dcd87542d6cac44e6c1ae8187014a8a472a69ca59e62ca",
+            "ov_radiomics/_native_selection.py": "cbfe43579a5b40751b1f123565b015984697733206426786fce97d5c6efd4f8f",
+            "ov_radiomics/_reference_clinical.py": "8d0aa05a2985d36d53bb9ebb79ecf2416ab043cb343faac73d93f0a69a94f909",
+            "ov_radiomics/_reference_metrics.py": "2b1b44b6d01c2d1acb5cdac4fb06954c65856ce41e2b9daf4303e47a8259615b",
+            "ov_radiomics/_reference_modeling.py": "4c83fcf704234f3d8e236f2afeea343b34acde792ee3565b1f8cbea663268566",
+            "ov_radiomics/_reference_selection.py": "5adc9c43e299496936690ff9e013e5c1d1170c63e84b21c501f7fb64ee788ed6",
+            "ov_radiomics/_types.py": "61c9e0c1e4377ae3da868051972ea5ac875eeca3475949999d8a1db46dbc4622",
+            "ov_radiomics/_validation.py": "195f45d4e61d8b99873637b8fd1cc640466c9ab7c12b944eef887b616add887a",
+            "ov_radiomics/clinical.py": "310a22c42492bbfd7eae36669cdee723acbfbdb6820f0e663bc1e39c1fa29750",
+            "ov_radiomics/habitat.py": "e5223172202766bc84790bf1d555a3b3e8c69e9f04d929682ec41e8f97bf5689",
+            "ov_radiomics/image.py": "5e03c7b76cc1a7170da19bd41f5a82ba22df28d523d0b6b27cf53e1bc792e75f",
+            "ov_radiomics/interop.py": "42952bb3d9c908b6ce7c70c7a54b37720f1e78bfb2dc47ff85a1b0528976e2ca",
+            "ov_radiomics/mask.py": "fa80bb714d2842f86e6eb2820f45c61b091c1d70dae0ef473eb127649ea6a47c",
+            "ov_radiomics/metrics.py": "d7bff475e63144f5e8efcffc914c1ebaac8e57257600fe94ad47998cb9948a00",
+            "ov_radiomics/modeling.py": "3aec1408c390ad522369069cae4caa25b87bd08ab7cffed58fc4b077dbeee722",
+            "ov_radiomics/pathology.py": "29cc475ea1a6ea722a7606ff1842feb39e72c2161aa4191409b4dfe3219391f4",
+            "ov_radiomics/plotting.py": "b5733fe2818a871c7a3519959bf378f793d4a38d78db154681f89184695cf06f",
+            "ov_radiomics/research.py": "0d0b32954c4e2c231ea3ef950fb2c816617a0412ce4923e893547fa39943c606",
+            "ov_radiomics/selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
+            "ov_radiomics/split.py": "e1ad5d7ca6b10d5f756735c9971d42f38bae40dd7d5fccfc969793d78a9d36a0",
+            "ov_radiomics/table.py": "1fb6ba46a5b2eb36dd60d2f077c51bd1bc1888de704463ac84bbeff1212f5dab"
+          },
+          "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+          "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
+          "dependencies": {
+            "numpy": {
+              "version": "2.0.2",
+              "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy\\__init__.py",
+              "sha256": "c8c1007668326afd3cf3b1d183e8bc1581430514af161672b4225c57487dd976"
+            },
+            "pandas": {
+              "version": "2.3.3",
+              "path": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\pandas\\__init__.py",
+              "sha256": "233a5ddc5d83d00055350d5b7a493a71fccb57442d47892a914140e6391a0511"
+            },
+            "threadpoolctl": {
+              "version": "3.6.0",
+              "path": "D:\\radiomics-sample-constructor\\baseline-env\\lib\\site-packages\\threadpoolctl.py",
+              "sha256": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
+            }
+          }
+        },
+        "stage": "sample_constructor",
+        "raw": [
+          {
+            "repetition": 0,
+            "warmup": false,
+            "nanoseconds": 143891200,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 1,
+            "warmup": false,
+            "nanoseconds": 141148100,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 2,
+            "warmup": false,
+            "nanoseconds": 141081000,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 3,
+            "warmup": false,
+            "nanoseconds": 139500500,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 4,
+            "warmup": false,
+            "nanoseconds": 138199000,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 5,
+            "warmup": false,
+            "nanoseconds": 137426600,
+            "stage": "sample_constructor"
+          },
+          {
+            "repetition": 6,
+            "warmup": false,
+            "nanoseconds": 144355400,
+            "stage": "sample_constructor"
+          }
+        ],
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "summary": {
+          "n": 7,
+          "median_ms": 141.081,
+          "iqr_ms": 3.6699,
+          "p95_ms": 144.21614
+        },
+        "all_66_features_match_frozen_ct": true
+      }
+    },
+    {
+      "environment": "baseline",
+      "kind": "rss",
+      "repetition": 0,
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "--worker",
+          "python_l2",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--request",
+          "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\rss-00-baseline\\worker.json"
+        ],
+        "launcher_pid": 14080,
+        "exit_code": 0,
+        "stdout_sha256": "b11b7d774cd3c737b40e6e5d5687fdc950af86f0e41a4a7d70fa3e812d9817db",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_l2",
+        "pid": 21480,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 21480,
+            "rss_bytes": 60362752,
+            "lifetime_peak_rss_bytes": 62402560,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 21480,
+            "rss_bytes": 62902272,
+            "lifetime_peak_rss_bytes": 62902272,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "image_constructed",
+            "pid": 21480,
+            "rss_bytes": 74547200,
+            "lifetime_peak_rss_bytes": 88031232,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "mask_constructed",
+            "pid": 21480,
+            "rss_bytes": 77885440,
+            "lifetime_peak_rss_bytes": 89149440,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "sample_constructed",
+            "pid": 21480,
+            "rss_bytes": 91414528,
+            "lifetime_peak_rss_bytes": 105103360,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "l2_complete_objects_retained",
+            "pid": 21480,
+            "rss_bytes": 90464256,
+            "lifetime_peak_rss_bytes": 113057792,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+        "native_path": "D:\\radiomics-sample-constructor\\baseline-env\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "retained_shallow_lists": {
+          "distinct_list_objects": 4,
+          "elements_per_list": [
+            257400,
+            257400,
+            257400,
+            257400
+          ],
+          "shallow_list_bytes": 9249888,
+          "excludes": "Boxed scalar objects, allocator overhead, temporary JSON and core arrays; only a retained lower bound."
+        }
+      },
+      "footer": {
+        "stage": "after_output_written",
+        "pid": 21480,
+        "rss_bytes": 90587136,
+        "lifetime_peak_rss_bytes": 113057792,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "actual_worker_pid": 21480,
+      "lifetime_peak_rss_bytes": 113057792
+    },
+    {
+      "environment": "candidate",
+      "kind": "rss",
+      "repetition": 0,
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "--worker",
+          "python_l2",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--request",
+          "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\rss-00-candidate\\worker.json"
+        ],
+        "launcher_pid": 17916,
+        "exit_code": 0,
+        "stdout_sha256": "2fcd72565e265d7f3b4f1f47ff5ffa73ba02edf08f552163eaf2465aadaf2561",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_l2",
+        "pid": 21936,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 21936,
+            "rss_bytes": 60432384,
+            "lifetime_peak_rss_bytes": 62472192,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 21936,
+            "rss_bytes": 62992384,
+            "lifetime_peak_rss_bytes": 62992384,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "image_constructed",
+            "pid": 21936,
+            "rss_bytes": 74530816,
+            "lifetime_peak_rss_bytes": 88014848,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "mask_constructed",
+            "pid": 21936,
+            "rss_bytes": 78667776,
+            "lifetime_peak_rss_bytes": 88473600,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "sample_constructed",
+            "pid": 21936,
+            "rss_bytes": 90689536,
+            "lifetime_peak_rss_bytes": 100704256,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "l2_complete_objects_retained",
+            "pid": 21936,
+            "rss_bytes": 91070464,
+            "lifetime_peak_rss_bytes": 113090560,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+        "native_path": "D:\\radiomics-sample-constructor\\candidate-env\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "retained_shallow_lists": {
+          "distinct_list_objects": 4,
+          "elements_per_list": [
+            257400,
+            257400,
+            257400,
+            257400
+          ],
+          "shallow_list_bytes": 9249888,
+          "excludes": "Boxed scalar objects, allocator overhead, temporary JSON and core arrays; only a retained lower bound."
+        }
+      },
+      "footer": {
+        "stage": "after_output_written",
+        "pid": 21936,
+        "rss_bytes": 91095040,
+        "lifetime_peak_rss_bytes": 113090560,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "actual_worker_pid": 21936,
+      "lifetime_peak_rss_bytes": 113090560
+    },
+    {
+      "environment": "candidate",
+      "kind": "rss",
+      "repetition": 1,
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "--worker",
+          "python_l2",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--request",
+          "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\rss-01-candidate\\worker.json"
+        ],
+        "launcher_pid": 19056,
+        "exit_code": 0,
+        "stdout_sha256": "5c5e08e302ed44197c60bc79b621a2e08ca0b0eb55e1d5d9e526ee7840e03279",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_l2",
+        "pid": 3652,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 3652,
+            "rss_bytes": 60186624,
+            "lifetime_peak_rss_bytes": 62226432,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 3652,
+            "rss_bytes": 62664704,
+            "lifetime_peak_rss_bytes": 62664704,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "image_constructed",
+            "pid": 3652,
+            "rss_bytes": 75464704,
+            "lifetime_peak_rss_bytes": 88948736,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "mask_constructed",
+            "pid": 3652,
+            "rss_bytes": 76693504,
+            "lifetime_peak_rss_bytes": 88948736,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "sample_constructed",
+            "pid": 3652,
+            "rss_bytes": 91230208,
+            "lifetime_peak_rss_bytes": 100315136,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "l2_complete_objects_retained",
+            "pid": 3652,
+            "rss_bytes": 90390528,
+            "lifetime_peak_rss_bytes": 113254400,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+        "native_path": "D:\\radiomics-sample-constructor\\candidate-env\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "retained_shallow_lists": {
+          "distinct_list_objects": 4,
+          "elements_per_list": [
+            257400,
+            257400,
+            257400,
+            257400
+          ],
+          "shallow_list_bytes": 9249888,
+          "excludes": "Boxed scalar objects, allocator overhead, temporary JSON and core arrays; only a retained lower bound."
+        }
+      },
+      "footer": {
+        "stage": "after_output_written",
+        "pid": 3652,
+        "rss_bytes": 90415104,
+        "lifetime_peak_rss_bytes": 113254400,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "actual_worker_pid": 3652,
+      "lifetime_peak_rss_bytes": 113254400
+    },
+    {
+      "environment": "baseline",
+      "kind": "rss",
+      "repetition": 1,
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "--worker",
+          "python_l2",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--request",
+          "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\rss-01-baseline\\worker.json"
+        ],
+        "launcher_pid": 23184,
+        "exit_code": 0,
+        "stdout_sha256": "0504cc2ea505833e221041b2203c1ceff6682ab8fbaa0a4e171e9151778e7ce3",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_l2",
+        "pid": 20036,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 20036,
+            "rss_bytes": 60379136,
+            "lifetime_peak_rss_bytes": 62418944,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 20036,
+            "rss_bytes": 62914560,
+            "lifetime_peak_rss_bytes": 62914560,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "image_constructed",
+            "pid": 20036,
+            "rss_bytes": 75911168,
+            "lifetime_peak_rss_bytes": 89395200,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "mask_constructed",
+            "pid": 20036,
+            "rss_bytes": 78053376,
+            "lifetime_peak_rss_bytes": 89395200,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "sample_constructed",
+            "pid": 20036,
+            "rss_bytes": 91504640,
+            "lifetime_peak_rss_bytes": 105291776,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "l2_complete_objects_retained",
+            "pid": 20036,
+            "rss_bytes": 90497024,
+            "lifetime_peak_rss_bytes": 113127424,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+        "native_path": "D:\\radiomics-sample-constructor\\baseline-env\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "retained_shallow_lists": {
+          "distinct_list_objects": 4,
+          "elements_per_list": [
+            257400,
+            257400,
+            257400,
+            257400
+          ],
+          "shallow_list_bytes": 9249888,
+          "excludes": "Boxed scalar objects, allocator overhead, temporary JSON and core arrays; only a retained lower bound."
+        }
+      },
+      "footer": {
+        "stage": "after_output_written",
+        "pid": 20036,
+        "rss_bytes": 90619904,
+        "lifetime_peak_rss_bytes": 113127424,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "actual_worker_pid": 20036,
+      "lifetime_peak_rss_bytes": 113127424
+    },
+    {
+      "environment": "baseline",
+      "kind": "rss",
+      "repetition": 2,
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "--worker",
+          "python_l2",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--request",
+          "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\rss-02-baseline\\worker.json"
+        ],
+        "launcher_pid": 8364,
+        "exit_code": 0,
+        "stdout_sha256": "39ea58183dd02f8ee997efd6653cb309b66bf6998f122df0fe31a077918392ac",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_l2",
+        "pid": 11656,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 11656,
+            "rss_bytes": 60178432,
+            "lifetime_peak_rss_bytes": 62218240,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 11656,
+            "rss_bytes": 62799872,
+            "lifetime_peak_rss_bytes": 62799872,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "image_constructed",
+            "pid": 11656,
+            "rss_bytes": 75407360,
+            "lifetime_peak_rss_bytes": 88891392,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "mask_constructed",
+            "pid": 11656,
+            "rss_bytes": 78753792,
+            "lifetime_peak_rss_bytes": 88891392,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "sample_constructed",
+            "pid": 11656,
+            "rss_bytes": 90734592,
+            "lifetime_peak_rss_bytes": 104595456,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "l2_complete_objects_retained",
+            "pid": 11656,
+            "rss_bytes": 90333184,
+            "lifetime_peak_rss_bytes": 112443392,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "D:\\radiomics-sample-constructor\\baseline-env\\Scripts\\python.exe",
+        "native_path": "D:\\radiomics-sample-constructor\\baseline-env\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "retained_shallow_lists": {
+          "distinct_list_objects": 4,
+          "elements_per_list": [
+            257400,
+            257400,
+            257400,
+            257400
+          ],
+          "shallow_list_bytes": 9249888,
+          "excludes": "Boxed scalar objects, allocator overhead, temporary JSON and core arrays; only a retained lower bound."
+        }
+      },
+      "footer": {
+        "stage": "after_output_written",
+        "pid": 11656,
+        "rss_bytes": 90456064,
+        "lifetime_peak_rss_bytes": 112443392,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "actual_worker_pid": 11656,
+      "lifetime_peak_rss_bytes": 112443392
+    },
+    {
+      "environment": "candidate",
+      "kind": "rss",
+      "repetition": 2,
+      "launch": {
+        "command": [
+          "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+          "D:\\OnekeyPlatfrom50\\radiomics\\tools\\profile_native_memory.py",
+          "--worker",
+          "python_l2",
+          "--fixtures",
+          "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+          "--request",
+          "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+          "--build-manifest",
+          "E:\\radiomics-build\\snapshot-native-v4\\build-manifest.json",
+          "--output",
+          "D:\\radiomics-sample-constructor\\comparison-v2\\rss-02-candidate\\worker.json"
+        ],
+        "launcher_pid": 10900,
+        "exit_code": 0,
+        "stdout_sha256": "ca70acd206314cd1c20e9779eae7a753a7a5e711c0b1321fbc8baf470ac72f63",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "status": "passed",
+      "result": {
+        "schema": "radiomics.memory-worker.v1",
+        "path": "python_l2",
+        "pid": 22464,
+        "snapshots": [
+          {
+            "stage": "common_python_imports_loaded",
+            "pid": 22464,
+            "rss_bytes": 60370944,
+            "lifetime_peak_rss_bytes": 62410752,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "cropped_arrays_loaded",
+            "pid": 22464,
+            "rss_bytes": 62930944,
+            "lifetime_peak_rss_bytes": 62930944,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "image_constructed",
+            "pid": 22464,
+            "rss_bytes": 74711040,
+            "lifetime_peak_rss_bytes": 88195072,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "mask_constructed",
+            "pid": 22464,
+            "rss_bytes": 77021184,
+            "lifetime_peak_rss_bytes": 88756224,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "sample_constructed",
+            "pid": 22464,
+            "rss_bytes": 90914816,
+            "lifetime_peak_rss_bytes": 100134912,
+            "source": "own GetProcessMemoryInfo"
+          },
+          {
+            "stage": "l2_complete_objects_retained",
+            "pid": 22464,
+            "rss_bytes": 90673152,
+            "lifetime_peak_rss_bytes": 112820224,
+            "source": "own GetProcessMemoryInfo"
+          }
+        ],
+        "python": "D:\\radiomics-sample-constructor\\candidate-env\\Scripts\\python.exe",
+        "native_path": "D:\\radiomics-sample-constructor\\candidate-env\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "native_sha256": "bda55de68f267fc3bcd710732f621659792741658b5900639c78141c5714cd7c",
+        "loaded_numeric_bytes": 2316600,
+        "full_source_nifti_loaded": false,
+        "all_66_features_match_frozen_ct": true,
+        "threadpools": [
+          {
+            "user_api": "blas",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "filepath": "E:\\radiomics-build\\native-env\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-caad452230ae4ddb57899b8b3a33c55c.dll",
+            "version": "0.3.27",
+            "threading_layer": "pthreads",
+            "architecture": "Haswell"
+          }
+        ],
+        "retained_shallow_lists": {
+          "distinct_list_objects": 4,
+          "elements_per_list": [
+            257400,
+            257400,
+            257400,
+            257400
+          ],
+          "shallow_list_bytes": 9249888,
+          "excludes": "Boxed scalar objects, allocator overhead, temporary JSON and core arrays; only a retained lower bound."
+        }
+      },
+      "footer": {
+        "stage": "after_output_written",
+        "pid": 22464,
+        "rss_bytes": 90697728,
+        "lifetime_peak_rss_bytes": 112820224,
+        "source": "own GetProcessMemoryInfo"
+      },
+      "actual_worker_pid": 22464,
+      "lifetime_peak_rss_bytes": 112820224
+    }
+  ],
+  "frozen_ct_reference_sha256": "8f08962ebc4a0eac4b283597960d0336ffed1157bdc928d2b9b3c3d14e8ee442",
+  "limitations": [
+    "No monkeypatches. Custom override guards therefore remain active as in production.",
+    "Complete public L2 is measured independently of prevalidated constructor-only stage; do not subtract medians.",
+    "RSS is actual-worker lifetime HWM, including common imports/cropped input setup; not exact resettable phase peak.",
+    "Both environments use Rust. This is not a new Rust-versus-PyRadiomics speed or memory comparison.",
+    "The original854 observations/targets are unchanged. No new production result is inferred from a prototype alone."
+  ]
+}
