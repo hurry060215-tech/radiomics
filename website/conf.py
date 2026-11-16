@@ -1,3 +1,5 @@
+import os
+
 project = 'ov-radiomics'
 author = 'radiomics contributors'
 extensions = ['myst_nb', 'sphinxcontrib.mermaid']
@@ -13,8 +15,13 @@ html_theme_options = {
     'show_toc_level': 2,
     'header_links_before_dropdown': 5,
     'navbar_end': ['theme-switcher', 'navbar-icon-links'],
+    'footer_end': ['build-revision'],
 }
-html_context = {'default_mode': 'light'}
+html_context = {
+    'default_mode': 'light',
+    'build_revision': os.environ.get('RADIOMICS_BUILD_REVISION', 'unversioned'),
+}
+templates_path = ['_templates']
 myst_heading_anchors = 3
 html_static_path = ['_static']
 html_css_files = ['custom.css']
