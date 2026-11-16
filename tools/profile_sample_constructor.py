@@ -24,6 +24,9 @@ PLAN = dict(schema='radiomics.constructor-diagnostic-plan.v1', cpu_warmups=1,cpu
 
 
 def installed_identity(wheel, build):
+    import numpy
+    import pandas
+    import threadpoolctl
     import ov_radiomics as rad
     from ov_radiomics._backend import resolve_backend
     native=resolve_backend('rust')
@@ -44,7 +47,9 @@ def installed_identity(wheel, build):
         raise ValueError('Core implementation differs from the supplied immutable build.')
     return dict(python=sys.executable,pid=os.getpid(),package_path=str(package),wheel=str(wheel),
         wheel_sha256=sha(wheel),installed_payload_sha256=actual,native_sha256=native_digest,
-        core_implementation_sha256=native.IMPLEMENTATION_SHA256)
+        core_implementation_sha256=native.IMPLEMENTATION_SHA256,
+        dependencies={name:dict(version=module.__version__,path=module.__file__,sha256=sha(module.__file__))
+            for name,module in [('numpy',numpy),('pandas',pandas),('threadpoolctl',threadpoolctl)]})
 
 
 def worker(args):
@@ -141,6 +146,10 @@ def coordinator(args):
         identities[name]=json.loads(file.read_text())
     if identities['baseline']['native_sha256']!=identities['candidate']['native_sha256'] or identities['baseline']['core_implementation_sha256']!=identities['candidate']['core_implementation_sha256']:
         raise ValueError('Before/after native binaries/core must match exactly.')
+    dependency_ids=[{name:(record['version'],record['sha256']) for name,record in identity['dependencies'].items()}
+                    for identity in identities.values()]
+    if dependency_ids[0]!=dependency_ids[1]:
+        raise ValueError('Baseline/candidate numerical or thread-control dependencies differ.')
     # FullL2 has its own process, without extra constructor-only objects retained.
     jobs=[('baseline','full_l2'),('candidate','full_l2'),
           ('candidate','sample_constructor'),('baseline','sample_constructor')]
@@ -213,8 +222,9 @@ def main():
     else:
         if not all((args.baseline_python,args.candidate_python,args.baseline_wheel,args.candidate_wheel,args.request)):
             parser.error('Coordinator requires both Python/wheel pairs and request path.')
-        coordinator(args)
+        result=coordinator(args)
         print('Constructor diagnostic:',args.output/'report.json')
+        return 0 if result['status']=='passed' else 1
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':raise SystemExit(main())
