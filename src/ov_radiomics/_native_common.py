@@ -56,6 +56,30 @@ def request(operation, **values):
     return json.loads(native.request_json(encode_json(envelope)))
 
 
+def array_features_typed_or_json(image_buffer, mask_buffer, *, image_geometry,
+        mask_geometry, config, roi_label=1, intensity_mask=None, families=None):
+    """Private typed dispatch with an explicit, fully timed legacy fallback.
+
+    No dtype or layout repair is performed before the Rust rejection. Conversion
+    to the JSON contract happens only inside the fallback and is part of its cost.
+    """
+    native = resolve_backend('rust')
+    parameters = dict(config=config, roi_label=roi_label,
+        intensity_mask=intensity_mask, families=families)
+    if hasattr(native, 'array_features_typed'):
+        try:
+            return json.loads(native.array_features_typed(image_buffer, mask_buffer,
+                encode_json(dict(image_geometry=image_geometry,
+                    mask_geometry=mask_geometry, **parameters))))
+        except (TypeError, ValueError):
+            pass
+    return request('array_features',
+        image=dict(geometry=image_geometry,
+            values=image_buffer.ravel(order='C').tolist()),
+        morphology_mask=dict(geometry=mask_geometry,
+            labels=mask_buffer.ravel(order='C').tolist()), **parameters)
+
+
 def numeric_buffer(values):
     raw = np.asarray(values)
     if np.iscomplexobj(raw):

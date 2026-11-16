@@ -4,7 +4,8 @@
 //! discretized gray labels and the distinction between direction averaging and
 //! count-matrix merging. No Python code or external extraction engine is called.
 use crate::contracts::{
-    Discretization, ExtractionConfig, ImageVolume, MaskVolume, SpatialUnit, TextureAggregation,
+    Discretization, ExtractionConfig, Geometry, ImageVolume, MaskVolume, SpatialUnit,
+    TextureAggregation,
 };
 use crate::errors::{ErrorCode, RadResult, RadiomicsError};
 use serde::{Deserialize, Serialize};
@@ -131,8 +132,27 @@ pub struct DiscretizedImage {
     pub gray_levels: Vec<u32>,
 }
 
-fn validate_pair(image: &ImageVolume, mask: &MaskVolume, roi_label: u32) -> RadResult<()> {
-    image.validate()?;
+/// Read-only image view used by owned and shared-buffer boundaries alike.
+#[derive(Clone, Copy)]
+pub struct ImageView<'a> {
+    pub geometry: &'a Geometry,
+    pub values: &'a [f64],
+}
+
+impl<'a> From<&'a ImageVolume> for ImageView<'a> {
+    fn from(image: &'a ImageVolume) -> Self {
+        Self {
+            geometry: &image.geometry,
+            values: &image.values,
+        }
+    }
+}
+
+fn validate_pair(image: ImageView<'_>, mask: &MaskVolume, roi_label: u32) -> RadResult<()> {
+    image.geometry.validate()?;
+    if image.values.len() != image.geometry.voxel_count()? {
+        return Err(invalid("Image buffer length differs from geometry."));
+    }
     mask.validate()?;
     image.geometry.aligned_with(&mask.geometry)?;
     if !mask.labels.contains(&roi_label) {
@@ -261,6 +281,15 @@ impl BinEdges {
 /// zero; fixed-count constant inputs follow NumPy histogram's expanded range.
 pub fn discretize(
     image: &ImageVolume,
+    mask: &MaskVolume,
+    roi_label: u32,
+    method: &Discretization,
+) -> RadResult<DiscretizedImage> {
+    discretize_view(image.into(), mask, roi_label, method)
+}
+
+fn discretize_view(
+    image: ImageView<'_>,
     mask: &MaskVolume,
     roi_label: u32,
     method: &Discretization,
@@ -997,6 +1026,25 @@ pub fn extract_families(
     config: &ExtractionConfig,
     families: &[FeatureFamily],
 ) -> RadResult<BTreeMap<String, f64>> {
+    extract_families_view(
+        image.into(),
+        morphology_mask,
+        intensity_mask,
+        roi_label,
+        config,
+        families,
+    )
+}
+
+/// Extract directly from a borrowed image buffer; no image clone or JSON conversion.
+pub fn extract_families_view(
+    image: ImageView<'_>,
+    morphology_mask: &MaskVolume,
+    intensity_mask: Option<&MaskVolume>,
+    roi_label: u32,
+    config: &ExtractionConfig,
+    families: &[FeatureFamily],
+) -> RadResult<BTreeMap<String, f64>> {
     config.validate()?;
     validate_families(families)?;
     let selected: BTreeSet<_> = families.iter().copied().collect();
@@ -1020,7 +1068,7 @@ pub fn extract_families(
     if selected.len() == 1 && selected.contains(&FeatureFamily::ShapeBasic) {
         return Ok(output);
     }
-    let discrete = discretize(image, mask, roi_label, &config.discretization)?;
+    let discrete = discretize_view(image, mask, roi_label, &config.discretization)?;
     let values: Vec<_> = image
         .values
         .iter()
