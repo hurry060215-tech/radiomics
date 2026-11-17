@@ -1,6 +1,6 @@
 # Installation
 
-[简体中文](../installation.md) · [Ecosystem and responsibilities](ecosystem.md)
+[English home](index.md) · [Quickstart](quickstart.md) · [简体中文](../installation.md)
 
 The distribution is **ov-radiomics**; import it as **ov_radiomics**. The current
 package version is 0.1.0. A repository build or Actions artifact is a candidate
@@ -91,8 +91,5 @@ Read the [support matrix](../reference/support-matrix.md) before treating a
 native subset, optional backend or historical validation result as broader
 support. Read the [data provenance](../datasets.md) before using public examples.
 
-```{toctree}
-:hidden:
-
-ecosystem
-```
+Registry uploads require a separate approved workflow. See the
+[release procedure](../reference/release.md).
