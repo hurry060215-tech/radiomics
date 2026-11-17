@@ -8,10 +8,10 @@
     "cpu": "Intel(R) Core(TM) Ultra 9 285K",
     "ram_bytes": 33663320064
   },
-  "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+  "python": "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
   "python_version": "3.9.21",
-  "package_source": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\__init__.py",
-  "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+  "package_source": "$WORKDIR/ml-path-native-v2/lib/site-packages/ov_radiomics/__init__.py",
+  "native_path": "$WORKDIR/ml-path-native-v2/lib/site-packages/ov_radiomics/_native.pyd",
   "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
   "native_build_manifest_sha256": "8828d0e7338ec5927f8a0505fed71e78b476d0cfd5e0ac23cec7195b8527ee92",
   "native_build": {
@@ -43,7 +43,7 @@
         "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "$WORKDIR/radiomics\\tools\\package_native.py",
         "--output",
-        "E:\\radiomics-build\\snapshot-native-v2\\package-assets"
+        "$WORKDIR/snapshot-native-v2/package-assets"
       ],
       [
         "cargo",
@@ -61,17 +61,17 @@
         "--release",
         "--locked",
         "--out",
-        "E:\\radiomics-build\\snapshot-native-v2\\wheels"
+        "$WORKDIR/snapshot-native-v2/wheels"
       ]
     ],
     "python_version": "3.9.21",
     "maturin_version": "1.16.0",
     "wheel": {
-      "path": "E:\\radiomics-build\\snapshot-native-v2\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+      "path": "$WORKDIR/snapshot-native-v2/wheels/ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
       "sha256": "f2c8e0cbf55bfdf56ee4efb7b4d664112028618cb6bf03e0761170730214c160"
     },
     "cli": {
-      "path": "E:\\radiomics-build\\snapshot-native-v2\\cli\\radiomics.exe",
+      "path": "$WORKDIR/snapshot-native-v2/cli/radiomics.exe",
       "sha256": "616342692392c95f92b1ecdb22cae5a3c071d095e74c2ec23e2fa49c08be010b"
     },
     "wheel_files_sha256": {
@@ -141,7 +141,7 @@
       "internal_api": "openblas",
       "num_threads": 1,
       "prefix": "libopenblas",
-      "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+      "filepath": "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
       "version": "0.3.20",
       "threading_layer": "pthreads",
       "architecture": "Prescott"
@@ -1843,42 +1843,42 @@
   "rust_probe_same_nifti_crop_values_labels_affine_exact": true,
   "evidence_files": {
     "report.json": {
-      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\report.json",
+      "path": "$WORKDIR/baseline-v3/report.json",
       "sha256": "3eb4ded0320ed71dc9ad4388e1822a9acebb44f497fd7a72142e610d7a1ca12e"
     },
     "rust-probe.json": {
-      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\rust-probe.json",
+      "path": "$WORKDIR/baseline-v3/rust-probe.json",
       "sha256": "d86f36ec4c18a3898dd0b98a1d8e0d87f711d176d55918bbdcfe91f2edd3756c"
     },
     "raw-python.jsonl": {
-      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\raw-python.jsonl",
+      "path": "$WORKDIR/baseline-v3/raw-python.jsonl",
       "sha256": "583c9047cd3b56db02c7e802094d2e2c86c8e5d74fb952310e16a13ada037108"
     },
     "request-traces.jsonl": {
-      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\request-traces.jsonl",
+      "path": "$WORKDIR/baseline-v3/request-traces.jsonl",
       "sha256": "6dac6fed9059cb5f430e8e5a69d7c97856908103a35feb69797e3f95fed91f5d"
     },
     "rust-probe.raw.jsonl": {
-      "path": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\rust-probe.raw.jsonl",
+      "path": "$WORKDIR/baseline-v3/rust-probe.raw.jsonl",
       "sha256": "e9dd9a9d59a2a53d4ad15cf4b41c5b50f2e7c03e9e9d1a80e630ad286610813e"
     }
   },
   "attempts": [
     {
-      "directory": "D:/radiomics-native-boundary-diagnosis/baseline-v1",
+      "directory": "$WORKDIR/baseline-v1",
       "status": "preflight_failure",
       "measured_observations": 0,
       "reason": "Diagnostic adapter initially compared55 statistical/texture fields without the separately frozen11 basic_shape fields; fixed by merging the two existing reference sections, without modifying any reference."
     },
     {
-      "directory": "D:/radiomics-native-boundary-diagnosis/baseline-v2",
+      "directory": "$WORKDIR/baseline-v2",
       "status": "rejected_identity_and_possible_host_interference",
       "python_observations": 98,
       "rust_observations": 63,
       "reason": "CRLF Cargo.lock changed implementation digest; exact LF normalization equals the frozen dependency lock. Concurrent documentation/browser activity was subsequently reported. Original raw files retained and not used for the primary conclusion."
     },
     {
-      "directory": "D:\\radiomics-native-boundary-diagnosis\\baseline-v3",
+      "directory": "$WORKDIR/baseline-v3",
       "status": "accepted_diagnostic_not_official_benchmark",
       "python_observations": 98,
       "rust_observations": 63,

@@ -1,11 +1,11 @@
 {
   "environments": {
     "python": {
-      "executable": "E:\\radiomics-build\\ml-path-reference-v2\\Scripts\\python.exe",
+      "executable": "$WORKDIR/ml-path-reference-v2/Scripts/python.exe",
       "libraries_sha256": {
-        "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-        "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\scipy.libs\\libopenblas_v0.3.27--3aa239bc726cfb0bd8e5330d8d4c15c6.dll": "2ee0262b429173f6fa3569d7b242e696736996210b2152c73fbce0b5d61dcfc1",
-        "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\sklearn\\.libs\\vcomp140.dll": "f33d7393bd27de380d29a3fe55b05b9ebada56355dbcd939d9deb477305387ca"
+        "$WORKDIR/ml-path-reference-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+        "$WORKDIR/ml-path-reference-v2/Lib/site-packages/scipy.libs/libopenblas_v0.3.27--3aa239bc726cfb0bd8e5330d8d4c15c6.dll": "2ee0262b429173f6fa3569d7b242e696736996210b2152c73fbce0b5d61dcfc1",
+        "$WORKDIR/ml-path-reference-v2/Lib/site-packages/sklearn/.libs/vcomp140.dll": "f33d7393bd27de380d29a3fe55b05b9ebada56355dbcd939d9deb477305387ca"
       },
       "modules": {
         "PIL": {
@@ -114,7 +114,7 @@
             "features.py": "503e22441d87b38991d2875538b27568bcffe586c6b0190bd35f913b7a32ac39",
             "report.py": "ea6ecd3afd5adb8e7bed9889a315fcf62a7925e3a07f63b517de5febed4ae5a3"
           },
-          "path": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\PIL",
+          "path": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/PIL",
           "single_file": null
         },
         "joblib": {
@@ -193,7 +193,7 @@
             "test/testutils.py": "e9aef35499b5920e8cfade021fdb73f00eab31d0ba658f6c53ac0107c0bb673a",
             "testing.py": "ea2d9cb6ca24557a212c185cd5d5c865cd938900d1881fa09462856df64322a1"
           },
-          "path": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\joblib",
+          "path": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/joblib",
           "single_file": null
         },
         "numpy": {
@@ -693,7 +693,7 @@
             "typing/tests/test_typing.py": "4cba8dcbe4ad459746037fc4516fc2bf3240a90b4c4e9c69349e225aab6fbe2b",
             "version.py": "3e1d08621f44c5f14b6756b3842c243b9a5019f364ff9202a4b690e0c7e5def5"
           },
-          "path": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\numpy",
+          "path": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/numpy",
           "single_file": null
         },
         "pandas": {
@@ -2009,7 +2009,7 @@
             "util/testing.py": "90ae4cad2a133170d2f5cbdf3f4096a73afc2f591c3a783bf0266d41bb2d2f95",
             "util/version/__init__.py": "a2daa82881295fcaf2a544353ea616d032908cf01cca486f70bc1914f1ea0bd5"
           },
-          "path": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\pandas",
+          "path": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/pandas",
           "single_file": null
         },
         "scipy": {
@@ -2980,7 +2980,7 @@
             "stats/tests/test_variation.py": "a42cb7844091a54a7fcd8b95e6820d48b40f993f65419726ac8b0baf4a3fd4c5",
             "version.py": "50490805208be2a461ba89e5182a543e274afa706c6c65b37412841db8ad19ef"
           },
-          "path": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\scipy",
+          "path": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/scipy",
           "single_file": null
         },
         "sklearn": {
@@ -3573,7 +3573,7 @@
             "utils/tests/test_weight_vector.py": "ba2d9fe195f39accf52833756693d51a7d1db3c4f49cd56c43688f4ca2843bd2",
             "utils/validation.py": "e04f83266531fe91784994082cb8753c4a6f2e94e64b5471bcc303bbe6261d9e"
           },
-          "path": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\sklearn",
+          "path": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/sklearn",
           "single_file": null
         },
         "statsmodels": {
@@ -4523,21 +4523,21 @@
             "tsa/vector_ar/vecm.py": "89011948e5730e9ccc48d255fb257861376d8f9592e38539682dd737e3561249",
             "tsa/x13.py": "4e659ed8823a12c7eeccb6d98df6c2753bd45018804f92e70c7ebaa1c9ec8f26"
           },
-          "path": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\statsmodels",
+          "path": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/statsmodels",
           "single_file": null
         },
         "threadpoolctl": {
           "files_sha256": {
             "threadpoolctl.py": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
           },
-          "path": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages",
+          "path": "$WORKDIR/ml-path-reference-v2/Lib/site-packages",
           "single_file": "threadpoolctl.py"
         }
       },
       "pools": [
         {
           "architecture": "Prescott",
-          "filepath": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+          "filepath": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
           "internal_api": "openblas",
           "num_threads": 1,
           "prefix": "libopenblas",
@@ -4546,7 +4546,7 @@
           "version": "0.3.20"
         },
         {
-          "filepath": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\sklearn\\.libs\\vcomp140.dll",
+          "filepath": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/sklearn/.libs/vcomp140.dll",
           "internal_api": "openmp",
           "num_threads": 1,
           "prefix": "vcomp",
@@ -4555,7 +4555,7 @@
         },
         {
           "architecture": "Haswell",
-          "filepath": "E:\\radiomics-build\\ml-path-reference-v2\\Lib\\site-packages\\scipy.libs\\libopenblas_v0.3.27--3aa239bc726cfb0bd8e5330d8d4c15c6.dll",
+          "filepath": "$WORKDIR/ml-path-reference-v2/Lib/site-packages/scipy.libs/libopenblas_v0.3.27--3aa239bc726cfb0bd8e5330d8d4c15c6.dll",
           "internal_api": "openblas",
           "num_threads": 1,
           "prefix": "libopenblas",
@@ -4578,9 +4578,9 @@
       }
     },
     "rust": {
-      "executable": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+      "executable": "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
       "libraries_sha256": {
-        "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c"
+        "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c"
       },
       "modules": {
         "numpy": {
@@ -5080,7 +5080,7 @@
             "typing/tests/test_typing.py": "4cba8dcbe4ad459746037fc4516fc2bf3240a90b4c4e9c69349e225aab6fbe2b",
             "version.py": "3e1d08621f44c5f14b6756b3842c243b9a5019f364ff9202a4b690e0c7e5def5"
           },
-          "path": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy",
+          "path": "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy",
           "single_file": null
         },
         "ov_radiomics": {
@@ -5111,7 +5111,7 @@
             "selection.py": "4f102918f2c4ca90d92a1a945b28191fc43163ec3a90f47ca740ffb15ee643ea",
             "split.py": "f0090ab15a820ccc6e0009b0c9b39e013fc44203b07d2f9cac3684860475c249"
           },
-          "path": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\ov_radiomics",
+          "path": "$WORKDIR/ml-path-native-v2/Lib/site-packages/ov_radiomics",
           "single_file": null
         },
         "pandas": {
@@ -6427,21 +6427,21 @@
             "util/testing.py": "90ae4cad2a133170d2f5cbdf3f4096a73afc2f591c3a783bf0266d41bb2d2f95",
             "util/version/__init__.py": "a2daa82881295fcaf2a544353ea616d032908cf01cca486f70bc1914f1ea0bd5"
           },
-          "path": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\pandas",
+          "path": "$WORKDIR/ml-path-native-v2/Lib/site-packages/pandas",
           "single_file": null
         },
         "threadpoolctl": {
           "files_sha256": {
             "threadpoolctl.py": "12fb9526b6a74d2e686b7ec148dc165c3587999b14fa86984aa180e10802400b"
           },
-          "path": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages",
+          "path": "$WORKDIR/ml-path-native-v2/Lib/site-packages",
           "single_file": "threadpoolctl.py"
         }
       },
       "pools": [
         {
           "architecture": "Prescott",
-          "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+          "filepath": "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
           "internal_api": "openblas",
           "num_threads": 1,
           "prefix": "libopenblas",
@@ -6466,7 +6466,7 @@
         "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "$WORKDIR/radiomics\\tools\\package_native.py",
         "--output",
-        "E:\\radiomics-build\\snapshot-native-v2\\package-assets"
+        "$WORKDIR/snapshot-native-v2/package-assets"
       ],
       [
         "cargo",
@@ -6484,12 +6484,12 @@
         "--release",
         "--locked",
         "--out",
-        "E:\\radiomics-build\\snapshot-native-v2\\wheels"
+        "$WORKDIR/snapshot-native-v2/wheels"
       ]
     ],
     "cargo_lock_sha256": "de33d6dfd0542add75ca1ba0076b9d373a4e8f8af0aa93eb4c49fa35b6d552bb",
     "cli": {
-      "path": "E:\\radiomics-build\\snapshot-native-v2\\cli\\radiomics.exe",
+      "path": "$WORKDIR/snapshot-native-v2/cli/radiomics.exe",
       "sha256": "616342692392c95f92b1ecdb22cae5a3c071d095e74c2ec23e2fa49c08be010b"
     },
     "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
@@ -6520,7 +6520,7 @@
     "source_tree_clean": true,
     "version_changed": false,
     "wheel": {
-      "path": "E:\\radiomics-build\\snapshot-native-v2\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+      "path": "$WORKDIR/snapshot-native-v2/wheels/ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
       "sha256": "f2c8e0cbf55bfdf56ee4efb7b4d664112028618cb6bf03e0761170730214c160"
     },
     "wheel_files_sha256": {

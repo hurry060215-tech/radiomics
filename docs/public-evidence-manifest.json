@@ -10,30 +10,36 @@
       "original_sha256": "a66bfb6244f9c18b046ca7083da65a056141b1e48339907012a05b27869c0cef",
       "original_bytes": 5529,
       "public_path": "benchmarks/results/deployment-native-45140bff/native-build-manifest-redacted.json",
-      "public_sha256": "c34975092b7a735bbd1b2e8daaf8e1dcbc16dc1c6427d6271459b57c085becf6",
-      "public_bytes": 5490,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "a66bfb6244f9c18b046ca7083da65a056141b1e48339907012a05b27869c0cef"
+      "public_sha256": "a07d9e479a3f5c0e9327267548f2abd0d55db44cd66c348e198c5ffdd489310a",
+      "public_bytes": 5436,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "a66bfb6244f9c18b046ca7083da65a056141b1e48339907012a05b27869c0cef",
+      "values_unchanged": true,
+      "observation_sha256": "4ac028c6c302edaf06f5e952e9240aab1fb606e35a75b3e2b740f7b24dbaaf89"
     },
     {
       "original_source_path": "benchmarks/results/deployment-native-45140bff/report.json",
       "original_sha256": "95960ebdfef7f12d9f7845bebb67281d510ddcdb1c3bef447d9f67c216725028",
       "original_bytes": 29488,
       "public_path": "benchmarks/results/deployment-native-45140bff/report-redacted.json",
-      "public_sha256": "a473452b589332c5d30ead9d6ada434c8c9a77ac5f0743f9bc1b10eb6365684c",
-      "public_bytes": 29438,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "95960ebdfef7f12d9f7845bebb67281d510ddcdb1c3bef447d9f67c216725028"
+      "public_sha256": "48094b32a6b8bdda84a308f0eca8043469d4db29e02d751ec9b5bb6d8f1a25a3",
+      "public_bytes": 29015,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "95960ebdfef7f12d9f7845bebb67281d510ddcdb1c3bef447d9f67c216725028",
+      "values_unchanged": true,
+      "observation_sha256": "6049073573d55eaf9935ffeaaed146bb7a2244b045f6e572a09b7ccf20fe7997"
     },
     {
       "original_source_path": "benchmarks/results/learning-pathology-native-48ecb310/binding.json",
       "original_sha256": "13254953c839f4aa51687a7acd2dfdd6b2db91981577803444a23105b47801a2",
       "original_bytes": 731828,
       "public_path": "benchmarks/results/learning-pathology-native-48ecb310/binding-redacted.json",
-      "public_sha256": "0c5e9e684e52eafae1d007e2748957a754ad6e872d7004b70a15db3f8da5bdf0",
-      "public_bytes": 731789,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "13254953c839f4aa51687a7acd2dfdd6b2db91981577803444a23105b47801a2"
+      "public_sha256": "f470bd2855d8dd194514644ac34d4e476a3b29ee17e3a50409e909211aa5cfcc",
+      "public_bytes": 731395,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "13254953c839f4aa51687a7acd2dfdd6b2db91981577803444a23105b47801a2",
+      "values_unchanged": true,
+      "observation_sha256": "d2630b051f654065e93bd141532992312f6cd244f0ba2054b29e051a92922412"
     },
     {
       "original_source_path": "benchmarks/results/learning-pathology-native-48ecb310/provenance.json",
@@ -42,128 +48,154 @@
       "public_path": "benchmarks/results/learning-pathology-native-48ecb310/provenance-redacted.json",
       "public_sha256": "89a19c4106ae7b9d505f5eb4c8c47be4b755009d86bd1a6e2de04ada1a3655c8",
       "public_bytes": 3101,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "81dac8dc9240fc1f41b4bf6eb8338f006ecf0a774fbdfd74349475dd9b145568"
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "81dac8dc9240fc1f41b4bf6eb8338f006ecf0a774fbdfd74349475dd9b145568",
+      "values_unchanged": true,
+      "observation_sha256": "9856e70ca67a6d5d929ec9774b8a50253921e3a7ae154442b19eedc9a0771c48"
     },
     {
       "original_source_path": "benchmarks/results/radiomics-native-48ecb310/input-manifest.json",
       "original_sha256": "4f0b5b555b97b34342095fd984cf92d1ba632baed18eea13ba21db2161138e9b",
       "original_bytes": 35416,
       "public_path": "benchmarks/results/radiomics-native-48ecb310/input-manifest-redacted.json",
-      "public_sha256": "eeed3f1d3a4c3ec4a6e2b8d1d40c813477ba37155f4cb48745455d54ab453bed",
-      "public_bytes": 35403,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "4f0b5b555b97b34342095fd984cf92d1ba632baed18eea13ba21db2161138e9b"
+      "public_sha256": "332aac517cd7483e8f4775d9f34d8781b54b793d7b1ba5001430b3acb1fce7b5",
+      "public_bytes": 35385,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "4f0b5b555b97b34342095fd984cf92d1ba632baed18eea13ba21db2161138e9b",
+      "values_unchanged": true,
+      "observation_sha256": "063e5cbe65b79afd785376e80832e7443cd2dd681200741990e63221a352a7a7"
     },
     {
       "original_source_path": "benchmarks/results/radiomics-native-48ecb310/provenance.json",
       "original_sha256": "bc2a07ff6f2eb5b236dc23b0349ce42619d8d7ea8ab311c928154298fa53b4cc",
       "original_bytes": 25241,
       "public_path": "benchmarks/results/radiomics-native-48ecb310/provenance-redacted.json",
-      "public_sha256": "df7eed9b433956b5ab5710dd6ae0c4c3f4dd6cb5b77724a68ce351464cad77ab",
-      "public_bytes": 25110,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "bc2a07ff6f2eb5b236dc23b0349ce42619d8d7ea8ab311c928154298fa53b4cc"
+      "public_sha256": "281ad22c82d58ce42122a81939c90f5e190ec9a6c36758c290c629888fcddc27",
+      "public_bytes": 24783,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "bc2a07ff6f2eb5b236dc23b0349ce42619d8d7ea8ab311c928154298fa53b4cc",
+      "values_unchanged": true,
+      "observation_sha256": "0e5660b31f931601837cb1387e6cc80fc627c671d7b0f99da1d8ed23e03d3d10"
     },
     {
       "original_source_path": "benchmarks/results/radiomics-native-48ecb310/report.json",
       "original_sha256": "04b8fe3d47e266c4bc3b6bafa49a8104e7b54b3793664ff450153db50e9ce14e",
       "original_bytes": 459246,
       "public_path": "benchmarks/results/radiomics-native-48ecb310/report-redacted.json",
-      "public_sha256": "e125523b1cc84d50a5ed9b3ab18d362ab3524a9bcb34613ac7289fdd6be8dbad",
-      "public_bytes": 459207,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "04b8fe3d47e266c4bc3b6bafa49a8104e7b54b3793664ff450153db50e9ce14e"
+      "public_sha256": "fb6d4c5c1e876f770df82a08cf3b55b8e94b482b66864f73cc1936b5020ef712",
+      "public_bytes": 457111,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "04b8fe3d47e266c4bc3b6bafa49a8104e7b54b3793664ff450153db50e9ce14e",
+      "values_unchanged": true,
+      "observation_sha256": "ead21129693354f61bcdee679d4b3e987d9935bd603dd369a1d122fdf1d8fcb4"
     },
     {
       "original_source_path": "docs/native-memory-diagnosis-data.json",
       "original_sha256": "4adb9c9d5f345be62e98e7ea9e13a8585e1527e224bbb6e81e5815a176718a46",
       "original_bytes": 32339,
       "public_path": "docs/native-memory-diagnosis-data-redacted.json",
-      "public_sha256": "b9d74c4ad165a75061899c06210308d79fae792ff26da6fec8cf336622d0b086",
-      "public_bytes": 32222,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "4adb9c9d5f345be62e98e7ea9e13a8585e1527e224bbb6e81e5815a176718a46"
+      "public_sha256": "a420216a2145d8306261e72c23c335d4ea153c500e970e0dadcef5cd00d76f84",
+      "public_bytes": 31059,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "4adb9c9d5f345be62e98e7ea9e13a8585e1527e224bbb6e81e5815a176718a46",
+      "values_unchanged": true,
+      "observation_sha256": "09e7ff92849de5cb15d1a0548e0e07227bceff06dd8f9afc6c4fbe5ad43f3e22"
     },
     {
       "original_source_path": "docs/native-performance-diagnosis-data.json",
       "original_sha256": "2f5fb5d42ea0b0d9c75aab3d6945a6ae4c9c0dcc4321fda8bc549f800d758bd3",
       "original_bytes": 52730,
       "public_path": "docs/native-performance-diagnosis-data-redacted.json",
-      "public_sha256": "2585ea1e1d375b16b513904d66df39ae2806c63936e882e284b9eb84b7944f07",
-      "public_bytes": 52691,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "2f5fb5d42ea0b0d9c75aab3d6945a6ae4c9c0dcc4321fda8bc549f800d758bd3"
+      "public_sha256": "3047690ad8530939159715217fc4f729edbe224baf7f02bbc49bfedddb00698b",
+      "public_bytes": 52317,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "2f5fb5d42ea0b0d9c75aab3d6945a6ae4c9c0dcc4321fda8bc549f800d758bd3",
+      "values_unchanged": true,
+      "observation_sha256": "b27433963d3a035f1553d146735646bc0224a50264642e19d0a281004373f895"
     },
     {
       "original_source_path": "docs/sample-constructor-optimization-data.json",
       "original_sha256": "21b186bfea6aa316b3394b2cb4d032d90a0e77ae4828587f91e325d65942e958",
       "original_bytes": 65058,
       "public_path": "docs/sample-constructor-optimization-data-redacted.json",
-      "public_sha256": "75168cf7d610b5793bf819ce649e8d1fd537add36ad8648037a9a673119d4c32",
-      "public_bytes": 64928,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "21b186bfea6aa316b3394b2cb4d032d90a0e77ae4828587f91e325d65942e958"
+      "public_sha256": "90759fbbef7fd5103b1255168605743f590809c16e773daf6264286ccadf08d7",
+      "public_bytes": 62529,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "21b186bfea6aa316b3394b2cb4d032d90a0e77ae4828587f91e325d65942e958",
+      "values_unchanged": true,
+      "observation_sha256": "6f9115c3c04b008ad579bc72a75f0d4f649a50ab790e3715e1440094ec2d75f7"
     },
     {
       "original_source_path": "examples/real/validation.json",
       "original_sha256": "5cedde5e5c840f8b11217a2095e32132158c5917391c6ac02c4e9975e2ec2ec7",
       "original_bytes": 3924,
       "public_path": "examples/real/validation-redacted.json",
-      "public_sha256": "9a1f3ad127e105da6f9826d6e460e56c0011631edad8610dfff5e8713282027d",
-      "public_bytes": 3852,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "bbdf0a64a440aca8e109b937c806303f841b31d265a1bd0ce84e07649dc291a1"
+      "public_sha256": "bdfe38503e1a32c06fb03107103caf51ee4c5d9533fc01290b93fef43e275341",
+      "public_bytes": 3758,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "bbdf0a64a440aca8e109b937c806303f841b31d265a1bd0ce84e07649dc291a1",
+      "values_unchanged": true,
+      "observation_sha256": "89c86a7155f92ed324bcf826436eba4458dd839cad3b5eca4fd38a0fda73cab3"
     },
     {
       "original_source_path": "website/public-ct-tutorial-execution.json",
       "original_sha256": "29de7e7a9dc49c7c0104f14bbb739f2d82f37aa5e63d93023e69799d119a7300",
       "original_bytes": 7635,
       "public_path": "website/public-ct-tutorial-execution-redacted.json",
-      "public_sha256": "d44b9d0d2ba9707c36a39c468b2d5ce9180372ddbe3250a8fe0ecde15b549528",
-      "public_bytes": 7579,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "29de7e7a9dc49c7c0104f14bbb739f2d82f37aa5e63d93023e69799d119a7300"
+      "public_sha256": "c1fe0f85494ae4aa1e6b49205e8e19b74a0eca4ac646d989d07465e6492505c9",
+      "public_bytes": 7459,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "29de7e7a9dc49c7c0104f14bbb739f2d82f37aa5e63d93023e69799d119a7300",
+      "values_unchanged": true,
+      "observation_sha256": "df63fb01e828ebe8a28323a3f395091f9635a93db6bfe3b8a16a14ad1d2b21db"
     },
     {
       "original_source_path": "website/public-tabular-independent-execution.json",
       "original_sha256": "c32cfc73190666552ff0eaad6183173db64f8dc6f6aa2e8fa60da29da306ed11",
       "original_bytes": 7257,
       "public_path": "website/public-tabular-independent-execution-redacted.json",
-      "public_sha256": "dca1275b7f933393aa27e23256500f43f5042ffbf34c58dae8f715c52ed24b7d",
-      "public_bytes": 7214,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "c32cfc73190666552ff0eaad6183173db64f8dc6f6aa2e8fa60da29da306ed11"
+      "public_sha256": "75b32c59a8236189d07b8aa466915df08a6ac52f71fd7a6a7580432ce7f7679e",
+      "public_bytes": 7140,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "c32cfc73190666552ff0eaad6183173db64f8dc6f6aa2e8fa60da29da306ed11",
+      "values_unchanged": true,
+      "observation_sha256": "521116b376bfa47207c87b8204348b67173e7f33cc29e61167127f7241d75711"
     },
     {
       "original_source_path": "website/public-tabular-tutorial-execution.json",
       "original_sha256": "0bfedc27d14e03c015001ac211c958352c17c03a12b0b744fa6f6fc3a555bb6f",
       "original_bytes": 7404,
       "public_path": "website/public-tabular-tutorial-execution-redacted.json",
-      "public_sha256": "a664b97b73066d41cde52b2094decf68c3ed49791470c9f4cb4d9b241eed0504",
-      "public_bytes": 7374,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "0bfedc27d14e03c015001ac211c958352c17c03a12b0b744fa6f6fc3a555bb6f"
+      "public_sha256": "279cd1e4b009f25284adb988b163600e50b4ce291b16934686c745372d420385",
+      "public_bytes": 7301,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "0bfedc27d14e03c015001ac211c958352c17c03a12b0b744fa6f6fc3a555bb6f",
+      "values_unchanged": true,
+      "observation_sha256": "353dd3ca7ab35f24e4d540ad614bcbec4c891e3fe824a2991c6f5ba079674814"
     },
     {
       "original_source_path": "website/tutorial-execution.json",
       "original_sha256": "0b7ed477ff00dde7d11f5621e11e3e509046834b63ae832e76a9cfb49db2bcd4",
       "original_bytes": 139589,
       "public_path": "website/tutorial-execution-redacted.json",
-      "public_sha256": "dcf9ec7000d9e241739c9d7d929e032d2d372c9a8a879e96d894032f9203bcb5",
-      "public_bytes": 139162,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "0b7ed477ff00dde7d11f5621e11e3e509046834b63ae832e76a9cfb49db2bcd4"
+      "public_sha256": "5398ee0f442c14599d784acafe857846188a0898e013b4de4fbf40b1953c6a0a",
+      "public_bytes": 138778,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "0b7ed477ff00dde7d11f5621e11e3e509046834b63ae832e76a9cfb49db2bcd4",
+      "values_unchanged": true,
+      "observation_sha256": "9268359083efea22d1d19643fc891b7d0015bd40a2aaff3cb4d3383a7d765d6f"
     },
     {
       "original_source_path": "benchmarks/results/radiomics-native-48ecb310/raw-observations.jsonl.gz",
       "original_sha256": "35c6ef15ecbf4f779d8542cff4c1d70f3beadd39c9c8e5e1f53ad33a8b6e544c",
       "original_bytes": 117681,
       "public_path": "benchmarks/results/radiomics-native-48ecb310/raw-observations-redacted.jsonl.gz",
-      "public_sha256": "a24f5f932d5106c4d547972e1e9636f6bbab1a319db80e4df27b198cbe9ad882",
-      "public_bytes": 115229,
-      "redaction": "Machine-local path prefix and environment directory label only; numerical values and observation order unchanged.",
-      "source_git_blob_sha256": "35c6ef15ecbf4f779d8542cff4c1d70f3beadd39c9c8e5e1f53ad33a8b6e544c"
+      "public_sha256": "460bb49838d3ba8e3299661f06e7d240c6b526a9d770a76ee4f81a977fc1c3fe",
+      "public_bytes": 113817,
+      "redaction": "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+      "source_git_blob_sha256": "35c6ef15ecbf4f779d8542cff4c1d70f3beadd39c9c8e5e1f53ad33a8b6e544c",
+      "values_unchanged": true,
+      "observation_sha256": "a452972dddd1f7d16168a7734528d1436ff108337c6f6c7497dea50d10441c57"
     }
   ],
   "archived_original_source": "Original working-tree bytes checked out from source_revision, preserved without content or newline rewriting. source_git_blob_sha256 separately identifies Git-normalized bytes."

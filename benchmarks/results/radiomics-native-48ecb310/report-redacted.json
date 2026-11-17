@@ -99,7 +99,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-00-cache_population\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-00-cache_population/comparison.json",
         "configuration_sha256": "c108eb127130a31c189aacefc435039357ad1cf8c567b2a5c3ccf87fd38d610a",
         "coordinator_peak_resident_bytes": 4046848,
         "correctness_checked": true,
@@ -141,8 +141,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -150,8 +150,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -161,7 +161,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -204,8 +204,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "cache_population",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-00-cache_population.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-00-cache_population.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-00-cache_population.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-00-cache_population.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -234,7 +234,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-00-verified_cache_hit\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-00-verified_cache_hit/comparison.json",
         "configuration_sha256": "a32287be92c374f89f3aa236079caf33ab6d4960e96632b8af420db6daae8baf",
         "coordinator_peak_resident_bytes": 4042752,
         "correctness_checked": true,
@@ -276,8 +276,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -285,8 +285,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -296,7 +296,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -355,8 +355,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "verified_cache_hit",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-00-verified_cache_hit.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-00-verified_cache_hit.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-00-verified_cache_hit.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-00-verified_cache_hit.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -369,7 +369,7 @@
               "rejected": 0,
               "write_failures": 0
             },
-            "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-00-verified_cache_hit\\warmup-0-comparison.json",
+            "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-00-verified_cache_hit/warmup-0-comparison.json",
             "elapsed_seconds": 0.054210000000000036,
             "output_digest": "1b992f98fb211d33f833e8513750bd57fe842fc96aa86850b3256c4a27b64315",
             "roi_count": 8
@@ -399,7 +399,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-01-cache_population\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-01-cache_population/comparison.json",
         "configuration_sha256": "c108eb127130a31c189aacefc435039357ad1cf8c567b2a5c3ccf87fd38d610a",
         "coordinator_peak_resident_bytes": 4046848,
         "correctness_checked": true,
@@ -441,8 +441,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -450,8 +450,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -461,7 +461,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -504,8 +504,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "cache_population",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-01-cache_population.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-01-cache_population.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-01-cache_population.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-01-cache_population.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -534,7 +534,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-01-verified_cache_hit\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-01-verified_cache_hit/comparison.json",
         "configuration_sha256": "a32287be92c374f89f3aa236079caf33ab6d4960e96632b8af420db6daae8baf",
         "coordinator_peak_resident_bytes": 4050944,
         "correctness_checked": true,
@@ -576,8 +576,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -585,8 +585,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -596,7 +596,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -655,8 +655,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "verified_cache_hit",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-01-verified_cache_hit.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-01-verified_cache_hit.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-01-verified_cache_hit.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-01-verified_cache_hit.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -669,7 +669,7 @@
               "rejected": 0,
               "write_failures": 0
             },
-            "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-01-verified_cache_hit\\warmup-0-comparison.json",
+            "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-01-verified_cache_hit/warmup-0-comparison.json",
             "elapsed_seconds": 0.012534099999999992,
             "output_digest": "1b992f98fb211d33f833e8513750bd57fe842fc96aa86850b3256c4a27b64315",
             "roi_count": 8
@@ -699,7 +699,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-02-cache_population\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-02-cache_population/comparison.json",
         "configuration_sha256": "c108eb127130a31c189aacefc435039357ad1cf8c567b2a5c3ccf87fd38d610a",
         "coordinator_peak_resident_bytes": 4050944,
         "correctness_checked": true,
@@ -741,8 +741,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -750,8 +750,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -761,7 +761,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -804,8 +804,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "cache_population",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-02-cache_population.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-02-cache_population.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-02-cache_population.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-02-cache_population.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -834,7 +834,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-02-verified_cache_hit\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-02-verified_cache_hit/comparison.json",
         "configuration_sha256": "a32287be92c374f89f3aa236079caf33ab6d4960e96632b8af420db6daae8baf",
         "coordinator_peak_resident_bytes": 4067328,
         "correctness_checked": true,
@@ -876,8 +876,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -885,8 +885,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -896,7 +896,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -955,8 +955,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "verified_cache_hit",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-02-verified_cache_hit.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-02-verified_cache_hit.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-02-verified_cache_hit.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-02-verified_cache_hit.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -969,7 +969,7 @@
               "rejected": 0,
               "write_failures": 0
             },
-            "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-02-verified_cache_hit\\warmup-0-comparison.json",
+            "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-02-verified_cache_hit/warmup-0-comparison.json",
             "elapsed_seconds": 0.011966200000000038,
             "output_digest": "1b992f98fb211d33f833e8513750bd57fe842fc96aa86850b3256c4a27b64315",
             "roi_count": 8
@@ -999,7 +999,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-03-cache_population\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-03-cache_population/comparison.json",
         "configuration_sha256": "c108eb127130a31c189aacefc435039357ad1cf8c567b2a5c3ccf87fd38d610a",
         "coordinator_peak_resident_bytes": 4067328,
         "correctness_checked": true,
@@ -1041,8 +1041,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1050,8 +1050,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1061,7 +1061,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -1104,8 +1104,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "cache_population",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-03-cache_population.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-03-cache_population.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-03-cache_population.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-03-cache_population.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -1134,7 +1134,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-03-verified_cache_hit\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-03-verified_cache_hit/comparison.json",
         "configuration_sha256": "a32287be92c374f89f3aa236079caf33ab6d4960e96632b8af420db6daae8baf",
         "coordinator_peak_resident_bytes": 4050944,
         "correctness_checked": true,
@@ -1176,8 +1176,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1185,8 +1185,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1196,7 +1196,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -1255,8 +1255,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "verified_cache_hit",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-03-verified_cache_hit.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-03-verified_cache_hit.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-03-verified_cache_hit.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-03-verified_cache_hit.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -1269,7 +1269,7 @@
               "rejected": 0,
               "write_failures": 0
             },
-            "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-03-verified_cache_hit\\warmup-0-comparison.json",
+            "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-03-verified_cache_hit/warmup-0-comparison.json",
             "elapsed_seconds": 0.012729099999999993,
             "output_digest": "1b992f98fb211d33f833e8513750bd57fe842fc96aa86850b3256c4a27b64315",
             "roi_count": 8
@@ -1299,7 +1299,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-04-cache_population\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-04-cache_population/comparison.json",
         "configuration_sha256": "c108eb127130a31c189aacefc435039357ad1cf8c567b2a5c3ccf87fd38d610a",
         "coordinator_peak_resident_bytes": 4050944,
         "correctness_checked": true,
@@ -1341,8 +1341,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1350,8 +1350,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1361,7 +1361,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -1404,8 +1404,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "cache_population",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-04-cache_population.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-04-cache_population.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-04-cache_population.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-04-cache_population.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -1434,7 +1434,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-04-verified_cache_hit\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-04-verified_cache_hit/comparison.json",
         "configuration_sha256": "a32287be92c374f89f3aa236079caf33ab6d4960e96632b8af420db6daae8baf",
         "coordinator_peak_resident_bytes": 4050944,
         "correctness_checked": true,
@@ -1476,8 +1476,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1485,8 +1485,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1496,7 +1496,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -1555,8 +1555,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "verified_cache_hit",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-04-verified_cache_hit.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-04-verified_cache_hit.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-04-verified_cache_hit.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-04-verified_cache_hit.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -1569,7 +1569,7 @@
               "rejected": 0,
               "write_failures": 0
             },
-            "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-04-verified_cache_hit\\warmup-0-comparison.json",
+            "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-04-verified_cache_hit/warmup-0-comparison.json",
             "elapsed_seconds": 0.011581200000000014,
             "output_digest": "1b992f98fb211d33f833e8513750bd57fe842fc96aa86850b3256c4a27b64315",
             "roi_count": 8
@@ -1599,7 +1599,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-05-cache_population\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-05-cache_population/comparison.json",
         "configuration_sha256": "c108eb127130a31c189aacefc435039357ad1cf8c567b2a5c3ccf87fd38d610a",
         "coordinator_peak_resident_bytes": 4050944,
         "correctness_checked": true,
@@ -1641,8 +1641,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1650,8 +1650,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1661,7 +1661,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -1704,8 +1704,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "cache_population",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-05-cache_population.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-05-cache_population.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-05-cache_population.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-05-cache_population.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -1734,7 +1734,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-05-verified_cache_hit\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-05-verified_cache_hit/comparison.json",
         "configuration_sha256": "a32287be92c374f89f3aa236079caf33ab6d4960e96632b8af420db6daae8baf",
         "coordinator_peak_resident_bytes": 4050944,
         "correctness_checked": true,
@@ -1776,8 +1776,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1785,8 +1785,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1796,7 +1796,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -1855,8 +1855,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "verified_cache_hit",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-05-verified_cache_hit.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-05-verified_cache_hit.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-05-verified_cache_hit.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-05-verified_cache_hit.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -1869,7 +1869,7 @@
               "rejected": 0,
               "write_failures": 0
             },
-            "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-05-verified_cache_hit\\warmup-0-comparison.json",
+            "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-05-verified_cache_hit/warmup-0-comparison.json",
             "elapsed_seconds": 0.012574599999999991,
             "output_digest": "1b992f98fb211d33f833e8513750bd57fe842fc96aa86850b3256c4a27b64315",
             "roi_count": 8
@@ -1899,7 +1899,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-06-cache_population\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-06-cache_population/comparison.json",
         "configuration_sha256": "c108eb127130a31c189aacefc435039357ad1cf8c567b2a5c3ccf87fd38d610a",
         "coordinator_peak_resident_bytes": 4046848,
         "correctness_checked": true,
@@ -1941,8 +1941,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1950,8 +1950,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -1961,7 +1961,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -2004,8 +2004,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "cache_population",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-06-cache_population.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-06-cache_population.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-06-cache_population.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-06-cache_population.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -2034,7 +2034,7 @@
           "mismatch_count": 0,
           "passed": true
         },
-        "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-06-verified_cache_hit\\comparison.json",
+        "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-06-verified_cache_hit/comparison.json",
         "configuration_sha256": "a32287be92c374f89f3aa236079caf33ab6d4960e96632b8af420db6daae8baf",
         "coordinator_peak_resident_bytes": 4059136,
         "correctness_checked": true,
@@ -2076,8 +2076,8 @@
         "non_timed_audits": {
           "after": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -2085,8 +2085,8 @@
           },
           "before": {
             "dependency_binary_files_sha256": {
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
-              "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\core\\_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll": "7d94a3454b1d02549312a25aa6230947003977a349a63718670c7621a20eb76c",
+              "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/core/_multiarray_umath.cp39-win_amd64.pyd": "425ae123990ef7c2f0233db5af4e0524a92f67c79e18441318b2255e4cb63f45"
             },
             "files_verified": 31,
             "input_sha256": "4fb8e40665effb1e56fa24bdf5d773354577444dfed46f1d118fffb222e3e92e",
@@ -2096,7 +2096,7 @@
         "observed_thread_libraries": [
           {
             "architecture": "Prescott",
-            "filepath": "E:\\radiomics-build\\benchmark-v2\\native-snapshot-v1\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/benchmark-v2/native-snapshot-v1/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
@@ -2155,8 +2155,8 @@
         "stage_status": "Full declared public call measured; no invented per-stage instrumentation.",
         "state": "verified_cache_hit",
         "status": "ok",
-        "stderr_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-06-verified_cache_hit.stderr.txt",
-        "stdout_path": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-06-verified_cache_hit.stdout.json",
+        "stderr_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-06-verified_cache_hit.stderr.txt",
+        "stdout_path": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-06-verified_cache_hit.stdout.json",
         "suite": "radiomics",
         "threads": 1,
         "timed_roi_count": 8,
@@ -2169,7 +2169,7 @@
               "rejected": 0,
               "write_failures": 0
             },
-            "comparison_artifact": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2\\native-cache-series\\pair-06-verified_cache_hit\\warmup-0-comparison.json",
+            "comparison_artifact": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2/native-cache-series/pair-06-verified_cache_hit/warmup-0-comparison.json",
             "elapsed_seconds": 0.012570799999999993,
             "output_digest": "1b992f98fb211d33f833e8513750bd57fe842fc96aa86850b3256c4a27b64315",
             "roi_count": 8
@@ -2277,8 +2277,8 @@
     "power_mode_raw_hex": "e794b5e6ba90e696b9e6a18820475549443a2033383162343232322d663639342d343166302d393638352d666635626232363064663265202028e5b9b3e8a1a129",
     "storage": {
       "device_model": "unrecorded; no I/O-device-speed claim",
-      "input_root": "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1",
-      "output_root": "E:\\radiomics-build\\benchmark-v2\\radiomics-full-v2-60case-2",
+      "input_root": "$WORKDIR/benchmark-v2/radiomics-inputs-a37-ct-v1",
+      "output_root": "$WORKDIR/benchmark-v2/radiomics-full-v2-60case-2",
       "output_volume_capacity_bytes": 392011911168,
       "output_volume_free_bytes": 19342024704
     },
@@ -2297,7 +2297,7 @@
         "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "$WORKDIR/radiomics\\tools\\package_native.py",
         "--output",
-        "E:\\radiomics-build\\snapshot-native-v2\\package-assets"
+        "$WORKDIR/snapshot-native-v2/package-assets"
       ],
       [
         "cargo",
@@ -2315,12 +2315,12 @@
         "--release",
         "--locked",
         "--out",
-        "E:\\radiomics-build\\snapshot-native-v2\\wheels"
+        "$WORKDIR/snapshot-native-v2/wheels"
       ]
     ],
     "cargo_lock_sha256": "de33d6dfd0542add75ca1ba0076b9d373a4e8f8af0aa93eb4c49fa35b6d552bb",
     "cli": {
-      "path": "E:\\radiomics-build\\snapshot-native-v2\\cli\\radiomics.exe",
+      "path": "$WORKDIR/snapshot-native-v2/cli/radiomics.exe",
       "sha256": "616342692392c95f92b1ecdb22cae5a3c071d095e74c2ec23e2fa49c08be010b"
     },
     "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
@@ -2351,7 +2351,7 @@
     "source_tree_clean": true,
     "version_changed": false,
     "wheel": {
-      "path": "E:\\radiomics-build\\snapshot-native-v2\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+      "path": "$WORKDIR/snapshot-native-v2/wheels/ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
       "sha256": "f2c8e0cbf55bfdf56ee4efb7b4d664112028618cb6bf03e0761170730214c160"
     },
     "wheel_files_sha256": {
