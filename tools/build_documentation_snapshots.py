@@ -93,6 +93,34 @@ def build_site(source, destination, version, source_revision, base_url):
             check=True,
         )
     with tempfile.TemporaryDirectory(prefix="radiomics-doctrees-") as doctrees:
+        website_source = source / "website"
+        execution_arguments = []
+        tutorial_preparer = source / "tools/prepare_documentation_tutorials.py"
+        if tutorial_preparer.exists():
+            prepared = Path(doctrees) / "tutorials"
+            execution = subprocess.run(
+                [
+                    sys.executable,
+                    str(tutorial_preparer),
+                    "--root",
+                    str(source),
+                    "--output",
+                    str(prepared),
+                ],
+                cwd=source,
+                env=environment,
+                check=False,
+            )
+            receipt_output = (
+                source / "website/_build/tutorial-execution" / (version + "-" + Path(doctrees).name)
+            )
+            if (prepared / "execution").exists():
+                shutil.copytree(prepared / "execution", receipt_output)
+            execution.check_returncode()
+            website_source = prepared / "website"
+            # The shared executor just ran fresh kernels and checked artifacts.
+            # Render those actual outputs once, rather than executing them twice.
+            execution_arguments = ["-D", "nb_execution_mode=off"]
         subprocess.run(
             [
                 sys.executable,
@@ -108,7 +136,8 @@ def build_site(source, destination, version, source_revision, base_url):
                 "html_baseurl=" + base_url.rstrip("/") + "/" + version + "/",
                 "-A",
                 "build_revision=" + source_revision,
-                str(source / "website"),
+                *execution_arguments,
+                str(website_source),
                 str(destination),
             ],
             cwd=source,

@@ -1,7 +1,8 @@
 """Result plots appended to the six synthetic, stepwise tutorials."""
 
 FIGURES = {
-    '01_extract': """import matplotlib.pyplot as plt
+    "01_extract": (
+        """import matplotlib.pyplot as plt
 fig, axes = plt.subplots(1, 2, figsize=(9, 3.5))
 frame = result.features
 axes[0].bar(frame['ID'], frame['original_firstorder_Mean'])
@@ -10,8 +11,10 @@ axes[1].bar(frame['ID'], frame['original_shape_basic_Volume_mm3'])
 axes[1].set(xlabel='Synthetic sample', ylabel='ROI volume (mm³)')
 fig.tight_layout()
 fig.savefig(output/'extraction-results.png', dpi=140)
-plt.close(fig)""",
-    '03_multiclass_regression': """import json
+plt.close(fig)"""
+    ),
+    "03_multiclass_regression": (
+        """import json
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -39,8 +42,10 @@ for task in ('multiclass', 'regression'):
         axes[1].set(xlabel='Actual (synthetic target units)', ylabel='Predicted (synthetic target units)', title='Held-out synthetic patients')
 fig.tight_layout()
 fig.savefig(output/'task-results.png', dpi=140)
-plt.close(fig)""",
-    '04_regions_delta_habitat': """import matplotlib.pyplot as plt
+plt.close(fig)"""
+    ),
+    "04_regions_delta_habitat": (
+        """import matplotlib.pyplot as plt
 labels = habitat.predict(training)['cluster'].to_numpy()
 fig, ax = plt.subplots(figsize=(5, 4))
 for cluster in sorted(set(labels)):
@@ -52,5 +57,6 @@ ax.set(xlabel='Synthetic intensity a', ylabel='Synthetic intensity b', title='On
 ax.legend()
 fig.tight_layout()
 fig.savefig(output/'local-habitat.png', dpi=140)
-plt.close(fig)""",
+plt.close(fig)"""
+    ),
 }

@@ -1,4 +1,5 @@
 """Consume frozen, independently generated references; never regenerate them."""
+
 import hashlib
 import json
 from pathlib import Path
@@ -6,7 +7,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pytest
-
 
 GOLDEN = Path(__file__).resolve().parents[1] / "golden/python_golden_v1"
 
@@ -43,19 +43,25 @@ def test_hand_calculations_crosscheck_reference_301():
         angle = raw["angles_xyz"].index([1, 0])
         counts = np.asarray(raw["counts"])[:, :, angle]
         target = np.asarray(hand[expected])
-        np.testing.assert_array_equal(counts[:, :target.shape[1]], target)
-        assert not counts[:, target.shape[1]:].any()
+        np.testing.assert_array_equal(counts[:, : target.shape[1]], target)
+        assert not counts[:, target.shape[1] :].any()
     for family in ("glszm", "gldm"):
         counts = np.asarray(ref["raw_matrices"][family]["value"])
         target = np.asarray(hand[family])
-        np.testing.assert_array_equal(counts[:, :target.shape[1]], target)
-        assert not counts[:, target.shape[1]:].any()
-    np.testing.assert_allclose(np.asarray(ref["raw_matrices"]["ngtdm"]["value"])[:, :2], hand["ngtdm"], atol=1e-10, rtol=1e-8)
+        np.testing.assert_array_equal(counts[:, : target.shape[1]], target)
+        assert not counts[:, target.shape[1] :].any()
+    np.testing.assert_allclose(
+        np.asarray(ref["raw_matrices"]["ngtdm"]["value"])[:, :2],
+        hand["ngtdm"],
+        atol=1e-10,
+        rtol=1e-8,
+    )
 
 
 @pytest.mark.parametrize("backend", ["python", "rust"])
 def test_current_metrics_match_frozen_2512e16(backend):
     import ov_radiomics as rad
+
     if backend == "rust" and rad.backend_info()["metrics_backend"] != "rust":
         pytest.skip("Native extension unavailable; Python baseline remains checked.")
     ref = load("reference.json")["baseline_metrics"]
@@ -68,13 +74,23 @@ def test_current_metrics_match_frozen_2512e16(backend):
     actual = rad.delong_test(y, a, b, backend=backend)
     for name, value in ref["paired_delong"].items():
         assert_scalar(actual[name], value)
-    dca = rad.decision_curve(y, {"a": a, "b": b}, thresholds=[.5, .2, .5, .8], backend=backend)
-    pd.testing.assert_frame_equal(dca, pd.DataFrame(ref["dca"]), check_exact=False, atol=1e-10, rtol=1e-8)
+    dca = rad.decision_curve(y, {"a": a, "b": b}, thresholds=[0.5, 0.2, 0.5, 0.8], backend=backend)
+    pd.testing.assert_frame_equal(
+        dca, pd.DataFrame(ref["dca"]), check_exact=False, atol=1e-10, rtol=1e-8
+    )
     hl = rad.hosmer_lemeshow(y, a, n_bins=4, backend=backend)
     for name in ("statistic", "df", "p_value"):
         assert_scalar(hl[name], ref["hosmer_lemeshow"][name])
-    np.testing.assert_array_equal(hl["table"][["n", "observed"]], [[row["n"], row["observed"]] for row in ref["hosmer_lemeshow"]["table"]])
-    np.testing.assert_allclose(hl["table"].expected, [row["expected"] for row in ref["hosmer_lemeshow"]["table"]], atol=1e-10, rtol=1e-8)
+    np.testing.assert_array_equal(
+        hl["table"][["n", "observed"]],
+        [[row["n"], row["observed"]] for row in ref["hosmer_lemeshow"]["table"]],
+    )
+    np.testing.assert_allclose(
+        hl["table"].expected,
+        [row["expected"] for row in ref["hosmer_lemeshow"]["table"]],
+        atol=1e-10,
+        rtol=1e-8,
+    )
 
 
 def test_bootstrap_index_sequence_frozen():
@@ -83,7 +99,9 @@ def test_bootstrap_index_sequence_frozen():
     pos, neg = np.flatnonzero(y), np.flatnonzero(y == 0)
     rng = np.random.RandomState(ref["parameters"]["random_state"])
     for expected in ref["bootstrap_indices"]:
-        np.testing.assert_array_equal(np.r_[rng.choice(pos, len(pos)), rng.choice(neg, len(neg))], expected)
+        np.testing.assert_array_equal(
+            np.r_[rng.choice(pos, len(pos)), rng.choice(neg, len(neg))], expected
+        )
 
 
 def test_degenerate_states_are_explicit():

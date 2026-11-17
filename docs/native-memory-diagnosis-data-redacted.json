@@ -16,18 +16,18 @@
       "launcher_pid": 13724,
       "exit_code": 0,
       "command": [
-        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
         "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_l2",
         "--fixtures",
-        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "$WORKDIR/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1",
         "--request",
-        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "$WORKDIR/baseline-v3/array-request.json",
         "--build-manifest",
-        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "$WORKDIR/snapshot-native-v2/build-manifest.json",
         "--output",
-        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\00-python_l2\\worker.json"
+        "$WORKDIR/memory-v1/00-python_l2/worker.json"
       ],
       "status": "passed",
       "worker": {
@@ -78,8 +78,8 @@
             "source": "own GetProcessMemoryInfo"
           }
         ],
-        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "python": "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
+        "native_path": "$WORKDIR/ml-path-native-v2/lib/site-packages/ov_radiomics/_native.pyd",
         "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
         "loaded_numeric_bytes": 2316600,
         "full_source_nifti_loaded": false,
@@ -90,7 +90,7 @@
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
-            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "version": "0.3.20",
             "threading_layer": "pthreads",
             "architecture": "Prescott"
@@ -128,18 +128,18 @@
       "launcher_pid": 38076,
       "exit_code": 0,
       "command": [
-        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
         "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_preencoded",
         "--fixtures",
-        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "$WORKDIR/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1",
         "--request",
-        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "$WORKDIR/baseline-v3/array-request.json",
         "--build-manifest",
-        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "$WORKDIR/snapshot-native-v2/build-manifest.json",
         "--output",
-        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\00-python_preencoded\\worker.json"
+        "$WORKDIR/memory-v1/00-python_preencoded/worker.json"
       ],
       "status": "passed",
       "worker": {
@@ -176,8 +176,8 @@
             "source": "own GetProcessMemoryInfo"
           }
         ],
-        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "python": "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
+        "native_path": "$WORKDIR/ml-path-native-v2/lib/site-packages/ov_radiomics/_native.pyd",
         "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
         "loaded_numeric_bytes": 2316600,
         "full_source_nifti_loaded": false,
@@ -188,7 +188,7 @@
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
-            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "version": "0.3.20",
             "threading_layer": "pthreads",
             "architecture": "Prescott"
@@ -218,8 +218,8 @@
       "command": [
         "$WORKDIR/radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
         "--memory-preloaded",
-        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
-        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\00-rust_core\\worker.json"
+        "$WORKDIR/baseline-v3/array-request.json",
+        "$WORKDIR/memory-v1/00-rust_core/worker.json"
       ],
       "status": "passed",
       "worker": {
@@ -280,18 +280,18 @@
       "launcher_pid": 38100,
       "exit_code": 0,
       "command": [
-        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
         "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_preencoded",
         "--fixtures",
-        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "$WORKDIR/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1",
         "--request",
-        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "$WORKDIR/baseline-v3/array-request.json",
         "--build-manifest",
-        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "$WORKDIR/snapshot-native-v2/build-manifest.json",
         "--output",
-        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\01-python_preencoded\\worker.json"
+        "$WORKDIR/memory-v1/01-python_preencoded/worker.json"
       ],
       "status": "passed",
       "worker": {
@@ -328,8 +328,8 @@
             "source": "own GetProcessMemoryInfo"
           }
         ],
-        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "python": "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
+        "native_path": "$WORKDIR/ml-path-native-v2/lib/site-packages/ov_radiomics/_native.pyd",
         "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
         "loaded_numeric_bytes": 2316600,
         "full_source_nifti_loaded": false,
@@ -340,7 +340,7 @@
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
-            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "version": "0.3.20",
             "threading_layer": "pthreads",
             "architecture": "Prescott"
@@ -370,8 +370,8 @@
       "command": [
         "$WORKDIR/radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
         "--memory-preloaded",
-        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
-        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\01-rust_core\\worker.json"
+        "$WORKDIR/baseline-v3/array-request.json",
+        "$WORKDIR/memory-v1/01-rust_core/worker.json"
       ],
       "status": "passed",
       "worker": {
@@ -432,18 +432,18 @@
       "launcher_pid": 5100,
       "exit_code": 0,
       "command": [
-        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
         "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_l2",
         "--fixtures",
-        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "$WORKDIR/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1",
         "--request",
-        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "$WORKDIR/baseline-v3/array-request.json",
         "--build-manifest",
-        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "$WORKDIR/snapshot-native-v2/build-manifest.json",
         "--output",
-        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\01-python_l2\\worker.json"
+        "$WORKDIR/memory-v1/01-python_l2/worker.json"
       ],
       "status": "passed",
       "worker": {
@@ -494,8 +494,8 @@
             "source": "own GetProcessMemoryInfo"
           }
         ],
-        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "python": "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
+        "native_path": "$WORKDIR/ml-path-native-v2/lib/site-packages/ov_radiomics/_native.pyd",
         "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
         "loaded_numeric_bytes": 2316600,
         "full_source_nifti_loaded": false,
@@ -506,7 +506,7 @@
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
-            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "version": "0.3.20",
             "threading_layer": "pthreads",
             "architecture": "Prescott"
@@ -546,8 +546,8 @@
       "command": [
         "$WORKDIR/radiomics-worktrees\\native-performance-audit\\.build-tools\\target\\release\\examples\\profile_native_boundary.exe",
         "--memory-preloaded",
-        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
-        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\02-rust_core\\worker.json"
+        "$WORKDIR/baseline-v3/array-request.json",
+        "$WORKDIR/memory-v1/02-rust_core/worker.json"
       ],
       "status": "passed",
       "worker": {
@@ -608,18 +608,18 @@
       "launcher_pid": 38256,
       "exit_code": 0,
       "command": [
-        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
         "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_l2",
         "--fixtures",
-        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "$WORKDIR/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1",
         "--request",
-        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "$WORKDIR/baseline-v3/array-request.json",
         "--build-manifest",
-        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "$WORKDIR/snapshot-native-v2/build-manifest.json",
         "--output",
-        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\02-python_l2\\worker.json"
+        "$WORKDIR/memory-v1/02-python_l2/worker.json"
       ],
       "status": "passed",
       "worker": {
@@ -670,8 +670,8 @@
             "source": "own GetProcessMemoryInfo"
           }
         ],
-        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "python": "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
+        "native_path": "$WORKDIR/ml-path-native-v2/lib/site-packages/ov_radiomics/_native.pyd",
         "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
         "loaded_numeric_bytes": 2316600,
         "full_source_nifti_loaded": false,
@@ -682,7 +682,7 @@
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
-            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "version": "0.3.20",
             "threading_layer": "pthreads",
             "architecture": "Prescott"
@@ -720,18 +720,18 @@
       "launcher_pid": 33932,
       "exit_code": 0,
       "command": [
-        "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
+        "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
         "$WORKDIR/radiomics-worktrees\\native-performance-audit\\tools\\profile_native_memory.py",
         "--worker",
         "python_preencoded",
         "--fixtures",
-        "E:\\radiomics-build\\benchmark-v2\\radiomics-inputs-a37-ct-v1\\public_ct_pat1",
+        "$WORKDIR/benchmark-v2/radiomics-inputs-a37-ct-v1/public_ct_pat1",
         "--request",
-        "D:\\radiomics-native-boundary-diagnosis\\baseline-v3\\array-request.json",
+        "$WORKDIR/baseline-v3/array-request.json",
         "--build-manifest",
-        "E:\\radiomics-build\\snapshot-native-v2\\build-manifest.json",
+        "$WORKDIR/snapshot-native-v2/build-manifest.json",
         "--output",
-        "D:\\radiomics-native-boundary-diagnosis\\memory-v1\\02-python_preencoded\\worker.json"
+        "$WORKDIR/memory-v1/02-python_preencoded/worker.json"
       ],
       "status": "passed",
       "worker": {
@@ -768,8 +768,8 @@
             "source": "own GetProcessMemoryInfo"
           }
         ],
-        "python": "E:\\radiomics-build\\ml-path-native-v2\\Scripts\\python.exe",
-        "native_path": "E:\\radiomics-build\\ml-path-native-v2\\lib\\site-packages\\ov_radiomics\\_native.pyd",
+        "python": "$WORKDIR/ml-path-native-v2/Scripts/python.exe",
+        "native_path": "$WORKDIR/ml-path-native-v2/lib/site-packages/ov_radiomics/_native.pyd",
         "native_sha256": "7a7109a732678ba1c498a2af249c4db867d7a906d58d2ccd458a89a461b29878",
         "loaded_numeric_bytes": 2316600,
         "full_source_nifti_loaded": false,
@@ -780,7 +780,7 @@
             "internal_api": "openblas",
             "num_threads": 1,
             "prefix": "libopenblas",
-            "filepath": "E:\\radiomics-build\\ml-path-native-v2\\Lib\\site-packages\\numpy\\.libs\\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
+            "filepath": "$WORKDIR/ml-path-native-v2/Lib/site-packages/numpy/.libs/libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll",
             "version": "0.3.20",
             "threading_layer": "pthreads",
             "architecture": "Prescott"
@@ -851,7 +851,7 @@
   "measurement_code_revision": "bc550cd",
   "report_file_sha256": "6f990eaa9325f762c44e0bb90db53f165332cb273d54c4cacd7f4f12ba168757",
   "raw_file_sha256": "988132c51104e6b99849695cac85e99ba842eff88a5f2f97fe48e77e5e9669fa",
-  "evidence_directory": "D:\\radiomics-native-boundary-diagnosis\\memory-v1",
+  "evidence_directory": "$WORKDIR/memory-v1",
   "data_license": "PAT1 input is CC-BY-NC-3.0; no raw image, mask or image numerical arrays in this archive.",
   "quiet_window": "Root paused testing/browser/Sphinx; other worker reported a preceding0.2257s stdlib scalar check at the boundary, with no native worker/heavy scan. No latency result is asserted here; all nine observations retained."
 }

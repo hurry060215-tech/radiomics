@@ -29,14 +29,14 @@
       "status": "passed",
       "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\01_extract.ipynb",
       "input_sha256": "1f9e11c39639e1cda3d835e4b26779d040e8d97afeb42a691100d808df9a8a3a",
-      "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\01_extract\\01_extract.ipynb",
+      "executed_path": "$WORKDIR/six-notebooks-final/01_extract/01_extract.ipynb",
       "executed_sha256": "24e06556a70aedddbf6517d5876a54b025d9b000cc33da60be3f94c1ddab9bd1",
       "seconds": 1.7270009,
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
         "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
-        "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\01_extract\\\\artifacts'"
+        "TUTORIAL_RUN_ROOT = '$WORKDIR/six-notebooks-final/01_extract/artifacts'"
       ],
       "kernel_terminated": true,
       "cells": [
@@ -234,14 +234,14 @@
       "status": "passed",
       "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\02_image_clinical_binary.ipynb",
       "input_sha256": "b43bb2cdb333b82ada4cfd45058105d3ebfe7bc45283a17694e052c803f7787d",
-      "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\02_image_clinical_binary\\02_image_clinical_binary.ipynb",
+      "executed_path": "$WORKDIR/six-notebooks-final/02_image_clinical_binary/02_image_clinical_binary.ipynb",
       "executed_sha256": "63023267154ab0a2e8fe1d2017fdd9eb0af999848e03ec66ae8773f41f00bae8",
       "seconds": 2.0540846,
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
         "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
-        "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\02_image_clinical_binary\\\\artifacts'"
+        "TUTORIAL_RUN_ROOT = '$WORKDIR/six-notebooks-final/02_image_clinical_binary/artifacts'"
       ],
       "kernel_terminated": true,
       "cells": [
@@ -1606,14 +1606,14 @@
       "status": "passed",
       "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\03_multiclass_regression.ipynb",
       "input_sha256": "d4d0e9d7bf94b9f9bb3d3733d8c206f5543e8d8263f2c633c9edc1a13f444a3c",
-      "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\03_multiclass_regression\\03_multiclass_regression.ipynb",
+      "executed_path": "$WORKDIR/six-notebooks-final/03_multiclass_regression/03_multiclass_regression.ipynb",
       "executed_sha256": "6214fd8845e69302d755b6131b858186378cfc1f434dd209ed39cbcfd1aa188d",
       "seconds": 1.8364630000000002,
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
         "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
-        "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\03_multiclass_regression\\\\artifacts'"
+        "TUTORIAL_RUN_ROOT = '$WORKDIR/six-notebooks-final/03_multiclass_regression/artifacts'"
       ],
       "kernel_terminated": true,
       "cells": [
@@ -1881,14 +1881,14 @@
       "status": "passed",
       "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\04_regions_delta_habitat.ipynb",
       "input_sha256": "0c329b76afa5a5fd9315adac11c91eec330e939d66bf6c7be5a6e84617a892b6",
-      "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\04_regions_delta_habitat\\04_regions_delta_habitat.ipynb",
+      "executed_path": "$WORKDIR/six-notebooks-final/04_regions_delta_habitat/04_regions_delta_habitat.ipynb",
       "executed_sha256": "dae9492574b73061bdca8460bfc3ab18d96f287cc1de4c4f5c677f7f0a0f60d3",
       "seconds": 1.7996081999999998,
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
         "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
-        "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\04_regions_delta_habitat\\\\artifacts'"
+        "TUTORIAL_RUN_ROOT = '$WORKDIR/six-notebooks-final/04_regions_delta_habitat/artifacts'"
       ],
       "kernel_terminated": true,
       "cells": [
@@ -2140,14 +2140,14 @@
       "status": "passed",
       "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\05_patch_patient.ipynb",
       "input_sha256": "b373801bdfb075d164ab498f2996affa9ff5b4c76b500790dd099dc819ae2bd8",
-      "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\05_patch_patient\\05_patch_patient.ipynb",
+      "executed_path": "$WORKDIR/six-notebooks-final/05_patch_patient/05_patch_patient.ipynb",
       "executed_sha256": "9ecd7e31386fafebe2aee760ab34e1112245bb6fc58fc21fce950eaf418d0cf5",
       "seconds": 2.4334050000000005,
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
         "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
-        "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\05_patch_patient\\\\artifacts'"
+        "TUTORIAL_RUN_ROOT = '$WORKDIR/six-notebooks-final/05_patch_patient/artifacts'"
       ],
       "kernel_terminated": true,
       "cells": [
@@ -2977,14 +2977,14 @@
       "status": "passed",
       "input_path": "$WORKDIR/radiomics\\.build-tools\\tutorial-inputs-final\\06_embedding_overlay.ipynb",
       "input_sha256": "461fb9f7734d38674e14dba55b3be4d208b61a907cb43b4c2f19a8f16adcb6f9",
-      "executed_path": "D:\\radiomics-tutorial-validation\\six-notebooks-final\\06_embedding_overlay\\06_embedding_overlay.ipynb",
+      "executed_path": "$WORKDIR/six-notebooks-final/06_embedding_overlay/06_embedding_overlay.ipynb",
       "executed_sha256": "09856f6cb5b2896c8ea0bf15a85005a302db057692c25811eb1dc3958bd8ef01",
       "seconds": 1.9562235000000001,
       "execution_error": null,
       "failures": [],
       "kernel_prelude": [
         "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
-        "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\six-notebooks-final\\\\06_embedding_overlay\\\\artifacts'"
+        "TUTORIAL_RUN_ROOT = '$WORKDIR/six-notebooks-final/06_embedding_overlay/artifacts'"
       ],
       "kernel_terminated": true,
       "cells": [

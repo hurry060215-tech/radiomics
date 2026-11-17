@@ -542,7 +542,7 @@
       "id": "public_ct_pat1",
       "input_sha256": "82d9f7fd261ef157e3faf03468ad9274821f9d4b63d7ebf3d7f8da250059d085",
       "license": "CC-BY-NC-3.0",
-      "original_source": "E:\\radiomics-build\\public-ct-v1\\source",
+      "original_source": "$WORKDIR/public-ct-v1/source",
       "present_gray_values": [
         -1000.0,
         -970.0,
@@ -1834,7 +1834,7 @@
       -20.0,
       30.0
     ],
-    "roi": "Interior ellipsoid: sum(((2*index-(size-1))/(size-3))^2) <= 1 over active dimensions; no 2.5D",
+    "roi": "Interior ellipsoid: sum(((2*index-(size-1))$WORKDIR <= 1 over active dimensions; no 2.5D",
     "seed": 20261114,
     "spacing_xyz_mm": [
       0.75,

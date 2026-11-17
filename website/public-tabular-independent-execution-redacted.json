@@ -12,15 +12,15 @@
     "status": "passed",
     "input_path": "$WORKDIR/radiomics\\website\\tutorials\\08_public_tabular.ipynb",
     "input_sha256": "fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40",
-    "executed_path": "D:\\radiomics-tutorial-validation\\public-tabular-root-v1\\08_public_tabular\\08_public_tabular.ipynb",
+    "executed_path": "$WORKDIR/public-tabular-root-v1/08_public_tabular/08_public_tabular.ipynb",
     "executed_sha256": "24a95354dcae4ee5f59c40544d879a9226f509474e04a3bb274037e10f4a4939",
     "seconds": 1.9435539,
     "execution_error": null,
     "failures": [],
     "kernel_prelude": [
       "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics'",
-      "TUTORIAL_RUN_ROOT = 'D:\\\\radiomics-tutorial-validation\\\\public-tabular-root-v1\\\\08_public_tabular\\\\artifacts'",
-      "TUTORIAL_DATA_ROOT = 'E:/radiomics-build/public-tabular-v1/source'"
+      "TUTORIAL_RUN_ROOT = '$WORKDIR/public-tabular-root-v1/08_public_tabular/artifacts'",
+      "TUTORIAL_DATA_ROOT = '$WORKDIR/public-tabular-v1/source'"
     ],
     "kernel_terminated": true,
     "cells": [

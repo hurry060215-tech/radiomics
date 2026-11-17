@@ -11,17 +11,17 @@
   "result": {
     "notebook": "08_public_tabular.ipynb",
     "status": "passed",
-    "input_path": "E:\\radiomics-build\\public-tabular-v1\\notebooks\\08_public_tabular.ipynb",
+    "input_path": "$WORKDIR/public-tabular-v1/notebooks/08_public_tabular.ipynb",
     "input_sha256": "8a9bbea94de56fc9ffd1369f3827ccf86c49065b7200f78a681f76831b604a3f",
-    "executed_path": "E:\\radiomics-build\\public-tabular-v1\\execution\\08_public_tabular\\08_public_tabular.ipynb",
+    "executed_path": "$WORKDIR/public-tabular-v1/execution/08_public_tabular/08_public_tabular.ipynb",
     "executed_sha256": "fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40",
     "seconds": 1.9375315,
     "execution_error": null,
     "failures": [],
     "kernel_prelude": [
       "TUTORIAL_REPO_ROOT = '$WORKDIR/radiomics-worktrees\\\\tutorial-lessons'",
-      "TUTORIAL_RUN_ROOT = 'E:\\\\radiomics-build\\\\public-tabular-v1\\\\execution\\\\08_public_tabular\\\\artifacts'",
-      "TUTORIAL_DATA_ROOT = 'E:\\\\radiomics-build\\\\public-tabular-v1\\\\source'"
+      "TUTORIAL_RUN_ROOT = '$WORKDIR/public-tabular-v1/execution/08_public_tabular/artifacts'",
+      "TUTORIAL_DATA_ROOT = '$WORKDIR/public-tabular-v1/source'"
     ],
     "kernel_terminated": true,
     "cells": [

@@ -1,11 +1,11 @@
 """Independent mathematical checks on solver-level reference artifacts."""
+
 import hashlib
 import json
 from pathlib import Path
 
 import numpy as np
 import pytest
-
 
 DIRECTORY = Path(__file__).resolve().parents[1] / "golden/python_golden_v1"
 
@@ -21,7 +21,10 @@ def logistic(linear):
 def test_model_input_identity_and_patient_groups():
     data = read("model_inputs.json")
     ref = read("model_reference.json")
-    assert hashlib.sha256((DIRECTORY / "model_inputs.json").read_bytes()).hexdigest() == ref["input_sha256"]
+    assert (
+        hashlib.sha256((DIRECTORY / "model_inputs.json").read_bytes()).hexdigest()
+        == ref["input_sha256"]
+    )
     for task, dataset in data["datasets"].items():
         assert len(dataset["records"]) == 132
         cohorts = {}
@@ -44,7 +47,9 @@ def test_frozen_solver_stationarity_and_probability_formulas(task):
     np.testing.assert_allclose(scale, raw.std(axis=0, ddof=0), atol=1e-12, rtol=1e-12)
     x = (raw - mean) / scale
     y = np.asarray([row["target"] for row in train])
-    evaluate = (np.asarray([lookup[key]["values"] for key in ref["evaluation_sample_ids"]]) - mean) / scale
+    evaluate = (
+        np.asarray([lookup[key]["values"] for key in ref["evaluation_sample_ids"]]) - mean
+    ) / scale
     assert np.linalg.matrix_rank(np.c_[np.ones(len(x)), x]) == 5
     for name, result in ref["models"].items():
         if "state" not in result:
@@ -57,7 +62,9 @@ def test_frozen_solver_stationarity_and_probability_formulas(task):
             if task == "binary":
                 residual = logistic(logits) - y
                 gradient = x.T @ residual / len(y) + penalty * w
-                objective = np.mean(np.logaddexp(0, logits) - y * logits) + penalty * np.sum(w ** 2) / 2
+                objective = (
+                    np.mean(np.logaddexp(0, logits) - y * logits) + penalty * np.sum(w**2) / 2
+                )
                 p = logistic(evaluate @ w + b)
                 expected_probabilities = np.c_[1 - p, p]
             else:
@@ -66,20 +73,29 @@ def test_frozen_solver_stationarity_and_probability_formulas(task):
                 probabilities = exp / exp.sum(axis=1, keepdims=True)
                 residual = probabilities - np.eye(3)[y.astype(int)]
                 gradient = residual.T @ x / len(y) + penalty * w
-                objective = -np.log(probabilities[np.arange(len(y)), y.astype(int)]).mean() + penalty * np.sum(w ** 2) / 2
+                objective = (
+                    -np.log(probabilities[np.arange(len(y)), y.astype(int)]).mean()
+                    + penalty * np.sum(w**2) / 2
+                )
                 eval_logits = evaluate @ w.T + b
                 exp = np.exp(eval_logits - eval_logits.max(axis=1, keepdims=True))
                 expected_probabilities = exp / exp.sum(axis=1, keepdims=True)
-            np.testing.assert_allclose(expected_probabilities, result["probabilities"], atol=1e-12, rtol=1e-12)
+            np.testing.assert_allclose(
+                expected_probabilities, result["probabilities"], atol=1e-12, rtol=1e-12
+            )
         else:
             residual = x @ w + b - y
             smooth = x.T @ residual / len(y)
             if name == "LASSO":
-                gradient = np.where(np.abs(w) > 1e-10, smooth + penalty * np.sign(w), np.maximum(np.abs(smooth) - penalty, 0))
-                objective = np.mean(residual ** 2) / 2 + penalty * np.abs(w).sum()
+                gradient = np.where(
+                    np.abs(w) > 1e-10,
+                    smooth + penalty * np.sign(w),
+                    np.maximum(np.abs(smooth) - penalty, 0),
+                )
+                objective = np.mean(residual**2) / 2 + penalty * np.abs(w).sum()
             else:
                 gradient = smooth + penalty * w
-                objective = np.mean(residual ** 2) / 2 + penalty * np.sum(w ** 2) / 2
+                objective = np.mean(residual**2) / 2 + penalty * np.sum(w**2) / 2
             key = "linear_scores_not_probabilities" if task == "binary" else "predictions"
             np.testing.assert_allclose(evaluate @ w + b, result[key], atol=1e-12, rtol=1e-12)
         assert np.max(np.abs(gradient)) <= 1e-7
@@ -97,7 +113,11 @@ def test_frozen_solver_stationarity_and_probability_formulas(task):
             residual = logistic(x @ w + state["intercept"]) - labels
             smooth = x.T @ residual / len(y)
             alpha = sparse["native_penalty"]
-            kkt = np.where(np.abs(w) > 1e-10, smooth + alpha * np.sign(w), np.maximum(np.abs(smooth) - alpha, 0))
+            kkt = np.where(
+                np.abs(w) > 1e-10,
+                smooth + alpha * np.sign(w),
+                np.maximum(np.abs(smooth) - alpha, 0),
+            )
             assert np.max(np.abs(kkt)) <= 1e-7
             assert abs(residual.mean()) <= 1e-7
             union.update(state["support"])

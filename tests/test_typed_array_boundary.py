@@ -1,73 +1,102 @@
 """The private typed path retains the JSON contract and owned sample semantics."""
+
 import gc
 import json
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 import numpy as np
 import pytest
 
 import ov_radiomics as rad
-from ov_radiomics._backend import resolve_backend, try_native
+from ov_radiomics._backend import resolve_backend
 from ov_radiomics._native_common import array_features_typed_or_json, request
 
-pytestmark = pytest.mark.skipif(try_native() is None, reason='Native extension not built.')
+pytestmark = pytest.mark.usefixtures("native_backend")
 
-CONFIG = dict(profile='python_golden_v1',
-    discretization=dict(method='fixed_width', width=1),
-    aggregation='direction_mean', gldm_alpha=0, voxel_array_shift=0)
+CONFIG = dict(
+    profile="python_golden_v1",
+    discretization=dict(method="fixed_width", width=1),
+    aggregation="direction_mean",
+    gldm_alpha=0,
+    voxel_array_shift=0,
+)
 
 
 def arrays():
     values = np.arange(24, dtype=np.float64).reshape(2, 3, 4)
     labels = np.ones(values.shape, dtype=np.uint32)
-    image = rad.image.from_array(values, spatial_unit='mm')
+    image = rad.image.from_array(values, spatial_unit="mm")
     return values, labels, image.geometry
 
 
 def test_typed_entry_matches_legacy_json_exactly():
     values, labels, geometry = arrays()
-    native = resolve_backend('rust')
-    actual = json.loads(native.array_features_typed(values, labels, json.dumps(dict(
-        image_geometry=geometry, mask_geometry=geometry, config=CONFIG,
-        roi_label=1, families=None, intensity_mask=None))))
-    expected = request('array_features',
+    native = resolve_backend("rust")
+    actual = json.loads(
+        native.array_features_typed(
+            values,
+            labels,
+            json.dumps(
+                dict(
+                    image_geometry=geometry,
+                    mask_geometry=geometry,
+                    config=CONFIG,
+                    roi_label=1,
+                    families=None,
+                    intensity_mask=None,
+                )
+            ),
+        )
+    )
+    expected = request(
+        "array_features",
         image=dict(geometry=geometry, values=values.ravel().tolist()),
         morphology_mask=dict(geometry=geometry, labels=labels.ravel().tolist()),
-        intensity_mask=None, config=CONFIG, roi_label=1, families=None)
+        intensity_mask=None,
+        config=CONFIG,
+        roi_label=1,
+        families=None,
+    )
     assert actual == expected
 
 
-@pytest.mark.parametrize('kind', ['float32', 'strided', 'fortran', 'mask64', 'big_endian'])
+@pytest.mark.parametrize("kind", ["float32", "strided", "fortran", "mask64", "big_endian"])
 def test_rust_rejects_incompatible_buffers_and_dispatch_falls_back(kind):
     values, labels, geometry = arrays()
-    if kind == 'float32':
+    if kind == "float32":
         values = values.astype(np.float32)
-    elif kind == 'strided':
+    elif kind == "strided":
         source = np.zeros((2, 3, 8), dtype=np.float64)
         source[..., ::2] = values
         values = source[..., ::2]
-    elif kind == 'fortran':
+    elif kind == "fortran":
         values = np.asfortranarray(values)
-    elif kind == 'mask64':
+    elif kind == "mask64":
         labels = labels.astype(np.uint64)
     else:
-        values = values.astype('>f8')
-    native = resolve_backend('rust')
-    parameters = dict(image_geometry=geometry, mask_geometry=geometry,
-        config=CONFIG, roi_label=1, families=['firstorder'], intensity_mask=None)
+        values = values.astype(">f8")
+    native = resolve_backend("rust")
+    parameters = dict(
+        image_geometry=geometry,
+        mask_geometry=geometry,
+        config=CONFIG,
+        roi_label=1,
+        families=["firstorder"],
+        intensity_mask=None,
+    )
     with pytest.raises((TypeError, ValueError)):
         native.array_features_typed(values, labels, json.dumps(parameters))
     actual = array_features_typed_or_json(values, labels, **parameters)
-    assert actual['original_firstorder_Mean'] == 11.5
+    assert actual["original_firstorder_Mean"] == 11.5
 
 
 def test_sample_arc_views_share_storage_are_immutable_and_keep_owner_alive():
     values, labels, _ = arrays()
-    image = rad.image.from_array(values, spatial_unit='mm')
+    image = rad.image.from_array(values, spatial_unit="mm")
     mask = rad.mask.from_array(labels, geometry=image.geometry)
-    sample = rad.ImageSample(dict(sample_id='arc', patient_id='p'), image, mask)
+    sample = rad.ImageSample(dict(sample_id="arc", patient_id="p"), image, mask)
     assert sample._owned_arrays is not None
     first, second = sample.image.array, sample.image.array
     mask_view = sample.mask.array
@@ -78,9 +107,9 @@ def test_sample_arc_views_share_storage_are_immutable_and_keep_owner_alive():
             view.setflags(write=True)
     expected = values.copy()
     values.fill(-999)
-    image._payload['values'][0] = -100
+    image._payload["values"][0] = -100
     snapshot = sample.to_dict()
-    snapshot['image']['values'][0] = -200
+    snapshot["image"]["values"][0] = -200
     np.testing.assert_array_equal(first, expected)
     del sample, image, mask, second
     gc.collect()
@@ -90,9 +119,9 @@ def test_sample_arc_views_share_storage_are_immutable_and_keep_owner_alive():
 
 def test_sample_owned_extraction_and_explicit_dict_path_are_equal():
     values, labels, _ = arrays()
-    image = rad.image.from_array(values, spatial_unit='mm')
+    image = rad.image.from_array(values, spatial_unit="mm")
     mask = rad.mask.from_array(labels, geometry=image.geometry)
-    metadata = dict(sample_id='same', patient_id='p')
+    metadata = dict(sample_id="same", patient_id="p")
     owned = rad.ImageSample(metadata, image, mask)
     legacy = rad.ImageSample(metadata, image.to_dict(), mask.to_dict())
     assert owned.to_dict() == legacy.to_dict()
@@ -100,33 +129,35 @@ def test_sample_owned_extraction_and_explicit_dict_path_are_equal():
 
 
 def test_diagnostic_observes_owned_path_without_disabling_serializer_guard(monkeypatch):
-    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1]/'tools'))
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "tools"))
     from profile_typed_boundary import trace_boundary
+
     import ov_radiomics._native_common as common
     import ov_radiomics._types as types
-    native = resolve_backend('rust')
+
+    native = resolve_backend("rust")
     original_owner = native.OwnedArraySample
     original_serializer = types.ImageVolume.to_dict
     with trace_boundary(common, types, native) as (stage, events, phases):
-        with stage('validate_image'):
-            image = rad.image.from_array(np.ones((2, 3, 4)), spatial_unit='mm')
-        with stage('validate_mask'):
+        with stage("validate_image"):
+            image = rad.image.from_array(np.ones((2, 3, 4)), spatial_unit="mm")
+        with stage("validate_mask"):
             mask = rad.mask.from_array(np.ones((2, 3, 4)), geometry=image.geometry)
-        with stage('validate_image_sample'):
-            sample = rad.ImageSample(dict(sample_id='trace', patient_id='p'), image, mask)
+        with stage("validate_image_sample"):
+            sample = rad.ImageSample(dict(sample_id="trace", patient_id="p"), image, mask)
         assert types.ImageVolume.to_dict is original_serializer
-        with stage('array_features'):
+        with stage("array_features"):
             sample.extract(CONFIG)
     assert native.OwnedArraySample is original_owner
     assert types.ImageVolume.to_dict is original_serializer
-    assert any(event['kind']=='native_owned_constructor' for event in events)
-    assert any(event['kind']=='native_owned_extract' for event in events)
+    assert any(event["kind"] == "native_owned_constructor" for event in events)
+    assert any(event["kind"] == "native_owned_extract" for event in events)
 
 
 def test_standalone_typed_entry_snapshots_before_releasing_gil():
     # Exercise only the repaired owned path. The subprocess bounds any failure
     # and restores its temporary GIL switch interval; no old unsafe race is run.
-    code = '''
+    code = """
 import json, sys, threading
 import numpy as np
 import ov_radiomics as rad
@@ -170,41 +201,48 @@ for _ in range(3):
     assert result['original_firstorder_Mean']==1.,result
     results.append(dict(changed_during_native=changed_during_native,mean=result['original_firstorder_Mean']))
 print(json.dumps(results))
-'''
-    result = subprocess.run([sys.executable, '-c', code], capture_output=True,
-        text=True, timeout=30)
+"""
+    result = subprocess.run(
+        [sys.executable, "-c", code], capture_output=True, text=True, timeout=30
+    )
     assert result.returncode == 0, result.stderr
-    assert json.loads(result.stdout) == [dict(changed_during_native=True, mean=1.)]*3
+    assert json.loads(result.stdout) == [dict(changed_during_native=True, mean=1.0)] * 3
 
 
-@pytest.mark.parametrize('failure', ['shape', 'geometry', 'config', 'roi'])
+@pytest.mark.parametrize("failure", ["shape", "geometry", "config", "roi"])
 def test_validation_errors_do_not_fall_back_to_flat_json(failure, monkeypatch):
     import ov_radiomics._native_common as common
 
     values, labels, geometry = arrays()
-    parameters = dict(image_geometry=geometry, mask_geometry=geometry,
-        config=CONFIG, roi_label=1, families=['firstorder'], intensity_mask=None)
-    if failure == 'shape':
+    parameters = dict(
+        image_geometry=geometry,
+        mask_geometry=geometry,
+        config=CONFIG,
+        roi_label=1,
+        families=["firstorder"],
+        intensity_mask=None,
+    )
+    if failure == "shape":
         # Same voxel count: flattening would silently accept this wrong shape.
-        wrong = {**geometry, 'shape': [3, 4, 2]}
+        wrong = {**geometry, "shape": [3, 4, 2]}
         parameters.update(image_geometry=wrong, mask_geometry=wrong)
-        expected = 'shape differs'
-    elif failure == 'geometry':
+        expected = "shape differs"
+    elif failure == "geometry":
         other = json.loads(json.dumps(geometry))
-        other['affine'][0][3] += 10.
-        parameters['mask_geometry'] = other
-        expected = 'world-coordinate grids differ'
-    elif failure == 'config':
-        parameters['config'] = {**CONFIG, 'profile': 'unsupported-profile'}
-        expected = 'Unknown extraction profile'
+        other["affine"][0][3] += 10.0
+        parameters["mask_geometry"] = other
+        expected = "world-coordinate grids differ"
+    elif failure == "config":
+        parameters["config"] = {**CONFIG, "profile": "unsupported-profile"}
+        expected = "Unknown extraction profile"
     else:
-        parameters['roi_label'] = 99
-        expected = 'ROI is empty or absent'
+        parameters["roi_label"] = 99
+        expected = "ROI is empty or absent"
 
     def unexpected(*args, **kwargs):
-        raise AssertionError('Validation errors must not retry the JSON path.')
+        raise AssertionError("Validation errors must not retry the JSON path.")
 
-    monkeypatch.setattr(common, 'request', unexpected)
+    monkeypatch.setattr(common, "request", unexpected)
     with pytest.raises(ValueError, match=expected):
         common.array_features_typed_or_json(values, labels, **parameters)
 
@@ -215,50 +253,53 @@ def test_dimensionality_rejection_does_not_fall_back(monkeypatch):
     values, labels, geometry = arrays()
 
     def unexpected(*args, **kwargs):
-        raise AssertionError('Dimensionality errors must not retry the JSON path.')
+        raise AssertionError("Dimensionality errors must not retry the JSON path.")
 
-    monkeypatch.setattr(common, 'request', unexpected)
-    with pytest.raises(TypeError, match='dimensionality mismatch'):
-        common.array_features_typed_or_json(values[0], labels[0],
-            image_geometry=geometry, mask_geometry=geometry, config=CONFIG)
+    monkeypatch.setattr(common, "request", unexpected)
+    with pytest.raises(TypeError, match="dimensionality mismatch"):
+        common.array_features_typed_or_json(
+            values[0], labels[0], image_geometry=geometry, mask_geometry=geometry, config=CONFIG
+        )
 
 
 def test_non_entry_type_error_does_not_fall_back(monkeypatch):
     import ov_radiomics._native_common as common
 
     values, labels, geometry = arrays()
-    native = resolve_backend('rust')
+    native = resolve_backend("rust")
 
     def compute_error(*args, **kwargs):
-        raise TypeError('Unexpected native computation type failure.')
+        raise TypeError("Unexpected native computation type failure.")
 
     def unexpected(*args, **kwargs):
-        raise AssertionError('A compute TypeError must not retry the JSON path.')
+        raise AssertionError("A compute TypeError must not retry the JSON path.")
 
-    monkeypatch.setattr(native, 'array_features_typed', compute_error)
-    monkeypatch.setattr(common, 'request', unexpected)
-    with pytest.raises(TypeError, match='native computation type failure'):
-        common.array_features_typed_or_json(values, labels,
-            image_geometry=geometry, mask_geometry=geometry, config=CONFIG)
+    monkeypatch.setattr(native, "array_features_typed", compute_error)
+    monkeypatch.setattr(common, "request", unexpected)
+    with pytest.raises(TypeError, match="native computation type failure"):
+        common.array_features_typed_or_json(
+            values, labels, image_geometry=geometry, mask_geometry=geometry, config=CONFIG
+        )
 
 
-@pytest.mark.parametrize('input_kind', ['float32', 'strided'])
+@pytest.mark.parametrize("input_kind", ["float32", "strided"])
 def test_wrong_shape_stays_rejected_after_dtype_or_layout_refusal(input_kind, monkeypatch):
     import ov_radiomics._native_common as common
 
     values, labels, geometry = arrays()
-    if input_kind == 'float32':
+    if input_kind == "float32":
         values = values.astype(np.float32)
     else:
         larger = np.zeros((2, 3, 8), dtype=np.float64)
         larger[..., ::2] = values
         values = larger[..., ::2]
-    wrong = {**geometry, 'shape': [3, 4, 2]}
+    wrong = {**geometry, "shape": [3, 4, 2]}
 
     def unexpected(*args, **kwargs):
-        raise AssertionError('Dtype/layout fallback must preserve the shape check.')
+        raise AssertionError("Dtype/layout fallback must preserve the shape check.")
 
-    monkeypatch.setattr(common, 'request', unexpected)
-    with pytest.raises(ValueError, match='shape differs'):
-        common.array_features_typed_or_json(values, labels,
-            image_geometry=wrong, mask_geometry=wrong, config=CONFIG)
+    monkeypatch.setattr(common, "request", unexpected)
+    with pytest.raises(ValueError, match="shape differs"):
+        common.array_features_typed_or_json(
+            values, labels, image_geometry=wrong, mask_geometry=wrong, config=CONFIG
+        )

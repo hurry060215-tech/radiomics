@@ -17,6 +17,8 @@ when Windows checkout line endings differ from the stored Git blob.
 ## What changed in public derivatives
 
 Only machine-local path prefixes and environment directory labels were replaced.
+The rule covers absolute Windows, UNC and Unix filesystem paths, rather than
+allowing paths outside any one platform directory. URLs and relative paths stay intact.
 `$WORKDIR` denotes the original working directory; `reference-env` denotes an
 external reference environment. These are provenance placeholders, not commands
 that were executed during the historical experiment.
@@ -27,6 +29,11 @@ paths were redacted with the same rule. The derivative JSON serialization and
 the compressed derivative's bytes therefore have their own SHA256 identities.
 No experiment, Golden reference or benchmark observation was rerun or rerecorded
 to create these public views.
+
+Run `python tools/redact_public_evidence.py --check` to verify every derivative
+and its manifest identity. The manifest records `values_unchanged: true` and an
+`observation_sha256` over the exact bytes outside JSON string tokens. This retains
+numeric spellings, whitespace and observation order; it is not a new measurement.
 
 ## How to interpret historical artifact indexes
 

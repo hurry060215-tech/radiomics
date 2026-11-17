@@ -1,18 +1,33 @@
 """Generate exact public signatures plus hand-maintained parameter contracts."""
+
 import inspect
 from pathlib import Path
+
 import ov_radiomics as rad
 
 ROOT = Path(__file__).resolve().parents[1]
 groups = {
-    'Image input and extraction':['match_images','check_images','extract','join_data'],
-    'Feature processing':['FeatureSelector'],
-    'Clinical statistics':['baseline_table','univariate_logistic','multivariable_logistic'],
-    'Training and probability fusion':['split_data','make_classifier','train_models','fusion_data','fit_fusion','evaluate'],
-    'Evaluation':['backend_info','binary_metrics','delong_test','decision_curve','hosmer_lemeshow'],
-    'Figures':[name for name in vars(rad) if name.startswith('plot_')],
+    "Image input and extraction": ["match_images", "check_images", "extract", "join_data"],
+    "Feature processing": ["FeatureSelector"],
+    "Clinical statistics": ["baseline_table", "univariate_logistic", "multivariable_logistic"],
+    "Training and probability fusion": [
+        "split_data",
+        "make_classifier",
+        "train_models",
+        "fusion_data",
+        "fit_fusion",
+        "evaluate",
+    ],
+    "Evaluation": [
+        "backend_info",
+        "binary_metrics",
+        "delong_test",
+        "decision_curve",
+        "hosmer_lemeshow",
+    ],
+    "Figures": [name for name in vars(rad) if name.startswith("plot_")],
 }
-text = '''# API reference
+text = """# API reference
 
 Import all functions with `import ov_radiomics as rad`. Signatures below are generated from the implementation.
 
@@ -60,12 +75,14 @@ All model parameters can be overridden using `make_classifier(..., **model_param
 | XGBoost | n_estimators=100, max_depth=3, eval_metric=logloss, n_jobs=1, random_state |
 | LightGBM | n_estimators=100, verbosity=-1, n_jobs=1, random_state |
 
-'''
-for group,names in groups.items():
-    text += '\n## '+group+'\n\n'
+"""
+for group, names in groups.items():
+    text += "\n## " + group + "\n\n"
     for name in names:
-        obj = getattr(rad,name)
-        text += '### `'+name+'`\n\n```python\n'+name+str(inspect.signature(obj))+'\n```\n\n'
+        obj = getattr(rad, name)
+        text += (
+            "### `" + name + "`\n\n```python\n" + name + str(inspect.signature(obj)) + "\n```\n\n"
+        )
         if inspect.getdoc(obj):
-            text += inspect.getdoc(obj)+'\n\n'
-(ROOT/'docs'/'api.md').write_text(text.rstrip()+'\n',encoding='utf-8')
+            text += inspect.getdoc(obj) + "\n\n"
+(ROOT / "docs" / "api.md").write_text(text.rstrip() + "\n", encoding="utf-8")

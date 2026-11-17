@@ -1,18 +1,18 @@
 {
   "schema": "radiomics.real.file-entry-validation.v1",
   "base_revision": "0b8bb22f4c736e7f1fd384bfc7f1eda3102a9945",
-  "environment_python": "E:/radiomics-build/native-env/Scripts/python.exe",
+  "environment_python": "$WORKDIR/native-env/Scripts/python.exe",
   "native_core_implementation": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
   "scope": "Actual file-input smoke and display, not speed/clinical effectiveness. No outcomes or patient model generated.",
   "runs": [
     {
       "name": "public_PAT1_source_files",
       "commands": [
-        "python examples/real/download_public_ct.py --output E:/radiomics-build/real-tutorial-pat1-v2 --from-cache E:/radiomics-build/public-ct-v1/source --acknowledge-license",
-        "python examples/real/nifti_extract.py --cohort E:/radiomics-build/real-tutorial-pat1-v1/cohort.csv --bin-width 25 --labels 1 --features basic --preview-window -500 400 --output E:/radiomics-build/real-tutorial-nifti-v1"
+        "python examples/real/download_public_ct.py --output $WORKDIR/real-tutorial-pat1-v2 --from-cache $WORKDIR/public-ct-v1/source --acknowledge-license",
+        "python examples/real/nifti_extract.py --cohort $WORKDIR/real-tutorial-pat1-v1/cohort.csv --bin-width 25 --labels 1 --features basic --preview-window -500 400 --output $WORKDIR/real-tutorial-nifti-v1"
       ],
       "source_license": "CC-BY-NC-3.0 Philippe Lambin/CancerData; NIfTI Alex Zwanenburg",
-      "output_directory": "E:\\radiomics-build\\real-tutorial-nifti-v1",
+      "output_directory": "$WORKDIR/real-tutorial-nifti-v1",
       "status": "passed",
       "failed_samples": 0,
       "feature_count": 27,
@@ -29,7 +29,7 @@
     },
     {
       "name": "existing_real_IHC_image",
-      "command": "python examples/real/patch_features.py --manifest E:/radiomics-build/real-tutorial-ihc-input-v1/patches.csv --coordinate-space image-local --identity-scope source-image --output E:/radiomics-build/real-tutorial-ihc-v2",
+      "command": "python examples/real/patch_features.py --manifest $WORKDIR/real-tutorial-ihc-input-v1/patches.csv --coordinate-space image-local --identity-scope source-image --output $WORKDIR/real-tutorial-ihc-v2",
       "source_file": "$WORKDIR/reference-env\\Lib\\site-packages\\skimage\\data\\ihc.png",
       "source_sha256": "f8dd1aa387ddd1f49d8ad13b50921b237df8e9b262606d258770687b0ef93cef",
       "source_distribution": "scikit-image0.24.0",
@@ -37,7 +37,7 @@
       "source_license_statement": "No known copyright restrictions; actual source image not copied into repository.",
       "identity_scope": "Explicit operator source-image group only; not verified clinical patient/slide identity.",
       "coordinate_scope": "Whole ordinary source-image local pixels; no WSI placement/MPP invented.",
-      "output_directory": "E:\\radiomics-build\\real-tutorial-ihc-v2",
+      "output_directory": "$WORKDIR/real-tutorial-ihc-v2",
       "status": "passed",
       "failed_files": 0,
       "feature_count": 7,

@@ -31,7 +31,7 @@
   "finished_utc": "2026-11-14T16:02:28.326629+00:00",
   "installation": {
     "argv": [
-      "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+      "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Scripts/python.exe",
       "-I",
       "-m",
       "pip",
@@ -40,7 +40,7 @@
       "--no-index",
       "--no-deps",
       "--no-cache-dir",
-      "E:\\radiomics-build\\snapshot-native-v3\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl"
+      "$WORKDIR/snapshot-native-v3/wheels/ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl"
     ],
     "elapsed_seconds": 0.7623983000000001,
     "error": null,
@@ -54,7 +54,7 @@
     "stderr_utf8": "",
     "stdout_path": "payload-install.stdout.txt",
     "stdout_sha256": "3bff4aa17a8165a5d98242a636c0edd66148f6b963d98f7eb6b0df8bb82a019f",
-    "stdout_utf8": "Processing e:\\radiomics-build\\snapshot-native-v3\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl\r\nInstalling collected packages: ov-radiomics\r\nSuccessfully installed ov-radiomics-0.1.0\r\n"
+    "stdout_utf8": "Processing $WORKDIR/snapshot-native-v3/wheels/ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl\r\nInstalling collected packages: ov-radiomics\r\nSuccessfully installed ov-radiomics-0.1.0\r\n"
   },
   "installed_identity": {
     "files_sha256": {
@@ -86,7 +86,7 @@
       "table.py": "1fb6ba46a5b2eb36dd60d2f077c51bd1bc1888de704463ac84bbeff1212f5dab"
     },
     "files_verified": 26,
-    "package_path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics"
+    "package_path": "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Lib/site-packages/ov_radiomics"
   },
   "limitations": [
     "One offline --no-deps wheel-payload install; no dependency resolution/download/install cost",
@@ -101,7 +101,7 @@
         "$WORKDIR/radiomics\\.venv\\Scripts\\python.exe",
         "$WORKDIR/radiomics\\tools\\package_native.py",
         "--output",
-        "E:\\radiomics-build\\snapshot-native-v3\\package-assets"
+        "$WORKDIR/snapshot-native-v3/package-assets"
       ],
       [
         "cargo",
@@ -119,12 +119,12 @@
         "--release",
         "--locked",
         "--out",
-        "E:\\radiomics-build\\snapshot-native-v3\\wheels"
+        "$WORKDIR/snapshot-native-v3/wheels"
       ]
     ],
     "cargo_lock_sha256": "de33d6dfd0542add75ca1ba0076b9d373a4e8f8af0aa93eb4c49fa35b6d552bb",
     "cli": {
-      "path": "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+      "path": "$WORKDIR/snapshot-native-v3/cli/radiomics.exe",
       "sha256": "2197ea4af3cc3078f660a26f5a1401c8c9b185ace3d1d31984c7ba74fbb471f4"
     },
     "core_implementation_sha256": "a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8",
@@ -155,7 +155,7 @@
     "source_tree_clean": true,
     "version_changed": false,
     "wheel": {
-      "path": "E:\\radiomics-build\\snapshot-native-v3\\wheels\\ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
+      "path": "$WORKDIR/snapshot-native-v3/wheels/ov_radiomics-0.1.0-cp39-abi3-win_amd64.whl",
       "sha256": "8767c22d3344d0009669de7c5297c0db58b5f9144c506be04722fe70ab4ea9b3"
     },
     "wheel_files_sha256": {
@@ -201,13 +201,13 @@
         {
           "logical_size_bytes": 9879171,
           "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
-          "path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics",
+          "path": "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Lib/site-packages/ov_radiomics",
           "regular_file_count": 51
         },
         {
           "logical_size_bytes": 195025,
           "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
-          "path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics-0.1.0.dist-info",
+          "path": "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Lib/site-packages/ov_radiomics-0.1.0.dist-info",
           "regular_file_count": 8
         }
       ],
@@ -219,13 +219,13 @@
         {
           "logical_size_bytes": 9879171,
           "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
-          "path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics",
+          "path": "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Lib/site-packages/ov_radiomics",
           "regular_file_count": 51
         },
         {
           "logical_size_bytes": 195025,
           "metric": "Summed logical regular-file bytes, not physical allocation or shared/base Python storage.",
-          "path": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages\\ov_radiomics-0.1.0.dist-info",
+          "path": "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Lib/site-packages/ov_radiomics-0.1.0.dist-info",
           "regular_file_count": 8
         }
       ],
@@ -233,13 +233,13 @@
     }
   },
   "python": {
-    "purelib": "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Lib\\site-packages",
+    "purelib": "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Lib/site-packages",
     "version": "3.9.21 (main, Dec 11 2024, 16:35:24) [MSC v.1929 64 bit (AMD64)]"
   },
   "raw_observations": [
     {
       "argv": [
-        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "$WORKDIR/snapshot-native-v3/cli/radiomics.exe",
         "--version"
       ],
       "case_id": "cli_version_fresh_process",
@@ -261,7 +261,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Scripts/python.exe",
         "-I",
         "-c",
         "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
@@ -285,7 +285,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Scripts/python.exe",
         "-I",
         "-c",
         "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
@@ -309,7 +309,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "$WORKDIR/snapshot-native-v3/cli/radiomics.exe",
         "--version"
       ],
       "case_id": "cli_version_fresh_process",
@@ -331,7 +331,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "$WORKDIR/snapshot-native-v3/cli/radiomics.exe",
         "--version"
       ],
       "case_id": "cli_version_fresh_process",
@@ -353,7 +353,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Scripts/python.exe",
         "-I",
         "-c",
         "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
@@ -377,7 +377,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Scripts/python.exe",
         "-I",
         "-c",
         "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
@@ -401,7 +401,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "$WORKDIR/snapshot-native-v3/cli/radiomics.exe",
         "--version"
       ],
       "case_id": "cli_version_fresh_process",
@@ -423,7 +423,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "$WORKDIR/snapshot-native-v3/cli/radiomics.exe",
         "--version"
       ],
       "case_id": "cli_version_fresh_process",
@@ -445,7 +445,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Scripts/python.exe",
         "-I",
         "-c",
         "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
@@ -469,7 +469,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Scripts/python.exe",
         "-I",
         "-c",
         "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
@@ -493,7 +493,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "$WORKDIR/snapshot-native-v3/cli/radiomics.exe",
         "--version"
       ],
       "case_id": "cli_version_fresh_process",
@@ -515,7 +515,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\snapshot-native-v3\\cli\\radiomics.exe",
+        "$WORKDIR/snapshot-native-v3/cli/radiomics.exe",
         "--version"
       ],
       "case_id": "cli_version_fresh_process",
@@ -537,7 +537,7 @@
     },
     {
       "argv": [
-        "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment\\Scripts\\python.exe",
+        "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment/Scripts/python.exe",
         "-I",
         "-c",
         "import json,ov_radiomics as rad;from ov_radiomics import _native;print(json.dumps({'version':rad.__version__,'backend':rad.backend_info(),'implementation':_native.IMPLEMENTATION_SHA256},sort_keys=True))"
@@ -568,7 +568,7 @@
       "-I",
       "-m",
       "venv",
-      "E:\\radiomics-build\\benchmark-v2\\deployment-v3-1\\fresh-environment"
+      "$WORKDIR/benchmark-v2/deployment-v3-1/fresh-environment"
     ],
     "system_site_packages": false,
     "timed": false

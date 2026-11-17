@@ -35,7 +35,7 @@
 教程 <tutorials/index>
 用户指南 <user-guide/index>
 生态分工 <guide/ecosystem>
-English <en/installation>
+English <en/index>
 API <reference>
 验证与开发 <development/index>
 ```
