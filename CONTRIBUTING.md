@@ -59,6 +59,19 @@ The real UCI table lesson's input license, predeclared split and actual executio
 record are described in [its guide](docs/user-guide/public-tabular.md). Source-record
 groups do not establish independent patient identities or clinical validity.
 
+Lessons 09–10 are authored, code-only local-data notebooks. Read their
+[input contract](docs/user-guide/local-samples.md), then execute with externally
+provided paths. Keep the input tree and all result files outside every Git worktree:
+
+```bash
+python tools/run_local_sample_tutorials.py --data-root "$DATA_ROOT" --output "$RESULTS_DIR"
+```
+
+Do not commit their executed notebooks, sample previews, feature/label tables,
+models, individual predictions or machine-specific receipts. The shared executor
+still requires genuine ordered execution and actual inline plots; code-only
+publication does not relax local acceptance checks.
+
 Use the executor's fresh output directory and a kernel containing the current
 native wheel. Preserve failures and execution receipts. Public-data downloads
 are explicit; do not make them a side effect of an ordinary documentation build.

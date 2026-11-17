@@ -20,6 +20,7 @@
 普通病理与外部 embedding <../reference/user-guide/pathology>
 结果解读与排错 <../reference/user-guide/results-and-errors>
 真实公开表格说明 <../reference/user-guide/public-tabular>
+本地样例与输出边界 <../reference/user-guide/local-samples>
 教程实际验证范围 <../reference/user-guide/validation>
 ```
 
