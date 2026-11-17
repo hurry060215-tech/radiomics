@@ -21,8 +21,7 @@ def test_python_rust_and_import_versions_are_consistent():
         for node in module.body
         if isinstance(node, ast.Assign)
         and any(
-            isinstance(target, ast.Name) and target.id == "__version__"
-            for target in node.targets
+            isinstance(target, ast.Name) and target.id == "__version__" for target in node.targets
         )
     ]
     assert len(versions) == 1

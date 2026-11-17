@@ -1,10 +1,10 @@
 """Check frozen forest behavioral metrics and hand-tree arithmetic independently."""
+
 import hashlib
 import json
 from pathlib import Path
 
 import numpy as np
-
 
 DIRECTORY = Path(__file__).resolve().parents[1] / "golden/python_golden_v1"
 
@@ -15,7 +15,7 @@ def read(name):
 
 def auc(y, scores):
     positive, negative = scores[y == 1, None], scores[None, y == 0]
-    return np.mean((positive > negative) + .5 * (positive == negative))
+    return np.mean((positive > negative) + 0.5 * (positive == negative))
 
 
 def macro_f1(y, predictions):
@@ -31,7 +31,10 @@ def macro_f1(y, predictions):
 def test_forest_uses_frozen_data_patient_units_and_five_fixed_seeds():
     reference = read("forest_reference.json")
     inputs = read("model_inputs.json")
-    assert hashlib.sha256((DIRECTORY / "model_inputs.json").read_bytes()).hexdigest() == reference["input_sha256"]
+    assert (
+        hashlib.sha256((DIRECTORY / "model_inputs.json").read_bytes()).hexdigest()
+        == reference["input_sha256"]
+    )
     assert reference["model_seeds"] == [11, 23, 37, 53, 71]
     assert reference["acceptance"]["evaluation_unit"] == "patient"
     for task, result in reference["datasets"].items():
@@ -42,7 +45,10 @@ def test_forest_uses_frozen_data_patient_units_and_five_fixed_seeds():
         assert result["parameters"]["n_estimators"] == 200
         assert result["parameters"]["bootstrap"]
         y = np.asarray(result["test_patient_targets"])
-        groups = [[i for i, row in enumerate(records) if row["patient_id"] == patient] for patient in result["test_patient_ids"]]
+        groups = [
+            [i for i, row in enumerate(records) if row["patient_id"] == patient]
+            for patient in result["test_patient_ids"]
+        ]
         assert all(len(group) == 2 for group in groups)
         assert [row["seed"] for row in result["per_seed"]] == reference["model_seeds"]
         for seed in result["per_seed"]:
@@ -51,7 +57,10 @@ def test_forest_uses_frozen_data_patient_units_and_five_fixed_seeds():
             patient_values = np.asarray([values[index].mean(axis=0) for index in groups])
             np.testing.assert_array_equal(patient_values, seed["patient_" + key])
             if task == "binary":
-                metrics = {"auc": auc(y, patient_values[:, 1]), "brier": np.mean((patient_values[:, 1] - y) ** 2)}
+                metrics = {
+                    "auc": auc(y, patient_values[:, 1]),
+                    "brier": np.mean((patient_values[:, 1] - y) ** 2),
+                }
             elif task == "multiclass":
                 metrics = {"macro_f1": macro_f1(y, np.argmax(patient_values, axis=1))}
             else:
@@ -75,9 +84,16 @@ def test_hand_tree_root_impurity_and_thresholds():
         threshold = case["root_threshold"]
         left = x[:, feature] <= threshold
         if case["task"] == "regression":
-            impurity = lambda values: np.var(values, ddof=0)
+
+            def impurity(values):
+                return np.var(values, ddof=0)
         else:
-            impurity = lambda values: 1 - sum((np.sum(values == label) / len(values)) ** 2 for label in case["classes"])
+
+            def impurity(values):
+                return 1 - sum(
+                    (np.sum(values == label) / len(values)) ** 2 for label in case["classes"]
+                )
+
         root = impurity(y)
         decrease = root - (left.mean() * impurity(y[left]) + (~left).mean() * impurity(y[~left]))
         np.testing.assert_allclose(root, case["root_impurity"], atol=1e-12, rtol=1e-12)
