@@ -7,7 +7,7 @@ orphan: true
 The Rust core, CLI `check`/`extract` and Python `backend="rust"` entry point use
 the same reader/preparation/explicit Original feature engine without calling
 SimpleITK/PyRadiomics/sklearn/statsmodels. Full native modeling/statistical
-workflow integration is tracked separately in [the ledger](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/native-development.md).
+workflow integration is tracked separately in [the ledger](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/docs/native-development.md).
 
 Build with `cargo build --release -p ov-radiomics-cli --locked`. The binary is
 `target/release/radiomics` (Windows: `radiomics.exe`). Build the Python wheel with
@@ -68,10 +68,10 @@ outputs have deterministic sample/feature order.
 Input content is checked again after computation; a moving input is rejected
 before any feature cache entry is accepted.
 
-[The executable tutorial](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/examples/native/01_extract.py) creates original
+[The executable tutorial](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/examples/native/01_extract.py) creates original
 anisotropic 3D fixtures with a flipped direction and nonzero origin. Three lesions
 belong to two patients, each with 24 ROI voxels / 576 mm³. `--cli` invokes the binary
 with an empty executable search path, compares exact CSV values with Python and
 requires matching implementation digests. A clean OS/container deployment remains
 a separate cross-platform gate. Numerical compatibility does not establish IBSI
-conformance or performance targets; see [Benchmark v2](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/benchmark-v2.md).
+conformance or performance targets; see [Benchmark v2](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/docs/benchmark-v2.md).

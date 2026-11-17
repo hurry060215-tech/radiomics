@@ -41,7 +41,7 @@ Tutorials 02/03/05/06 consume the versioned synthetic JSON fixtures in this
 repository, without importing their reference implementations. See
 [strict WSIData adaptation](interop.md) for optional existing containers. The
 external-array lesson does not execute WSIData; separate
-[optional-container acceptance](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/optional-interop-acceptance.md) records the
+[optional-container acceptance](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/docs/optional-interop-acceptance.md) records the
 limited real pinned-container checks.
 
 ## Training and persistence

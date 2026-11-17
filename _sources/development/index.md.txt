@@ -17,4 +17,5 @@
 方法与技术报告 <methods>
 独立基准报告 <benchmarks>
 开发与贡献 <../contributing>
+源码版本与包发布 <../reference/release>
 ```

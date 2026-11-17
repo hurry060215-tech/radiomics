@@ -155,7 +155,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../en/installation.html">
+  <a class="nav-link nav-internal" href="../en/index.html">
     English
   </a>
 </li>
@@ -304,7 +304,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../en/installation.html">
+  <a class="nav-link nav-internal" href="../en/index.html">
     English
   </a>
 </li>
@@ -420,7 +420,7 @@ machine-local working directories and interpreter locations. The public tree
 provides separately named <code class="docutils literal notranslate"><span class="pre">*-redacted.json</span></code> and <code class="docutils literal notranslate"><span class="pre">*-redacted.jsonl.gz</span></code> derivatives
 of those receipts, while the original files are preserved byte for byte in an
 external evidence archive outside every Git repository.</p>
-<p>The <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/public-evidence-manifest.json">public evidence manifest</a> records each
+<p>The <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/docs/public-evidence-manifest.json">public evidence manifest</a> records each
 original repository-relative filename, original SHA256 and byte count, and its
 public derivative’s filename, SHA256 and byte count. The external archive’s
 <code class="docutils literal notranslate"><span class="pre">MANIFEST.json</span></code> also records the source paths and archival timestamps.
@@ -430,6 +430,8 @@ when Windows checkout line endings differ from the stored Git blob.</p>
 <section id="what-changed-in-public-derivatives">
 <h2>What changed in public derivatives<a class="headerlink" href="#what-changed-in-public-derivatives" title="Link to this heading">#</a></h2>
 <p>Only machine-local path prefixes and environment directory labels were replaced.
+The rule covers absolute Windows, UNC and Unix filesystem paths, rather than
+allowing paths outside any one platform directory. URLs and relative paths stay intact.
 <code class="docutils literal notranslate"><span class="pre">$WORKDIR</span></code> denotes the original working directory; <code class="docutils literal notranslate"><span class="pre">reference-env</span></code> denotes an
 external reference environment. These are provenance placeholders, not commands
 that were executed during the historical experiment.</p>
@@ -439,6 +441,10 @@ paths were redacted with the same rule. The derivative JSON serialization and
 the compressed derivative’s bytes therefore have their own SHA256 identities.
 No experiment, Golden reference or benchmark observation was rerun or rerecorded
 to create these public views.</p>
+<p>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/redact_public_evidence.py</span> <span class="pre">--check</span></code> to verify every derivative
+and its manifest identity. The manifest records <code class="docutils literal notranslate"><span class="pre">values_unchanged:</span> <span class="pre">true</span></code> and an
+<code class="docutils literal notranslate"><span class="pre">observation_sha256</span></code> over the exact bytes outside JSON string tokens. This retains
+numeric spellings, whitespace and observation order; it is not a new measurement.</p>
 </section>
 <section id="how-to-interpret-historical-artifact-indexes">
 <h2>How to interpret historical artifact indexes<a class="headerlink" href="#how-to-interpret-historical-artifact-indexes" title="Link to this heading">#</a></h2>
@@ -535,8 +541,8 @@ input, interpreter, work-directory and output arguments.</p>
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="build-revision" data-build-revision="a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c">
-  Build <code>a767fa7</code>
+        <div class="footer-item"><p class="build-revision" data-build-revision="1eba7e5455d5c1bf830a9e1834e8f5274af07fd3">
+  Build <code>1eba7e5</code>
 </p></div>
       
     </div>

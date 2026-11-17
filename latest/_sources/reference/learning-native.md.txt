@@ -74,7 +74,7 @@ without outcomes. These are software acceptance data, not clinical performance.
 Outer CV scores used for model comparison have selection uncertainty. Training
 predictions are apparent. A final held-out cohort remains necessary for evaluation;
 this workflow does not turn OOF scores used to fit a fusion model into unbiased
-validation of that fusion model. See [Benchmark v2](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/benchmark-v2.md) for separate
+validation of that fusion model. See [Benchmark v2](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/docs/benchmark-v2.md) for separate
 correctness/deployment gates and performance reporting.
 
 `learning::fit_fusion` supports explicit weighted probability averaging and a

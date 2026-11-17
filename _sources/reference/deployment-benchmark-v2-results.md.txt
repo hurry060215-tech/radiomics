@@ -13,7 +13,7 @@ orphan: true
 
 - 源码 `45140bff46b3ef1ae7eff9a170acb3a1116308b1`，核心实现 `a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8`，包版本 `0.1.0`。
 - 不可变 wheel SHA256 `8767c22d3344d0009669de7c5297c0db58b5f9144c506be04722fe70ab4ea9b3`；CLI SHA256 `2197ea4af3cc3078f660a26f5a1401c8c9b185ace3d1d31984c7ba74fbb471f4`。
-- 先审阅并批准 [deployment-plan.json](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/v2/deployment-plan.json) 精确 SHA `d807983caaee9bb95f6046327c014bb9a2b86c6e421e77e96b66e938c0c6bfa6`，之后只执行一次固定试验。
+- 先审阅并批准 [deployment-plan.json](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/benchmarks/v2/deployment-plan.json) 精确 SHA `d807983caaee9bb95f6046327c014bb9a2b86c6e421e77e96b66e938c0c6bfa6`，之后只执行一次固定试验。
 - Windows、CPython3.9.21；新建 `system-site-packages=false` venv。创建环境为不计时准备，不修改既有 Golden/测量环境或系统安装。
 - CLI `--version` 和 Python `-I` import＋`backend_info()` 各运行7个独立进程，无预热；round0 CLI→Python，round1反向，固定交替，全部14次保留。时间为父进程启动到 stdout/stderr 传输与退出完成；字节核验、日志解码、文件计数和扫描在计时外。
 - 主 agent 和验收工作包确认短窗口没有重叠构建、安装、算法预检或其他套件计时。OS/user 后台进程和文件/bytecode cache 未独占控制。
@@ -53,7 +53,7 @@ python -I -m pip --disable-pip-version-check install --no-index --no-deps --no-c
 
 ## 证据与复现
 
-可核查 [独立报告](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/deployment-native-45140bff/report-redacted.json)、[14条原始观测](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/deployment-native-45140bff/raw-observations.jsonl)、[单次安装记录](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/deployment-native-45140bff/payload-install.json) 与 [artifact index](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/deployment-native-45140bff/artifact-index.json)。外部完整目录为 `$WORKDIR/benchmark-v2/deployment-v3-1`，包含 fresh venv 和原始日志；归档不包含可执行构建产物或整个环境。
+可核查 [独立报告](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/benchmarks/results/deployment-native-45140bff/report-redacted.json)、[14条原始观测](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/benchmarks/results/deployment-native-45140bff/raw-observations.jsonl)、[单次安装记录](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/benchmarks/results/deployment-native-45140bff/payload-install.json) 与 [artifact index](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/benchmarks/results/deployment-native-45140bff/artifact-index.json)。外部完整目录为 `$WORKDIR/benchmark-v2/deployment-v3-1`，包含 fresh venv 和原始日志；归档不包含可执行构建产物或整个环境。
 
 Set `$BASE_PYTHON` to the matching isolated base interpreter. Use a new output directory:
 

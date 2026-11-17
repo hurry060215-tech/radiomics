@@ -1,7 +1,7 @@
 {
   "schema": "radiomics.documentation.publication.v1",
-  "build_revision": "a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c",
-  "latest_revision": "a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c",
+  "build_revision": "1eba7e5455d5c1bf830a9e1834e8f5274af07fd3",
+  "latest_revision": "1eba7e5455d5c1bf830a9e1834e8f5274af07fd3",
   "releases": {
     "v0.1.0": "bb2d3fe4f31e938c8aef8eb64c44987f3ed24c6e"
   },
@@ -15,32 +15,32 @@
     ],
     "files": {
       ".buildinfo": {
-        "sha256": "ac67bc29d01d59368e98a3f49b870110c8083c7658e81b3afe3c1c5db314959d",
+        "sha256": "61274ff2046a7e6e450bf671b092e455bbfb76795183e9c49b777c856707b43b",
         "bytes": 230
       },
       "_downloads/0c29e5de3257c17abceda3c965b9d4e5/03_multiclass_regression.ipynb": {
-        "sha256": "6214fd8845e69302d755b6131b858186378cfc1f434dd209ed39cbcfd1aa188d",
-        "bytes": 106677
+        "sha256": "94415ce41ea98800b6abcee9d10069172520e4c7eb4424d4c95d5ef4db0fa5f4",
+        "bytes": 114425
       },
       "_downloads/1b15275b3f109a574a0d9e3a84396e30/07_public_ct.ipynb": {
         "sha256": "cba875a9813ccfc881be6ac01f2bbcb051cf09bce777a1e8f691bca354575a13",
         "bytes": 190605
       },
       "_downloads/2528c2dd6f2504536eb012e96639ab37/05_patch_patient.ipynb": {
-        "sha256": "9ecd7e31386fafebe2aee760ab34e1112245bb6fc58fc21fce950eaf418d0cf5",
-        "bytes": 92770
+        "sha256": "79ae2b3400fa7d166f65d03a31c6ba7dce08f613117ed6a3cfb4b43f73e5a3a4",
+        "bytes": 101337
       },
       "_downloads/48300a9ef749e75be1b5f00256f7513c/08_public_tabular.ipynb": {
         "sha256": "fa5550d0cf1f2788610021b4d39094fbc8e8aa6de1cec4ac5e23e15983fffe40",
         "bytes": 88040
       },
       "_downloads/5a9b704c92210dcfd288e38b43d2a7a8/02_image_clinical_binary.ipynb": {
-        "sha256": "63023267154ab0a2e8fe1d2017fdd9eb0af999848e03ec66ae8773f41f00bae8",
-        "bytes": 83789
+        "sha256": "127f8e49affbca2b8132e745ba6e6b0e730266f27385ce1e5b007bbce7305cb3",
+        "bytes": 83457
       },
       "_downloads/8d03d22d99d993f3a6b12774c8a0881d/01_extract.ipynb": {
-        "sha256": "24e06556a70aedddbf6517d5876a54b025d9b000cc33da60be3f94c1ddab9bd1",
-        "bytes": 56294
+        "sha256": "443a5ba1c6de554ee98a70dc625ce28557c4bf0c47cd27d21b1d54b45c6b613e",
+        "bytes": 64266
       },
       "_downloads/ab3e3948991c229ffcf45e195cd37c2d/acceptance-v2-report.md": {
         "sha256": "b4ef8e55a93d5141bc1fc6f90a6e81dbfc24842df62155cb07054ab6dde7273c",
@@ -51,8 +51,8 @@
         "bytes": 13207
       },
       "_downloads/c1baa132fddccd30046fba2594802657/04_regions_delta_habitat.ipynb": {
-        "sha256": "dae9492574b73061bdca8460bfc3ab18d96f287cc1de4c4f5c677f7f0a0f60d3",
-        "bytes": 76308
+        "sha256": "bb7bfb4a3f9bbaf177b28c0b8b82aa7244381a5c7b56d08da202d02cb5534476",
+        "bytes": 74000
       },
       "_downloads/c5da5a5d23e8ea5e1c0ca3c891103de4/09_local_image_features.ipynb": {
         "sha256": "dce465f1317b5577cab6302c90c0da2651c93e01a3f2a9f7c2796f8bd81d2063",
@@ -63,8 +63,8 @@
         "bytes": 11410
       },
       "_downloads/eafc33ab98a227502e6561fe4831a553/06_embedding_overlay.ipynb": {
-        "sha256": "09856f6cb5b2896c8ea0bf15a85005a302db057692c25811eb1dc3958bd8ef01",
-        "bytes": 86416
+        "sha256": "2a00f5c9e601f6e60dc1e6213e054f5a593a1b1e38284271e14e9551a87b9361",
+        "bytes": 95021
       },
       "_downloads/f1d948739dfb6590f33785fed5373661/scope.md": {
         "sha256": "cd7cb8edc7eda685844d78be4fb2a2e9001bb27b8ffd4ff6e588e59acdd88198",
@@ -74,33 +74,33 @@
         "sha256": "1b60b71c86caa497c69ddd35e0abb6d56a8af7e5a4160fb691a82198e9cc31e5",
         "bytes": 32059
       },
-      "_images/2ad0d46fc16da8b5857afed3730f4b534803dde49de496d0f8b6b90a0a058c1f.png": {
-        "sha256": "2ad0d46fc16da8b5857afed3730f4b534803dde49de496d0f8b6b90a0a058c1f",
-        "bytes": 57914
+      "_images/1b64a1ab131bef674e35b4474d92ea0f25169e8e65283dfc827d48f243a14d54.png": {
+        "sha256": "1b64a1ab131bef674e35b4474d92ea0f25169e8e65283dfc827d48f243a14d54",
+        "bytes": 42221
+      },
+      "_images/2f1025560b469486cc4c6ee76b7136bfc80fe2e61c6c94193ac0e115fac9911b.png": {
+        "sha256": "2f1025560b469486cc4c6ee76b7136bfc80fe2e61c6c94193ac0e115fac9911b",
+        "bytes": 37100
+      },
+      "_images/363ade75331fcbd1ffd8669bdadfee056e3b0dcdddb70258ba5c4928c190600d.png": {
+        "sha256": "363ade75331fcbd1ffd8669bdadfee056e3b0dcdddb70258ba5c4928c190600d",
+        "bytes": 48577
       },
       "_images/3cc22c7f7c42d699215d0bf460b1be1efeb31ce61c7ddae59a2927acc8f53554.png": {
         "sha256": "3cc22c7f7c42d699215d0bf460b1be1efeb31ce61c7ddae59a2927acc8f53554",
         "bytes": 123993
       },
-      "_images/623023ec60ffa70568e6c7fa13f3ec0cca68aad2f0e167dbd112f22a34cbdd3a.png": {
-        "sha256": "623023ec60ffa70568e6c7fa13f3ec0cca68aad2f0e167dbd112f22a34cbdd3a",
-        "bytes": 31162
+      "_images/5bfa28445e58ad776d4254e86c2676c9f1630292e8200b5230357b4f63142267.png": {
+        "sha256": "5bfa28445e58ad776d4254e86c2676c9f1630292e8200b5230357b4f63142267",
+        "bytes": 36890
       },
-      "_images/a40fd585e23b58098f7abfd1078414a87aa645b044e1a2817d266e5530645449.png": {
-        "sha256": "a40fd585e23b58098f7abfd1078414a87aa645b044e1a2817d266e5530645449",
-        "bytes": 37180
+      "_images/75159ee840673b683172b4d43d997897a7888c347130b88b28303149aefe53b1.png": {
+        "sha256": "75159ee840673b683172b4d43d997897a7888c347130b88b28303149aefe53b1",
+        "bytes": 29721
       },
-      "_images/aafb4604b798664d1342d1a1522355ade7a0241ca34ef818db5d199a829d8d4c.png": {
-        "sha256": "aafb4604b798664d1342d1a1522355ade7a0241ca34ef818db5d199a829d8d4c",
-        "bytes": 42171
-      },
-      "_images/b804b22438686546be7bb64181fef62ee9e4162dbd1dcc1d94dbb5f948352b46.png": {
-        "sha256": "b804b22438686546be7bb64181fef62ee9e4162dbd1dcc1d94dbb5f948352b46",
-        "bytes": 35792
-      },
-      "_images/c7204ece8bde9d5d4230f461e285cb030d4ca23b199c225ad46d295e37771a39.png": {
-        "sha256": "c7204ece8bde9d5d4230f461e285cb030d4ca23b199c225ad46d295e37771a39",
-        "bytes": 31491
+      "_images/a2ab98062eaaebec965b0c3874b4308832fcb0b2774a4a73a86238728afe20f8.png": {
+        "sha256": "a2ab98062eaaebec965b0c3874b4308832fcb0b2774a4a73a86238728afe20f8",
+        "bytes": 63692
       },
       "_sources/contributing.md.txt": {
         "sha256": "cef154ad36b08fd223d7bc019a381a72e6b57bad58eebe71d0797addf7f9c53d",
@@ -115,8 +115,8 @@
         "bytes": 1094
       },
       "_sources/development/index.md.txt": {
-        "sha256": "babdbfd1d501fe9486baa666d61a0f404f28274c739f9b59835243c2bef35eed",
-        "bytes": 928
+        "sha256": "73fd8eb773ff3e86204f3f4cd985ba12ebf4b8ccb4770ab16098ee4ccb1a59f0",
+        "bytes": 976
       },
       "_sources/development/methods.md.txt": {
         "sha256": "83c2bee3acffbe6f345d8e66d6e2df4e75e6007be5ec8f571068f88dc61c3556",
@@ -126,17 +126,29 @@
         "sha256": "981cfb5052757543fb4f4578415b60028460e61c88e097fa60fd912d8261f7d7",
         "bytes": 2668
       },
+      "_sources/en/index.md.txt": {
+        "sha256": "1c2ee85748624ff3e57367290cda959ac5b1a2e1bc237f18caba8632f5ffcef9",
+        "bytes": 944
+      },
       "_sources/en/installation.md.txt": {
-        "sha256": "a64de97aa24d72546d51d83343410f637c7de6a8e28a2e6e3ce187aa52ed8fc4",
-        "bytes": 3752
+        "sha256": "e5da584f96b332a715e0bd18ecff03691e2fea7cca0e02f15133e23b5cc7be39",
+        "bytes": 3833
+      },
+      "_sources/en/quickstart.md.txt": {
+        "sha256": "dd4717c1f558598db43f1406bf5f343e1f54f362aa9b43c9c677359f89b01661",
+        "bytes": 2718
+      },
+      "_sources/en/tutorials/index.md.txt": {
+        "sha256": "71868aab610583aae3ab9900ab4b929baf2dd81b65d3b7fec30e88f2eb305a86",
+        "bytes": 2703
       },
       "_sources/guide/ecosystem.md.txt": {
         "sha256": "065b177319e26e30d79d6b3087c4f676e3f8eebd9eeefbfee7270ba23aa0d44e",
         "bytes": 2703
       },
       "_sources/index.md.txt": {
-        "sha256": "800e83105a68689c82cde584787d82f372c5544581acaae028b39f29cc4df9ac",
-        "bytes": 3525
+        "sha256": "e5080951c7074fa1e6940c349b2474f2b3d044656937bcdd5de6d95de802c8e1",
+        "bytes": 3518
       },
       "_sources/installation.md.txt": {
         "sha256": "b2b45a7625e013188d19e6892e93cca6d09f692b097a7018922fde2160bf5adf",
@@ -359,7 +371,7 @@
         "bytes": 1268
       },
       "_sources/reference/api.md.txt": {
-        "sha256": "c94b8c4fb363af047baf319381c08a30e2df819ae12fd81a1b1b10bc853ad8e9",
+        "sha256": "c8bb00f0eb10b36b2d447c5141f6f8c6d5990b2354900a7abfffd5df6f402323",
         "bytes": 3635
       },
       "_sources/reference/baseline-native.md.txt": {
@@ -375,11 +387,11 @@
         "bytes": 7031
       },
       "_sources/reference/delivery-index.md.txt": {
-        "sha256": "dde3e12a576a2ac9145cf6b6632db0ebffdacfe24e02b13deff123f6f73ddb90",
+        "sha256": "389eee180387eedb5629df62aded605d2d7b4d46cc2213ed874b89fdbd900cb8",
         "bytes": 4139
       },
       "_sources/reference/deployment-benchmark-v2-results.md.txt": {
-        "sha256": "89f6a1432ebdd099cc84b694ec339ed180a74aa0cee92eef1ec8c05795d9fb28",
+        "sha256": "7ddd0b56c5522da01473ae0849b8750197752a8c286573ae3ee336281d4c7b3a",
         "bytes": 5738
       },
       "_sources/reference/evaluation-native.md.txt": {
@@ -399,11 +411,11 @@
         "bytes": 11689
       },
       "_sources/reference/learning-native.md.txt": {
-        "sha256": "3475dfe97a10ac11f9956f6ac9aa3dae2178b8b6147b294697ad3297c2ed6fee",
+        "sha256": "c448fd7ff4fae5b277b5cc9ceebe31337e25125d28ea409faccab2c1cbd79b16",
         "bytes": 6367
       },
       "_sources/reference/learning-pathology-benchmark-v2-results.md.txt": {
-        "sha256": "75e71c73dfc2779df0f2a940771c9e4d661be335b59914e2d753a54c1396d7fe",
+        "sha256": "793b4f69cb857c5f3c09df8bf87125d609d05d760d4e319c3f7c6c925a32bd38",
         "bytes": 9088
       },
       "_sources/reference/models-native.md.txt": {
@@ -411,15 +423,15 @@
         "bytes": 9374
       },
       "_sources/reference/native-boundaries.md.txt": {
-        "sha256": "f305e82f586be7b52df19d707ee3dd6aab70c8a994d4ec2dbc7d0daa3964c4b6",
+        "sha256": "53dcca2188233ff233151183a27a72edcdd7e97a430e73e448ae8ee7daf42a10",
         "bytes": 6240
       },
       "_sources/reference/native-extraction.md.txt": {
-        "sha256": "bebeffecfa4371db5c432ebec02ffb234b34384f21965bfded8bcd5e119d152b",
+        "sha256": "20ce25fd937b9ec59d90930a9b2e10eccd63d014ac01f9f2922114b3111ade90",
         "bytes": 4680
       },
       "_sources/reference/native-performance-diagnosis.md.txt": {
-        "sha256": "b2384688e2d7a0abde2dd8392dbe52e468cf814a41ef01a2239733fad8a77db0",
+        "sha256": "ebde4697681ad25ba32a72630e9b93fbfdb6dd4fb466fd3b7084a0414149cbd6",
         "bytes": 19533
       },
       "_sources/reference/pathology-aggregate.md.txt": {
@@ -439,23 +451,27 @@
         "bytes": 7553
       },
       "_sources/reference/public-evidence.md.txt": {
-        "sha256": "ade40adbcbbd786705f1a336cb030f309d29bbd2c42a9d1bedd0a5e5b3227977",
-        "bytes": 2738
+        "sha256": "cdf92c65358729c1c7a0a387c312a46f2a6f860c646ee653314193597e8d75f7",
+        "bytes": 3229
       },
       "_sources/reference/python-native.md.txt": {
-        "sha256": "9afd548891038618a31a07ef4d87cc501525a8adcb62a9b158b8b235dc9de3de",
+        "sha256": "68659b122ae2037cca6d62bface93acb7dd4f402d8bdb759dd8b09076df6c973",
         "bytes": 10599
       },
       "_sources/reference/radiomics-benchmark-v2-results.md.txt": {
-        "sha256": "716323a0cef8bd2e9a64ee0db43e45e14afd454323d9faf1739142859cfa0d9a",
+        "sha256": "8197e2b5284adaaf42113b8799506ea13920d5c62e0efabf3144a90e7ad00a27",
         "bytes": 11974
+      },
+      "_sources/reference/release.md.txt": {
+        "sha256": "93d593fdb675f74c9893bf1dc5904d2f17412851a0e43357c53fd1c4c5d61ba9",
+        "bytes": 2957
       },
       "_sources/reference/reliability-native.md.txt": {
         "sha256": "ec37d4a98dad677f13e2ea2eb5a919a2612b99560abe287518c436c9212e1090",
         "bytes": 2821
       },
       "_sources/reference/research-native.md.txt": {
-        "sha256": "4d6f4ee444fd06453518755ea1e92cac72136d9cac4e57db738a7dd2bc3e1846",
+        "sha256": "80ff59c08cbed8adf2d2846eefb29b2f8f6199dfc29fcbfd2a8e1ecbbb366793",
         "bytes": 6588
       },
       "_sources/reference/rust-backend-decision.md.txt": {
@@ -463,7 +479,7 @@
         "bytes": 7359
       },
       "_sources/reference/sample-constructor-optimization.md.txt": {
-        "sha256": "242cbeac665bb6e1293ac63dfa26a76968bba96ea747117b44c3ce231bb45cb4",
+        "sha256": "58f461198fcd7d8f585a1373e04fe1258de2880b62f5645d993346f16f03dc1d",
         "bytes": 4749
       },
       "_sources/reference/scalar-accuracy-audit.md.txt": {
@@ -471,7 +487,7 @@
         "bytes": 12263
       },
       "_sources/reference/support-matrix.md.txt": {
-        "sha256": "4f70fa7ee11eab4da07f5eec043a41df0b1f6c17b893bc7c23236c9b7fde3b2c",
+        "sha256": "9089e4d24eb9bd16a39b8110f7630957e21629408dc332df82b822b02b73cf99",
         "bytes": 7644
       },
       "_sources/reference/table-io-native.md.txt": {
@@ -479,7 +495,7 @@
         "bytes": 8068
       },
       "_sources/reference/technical-report.md.txt": {
-        "sha256": "f111e5f12b6dc11aa2378432913fac0cdfa943c691ca8b90b24b77319adc73b4",
+        "sha256": "bc60db7025949c5fac7da879e37313079e0624e910177e5af31d760cacfcdbc3",
         "bytes": 35974
       },
       "_sources/reference/user-guide/file-workflows.md.txt": {
@@ -523,28 +539,28 @@
         "bytes": 1451
       },
       "_sources/tutorials/01_extract.ipynb.txt": {
-        "sha256": "24e06556a70aedddbf6517d5876a54b025d9b000cc33da60be3f94c1ddab9bd1",
-        "bytes": 56294
+        "sha256": "443a5ba1c6de554ee98a70dc625ce28557c4bf0c47cd27d21b1d54b45c6b613e",
+        "bytes": 64266
       },
       "_sources/tutorials/02_image_clinical_binary.ipynb.txt": {
-        "sha256": "63023267154ab0a2e8fe1d2017fdd9eb0af999848e03ec66ae8773f41f00bae8",
-        "bytes": 83789
+        "sha256": "127f8e49affbca2b8132e745ba6e6b0e730266f27385ce1e5b007bbce7305cb3",
+        "bytes": 83457
       },
       "_sources/tutorials/03_multiclass_regression.ipynb.txt": {
-        "sha256": "6214fd8845e69302d755b6131b858186378cfc1f434dd209ed39cbcfd1aa188d",
-        "bytes": 106677
+        "sha256": "94415ce41ea98800b6abcee9d10069172520e4c7eb4424d4c95d5ef4db0fa5f4",
+        "bytes": 114425
       },
       "_sources/tutorials/04_regions_delta_habitat.ipynb.txt": {
-        "sha256": "dae9492574b73061bdca8460bfc3ab18d96f287cc1de4c4f5c677f7f0a0f60d3",
-        "bytes": 76308
+        "sha256": "bb7bfb4a3f9bbaf177b28c0b8b82aa7244381a5c7b56d08da202d02cb5534476",
+        "bytes": 74000
       },
       "_sources/tutorials/05_patch_patient.ipynb.txt": {
-        "sha256": "9ecd7e31386fafebe2aee760ab34e1112245bb6fc58fc21fce950eaf418d0cf5",
-        "bytes": 92770
+        "sha256": "79ae2b3400fa7d166f65d03a31c6ba7dce08f613117ed6a3cfb4b43f73e5a3a4",
+        "bytes": 101337
       },
       "_sources/tutorials/06_embedding_overlay.ipynb.txt": {
-        "sha256": "09856f6cb5b2896c8ea0bf15a85005a302db057692c25811eb1dc3958bd8ef01",
-        "bytes": 86416
+        "sha256": "2a00f5c9e601f6e60dc1e6213e054f5a593a1b1e38284271e14e9551a87b9361",
+        "bytes": 95021
       },
       "_sources/tutorials/07_public_ct.ipynb.txt": {
         "sha256": "cba875a9813ccfc881be6ac01f2bbcb051cf09bce777a1e8f691bca354575a13",
@@ -719,508 +735,524 @@
         "bytes": 1257
       },
       "contributing.html": {
-        "sha256": "cc800039f9252d6bb421dc1ee280816853e42b2713c83f94adba7069dd122546",
-        "bytes": 19920
+        "sha256": "cc501e6f75740ea5bd71a83988ce208262db8d85a9c594081bb0d622af4556a1",
+        "bytes": 20460
       },
       "datasets.html": {
-        "sha256": "86bee842e7f77b840fde638833cad24b5b913c6fa7a55b8358d2a18a1c34046a",
-        "bytes": 24255
+        "sha256": "2cc5878aa2f174473cff736daa1a5e30d75c8aa78668ad27afffddc595f45a35",
+        "bytes": 24241
       },
       "development/benchmarks.html": {
-        "sha256": "6fcca3f5b88fc97ba392716ebcbd09088ed03f7e7882d3cffa0a1211a19b3b8d",
-        "bytes": 19432
+        "sha256": "9254323c0fe4678f6360674084d475f01cbfcfda27df900b90c83992b5ec9f5e",
+        "bytes": 19538
       },
       "development/index.html": {
-        "sha256": "2e3def4e6290a1899602eeec4af66595132367b17250fa8bd01e390ce7fed4a1",
-        "bytes": 21988
+        "sha256": "1870a1e7b8e61f80e19b00fc85c32c0361067b82870bcd790f755249b0094a89",
+        "bytes": 22396
       },
       "development/methods.html": {
-        "sha256": "375eb521277495d376cca08b681cbab604ed02b65696867338cf49a3c98876ee",
-        "bytes": 21503
+        "sha256": "16afd8aa2a38a8307c2725d31f3df0ef4f6a3d49c7a73f30a8732d6391768e41",
+        "bytes": 21609
       },
       "en/ecosystem.html": {
-        "sha256": "b26bf1d6b09114a0913002009cac611e7d0ee35d360a04001ed04ef24d81545c",
-        "bytes": 31219
+        "sha256": "698a1df125e44232d4f9f732ce3c96e7025d09f7dd5a9c1e7fbaf21a8d502398",
+        "bytes": 31565
+      },
+      "en/index.html": {
+        "sha256": "cb56a5ae43239723aa255ee97c948fcac1ec9c18de3249520ce2d39ae456e4c4",
+        "bytes": 18268
       },
       "en/installation.html": {
-        "sha256": "8a7671028755af3ef2ef1c89521a46a2c6db9a158b40baaa8557e7c5ce9cbb64",
-        "bytes": 23381
+        "sha256": "1765427c2308df2d92879740df99e96466da88004ab81534b526793cf0f48930",
+        "bytes": 23936
+      },
+      "en/quickstart.html": {
+        "sha256": "9f6adcc299b83c0d85a1dbe3ac5b0889c79521ba6b7cece5b32ce8838ae8f39c",
+        "bytes": 25526
+      },
+      "en/tutorials/index.html": {
+        "sha256": "2dec197382be4a41374db6d00648cec212e7923a4e0098955c67f3ee4a2cbf71",
+        "bytes": 20504
       },
       "genindex.html": {
-        "sha256": "a102687360b3db0f4fb7523e53c167235e1d73feaa05fa740e72a56270004442",
-        "bytes": 38777
+        "sha256": "59300a28d66c57d1585e9909e64f02c7f682dada1dee7a376cb5009c2fcda1d8",
+        "bytes": 38763
       },
       "guide/ecosystem.html": {
-        "sha256": "6a411e430ef5e0391289d6edddaaff245200b7ec3adfba3b8acb791b403a86a0",
-        "bytes": 31798
+        "sha256": "df068cd7c562c7f4931f3dc656c541ccf179466ccb58f270158ee0d3e7aa1cf1",
+        "bytes": 31792
       },
       "installation.html": {
-        "sha256": "93318fb1218b7a3e0c30b61322388f3ec71b749ec2b81c5bc2e0a1195c516fda",
-        "bytes": 24309
+        "sha256": "d9edfd6c9e187402e6541a0fbd7a74948b9f81dc1c9e62cc92c97bafa8acb50a",
+        "bytes": 24295
       },
       "objects.inv": {
-        "sha256": "83c1269a14f3d26d9437abae581cba26e893a4fd00c94a9821688fc53f1247a4",
-        "bytes": 4286
+        "sha256": "5da03186faa3ef496bd4b7383c91c847db8b674afab7dba2aee8a80ffac2cc74",
+        "bytes": 4375
       },
       "quickstart.html": {
-        "sha256": "f4a9e321e1717ed75f9815a0ef3283ba3b9ff2386154945f37b5e6d507d829e8",
-        "bytes": 21818
+        "sha256": "7bde62b13c961948e35b07cbedcbbce8b96d7d3c5c2b24327bf5495d8b281321",
+        "bytes": 21804
       },
       "reference/api/generated/ov_radiomics.ExtractionResult.html": {
-        "sha256": "5d550bc540e73a7ed76e6ad23ead359e5be23ffdf79415863363184ac1e2f5fb",
-        "bytes": 31399
+        "sha256": "2dd9845e8c87e9e082ab240363127a2fcb2a14be9074cd869235cec35ca3818d",
+        "bytes": 31385
       },
       "reference/api/generated/ov_radiomics.FeatureSelector.html": {
-        "sha256": "1a77938f3e9d845ba372eb1e879337b3d909b587e5784b1f82a205b90ac69e0e",
-        "bytes": 29115
+        "sha256": "bfeee90f2a092dfc9331470e835d92d4970b0a633595a9fb1e82e969ad12d7cb",
+        "bytes": 29101
       },
       "reference/api/generated/ov_radiomics.FeatureTable.html": {
-        "sha256": "defa81e2b8d9bd1b8fc28ccbdb353b24ff8a312eb6d8f10d7938db303b00bd88",
-        "bytes": 29930
+        "sha256": "86f0fe6196f6357f5d93a6281a548145497c5703731812c37170cb41fd63a89e",
+        "bytes": 29916
       },
       "reference/api/generated/ov_radiomics.ImageSample.html": {
-        "sha256": "b9fed4589cfd03f17719d36a6c61708a1ca03dc9524580765f703e02a8b3eb4c",
-        "bytes": 30364
+        "sha256": "e5f169e44841d75a25a748c3b6586df8da965cb0d0b4bd1d6f0644786cfa9eab",
+        "bytes": 30350
       },
       "reference/api/generated/ov_radiomics.ImageVolume.html": {
-        "sha256": "bef23ca6e8d17338595e6b010cc62512dd5837a982284020e905d2421a55d214",
-        "bytes": 29383
+        "sha256": "df621e65346eab5765db6dc152cf705d1f6ea1c0f18da3bdceef25d144786258",
+        "bytes": 29369
       },
       "reference/api/generated/ov_radiomics.LoadedStudy.html": {
-        "sha256": "626c72bb3713125eefb7b7efefbf4658fdbee0471a98b8e4ba8157d5f208e259",
-        "bytes": 29761
+        "sha256": "4b17289a90e14fabcc88bd455297d228c52552c0eba49738fd76fc8e121bb036",
+        "bytes": 29747
       },
       "reference/api/generated/ov_radiomics.MaskVolume.html": {
-        "sha256": "38c70ddc19a1a547b37c44cfbccd3b6b5c5b86babc74cfcb4c14fdea7ee52595",
-        "bytes": 29296
+        "sha256": "18380dffa79941ea17ec0cf57eed6d64bceaa3472000ec915386cb7d13aa40f1",
+        "bytes": 29282
       },
       "reference/api/generated/ov_radiomics.ModelBundle.html": {
-        "sha256": "2fff2bef3ce903b019c14cb2580cb4013767a03b47263b446b0aa27016c73f44",
-        "bytes": 30276
+        "sha256": "cf574e4780c2df03500532c448c359c198ae0bdd7ff9c95e5a35c8e95eabb466",
+        "bytes": 30262
       },
       "reference/api/generated/ov_radiomics.PredictionTable.html": {
-        "sha256": "092ec0db855dc5ef0e8ae6635f97612832025625a6a11cae0a840ff37f5e907b",
-        "bytes": 29481
+        "sha256": "089d2e87ed9923a0801a403838df92d2938c714f7736ebb32398ad58c80e537c",
+        "bytes": 29467
       },
       "reference/api/generated/ov_radiomics.SplitPlan.html": {
-        "sha256": "83078c8de491d978d1761b6869a4d3f773f384a585e1754ced53f728eab76a72",
-        "bytes": 31620
+        "sha256": "996cdeca383f653fa8d7b0a127d17f633ddbc74a3be8a408929c8bdbed5f8614",
+        "bytes": 31606
       },
       "reference/api/generated/ov_radiomics.TileTable.html": {
-        "sha256": "25b08ab0df6f97c7879660b75b329cb44cddd380bf1328f2145cfddd1e2094c4",
-        "bytes": 30423
+        "sha256": "7ebef32440d6073027b0b0f891e50e9ceb5444cfa72f5ad279399380cc4a8e14",
+        "bytes": 30409
       },
       "reference/api/generated/ov_radiomics.backend_info.html": {
-        "sha256": "d90e6277aeab8b2d91d60b92df82974faf41a22ad1762da386dfb7b079993381",
-        "bytes": 27422
+        "sha256": "eb318641a1e26844892e2b2e6d4f9b3bb6dad88983f5442f3f3cf99591b24345",
+        "bytes": 27404
       },
       "reference/api/generated/ov_radiomics.baseline_table.html": {
-        "sha256": "84f9ee8e918168dd7b505e201644564814245bd7027e30b0041616f9fa7df499",
-        "bytes": 27730
+        "sha256": "975d7e9b01fa761ba33e227ea9339cbd3b0fad168080d03adbc6a6e579f3ff81",
+        "bytes": 27716
       },
       "reference/api/generated/ov_radiomics.binary_metrics.html": {
-        "sha256": "c4f0becdc9797e8d84635a0847f14f9232ebb91aaa6b17dcf618bf3ab282b7b0",
-        "bytes": 28798
+        "sha256": "3cf9007fe5c0a53d1c61f81000dd8874979e416e7ff5eed9307c00c61163b3ed",
+        "bytes": 28784
       },
       "reference/api/generated/ov_radiomics.check_images.html": {
-        "sha256": "ef8a649d0a1ea6e9e659a15e0480cd90e48074e4a458750777c2106df88dc001",
-        "bytes": 27778
+        "sha256": "0f721e1a5ae9ad7ecb74949fc15a4f269ebd5dc224fbfbe663cf19f1f8ed70b8",
+        "bytes": 27764
       },
       "reference/api/generated/ov_radiomics.decision_curve.html": {
-        "sha256": "1e2c82c7caae1df15f682f6e75a1971e8a21212784125aa6c8c86111ce67011a",
-        "bytes": 28016
+        "sha256": "6b59e6a1e38921b2ea7ef5c50623dd52e09beaf69c0372c2d97fe290eede79f9",
+        "bytes": 28002
       },
       "reference/api/generated/ov_radiomics.delong_test.html": {
-        "sha256": "387702a39f85e91caf21a7d47266aa248558dcdf2d9c916a6fce5462f7206ee8",
-        "bytes": 27873
+        "sha256": "1be0c77b647b89baf0d1004a05b645fd858eb302ee084f0dc44f3733eafee09d",
+        "bytes": 27859
       },
       "reference/api/generated/ov_radiomics.evaluate.html": {
-        "sha256": "86383f35111d8eaed010d71e8d32b4c70927b5b276982a7be8b1fb94270b3a24",
-        "bytes": 27714
+        "sha256": "8b3cf0e2d0838ad226da486b5fe9bbce066d883366a298a5cefb69fd8fa815d3",
+        "bytes": 27700
       },
       "reference/api/generated/ov_radiomics.extract.html": {
-        "sha256": "d3273010de0f5914d745ffb09f3850cfa5d774d3fdeed25a3c4d92bc3d3a0596",
-        "bytes": 29871
+        "sha256": "405d5df49b786fdb3063a999438a2367fcdbc2b0101ffd878c2c96477daaba39",
+        "bytes": 29857
       },
       "reference/api/generated/ov_radiomics.fit_fusion.html": {
-        "sha256": "c61647316e72c226af795e1ee3a2c8b1720788347e0bea33438018b2832822cf",
-        "bytes": 27741
+        "sha256": "d0e71557bb4bc1fccbd6461fba8c42b69acd486583c109db07a1c5329043f024",
+        "bytes": 27727
       },
       "reference/api/generated/ov_radiomics.fusion_data.html": {
-        "sha256": "c049e05bc68572970893854b437fabce30898b7c55cbbb0e35289463c2b23412",
-        "bytes": 27726
+        "sha256": "bce8f8617ed9e4756bd8a386a87158a89bb0baf7e4c53a4ee1dae819240a841a",
+        "bytes": 27712
       },
       "reference/api/generated/ov_radiomics.hosmer_lemeshow.html": {
-        "sha256": "6f869f00257f81a1b6f6c184e89a096fbd9e08dbe059c3689d584b79b022925c",
-        "bytes": 28011
+        "sha256": "bdec67fe4b80da3ba7f623d6746bdc4244bea95d65ff2743a8c30bb1365f8598",
+        "bytes": 27997
       },
       "reference/api/generated/ov_radiomics.icc.html": {
-        "sha256": "77cea48c62b571d843e37176efa0963929d9c58bf9ffcda882cf8cb715c0bc75",
-        "bytes": 27604
+        "sha256": "4b9ee6c2b1db9c2eadfa5d11f92454e16acdb49bae7ec9b76d2f55cc67e1c197",
+        "bytes": 27590
       },
       "reference/api/generated/ov_radiomics.join_data.html": {
-        "sha256": "066bf91ae019b4194dbc72ba1672a6cff322da4595ecf35b74632a7e9e731acf",
-        "bytes": 27630
+        "sha256": "d7354fd94fcb63146bc431c16ae3768825bbf73d3a52259a0cb01e340eeb199e",
+        "bytes": 27616
       },
       "reference/api/generated/ov_radiomics.load_model.html": {
-        "sha256": "2f48c57affe463467555bd50e4bebac52fbe94ca18e6172789d388951407e847",
-        "bytes": 27271
+        "sha256": "4bed274459ceb8dcee479109ee739ee25f5e650554d56aaeb2b4bfa2a0fdbc77",
+        "bytes": 27257
       },
       "reference/api/generated/ov_radiomics.make_classifier.html": {
-        "sha256": "f222adb4e860b557a9e5a2aa54a8deff4fd359be2b07c74ae537fa1950441874",
-        "bytes": 27785
+        "sha256": "5fa41328cd65e32a969d4dba71d0eb43acd634a2313303a0fc890b5a1fcce9bf",
+        "bytes": 27771
       },
       "reference/api/generated/ov_radiomics.match_images.html": {
-        "sha256": "5d04c7c15e217baa6794b140bd887c73988ee31b294dcda4e48fcc3180413feb",
-        "bytes": 27766
+        "sha256": "2329f5edc7c761f3b52d86094e68869e1fd6a26b30d30f288e837475c1ea9138",
+        "bytes": 27752
       },
       "reference/api/generated/ov_radiomics.multivariable_logistic.html": {
-        "sha256": "2189d3e47a70b6fbfafb43fedcf917e93f22dd31eabbf0091bf7c4981da547c4",
-        "bytes": 27794
+        "sha256": "3cb364decbd9402e8e4aacf6a53175f6a98b80cb6e96af433b5d9b2248b68de9",
+        "bytes": 27780
       },
       "reference/api/generated/ov_radiomics.plot_calibration.html": {
-        "sha256": "bfc8d8a8e5a7712acceda2f11753c926925a3d7b68f3c70f5409373dd2a29650",
-        "bytes": 28617
+        "sha256": "bd9884a95d61e46a52742b41ac89ba9978956c62842ee6dbfa0067ef47c29247",
+        "bytes": 28603
       },
       "reference/api/generated/ov_radiomics.plot_confusion_matrix.html": {
-        "sha256": "5f3ffa468bba38c120b3ad30b8e5c8148d262a6083acab322be9de3f2c435e11",
-        "bytes": 29207
+        "sha256": "8ed1d0cbd159d47916e69d686f394edb1859cbdb397aa04b8dec07d475129fdd",
+        "bytes": 29193
       },
       "reference/api/generated/ov_radiomics.plot_correlation.html": {
-        "sha256": "304227dda701b4a6874e4ddc2ca2d3fa3cad4b24599e50715f624bb80f4d569e",
-        "bytes": 28649
+        "sha256": "8f571427b1d677ff5b8f2537db9dfd95ba953653066315d437d7b85c3e773936",
+        "bytes": 28635
       },
       "reference/api/generated/ov_radiomics.plot_cv_results.html": {
-        "sha256": "5978a38b5a47be211fbe877dd8a35343592d6a01ffd7b426f4a72e8e5ddf757b",
-        "bytes": 28413
+        "sha256": "67f6faa4592e4fa9f1b1765baf317231ac59fa115028eec12765b03cad73a498",
+        "bytes": 28399
       },
       "reference/api/generated/ov_radiomics.plot_dca.html": {
-        "sha256": "c4b360a317e7556d70585b494dc13bdd0780b1af682d53e5e34c734db40fba86",
-        "bytes": 28146
+        "sha256": "1da472831f229de8afb4dcc7ab200b6b269ffe4a274657aaa4b95d5cb143ac7b",
+        "bytes": 28132
       },
       "reference/api/generated/ov_radiomics.plot_embedding.html": {
-        "sha256": "4b7fe9bfd073bcd52c9342cff1410398a6ff445f1eb41268650306aed9cbd4f8",
-        "bytes": 28587
+        "sha256": "0893ca23695304049dcceb2f50ec2d962a806ecb514c10e3cf5112244141c269",
+        "bytes": 28573
       },
       "reference/api/generated/ov_radiomics.plot_feature_pvalues.html": {
-        "sha256": "bd28bc6e6c2be9090b09997bd4309012a378f7de88e57b59a4e60e81c0dd26d4",
-        "bytes": 28122
+        "sha256": "9ee647fd244e57be99be7a09f9cae71e7712fc4618ae97058ceaf1497d21de34",
+        "bytes": 28108
       },
       "reference/api/generated/ov_radiomics.plot_feature_summary.html": {
-        "sha256": "f7295d0228517f4ae798a3625fd726c410705cd8aac29815477804eb75c09ea9",
-        "bytes": 28311
+        "sha256": "2110d7615285da153929545ba51b7e50328ff83c344384574b7c4263455c9daa",
+        "bytes": 28297
       },
       "reference/api/generated/ov_radiomics.plot_feature_weights.html": {
-        "sha256": "19cf64bf42b86c26e413505d72c7b19ebc33dd42e6d6c6bda580c105c6b79f74",
-        "bytes": 28063
+        "sha256": "8dc28a74e513a2e4d26c156b861ae4294b4c5b5ad96a4e7eb97d8584c6aea0f8",
+        "bytes": 28049
       },
       "reference/api/generated/ov_radiomics.plot_lasso_cv.html": {
-        "sha256": "274a96511908396421bc3bbb9fddd669ac366c3462eb94a2b313b3abb922beb7",
-        "bytes": 28032
+        "sha256": "ae687dfc03eeb5897194f48b7fbb45eceec7e709e7b4ab3e558824aa2912d836",
+        "bytes": 28018
       },
       "reference/api/generated/ov_radiomics.plot_lasso_path.html": {
-        "sha256": "d3e0f7ad39939e2e2977238f8726bc1be524003a95eb7ccbadfe07e1bcab363e",
-        "bytes": 28040
+        "sha256": "59cbd8b707043a72c49e43a2c39a48583344f22145f9ab864286dd29b66a1087",
+        "bytes": 28026
       },
       "reference/api/generated/ov_radiomics.plot_learning_curve.html": {
-        "sha256": "b9f81e36757b582d1e66b235db6e6d8d3a4d6220540480ad29f82329806e1347",
-        "bytes": 28848
+        "sha256": "c3cecc401859435b48bb3cfc3e9d4f8103ff8f477c7d804f056398f15613e0e5",
+        "bytes": 28834
       },
       "reference/api/generated/ov_radiomics.plot_metrics.html": {
-        "sha256": "5781365a706edc383a5e7849d10bf04d1221ad7595ee756ffed69fec502a35d2",
-        "bytes": 28349
+        "sha256": "7c598d0832cf556ce119f1f166fe5fe218b10a27caaa0eddbb3542644686b90f",
+        "bytes": 28335
       },
       "reference/api/generated/ov_radiomics.plot_nomogram.html": {
-        "sha256": "9538df0bc9b662e561a16af9929c2d06e2227a524b1b806305ba3729709cccb0",
-        "bytes": 28248
+        "sha256": "b796a5e030097098d72576e30fdccdbb9330c5eda3f1722835037ccbbf952ccc",
+        "bytes": 28234
       },
       "reference/api/generated/ov_radiomics.plot_prediction_scores.html": {
-        "sha256": "be692c24c731a4d644c0aeab39775cab4516e046baf36fa104996131b1dd547e",
-        "bytes": 28409
+        "sha256": "8917d442dbb5a25bf85255227d462d4dab08756398a89a82a1f35f1d797cebab",
+        "bytes": 28395
       },
       "reference/api/generated/ov_radiomics.plot_roc.html": {
-        "sha256": "64380e97906cad958f1fa20e2e4cc57cc000d10e896c30480a0f1e744bea133f",
-        "bytes": 28352
+        "sha256": "a8b371a91b84cef68d45e2d5ddc511eceef9de0421a74d746573a8a983d12de5",
+        "bytes": 28338
       },
       "reference/api/generated/ov_radiomics.read_cohort.html": {
-        "sha256": "f79d9e6f9a17c54f029215a4ccc2480f898e9de6bd5481742dbdb324f4b712f4",
-        "bytes": 27520
+        "sha256": "a5513ed34c0e5494a70b626ab0b7b933ec5a9995dc1320db37730c19d96bc56d",
+        "bytes": 27506
       },
       "reference/api/generated/ov_radiomics.read_feature_table.html": {
-        "sha256": "88abdc0c15a8e8b32e525a5d417684ddab095f6d8510ffaf1349270d0a70c832",
-        "bytes": 27635
+        "sha256": "dda8a884d4c9191c73c580ed6afe8e556c24ba76eadf58e46b7746750723dcb4",
+        "bytes": 27621
       },
       "reference/api/generated/ov_radiomics.read_study.html": {
-        "sha256": "62efe0d421b9865b490415f862c4f2bd53b3e6b8425769b417f68a86563de8d9",
-        "bytes": 28025
+        "sha256": "7e848c967c30f602ae87c1a1dd4a3004a86544b2995e6668f4e7a49294d7b325",
+        "bytes": 28011
       },
       "reference/api/generated/ov_radiomics.split_data.html": {
-        "sha256": "8ea08ad6ebb8bf03b8b2ec6eff3a9051565dfb0bb8047e4c3c2f4e761fe24c1a",
-        "bytes": 27708
+        "sha256": "74ec703545593e687371061d0386a21cd34546d8df27ec6de69b2addc8270f98",
+        "bytes": 27694
       },
       "reference/api/generated/ov_radiomics.train_models.html": {
-        "sha256": "b11e0ee9a988ee21d6e396d8b54b264d0b82bd84a464119a51795e61e31dd7cd",
-        "bytes": 27891
+        "sha256": "9be2f7c0df1da69a0ec51406fbd3a32fd225f32f436326d5aad7f7f4ac3aa79f",
+        "bytes": 27877
       },
       "reference/api/generated/ov_radiomics.univariate_logistic.html": {
-        "sha256": "aeb44487303d469161d3a1aed3797126c7ea0a424b49bb15a62342730c89a684",
-        "bytes": 27814
+        "sha256": "0eb0d4caba6dbdcd6327a966f909d06e0c05a400c1ca8430cad54d57ca605b39",
+        "bytes": 27800
       },
       "reference/api/ov_radiomics.FusionResult.html": {
-        "sha256": "ae82212277337759c5293e7792a9890cee4a086170b185ecfed5a7da3a8a63a1",
-        "bytes": 28080
+        "sha256": "2877fa6121ef2ef2b5f8701532ae60ae2ec3a3013a8d63571fbc7ac65067a6a6",
+        "bytes": 28066
       },
       "reference/api/ov_radiomics.TrainingResult.html": {
-        "sha256": "17f01a19d09b3e0d4fededee33122e02384c032f3a6968fc4e24933fe29fb69f",
-        "bytes": 28142
+        "sha256": "0dc0361c813cf54d0c8526f359f88677380dbc55a03a7b1fc871067340113aaa",
+        "bytes": 28128
       },
       "reference/api/ov_radiomics.html": {
-        "sha256": "3d5e1ff9a45e9962e933bc58cb24def5a9344019b44c8f5bd09f056445d41ea8",
-        "bytes": 44355
+        "sha256": "e2244802f619f493fb79389164ba06ee996d5f80d18dd29fde929cea661fc906",
+        "bytes": 44341
       },
       "reference/api.html": {
-        "sha256": "0e8b4ebcaa710193a48328f8bcc89bc3365c278095e4051c8fa8874cc32b1f5c",
-        "bytes": 33291
+        "sha256": "328a9c4bb48f4c5d70e25e13a5e90fb0dcaf065c37759bcfaf69f175439e9218",
+        "bytes": 33277
       },
       "reference/baseline-native.html": {
-        "sha256": "cd8b4ba0b118b88a4e3f91abb13213339ca96fca6413814106a89458ea8a7161",
-        "bytes": 31174
+        "sha256": "2fffbee29795fe30e4bfd7aa75270f3f4dbf799a9ba8a5d2e32cb1660ebf63ca",
+        "bytes": 31160
       },
       "reference/cli-workflows-native.html": {
-        "sha256": "b40e7b8751b4476dcfc2cfeafdf95c2d35217b11477ba8bd8169d478c762ee65",
-        "bytes": 37702
+        "sha256": "0aff92dcf3ff49478a8979fbb534493f32ffd9ff2bb9f95a12346e18fbdf0dcd",
+        "bytes": 37688
       },
       "reference/clinical-native.html": {
-        "sha256": "98750d46551b9e1a901b43e375fd1e9f828f069c22819d668afc999f10b63483",
-        "bytes": 38952
+        "sha256": "31086f867796a63bb4716ea2a1254062243e52556c74be809cb47982cc8f2b92",
+        "bytes": 38938
       },
       "reference/delivery-index.html": {
-        "sha256": "2bd1594de08838797e3166f75c6b0b2e3ce12ac0b8d5cc90ba3678319dfa1e45",
-        "bytes": 21003
+        "sha256": "ac0ac5d6d2532f85418d0dad2acf7d911462163535525ffbbdf580790eed4023",
+        "bytes": 20989
       },
       "reference/deployment-benchmark-v2-results.html": {
-        "sha256": "f62c22ffc79393693d2e8b7edea6656598a6eaedbb6970f3f4a2f927f729a8ef",
-        "bytes": 29086
+        "sha256": "3f8e3fb8c8ba6de54f756de57e2dd16580845508828a77cb44c4293e3b38f73b",
+        "bytes": 29179
       },
       "reference/evaluation-native.html": {
-        "sha256": "84f2e8e962441a9cc604b116faf2c3f9854d7eced98bcb4e7da77f61a990eced",
-        "bytes": 37631
+        "sha256": "18cae36974c8b6a2860309eeaa299d45b01e3aad6e7c04a43374abb58cd068f8",
+        "bytes": 37617
       },
       "reference/features-native.html": {
-        "sha256": "e207efbdab1828914535ca8887ed42ab60f5bd319b2b09d3bf7268a0db1fe309",
-        "bytes": 39819
+        "sha256": "69135480d141170d728595fe77bf22d556ecd9fb7b46a2c36daac7605976a16f",
+        "bytes": 39805
       },
       "reference/image-native.html": {
-        "sha256": "9d1196401c021973a9c60575116f00bdd14ba81c73ea562df2df683659a56637",
-        "bytes": 43741
+        "sha256": "458ddbf5fd37e88b9f0af83831615c68638d419fa45dc39f8b221775d5151216",
+        "bytes": 43727
       },
       "reference/interop.html": {
-        "sha256": "423c3a96d9d28d3c5e31d5d86abf4fc5fc85cc8438a26ae8502a433c53569aa2",
-        "bytes": 47149
+        "sha256": "c8caed06106b1c13225921faa0b249a7c5ccdeaa4d702ff227245840c72d689f",
+        "bytes": 47135
       },
       "reference/learning-native.html": {
-        "sha256": "5739e51bd3b2d5e960dc38e7e27699af9fdc57e8e6f14d7f821af96ddca06b30",
-        "bytes": 34080
+        "sha256": "e69c7a21bbccd591701d9eb7186b9134b56aae4b23eebab40668961dac346c61",
+        "bytes": 34066
       },
       "reference/learning-pathology-benchmark-v2-results.html": {
-        "sha256": "04b0155404b895873990e5ba56c63e1157cb66d6b0c727b19b28df4d059940fe",
-        "bytes": 36084
+        "sha256": "6900c0a05d3bea88d9070d3083d3e5b05c3e5d7f25646346dec76611f1007bb1",
+        "bytes": 36177
       },
       "reference/models-native.html": {
-        "sha256": "22834054761b351eebe8681ec7ba55b9fa9e3e592ad46aeeef3251cfc6357762",
-        "bytes": 45308
+        "sha256": "5b9db42f7339605a2c1a1b3d49873e6ebfeb7c1d8ee7e62e05f4c39835807852",
+        "bytes": 45294
       },
       "reference/native-boundaries.html": {
-        "sha256": "8f72258d407f76986329ee2d8aa7adf9db3fc3ef03a6d52f01d9f6ca6570d057",
-        "bytes": 28968
+        "sha256": "d72a87bab81938e8e569162ee0c7f07a33526f079775d7402b1fe4c3d2420e8a",
+        "bytes": 29061
       },
       "reference/native-extraction.html": {
-        "sha256": "ac663daac0155800c3697dfcce81c2eccd06ce07b41c61d9a342fc915c0d196e",
-        "bytes": 36008
+        "sha256": "262c6d90fd5f773c4adc5de124035214f638b324b3f1f1de209e870118659de1",
+        "bytes": 35994
       },
       "reference/native-performance-diagnosis.html": {
-        "sha256": "216fa2f3413938a8cd7afa45cc9fab4c83d92b6a25d69ef1a99c3952c6566a9b",
-        "bytes": 53675
+        "sha256": "c7ae8be853d8b48d5af21dbaddb3da5f3bb0a950daec7c1bc60b5ff80e892e71",
+        "bytes": 53768
       },
       "reference/pathology-aggregate.html": {
-        "sha256": "cd53d615558d66077897b9ba135af986e766f7bd9db2466baa35724cf9fb1d72",
-        "bytes": 42355
+        "sha256": "82ab1e66f0b95237eb7ff5a7819d0e6179ffa2d2c761ca746c28a9d012670a44",
+        "bytes": 42341
       },
       "reference/pathology-cli-native.html": {
-        "sha256": "2c14ae98b294f2bd45ef5d76a3ce6a93ed8bc884cc6429cf90932990066b2a99",
-        "bytes": 58491
+        "sha256": "c02c0b5af4ed0ab997c35df147afa7d273fd99d4cf7ead84f52932d180736961",
+        "bytes": 58477
       },
       "reference/pathology-pixels.html": {
-        "sha256": "83f4dcf40de79584f62bc46bd0767b5e6200dd0e3b68853fe7459ecbd4d6310e",
-        "bytes": 43902
+        "sha256": "60f3075d2d168af75957195550b2332f63127558dabb1d610142fff7b3aa46ea",
+        "bytes": 43888
       },
       "reference/preprocessing-native.html": {
-        "sha256": "6cc476aea4d0f3de6fbf799ebcdb4067c108feb25518bc3dab6193e52f4d56bc",
-        "bytes": 39707
+        "sha256": "64ea7e10f9f31af0e1e00ed4d15a62841020c1c5c1ada96a38b09e8102e6cd53",
+        "bytes": 39693
       },
       "reference/public-evidence.html": {
-        "sha256": "a01c84ffcac638dd17973bce01126af96a2920e7a2b44d6a4c3f9a1ee9cd2b3c",
-        "bytes": 18492
+        "sha256": "e322cabda9366c8b23582071daa59761fe8783b49f76e030515c3488e0706c68",
+        "bytes": 19269
       },
       "reference/python-native.html": {
-        "sha256": "6decaaa81825a598fcb9175ea56497f214efb1145bead7281df6c6d98df3b925",
-        "bytes": 47589
+        "sha256": "4f1412ab07b2dfd0797fa4515490e96c58a25b9cae76b617f80adf5728c9cf27",
+        "bytes": 47575
       },
       "reference/radiomics-benchmark-v2-results.html": {
-        "sha256": "e5ab2a36828ad30f9525bcde7e6ed77b555e1d9b0e032326fbc55b4174b9e525",
-        "bytes": 37445
+        "sha256": "584102fd160e9b64be6649bee66dfe227100aa5c1ba99fb948c58efade747050",
+        "bytes": 37538
+      },
+      "reference/release.html": {
+        "sha256": "39ee912a0680dbf54a830956a3281954bea11394001297d1137be275f42e1069",
+        "bytes": 22749
       },
       "reference/reliability-native.html": {
-        "sha256": "bd99c624adc4f0f422d80098f505b075c1d08982b6d3cd83e7b75ec9cf1609d5",
-        "bytes": 29885
+        "sha256": "4f92fcb9a55316deb9eddc4e08d96cd287f7586de226eabbc132b68187b78512",
+        "bytes": 29871
       },
       "reference/research-native.html": {
-        "sha256": "ca79b89cb2e825ec20e91b01db9f62571dfa89ebeb7630b512c88aec27f69c05",
-        "bytes": 36328
+        "sha256": "390c492eb6c4bb24f0999875b69ec3c4e6b0daee830c9c659e694c6f88a895c6",
+        "bytes": 36314
       },
       "reference/rust-backend-decision.html": {
-        "sha256": "d5c39a41d6cef6099136b61139de2eecb7f74c3bfc6ce50a585735a06d2413f6",
-        "bytes": 29116
+        "sha256": "8e122c515e4fffe853bc33933434bc9988961fd5a91467d247c0e016449d2b3e",
+        "bytes": 29209
       },
       "reference/sample-constructor-optimization.html": {
-        "sha256": "e7fc8699467938067e29a3e70847597e58c83f00c7651aa34f93203b0d62189c",
-        "bytes": 25594
+        "sha256": "a27ef2a0cf85d52058d018e0e50763d98c1972fb83d69e60e38191b142787db0",
+        "bytes": 25687
       },
       "reference/scalar-accuracy-audit.html": {
-        "sha256": "b90507a328b81337caae1bb6833654145e0e72e0219417dce9e008c68dce4b86",
-        "bytes": 39592
+        "sha256": "1fdcd26510e01be5e693034d190dfadc0d440524d56db6bf9f89a4cf061b771e",
+        "bytes": 39685
       },
       "reference/support-matrix.html": {
-        "sha256": "bb0c4f11f141e3e82de925cbf08953818fae8b50c66c42a6557464145b452788",
-        "bytes": 28760
+        "sha256": "c9993270dd70d9297ae0dce49f3c10f2728c227b92de84ed73fe0e825de9fe12",
+        "bytes": 28853
       },
       "reference/table-io-native.html": {
-        "sha256": "8bc0c772cb8e622073df8b35cf41eef5d8eee5dcb85f29cc2dcca42b91beef3e",
-        "bytes": 39296
+        "sha256": "d9fe4ac5d679a25a54642c363bffb479e5fde2bad9816bc0f2ef08b661df5270",
+        "bytes": 39282
       },
       "reference/technical-report.html": {
-        "sha256": "f1b836c0e6e702605fbd8c0a5022ef21858dedff1932143b2455ce38dedaaa6e",
-        "bytes": 88155
+        "sha256": "fa6965491ffaae2acf057f62827376f2b38c664136277086494314cacee2b03b",
+        "bytes": 88248
       },
       "reference/user-guide/file-workflows.html": {
-        "sha256": "f892d9beccf03a5be52f1573f0a77c0119e2412feaec08a3f16c6108915722e6",
-        "bytes": 32066
+        "sha256": "862c35d9b126d2d2af0c73eb391496c672fea809cf63a840a64e7310f8630427",
+        "bytes": 32052
       },
       "reference/user-guide/index.html": {
-        "sha256": "4eff90db345354cd0f2704621f928a7eb3ef0108a75250eb39e3403e967a93bb",
-        "bytes": 20092
+        "sha256": "37c2b8093f0cf97e01f90b33ed8b7464c073c422089db96057dd30f3d86a7303",
+        "bytes": 20078
       },
       "reference/user-guide/input-contracts.html": {
-        "sha256": "13b235b2cbfa2f9616074f1f5c95c37b40028853a5b5b621c8e69b28a7a6e9bc",
-        "bytes": 30122
+        "sha256": "e8e0c742d25490f4da53eb459353efc6cb7700bc9ea0827a4514f42b7f2ecfaf",
+        "bytes": 30108
       },
       "reference/user-guide/local-samples.html": {
-        "sha256": "3bdadb127511d2e123792095c43e0ed5671b7dfaf3110e80fd1a76aa005fe2e1",
-        "bytes": 29078
+        "sha256": "0bd884e67ab245a6a1b2c5cde93bd11545967dda6b22084685efd9c7a021145c",
+        "bytes": 29064
       },
       "reference/user-guide/pathology.html": {
-        "sha256": "a503d096e7c0e21b6bb3586385e02adfe027e919664ce69a516af4f77920f071",
-        "bytes": 42106
+        "sha256": "bfef1a6ead38fce988963d78c489d704cd4a051371f26a24a9fb195e587bd05a",
+        "bytes": 42092
       },
       "reference/user-guide/public-tabular.html": {
-        "sha256": "b89189d3800955ea2d81b46c590596fe413bfbd8de4f3dd70fe7a73ed50becbb",
-        "bytes": 30014
+        "sha256": "67fea5c5e1ae8d65a24d411ea9354ecb1fff19e966c3d67f7b987db114158d61",
+        "bytes": 30000
       },
       "reference/user-guide/results-and-errors.html": {
-        "sha256": "d87c6a252bd35ffeac403c3dad0d3e7b3e39fad45147d22a8614e2a956a8c46f",
-        "bytes": 28116
+        "sha256": "24c7f9eddb7f687213811f0b4597489512e64e916b9d82c3bad1b95b04612d21",
+        "bytes": 28102
       },
       "reference/user-guide/training.html": {
-        "sha256": "da42a6e9bd7783939e6f3556be0e16e8844bf31b3305a61cd14885c8588a25fd",
-        "bytes": 42554
+        "sha256": "04cec3614bd79e7fca91d9260662e39b9040f4f1327c401b32aedf79720d5423",
+        "bytes": 42540
       },
       "reference/user-guide/validation.html": {
-        "sha256": "280c0f4545122e73d7756b7ccf833d09e5ef96e6dd8957101483d93a5f0a2a79",
-        "bytes": 22448
+        "sha256": "47b0e42d9d8333ad0af555c7a7eb1bbb4d239d1199a7540032563d57bccca226",
+        "bytes": 22434
       },
       "reference.html": {
-        "sha256": "50ec51db1d568d9c909b45d6459c8075c1acf046df6c9273bcf73d84d450c7c7",
-        "bytes": 30897
+        "sha256": "3faaec2ce19bfdcd8b3e3650a3e46fe3d91171a9ed165596fc8d869990eb5655",
+        "bytes": 30883
       },
       "search.html": {
-        "sha256": "c4325a0c43edea3535edbd14bd802a754f8d18361c9ed4261cf39850080ff2bd",
-        "bytes": 25316
+        "sha256": "84895d57570d8995073fa2cb2874022d610a6a8c14d0ef046f4c656d3d75e500",
+        "bytes": 25302
       },
       "searchindex.js": {
-        "sha256": "9599312ae423b8dac362b845df7c96c76b0416b78944e48ee48e1b9788417742",
-        "bytes": 190964
+        "sha256": "b2b1ba628145ffc7f270185a71864035a27108138d1da20d0ffe425c5935af73",
+        "bytes": 195147
       },
       "tutorials/01_extract.html": {
-        "sha256": "8d1918203c0a785c5c8f455ff044f14d5a05732e2a9708a122022f646305c838",
-        "bytes": 57900
+        "sha256": "d0971f99bd49cb6e95af9ed993a795be68ef8e2047b9580eebf6f3e236cee9e0",
+        "bytes": 57857
       },
       "tutorials/02_image_clinical_binary.html": {
-        "sha256": "619643cfca76816a1826511e445363ef51e1349b6b2f1d218f018b75405206a1",
-        "bytes": 62746
+        "sha256": "1922122802a039ad140398206981e3ddb9122a60f01e813fe12703e7572a2a96",
+        "bytes": 62703
       },
       "tutorials/03_multiclass_regression.html": {
-        "sha256": "70d370274094a3bb2cb34db5259ccb1cebce5e09a11f787024ed0b49d9313475",
-        "bytes": 70101
+        "sha256": "fe5d4f83b25e9778ef501c2b97b1d9b35e44185d2c6243739fc75b21dd0d6e2c",
+        "bytes": 70000
       },
       "tutorials/04_regions_delta_habitat.html": {
-        "sha256": "f82c6dd09872ad124b2aec9178b6d63124b041246074925511ad8b255385c269",
-        "bytes": 72170
+        "sha256": "ac859d88021b62b47b2cf7a54ffb696174e2dbe67b029d74151e18329bda560e",
+        "bytes": 72031
       },
       "tutorials/05_patch_patient.html": {
-        "sha256": "e958899db7d01dfa517d62e5b2a4b05254ed9354e0dd8b6c33fd3fc31fc4608c",
-        "bytes": 77842
+        "sha256": "ceacf007cd68f37af7f8525011d5c10c4c909e79fec650915addf2208aa4e50d",
+        "bytes": 77542
       },
       "tutorials/06_embedding_overlay.html": {
-        "sha256": "6665404d3c816e126ace0f31ec703d4a8ac478c96a927e1a08b9c02e7bbbfef8",
-        "bytes": 74309
+        "sha256": "7a08cdbe47b36a17a7ca560c800c4b26faa270874fae966e7c5e60a4899055fa",
+        "bytes": 74135
       },
       "tutorials/07_public_ct.html": {
-        "sha256": "7bf5cb13cd3a66785dbb5b731d5ed32cab5f0d9629116f787eb68e16bdf1dfb1",
-        "bytes": 58919
+        "sha256": "a3e5967dbde8cb9685dd5e4e501e89b94cf3596518a125dcb4765fa68edd8641",
+        "bytes": 58905
       },
       "tutorials/08_public_tabular.html": {
-        "sha256": "553f6615a3ad794bd8fa7e28cb49e8f3da7b1cfbc1a8a60190b79a4dca904dad",
-        "bytes": 84491
+        "sha256": "93a87c44e186edd68795a9d6a59c569b9f86d3f9997569e16a52e2920d624766",
+        "bytes": 84477
       },
       "tutorials/09_local_image_features.html": {
-        "sha256": "4f1c79b056ede6ac2e07ca541cbb41c368f0dff89077952bfcfbe916060b1a15",
-        "bytes": 86655
+        "sha256": "e2080b3726e4f3356e4de586898cc510d1b7dd2ee7d58ed6ca302ea9266fe458",
+        "bytes": 86641
       },
       "tutorials/10_local_modeling.html": {
-        "sha256": "3d00a127659ee94c30f8b62e56d6c641e0f4d9b6b9c3440254080d51cd345750",
-        "bytes": 70761
+        "sha256": "46d2ba5634a5dff81b3f12aac38c6d6ef67b3b2cefb48dc0b0f3b00cd9814e3c",
+        "bytes": 70747
       },
       "tutorials/index.html": {
-        "sha256": "e34f0f4a685adf46ecee80c351042b00e28018220da6409965123b46d50418b7",
-        "bytes": 27654
+        "sha256": "d196e740d10dbc03ce9cfd9013832d0c4f2372fe0d64aa885a0bab31563853df",
+        "bytes": 27640
       },
       "tutorials/local-data.html": {
-        "sha256": "7f9f53a981d70372375c50fa352323df62c7f6d02e96a7350b64b1e8f828df02",
-        "bytes": 19821
+        "sha256": "61d1e1518a538ea6344222b590c7b306087054fa34dccbc08b5089c1032cbaa9",
+        "bytes": 19807
       },
       "tutorials/modeling.html": {
-        "sha256": "015806e572adee045644ebdc380acae7605664994c8debadd7a300d4f6aa9c7d",
-        "bytes": 20700
+        "sha256": "bfddc13a1b7fd63ff2161173cc43c80d9f4f68867304beace92d52266d800152",
+        "bytes": 20686
       },
       "tutorials/pathology.html": {
-        "sha256": "b0a0c4e03880258a4afd581a9177cb1b02cb2f5e01bd91245ab9df8c6fb252f1",
-        "bytes": 20508
+        "sha256": "423ab9166223e860afae7b2ff3a7f1d81a3024e166d0f5ee7ec62dabc33ee13a",
+        "bytes": 20494
       },
       "tutorials/radiomics.html": {
-        "sha256": "f48a74b97dcf1db4b09b19f9c198ef6ba8cd16307c31f0e6e3bf5c05365d314c",
-        "bytes": 20540
+        "sha256": "c1319b55b865521d87f47f535333c72de0c89da28f33c3620291bbe6fe04b856",
+        "bytes": 20526
       },
       "tutorials/real-data.html": {
-        "sha256": "59099bdda86e5482a7525ea04de69c58d2d9ea2f815d3489a04b459314df3ef6",
-        "bytes": 21662
+        "sha256": "388d38312fc8a82edefd238812cde60b932ce0d96a209bd112bf882dedbf33c6",
+        "bytes": 21648
       },
       "user-guide/index.html": {
-        "sha256": "339ab85dfb3fb07ca50196027363c7f4b02648a08efa92ba03ef4c54029a9799",
-        "bytes": 20335
+        "sha256": "ef98dee48165db0f8d5494001e7d8c605b1fac8ed7deda2dc3fbbaef01c9f22d",
+        "bytes": 20321
       },
       "validation.html": {
-        "sha256": "df84430f42b981941a0b1c7c9a45964e9dc91b1f6e87616d3b6a8300482625bb",
-        "bytes": 20843
+        "sha256": "4202145c64f0eb92831289b8b916167ce27aac6e6d1e604ff94bcf7e5b997bc4",
+        "bytes": 20946
       }
     }
   }

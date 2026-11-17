@@ -67,5 +67,5 @@ python -m sphinx -W --keep-going -b html website website/_build/html
 
 Native semantics, input roles, saved model contracts and known limitations remain
 in the linked native guides and [support matrix](support-matrix.md). The
-[legacy Python guide](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/legacy-python.md) describes optional estimator objects and
+[legacy Python guide](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/docs/legacy-python.md) describes optional estimator objects and
 its independent-row workflow; historical interfaces are not native promises.

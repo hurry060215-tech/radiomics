@@ -157,7 +157,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../en/installation.html">
+  <a class="nav-link nav-internal" href="../en/index.html">
     English
   </a>
 </li>
@@ -304,7 +304,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../en/installation.html">
+  <a class="nav-link nav-internal" href="../en/index.html">
     English
   </a>
 </li>
@@ -496,14 +496,14 @@
                                   <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s1">'*.py'</span><span class="p">))}</span>
 <span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="s1">'tutorial-runtime.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">runtime</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
  
+<span class="kn">from</span><span class="w"> </span><span class="nn">_shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">image_cohort</span><span class="p">,</span> <span class="n">output_arguments</span><span class="p">,</span> <span class="n">provenance</span><span class="p">,</span> <span class="n">save_patient_roc</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">_shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">output_arguments</span><span class="p">,</span> <span class="n">image_cohort</span><span class="p">,</span> <span class="n">provenance</span><span class="p">,</span> <span class="n">save_patient_roc</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'metrics_backend': 'rust', 'rust_core_version': '0.1.0'}
-输出目录: D:\radiomics-tutorial-validation\six-notebooks-final\02_image_clinical_binary\artifacts
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'metrics_backend': 'rust', 'rust_core_version': '0.1.0', 'schema_version': 1, 'api_revision': 2, 'native_compatible': True}
+输出目录: /tmp/radiomics-doctrees-8y5ry4nj/tutorials/execution/02_image_clinical_binary/artifacts
 </pre></div>
 </div>
 </div>
@@ -514,7 +514,7 @@
 <p>运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">extracted</span><span class="p">,</span> <span class="n">identities</span><span class="p">,</span> <span class="n">classes</span><span class="p">)</span> <span class="o">=</span> <span class="n">image_cohort</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extracted</span><span class="p">,</span> <span class="n">identities</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">image_cohort</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'original_firstorder_Mean'</span><span class="p">,</span> <span class="s1">'original_firstorder_Variance'</span><span class="p">,</span> <span class="s1">'original_firstorder_90Percentile'</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -918,7 +918,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fusion</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">fit_fusion</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="n">fusion_data</span><span class="p">({</span><span class="s1">'Image'</span><span class="p">:</span> <span class="n">image</span><span class="p">,</span> <span class="s1">'Clinical'</span><span class="p">:</span> <span class="n">clinic</span><span class="p">}),</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">)</span>
 <span class="n">fusion</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'fusion.rad'</span><span class="p">)</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">'image'</span><span class="p">,</span> <span class="n">image</span><span class="p">),</span> <span class="p">(</span><span class="s1">'clinical'</span><span class="p">,</span> <span class="n">clinic</span><span class="p">),</span> <span class="p">(</span><span class="s1">'fusion'</span><span class="p">,</span> <span class="n">fusion</span><span class="p">)]:</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">'image'</span><span class="p">,</span> <span class="n">image</span><span class="p">),</span> <span class="p">(</span><span class="s1">'clinical'</span><span class="p">,</span> <span class="n">clinic</span><span class="p">),</span> <span class="p">(</span><span class="s1">'fusion'</span><span class="p">,</span> <span class="n">fusion</span><span class="p">)]:</span>
     <span class="n">rad</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">'rust'</span><span class="p">,</span> <span class="n">prediction_unit</span><span class="o">=</span><span class="s1">'patient'</span><span class="p">,</span> <span class="n">ci_method</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s1">'-metrics.csv'</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -967,7 +967,7 @@
    LR external_A binary         patient  6        external prediction_only         NaN        NaN       NaN      NaN          NaN          NaN      NaN      NaN        NaN      NaN      NaN      NaN               NaN                NaN                 NaN     NaN      NaN
    LR       test binary         patient 12         holdout       evaluated         6.0        0.5  0.500000 0.722222     0.166667     0.833333 0.500000 0.500000   0.500000 0.166667 0.250000 0.230116          0.651746           0.740278            0.707110     NaN      NaN
    LR      train binary         patient 48        apparent       evaluated        24.0        0.5  0.604167 0.675347     0.541667     0.666667 0.619048 0.592593   0.619048 0.541667 0.577778 0.220681          0.630318           0.769413            0.765601     NaN      NaN
-Outputs: D:\radiomics-tutorial-validation\six-notebooks-final\02_image_clinical_binary\artifacts
+Outputs: /tmp/radiomics-doctrees-8y5ry4nj/tutorials/execution/02_image_clinical_binary/artifacts
 </pre></div>
 </div>
 </div>
@@ -985,7 +985,7 @@ Outputs: D:\radiomics-tutorial-validation\six-notebooks-final\02_image_clinical_
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a40fd585e23b58098f7abfd1078414a87aa645b044e1a2817d266e5530645449.png" src="../_images/a40fd585e23b58098f7abfd1078414a87aa645b044e1a2817d266e5530645449.png" />
+<img alt="../_images/5bfa28445e58ad776d4254e86c2676c9f1630292e8200b5230357b4f63142267.png" src="../_images/5bfa28445e58ad776d4254e86c2676c9f1630292e8200b5230357b4f63142267.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>结果文件: ['clinical-metrics.csv', 'clinical-model', 'clinical.csv', 'cohort.csv', 'extract.json', 'extraction', 'fusion-metrics.csv', 'fusion.rad', 'heldout-patient-roc.png', 'image-metrics.csv', 'image-model', 'inputs', 'provenance.json', 'study.csv', 'tutorial-runtime.json', 'unlabeled-predictions.csv']
 </pre></div>
 </div>
@@ -1107,8 +1107,8 @@ Outputs: D:\radiomics-tutorial-validation\six-notebooks-final\02_image_clinical_
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="build-revision" data-build-revision="a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c">
-  Build <code>a767fa7</code>
+        <div class="footer-item"><p class="build-revision" data-build-revision="1eba7e5455d5c1bf830a9e1834e8f5274af07fd3">
+  Build <code>1eba7e5</code>
 </p></div>
       
     </div>

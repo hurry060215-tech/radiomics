@@ -32,7 +32,7 @@ not count as native implementation. Base native tests omit these packages.
 
 Actual pinned AnnData/WSIData dense, in-memory metadata/H5AD adaptation was
 tested with real containers, geometry, table IDs, historical snapshots and MPP.
-See [the precise environment and limitations](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/optional-interop-acceptance.md).
+See [the precise environment and limitations](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/docs/optional-interop-acceptance.md).
 This is not complete WSIData dependency, backed/sparse, decoder or training
 coverage. Ordinary arrays and the basic pathology path work without these packages.
 
@@ -85,5 +85,5 @@ GUI and automatic paper generation remain outside this round.
 
 Formal PyPI/crates.io publication, version changes and ov source integration
 require separate authorization. The six executable tutorials are documented in
-[native Python workflows](python-native.md); the [completion audit](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/completion-audit.md)
+[native Python workflows](python-native.md); the [completion audit](https://github.com/hurry060215-tech/radiomics/blob/1eba7e5455d5c1bf830a9e1834e8f5274af07fd3/docs/completion-audit.md)
 tracks remaining delivery gates rather than redefining completion around this matrix.

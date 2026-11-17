@@ -157,7 +157,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../en/installation.html">
+  <a class="nav-link nav-internal" href="../en/index.html">
     English
   </a>
 </li>
@@ -304,7 +304,7 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../en/installation.html">
+  <a class="nav-link nav-internal" href="../en/index.html">
     English
   </a>
 </li>
@@ -498,14 +498,14 @@
  
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">_shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">extraction_config</span><span class="p">,</span> <span class="n">output_arguments</span><span class="p">,</span> <span class="n">provenance</span><span class="p">,</span> <span class="n">stack_example_tables</span><span class="p">,</span> <span class="n">write_json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">_shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">output_arguments</span><span class="p">,</span> <span class="n">extraction_config</span><span class="p">,</span> <span class="n">stack_example_tables</span><span class="p">,</span> <span class="n">write_json</span><span class="p">,</span> <span class="n">provenance</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'metrics_backend': 'rust', 'rust_core_version': '0.1.0'}
-输出目录: D:\radiomics-tutorial-validation\six-notebooks-final\04_regions_delta_habitat\artifacts
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'metrics_backend': 'rust', 'rust_core_version': '0.1.0', 'schema_version': 1, 'api_revision': 2, 'native_compatible': True}
+输出目录: /tmp/radiomics-doctrees-8y5ry4nj/tutorials/execution/04_regions_delta_habitat/artifacts
 </pre></div>
 </div>
 </div>
@@ -516,7 +516,7 @@
 <p>运行并检查本步的数据构造、校验或导出操作。遇到报错时先检查上一单元的输出和对象，而不要跳过校验。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">xx</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yy</span><span class="p">,</span> <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
 <span class="n">affine</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">20.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]]</span>
 </pre></div>
 </div>
@@ -530,14 +530,14 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">extraction_config</span><span class="p">()[</span><span class="s1">'extraction'</span><span class="p">]</span>
 <span class="n">sources</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'CT_tumor'</span><span class="p">,</span> <span class="s1">'CT_ring'</span><span class="p">,</span> <span class="s1">'MR_tumor'</span><span class="p">,</span> <span class="s1">'MR_ring'</span><span class="p">)}</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">timepoint</span><span class="p">,</span> <span class="n">change</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">'T0'</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="s1">'T1'</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)]:</span>
+<span class="k">for</span> <span class="n">timepoint</span><span class="p">,</span> <span class="n">change</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">'T0'</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="s1">'T1'</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)]:</span>
     <span class="k">for</span> <span class="n">modality</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'CT'</span><span class="p">,</span> <span class="s1">'MR'</span><span class="p">):</span>
         <span class="n">image</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">+</span> <span class="n">xx</span> <span class="o">+</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">yy</span> <span class="o">+</span> <span class="n">change</span> <span class="o">+</span> <span class="p">(</span><span class="n">xx</span> <span class="o">*</span> <span class="n">yy</span> <span class="o">*</span> <span class="mf">0.01</span> <span class="k">if</span> <span class="n">modality</span> <span class="o">==</span> <span class="s1">'MR'</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">),</span> <span class="n">affine</span><span class="o">=</span><span class="n">affine</span><span class="p">,</span> <span class="n">spatial_unit</span><span class="o">=</span><span class="s1">'mm'</span><span class="p">)</span>
         <span class="n">tumor</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">from_array</span><span class="p">(((</span><span class="n">xx</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">xx</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">yy</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">yy</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span> <span class="n">geometry</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
         <span class="n">organ</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span> <span class="n">geometry</span><span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
         <span class="n">ring</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">peritumoral_ring</span><span class="p">(</span><span class="n">tumor</span><span class="p">,</span> <span class="n">inner_mm</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">outer_mm</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">organ_mask</span><span class="o">=</span><span class="n">organ</span><span class="p">)</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">tumor</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">ring</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">))</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">'tumor'</span><span class="p">,</span> <span class="n">tumor</span><span class="p">),</span> <span class="p">(</span><span class="s1">'ring'</span><span class="p">,</span> <span class="n">ring</span><span class="p">)]:</span>
+        <span class="k">for</span> <span class="n">region</span><span class="p">,</span> <span class="n">mask</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">'tumor'</span><span class="p">,</span> <span class="n">tumor</span><span class="p">),</span> <span class="p">(</span><span class="s1">'ring'</span><span class="p">,</span> <span class="n">ring</span><span class="p">)]:</span>
             <span class="n">sample</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">ImageSample</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">sample_id</span><span class="o">=</span><span class="n">modality</span> <span class="o">+</span> <span class="s1">'-'</span> <span class="o">+</span> <span class="n">region</span> <span class="o">+</span> <span class="s1">'-'</span> <span class="o">+</span> <span class="n">timepoint</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="s1">'P1'</span><span class="p">,</span> <span class="n">lesion_id</span><span class="o">=</span><span class="s1">'L1'</span><span class="p">,</span> <span class="n">modality</span><span class="o">=</span><span class="n">modality</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">region</span><span class="p">,</span> <span class="n">timepoint</span><span class="o">=</span><span class="n">timepoint</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="s1">'A'</span><span class="p">),</span> <span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
             <span class="n">sources</span><span class="p">[</span><span class="n">modality</span> <span class="o">+</span> <span class="s1">'_'</span> <span class="o">+</span> <span class="n">region</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">config</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">modality</span> <span class="o">==</span> <span class="s1">'CT'</span> <span class="ow">and</span> <span class="n">timepoint</span> <span class="o">==</span> <span class="s1">'T0'</span><span class="p">:</span>
@@ -557,7 +557,7 @@
 <p>按患者、病灶、时间点对齐；模态与区域是显式可变化的字段。输入影像已经对齐，本包没有执行配准。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tables</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">stack_example_tables</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span> <span class="ow">in</span> <span class="n">sources</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tables</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">stack_example_tables</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">sources</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 </pre></div>
 </div>
 </div>
@@ -859,7 +859,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Outputs: D:\radiomics-tutorial-validation\six-notebooks-final\04_regions_delta_habitat\artifacts
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Outputs: /tmp/radiomics-doctrees-8y5ry4nj/tutorials/execution/04_regions_delta_habitat/artifacts
 </pre></div>
 </div>
 </div>
@@ -900,7 +900,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c7204ece8bde9d5d4230f461e285cb030d4ca23b199c225ad46d295e37771a39.png" src="../_images/c7204ece8bde9d5d4230f461e285cb030d4ca23b199c225ad46d295e37771a39.png" />
+<img alt="../_images/75159ee840673b683172b4d43d997897a7888c347130b88b28303149aefe53b1.png" src="../_images/75159ee840673b683172b4d43d997897a7888c347130b88b28303149aefe53b1.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>结果文件: ['concat-provenance.json', 'delta-pairing.json', 'delta.csv', 'delta.csv.manifest.json', 'local-habitat-centers.csv', 'local-habitat-labels.csv', 'local-habitat.json', 'local-habitat.png', 'multimodal-multiregion.parquet', 'multimodal-multiregion.parquet.manifest.json', 'provenance.json', 'provided-habitat-1.csv', 'provided-habitat-1.csv.manifest.json', 'provided-habitat-2.csv', 'provided-habitat-2.csv.manifest.json', 'provided-habitat-mask.npy', 'tutorial-runtime.json']
 </pre></div>
 </div>
@@ -1021,8 +1021,8 @@
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="build-revision" data-build-revision="a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c">
-  Build <code>a767fa7</code>
+        <div class="footer-item"><p class="build-revision" data-build-revision="1eba7e5455d5c1bf830a9e1834e8f5274af07fd3">
+  Build <code>1eba7e5</code>
 </p></div>
       
     </div>
