@@ -68,7 +68,9 @@ def backend_info() -> dict[str, object]:
         "rust_core_version": native.CORE_VERSION if native is not None else None,
         "schema_version": getattr(native, "SCHEMA_VERSION", None),
         "api_revision": getattr(native, "API_REVISION", None),
-        "native_compatible": native is not None
-        and getattr(native, "SCHEMA_VERSION", None) == NATIVE_SCHEMA_VERSION
-        and getattr(native, "API_REVISION", None) == NATIVE_API_REVISION,
+        "native_compatible": (
+            native is not None
+            and getattr(native, "SCHEMA_VERSION", None) == NATIVE_SCHEMA_VERSION
+            and getattr(native, "API_REVISION", None) == NATIVE_API_REVISION
+        ),
     }

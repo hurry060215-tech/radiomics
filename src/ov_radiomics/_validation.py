@@ -1,4 +1,5 @@
 """Shared contracts: explicit IDs, binary targets, and aligned probabilities."""
+
 import numpy as np
 import pandas as pd
 
