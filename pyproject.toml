@@ -54,6 +54,7 @@ include = [
     {path = "golden/python_golden_v1/**/*", format = "sdist"},
     {path = "golden/ibsi_digital_v1/**/*", format = "sdist"},
     {path = "benchmarks/v2/**/*", format = "sdist"},
+    {path = "benchmarks/results/**/*", format = "sdist"},
 ]
 
 [tool.pytest.ini_options]
