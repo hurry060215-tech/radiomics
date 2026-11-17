@@ -2243,7 +2243,7 @@ def write_report_markdown(path, report):
         f"Plan SHA256: `{report['plan_sha256']}`.",
         (
             "L1 is a selected-family public array call, including conversion/binning and its actual"
-            " matrix/scalar work. L2–4 compute the exact 55-feature list plus the separately"
+            " matrix/scalar work. L2–L4 compute the exact 55-feature list plus the separately"
             " described project shape_basic descriptors on both backends. No mesh/filter feature is"
             " timed."
         ),
