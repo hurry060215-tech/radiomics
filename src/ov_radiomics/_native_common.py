@@ -4,7 +4,7 @@ import math
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from ._backend import resolve_backend
+from ._backend import REBUILD_MESSAGE, resolve_backend
 from .split import _label
 
 
@@ -53,7 +53,13 @@ def request(operation, **values):
     envelope = dict(schema_version=1, request=dict(operation=operation, **values))
     # Nonfinite image/statistic states have explicit string encodings in Rust.
     # Numeric feature buffers below instead use finite zero + missing flags.
-    return json.loads(native.request_json(encode_json(envelope)))
+    try:
+        response = native.request_json(encode_json(envelope))
+    except ValueError as error:
+        if 'unknown field' in str(error):
+            raise ValueError(f'{REBUILD_MESSAGE} Native schema error: {error}') from error
+        raise
+    return json.loads(response)
 
 
 def array_features_typed_or_json(image_buffer, mask_buffer, *, image_geometry,

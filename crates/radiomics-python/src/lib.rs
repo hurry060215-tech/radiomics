@@ -165,6 +165,13 @@ mod _native {
     const CORE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
     #[pymodule_export]
+    const SCHEMA_VERSION: u32 = 1;
+
+    // Increment when a request/typed-array boundary changes within schema v1.
+    #[pymodule_export]
+    const API_REVISION: u32 = 2;
+
+    #[pymodule_export]
     const IMPLEMENTATION_SHA256: &str = core::workflow::implementation_sha256();
 
     #[pyfunction]
