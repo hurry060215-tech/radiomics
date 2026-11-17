@@ -2,6 +2,7 @@ exclude: >-
   (?x)^(
     src/ov_radiomics/_reference[^/]*\.py|
     golden/.*|
+    tools/(golden_[^/]+|validate_public_ct)\.py|
     benchmarks/(v2|results)/.*|
     docs/.*-data(?:-redacted)?\.json|
     website/.*execution.*\.json

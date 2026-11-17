@@ -63,10 +63,20 @@ pythonpath = ["src"]
 [tool.ruff]
 target-version = "py39"
 line-length = 100
-extend-exclude = ["src/ov_radiomics/_reference*.py", "golden", "benchmarks/v2", "benchmarks/results"]
+extend-exclude = ["*.ipynb", "src/ov_radiomics/_reference*.py", "tools/golden_*.py", "tools/validate_public_ct.py", "golden", "benchmarks/v2", "benchmarks/results"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
+
+# Embedded Markdown and executable notebook templates retain intentional long
+# lines; their Python imports, names and formatting are still checked.
+[tool.ruff.lint.per-file-ignores]
+"tools/build_api_docs.py" = ["E501"]
+"tools/build_notebooks.py" = ["E501"]
+"tools/build_tutorial_notebooks.py" = ["E501"]
+"tools/build_public_ct_notebook.py" = ["E501"]
+"tools/build_public_tabular_notebook.py" = ["E501"]
+"tools/tutorial_figures.py" = ["E501"]
 
 [tool.mypy]
 python_version = "3.9"

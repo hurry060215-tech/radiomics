@@ -58,7 +58,7 @@ def process(root, check=False):
         text = (gzip.decompress(raw) if path.suffix == ".gz" else raw).decode("utf-8")
         redacted = redact_text(text)
         # Parse all lines to detect invalid JSON and redacted-key collisions.
-        before_lines, after_lines = text.splitlines(), redacted.splitlines()
+        after_lines = redacted.splitlines()
 
         def unique(pairs):
             result = dict(pairs)
@@ -94,7 +94,10 @@ def process(root, check=False):
             public_bytes=len(data),
             values_unchanged=True,
             observation_sha256=digest,
-            redaction="Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and observation order unchanged.",
+            redaction=(
+                "Absolute filesystem path prefixes replaced with $WORKDIR; non-string bytes and"
+                " observation order unchanged."
+            ),
         )
         pending.append((path, data))
     if check:

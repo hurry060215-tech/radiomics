@@ -1,12 +1,13 @@
 """Download/reuse hash-pinned UCI WDBC files in an external cache; standard library only."""
+
 import argparse
 import hashlib
 import json
 import os
-from pathlib import Path
 import shutil
 import urllib.request
 import uuid
+from pathlib import Path
 
 
 def sha256(path):
@@ -56,7 +57,10 @@ def fetch(output, *, from_cache=None):
                 with cached.open("rb") as source, temporary.open("xb") as destination:
                     shutil.copyfileobj(source, destination)
             else:
-                with urllib.request.urlopen(spec["url"], timeout=60) as source, temporary.open("xb") as destination:
+                with (
+                    urllib.request.urlopen(spec["url"], timeout=60) as source,
+                    temporary.open("xb") as destination,
+                ):
                     total = 0
                     while True:
                         block = source.read(65536)
@@ -73,24 +77,46 @@ def fetch(output, *, from_cache=None):
         finally:
             if temporary.exists():
                 temporary.unlink()
-    notice = ("# Public WDBC input\n\n" + facts["dataset"] + "\n\n" + facts["attribution"] +
-              "\n\nLicense: " + facts["license"]["identifier"] + " " + facts["license"]["url"] +
-              "\n\nData retained as downloaded, not covered by the software MIT license.\n" +
-              "The tutorial renames columns and assigns a declared hash-based training/test split; it never invents diagnosis labels.\n")
+    notice = (
+        "# Public WDBC input\n\n"
+        + facts["dataset"]
+        + "\n\n"
+        + facts["attribution"]
+        + "\n\nLicense: "
+        + facts["license"]["identifier"]
+        + " "
+        + facts["license"]["url"]
+        + "\n\nData retained as downloaded, not covered by the software MIT license.\n"
+        + "The tutorial renames columns and assigns a declared hash-based training/test split; it"
+        " never invents diagnosis labels.\n"
+    )
     exclusive_text(output / "NOTICE.md", notice)
-    canonical = json.dumps(facts, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    manifest = dict(schema="radiomics.real.public_tabular_cache.v1", source_facts_canonical_sha256=hashlib.sha256(canonical).hexdigest(),
-                    dataset=facts["dataset"], doi=facts["doi"], license=facts["license"],
-                    files={name: {"sha256": spec["sha256"], "bytes": spec["bytes"], "url": spec["url"]}
-                           for name, spec in facts["files"].items()})
-    exclusive_text(output / "source-manifest.json", json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
+    canonical = json.dumps(facts, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode(
+        "utf-8"
+    )
+    manifest = dict(
+        schema="radiomics.real.public_tabular_cache.v1",
+        source_facts_canonical_sha256=hashlib.sha256(canonical).hexdigest(),
+        dataset=facts["dataset"],
+        doi=facts["doi"],
+        license=facts["license"],
+        files={
+            name: {"sha256": spec["sha256"], "bytes": spec["bytes"], "url": spec["url"]}
+            for name, spec in facts["files"].items()
+        },
+    )
+    exclusive_text(
+        output / "source-manifest.json", json.dumps(manifest, indent=2, ensure_ascii=False) + "\n"
+    )
     return output
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--from-cache", type=Path, help="Reuse matching original source files without network")
+    parser.add_argument(
+        "--from-cache", type=Path, help="Reuse matching original source files without network"
+    )
     args = parser.parse_args()
     print("Verified cache:", fetch(args.output, from_cache=args.from_cache))
 

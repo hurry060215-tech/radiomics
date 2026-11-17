@@ -146,3 +146,8 @@ The GitHub Pages environment may restrict allowed deployment branches or tags.
 An actual tag build can therefore produce a preview while deployment still needs
 the maintainer's environment policy to allow that tag. The documentation workflow
 does not change repository environment protection settings.
+
+Frozen Golden generators (`tools/golden_*.py` and the frozen public CT validator)
+retain their approved bytes alongside the Golden assets. Embedded Markdown and
+notebook templates keep their literal line lengths; their other Ruff rules remain
+enforced. Notebook JSON and historical execution outputs are not reformatted.

@@ -103,8 +103,7 @@ def build(root=ROOT, output=None):
             raise RuntimeError("Sphinx apidoc failed.")
     for name in optional:
         text = (
-            name + "\n" + "=" * len(name) + "\n\n"
-            ".. py:class:: ov_radiomics." + name + "\n\n"
+            name + "\n" + "=" * len(name) + "\n\n.. py:class:: ov_radiomics." + name + "\n\n"
             "   This public name is a lazy alias supplied by the optional Python\n"
             "   reference backend. Its implementation is intentionally not imported\n"
             "   during documentation generation. Install ``ov-radiomics[reference]``\n"
