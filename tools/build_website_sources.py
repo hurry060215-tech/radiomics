@@ -46,6 +46,7 @@ PAGES = (
     "rust-backend-decision.md",
     "scalar-accuracy-audit.md",
     "sample-constructor-optimization.md",
+    "release.md",
 )
 LINK = re.compile(r"(?P<head>\!?\[[^\]\n]*\]\()(?P<target>[^)\s]+)(?P<tail>\))")
 
@@ -65,13 +66,15 @@ def source_revision(root):
     )
 
 
-def build(root=ROOT, source_ref=None):
+def build(root=ROOT, source_ref=None, check=False):
     root = Path(root).resolve()
     source_ref = source_revision(root) if source_ref is None else source_ref
     docs, website = root / "docs", root / "website"
     # Base sdists omit the executed public CT notebook's NC-derived image.
     # Recreate its code-only source, without executing/downloading anything.
     if not (website / "tutorials/07_public_ct.ipynb").exists():
+        if check:
+            raise ValueError("reference out of sync: missing public CT source notebook")
         import subprocess
         import sys
 
@@ -91,7 +94,7 @@ def build(root=ROOT, source_ref=None):
     )
     owned = set(previous.get("files", {}))
     for target in destinations.values():
-        if target.exists() and target.relative_to(output).as_posix() not in owned:
+        if not check and target.exists() and target.relative_to(output).as_posix() not in owned:
             raise FileExistsError(
                 "Refusing to overwrite an unmanaged website source: " + str(target)
             )
@@ -132,36 +135,43 @@ def build(root=ROOT, source_ref=None):
         text = re.sub(r"^```mermaid\s*$", "```{mermaid}", text, flags=re.MULTILINE)
         # Pages omitted from the shorter navigation remain available via links.
         text = "---\norphan: true\n---\n\n" + text
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(text.encode("utf-8"))
+        rendered = text.encode("utf-8")
+        if check:
+            if not target.is_file() or target.read_bytes() != rendered:
+                raise ValueError("reference out of sync: " + str(target.relative_to(root)))
+        else:
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(rendered)
         records[target.relative_to(output).as_posix()] = {
             "source": source.relative_to(root).as_posix(),
             "sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
         }
     stale = owned - records.keys()
+    expected = {"schema": 1, "source_ref": source_ref, "files": records}
+    if check:
+        if stale or previous != expected:
+            raise ValueError("reference out of sync: source manifest differs")
+        return records
     for name in stale:
         path = (output / name).resolve()
         if not path.is_relative_to(output.resolve()):
             raise ValueError("Invalid managed source path: " + name)
         if path.is_file():
             path.unlink()
-    manifest_path.write_bytes(
-        (
-            json.dumps({"schema": 1, "source_ref": source_ref, "files": records}, indent=2) + "\n"
-        ).encode()
-    )
+    manifest_path.write_bytes((json.dumps(expected, indent=2) + "\n").encode())
     return records
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--check", action="store_true", help="Compare without writing files.")
     parser.add_argument(
         "--source-ref", help="Optional explicit Git source ref for repository links."
     )
     args = parser.parse_args()
     print(
         "Prepared",
-        len(build(args.root, args.source_ref)),
+        len(build(args.root, args.source_ref, check=args.check)),
         "reference pages from maintained Markdown sources.",
     )

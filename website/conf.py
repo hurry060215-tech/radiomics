@@ -21,7 +21,16 @@ html_title = "Radiomics · 教程与文档"
 documentation_version = os.environ.get("RADIOMICS_DOC_VERSION", "latest")
 html_baseurl = "https://hurry060215-tech.github.io/radiomics/" + documentation_version + "/"
 language = "zh_CN"
-nb_execution_mode = "off"
+nb_execution_mode = "force"
+nb_execution_timeout = 300
+nb_execution_raise_on_error = True
+# Public-data licenses/downloads and private inputs require explicit user steps.
+nb_execution_excludepatterns = [
+    "tutorials/07_public_ct.ipynb",
+    "tutorials/08_public_tabular.ipynb",
+    "tutorials/09_local_image_features.ipynb",
+    "tutorials/10_local_modeling.ipynb",
+]
 exclude_patterns = ["_build"]
 html_theme_options = {
     "github_url": "https://github.com/hurry060215-tech/radiomics",

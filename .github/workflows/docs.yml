@@ -14,7 +14,18 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  docs-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python tools/build_website_sources.py
+      - run: python tools/build_website_sources.py --check
+
   build:
+    needs: docs-sync
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -29,6 +40,14 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install -r website/requirements.txt
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build native wheel and CLI for executable documentation
+        run: |
+          python -m pip install 'maturin==1.16.0' nbformat nbclient ipykernel
+          python tools/package_native.py --output artifacts/docs-package-assets
+          python -m maturin build --release --locked --out dist
+          python -c "import glob,subprocess,sys; subprocess.check_call([sys.executable,'-m','pip','install',glob.glob('dist/*.whl')[0]])"
+          cargo build --release -p ov-radiomics-cli --locked
       - name: Record the checked-out documentation revision
         run: |
           python - <<'PY'
@@ -51,6 +70,11 @@ jobs:
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
               output.write('latest_revision=' + metadata['latest_revision'] + '\n')
           PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: documentation-tutorial-execution
+          path: website/_build/tutorial-execution
       - uses: actions/upload-artifact@v4
         with:
           name: documentation-preview

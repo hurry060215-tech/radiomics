@@ -90,6 +90,19 @@ Pages from allowed branches; manual publication does not merge a PR or release
 a package version. Tests run once for each PR head and for main pushes, rather
 than duplicating feature-branch push and PR runs.
 
+Run `python tools/build_website_sources.py --check` after generation to detect
+source or rendered-byte drift without writing anything. A fresh checkout first
+generates the ignored reference tree; `docs-sync` then checks that exact tree.
+There is no separately committed generated copy to keep synchronized.
+
+The publication builder executes lessons 01–06 in fresh kernels through the
+shared native executor, checks their actual artifacts and inline plots, and
+renders a disposable website copy containing those outputs. Execution receipts
+are separate CI artifacts, not public website files. The original notebooks and
+historical execution receipts stay unchanged. Lessons 07–08 retain explicitly
+licensed public-data execution, and 09–10 require external private inputs; normal
+documentation builds never download those data or execute the private lessons.
+
 ## Numerical and provenance review
 
 Do not update Golden outputs to make an implementation pass. Keep Python
@@ -124,6 +137,12 @@ The two pre-commit hooks check staged Python files with Ruff E/F/I rules and
 `ruff format --check`. They do not rewrite existing files or initiate a repository
 wide formatting pass. Frozen reference implementations, Golden assets and
 historical benchmark evidence are excluded.
+
+`pre-commit install` is recommended locally. The `lint` CI job is mandatory:
+it checks all maintained Python sources with the same pinned Ruff version,
+including formatting, and runs the three strict Mypy entry points. The maintained
+backlog was cleaned in separate tools/examples, tests and package commits, so CI
+can check the full scope rather than allowing old errors through a diff-only gate.
 
 Mypy strict checking is limited to the package entry point, `_backend.py` and
 `interop.py`; other modules keep `ignore_errors = true` during gradual adoption.
