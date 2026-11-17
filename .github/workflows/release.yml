@@ -1,0 +1,143 @@
+name: release candidates and approved registry publication
+
+"on":
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version matching all four source metadata files
+        required: true
+        default: '0.1.0'
+        type: string
+      destination:
+        description: Build artifacts first; registry uploads require environment approval
+        required: true
+        default: artifacts
+        type: choice
+        options: [artifacts, testpypi, pypi]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ inputs.version }}-${{ inputs.destination }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Require maintained main and matching metadata
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          test "$GITHUB_REF" = refs/heads/main
+          python tools/check_release_version.py --version "$RELEASE_VERSION"
+
+  acceptance:
+    needs: validate
+    uses: ./.github/workflows/tests.yml
+
+  wheels:
+    needs: validate
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: dtolnay/rust-toolchain@stable
+      - run: python -m pip install maturin==1.16.0
+      - run: python tools/package_native.py --output artifacts/release-package-assets
+      - name: Build Linux abi3 wheel
+        if: runner.os == 'Linux'
+        uses: PyO3/maturin-action@v1
+        with:
+          command: build
+          maturin-version: v1.16.0
+          manylinux: '2014'
+          target: x86_64
+          args: --release --locked --out dist -i python3.11
+      - name: Build Windows abi3 wheel
+        if: runner.os == 'Windows'
+        run: python -m maturin build --release --locked --out dist --target x86_64-pc-windows-msvc
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-wheel-${{ matrix.os }}
+          path: dist/*.whl
+          if-no-files-found: error
+
+  sdist:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: dtolnay/rust-toolchain@stable
+      - run: python -m pip install maturin==1.16.0
+      - run: python tools/package_native.py --output artifacts/release-sdist-assets
+      - run: python -m maturin sdist --out dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-sdist
+          path: dist/*.tar.gz
+          if-no-files-found: error
+
+  wheel-smoke:
+    needs: wheels
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.9', '3.10', '3.11', '3.12']
+    steps:
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2
+        with:
+          version: '0.13.8'
+          enable-cache: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-wheel-${{ matrix.os }}
+          path: dist
+      - name: Install the same abi3 candidate across the supported matrix
+        shell: bash
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          uv python install "${{ matrix.python }}"
+          uv venv --managed-python --python "${{ matrix.python }}" --seed .release-smoke
+          uv pip install --python .release-smoke dist/*.whl
+          uv run --no-project --python .release-smoke python -c "import ov_radiomics as r; assert r.__version__ == '$RELEASE_VERSION'; assert r.backend_info()['native_compatible']; assert r.binary_metrics([0,0,1,1],[.1,.4,.35,.8],backend='rust').auc == .75; print(r.backend_info())"
+
+  publish:
+    needs: [acceptance, wheel-smoke, sdist]
+    if: inputs.destination != 'artifacts'
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.destination }}
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: dist
+          merge-multiple: true
+      - name: Publish to TestPyPI using its Trusted Publisher
+        if: inputs.destination == 'testpypi'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+      - name: Publish to PyPI using its Trusted Publisher
+        if: inputs.destination == 'pypi'
+        uses: pypa/gh-action-pypi-publish@release/v1
