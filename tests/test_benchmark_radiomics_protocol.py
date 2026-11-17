@@ -87,7 +87,9 @@ def test_report_writer_works_on_supported_python_without_claiming_missing_eviden
         plan_sha256="a" * 64, results=[], missing_evidence=["allocator counts unmeasured"]
     )
     module.write_report_markdown(tmp_path / "report.md", report)
-    assert "allocator counts unmeasured" in (tmp_path / "report.md").read_text()
+    text = (tmp_path / "report.md").read_text(encoding="utf-8")
+    assert "allocator counts unmeasured" in text
+    assert "L2\u2013L4" in text
 
 
 def test_public_version_string_cannot_replace_frozen_source_and_compiled_hashes():

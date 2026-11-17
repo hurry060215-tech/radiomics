@@ -2243,7 +2243,7 @@ def write_report_markdown(path, report):
         f"Plan SHA256: `{report['plan_sha256']}`.",
         (
             "L1 is a selected-family public array call, including conversion/binning and its actual"
-            " matrix/scalar work. L2鈥揕4 compute the exact 55-feature list plus the separately"
+            " matrix/scalar work. L2–4 compute the exact 55-feature list plus the separately"
             " described project shape_basic descriptors on both backends. No mesh/filter feature is"
             " timed."
         ),
@@ -2290,7 +2290,7 @@ def write_report_markdown(path, report):
             lines.append(
                 f"- `{row['case']['id']}`: runtime"
                 f" regression={row.get('L2_engineering_runtime_miss', False)}, memory"
-                f" regression={row.get('memory_engineering_miss', False)}, >=1.5脳 speed target"
+                f" regression={row.get('memory_engineering_miss', False)}, >=1.5× speed target"
                 f" met={row.get('speedup_target_met', 'not applicable')}. Retain and investigate;"
                 " do not change correctness tolerances or claim an algorithm failure merely"
                 " because it is slower."
