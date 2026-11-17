@@ -97,7 +97,7 @@ that fit and cannot be interpreted as the same tissue type across patients.
 ## Verification and limitations
 
 The independently reviewed pre-implementation reference is described in
-[research-golden.md](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/research-golden.md). Six native tests compare exact keys,
+[research-golden.md](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/research-golden.md). Six native tests compare exact keys,
 IDs, row/column order, missing states and assignments, deterministic numerical
 scaler/center/inertia/direct-distance values at `atol=1e-10, rtol=1e-8`, explicit
 failures, held-out prediction immutability, named-column reordering, serialization

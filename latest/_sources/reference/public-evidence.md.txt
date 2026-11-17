@@ -10,7 +10,7 @@ provides separately named `*-redacted.json` and `*-redacted.jsonl.gz` derivative
 of those receipts, while the original files are preserved byte for byte in an
 external evidence archive outside every Git repository.
 
-The [public evidence manifest](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/public-evidence-manifest.json) records each
+The [public evidence manifest](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/public-evidence-manifest.json) records each
 original repository-relative filename, original SHA256 and byte count, and its
 public derivative's filename, SHA256 and byte count. The external archive's
 `MANIFEST.json` also records the source paths and archival timestamps.

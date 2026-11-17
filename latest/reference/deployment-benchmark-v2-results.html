@@ -457,7 +457,7 @@
 <ul class="simple">
 <li><p>源码 <code class="docutils literal notranslate"><span class="pre">45140bff46b3ef1ae7eff9a170acb3a1116308b1</span></code>，核心实现 <code class="docutils literal notranslate"><span class="pre">a39c66ee16dcf04aefd79f2b3996e1be5666b2903b0f40e991aaf5097d54c2a8</span></code>，包版本 <code class="docutils literal notranslate"><span class="pre">0.1.0</span></code>。</p></li>
 <li><p>不可变 wheel SHA256 <code class="docutils literal notranslate"><span class="pre">8767c22d3344d0009669de7c5297c0db58b5f9144c506be04722fe70ab4ea9b3</span></code>；CLI SHA256 <code class="docutils literal notranslate"><span class="pre">2197ea4af3cc3078f660a26f5a1401c8c9b185ace3d1d31984c7ba74fbb471f4</span></code>。</p></li>
-<li><p>先审阅并批准 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/v2/deployment-plan.json">deployment-plan.json</a> 精确 SHA <code class="docutils literal notranslate"><span class="pre">d807983caaee9bb95f6046327c014bb9a2b86c6e421e77e96b66e938c0c6bfa6</span></code>，之后只执行一次固定试验。</p></li>
+<li><p>先审阅并批准 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/v2/deployment-plan.json">deployment-plan.json</a> 精确 SHA <code class="docutils literal notranslate"><span class="pre">d807983caaee9bb95f6046327c014bb9a2b86c6e421e77e96b66e938c0c6bfa6</span></code>，之后只执行一次固定试验。</p></li>
 <li><p>Windows、CPython3.9.21；新建 <code class="docutils literal notranslate"><span class="pre">system-site-packages=false</span></code> venv。创建环境为不计时准备，不修改既有 Golden/测量环境或系统安装。</p></li>
 <li><p>CLI <code class="docutils literal notranslate"><span class="pre">--version</span></code> 和 Python <code class="docutils literal notranslate"><span class="pre">-I</span></code> import＋<code class="docutils literal notranslate"><span class="pre">backend_info()</span></code> 各运行7个独立进程，无预热；round0 CLI→Python，round1反向，固定交替，全部14次保留。时间为父进程启动到 stdout/stderr 传输与退出完成；字节核验、日志解码、文件计数和扫描在计时外。</p></li>
 <li><p>主 agent 和验收工作包确认短窗口没有重叠构建、安装、算法预检或其他套件计时。OS/user 后台进程和文件/bytecode cache 未独占控制。</p></li>
@@ -543,7 +543,7 @@
 </section>
 <section id="id4">
 <h2>证据与复现<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
-<p>可核查 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/deployment-native-45140bff/report-redacted.json">独立报告</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/deployment-native-45140bff/raw-observations.jsonl">14条原始观测</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/deployment-native-45140bff/payload-install.json">单次安装记录</a> 与 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/deployment-native-45140bff/artifact-index.json">artifact index</a>。外部完整目录为 <code class="docutils literal notranslate"><span class="pre">$WORKDIR/benchmark-v2/deployment-v3-1</span></code>，包含 fresh venv 和原始日志；归档不包含可执行构建产物或整个环境。</p>
+<p>可核查 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/deployment-native-45140bff/report-redacted.json">独立报告</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/deployment-native-45140bff/raw-observations.jsonl">14条原始观测</a>、<a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/deployment-native-45140bff/payload-install.json">单次安装记录</a> 与 <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/deployment-native-45140bff/artifact-index.json">artifact index</a>。外部完整目录为 <code class="docutils literal notranslate"><span class="pre">$WORKDIR/benchmark-v2/deployment-v3-1</span></code>，包含 fresh venv 和原始日志；归档不包含可执行构建产物或整个环境。</p>
 <p>Set <code class="docutils literal notranslate"><span class="pre">$BASE_PYTHON</span></code> to the matching isolated base interpreter. Use a new output directory:</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">tools</span><span class="p">/</span><span class="n">benchmark_deployment</span><span class="p">.</span><span class="n">py</span> <span class="p">`</span>
   <span class="p">-</span><span class="n">-plan</span> <span class="n">benchmarks</span><span class="p">/</span><span class="n">v2</span><span class="p">/</span><span class="n">deployment-plan</span><span class="p">.</span><span class="n">json</span> <span class="p">`</span>
@@ -656,8 +656,8 @@
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
-  Build <code>f3ec58c</code>
+        <div class="footer-item"><p class="build-revision" data-build-revision="a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c">
+  Build <code>a767fa7</code>
 </p></div>
       
     </div>

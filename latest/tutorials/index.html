@@ -388,6 +388,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../datasets.html">数据与许可</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="local-data.html">本地样例路线</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="09_local_image_features.html">09 · 本地影像／ROI：真实文件、几何质控与原生 55 项特征</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_local_modeling.html">10 · 同一固定划分：新提取 55 项／提供的 107 项 → 原生 LR → 无标签重载预测</a></li>
+</ul>
+</details></li>
 </ul>
 </div>
 </nav></div>
@@ -447,20 +452,21 @@
                   
   <section id="id1">
 <h1>教程：按任务选择路线<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>先完成<a class="reference internal" href="../installation.html"><span class="std std-doc">安装</span></a>，再从完整仓库启动 Jupyter。每篇 Notebook 都包含代码、中间检查、保存的实际输出和解释；按顺序执行单元，使用新的输出目录。网页构建只展示已保存输出，不自动下载数据或训练。</p>
+<p>先完成<a class="reference internal" href="../installation.html"><span class="std std-doc">安装</span></a>，再从完整仓库启动 Jupyter。01–08包含代码、中间检查、保存的实际输出和解释；09–10提供读取本机数据的源码，执行输出只留本机。按顺序执行单元，使用新的输出目录。网页构建不自动下载数据或训练。</p>
 <section id="id2">
-<h2>四条学习路线<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>五条学习路线<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <div class="portal-grid">
 <a class="route-card" href="radiomics.html"><span class="route-label">影像组学 · 01 → 04</span><h3>从 ROI 到 Original 特征</h3><p>NIfTI / mask → 几何与提取 → 多区域与时间点 → 特征和质量记录。</p><span class="data-badge synthetic">合成入门</span></a>
 <a class="route-card" href="modeling.html"><span class="route-label">建模与统计 · 02 → 03</span><h3>从特征到可保存的模型</h3><p>特征与结局 → 患者分组 → 分类／回归 → 评价、.rad 与外部预测。</p><span class="data-badge synthetic">合成入门</span></a>
 <a class="route-card" href="pathology.html"><span class="route-label">轻量病理 · 05 → 06</span><h3>从 patch 到层级结果</h3><p>普通图像 / embedding → QC、ID 对齐 → 聚合 → 真实 tile 分数覆盖图。</p><span class="data-badge synthetic">合成入门</span></a>
 <a class="route-card" href="real-data.html"><span class="route-label">真实数据 · 07 / 08</span><h3>检查真实文件与数据来源</h3><p>公开 CT 或细胞核测量表 → 许可与 SHA → 提取或固定记录留出 → 可追溯结果。</p><span class="data-badge real">真实公开数据</span></a>
+<a class="route-card" href="local-data.html"><span class="route-label">本地数据 · 09 → 10</span><h3>自备影像／ROI 到原生模型</h3><p>参数化本机路径 → 几何质控 → 55项特征 → 固定划分与模型重载。</p><span class="data-badge">代码公开，输出留本机</span></a>
 </div>
 <div class="toctree-wrapper compound">
 </div>
 </section>
 <section id="id3">
-<h2>八篇可执行教程<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2>十篇可执行教程<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>教程</p></th>
@@ -501,6 +507,14 @@
 <td><p>真实 UCI 记录与 B/M 标签，CC-BY-4.0</p></td>
 <td><p>固定记录留出、原生 LR、保存加载与无标签预测</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="09_local_image_features.html"><span class="std std-doc">09 · 本地图像与 ROI</span></a></p></td>
+<td><p>用户自备 NIfTI／mask、标签与固定分组</p></td>
+<td><p>显式几何处理、55项特征、QA与输入哈希</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="10_local_modeling.html"><span class="std std-doc">10 · 本地固定划分建模</span></a></p></td>
+<td><p>09生成的55列与既有107列特征</p></td>
+<td><p>共享划分、OOF／val、模型重载和无标签推理</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -516,7 +530,9 @@
 <a class="reference download internal" download="" href="../_downloads/2528c2dd6f2504536eb012e96639ab37/05_patch_patient.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">05</span> <span class="pre">病理</span> <span class="pre">patch</span></code></a> ·
 <a class="reference download internal" download="" href="../_downloads/eafc33ab98a227502e6561fe4831a553/06_embedding_overlay.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">06</span> <span class="pre">Embedding</span></code></a> ·
 <a class="reference download internal" download="" href="../_downloads/1b15275b3f109a574a0d9e3a84396e30/07_public_ct.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">07</span> <span class="pre">公开</span> <span class="pre">CT</span></code></a> ·
-<a class="reference download internal" download="" href="../_downloads/48300a9ef749e75be1b5f00256f7513c/08_public_tabular.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">08</span> <span class="pre">公开表格</span></code></a></p>
+<a class="reference download internal" download="" href="../_downloads/48300a9ef749e75be1b5f00256f7513c/08_public_tabular.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">08</span> <span class="pre">公开表格</span></code></a> ·
+<a class="reference download internal" download="" href="../_downloads/c5da5a5d23e8ea5e1c0ca3c891103de4/09_local_image_features.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">09</span> <span class="pre">本地图像</span></code></a> ·
+<a class="reference download internal" download="" href="../_downloads/acc5c4799901d2018042bd5e7b1526f2/10_local_modeling.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">10</span> <span class="pre">本地建模</span></code></a></p>
 <p>换用自有数据时，按<a class="reference internal" href="../user-guide/index.html"><span class="std std-doc">用户指南</span></a>准备文件、列角色、患者单位和坐标。<code class="docutils literal notranslate"><span class="pre">examples/real/</span></code> 入口读取提供的身份与结局，不生成临床标签。</p>
 </section>
 </section>
@@ -568,8 +584,8 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">四条学习路线</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">八篇可执行教程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">五条学习路线</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">十篇可执行教程</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">下载与替换数据</a></li>
 </ul>
   </nav></div>
@@ -618,8 +634,8 @@
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
-  Build <code>f3ec58c</code>
+        <div class="footer-item"><p class="build-revision" data-build-revision="a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c">
+  Build <code>a767fa7</code>
 </p></div>
       
     </div>

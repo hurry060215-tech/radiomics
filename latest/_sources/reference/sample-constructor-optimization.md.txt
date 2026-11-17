@@ -57,7 +57,7 @@ orphan: true
 
 ## 原始记录与限制
 
-完整[路径脱敏数据](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/sample-constructor-optimization-data-redacted.json)保留每轮、warmup、worker PID、
+完整[路径脱敏数据](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/sample-constructor-optimization-data-redacted.json)保留每轮、warmup、worker PID、
 内存footer、输入/包/二进制摘要和前后身份复核。外置运行目录：
 `$WORKDIR/sample-constructor/comparison-v2/`。
 

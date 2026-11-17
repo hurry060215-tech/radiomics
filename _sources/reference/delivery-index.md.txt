@@ -23,10 +23,10 @@ versioned completion audit, subsequent audits and latest PR CI together.
 
 - [Chinese technical report](technical-report.md): architecture, algorithms,
   correctness, measured performance, deployment and limitations.
-- [Support matrix](support-matrix.md) and [requirement audit](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/completion-audit.md).
+- [Support matrix](support-matrix.md) and [requirement audit](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/completion-audit.md).
 - [Six native tutorials](python-native.md), with fresh output directories.
 - [Native CLI](cli-workflows-native.md) and [pathology CLI](pathology-cli-native.md).
-- [Portable source assets and build instructions](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/native-package-assets.md).
+- [Portable source assets and build instructions](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/native-package-assets.md).
 
 ## Versioned evidence
 
@@ -36,11 +36,11 @@ versioned completion audit, subsequent audits and latest PR CI together.
   14 startup observations and one offline payload install, with limited scope.
 - [ML/Statistics and Pathology](learning-pathology-benchmark-v2-results.md):
   224 complete observations, separate suites and whole-scene stages.
-- [Public CT acceptance](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/public-ct-native-acceptance.md): independent scalar,
+- [Public CT acceptance](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/public-ct-native-acceptance.md): independent scalar,
   matrix, buffer and physical-coordinate checks.
-- [Actual optional containers](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/optional-interop-acceptance.md): pinned dense
+- [Actual optional containers](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/optional-interop-acceptance.md): pinned dense
   AnnData/WSIData metadata paths, preserving exact IDs/history and unknown MPP.
-- [Independent API/IBSI audit](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/acceptance-v2-report.md).
+- [Independent API/IBSI audit](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/acceptance-v2-report.md).
 
 ## Local build artifacts
 

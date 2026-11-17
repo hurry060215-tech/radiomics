@@ -102,8 +102,8 @@ filter or transformation that produced it.
 
 ## Reading historical and optional interfaces
 
-The [initial scope](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/scope.md) records historical optional-Python functionality.
-The [legacy API](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/legacy-python.md) describes its own estimator objects and
+The [initial scope](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/scope.md) records historical optional-Python functionality.
+The [legacy API](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/legacy-python.md) describes its own estimator objects and
 persistence rather than the native model-bundle contract.
 Native calibration curves and bins do not establish a fitted Platt or isotonic
 recalibrator. SHAP, exploratory dimensionality reduction and other optional

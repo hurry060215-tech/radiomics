@@ -39,12 +39,12 @@ or a formal publication/release.
   throughout measurement. The earlier failed untimed2D configuration and the
   zero-observation localized metadata-probe failure remain retained evidence.
 
-The [versioned artifact directory](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310)
-contains the full [machine/build/run provenance](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/provenance-redacted.json),
-[60-case report](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/report-redacted.json),
-[human-readable all-case table](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/report.md),
-and compressed [all observation records, with machine paths redacted](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/raw-observations-redacted.jsonl.gz).
-The [artifact index](https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/benchmarks/results/radiomics-native-48ecb310/artifact-index.json)
+The [versioned artifact directory](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/radiomics-native-48ecb310)
+contains the full [machine/build/run provenance](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/radiomics-native-48ecb310/provenance-redacted.json),
+[60-case report](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/radiomics-native-48ecb310/report-redacted.json),
+[human-readable all-case table](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/radiomics-native-48ecb310/report.md),
+and compressed [all observation records, with machine paths redacted](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/radiomics-native-48ecb310/raw-observations-redacted.jsonl.gz).
+The [artifact index](https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/benchmarks/results/radiomics-native-48ecb310/artifact-index.json)
 records hashes, observed request/report timestamps and the external per-worker
 CSV/config/comparison/stdout/stderr location. No raw CT voxels or prepared arrays
 were added to the repository/package. Public CT terms remain CC-BY-NC-3.0;

@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>09 · 本地影像／ROI：真实文件、几何质控与原生 55 项特征 &#8212; Radiomics · 教程与文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=76a2e1c9" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=7d86a446"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/09_local_image_features';</script>
+    <link rel="canonical" href="https://hurry060215-tech.github.io/radiomics/latest/tutorials/09_local_image_features.html" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="10 · 同一固定划分：新提取 55 项／提供的 107 项 → 原生 LR → 无标签重载预测" href="10_local_modeling.html" />
+    <link rel="prev" title="本地数据：影像／ROI 接固定划分建模" href="local-data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="网页导航">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Radiomics · 教程与文档</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="当前页面">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    安装
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    教程
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user-guide/index.html">
+    用户指南
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/ecosystem.html">
+    生态分工
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../en/installation.html">
+    English
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../development/index.html">
+    验证与开发
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hurry060215-tech/radiomics" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="章节导航">
+  <p class="bd-links__title" role="heading" aria-level="1">章节导航</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="radiomics.html">影像组学</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_extract.html">NIfTI 与 ROI 基础提取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04_regions_delta_habitat.html">多区域、Delta 与生境</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="modeling.html">建模与统计</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_image_clinical_binary.html">影像与临床二分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_multiclass_regression.html">多分类与连续值回归</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pathology.html">轻量病理</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="05_patch_patient.html">病理 patch 到患者建模</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_embedding_overlay.html">Embedding 对齐与局部覆盖图</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="real-data.html">真实数据路线</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="07_public_ct.html">07 · 真实公开CT：从文件与ROI到特征表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08_public_tabular.html">08 · 真实公开表格：固定留出、原生二分类与无标签预测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets.html">数据与许可</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="local-data.html">本地样例路线</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">09 · 本地影像／ROI：真实文件、几何质控与原生 55 项特征</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_local_modeling.html">10 · 同一固定划分：新提取 55 项／提供的 107 项 → 原生 LR → 无标签重载预测</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="初始页面">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">教程：按任务选择路线</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="local-data.html" class="nav-link">本地数据：影像／ROI 接固定划分建模</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">09 · 本地影像／ROI：真实文件、几何质控与原生 55 项特征</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="roi-55">
+<h1>09 · 本地影像／ROI：真实文件、几何质控与原生 55 项特征<a class="headerlink" href="#roi-55" title="Link to this heading">#</a></h1>
+<p>本页读取你提供的本机样例，不下载、不合成影像或标签、不调用商业平台运行时。原始 NIfTI、mask 与本次执行输出均留在仓库外。目录中未找到整体再分发许可证，本页执行结果不用于公共站点、wheel 或 sdist。</p>
+<p>输入目录称为 CT，但未附强度标定协议，因此这里不将数值自动解释为 HU。保留完整 RAS affine；展示的是源数组的 z 索引切面，不标注成已经重定向的解剖轴位。</p>
+<section id="id1">
+<h2>1. 检查真正运行的环境<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>所有提取由 <code class="docutils literal notranslate"><span class="pre">ov_radiomics</span></code> Rust 核心执行；这里明确记录解释器、扩展 SHA 和源码实现身份。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ov_radiomics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rad</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ov_radiomics._backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_backend</span>
+
+<span class="k">if</span> <span class="s1">'TUTORIAL_DATA_ROOT'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span> <span class="ow">or</span> <span class="s1">'TUTORIAL_RUN_ROOT'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'请用本教程的 run_local_sample_tutorials.py --data-root ... --output ... 执行；或先设置这两个路径变量。'</span><span class="p">)</span>
+<span class="n">DATA</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_DATA_ROOT</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span> <span class="o">/</span> <span class="s1">'CT'</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">TUTORIAL_RUN_ROOT</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">output</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sha256</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">),</span> <span class="sa">b</span><span class="s1">''</span><span class="p">):</span>
+            <span class="n">h</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">h</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_json</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">allow_nan</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+<span class="n">native</span> <span class="o">=</span> <span class="n">resolve_backend</span><span class="p">(</span><span class="s1">'rust'</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">rad</span><span class="o">.</span><span class="n">backend_info</span><span class="p">(),</span> <span class="n">interpreter</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="n">python</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+    <span class="n">package_version</span><span class="o">=</span><span class="n">rad</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span> <span class="n">package_path</span><span class="o">=</span><span class="n">rad</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span> <span class="n">native_sha256</span><span class="o">=</span><span class="n">sha256</span><span class="p">(</span><span class="n">native</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span>
+    <span class="n">implementation_sha256</span><span class="o">=</span><span class="n">native</span><span class="o">.</span><span class="n">IMPLEMENTATION_SHA256</span><span class="p">,</span> <span class="n">data_kind</span><span class="o">=</span><span class="s1">'local-image-mask-tabular-no-clinical-validity'</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">'local-only: source/redistribution license not established'</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">runtime</span><span class="p">[</span><span class="s1">'backend'</span><span class="p">][</span><span class="s1">'metrics_backend'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'rust'</span>
+<span class="n">save_json</span><span class="p">(</span><span class="s1">'tutorial-runtime.json'</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">runtime</span><span class="p">[</span><span class="s1">'backend'</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">'actual backend'</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h2>2. 冻结输入清单和分析参数<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>按同名文件精确配对，不按目录顺序猜配对。<code class="docutils literal notranslate"><span class="pre">label_multicenter.csv</span></code> 的文件名不证明真实多中心；这里仅保留其提供的 train／val 分组，不重新挑划分。</p>
+<p>提取输入清单中全部图像的 label 1；首次本地验收使用了237对文件。参数预先固定为 <code class="docutils literal notranslate"><span class="pre">python_golden_v1</span></code>、fixed-count 32、distance 1／direction_mean、GLDM alpha 0、voxel shift 0。不做图像归一化、裁剪、截断或重采样。32 bins 是软件教学选择，不是临床 CT preset。</p>
+<p>部分 affine 被原生读取器标为 shear，因此本页仅取 16 项一阶＋39 项纹理（55 项）；不调用要求正交网格的 11 项 <code class="docutils literal notranslate"><span class="pre">shape_basic</span></code>。这不是把提供的 107 列旧特征表重新提取了一遍。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">provided_split</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA</span> <span class="o">/</span> <span class="s1">'label_multicenter.csv'</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">provided_labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">DATA</span> <span class="o">/</span> <span class="s1">'label.csv'</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">provided_split</span><span class="o">.</span><span class="n">ID</span><span class="o">.</span><span class="n">is_unique</span> <span class="ow">and</span> <span class="n">provided_labels</span><span class="o">.</span><span class="n">ID</span><span class="o">.</span><span class="n">is_unique</span>
+<span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">provided_split</span><span class="o">.</span><span class="n">group</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="s1">'train'</span><span class="p">,</span> <span class="s1">'val'</span><span class="p">}</span>
+<span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">provided_split</span><span class="o">.</span><span class="n">label</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="s1">'0'</span><span class="p">,</span> <span class="s1">'1'</span><span class="p">}</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_series_equal</span><span class="p">(</span><span class="n">provided_split</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'ID'</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(),</span>
+    <span class="n">provided_labels</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'ID'</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">sort_index</span><span class="p">())</span>
+<span class="n">images</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">(</span><span class="n">DATA</span> <span class="o">/</span> <span class="s1">'images'</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*.nii.gz'</span><span class="p">)}</span>
+<span class="n">masks</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">(</span><span class="n">DATA</span> <span class="o">/</span> <span class="s1">'masks'</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*.nii.gz'</span><span class="p">)}</span>
+<span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">images</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">masks</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">provided_split</span><span class="o">.</span><span class="n">ID</span><span class="p">)</span>
+<span class="n">ids</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">x</span><span class="p">))</span>
+<span class="n">families</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'firstorder'</span><span class="p">,</span> <span class="s1">'glcm'</span><span class="p">,</span> <span class="s1">'glrlm'</span><span class="p">,</span> <span class="s1">'glszm'</span><span class="p">,</span> <span class="s1">'gldm'</span><span class="p">,</span> <span class="s1">'ngtdm'</span><span class="p">]</span>
+<span class="n">config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s1">'python_golden_v1'</span><span class="p">,</span> <span class="n">discretization</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'fixed_count'</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">32</span><span class="p">),</span>
+    <span class="n">aggregation</span><span class="o">=</span><span class="s1">'direction_mean'</span><span class="p">,</span> <span class="n">gldm_alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">voxel_array_shift</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">protocol</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">families</span><span class="o">=</span><span class="n">families</span><span class="p">,</span> <span class="n">roi_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">image_processing</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">alignment_policy</span><span class="o">=</span><span class="s1">'native validation; explicit nearest-neighbor mask-to-image resampling only for equal-shape millimeter grids with &lt;=0.001mm corner drift'</span><span class="p">,</span>
+    <span class="n">maximum_permitted_header_drift_mm</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">physical_shape_features</span><span class="o">=</span><span class="s1">'not requested'</span><span class="p">,</span>
+    <span class="n">patient_identity</span><span class="o">=</span><span class="s1">'source ID grouping only; independent patients are not established'</span><span class="p">)</span>
+<span class="n">save_json</span><span class="p">(</span><span class="s1">'protocol.json'</span><span class="p">,</span> <span class="n">protocol</span><span class="p">)</span>
+<span class="n">source_hashes</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">):</span> <span class="n">sha256</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span>
+    <span class="p">[</span><span class="n">DATA</span> <span class="o">/</span> <span class="s1">'label.csv'</span><span class="p">,</span> <span class="n">DATA</span> <span class="o">/</span> <span class="s1">'label_multicenter.csv'</span><span class="p">]</span> <span class="o">+</span>
+    <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">identity</span> <span class="ow">in</span> <span class="n">ids</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">identity</span><span class="p">],</span> <span class="n">masks</span><span class="p">[</span><span class="n">identity</span><span class="p">])]}</span>
+<span class="n">save_json</span><span class="p">(</span><span class="s1">'source-hashes.json'</span><span class="p">,</span> <span class="n">source_hashes</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">provided_split</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'group'</span><span class="p">,</span> <span class="s1">'label'</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Exact image/mask pairs:'</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2>3. 看清原始拒绝，再显式处理微小网格差异<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>首例的 image 使用 sform，mask 使用 qform。虽然 shape 一样，网格外角点有微小物理坐标差异，原生严格校验会拒绝，不能直接把 mask 的 affine 强行改成 image affine。</p>
+<p>本页只允许同 shape、毫米单位且最大角点漂移不超过 0.001 mm 的样例进入<strong>显式最近邻 mask 重采样到 image 网格</strong>。这不是放宽包内的校验容差：处理后仍由原生 <code class="docutils literal notranslate"><span class="pre">ImageSample</span></code> 正常验证。漂移更大、shape 不同或 ROI 消失会停止并保留错误，不自动注册或居中。</p>
+<p>下面保留首例的真实拒绝信息，之后的表逐例记录是否重采样、改变了多少标签、ROI 前后体素数及原始警告。image 强度完全不变；原始 mask 文件也不改写。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">first_image</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">read_nifti</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">first_mask</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">read_nifti</span><span class="p">(</span><span class="n">masks</span><span class="p">[</span><span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">rad</span><span class="o">.</span><span class="n">ImageSample</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">sample_id</span><span class="o">=</span><span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">patient_id</span><span class="o">=</span><span class="n">ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">first_image</span><span class="p">,</span> <span class="n">first_mask</span><span class="p">)</span>
+    <span class="n">first_rejection</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+    <span class="n">first_rejection</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Original pair validation:'</span><span class="p">,</span> <span class="n">first_rejection</span> <span class="ow">or</span> <span class="s1">'passed'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">first_image</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">first_mask</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">first_image</span><span class="p">,</span> <span class="n">first_mask</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">corner_drift</span><span class="p">(</span><span class="n">image_geometry</span><span class="p">,</span> <span class="n">mask_geometry</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">image_geometry</span><span class="p">[</span><span class="s1">'shape'</span><span class="p">]</span> <span class="o">==</span> <span class="n">mask_geometry</span><span class="p">[</span><span class="s1">'shape'</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">image_geometry</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">]</span> <span class="o">==</span> <span class="n">mask_geometry</span><span class="p">[</span><span class="s1">'unit'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'millimeter'</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">image_geometry</span><span class="p">[</span><span class="s1">'shape'</span><span class="p">]</span>
+    <span class="n">corners</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">.5</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">.5</span><span class="p">]</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="mf">.5</span><span class="p">]])</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">corners</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image_geometry</span><span class="p">[</span><span class="s1">'affine'</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="n">corners</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mask_geometry</span><span class="p">[</span><span class="s1">'affine'</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">((</span><span class="n">first</span><span class="o">-</span><span class="n">second</span><span class="p">)[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h2>4. 全部文件逐例提取与可追溯质控<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>执行后看实际成功数，不能只展示一个能跑的例子。几何 warnings 原样记录；没有因 warnings 就关闭校验。<code class="docutils literal notranslate"><span class="pre">patient_id</span></code> 暂以 source ID 作为记录分组键，仅用于 API 合约，不能据此推断生物学患者独立。</p>
+<p>原始几何警告保存在独立 QA 中；本页不将其缺省为“数据完美”。缺失特征保持 NaN，正负无穷会报错。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rows</span><span class="p">,</span> <span class="n">qa</span><span class="p">,</span> <span class="n">failures</span><span class="p">,</span> <span class="n">previews</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="n">started</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">identity</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">read_nifti</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">identity</span><span class="p">])</span>
+        <span class="n">source_mask</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">read_nifti</span><span class="p">(</span><span class="n">masks</span><span class="p">[</span><span class="n">identity</span><span class="p">])</span>
+        <span class="n">drift</span> <span class="o">=</span> <span class="n">corner_drift</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">source_mask</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="n">original_labels</span> <span class="o">=</span> <span class="n">source_mask</span><span class="o">.</span><span class="n">array</span>
+        <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">original_labels</span><span class="p">))</span> <span class="o">-</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'This frozen local tutorial expects explicit binary mask labels 0/1.'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">original_labels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Source ROI label 1 is empty.'</span><span class="p">)</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">sample_id</span><span class="o">=</span><span class="n">identity</span><span class="p">,</span> <span class="n">patient_id</span><span class="o">=</span><span class="n">identity</span><span class="p">)</span>
+        <span class="n">rejection</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">ImageSample</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">)</span>
+            <span class="n">aligned_mask</span> <span class="o">=</span> <span class="n">source_mask</span>
+            <span class="n">correction</span> <span class="o">=</span> <span class="s1">'none'</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="n">rejection</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">'world-coordinate grids differ'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rejection</span><span class="p">:</span>
+                <span class="k">raise</span>
+            <span class="k">if</span> <span class="n">drift</span> <span class="o">&gt;</span> <span class="n">protocol</span><span class="p">[</span><span class="s1">'maximum_permitted_header_drift_mm'</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Grid drift exceeds the declared small-header-drift policy.'</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+            <span class="n">aligned_mask</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">resample_like</span><span class="p">(</span><span class="n">source_mask</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">rad</span><span class="o">.</span><span class="n">ImageSample</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">aligned_mask</span><span class="p">)</span>
+            <span class="n">correction</span> <span class="o">=</span> <span class="s1">'explicit_nearest_mask_resample_to_image'</span>
+        <span class="n">aligned_labels</span> <span class="o">=</span> <span class="n">aligned_mask</span><span class="o">.</span><span class="n">array</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">aligned_labels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'ROI label 1 disappeared after explicit mask resampling.'</span><span class="p">)</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">families</span><span class="o">=</span><span class="n">families</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">table</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">56</span><span class="p">)</span>
+        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">identity</span><span class="p">,</span> <span class="n">max_outer_corner_drift_mm</span><span class="o">=</span><span class="n">drift</span><span class="p">,</span>
+            <span class="n">alignment_action</span><span class="o">=</span><span class="n">correction</span><span class="p">,</span> <span class="n">original_rejection</span><span class="o">=</span><span class="n">rejection</span><span class="p">,</span>
+            <span class="n">original_ROI_voxels</span><span class="o">=</span><span class="nb">int</span><span class="p">((</span><span class="n">original_labels</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+            <span class="n">aligned_ROI_voxels</span><span class="o">=</span><span class="nb">int</span><span class="p">((</span><span class="n">aligned_labels</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+            <span class="n">changed_mask_voxels</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">original_labels</span><span class="o">!=</span><span class="n">aligned_labels</span><span class="p">)),</span>
+            <span class="n">image_warning_codes</span><span class="o">=</span><span class="s1">';'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">'code'</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="s1">'diagnostics'</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">'severity'</span><span class="p">]</span><span class="o">==</span><span class="s1">'warning'</span><span class="p">),</span>
+            <span class="n">mask_warning_codes</span><span class="o">=</span><span class="s1">';'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">'code'</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">source_mask</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="s1">'diagnostics'</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">'severity'</span><span class="p">]</span><span class="o">==</span><span class="s1">'warning'</span><span class="p">),</span>
+            <span class="n">voxel_volume_mm3</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">geometry</span><span class="p">[</span><span class="s1">'affine'</span><span class="p">])[:</span><span class="mi">3</span><span class="p">,:</span><span class="mi">3</span><span class="p">]))))</span>
+        <span class="n">qa</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">chosen</span> <span class="o">=</span> <span class="n">aligned_labels</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">chosen</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))))</span>
+            <span class="n">plane</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">[</span><span class="n">z</span><span class="p">]</span>
+            <span class="n">roi_values</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">[</span><span class="n">chosen</span><span class="p">]</span>
+            <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">roi_values</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">])</span>
+            <span class="n">previews</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">identity</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">plane</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">chosen</span><span class="p">[</span><span class="n">z</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="nb">float</span><span class="p">(</span><span class="n">lo</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">hi</span><span class="p">)))</span>
+        <span class="k">del</span> <span class="n">image</span><span class="p">,</span> <span class="n">source_mask</span><span class="p">,</span> <span class="n">aligned_mask</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="n">original_labels</span><span class="p">,</span> <span class="n">aligned_labels</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">failures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">identity</span><span class="p">,</span> <span class="n">error_type</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)))</span>
+    <span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="s1">'progress.json'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">processed</span><span class="o">=</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">),</span>
+        <span class="n">success</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">),</span> <span class="n">failures</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">failures</span><span class="p">))),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">25</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Processed:'</span><span class="p">,</span> <span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'/'</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">),</span> <span class="s1">'; failures:'</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">failures</span><span class="p">))</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">failures</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'ID'</span><span class="p">,</span><span class="s1">'error_type'</span><span class="p">,</span><span class="s1">'error'</span><span class="p">])</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="s1">'failures.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">save_json</span><span class="p">(</span><span class="s1">'failures.json'</span><span class="p">,</span> <span class="n">failures</span><span class="p">)</span>
+<span class="n">qa</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">qa</span><span class="p">)</span>
+<span class="n">qa</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="s1">'qa.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">failures</span><span class="p">,</span> <span class="s1">'Data failures retained in failures.csv; resolve them explicitly before modeling.'</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">features</span><span class="o">.</span><span class="n">ID</span><span class="o">.</span><span class="n">is_unique</span> <span class="ow">and</span> <span class="nb">set</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">ID</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">56</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+<span class="n">features</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="s1">'features.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">features</span><span class="p">[[</span><span class="s1">'ID'</span><span class="p">,</span><span class="s1">'original_firstorder_Mean'</span><span class="p">,</span><span class="s1">'original_firstorder_Variance'</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">qa</span><span class="p">[[</span><span class="s1">'max_outer_corner_drift_mm'</span><span class="p">,</span><span class="s1">'original_ROI_voxels'</span><span class="p">,</span><span class="s1">'aligned_ROI_voxels'</span><span class="p">,</span><span class="s1">'changed_mask_voxels'</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">qa</span><span class="o">.</span><span class="n">alignment_action</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Rows:'</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">),</span> <span class="s1">'; native features:'</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Undefined feature cells preserved:'</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">'ID'</span><span class="p">)</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Elapsed seconds (execution evidence, not a benchmark):'</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span><span class="o">-</span><span class="n">started</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h2>5. 解释实际图像和结果<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>红线是实际 ROI 的边界。显示范围采用该例 ROI 强度的 1%–99% 分位数，仅改变显示，不改变提取数据。图中切面采用源数组 z 索引；没有擅自标注 RAS 解剖左右。</p>
+<p>几何表中的体素体积为 affine 三阶行列式绝对值的 QA 数值，不新增 <code class="docutils literal notranslate"><span class="pre">shape_basic</span></code> 特征，也不把近似 shear 当作已经正交。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">previews</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">previews</span><span class="p">)),</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">number</span><span class="p">,</span> <span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">plane</span><span class="p">,</span> <span class="n">roi</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">previews</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">[</span><span class="n">number</span><span class="p">]:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">lo</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">hi</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Source voxel x index'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Source voxel y index'</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">number</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Local record </span><span class="si">{</span><span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">, source z=</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">number</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">.5</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">'#e45756'</span><span class="p">],</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">number</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Actual ROI label 1'</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">'Index-space display; full affine and QA retained; display window only'</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="s1">'roi-previews.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">qa</span><span class="o">.</span><span class="n">aligned_ROI_voxels</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#2f6b8a'</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Label-1 voxel count'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Source records'</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Observed ROI sizes'</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">original_firstorder_Mean</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#d08b41'</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">'Original first-order Mean (input units)'</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">'Source records'</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Native Mean values'</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="s1">'feature-overview.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id6">
+<h2>6. 验证原始输入没有变动<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>所有来源 SHA 再次核对。Notebook、图、特征和本机路径收据均只保存在这次外置执行目录。下一篇使用相同记录身份与提供的固定 train／val 继续建模。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">sha256</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">==</span> <span class="n">value</span> <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">source_hashes</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="n">receipt</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s1">'passed'</span><span class="p">,</span> <span class="n">source_records</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">),</span> <span class="n">extracted_records</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">),</span>
+    <span class="n">feature_count</span><span class="o">=</span><span class="mi">55</span><span class="p">,</span> <span class="n">shape_basic_requested</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="n">protocol</span><span class="p">,</span>
+    <span class="n">resampled_mask_records</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">qa</span><span class="o">.</span><span class="n">alignment_action</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="s1">'none'</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+    <span class="n">records_with_changed_mask_labels</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">qa</span><span class="o">.</span><span class="n">changed_mask_voxels</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+    <span class="n">max_outer_corner_drift_mm</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">qa</span><span class="o">.</span><span class="n">max_outer_corner_drift_mm</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+    <span class="n">warnings_retained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">original_input_hashes_unchanged</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">outcomes_used</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">clinical_validity_claim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">distribution</span><span class="o">=</span><span class="s1">'local-only'</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">,</span>
+    <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="n">sha256</span><span class="p">(</span><span class="n">output</span><span class="o">/</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'features.csv'</span><span class="p">,</span><span class="s1">'qa.csv'</span><span class="p">,</span><span class="s1">'failures.csv'</span><span class="p">,</span><span class="s1">'roi-previews.png'</span><span class="p">,</span><span class="s1">'feature-overview.png'</span><span class="p">]})</span>
+<span class="n">save_json</span><span class="p">(</span><span class="s1">'receipt.json'</span><span class="p">,</span> <span class="n">receipt</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">receipt</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'source_records'</span><span class="p">,</span><span class="s1">'extracted_records'</span><span class="p">,</span><span class="s1">'feature_count'</span><span class="p">,</span><span class="s1">'resampled_mask_records'</span><span class="p">,</span><span class="s1">'records_with_changed_mask_labels'</span><span class="p">,</span><span class="s1">'max_outer_corner_drift_mm'</span><span class="p">]}))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="local-data.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">本地数据：影像／ROI 接固定划分建模</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="10_local_modeling.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">10 · 同一固定划分：新提取 55 项／提供的 107 项 → 原生 LR → 无标签重载预测</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 当前页面
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. 检查真正运行的环境</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2. 冻结输入清单和分析参数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3. 看清原始拒绝，再显式处理微小网格差异</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4. 全部文件逐例提取与可追溯质控</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5. 解释实际图像和结果</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6. 验证原始输入没有变动</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/09_local_image_features.ipynb.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7创建。
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="build-revision" data-build-revision="a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c">
+  Build <code>a767fa7</code>
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

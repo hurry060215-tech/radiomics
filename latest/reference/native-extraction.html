@@ -521,7 +521,7 @@
 <p>The Rust core, CLI <code class="docutils literal notranslate"><span class="pre">check</span></code>/<code class="docutils literal notranslate"><span class="pre">extract</span></code> and Python <code class="docutils literal notranslate"><span class="pre">backend=&quot;rust&quot;</span></code> entry point use
 the same reader/preparation/explicit Original feature engine without calling
 SimpleITK/PyRadiomics/sklearn/statsmodels. Full native modeling/statistical
-workflow integration is tracked separately in <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/native-development.md">the ledger</a>.</p>
+workflow integration is tracked separately in <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/native-development.md">the ledger</a>.</p>
 <p>Build with <code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">build</span> <span class="pre">--release</span> <span class="pre">-p</span> <span class="pre">ov-radiomics-cli</span> <span class="pre">--locked</span></code>. The binary is
 <code class="docutils literal notranslate"><span class="pre">target/release/radiomics</span></code> (Windows: <code class="docutils literal notranslate"><span class="pre">radiomics.exe</span></code>). Build the Python wheel with
 maturin; base installation needs no reference packages. Legacy scientific
@@ -572,13 +572,13 @@ Cache files are not silently overwritten. <code class="docutils literal notransl
 outputs have deterministic sample/feature order.
 Input content is checked again after computation; a moving input is rejected
 before any feature cache entry is accepted.</p>
-<p><a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/examples/native/01_extract.py">The executable tutorial</a> creates original
+<p><a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/examples/native/01_extract.py">The executable tutorial</a> creates original
 anisotropic 3D fixtures with a flipped direction and nonzero origin. Three lesions
 belong to two patients, each with 24 ROI voxels / 576 mm³. <code class="docutils literal notranslate"><span class="pre">--cli</span></code> invokes the binary
 with an empty executable search path, compares exact CSV values with Python and
 requires matching implementation digests. A clean OS/container deployment remains
 a separate cross-platform gate. Numerical compatibility does not establish IBSI
-conformance or performance targets; see <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/f3ec58cac4ed883331f56b30155ac80998056b80/docs/benchmark-v2.md">Benchmark v2</a>.</p>
+conformance or performance targets; see <a class="reference external" href="https://github.com/hurry060215-tech/radiomics/blob/a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c/docs/benchmark-v2.md">Benchmark v2</a>.</p>
 </section>
 
 
@@ -664,8 +664,8 @@ conformance or performance targets; see <a class="reference external" href="http
   
     <div class="footer-items__end">
       
-        <div class="footer-item"><p class="build-revision" data-build-revision="f3ec58cac4ed883331f56b30155ac80998056b80">
-  Build <code>f3ec58c</code>
+        <div class="footer-item"><p class="build-revision" data-build-revision="a767fa7c79b3ffd09fe01ac45558a8ecdb7e801c">
+  Build <code>a767fa7</code>
 </p></div>
       
     </div>
